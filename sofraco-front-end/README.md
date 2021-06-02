@@ -1,3 +1,13 @@
+<!-- SOFRACO installation -->
+
+- npm install
+- créez un fichier config.json en suivant l'exemple dans config.example.json
+- modifiez config.json selon vos propres configurations
+- run node server ou nodemon 
+
+
+<!-- By default, créé par REACT -->
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
