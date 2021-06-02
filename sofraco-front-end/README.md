@@ -3,7 +3,7 @@
 - npm install
 - créez un fichier config.json en suivant l'exemple dans config.example.json
 - modifiez config.json selon vos propres configurations
-- run node server ou nodemon 
+- run npm start ou yarn start 
 
 
 <!-- By default, créé par REACT -->
