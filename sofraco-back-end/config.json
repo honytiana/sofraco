@@ -1,0 +1,7 @@
+{
+    "nodeUrl": "http://localhost:9000",
+    "nodePort": 9000,
+    "database": "mongodb://localhost:27017/sofraco",
+    "mailSender": "honytianarazafimahefa@gmail.com",
+    "mailPass": "NjallidotiA%2311#"
+}
