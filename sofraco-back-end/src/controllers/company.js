@@ -3,17 +3,6 @@ const path = require('path');
 const config = require('../../config.json');
 const Company = require('../models/company');
 
-exports.getCompanies = (req, res) => {
-    console.log('get company');
-    Company.find((err, doc) => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.status(200).json(doc);
-        }
-    });
-}
-
 exports.createCompany = (req, res) => {
     const data = {
         name: 'APICIL',
@@ -38,3 +27,25 @@ exports.createCompany = (req, res) => {
     });
 
 };
+
+exports.getCompany = (req, res) => {
+    console.log('get company');
+    Company.findById(req.params.id, (err, doc) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.status(200).json(doc);
+        }
+    });
+}
+
+exports.getCompanies = (req, res) => {
+    console.log('get company');
+    Company.find((err, doc) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.status(200).json(doc);
+        }
+    });
+}
