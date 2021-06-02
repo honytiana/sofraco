@@ -22,10 +22,11 @@ class Treatments extends Component {
                 { code: 0, email: 'test@test.com', firstName: 'Test', is_enabled: true, lastName: 'Courtier', status: 'Active' }
             ],
             fields: [
+                { key: 'code', _style: { width: '10%' } },
                 { key: 'firstName', _style: { width: '20%' } },
                 { key: 'lastName', _style: { width: '20%' } },
                 { key: 'email', _style: { width: '20%' } },
-                { key: 'status', _style: { width: '20%' } },
+                { key: 'status', _style: { width: '10%' } },
                 {
                     key: 'check',
                     label: '',
@@ -50,7 +51,6 @@ class Treatments extends Component {
     componentDidMount() {
         axios.get(`${config.nodeUrl}/api/courtier`)
             .then((data) => {
-                console.log(data);
                 this.setState({
                     usersData: data.data
                 })

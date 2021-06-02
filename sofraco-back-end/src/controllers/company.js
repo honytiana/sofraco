@@ -7,20 +7,30 @@ exports.createCompany = (req, res) => {
     const data = req.body;
     const company = new Company(data);
     company.save()
-    .then((data) => {
-        console.log('Post company');
-        res.status(200).json(data);
-    })
-    .catch((err) => {
-        res.status(500);
-        res.end(err);
-    });
+        .then((data) => {
+            console.log('Post company');
+            res.status(200).json(data);
+        })
+        .catch((err) => {
+            res.status(500);
+            res.end(err);
+        });
 
 };
 
 exports.getCompany = (req, res) => {
     console.log('get company');
     Company.findById(req.params.id, (err, doc) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.status(200).json(doc);
+        }
+    });
+}
+
+exports.getCompanyByName = (req, res) => {
+    Company.findOne({ name: req.params.name }, (err, doc) => {
         if (err) {
             console.log(err);
         } else {

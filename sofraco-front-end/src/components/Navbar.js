@@ -33,15 +33,7 @@ class Navbar extends Component {
                     <CCollapse show={this.state.isOpen} navbar>
                         <CNavbarNav>
                             <CNavLink href='/' >Home</CNavLink>
-                            <CDropdown inNav >
-                                <CDropdownToggle color="primary">
-                                    Compagnies d'assurance
-                                </CDropdownToggle>
-                                <CDropdownMenu>
-                                    <CDropdownItem href='/compagnies'> Compagnie 1</CDropdownItem>
-                                    <CDropdownItem href='/compagnies'> Compagnie 2</CDropdownItem>
-                                </CDropdownMenu>
-                            </CDropdown>
+                            <CNavLink href='/companies'>Compagnies d'assurance</CNavLink>
                             <CNavLink href='/treatments'>Traitements</CNavLink>
                         </CNavbarNav>
                         <CNavbarNav className="ml-auto">

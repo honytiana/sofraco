@@ -12,22 +12,53 @@ import {
     // CInputFile,
     CInputGroup,
     CInputGroupText,
-    CInputGroupPrepend
+    CInputGroupPrepend,
+    CCard,
+    CCardHeader
 } from '@coreui/react';
 
-class Compagnies extends Component {
+import queryString from 'query-string';
+import axios from 'axios';
+
+import config from '../config.json';
+
+class Upload extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isOpen: false
+            company: '',
+            location: props.location
         }
+    }
 
+    componentDidMount() {
+        const location = this.state.location;
+        const params = queryString.parse(location.search);
+        axios.get(`${config.nodeUrl}/api/company/name/${params.name}`)
+            .then((data) => {
+                this.setState({
+                    company: data.data
+                })
+                return data;
+            })
+            .catch((err) => {
+                console.log(err)
+            });
     }
 
     render() {
         return (
             <div>
                 <CContainer fluid>
+                    <CRow>
+                        <CCol sm="12">
+                            <CCard>
+                                <CCardHeader>
+                                    Upload de documents pour la compagnie {this.state.company.name}
+                                </CCardHeader>
+                            </CCard>
+                        </CCol>
+                    </CRow>
                     <CRow>
                         <CCol sm="12">
                             <CForm action="" method="post">
@@ -68,4 +99,4 @@ class Compagnies extends Component {
     }
 }
 
-export default Compagnies;
+export default Upload;
