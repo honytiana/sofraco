@@ -5,14 +5,7 @@ const Courtier = require('../models/courtier');
 
 
 exports.createCourtier = (req, res) => {
-    const data = {
-        firstName: 'Test',
-        lastName: 'Courtier',
-        email: 'courtier1@test.com',
-        phone: '+33000000000',
-        code: '123456',
-        is_enabled: true,
-    };
+    const data = req.body;
     const courtier = new Courtier(data);
     courtier.save()
     .then((data) => {
