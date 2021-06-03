@@ -5,20 +5,14 @@ import {
     CRow,
     CCol,
     CForm,
-    // CFormGroup,
-    // CLabel,
     CInput,
-    // CFormText,
-    // CInputFile,
-    CInputGroup,
-    CInputGroupText,
-    CInputGroupPrepend,
     CCard,
     CCardHeader
 } from '@coreui/react';
 
 import queryString from 'query-string';
 import axios from 'axios';
+import Dropzone from 'react-dropzone';
 
 import config from '../config.json';
 
@@ -27,8 +21,11 @@ class Upload extends Component {
         super(props);
         this.state = {
             company: '',
-            location: props.location
+            location: props.location,
+            files: null
         }
+        this.onSubmitHandler = this.onSubmitHandler.bind(this);
+        this.onChangeHandler = this.onChangeHandler.bind(this);
     }
 
     componentDidMount() {
@@ -46,6 +43,23 @@ class Upload extends Component {
             });
     }
 
+    onSubmitHandler(event) {
+        event.preventDefault();
+        const formData = new FormData();
+        formData.append('file', this.state.files);
+        console.log(formData);
+    }
+
+    onChangeHandler(event) {
+        event.preventDefault();
+        this.setState({
+            files: null
+        });
+        this.setState({
+            files: event.target.files[0]
+        });
+    }
+
     render() {
         return (
             <div>
@@ -61,35 +75,43 @@ class Upload extends Component {
                     </CRow>
                     <CRow>
                         <CCol sm="12">
-                            <CForm action="" method="post">
-                                {/* <CFormGroup>
-                                    <CLabel htmlFor="nf-file">Fichier</CLabel>
-                                    <CInputFile
-                                        type="file"
-                                        id="nf-file"
-                                        name="nf-file"
-                                    />
-                                    <CFormText className="help-block">Veuillez choisir un fichier</CFormText>
-                                </CFormGroup> */}
-                                <CInputGroup>
-                                    <CInputGroupPrepend>
-                                        <CInputGroupText className={'bg-info text-white'}>
-                                            Uploadez un fichier
-                                        </CInputGroupText>
-                                    </CInputGroupPrepend>
-                                    <CInput
-                                        type="file"
-                                        id="nf-file"
-                                        name="nf-file"
-                                    />
-                                    <CInput
-                                        type="submit"
-                                        id="nf-password"
-                                        name="nf-password"
-                                        placeholder="Enter Password.."
-                                        autoComplete="current-password"
-                                    />
-                                </CInputGroup>
+                            <CForm action="" method="post" onSubmit={this.onSubmitHandler}>
+                                <Dropzone onDrop={(files) => {
+                                    this.setState({
+                                        files
+                                    })
+                                }}>
+                                    {({ getRootProps, getInputProps }) => (
+                                        <div
+                                            {...getRootProps()}
+                                        >
+                                            <CCard>
+                                                <CCardHeader>
+                                                    <input
+                                                        {...getInputProps()}
+                                                        onChange={this.onChangeHandler}
+                                                    />
+                                                    Drag 'n' drop some files here, or click to select files
+                                                </CCardHeader>
+                                            </CCard>
+                                        </div>
+                                    )}
+
+                                </Dropzone>
+                                {(this.state.files !== null) && (
+                                    <CRow>
+                                        <CCol sm="12">
+                                            <h4>Files</h4>
+                                            <p>{this.state.files.name}</p>
+                                        </CCol>
+                                    </CRow>
+                                )
+                                }
+                                <CInput
+                                    type="submit"
+                                    id="nf-send"
+                                    name="nf-send"
+                                />
                             </CForm>
                         </CCol>
                     </CRow>
