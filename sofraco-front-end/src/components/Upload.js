@@ -91,7 +91,7 @@ class Upload extends Component {
                                                         {...getInputProps()}
                                                         onChange={this.onChangeHandler}
                                                     />
-                                                    Drag 'n' drop some files here, or click to select files
+                                                    Glissez et déposez un fichier ou cliquez ici
                                                 </CCardHeader>
                                             </CCard>
                                         </div>
@@ -101,8 +101,9 @@ class Upload extends Component {
                                 {(this.state.files !== null) && (
                                     <CRow>
                                         <CCol sm="12">
-                                            <h4>Files</h4>
-                                            <p>{this.state.files.name}</p>
+                                            <p>Le fichier que vous avez donné est {
+                                                (this.state.files.length > 0) ? this.state.files[0].name : this.state.files.name
+                                            }</p>
                                         </CCol>
                                     </CRow>
                                 )
