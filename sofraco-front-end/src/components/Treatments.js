@@ -6,7 +6,8 @@ import {
     CButton,
     CCollapse,
     CCardBody,
-    CInputCheckbox
+    CInputCheckbox,
+    CAlert
 } from '@coreui/react';
 import axios from 'axios';
 
@@ -18,9 +19,19 @@ class Treatments extends Component {
         super(props);
         this.state = {
             details: [],
-            usersData: [
-                { code: 0, email: 'test@test.com', firstName: 'Test', is_enabled: true, lastName: 'Courtier', status: 'Active' }
-            ],
+            checked: [],
+            courtiersChecked: [],
+            courtiers: [],
+            fields: []
+        }
+        this.getBadge = this.getBadge.bind(this);
+        this.toggleDetails = this.toggleDetails.bind(this);
+        this.onCheckHandler = this.onCheckHandler.bind(this);
+
+    }
+
+    componentDidMount() {
+        this.setState({
             fields: [
                 { key: 'code', _style: { width: '10%' } },
                 { key: 'firstName', _style: { width: '20%' } },
@@ -42,18 +53,12 @@ class Treatments extends Component {
                     filter: false
                 }
             ]
-        }
-        this.getBadge = this.getBadge.bind(this);
-        this.toggleDetails = this.toggleDetails.bind(this);
-
-    }
-
-    componentDidMount() {
+        });
         axios.get(`${config.nodeUrl}/api/courtier`)
             .then((data) => {
                 this.setState({
-                    usersData: data.data
-                })
+                    courtiers: data.data
+                });
             })
             .catch((err) => {
                 console.log(err)
@@ -83,11 +88,39 @@ class Treatments extends Component {
         })
     }
 
+    onCheckHandler(item, index) {
+        if (this.state.checked.length === 0) {
+            this.setState({
+                checked: this.state.courtiers.forEach(element => {
+                    const obj = { code: element.code, checked: false };
+                    this.state.checked.push(obj);
+                })
+            });
+        }
+        this.state.checked.forEach((element, index) => {
+            if (element.code === item.code) {
+                let newChecked = this.state.checked.slice();
+                newChecked[index].checked = !this.state.checked[index].checked;
+                let newCourtierChecked = this.state.courtiersChecked.slice();
+                if (newChecked[index].checked === true) {
+                    newCourtierChecked.push(item.email);
+                } else {
+                    newCourtierChecked.splice(newCourtierChecked.indexOf(item.email), 1);
+                }
+                this.setState({
+                    checked: newChecked,
+                    courtiersChecked: newCourtierChecked
+                });
+            }
+        })
+    }
+
     render() {
+
         return (
             <div>
                 <CDataTable
-                    items={this.state.usersData}
+                    items={this.state.courtiers}
                     fields={this.state.fields}
                     columnFilter
                     tableFilter
@@ -137,13 +170,24 @@ class Treatments extends Component {
                             (item, index) => {
                                 return (
                                     <td>
-                                        <CInputCheckbox />
+                                        <CInputCheckbox onChange={() => {
+                                            this.onCheckHandler(item, index)
+                                        }} />
                                     </td>
                                 )
                             }
                     }
                     }
                 />
+                {
+                    this.state.courtiersChecked.map((courtier, index) => {
+                        return (
+                            <CAlert color="info" closeButton key={index}>
+                                Le courtier coché est {courtier}
+                            </CAlert>
+                        )
+                    })
+                }
             </div>
         );
     }
