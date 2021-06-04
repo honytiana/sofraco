@@ -7,7 +7,8 @@ import {
     CForm,
     CInput,
     CCard,
-    CCardHeader
+    CCardHeader,
+    CAlert
 } from '@coreui/react';
 
 import queryString from 'query-string';
@@ -89,6 +90,7 @@ class Upload extends Component {
                                                 <CCardHeader>
                                                     <input
                                                         {...getInputProps()}
+                                                        multiple={false}
                                                         onChange={this.onChangeHandler}
                                                     />
                                                     Glissez et déposez un fichier ou cliquez ici
@@ -98,16 +100,6 @@ class Upload extends Component {
                                     )}
 
                                 </Dropzone>
-                                {(this.state.files !== null) && (
-                                    <CRow>
-                                        <CCol sm="12">
-                                            <p>Le fichier que vous avez donné est {
-                                                (this.state.files.length > 0) ? this.state.files[0].name : this.state.files.name
-                                            }</p>
-                                        </CCol>
-                                    </CRow>
-                                )
-                                }
                                 <CInput
                                     type="submit"
                                     id="nf-send"
@@ -117,6 +109,15 @@ class Upload extends Component {
                         </CCol>
                     </CRow>
                 </CContainer>
+                {
+                    (this.state.files !== null) && (
+                        <CAlert color="info" closeButton >
+                            Le fichier que vous avez donné est {
+                                (this.state.files.length > 0) ? this.state.files[0].name : this.state.files.name
+                            }
+                        </CAlert>
+                    )
+                }
             </div>
         );
     }
