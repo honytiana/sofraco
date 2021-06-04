@@ -48,7 +48,15 @@ class Upload extends Component {
         event.preventDefault();
         const formData = new FormData();
         formData.append('file', this.state.files);
-        console.log(formData);
+        axios.post(`${config.nodeUrl}/api/document/`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then((res) => {
+            console.log(res);
+        }).catch((err) => {
+            console.log(err);
+        });
     }
 
     onChangeHandler(event) {
@@ -79,7 +87,7 @@ class Upload extends Component {
                             <CForm action="" method="post" onSubmit={this.onSubmitHandler}>
                                 <Dropzone onDrop={(files) => {
                                     this.setState({
-                                        files
+                                        files: files[0]
                                     })
                                 }}>
                                     {({ getRootProps, getInputProps }) => (
@@ -112,9 +120,7 @@ class Upload extends Component {
                 {
                     (this.state.files !== null) && (
                         <CAlert color="info" closeButton >
-                            Le fichier que vous avez donné est {
-                                (this.state.files.length > 0) ? this.state.files[0].name : this.state.files.name
-                            }
+                            Le fichier que vous avez donné est {this.state.files.name}
                         </CAlert>
                     )
                 }
