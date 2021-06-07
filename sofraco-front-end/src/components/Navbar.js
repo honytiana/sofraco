@@ -26,7 +26,9 @@ class Navbar extends Component {
         return (
             <div>
                 <CNavbar expandable="sm" color="info" >
-                    <CToggler inNavbar onClick={() => this.setState({ isOpen: !this.state.isOpen })} />
+                    <CToggler inNavbar onClick={() => this.setState((state) => ({
+                        isOpen: !state.isOpen
+                    }))} />
                     <CNavbarBrand>
                         Sofraco
                     </CNavbarBrand>

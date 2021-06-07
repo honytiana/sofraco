@@ -27,6 +27,7 @@ class Treatments extends Component {
         this.getBadge = this.getBadge.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
         this.onCheckHandler = this.onCheckHandler.bind(this);
+        this.updateChecked = this.updateChecked.bind(this);
 
     }
 
@@ -90,13 +91,20 @@ class Treatments extends Component {
 
     onCheckHandler(item, index) {
         if (this.state.checked.length === 0) {
-            this.setState({
-                checked: this.state.courtiers.forEach(element => {
-                    const obj = { code: element.code, checked: false };
-                    this.state.checked.push(obj);
-                })
+            this.setState((state) => {
+                const checked = state.courtiers.map(element => {
+                    return { code: element.code, checked: false };
+                });
+                return { checked };
+            }, () => {
+                this.updateChecked(item)
             });
+        } else {
+            this.updateChecked(item);
         }
+    }
+
+    updateChecked(item) {
         this.state.checked.forEach((element, index) => {
             if (element.code === item.code) {
                 let newChecked = this.state.checked.slice();
