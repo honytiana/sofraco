@@ -1,0 +1,10 @@
+{
+    "code" : "123456",
+    "lastName" : "Courtier",
+    "email" : "courtier1@test.com",
+    "cabinet": "",
+    "phone" : "+33000000000",
+    "status" : "Active",
+    "is_enabled" : true,
+    "firstName" : "Test"
+}
