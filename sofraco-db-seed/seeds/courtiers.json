@@ -1,0 +1,62 @@
+[
+    {
+        "code": "1",
+        "lastName": "Courtier1",
+        "email": "courtier1@test.com",
+        "cabinet": "",
+        "phone": "+33000000001",
+        "status": "Active",
+        "is_enabled": true,
+        "firstName": "Test1"
+    },
+    {
+        "code": "2",
+        "lastName": "Courtier2",
+        "email": "courtier2@test.com",
+        "cabinet": "",
+        "phone": "+33000000002",
+        "status": "Active",
+        "is_enabled": true,
+        "firstName": "Test2"
+    },
+    {
+        "code": "3",
+        "lastName": "Courtier3",
+        "email": "courtier3@test.com",
+        "cabinet": "",
+        "phone": "+33000000003",
+        "status": "Active",
+        "is_enabled": true,
+        "firstName": "Test3"
+    },
+    {
+        "code": "4",
+        "lastName": "Courtier4",
+        "email": "courtier4@test.com",
+        "cabinet": "",
+        "phone": "+33000000004",
+        "status": "Active",
+        "is_enabled": true,
+        "firstName": "Test4"
+    },
+    {
+        "code": "5",
+        "lastName": "Courtier5",
+        "email": "courtier5@test.com",
+        "cabinet": "",
+        "phone": "+33000000005",
+        "status": "Active",
+        "is_enabled": true,
+        "firstName": "Test5"
+    },
+    {
+        "code": "6",
+        "lastName": "Courtier6",
+        "email": "courtier6@test.com",
+        "cabinet": "",
+        "phone": "+33000000006",
+        "status": "Active",
+        "is_enabled": true,
+        "firstName": "Test6"
+    }
+]
