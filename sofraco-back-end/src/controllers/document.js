@@ -5,18 +5,20 @@ const Document = require('../models/document');
 const documentService = require('../services/document');
 
 
-exports.createDocument = (req, res) => {
+exports.createDocument = async (req, res) => {
     const file = req.file;
-    documentService.readExcel(file.path);
+    const user = req.body.user;
+    const company = req.body.company
+    const infos = await documentService.readExcel(file.path);
     const document = new Document();
     document.name = file.filename;
-    document.user = '';
-    document.company = '';
+    document.user = user;
+    document.company = company;
     document.upload_date = Date.now();
     document.path = file.path;
-    document.type = file.mimitype;
+    document.type = file.mimetype;
     document.is_enabled = true;
-    document.ocr = null;
+    document.ocr = infos;
     document.save()
         .then((data) => {
             console.log('Post document');
