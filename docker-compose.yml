@@ -1,0 +1,42 @@
+version: "2"
+services:
+    frontend:
+        build: ./sofraco-front-end
+        restart: always
+        ports:
+            - "3000:3000"
+        volumes:
+            - ./sofraco-front-end:/frontend
+            - /frontend/node_modules
+        links:
+            - backend
+        networks:
+            - netbridges
+    backend:
+        build: ./sofraco-back-end
+        restart: always
+        ports:
+            - "9000:9000"
+        volumes:
+            - ./sofraco-back-end:/backend
+            - /backend/node_modules
+        depends_on:
+            - mongodb-sofraco
+        networks:
+            - netbridges
+
+    mongodb-sofraco:
+        image: mongo
+        restart: always
+        container_name: mongodb
+        volumes:
+            - ./data-node:/data/db
+        ports:
+            - 27017:27017
+        command: mongod --noauth
+        networks:
+            - netbridges
+
+networks:
+    netbridges:
+        driver: bridge
