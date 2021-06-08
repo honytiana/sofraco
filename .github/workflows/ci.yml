@@ -15,7 +15,8 @@ jobs:
       env:
         HOST: ${{ secrets.HOST }}
         USERNAME: ${{ secrets.USER }}
-        PASSWORD: ${{ secrets.PASSWORD }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.KEY }}
       with:
         source: "."
         target: "~/Sofraco"
@@ -23,9 +24,11 @@ jobs:
     - name: Executing remote command
       uses: appleboy/ssh-action@master
       with:
-        HOST: ${{ secrets.HOST }}
+        host: ${{ secrets.HOST }}
         USERNAME: ${{ secrets.USER }}
-        PASSWORD: ${{ secrets.PASSWORD }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.KEY }}
         script: |
           cd Sofraco
           docker-compose up -d
+          docker image prune -f
