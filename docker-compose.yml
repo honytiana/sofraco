@@ -5,9 +5,6 @@ services:
         restart: always
         ports:
             - "3000:3000"
-        volumes:
-            - ./sofraco-front-end:/frontend
-            - /frontend/node_modules
         links:
             - backend
         networks:
@@ -17,9 +14,6 @@ services:
         restart: always
         ports:
             - "9000:9000"
-        volumes:
-            - ./sofraco-back-end:/backend
-            - /backend/node_modules
         depends_on:
             - mongodb-sofraco
         networks:
