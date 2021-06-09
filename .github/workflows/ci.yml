@@ -19,7 +19,7 @@ jobs:
         KEY: ${{ secrets.KEY }}
       with:
         source: "."
-        target: "~/Sofraco"
+        target: "~/Sofraco-test"
 
     - name: Executing remote command
       uses: appleboy/ssh-action@master
@@ -29,6 +29,6 @@ jobs:
         PORT: ${{ secrets.PORT }}
         KEY: ${{ secrets.KEY }}
         script: |
-          cd Sofraco
+          cd Sofraco-test
           docker-compose up -d
           docker image prune -f
