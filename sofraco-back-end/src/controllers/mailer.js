@@ -9,8 +9,8 @@ exports.postMail = (req, res) => {
     const user = req.body.user;
     const emailDestination = user.email;
     const transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        // smtp-mail.outlook.com
+        // host: 'smtp.gmail.com',
+        host: 'smtp-mail.outlook.com',
         port: 587,
         secure: false,
         requireTLS: true,

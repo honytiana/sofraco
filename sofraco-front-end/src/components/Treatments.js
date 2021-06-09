@@ -7,10 +7,15 @@ import {
     CCollapse,
     CCardBody,
     CInputCheckbox,
-    CAlert
+    CAlert,
+    CToaster,
+    CToast,
+    CToastHeader,
+    CToastBody
 } from '@coreui/react';
 import axios from 'axios';
 
+import '../styles/Treatments.css';
 import config from '../config.json';
 
 class Treatments extends Component {
@@ -22,12 +27,15 @@ class Treatments extends Component {
             checked: [],
             courtiersChecked: [],
             courtiers: [],
-            fields: []
+            fields: [],
+            toast: false,
+            messageToast: {}
         }
         this.getBadge = this.getBadge.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
         this.onCheckHandler = this.onCheckHandler.bind(this);
         this.updateChecked = this.updateChecked.bind(this);
+        this.onSendMailHandler = this.onSendMailHandler.bind(this);
 
     }
 
@@ -53,7 +61,9 @@ class Treatments extends Component {
                     sorter: false,
                     filter: false
                 }
-            ]
+            ],
+            toast: false,
+            messageToast: {}
         });
         axios.get(`${config.nodeUrl}/api/courtier`)
             .then((data) => {
@@ -93,7 +103,7 @@ class Treatments extends Component {
         if (this.state.checked.length === 0) {
             this.setState((state) => {
                 const checked = state.courtiers.map(element => {
-                    return { code: element.code, checked: false };
+                    return { code: element.code, email: element.email, checked: false };
                 });
                 return { checked };
             }, () => {
@@ -110,10 +120,11 @@ class Treatments extends Component {
                 let newChecked = this.state.checked.slice();
                 newChecked[index].checked = !this.state.checked[index].checked;
                 let newCourtierChecked = this.state.courtiersChecked.slice();
+                let obj = { email: item.email, firstName: item.firstName, lastName: item.lastName };
                 if (newChecked[index].checked === true) {
-                    newCourtierChecked.push(item.email);
+                    newCourtierChecked.push(obj);
                 } else {
-                    newCourtierChecked.splice(newCourtierChecked.indexOf(item.email), 1);
+                    newCourtierChecked.splice(newCourtierChecked.indexOf(obj), 1);
                 }
                 this.setState({
                     checked: newChecked,
@@ -121,6 +132,34 @@ class Treatments extends Component {
                 });
             }
         })
+    }
+
+    onSendMailHandler() {
+        for (let courtierChecked of this.state.courtiersChecked) {
+            const options = {
+                user: {
+                    email: courtierChecked.email,
+                    firstName: courtierChecked.firstName,
+                    lastName: courtierChecked.lastName
+                }
+            };
+            axios.post(`${config.nodeUrl}/api/mailer/`, options)
+                .then((data) => {
+                    this.setState({
+                        toast: true,
+                        messageToast: {
+                            header: 'success', message: `Le mail à été envoyé aux courtiers ${this.state.courtiersChecked.map((c) => {
+                                return c.email;
+                            })}`
+                        }
+                    });
+                }).catch((err) => {
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'error', message: err }
+                    })
+                })
+        }
     }
 
     render() {
@@ -187,14 +226,46 @@ class Treatments extends Component {
                     }
                     }
                 />
+                <div className="sofraco-send-mail-button">
+                    <CButton
+                        color="primary"
+                        size=""
+                        className="m-2"
+                        onClick={() => this.onSendMailHandler()}
+                    >
+                        Send mail
+                </CButton>
+                </div>
                 {
                     this.state.courtiersChecked.map((courtier, index) => {
                         return (
                             <CAlert color="info" closeButton key={index}>
-                                Le courtier coché est {courtier}
+                                Le courtier coché est {courtier.email}
                             </CAlert>
                         )
                     })
+                }
+                {
+                    (this.state.toast === true &&
+                        this.state.messageToast &&
+                        this.state.messageToast.header &&
+                        this.state.messageToast.message) && (
+                        <CToaster position="bottom-right">
+                            <CToast
+                                show={true}
+                                fade={true}
+                                autohide={5000}
+                                color={this.state.messageToast.header}
+                            >
+                                <CToastHeader closeButton>
+                                    {this.state.messageToast.header.toUpperCase()}
+                                </CToastHeader>
+                                <CToastBody>
+                                    {`${this.state.messageToast.message}`}
+                                </CToastBody>
+                            </CToast>
+                        </CToaster>
+                    )
                 }
             </div>
         );
