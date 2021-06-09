@@ -87,8 +87,14 @@ class Upload extends Component {
             })
         }).finally(() => {
             this.setState({
-                loader: false,
+                loader: false
             });
+            setTimeout(() => {
+                this.setState({
+                    toast: false,
+                    messageToast: {}
+                });
+            }, 6000);
         });
     }
 
@@ -178,7 +184,7 @@ class Upload extends Component {
                                     </CToastHeader>
                                     <CToastBody>
                                         {`${this.state.messageToast.message}`}
-                                </CToastBody>
+                                    </CToastBody>
                                 </CToast>
                             </CToaster>
                         )

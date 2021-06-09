@@ -43,7 +43,7 @@ exports.postMail = (req, res) => {
             transporter.sendMail(mailOptions, (err, info) => {
                 if (err) {
                     console.log(err);
-                    res.send(err);
+                    throw err;
                 } else {
                     console.log('Email sent: ' + info.accepted);
                     res.send(info);
