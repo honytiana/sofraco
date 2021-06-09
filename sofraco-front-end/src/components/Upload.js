@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import '@coreui/coreui/dist/css/coreui.min.css';
+import '@coreui/coreui/dist/css/coreui.css';
 import {
     CContainer,
     CRow,
@@ -8,13 +8,20 @@ import {
     CInput,
     CCard,
     CCardHeader,
-    CAlert
+    CJumbotron,
+    CAlert,
+    CSpinner,
+    CToast,
+    CToastHeader,
+    CToastBody,
+    CToaster
 } from '@coreui/react';
 
 import queryString from 'query-string';
 import axios from 'axios';
 import Dropzone from 'react-dropzone';
 
+import '../styles/Upload.css';
 import config from '../config.json';
 
 class Upload extends Component {
@@ -23,13 +30,20 @@ class Upload extends Component {
         this.state = {
             company: '',
             location: props.location,
-            files: null
+            files: null,
+            loader: false,
+            toast: false,
+            messageToast: {}
         }
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.onChangeHandler = this.onChangeHandler.bind(this);
     }
 
     componentDidMount() {
+        this.setState({
+            toast: false,
+            messageToast: {}
+        });
         const location = this.state.location;
         const params = queryString.parse(location.search);
         axios.get(`${config.nodeUrl}/api/company/name/${params.name}`)
@@ -44,18 +58,37 @@ class Upload extends Component {
             });
     }
 
+    componentDidUpdate() {
+
+    }
+
     onSubmitHandler(event) {
         event.preventDefault();
+        this.setState({
+            loader: true
+        });
         const formData = new FormData();
         formData.append('file', this.state.files);
+        formData.append('user', '');
+        formData.append('company', this.state.company._id)
         axios.post(`${config.nodeUrl}/api/document/`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         }).then((res) => {
-            console.log(res);
+            this.setState({
+                toast: true,
+                messageToast: { header: 'success', message: 'Traitement terminé' }
+            });
         }).catch((err) => {
-            console.log(err);
+            this.setState({
+                toast: true,
+                messageToast: { header: 'error', message: err }
+            })
+        }).finally(() => {
+            this.setState({
+                loader: false,
+            });
         });
     }
 
@@ -94,16 +127,21 @@ class Upload extends Component {
                                         <div
                                             {...getRootProps()}
                                         >
-                                            <CCard>
-                                                <CCardHeader>
-                                                    <input
-                                                        {...getInputProps()}
-                                                        multiple={false}
-                                                        onChange={this.onChangeHandler}
-                                                    />
+                                            <CJumbotron>
+                                                <input
+                                                    {...getInputProps()}
+                                                    multiple={false}
+                                                    onChange={this.onChangeHandler}
+                                                />
                                                     Glissez et déposez un fichier ou cliquez ici
-                                                </CCardHeader>
-                                            </CCard>
+                                                {
+                                                    (this.state.files !== null) && (
+                                                        <CAlert color="info" >
+                                                            Le fichier que vous avez donné est {this.state.files.name}
+                                                        </CAlert>
+                                                    )
+                                                }
+                                            </CJumbotron>
                                         </div>
                                     )}
 
@@ -116,14 +154,36 @@ class Upload extends Component {
                             </CForm>
                         </CCol>
                     </CRow>
+                    {
+                        (this.state.loader === true) && (
+                            <div className="sofraco-loader">
+                                <CSpinner color="warning" variant="grow" />
+                            </div>
+                        )
+                    }
+                    {
+                        (this.state.toast === true &&
+                            this.state.messageToast &&
+                            this.state.messageToast.header &&
+                            this.state.messageToast.message) && (
+                            <CToaster position="bottom-right">
+                                <CToast
+                                    show={true}
+                                    fade={true}
+                                    autohide={5000}
+                                    color={this.state.messageToast.header}
+                                >
+                                    <CToastHeader closeButton>
+                                        {this.state.messageToast.header.toUpperCase()}
+                                    </CToastHeader>
+                                    <CToastBody>
+                                        {`${this.state.messageToast.message}`}
+                                </CToastBody>
+                                </CToast>
+                            </CToaster>
+                        )
+                    }
                 </CContainer>
-                {
-                    (this.state.files !== null) && (
-                        <CAlert color="info" closeButton >
-                            Le fichier que vous avez donné est {this.state.files.name}
-                        </CAlert>
-                    )
-                }
             </div>
         );
     }
