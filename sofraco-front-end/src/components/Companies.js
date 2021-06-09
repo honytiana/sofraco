@@ -25,7 +25,6 @@ class Companies extends Component {
     componentDidMount() {
         axios.get(`${config.nodeUrl}/api/company`)
             .then((data) => {
-                console.log(data);
                 this.setState({
                     companies: data.data
                 })
@@ -50,13 +49,19 @@ class Companies extends Component {
                     </CRow>
                     <CListGroup>
                         {
-                            this.state.companies.map((company, index) => {
-                                return (
-                                    <CListGroupItem href={`/upload?name=${company.name}`} color="primary" key={index}>
-                                        {company.name}
-                                    </CListGroupItem>
-                                )
-                            })
+                            (this.state.companies.length > 0) ? (
+                                this.state.companies.map((company, index) => {
+                                    return (
+                                        <CListGroupItem href={`/upload?name=${company.name}`} color="primary" key={index}>
+                                            {company.name}
+                                        </CListGroupItem>
+                                    )
+                                })
+                            ) : (
+                                <CListGroupItem color="primary" >
+                                    No companies
+                                </CListGroupItem>
+                            )
                         }
                     </CListGroup>
                 </CContainer>
