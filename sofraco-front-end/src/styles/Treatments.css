@@ -2,3 +2,13 @@
     margin: auto;
     text-align: center;
 }
+
+.sofraco-pagination, .sofraco-pagination ul, .sofraco-pagination li, .sofraco-pagination a {
+    color: #fd7a22 !important;
+}
+
+.sofraco-pagination .page-item.active a {
+    color: #fff !important;
+    background-color: #fd7a22 !important;
+    border-color: #fd7a22 !important;
+}

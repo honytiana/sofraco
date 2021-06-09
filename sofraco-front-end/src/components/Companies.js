@@ -43,7 +43,7 @@ class Companies extends Component {
                             <CCard>
                                 <CCardHeader>
                                     Liste des compagnies
-                            </CCardHeader>
+                                </CCardHeader>
                             </CCard>
                         </CCol>
                     </CRow>
@@ -52,13 +52,13 @@ class Companies extends Component {
                             (this.state.companies.length > 0) ? (
                                 this.state.companies.map((company, index) => {
                                     return (
-                                        <CListGroupItem href={`/upload?name=${company.name}`} color="primary" key={index}>
+                                        <CListGroupItem href={`/upload?name=${company.name}`} color="warning" key={index}>
                                             {company.name}
                                         </CListGroupItem>
                                     )
                                 })
                             ) : (
-                                <CListGroupItem color="primary" >
+                                <CListGroupItem color="warning" >
                                     No companies
                                 </CListGroupItem>
                             )

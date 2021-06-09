@@ -1,6 +1,11 @@
 import { Component } from 'react';
 import '@coreui/coreui/dist/css/coreui.min.css';
-// import {} from '@coreui/react';
+import {
+    CImg
+} from '@coreui/react';
+
+import sofraco_logo from '../assets/sofraco_logo.png';
+import '../styles/Home.css';
 
 class Home extends Component {
     constructor(props) {
@@ -13,8 +18,12 @@ class Home extends Component {
 
     render() {
         return (
-            <div>
-                HOME
+            <div className="sofraco-logo">
+                <CImg
+                    src={sofraco_logo}
+                    fluid
+                    className="mb-2"
+                />
             </div>
         );
     }

@@ -175,7 +175,7 @@ class Treatments extends Component {
                     itemsPerPage={5}
                     hover
                     sorter
-                    pagination
+                    pagination={{className: 'sofraco-pagination'}}
                     scopedSlots={{
                         'status':
                             (item) => (
@@ -190,7 +190,7 @@ class Treatments extends Component {
                                 return (
                                     <td className="py-2">
                                         <CButton
-                                            color="primary"
+                                            color="warning"
                                             variant="outline"
                                             shape="square"
                                             size="sm"
@@ -228,7 +228,7 @@ class Treatments extends Component {
                 />
                 <div className="sofraco-send-mail-button">
                     <CButton
-                        color="primary"
+                        color="warning"
                         size=""
                         className="m-2"
                         onClick={() => this.onSendMailHandler()}
@@ -239,7 +239,7 @@ class Treatments extends Component {
                 {
                     this.state.courtiersChecked.map((courtier, index) => {
                         return (
-                            <CAlert color="info" closeButton key={index}>
+                            <CAlert color="warning" closeButton key={index}>
                                 Le courtier coché est {courtier.email}
                             </CAlert>
                         )

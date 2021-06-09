@@ -13,6 +13,8 @@ import {
     CDropdownItem
 } from '@coreui/react';
 
+import '../styles/Navbar.css';
+
 class Navbar extends Component {
     constructor(props) {
         super(props);
@@ -25,7 +27,7 @@ class Navbar extends Component {
     render() {
         return (
             <div>
-                <CNavbar expandable="sm" color="info" >
+                <CNavbar expandable="sm" className="sofraco-navbar">
                     <CToggler inNavbar onClick={() => this.setState((state) => ({
                         isOpen: !state.isOpen
                     }))} />
