@@ -12,8 +12,7 @@ exports.createCompany = (req, res) => {
             res.status(200).json(data);
         })
         .catch((err) => {
-            res.status(500);
-            res.end(err);
+            throw err;
         });
 
 };
@@ -22,7 +21,7 @@ exports.getCompany = (req, res) => {
     console.log('get company');
     Company.findById(req.params.id, (err, doc) => {
         if (err) {
-            console.log(err);
+            throw err;
         } else {
             res.status(200).json(doc);
         }
@@ -32,7 +31,7 @@ exports.getCompany = (req, res) => {
 exports.getCompanyByName = (req, res) => {
     Company.findOne({ name: req.params.name }, (err, doc) => {
         if (err) {
-            console.log(err);
+            throw err;
         } else {
             res.status(200).json(doc);
         }
@@ -43,7 +42,7 @@ exports.getCompanies = (req, res) => {
     console.log('get company');
     Company.find((err, doc) => {
         if (err) {
-            console.log(err);
+            throw err;
         } else {
             res.status(200).json(doc);
         }

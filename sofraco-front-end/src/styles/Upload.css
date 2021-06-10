@@ -2,3 +2,20 @@
     margin: auto;
     text-align: center;
 }
+
+input[type=submit] {
+    margin: auto;
+    color: #fff;
+    background-color: #fd7a22;
+    width: 150px;
+}
+
+input[type=submit]:not(:hover) {
+    color: #fff;
+    background-color: #fd7a22;
+}
+
+input[type=submit]:hover {
+    color: #fff;
+    background-color: #fc7f2d;
+}

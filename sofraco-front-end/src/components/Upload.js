@@ -142,7 +142,7 @@ class Upload extends Component {
                                                     Glissez et déposez un fichier ou cliquez ici
                                                 {
                                                     (this.state.files !== null) && (
-                                                        <CAlert color="info" >
+                                                        <CAlert color="warning" >
                                                             Le fichier que vous avez donné est {this.state.files.name}
                                                         </CAlert>
                                                     )
