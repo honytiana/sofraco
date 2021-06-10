@@ -3,6 +3,11 @@
     text-align: center;
 }
 
+.sofraco-send-mail-button button {
+    color: #fff;
+    background-color: #fd7a22;
+}
+
 .sofraco-pagination, .sofraco-pagination ul, .sofraco-pagination li, .sofraco-pagination a {
     color: #fd7a22 !important;
 }
