@@ -18,7 +18,7 @@ services:
         depends_on:
             - mongodb-sofraco
         environment:
-            MONGO_URL: mongodb-sofraco://mongo-sofraco:27017
+            MONGO_URL: mongodb://mongodb-sofraco:27017/sofraco
         networks:
             - netbridges
 
