@@ -12,6 +12,7 @@ class App extends Component {
   }
 
   render() {
+    document.title = 'Sofraco';
     return (
       <div>
         <Navbar />
