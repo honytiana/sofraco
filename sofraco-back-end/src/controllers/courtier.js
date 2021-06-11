@@ -13,8 +13,7 @@ exports.createCourtier = (req, res) => {
         res.status(200).json(data);
     })
     .catch((err) => {
-        res.status(500);
-        res.end(err);
+        throw err;
     });
 
 };
@@ -23,7 +22,7 @@ exports.getCourtier = (req, res) => {
     console.log('get courtier');
     Courtier.findById(req.params.id, (err, doc) => {
         if (err) {
-            console.log(err);
+            throw err;
         } else {
             res.status(200).json(doc);
         }
@@ -34,7 +33,7 @@ exports.getCourtiers = (req, res) => {
     console.log('get courtier');
     Courtier.find((err, doc) => {
         if (err) {
-            console.log(err);
+            throw err;
         } else {
             res.status(200).json(doc);
         }

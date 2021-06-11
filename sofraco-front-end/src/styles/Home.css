@@ -1,4 +1,15 @@
-.sofraco-logo {
+/* .sofraco-logo {
     margin: auto;
     text-align: center;
+} */
+
+/* div {
+    position: relative;
+} */
+  
+.sofraco-logo {
+    position: absolute;
+    top: 30%;
+    left: 40%;
+    margin: auto;
 }

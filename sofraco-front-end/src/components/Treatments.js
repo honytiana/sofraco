@@ -29,7 +29,7 @@ class Treatments extends Component {
             courtiers: [],
             fields: [],
             toast: false,
-            messageToast: {}
+            messageToast: []
         }
         this.getBadge = this.getBadge.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
@@ -63,7 +63,7 @@ class Treatments extends Component {
                 }
             ],
             toast: false,
-            messageToast: {}
+            messageToast: []
         });
         axios.get(`${config.nodeUrl}/api/courtier`)
             .then((data) => {
@@ -145,20 +145,29 @@ class Treatments extends Component {
             };
             axios.post(`${config.nodeUrl}/api/mailer/`, options)
                 .then((data) => {
+                    let mt = this.state.messageToast.slice();
+                    mt.push({
+                        header: 'success', message: `Le mail à été envoyé aux courtiers ${data.data.accepted}`
+                    });
                     this.setState({
                         toast: true,
-                        messageToast: {
-                            header: 'success', message: `Le mail à été envoyé aux courtiers ${this.state.courtiersChecked.map((c) => {
-                                return c.email;
-                            })}`
-                        }
+                        messageToast: mt
                     });
                 }).catch((err) => {
+                    let mt = this.state.messageToast.slice();
+                    mt.push({ header: 'error', message: err });
                     this.setState({
                         toast: true,
-                        messageToast: { header: 'error', message: err }
+                        messageToast: mt
                     })
-                })
+                }).finally(() => {
+                    setTimeout(() => {
+                        this.setState({
+                            toast: false,
+                            messageToast: []
+                        });
+                    }, 10000);
+                });
         }
     }
 
@@ -175,7 +184,7 @@ class Treatments extends Component {
                     itemsPerPage={5}
                     hover
                     sorter
-                    pagination={{className: 'sofraco-pagination'}}
+                    pagination={{ className: 'sofraco-pagination' }}
                     scopedSlots={{
                         'status':
                             (item) => (
@@ -228,7 +237,6 @@ class Treatments extends Component {
                 />
                 <div className="sofraco-send-mail-button">
                     <CButton
-                        color="warning"
                         size=""
                         className="m-2"
                         onClick={() => this.onSendMailHandler()}
@@ -247,24 +255,27 @@ class Treatments extends Component {
                 }
                 {
                     (this.state.toast === true &&
-                        this.state.messageToast &&
-                        this.state.messageToast.header &&
-                        this.state.messageToast.message) && (
-                        <CToaster position="bottom-right">
-                            <CToast
-                                show={true}
-                                fade={true}
-                                autohide={5000}
-                                color={this.state.messageToast.header}
-                            >
-                                <CToastHeader closeButton>
-                                    {this.state.messageToast.header.toUpperCase()}
-                                </CToastHeader>
-                                <CToastBody>
-                                    {`${this.state.messageToast.message}`}
-                                </CToastBody>
-                            </CToast>
-                        </CToaster>
+                        this.state.messageToast.length > 0) && (
+                        this.state.messageToast.map((toast, index) => {
+                            return (
+                                <CToaster position="bottom-right" key={index}>
+                                    <CToast
+                                        show={true}
+                                        fade={true}
+                                        autohide={5000}
+                                        color={(toast.header === 'success') ? 'success' : 'danger'}
+                                    >
+                                        <CToastHeader closeButton>
+                                            {toast.header.toUpperCase()}
+                                        </CToastHeader>
+                                        <CToastBody>
+                                            {`${toast.message}`}
+                                        </CToastBody>
+                                    </CToast>
+                                </CToaster>
+                            )
+                        })
+
                     )
                 }
             </div>

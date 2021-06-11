@@ -4,21 +4,24 @@ const ejs = require('ejs');
 
 const config = require('../../config.json');
 
+
+const transporter = nodemailer.createTransport({
+    // host: 'smtp.gmail.com',
+    pool: true,
+    host: 'smtp-mail.outlook.com',
+    port: 587,
+    secure: false,
+    requireTLS: true,
+    auth: {
+        user: config.mailSender,
+        pass: config.mailPass
+    }
+});
+
 exports.postMail = (req, res) => {
     console.log('post mail');
     const user = req.body.user;
     const emailDestination = user.email;
-    const transporter = nodemailer.createTransport({
-        // host: 'smtp.gmail.com',
-        host: 'smtp-mail.outlook.com',
-        port: 587,
-        secure: false,
-        requireTLS: true,
-        auth: {
-            user: config.mailSender,
-            pass: config.mailPass
-        }
-    });
 
     const data = {
         firstName: user.firstName,

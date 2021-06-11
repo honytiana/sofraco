@@ -1,3 +1,7 @@
 .sofraco-navbar {
     background-color: #fd7a22;
 }
+
+.sofraco-navbar .collapse.navbar-collapse ul a {
+    color: #fff !important;
+}

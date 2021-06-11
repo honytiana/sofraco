@@ -26,7 +26,7 @@ exports.createDocument = async (req, res) => {
         })
         .catch((err) => {
             res.status(500);
-            res.end(err);
+            throw err;
         });
 
 };
