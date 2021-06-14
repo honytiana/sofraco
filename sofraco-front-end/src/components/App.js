@@ -2,6 +2,7 @@ import { Component } from 'react';
 import '@coreui/coreui/dist/css/coreui.min.css';
 import Navbar from './Navbar';
 import RouteComponent from './Routes';
+import Footer from './Footer';
 
 class App extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class App extends Component {
       <div>
         <Navbar />
         <RouteComponent />
+        <Footer />
       </div>
     );
   }
