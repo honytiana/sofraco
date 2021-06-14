@@ -6,15 +6,14 @@ const config = require('../../config.json');
 
 
 const transporter = nodemailer.createTransport({
-    // host: 'smtp.gmail.com',
     pool: true,
-    host: 'smtp-mail.outlook.com',
+    host: config.outlookHost,
     port: 587,
     secure: false,
     requireTLS: true,
     auth: {
-        user: config.mailSender,
-        pass: config.mailPass
+        user: config.mailSenderOutlook,
+        pass: config.mailPassOutlook
     }
 });
 
