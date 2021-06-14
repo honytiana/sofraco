@@ -17,7 +17,6 @@ import {
     CToaster
 } from '@coreui/react';
 
-import queryString from 'query-string';
 import axios from 'axios';
 import Dropzone from 'react-dropzone';
 
@@ -44,9 +43,8 @@ class Upload extends Component {
             toast: false,
             messageToast: {}
         });
-        const location = this.state.location;
-        const params = queryString.parse(location.search);
-        axios.get(`${config.nodeUrl}/api/company/name/${params.name}`)
+        const idCompany = this.props.company;
+        axios.get(`${config.nodeUrl}/api/company/${idCompany}`)
             .then((data) => {
                 this.setState({
                     company: data.data

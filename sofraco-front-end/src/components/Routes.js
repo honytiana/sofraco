@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // const Navbar = React.lazy(() => import('./Navbar'));
 const Home = React.lazy(() => import('./Home'));
 const Companies = React.lazy(() => import('./Companies'));
-const Upload = React.lazy(() => import('./Upload'));
+// const Upload = React.lazy(() => import('./Upload'));
 const Treatments = React.lazy(() => import('./Treatments'));
 
 const RouteComponent = () => {
@@ -15,7 +15,7 @@ const RouteComponent = () => {
             <Switch>
                 <Route exact path="/" component={Home} />
                 <Route path="/companies" component={Companies} />
-                <Route path="/upload" component={Upload} />
+                {/* <Route path="/upload" component={Upload} /> */}
                 <Route path="/treatments" component={Treatments} />
             </Switch>
         </Suspense>
