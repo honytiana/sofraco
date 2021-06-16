@@ -34,7 +34,7 @@ class Treatments extends Component {
         this.getBadge = this.getBadge.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
         this.onCheckHandler = this.onCheckHandler.bind(this);
-        this.updateChecked = this.updateChecked.bind(this);
+        this.onCheckAllHandler = this.onCheckAllHandler.bind(this);
         this.onSendMailHandler = this.onSendMailHandler.bind(this);
 
     }
@@ -42,15 +42,41 @@ class Treatments extends Component {
     componentDidMount() {
         this.setState({
             fields: [
-                { key: 'code', _style: { width: '10%' } },
-                { key: 'firstName', _style: { width: '20%' } },
-                { key: 'lastName', _style: { width: '20%' } },
-                { key: 'email', _style: { width: '20%' } },
-                { key: 'status', _style: { width: '10%' } },
+                {
+                    key: 'code',
+                    label: 'Code courtier',
+                    _style: { width: '10%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'firstName',
+                    label: 'Nom',
+                    _style: { width: '20%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'lastName',
+                    label: 'Prénom',
+                    _style: { width: '20%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'email',
+                    label: 'Email',
+                    _style: { width: '20%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'status',
+                    label: 'Status',
+                    _style: { width: '10%' },
+                    _classes: ['text-center']
+                },
                 {
                     key: 'check',
-                    label: '',
+                    label: <CInputCheckbox onChange={() => this.onCheckAllHandler()} />,
                     _style: { width: '10%' },
+                    _classes: ['text-center'],
                     sorter: false,
                     filter: false
                 },
@@ -58,6 +84,7 @@ class Treatments extends Component {
                     key: 'show_details',
                     label: '',
                     _style: { width: '10%' },
+                    _classes: ['text-center'],
                     sorter: false,
                     filter: false
                 }
@@ -67,8 +94,22 @@ class Treatments extends Component {
         });
         axios.get(`${config.nodeUrl}/api/courtier`)
             .then((data) => {
+                return data.data
+            })
+            .then((data) => {
+                const checked = data.map(element => {
+                    return {
+                        code: element.code,
+                        email: element.email,
+                        firstName: element.firstName,
+                        lastName: element.lastName,
+                        checked: false
+                    };
+                });
+                const courtiers = data;
                 this.setState({
-                    courtiers: data.data
+                    checked,
+                    courtiers
                 });
             })
             .catch((err) => {
@@ -100,74 +141,67 @@ class Treatments extends Component {
     }
 
     onCheckHandler(item, index) {
-        if (this.state.checked.length === 0) {
-            this.setState((state) => {
-                const checked = state.courtiers.map(element => {
-                    return { code: element.code, email: element.email, checked: false };
-                });
-                return { checked };
-            }, () => {
-                this.updateChecked(item)
-            });
-        } else {
-            this.updateChecked(item);
-        }
-    }
-
-    updateChecked(item) {
         this.state.checked.forEach((element, index) => {
             if (element.code === item.code) {
                 let newChecked = this.state.checked.slice();
                 newChecked[index].checked = !this.state.checked[index].checked;
-                let newCourtierChecked = this.state.courtiersChecked.slice();
-                let obj = { email: item.email, firstName: item.firstName, lastName: item.lastName };
-                if (newChecked[index].checked === true) {
-                    newCourtierChecked.push(obj);
-                } else {
-                    newCourtierChecked.splice(newCourtierChecked.indexOf(obj), 1);
-                }
                 this.setState({
                     checked: newChecked,
-                    courtiersChecked: newCourtierChecked
                 });
             }
         })
     }
 
+    onCheckAllHandler() {
+        this.state.checked.forEach((element, index) => {
+            let newChecked = this.state.checked.slice();
+            newChecked[index].checked = !this.state.checked[index].checked;
+            this.setState({
+                checked: newChecked
+            });
+        });
+        for (let element of document.getElementsByClassName('sofraco-checkbox')) {
+            element.checked = !element.checked;
+        }
+    }
+
     onSendMailHandler() {
-        for (let courtierChecked of this.state.courtiersChecked) {
-            const options = {
-                user: {
-                    email: courtierChecked.email,
-                    firstName: courtierChecked.firstName,
-                    lastName: courtierChecked.lastName
-                }
-            };
-            axios.post(`${config.nodeUrl}/api/mailer/`, options)
-                .then((data) => {
-                    let mt = this.state.messageToast.slice();
-                    mt.push({
-                        header: 'success', message: `Le mail à été envoyé aux courtiers ${data.data.accepted}`
-                    });
-                    this.setState({
-                        toast: true,
-                        messageToast: mt
-                    });
-                }).catch((err) => {
-                    let mt = this.state.messageToast.slice();
-                    mt.push({ header: 'error', message: err });
-                    this.setState({
-                        toast: true,
-                        messageToast: mt
-                    })
-                }).finally(() => {
-                    setTimeout(() => {
-                        this.setState({
-                            toast: false,
-                            messageToast: []
+        for (let courtier of this.state.checked) {
+            if (courtier.checked === true) {
+                const options = {
+                    user: {
+                        email: courtier.email,
+                        firstName: courtier.firstName,
+                        lastName: courtier.lastName
+                    }
+                };
+                axios.post(`${config.nodeUrl}/api/mailer/`, options)
+                    .then((data) => {
+                        let mt = this.state.messageToast.slice();
+                        mt.push({
+                            header: 'success', message: `Le mail à été envoyé aux courtiers ${data.data.accepted}`
                         });
-                    }, 10000);
-                });
+                        this.setState({
+                            toast: true,
+                            messageToast: mt
+                        });
+                    }).catch((err) => {
+                        let mt = this.state.messageToast.slice();
+                        mt.push({ header: 'error', message: err });
+                        this.setState({
+                            toast: true,
+                            messageToast: mt
+                        })
+                    }).finally(() => {
+                        setTimeout(() => {
+                            this.setState({
+                                toast: false,
+                                messageToast: []
+                            });
+                        }, 10000);
+                    });
+            }
+
         }
     }
 
@@ -179,8 +213,8 @@ class Treatments extends Component {
                     items={this.state.courtiers}
                     fields={this.state.fields}
                     columnFilter
-                    tableFilter
-                    itemsPerPageSelect
+                    tableFilter={{ label: 'Filtre', placeholder: 'Filtre' }}
+                    itemsPerPageSelect={{ label: 'Nombre de courtiers par page' }}
                     itemsPerPage={5}
                     hover
                     sorter
@@ -188,7 +222,7 @@ class Treatments extends Component {
                     scopedSlots={{
                         'status':
                             (item) => (
-                                <td>
+                                <td className="text-center" >
                                     <CBadge color={this.getBadge(item.status)}>
                                         {item.status}
                                     </CBadge>
@@ -205,7 +239,7 @@ class Treatments extends Component {
                                             size="sm"
                                             onClick={() => { this.toggleDetails(index) }}
                                         >
-                                            {this.state.details.includes(index) ? 'Hide' : 'Show'}
+                                            {this.state.details.includes(index) ? 'Cacher' : 'Afficher'}
                                         </CButton>
                                     </td>
                                 )
@@ -225,8 +259,8 @@ class Treatments extends Component {
                         'check':
                             (item, index) => {
                                 return (
-                                    <td>
-                                        <CInputCheckbox onChange={() => {
+                                    <td className="text-center" >
+                                        <CInputCheckbox className="sofraco-checkbox" onChange={() => {
                                             this.onCheckHandler(item, index)
                                         }} />
                                     </td>
@@ -241,16 +275,16 @@ class Treatments extends Component {
                         className="m-2"
                         onClick={() => this.onSendMailHandler()}
                     >
-                        Send mail
+                        Envoyer les emails
                 </CButton>
                 </div>
                 {
-                    this.state.courtiersChecked.map((courtier, index) => {
-                        return (
+                    this.state.checked.map((courtier, index) => {
+                        return ((courtier.checked === true) && (
                             <CAlert color="warning" closeButton key={index}>
                                 Le courtier coché est {courtier.email}
                             </CAlert>
-                        )
+                        ))
                     })
                 }
                 {
