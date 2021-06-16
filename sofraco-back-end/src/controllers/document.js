@@ -9,7 +9,20 @@ exports.createDocument = async (req, res) => {
     const file = req.file;
     const user = req.body.user;
     const company = req.body.company
-    const infos = await documentService.readExcel(file.path);
+    const paths = file.path.split('.');
+    const extension = paths[paths.length - 1];
+    let infos = null;
+    if (extension.toUpperCase() === 'XLSX') {
+        infos = await documentService.readExcel(file);
+    } else if (extension.toUpperCase() === 'PDF') {
+        infos = await documentService.readPdf(file);
+    } else if (extension.toUpperCase() === 'JPG' ||
+        extension.toUpperCase() === 'JPEG' ||
+        extension.toUpperCase() === 'PNG') {
+        infos = await documentService.readImage(file);
+    } else {
+        return;
+    }
     const document = new Document();
     document.name = file.filename;
     document.user = user;
