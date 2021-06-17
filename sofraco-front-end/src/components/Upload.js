@@ -68,7 +68,7 @@ class Upload extends Component {
         const formData = new FormData();
         formData.append('file', this.state.files);
         formData.append('user', '');
-        formData.append('company', this.state.company._id)
+        formData.append('company', this.state.company)
         axios.post(`${config.nodeUrl}/api/document/`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
