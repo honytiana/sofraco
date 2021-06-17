@@ -6,16 +6,16 @@
 input[type=submit] {
     margin: auto;
     color: #fff;
-    background-color: #fd7a22;
+    background-color: #ed7102;
     width: 150px;
 }
 
 input[type=submit]:not(:hover) {
     color: #fff;
-    background-color: #fd7a22;
+    background-color: #ed7102;
 }
 
 input[type=submit]:hover {
     color: #fff;
-    background-color: #fc7f2d;
+    background-color: #F39200;
 }

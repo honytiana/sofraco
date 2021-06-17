@@ -5,20 +5,20 @@
 
 .sofraco-send-mail-button button {
     color: #fff;
-    background-color: #fd7a22;
+    background-color: #ed7102;
 }
 
 .sofraco-send-mail-button button:hover, .sofraco-send-mail-button button:active {
     color: #fff;
-    background-color: #fc7f2d;
+    background-color: #F39200;
 }
 
 .sofraco-pagination, .sofraco-pagination ul, .sofraco-pagination li, .sofraco-pagination a {
-    color: #fd7a22 !important;
+    color: #ed7102 !important;
 }
 
 .sofraco-pagination .page-item.active a {
     color: #fff !important;
-    background-color: #fd7a22 !important;
-    border-color: #fd7a22 !important;
+    background-color: #ed7102 !important;
+    border-color: #ed7102 !important;
 }

@@ -3,6 +3,9 @@ import '@coreui/coreui/dist/css/coreui.min.css';
 import Navbar from './Navbar';
 import RouteComponent from './Routes';
 import Footer from './Footer';
+// import { CCard, CCardBody } from '@coreui/react';
+import '../styles/App.css';
+
 
 class App extends Component {
   constructor(props) {
@@ -15,7 +18,7 @@ class App extends Component {
   render() {
     document.title = 'Sofraco';
     return (
-      <div>
+      <div className="sofraco-root">
         <Navbar />
         <RouteComponent />
         <Footer />

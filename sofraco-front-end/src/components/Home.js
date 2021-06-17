@@ -4,7 +4,7 @@ import {
     CImg
 } from '@coreui/react';
 
-import sofraco_logo from '../assets/sofraco_logo_2.png';
+import sofraco_logo from '../assets/sofraco_logo.png';
 import '../styles/Home.css';
 
 class Home extends Component {
