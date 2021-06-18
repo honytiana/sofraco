@@ -10,7 +10,7 @@ const imageFileService = require('../services/document/imageFile');
 exports.createDocument = async (req, res) => {
     const file = req.file;
     const user = req.body.user;
-    const company = req.body.company
+    const company = JSON.parse(req.body.company);
     const paths = file.path.split('.');
     const extension = paths[paths.length - 1];
     let infos = null;

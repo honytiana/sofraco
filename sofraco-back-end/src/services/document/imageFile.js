@@ -17,7 +17,7 @@ exports.readImage = async (file) => {
     await worker.initialize();
     const { data: { text } } = await worker.recognize(file.path);
     const content = text;
-    fs.writeFile(path.join(__dirname, '..', '..', 'documents', 'texte', `${filename}.txt`), content, () => {
+    fs.writeFile(path.join(__dirname, '..', '..', '..', 'documents', 'texte', `${filename}.txt`), content, () => {
         console.log('Fichier créé');
     });
     return infos;

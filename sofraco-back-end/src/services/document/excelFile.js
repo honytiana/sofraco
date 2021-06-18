@@ -6,7 +6,7 @@ const fs = require('fs');
 exports.readExcelAPICIL = async (file) => {
     const filePath = file.path;
     const workbook = new ExcelJS.Workbook();
-    await workbook.xlsx.readFile(filePaht);
+    await workbook.xlsx.readFile(filePath);
 
     const worksheets = workbook.worksheets;
     let allRows = [];

@@ -17,7 +17,7 @@ exports.readPdfMETLIFE = (file) => {
         type: 'jpg',
         size: 1024,
         density: 600,
-        outputdir: path.join(__dirname, '..', '..', 'documents', 'temp'),
+        outputdir: path.join(__dirname, '..', '..', '..', 'documents', 'temp'),
     });
 
     converter.convert(file.path)

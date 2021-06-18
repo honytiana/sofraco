@@ -1,11 +1,14 @@
 const path = require('path');
+const fs = require('fs');
 
 const config = require('../../config.json');
 const Company = require('../models/company');
 
 exports.createCompany = (req, res) => {
     const data = req.body;
+    const file = req.file;
     const company = new Company(data);
+    company.logo = file.path;
     company.save()
         .then((data) => {
             console.log('Post company');
@@ -39,12 +42,21 @@ exports.getCompanyByName = (req, res) => {
 }
 
 exports.getCompanies = (req, res) => {
-    console.log('get company');
+    console.log('get companies');
     Company.find((err, doc) => {
         if (err) {
             throw err;
         } else {
-            res.status(200).json(doc);
+            let newDoc = [];
+            for (let c of doc) {
+                c.logo = fs.readFileSync(c.logo, {encoding: 'base64'});
+                newDoc.push(c);
+            }
+            res.status(200).json(newDoc);
         }
     });
+}
+
+exports.updateCompany = (req, res) => {
+    console.log('update')
 }
