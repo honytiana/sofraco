@@ -1,20 +1,6 @@
 .sofraco-logo {
     height: 100%;
-    /* margin: auto;
-    text-align: center;
-    vertical-align: middle; */
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
-/* div {
-    position: relative;
-} */
-  
-/* .sofraco-logo {
-    position: absolute;
-    top: 30%;
-    left: 40%;
-    margin: auto;
-} */

@@ -8,19 +8,26 @@ import {
     CListGroupItem,
     CCard,
     CCardHeader,
-    CCollapse
+    CCollapse,
+    CImg,
+    CAlert
 } from '@coreui/react';
+import CIcon from '@coreui/icons-react'
 import axios from 'axios';
 
 import config from '../config.json';
 import Upload from './Upload';
+import '../styles/Companies.css';
+
+
 
 class Companies extends Component {
     constructor(props) {
         super(props);
         this.state = {
             companies: [],
-            collapsed: []
+            collapsed: [],
+            logo: ''
         }
         this.toggle = this.toggle.bind(this);
 
@@ -58,45 +65,44 @@ class Companies extends Component {
     }
 
     render() {
+        const images = this.state.companies.map((companies) => {
+            return companies.logo
+        });
         return (
-            <div>
-                <CContainer fluid>
-                    <CRow>
-                        <CCol sm="12">
-                            <CCard>
-                                <CCardHeader>
-                                    Liste des compagnies
-                                </CCardHeader>
-                            </CCard>
-                        </CCol>
-                    </CRow>
-                    <CListGroup>
-                        {
-                            (this.state.companies.length > 0) ? (
-                                this.state.companies.map((company, index) => {
-                                    return (
-                                        <CCard key={`d${index}`}>
-                                            <CListGroupItem color="warning" key={`li${index}`} onClick={(e) => this.toggle(e, index)}>
-                                                {company.name}
-                                            </CListGroupItem>
-                                            <CCollapse
-                                                show={this.state.collapsed[index].collapse}
-                                                key={`co${index}`}
-                                            >
-                                                <Upload key={`upload${index}`} company={company._id} />
-                                            </CCollapse>
-                                        </CCard>
-                                    )
-                                })
-                            ) : (
-                                <CListGroupItem color="warning" >
-                                    No companies
-                                </CListGroupItem>
-                            )
-                        }
-                    </CListGroup>
-                </CContainer>
-            </div>
+            <CContainer fluid>
+                <CRow>
+                    <CCol sm="12">
+                        <CAlert className="sofraco-header">
+                            Liste des compagnies
+                        </CAlert>
+                    </CCol>
+                </CRow>
+                <CListGroup className="sofraco-companies-container">
+                    {
+                        (this.state.companies.length > 0) ? (
+                            this.state.companies.map((company, index) => {
+                                return (
+                                    <CCard key={`d${index}`} className="sofraco-company-container">
+                                        <CListGroupItem className="sofraco-list-companies" key={`li${index}`} onClick={(e) => this.toggle(e, index)}>
+                                            <CImg key={`img${index}`} src={`data:image/png;base64,${company.logo}`} fluid width={30} /> {company.name} <CIcon size="sm" name="cil-arrow-bottom" />
+                                        </CListGroupItem>
+                                        <CCollapse
+                                            show={this.state.collapsed[index].collapse}
+                                            key={`co${index}`}
+                                        >
+                                            <Upload key={`upload${index}`} company={company._id} />
+                                        </CCollapse>
+                                    </CCard>
+                                )
+                            })
+                        ) : (
+                            <CListGroupItem color="" >
+                                <p>No companies</p>
+                            </CListGroupItem>
+                        )
+                    }
+                </CListGroup>
+            </CContainer>
         );
     }
 }

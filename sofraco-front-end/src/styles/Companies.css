@@ -1,0 +1,20 @@
+.sofraco-header {
+    background-color: #F39200;
+    color: #fff;
+}
+
+.sofraco-list-companies {
+    background-color: #fff;
+    color: #000;
+    border-radius: 0 !important;
+}
+
+.sofraco-companies-container{
+    /* margin: auto; */
+}
+
+.sofraco-company-container {
+    width: 50%;
+    border-radius: 0 !important;
+}
+

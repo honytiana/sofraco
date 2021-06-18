@@ -18,7 +18,7 @@ class Home extends Component {
 
     render() {
         return (
-            <div className="sofraco-logo">
+            <div className="sofraco-logo" style={{minHeight: window.innerHeight - 50}}>
                 <CImg
                     src={sofraco_logo}
                     fluid

@@ -3,6 +3,10 @@
     text-align: center;
 }
 
+.sofraco-progress-bar .progress-bar{
+    background-color: #6F6F6E !important;
+}
+
 input[type=submit] {
     margin: auto;
     color: #fff;

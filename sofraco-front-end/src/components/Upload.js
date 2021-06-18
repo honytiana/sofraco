@@ -6,15 +6,14 @@ import {
     CCol,
     CForm,
     CInput,
-    CCard,
-    CCardHeader,
-    CJumbotron,
     CAlert,
     CSpinner,
     CToast,
     CToastHeader,
     CToastBody,
-    CToaster
+    CToaster,
+    CImg,
+    CProgress
 } from '@coreui/react';
 
 import axios from 'axios';
@@ -22,6 +21,7 @@ import Dropzone from 'react-dropzone';
 
 import '../styles/Upload.css';
 import config from '../config.json';
+import folder from '../assets/folder.png';
 
 class Upload extends Component {
     constructor(props) {
@@ -68,7 +68,7 @@ class Upload extends Component {
         const formData = new FormData();
         formData.append('file', this.state.files);
         formData.append('user', '');
-        formData.append('company', this.state.company)
+        formData.append('company', JSON.stringify(this.state.company));
         axios.post(`${config.nodeUrl}/api/document/`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -112,15 +112,6 @@ class Upload extends Component {
                 <CContainer fluid>
                     <CRow>
                         <CCol sm="12">
-                            <CCard>
-                                <CCardHeader>
-                                    Upload de documents pour la compagnie {this.state.company.name}
-                                </CCardHeader>
-                            </CCard>
-                        </CCol>
-                    </CRow>
-                    <CRow>
-                        <CCol sm="12">
                             <CForm action="" method="post" onSubmit={this.onSubmitHandler}>
                                 <Dropzone onDrop={(files) => {
                                     this.setState({
@@ -131,21 +122,21 @@ class Upload extends Component {
                                         <div
                                             {...getRootProps()}
                                         >
-                                            <CJumbotron>
-                                                <input
-                                                    {...getInputProps()}
-                                                    multiple={false}
-                                                    onChange={this.onChangeHandler}
-                                                />
-                                                    Glissez et déposez un fichier ou cliquez ici
-                                                {
-                                                    (this.state.files !== null) && (
-                                                        <CAlert color="warning" >
-                                                            Le fichier que vous avez donné est {this.state.files.name}
-                                                        </CAlert>
-                                                    )
-                                                }
-                                            </CJumbotron>
+                                            <input
+                                                {...getInputProps()}
+                                                multiple={false}
+                                                onChange={this.onChangeHandler}
+                                            />
+                                            {
+                                                (this.state.files !== null) ? (
+                                                    <CAlert >
+                                                        <CImg src={folder} fluid width={20} /> {this.state.files.name}
+                                                    </CAlert>
+                                                ) : (
+                                                    <CAlert>
+                                                        <CImg src={folder} fluid width={20} /> Glissez et déposez un fichier ou cliquez ici
+                                                    </CAlert>)
+                                            }
                                         </div>
                                     )}
 
@@ -161,7 +152,14 @@ class Upload extends Component {
                     {
                         (this.state.loader === true) && (
                             <div className="sofraco-loader">
-                                <CSpinner color="warning" variant="grow" />
+                                {/* <CSpinner color="warning" variant="grow" /> */}
+                                <CProgress
+                                    color="dark"
+                                    className="sofraco-progress-bar"
+                                    value={42}
+                                    showValue
+                                    className="mb-1 bg-white"
+                                />
                             </div>
                         )
                     }

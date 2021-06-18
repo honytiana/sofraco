@@ -11,7 +11,7 @@ class Footer extends Component {
     render() {
         return (
             <div>
-                <CFooter className="sofraco-footer" fixed>
+                <CFooter className="sofraco-footer" >
                     <div>Powered by SOFRACO</div>
                 </CFooter>
             </div>

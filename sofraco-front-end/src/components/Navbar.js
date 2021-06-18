@@ -26,34 +26,32 @@ class Navbar extends Component {
 
     render() {
         return (
-            <div>
-                <CNavbar expandable="sm" className="sofraco-navbar">
-                    <CToggler inNavbar onClick={() => this.setState((state) => ({
-                        isOpen: !state.isOpen
-                    }))} />
-                    <CNavbarBrand>
-                        Sofraco
+            <CNavbar expandable="sm" className="sofraco-navbar" fixed="top">
+                <CToggler inNavbar onClick={() => this.setState((state) => ({
+                    isOpen: !state.isOpen
+                }))} />
+                <CNavbarBrand>
+                    Sofraco
                     </CNavbarBrand>
-                    <CCollapse show={this.state.isOpen} navbar>
-                        <CNavbarNav>
-                            <CNavLink href='/' >Home</CNavLink>
-                            <CNavLink href='/companies'>Compagnies d'assurance</CNavLink>
-                            <CNavLink href='/treatments'>Traitements</CNavLink>
-                        </CNavbarNav>
-                        <CNavbarNav className="ml-auto">
-                            <CDropdown inNav >
-                                <CDropdownToggle color="primary">
-                                    User
+                <CCollapse show={this.state.isOpen} navbar>
+                    <CNavbarNav>
+                        <CNavLink href='/' >Home</CNavLink>
+                        <CNavLink href='/companies'>Compagnies d'assurance</CNavLink>
+                        <CNavLink href='/treatments'>Traitements</CNavLink>
+                    </CNavbarNav>
+                    <CNavbarNav className="ml-auto">
+                        <CDropdown inNav >
+                            <CDropdownToggle color="primary">
+                                User
                             </CDropdownToggle>
-                                <CDropdownMenu>
-                                    <CDropdownItem>Account</CDropdownItem>
-                                    <CDropdownItem>Settings</CDropdownItem>
-                                </CDropdownMenu>
-                            </CDropdown>
-                        </CNavbarNav>
-                    </CCollapse>
-                </CNavbar>
-            </div>
+                            <CDropdownMenu>
+                                <CDropdownItem>Account</CDropdownItem>
+                                <CDropdownItem>Settings</CDropdownItem>
+                            </CDropdownMenu>
+                        </CDropdown>
+                    </CNavbarNav>
+                </CCollapse>
+            </CNavbar>
         );
     }
 }

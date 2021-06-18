@@ -3,8 +3,8 @@ import '@coreui/coreui/dist/css/coreui.min.css';
 import Navbar from './Navbar';
 import RouteComponent from './Routes';
 import Footer from './Footer';
-// import { CCard, CCardBody } from '@coreui/react';
 import '../styles/App.css';
+import { CCard, CCardBody, CContainer } from '@coreui/react';
 
 
 class App extends Component {
@@ -18,11 +18,13 @@ class App extends Component {
   render() {
     document.title = 'Sofraco';
     return (
-      <div className="sofraco-root">
+      <CContainer className="sofraco-container" fluid >
         <Navbar />
-        <RouteComponent />
+        <div className="sofraco-root" style={{minHeight: window.innerHeight - 50}}>
+          <RouteComponent />
+        </div>
         <Footer />
-      </div>
+      </CContainer>
     );
   }
 }
