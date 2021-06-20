@@ -7,7 +7,6 @@ import {
     CForm,
     CInput,
     CAlert,
-    CSpinner,
     CToast,
     CToastHeader,
     CToastBody,
@@ -155,10 +154,9 @@ class Upload extends Component {
                                 {/* <CSpinner color="warning" variant="grow" /> */}
                                 <CProgress
                                     color="dark"
-                                    className="sofraco-progress-bar"
+                                    className="mb-1 bg-white sofraco-progress-bar"
                                     value={42}
                                     showValue
-                                    className="mb-1 bg-white"
                                 />
                             </div>
                         )

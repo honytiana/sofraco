@@ -7,7 +7,6 @@ import {
     CListGroup,
     CListGroupItem,
     CCard,
-    CCardHeader,
     CCollapse,
     CImg,
     CAlert

@@ -1,10 +1,11 @@
 import { Component } from 'react';
 import '@coreui/coreui/dist/css/coreui.min.css';
+import { CContainer } from '@coreui/react';
+
 import Navbar from './Navbar';
 import RouteComponent from './Routes';
 import Footer from './Footer';
 import '../styles/App.css';
-import { CCard, CCardBody, CContainer } from '@coreui/react';
 
 
 class App extends Component {
