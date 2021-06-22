@@ -6,7 +6,7 @@ const Tesseract = require('tesseract.js');
 const { createWorker } = require('tesseract.js');
 
 
-exports.readImage = async (file) => {
+exports.readImage = async (file, company) => {
 
     const filename = file.filename.split('.')[0];
     const worker = createWorker();
@@ -20,6 +20,49 @@ exports.readImage = async (file) => {
     fs.writeFile(path.join(__dirname, '..', '..', '..', 'documents', 'texte', `${filename}.txt`), content, () => {
         console.log('Fichier créé');
     });
+    switch (company.toUpperCase()) {
+        // case 'APICIL':
+        //     infos = await readImage(file);
+        //     break;
+        // case 'APREP':
+        //     infos = await readImage(file);
+        //     break;
+        // case 'AVIVA':
+        //     infos = await readImage(file);
+        //     break;
+        // case 'AVIVA SURCO':
+        //     infos = await readImage(file);
+        //     break;
+        // case 'CARDIF':
+        //     infos = await readImage(file);
+        //     break;
+        // case 'CBP FRANCE':
+        //     infos = await readImage(file);
+        //     break;
+        // case 'CEGEMA':
+        //     infos = await readImage(file);
+        //     break;
+        // case 'ERES':
+        //     infos = await readImage(file);
+        //     break;
+        // case 'GENERALI':
+        //     infos = await readImage(file);
+        //     break;
+        // case 'HODEVA':
+        //     infos = await readImage(file);
+        //     break;
+        // case 'METLIFE':
+        //     infos = await readImage(file);
+        //     break;
+        // case 'SWISSLIFE':
+        //     infos = await readImage(file);
+        //     break;
+        // case 'SWISSLIFE SURCO':
+        //     infos = await readImage(file);
+        //     break;
+        default:
+            console.log('Pas de compagnie correspondante');
+    }
     return infos;
 };
 
