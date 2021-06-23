@@ -29,6 +29,7 @@ exports.createDocument = async (req, res) => {
     document.name = file.filename;
     document.user = user;
     document.company = company._id;
+    document.companyName =  company.name;
     document.upload_date = Date.now();
     document.path = file.path;
     document.type = file.mimetype;
@@ -58,7 +59,7 @@ exports.getDocument = (req, res) => {
 }
 
 exports.getDocuments = (req, res) => {
-    console.log('get document');
+    console.log('get documents');
     Document.find((err, doc) => {
         if (err) {
             console.log(err);
