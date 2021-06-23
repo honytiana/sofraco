@@ -7,7 +7,8 @@ const config = require('../../../config.json');
 
 exports.create = async () => {
     const ocrInfos = await getOCRInfos();
-    await generateExcelMaster(ocrInfos);
+    const res = await generateExcelMaster(ocrInfos);
+    return res;
 };
 
 const getOCRInfos = async () => {
@@ -175,197 +176,168 @@ const getOCRAPICIL = (ocr) => {
                 dataCourtierOCR.datas.push(data);
             }
         }
-        infosOCR.push(dataCourtierOCR);
+        infosOCR.push({ company: 'APICIL', infosOCR: dataCourtierOCR });
     }
-    const result = { company: 'APICIL', infosOCR };
-    return result;
+    return infosOCR;
 
-}
-
-const getCompanyNames = async () => {
-    const res = await axios.get(`${config.nodeUrl}/api/company`);
-    const companies = res.data;
-    let names = [];
-    for (let company of companies) {
-        names.push(company.name);
-    }
-    return names;
 }
 
 const generateExcelMaster = async (ocrInfos) => {
-    // Workbook
-    for (let ocr of ocrInfos) {
-        let num = 1;
-        for (let element of ocr.infosOCR) {
-            // Worksheet
-            const workbook = new ExcelJS.Workbook();
-            workbook.addWorksheet('RECAP');
-            const workSheet = workbook.addWorksheet(ocr.company);
-            workSheet.properties.defaultColWidth = 20;
-
-            const row1 = workSheet.getRow(1);
-            row1.getCell('B').value = 'RELEVE';
-            row1.getCell('C').value = 'PRESCRIPTEUR';
-            row1.getCell('E').value = 'CODE STE';
-
-            const row2 = workSheet.getRow(2);
-            row2.getCell('B').value = element.headers.releve;
-            row2.getCell('C').value = element.headers.prescripteur;
-            row2.getCell('E').value = element.headers.codeSte;
-
-            const row3 = workSheet.getRow(3);
-            row3.getCell('B').value = 'ECHEANCE';
-            row3.getCell('C').value = new Date(element.headers.echeance);
-            row3.getCell('C').numFmt = 'mmm-yy';
-
-            const row4 = workSheet.getRow(4);
-            row4.getCell('A').value = 'CONTRAT JURIDIQUE';
-            row4.getCell('B').value = 'NO-ADHERENT';
-            row4.getCell('C').value = 'INTITULE';
-            row4.getCell('D').value = 'PRODUIT';
-            row4.getCell('E').value = '';
-            row4.getCell('F').value = 'EXER';
-            row4.getCell('G').value = 'MT COTISATIONS';
-            row4.getCell('H').value = 'TAUX';
-            row4.getCell('I').value = 'MT ECHEANCE';
-            row4.getCell('J').value = 'DEB CONTR.';
-            row4.getCell('K').value = 'FIN CONTR.';
-            row4.getCell('L').value = 'PRESC REMU';
-            row4.getCell('M').value = 'NOM PRESC REMU';
-            row4.getCell('N').value = 'PRENOM PRECR REMU';
-            row4.getCell('O').value = 'PERIODE';
-
-            let dataTri = { reprise: [], collective: [], individual: [] };
-            element.datas.forEach((e, index) => {
-                if (e.contrat === 'reprise') {
-                    dataTri.reprise.push(e);
+    let eM = [];
+    try {
+        for (let ocr of ocrInfos) {
+            for (let dataCourtierOCR of ocr) {
+                let excelMaster = {
+                    courtier: dataCourtierOCR.infosOCR.code,
+                    companies: [],
+                    create_date: new Date(),
+                    ocr: null,
+                    path: null,
+                    is_enabled: true
                 }
-            });
-            element.datas.forEach((e, index) => {
-                if (e.contrat === 'collective') {
-                    dataTri.collective.push(e);
+                const workbook = new ExcelJS.Workbook();
+                workbook.addWorksheet('RECAP');
+                const workSheet = workbook.addWorksheet(dataCourtierOCR.company);
+                excelMaster.companies.push(dataCourtierOCR.company);
+                workSheet.properties.defaultColWidth = 20;
+                if (dataCourtierOCR.company === 'APICIL') {
+                    createWorkSheetAPICIL(workSheet, dataCourtierOCR);
                 }
-            });
-            element.datas.forEach((e, index) => {
-                if (e.contrat === 'individual') {
-                    dataTri.individual.push(e);
-                }
-            });
 
-            let debut = 5;
-            let rowNumber = 5;
-            for (let data of dataTri.reprise) {
-                workSheet.getRow(rowNumber).getCell('A').value = data.contratJuridique;
-                workSheet.getRow(rowNumber).getCell('B').value = data.no_Adherent;
-                workSheet.getRow(rowNumber).getCell('C').value = data.intitule;
-                workSheet.getRow(rowNumber).getCell('D').value = data.produit;
-                workSheet.getRow(rowNumber).getCell('E').value = data.nombre;
-                workSheet.getRow(rowNumber).getCell('F').value = data.exer;
-                workSheet.getRow(rowNumber).getCell('G').value = parseFloat(data.mtCotisation);
-                workSheet.getRow(rowNumber).getCell('G').numFmt = '####,##0.00"€";\-####,##0.00"€"';
-                workSheet.getRow(rowNumber).getCell('H').value = data.taux;
-                workSheet.getRow(rowNumber).getCell('I').value = parseFloat(data.mtEcheance);
-                workSheet.getRow(rowNumber).getCell('I').numFmt = '####,##0.00"€";\-####,##0.00"€"';
-                workSheet.getRow(rowNumber).getCell('J').value = (data.debContr) ? new Date(data.debContr) : '';
-                workSheet.getRow(rowNumber).getCell('J').numFmt = 'dd/mm/yyyy';
-                workSheet.getRow(rowNumber).getCell('K').value = (data.finContr) ? new Date(data.finContr): '';
-                workSheet.getRow(rowNumber).getCell('K').numFmt = 'dd/mm/yyyy';
-                workSheet.getRow(rowNumber).getCell('L').value = data.prescRemu;
-                workSheet.getRow(rowNumber).getCell('M').value = data.nomPrescRemu;
-                workSheet.getRow(rowNumber).getCell('N').value = data.prenomPrescRemu;
-                workSheet.getRow(rowNumber).getCell('O').value = data.periode;
-                rowNumber++;
+                const excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'masterExcel', `excelMaster_${dataCourtierOCR.infosOCR.code}.xlsx`);
+                await workbook.xlsx.writeFile(excelPath);
+                excelMaster.path = excelPath;
+                eM.push(excelMaster);
             }
-            workSheet.getRow(rowNumber).getCell('H').value = 'TOTAL';
-            if (workSheet.getRow(rowNumber - 1).getCell('I').value !== '' ||
-                workSheet.getRow(rowNumber - 1).getCell('I').value !== 'MT ECHEANCE') {
-                workSheet.getRow(rowNumber).getCell('I').value = { formula: `SUM(I${debut}:I${rowNumber - 1})` };
-            } else {
-                workSheet.getRow(rowNumber).getCell('I').value = 0;
-            }
-            workSheet.getRow(rowNumber).getCell('I').numFmt = '###,##0.00"€";\-###,##0.00"€"';
-            const totalRepriseRowNumber = rowNumber;
-            rowNumber++;
-            rowNumber++;
-
-            debut = rowNumber;
-            for (let data of dataTri.collective) {
-                workSheet.getRow(rowNumber).getCell('A').value = data.contratJuridique;
-                workSheet.getRow(rowNumber).getCell('B').value = data.no_Adherent;
-                workSheet.getRow(rowNumber).getCell('C').value = data.intitule;
-                workSheet.getRow(rowNumber).getCell('D').value = data.produit;
-                workSheet.getRow(rowNumber).getCell('E').value = data.nombre;
-                workSheet.getRow(rowNumber).getCell('F').value = data.exer;
-                workSheet.getRow(rowNumber).getCell('G').value = parseFloat(data.mtCotisation);
-                workSheet.getRow(rowNumber).getCell('G').numFmt = '####,##0.00"€";\-####,##0.00"€"';
-                workSheet.getRow(rowNumber).getCell('H').value = data.taux;
-                workSheet.getRow(rowNumber).getCell('I').value = parseFloat(data.mtEcheance);
-                workSheet.getRow(rowNumber).getCell('I').numFmt = '####,##0.00"€";\-####,##0.00"€"';
-                workSheet.getRow(rowNumber).getCell('J').value = (data.debContr) ? new Date(data.debContr) : '';
-                workSheet.getRow(rowNumber).getCell('J').numFmt = 'dd/mm/yyyy';
-                workSheet.getRow(rowNumber).getCell('K').value = (data.finContr) ? new Date(data.finContr): '';
-                workSheet.getRow(rowNumber).getCell('K').numFmt = 'dd/mm/yyyy';
-                workSheet.getRow(rowNumber).getCell('L').value = data.prescRemu;
-                workSheet.getRow(rowNumber).getCell('M').value = data.nomPrescRemu;
-                workSheet.getRow(rowNumber).getCell('N').value = data.prenomPrescRemu;
-                workSheet.getRow(rowNumber).getCell('O').value = data.periode;
-                rowNumber++;
-            }
-
-            workSheet.getRow(rowNumber).getCell('H').value = 'TOTAL';
-            if (workSheet.getRow(rowNumber - 1).getCell('I').value !== '') {
-                workSheet.getRow(rowNumber).getCell('I').value = { formula: `SUM(I${debut}:I${rowNumber - 1})` };
-            } else {
-                workSheet.getRow(rowNumber).getCell('I').value = 0;
-            }
-            workSheet.getRow(rowNumber).getCell('I').numFmt = '####,##0.00"€";\-####,##0.00"€"';
-            const totalCollectiveRowNumber = rowNumber;
-            rowNumber++;
-            rowNumber++;
-
-            debut = rowNumber;
-            for (let data of dataTri.individual) {
-                workSheet.getRow(rowNumber).getCell('A').value = data.contratJuridique;
-                workSheet.getRow(rowNumber).getCell('B').value = data.no_Adherent;
-                workSheet.getRow(rowNumber).getCell('C').value = data.intitule;
-                workSheet.getRow(rowNumber).getCell('D').value = data.produit;
-                workSheet.getRow(rowNumber).getCell('E').value = data.nombre;
-                workSheet.getRow(rowNumber).getCell('F').value = data.exer;
-                workSheet.getRow(rowNumber).getCell('G').value = parseFloat(data.mtCotisation);
-                workSheet.getRow(rowNumber).getCell('G').numFmt = '####,##0.00"€";\-####,##0.00"€"';
-                workSheet.getRow(rowNumber).getCell('H').value = data.taux;
-                workSheet.getRow(rowNumber).getCell('I').value = parseFloat(data.mtEcheance);
-                workSheet.getRow(rowNumber).getCell('I').numFmt = '####,##0.00"€";\-####,##0.00"€"';
-                workSheet.getRow(rowNumber).getCell('J').value = (data.debContr) ? new Date(data.debContr) : '';
-                workSheet.getRow(rowNumber).getCell('J').numFmt = 'dd/mm/yyyy';
-                workSheet.getRow(rowNumber).getCell('K').value = (data.finContr) ? new Date(data.finContr): '';
-                workSheet.getRow(rowNumber).getCell('K').numFmt = 'dd/mm/yyyy';
-                workSheet.getRow(rowNumber).getCell('L').value = data.prescRemu;
-                workSheet.getRow(rowNumber).getCell('M').value = data.nomPrescRemu;
-                workSheet.getRow(rowNumber).getCell('N').value = data.prenomPrescRemu;
-                workSheet.getRow(rowNumber).getCell('O').value = data.periode;
-                rowNumber++;
-            }
-
-            workSheet.getRow(rowNumber).getCell('H').value = 'TOTAL';
-            if (workSheet.getRow(rowNumber - 1).getCell('I').value !== '') {
-                workSheet.getRow(rowNumber).getCell('I').value = { formula: `SUM(I${debut}:I${rowNumber - 1})` };
-            } else {
-                workSheet.getRow(rowNumber).getCell('I').value = 0;
-            }
-            workSheet.getRow(rowNumber).getCell('I').numFmt = '####,##0.00"€";\-####,##0.00"€"';
-            const totalIndividualRowNumber = rowNumber;
-            rowNumber++;
-            rowNumber++;
-
-
-            workSheet.getRow(rowNumber).getCell('H').value = 'TOTAL';
-            workSheet.getRow(rowNumber).getCell('I').value = { formula: `I${totalRepriseRowNumber}+I${totalCollectiveRowNumber}+I${totalIndividualRowNumber}` };
-            workSheet.getRow(rowNumber).getCell('I').numFmt = '####,##0.00"€";\-####,##0.00"€"';
-
-            await workbook.xlsx.writeFile(path.join(__dirname, '..', '..', '..', 'documents', 'masterExcel', `excelMaster_${element.code}.xlsx`));
-            num++;
         }
+
+        return { excelMasters: eM, message: 'Excel Master générés' };
+    } catch (err) {
+        return err;
     }
-    console.log('DONE');
+}
+
+const createWorkSheetAPICIL = (workSheet, dataCourtierOCR) => {
+    const row1 = workSheet.getRow(1);
+    row1.getCell('B').value = 'RELEVE';
+    row1.getCell('C').value = 'PRESCRIPTEUR';
+    row1.getCell('E').value = 'CODE STE';
+
+    const row2 = workSheet.getRow(2);
+    row2.getCell('B').value = dataCourtierOCR.infosOCR.headers.releve;
+    row2.getCell('C').value = dataCourtierOCR.infosOCR.headers.prescripteur;
+    row2.getCell('E').value = dataCourtierOCR.infosOCR.headers.codeSte;
+
+    const row3 = workSheet.getRow(3);
+    row3.getCell('B').value = 'ECHEANCE';
+    row3.getCell('C').value = new Date(dataCourtierOCR.infosOCR.headers.echeance);
+    row3.getCell('C').numFmt = 'mmm-yy';
+
+    const row4 = workSheet.getRow(4);
+    row4.getCell('A').value = 'CONTRAT JURIDIQUE';
+    row4.getCell('B').value = 'NO-ADHERENT';
+    row4.getCell('C').value = 'INTITULE';
+    row4.getCell('D').value = 'PRODUIT';
+    row4.getCell('E').value = '';
+    row4.getCell('F').value = 'EXER';
+    row4.getCell('G').value = 'MT COTISATIONS';
+    row4.getCell('H').value = 'TAUX';
+    row4.getCell('I').value = 'MT ECHEANCE';
+    row4.getCell('J').value = 'DEB CONTR.';
+    row4.getCell('K').value = 'FIN CONTR.';
+    row4.getCell('L').value = 'PRESC REMU';
+    row4.getCell('M').value = 'NOM PRESC REMU';
+    row4.getCell('N').value = 'PRENOM PRECR REMU';
+    row4.getCell('O').value = 'PERIODE';
+
+    let dataTri = { reprise: [], collective: [], individual: [] };
+    dataCourtierOCR.infosOCR.datas.forEach((e, index) => {
+        if (e.contrat === 'reprise') {
+            dataTri.reprise.push(e);
+        }
+    });
+    dataCourtierOCR.infosOCR.datas.forEach((e, index) => {
+        if (e.contrat === 'collective') {
+            dataTri.collective.push(e);
+        }
+    });
+    dataCourtierOCR.infosOCR.datas.forEach((e, index) => {
+        if (e.contrat === 'individual') {
+            dataTri.individual.push(e);
+        }
+    });
+
+    let debut = 5;
+    let rowNumber = 5;
+    createPaveAPICIL(workSheet, rowNumber, dataTri.reprise);
+
+    workSheet.getRow(rowNumber).getCell('H').value = 'TOTAL';
+    if (workSheet.getRow(rowNumber - 1).getCell('I').value !== '' ||
+        workSheet.getRow(rowNumber - 1).getCell('I').value !== 'MT ECHEANCE') {
+        workSheet.getRow(rowNumber).getCell('I').value = { formula: `SUM(I${debut}:I${rowNumber - 1})` };
+    } else {
+        workSheet.getRow(rowNumber).getCell('I').value = 0;
+    }
+    workSheet.getRow(rowNumber).getCell('I').numFmt = '###,##0.00"€";\-###,##0.00"€"';
+    const totalRepriseRowNumber = rowNumber;
+    rowNumber++;
+    rowNumber++;
+
+    debut = rowNumber;
+    createPaveAPICIL(workSheet, rowNumber, dataTri.collective);
+
+    workSheet.getRow(rowNumber).getCell('H').value = 'TOTAL';
+    if (workSheet.getRow(rowNumber - 1).getCell('I').value !== '') {
+        workSheet.getRow(rowNumber).getCell('I').value = { formula: `SUM(I${debut}:I${rowNumber - 1})` };
+    } else {
+        workSheet.getRow(rowNumber).getCell('I').value = 0;
+    }
+    workSheet.getRow(rowNumber).getCell('I').numFmt = '####,##0.00"€";\-####,##0.00"€"';
+    const totalCollectiveRowNumber = rowNumber;
+    rowNumber++;
+    rowNumber++;
+
+    debut = rowNumber;
+    createPaveAPICIL(workSheet, rowNumber, dataTri.individual);
+
+    workSheet.getRow(rowNumber).getCell('H').value = 'TOTAL';
+    if (workSheet.getRow(rowNumber - 1).getCell('I').value !== '') {
+        workSheet.getRow(rowNumber).getCell('I').value = { formula: `SUM(I${debut}:I${rowNumber - 1})` };
+    } else {
+        workSheet.getRow(rowNumber).getCell('I').value = 0;
+    }
+    workSheet.getRow(rowNumber).getCell('I').numFmt = '####,##0.00"€";\-####,##0.00"€"';
+    const totalIndividualRowNumber = rowNumber;
+    rowNumber++;
+    rowNumber++;
+
+    workSheet.getRow(rowNumber).getCell('H').value = 'TOTAL';
+    workSheet.getRow(rowNumber).getCell('I').value = { formula: `I${totalRepriseRowNumber}+I${totalCollectiveRowNumber}+I${totalIndividualRowNumber}` };
+    workSheet.getRow(rowNumber).getCell('I').numFmt = '####,##0.00"€";\-####,##0.00"€"';
+
+}
+
+const createPaveAPICIL = (workSheet, rowNumber, dataTri) => {
+    for (let data of dataTri) {
+        workSheet.getRow(rowNumber).getCell('A').value = data.contratJuridique;
+        workSheet.getRow(rowNumber).getCell('B').value = data.no_Adherent;
+        workSheet.getRow(rowNumber).getCell('C').value = data.intitule;
+        workSheet.getRow(rowNumber).getCell('D').value = data.produit;
+        workSheet.getRow(rowNumber).getCell('E').value = data.nombre;
+        workSheet.getRow(rowNumber).getCell('F').value = data.exer;
+        workSheet.getRow(rowNumber).getCell('G').value = parseFloat(data.mtCotisation);
+        workSheet.getRow(rowNumber).getCell('G').numFmt = '####,##0.00"€";\-####,##0.00"€"';
+        workSheet.getRow(rowNumber).getCell('H').value = data.taux;
+        workSheet.getRow(rowNumber).getCell('I').value = parseFloat(data.mtEcheance);
+        workSheet.getRow(rowNumber).getCell('I').numFmt = '####,##0.00"€";\-####,##0.00"€"';
+        workSheet.getRow(rowNumber).getCell('J').value = (data.debContr) ? new Date(data.debContr) : '';
+        workSheet.getRow(rowNumber).getCell('J').numFmt = 'dd/mm/yyyy';
+        workSheet.getRow(rowNumber).getCell('K').value = (data.finContr) ? new Date(data.finContr) : '';
+        workSheet.getRow(rowNumber).getCell('K').numFmt = 'dd/mm/yyyy';
+        workSheet.getRow(rowNumber).getCell('L').value = data.prescRemu;
+        workSheet.getRow(rowNumber).getCell('M').value = data.nomPrescRemu;
+        workSheet.getRow(rowNumber).getCell('N').value = data.prenomPrescRemu;
+        workSheet.getRow(rowNumber).getCell('O').value = data.periode;
+        rowNumber++;
+    }
 }

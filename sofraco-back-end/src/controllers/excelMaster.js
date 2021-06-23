@@ -5,18 +5,13 @@ const config = require('../../config.json');
 const ExcelMaster = require('../models/excelMaster');
 const excelMasterService = require('../services/excelMaster/excelMasterManagement');
 
-exports.createExcelMaster = (req, res) => {
-    // const data = req.body;
-    // const excelMaster = new ExcelMaster();
-    const data = excelMasterService.create();
-    // excelMaster.save()
-    //     .then((data) => {
-    //         console.log('Post excelMaster');
-    res.status(200).json('');
-    //     })
-    //     .catch((err) => {
-    //         throw err;
-    //     });
+exports.createExcelMaster = async (req, res) => {
+    const message = await excelMasterService.create();
+    if (message.excelMasters && message.message) {
+        res.status(200).json({ message: message.message, excelMasters: message.excelMasters });
+    } else {
+        res.status(500).end(message);
+    }
 
 };
 
