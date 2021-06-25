@@ -4,6 +4,7 @@ const ExcelJS = require('exceljs');
 
 const config = require('../../../config.json');
 const excelMasterAPICIL = require('./excelMasterAPICIL');
+const excelMasterMETLIFE = require('./excelMasterMETLIFE');
 
 
 exports.create = async () => {
@@ -50,9 +51,9 @@ const getOCRInfos = async () => {
             // case 'HODEVA':
             //     infos = await getOCRAPICIL(file);
             //     break;
-            // case 'METLIFE':
-            //     infos = await getOCRAPICIL(file);
-            //     break;
+            case 'METLIFE':
+                infos.push(excelMasterMETLIFE.getOCRMETLIFE(ocr));
+                break;
             // case 'SWISSLIFE':
             //     infos = await getOCRAPICIL(file);
             //     break;
@@ -73,7 +74,7 @@ const generateExcelMaster = async (ocrInfos) => {
         for (let ocr of ocrInfos) {
             for (let dataCourtierOCR of ocr) {
                 let excelMaster = {
-                    courtier: dataCourtierOCR.infosOCR.code,
+                    courtier: (dataCourtierOCR.company === 'APICIL') ? dataCourtierOCR.infosOCR.code : '',
                     companies: [],
                     create_date: new Date(),
                     ocr: null,
@@ -87,6 +88,9 @@ const generateExcelMaster = async (ocrInfos) => {
                 workSheet.properties.defaultColWidth = 20;
                 if (dataCourtierOCR.company === 'APICIL') {
                     excelMasterAPICIL.createWorkSheetAPICIL(workSheet, dataCourtierOCR);
+                }
+                if (dataCourtierOCR.company === 'METLIFE') {
+                    excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, dataCourtierOCR);
                 }
 
                 const excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'masterExcel', `excelMaster_${dataCourtierOCR.infosOCR.code}.xlsx`);
