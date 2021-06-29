@@ -93,7 +93,7 @@ const generateExcelMaster = async (ocrInfos) => {
                     excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, dataCourtierOCR);
                 }
 
-                const excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'masterExcel', `excelMaster_${dataCourtierOCR.infosOCR.code}.xlsx`);
+                const excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'masterExcel', `Commissions${new Date().getMonth()}${new Date().getYear()}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
                 await workbook.xlsx.writeFile(excelPath);
                 excelMaster.path = excelPath;
                 eM.push(excelMaster);

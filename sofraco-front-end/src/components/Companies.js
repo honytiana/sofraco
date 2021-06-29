@@ -4,14 +4,13 @@ import {
     CRow,
     CCol,
     CContainer,
-    CListGroup,
-    CListGroupItem,
-    CCard,
     CCollapse,
     CImg,
-    CAlert
+    CAlert,
+    CDataTable,
+    CButton,
+    CCardBody
 } from '@coreui/react';
-import CIcon from '@coreui/icons-react'
 import axios from 'axios';
 
 import config from '../config.json';
@@ -24,15 +23,46 @@ class Companies extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            details: [],
             companies: [],
             collapsed: [],
-            logo: ''
+            logo: '',
+            fields: [],
+            toast: false,
+            messageToast: {}
         }
         this.toggle = this.toggle.bind(this);
 
     }
 
     componentDidMount() {
+        this.setState({
+            fields: [
+                {
+                    key: 'logo',
+                    label: '',
+                    _style: { width: '20%' },
+                    _classes: ['text-center'],
+                    sorter: false,
+                    filter: false
+                },
+                {
+                    key: 'company',
+                    label: '',
+                    _style: { width: '70%' },
+                    _classes: ['text-center'],
+                    sorter: true
+                },
+                {
+                    key: 'show_details',
+                    label: '',
+                    _style: { width: '10%' },
+                    _classes: ['text-center'],
+                    sorter: false,
+                    filter: false
+                }
+            ]
+        });
         axios.get(`${config.nodeUrl}/api/company`)
             .then((data) => {
                 return data.data
@@ -63,10 +93,51 @@ class Companies extends Component {
         e.preventDefault();
     }
 
-    render() {
-        const images = this.state.companies.map((companies) => {
-            return companies.logo
+    toggleDetails(index) {
+        const position = this.state.details.indexOf(index)
+        let newDetails = this.state.details.slice()
+        if (position !== -1) {
+            newDetails.splice(position, 1)
+        } else {
+            newDetails = [...this.state.details, index]
+        }
+        this.setState({
+            details: newDetails
+        })
+    }
+
+    launchTreatments() {
+        axios.post(`${config.nodeUrl}/api/document`, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then((res) => {
+            this.setState({
+                toast: true,
+                messageToast: { header: 'success', message: 'Traitement terminé' }
+            });
+        }).catch((err) => {
+            this.setState({
+                toast: true,
+                messageToast: { header: 'error', message: err }
+            })
+        }).finally(() => {
+            this.setState({
+                loader: false
+            });
+            setTimeout(() => {
+                this.setState({
+                    toast: false,
+                    messageToast: {}
+                });
+            }, 6000);
         });
+    }
+
+    render() {
+        // const images = this.state.companies.map((companies) => {
+        //     return companies.logo
+        // });
         return (
             <CContainer fluid>
                 <CRow>
@@ -76,31 +147,65 @@ class Companies extends Component {
                         </CAlert>
                     </CCol>
                 </CRow>
-                <CListGroup className="sofraco-companies-container">
-                    {
-                        (this.state.companies.length > 0) ? (
-                            this.state.companies.map((company, index) => {
+                <CDataTable
+                    items={this.state.companies}
+                    fields={this.state.fields}
+                    tableFilter={{ label: 'Filtre', placeholder: 'Filtre' }}
+                    itemsPerPageSelect={{ label: 'Nombre de compagnies par page' }}
+                    itemsPerPage={10}
+                    hover
+                    sorter
+                    pagination={{ className: 'sofraco-pagination' }}
+                    scopedSlots={{
+                        'logo':
+                            (item, index) => {
                                 return (
-                                    <CCard key={`d${index}`} className="sofraco-company-container">
-                                        <CListGroupItem className="sofraco-list-companies" key={`li${index}`} onClick={(e) => this.toggle(e, index)}>
-                                            <CImg key={`img${index}`} src={`data:image/png;base64,${company.logo}`} fluid width={30} /> {company.name} <CIcon size="sm" name="cil-arrow-bottom" />
-                                        </CListGroupItem>
-                                        <CCollapse
-                                            show={this.state.collapsed[index].collapse}
-                                            key={`co${index}`}
-                                        >
-                                            <Upload key={`upload${index}`} company={company._id} />
-                                        </CCollapse>
-                                    </CCard>
+                                    <td>
+                                        <CImg src={`data:image/png;base64,${item.logo}`} fluid width={40} />
+                                    </td>
                                 )
-                            })
-                        ) : (
-                            <CListGroupItem color="" >
-                                <p>No companies</p>
-                            </CListGroupItem>
-                        )
+                            },
+                        'company':
+                            (item, index) => {
+                                return (
+                                    <td>
+                                        {item.name}
+                                    </td>
+                                )
+                            },
+                        'show_details':
+                            (item, index) => {
+                                return (
+                                    <td className="py-2">
+                                        <CButton
+                                            color="warning"
+                                            variant="outline"
+                                            shape="square"
+                                            size="sm"
+                                            onClick={() => { this.toggleDetails(index) }}
+                                        >
+                                            {this.state.details.includes(index) ? 'Cacher' : 'Afficher'}
+                                        </CButton>
+                                    </td>
+                                )
+                            },
+                        'details':
+                            (item, index) => {
+                                return (
+                                    <CCollapse show={this.state.details.includes(index)}>
+                                        <CCardBody>
+                                            <Upload company={item._id} companyName={item.name} />
+                                        </CCardBody>
+                                    </CCollapse>
+                                )
+                            },
                     }
-                </CListGroup>
+                    }
+                />
+                <div>
+                    <CButton className="sofraco-button" onClick={() => { this.launchTreatments() }}>Traiter les fichiers</CButton>
+                </div>
+
             </CContainer>
         );
     }

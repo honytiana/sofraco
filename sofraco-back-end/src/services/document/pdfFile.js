@@ -9,10 +9,15 @@ const { createWorker } = require('tesseract.js');
 const { exec, execSync } = require('child_process');
 
 const documentMETLIFE = require('./documentMETLIFE');
+const easyOCR = require('../easyOCR/easyOCR');
 
 
 exports.readPdf = async (file, company) => {
-    const filename = file.filename.split('.')[0];
+    let infos = null;
+    const filePath = file;
+    const fileNameWithExtensionArr = filePath.split('/');
+    const fileNameWithExtension = fileNameWithExtensionArr[fileNameWithExtensionArr.length - 1];
+    const filename = fileNameWithExtension.split('.')[0];
     let converter = new Pdf2Img();
 
     converter.setOptions({
@@ -24,35 +29,40 @@ exports.readPdf = async (file, company) => {
 
     const data = await converter.convert(file.path);
     const message = data.message;
-    let infos = null;
     let filesPaths = [];
     for (let image of message) {
+        const filename = image.name.split('.')[0];
+        const nameA = filename.split('_');
+        const numero = nameA[nameA.length - 1];
         let time = 0;
         const timeout = setInterval(() => {
             time++;
         }, 1000);
-        const img = await Jimp.read(image.path);
-        img.contrast(0.5);
-        const pathImage = `${image.path.split('.')[0]}_edit.png`;
-        await img.writeAsync(pathImage);
-        const finalFilePath = path.join(__dirname, '..', '..', '..', 'documents', 'texte', `${image.name.split('.')[0]}`);
-        try {
-            execSync(`tesseract ${pathImage} ${finalFilePath}`);
-            console.log(`Temps de traitement : ${time}`);
-            clearInterval(timeout);
-            filesPaths.push(`${finalFilePath}.txt`);
 
-        } catch (err) {
-            console.log(err);
-            console.log(`Temps de traitement : ${time}`);
-            clearInterval(timeout);
+        if (numero === '1' || numero === '3' || numero === '4') {
+            // const img = await Jimp.read(image.path);
+            // img.contrast(0.5);
+            // const pathImage = `${image.path.split('.')[0]}_edit.png`;
+            // await img.writeAsync(pathImage);
+            const destFullPath = path.join(__dirname, '..', '..', '..', 'documents', 'texte', `${image.name.split('.')[0]}`);
+            try {
+                if (numero === '1') {
+                    execSync(`tesseract ${image.path} ${destFullPath}`);
+                } else {
+                    easyOCR(image.path, destFullPath)
+                }
+                console.log(`Temps de traitement : ${time}`);
+                clearInterval(timeout);
+                filesPaths.push(`${destFullPath}.txt`);
+
+            } catch (err) {
+                console.log(err);
+                console.log(`Temps de traitement : ${time}`);
+                clearInterval(timeout);
+            }
         }
+
     }
-    // filesPaths = [
-    //     '/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/texte/METLIFE_13_16_1.txt',
-    //     '/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/texte/METLIFE_13_16_2.txt',
-    //     '/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/texte/METLIFE_13_16_3.txt',
-    //     '/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/texte/METLIFE_13_16_4.txt']
     switch (company.toUpperCase()) {
         // case 'APREP':
         //     infos = await readPdfMETLIFE(file);

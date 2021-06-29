@@ -8,7 +8,10 @@ const { createWorker } = require('tesseract.js');
 
 exports.readImage = async (file, company) => {
 
-    const filename = file.filename.split('.')[0];
+    const filePath = file;
+    const fileNameWithExtensionArr = filePath.split('/');
+    const fileNameWithExtension = fileNameWithExtensionArr[fileNameWithExtensionArr.length - 1];
+    const filename = fileNameWithExtension.split('.')[0];
     const worker = createWorker();
     let infos = { collective: [], individual: [], totals: { collective: '', individual: '', general: '' } };
 

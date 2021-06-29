@@ -45,6 +45,7 @@ exports.readPdfMETLIFE = (filesPaths) => {
                 return element.match(/Report solde précédent.+/)
             });
             reportSoldePrecedent = reportSoldePrecedent[0].split(':')[1].trim();
+            reportSoldePrecedent = reportSoldePrecedent.split('€')[0].trim();
 
             nombrePolicesSurLaPeriode = data.filter((element) => {
                 return element.match(/Nombre de polices sur la période.+/)
@@ -55,31 +56,37 @@ exports.readPdfMETLIFE = (filesPaths) => {
                 return element.match(/Total des primes encaissées sur la période.+/)
             });
             primesEncaisseesSurLaPeriode = primesEncaisseesSurLaPeriode[0].split(':')[1].trim();
+            primesEncaisseesSurLaPeriode = primesEncaisseesSurLaPeriode.split('€')[0].trim();
 
             stCommissionsCalculeesSurLaPeriode = data.filter((element) => {
                 return element.match(/.+commissions calculées sur la période.+/)
             });
             stCommissionsCalculeesSurLaPeriode = stCommissionsCalculeesSurLaPeriode[0].split(':')[1].trim();
+            stCommissionsCalculeesSurLaPeriode = stCommissionsCalculeesSurLaPeriode.split('€')[0].trim();
 
             stCommissionsReprisesSurLaPeriode = data.filter((element) => {
                 return element.match(/.+commissions reprises sur la période.+/)
             });
             stCommissionsReprisesSurLaPeriode = stCommissionsReprisesSurLaPeriode[0].split(':')[1].trim();
+            stCommissionsReprisesSurLaPeriode = stCommissionsReprisesSurLaPeriode.split('€')[0].trim();
 
             stCommissionsDeduitesSurLaPeriode = data.filter((element) => {
                 return element.match(/.+commissions déduites sur la période.+/)
             });
             stCommissionsDeduitesSurLaPeriode = stCommissionsDeduitesSurLaPeriode[0].split(':')[1].trim();
+            stCommissionsDeduitesSurLaPeriode = stCommissionsDeduitesSurLaPeriode.split('€')[0].trim();
 
             stOperationsDiversesSurLaPeriode = data.filter((element) => {
                 return element.match(/.+opérations diverses sur la période.+/)
             });
             stOperationsDiversesSurLaPeriode = stOperationsDiversesSurLaPeriode[0].split(':')[1].trim();
+            stOperationsDiversesSurLaPeriode = stOperationsDiversesSurLaPeriode.split('€')[0].trim();
 
             totalCommissionsDues = data.filter((element) => {
                 return element.match(/.+commissions dues.+/)
             });
             totalCommissionsDues = totalCommissionsDues[0].split(':')[1].trim();
+            totalCommissionsDues = totalCommissionsDues[0].split('€')[0].trim();
             syntheseDesCommissions = {
                 periodeEncaissement,
                 codeApporteurBeneficiaireCommissions,
@@ -96,84 +103,185 @@ exports.readPdfMETLIFE = (filesPaths) => {
             infos.syntheseDesCommissions = syntheseDesCommissions;
         }
         if (numero === '3' || numero === '4') {
-            let details = [];
-            data.forEach((element, index) => {
-                if (index > 3) {
-                    element = element.replace('$', 'S');
-                    element = (!element.match(/Sous-total/)) ? element.replace(/[_-]/, ' ') : element;
-                    elemeny = element.replace(/[=|]/, ' ')
-                    const e = element.split(/\s+/);
-                    details.push(e);
-                }
+            const indexMontant = data.lastIndexOf('Montant');
+            const indexLastUtil = data.lastIndexOf('#WiEs');
+            const details = data.filter((d, index) => {
+                return index > indexMontant && index < indexLastUtil;
             });
             let newDetails = [];
-            let content = { ligne1: [], ligne2: [], ligne3: [], ligne4: [] };
-            const detailLength = details.length;
-            for (let i = 0; i < detailLength / 4; i++) {
-                let d = details;
-                d.forEach((element, index) => {
-                    if (details.length > 4) {
-                        if (index === 0) {
-                            content.ligne1 = element;
-                        }
-                        if (index === 1) {
-                            content.ligne2 = element;
-                        }
-                        if (index === 2) {
-                            content.ligne3 = element;
-                        }
-                        if (index === 3) {
-                            content.ligne4 = element;
-                        };
-                        if (content.ligne1.length > 0 && content.ligne2.length > 0 && content.ligne3.length > 0 && content.ligne4.length > 0) {
-                            details.splice(0, 4);
-                            newDetails.push(content);
-                            content = { ligne1: [], ligne2: [], ligne3: [], ligne4: [] };
-                            d = details;
-                        }
-                    }
-                })
+            const maxI = details.length / 4;
+            for (let i = 0; i < maxI; i++) {
+                if (details.length > 0) {
+                    const d = details.slice(0, reIndexOf(details, /Sous-total/) + 2);
+                    details.splice(0, reIndexOf(details, /Sous-total/) + 2);
+                    newDetails.push(d);
+                } else {
+                    break;
+                }
             }
 
             newDetails.forEach((element, index) => {
-                const police = element.ligne1[reIndexOf(element.ligne1, /.*S\d.+/)] || element.ligne1[0];
+                let i = 0;
+                const police = element[0];
+                element.splice(0, 1);
 
-                const assure = `${element.ligne1[1]} ${element.ligne1[2]} ${element.ligne2[0]}`;
+                let fractionnement = '';
+                if (reIndexOf(element, /mensuel/i) > 0 ||
+                    reIndexOf(element, /men.*/i) > 0 ||
+                    reIndexOf(element, /ncn.*/i) > 0 ||
+                    reIndexOf(element, /nen.*/i) > 0) {
+                    fractionnement = 'Mensuel';
+                    if (reIndexOf(element, /mensuel/i) > 0) {
+                        i = reIndexOf(element, /mensuel/i);
+                    } else if (reIndexOf(element, /men.*/i) > 0) {
+                        i = reIndexOf(element, /men.*/i);
+                    } else if (reIndexOf(element, /ncn.*/i) > 0) {
+                        i = reIndexOf(element, /ncn.*/i);
+                    } else if (reIndexOf(element, /nen.*/i) > 0) {
+                        i = reIndexOf(element, /nen.*/i);
+                    }
+                    element.splice(i, 1);
+                }
+                if (reIndexOf(element, /annuel*/i) > 0 ||
+                    reIndexOf(element, /annu.*/i) > 0 ||
+                    reIndexOf(element, /annucl/i) > 0) {
+                    fractionnement = 'Annuel';
+                    if (reIndexOf(element, /annuel*/i) > 0) {
+                        i = reIndexOf(element, /annuel*/i);
+                    } else if (reIndexOf(element, /annu.*/i) > 0) {
+                        i = reIndexOf(element, /annu.*/i);
+                    } else if (reIndexOf(element, /annucl/i) > 0) {
+                        i = reIndexOf(element, /annucl/i);
+                    }
+                    element.splice(i, 1);
+                }
 
-                const produit = `${element.ligne1[3]} ${element.ligne2[1]} ${element.ligne2[2]} ${element.ligne3[0]} ${element.ligne3.length > 1 ? element.ligne3[1] : ''}`;
+                let etat = '';
+                if (reIndexOf(element, /sold.*/) > 0 || reIndexOf(element, /soid.*/) > 0) {
+                    etat = 'soldée';
+                }
+                if (reIndexOf(element, /sold.*/) > 0) {
+                    element.splice(reIndexOf(element, /sold.*/), 1);
+                } else if(reIndexOf(element, /soid.*/) > 0) {
+                    element.splice(reIndexOf(element, /soid.*/), 1);
+                }
 
-                const fractionnement = element.ligne1[reIndexOf(element.ligne1, /annuel/i)] ||
-                    element.ligne1[reIndexOf(element.ligne1, /mensuel/i)];
+                let mode = '';
+                if (reIndexOf(element, /escompté/i) > 0 ||
+                    reIndexOf(element, /escamp.*/i) > 0 ||
+                    reIndexOf(element, /escom.*/i) > 0 ||
+                    reIndexOf(element, /esc.*/i) > 0) {
+                    mode = 'escompté';
+                    if (reIndexOf(element, /escompté/i) > 0) {
+                        i = reIndexOf(element, /escompté/i);
+                    } else if (reIndexOf(element, /escamp.*/i) > 0) {
+                        i = reIndexOf(element, /escamp.*/i);
+                    } else if (reIndexOf(element, /escom.*/i) > 0) {
+                        i = reIndexOf(element, /escom.*/i);
+                    } else if (reIndexOf(element, /esc.*/i) > 0) {
+                        i = reIndexOf(element, /esc.*/i);
+                    }
+                    element.splice(i, 1);
+                }
+                if (reIndexOf(element, /linéaire/i) > 0 || reIndexOf(element, /lin.*/i) > 0) {
+                    mode = 'linéaire';
+                    if (reIndexOf(element, /linéaire/i) > 0) {
+                        i = reIndexOf(element, /linéaire/i);
+                    } else if (reIndexOf(element, /lin.*/i) > 0) {
+                        i = reIndexOf(element, /lin.*/i);
+                    }
+                    element.splice(i, 1);
+                }
 
-                const periode = `${element.ligne1[element.ligne1.indexOf('du')]} ${element.ligne1[reIndexOf(element.ligne1, /^.*\d{1,2}[/]\d{1,2}[/]\d{1,2}.*$/)] ||
-                    element.ligne1[element.ligne1.indexOf('du') + 1]} ${element.ligne2[element.ligne2.lenght - 1]}`;
 
-                const etat = element.ligne1[reIndexOf(element.ligne1, /sold.*/)];
+                let periode = '';
+                const du = element[reIndexOf(element, /du \d{1,2}[/]\d{1,2}[/]\d{1,4}/)] ||
+                element[reIndexOf(element, /du \d{1,2}[/]\d+/)] ||
+                element[reIndexOf(element, /\d{1,2}[/]\d{1,2}[/]\d{1,4}/)] ||
+                element[reIndexOf(element, /\d{1,2}[/]\d+/)];
+                if (reIndexOf(element, /du \d{1,2}[/]\d{1,2}[/]\d{1,4}/) > 0) {
+                    element.splice(reIndexOf(element, /du \d{1,2}[/]\d{1,2}[/]\d{1,4}/), 1);
+                } else if (reIndexOf(element, /du \d{1,2}[/]\d+/) > 0) {
+                    element.splice(reIndexOf(element, /du \d{1,2}[/]\d+/), 1);
+                } else if (reIndexOf(element, /\d{1,2}[/]\d{1,2}[/]\d{1,4}/) > 0) {
+                    element.splice(reIndexOf(element, /\d{1,2}[/]\d{1,2}[/]\d{1,4}/), 1);
+                } else if (reIndexOf(element, /\d{1,2}[/]\d+/) > 0) {
+                    element.splice(reIndexOf(element, /\d{1,2}[/]\d+/), 1);
+                }
 
-                const montant = element.ligne1[reIndexOf(element.ligne1, /^\d+.*€/)] ||
-                    element.ligne1[element.ligne1.indexOf(etat) + 1];
+                const au = element[reIndexOf(element, /au \d{1,2}[/]\d{1,2}[/]\d{1,4}/)] ||
+                    element[reIndexOf(element, /au \d{1,2}[/]\d+/)] ||
+                    element[reIndexOf(element, /\d{1,2}[/]\d{1,2}[/]\d{1,4}/)] ||
+                    element[reIndexOf(element, /\d{1,2}[/]\d+/)];
+                periode = `${du} ${au}`;
 
-                const mode = element.ligne1[reIndexOf(element.ligne1, /escompté/i)] ||
-                    element.ligne1[reIndexOf(element.ligne1, /linéaire/i)] ||
-                    element.ligne1[reIndexOf(element.ligne1, /escom.*/i)] ||
-                    element.ligne1[reIndexOf(element.ligne1, /lin.*/i)] ||
-                    element.ligne1[reIndexOf(element.ligne1, /escamp.*/i)] || '';
+                if (reIndexOf(element, /au \d{1,2}[/]\d{1,2}[/]\d{1,4}/) > 0) {
+                    element.splice(reIndexOf(element, /au \d{1,2}[/]\d{1,2}[/]\d{1,4}/), 1);
+                } else if (reIndexOf(element, /au \d{1,2}[/]\d+/) > 0) {
+                    element.splice(reIndexOf(element, /au \d{1,2}[/]\d+/), 1);
+                } else if (reIndexOf(element, /\d{1,2}[/]\d{1,2}[/]\d{1,4}/) > 0) {
+                    element.splice(reIndexOf(element, /\d{1,2}[/]\d{1,2}[/]\d{1,4}/), 1);
+                } else if (reIndexOf(element, /\d{1,2}[/]\d+/) > 0) {
+                    element.splice(reIndexOf(element, /\d{1,2}[/]\d+/), 1);
+                }
 
-                const taux = element.ligne1[reIndexOf(element.ligne1, /^\d{1,3}/)] ||
-                    element.ligne1[element.ligne1.indexOf(mode) + 1];
+                let status = '';
+                if (reIndexOf(element, /calculée/i) > 0) {
+                    status = 'calculée';
+                    element.splice(reIndexOf(element, /calculée/i), 1);
+                } else if (reIndexOf(element, /reprise/i) > 0) {
+                    status = 'reprise';
+                    element.splice(reIndexOf(element, /reprise/i), 1);
+                } else if (reIndexOf(element, /paye/i) > 0) {
+                    status = 'à payer';
+                    element.splice(reIndexOf(element, /paye/i), 1);
+                }
 
-                const status = element.ligne1[reIndexOf(element.ligne1, /calculée/i)] ||
-                    element.ligne1[reIndexOf(element.ligne1, /reprise/i)] ||
-                    element.ligne1[reIndexOf(element.ligne1, /payer/i)] || '';
+                const stPolice = element[reIndexOf(element, /Sous-total/i)].split(' ');
+                const sousTotalPolice = stPolice[stPolice.length - 1];
+                const sousTotalMontant = parseFloat(element[reIndexOf(element, /Sous-total/i) + 1].split(' ')[0]);
+                element.splice(reIndexOf(element, /Sous-total/i), 1);
+                element.splice(element.indexOf(sousTotalMontant), 1);
 
-                const montantc = element.ligne1[reIndexOf(element.ligne1, /^\d.*€/)] ||
-                    element.ligne1[element.ligne1.indexOf(status) + 1];
+                const mots = element.filter((e, i) => {
+                    return e.match(/^[a-z]+/i);
+                });
+                for (let e of mots) {
+                    element.splice(element.indexOf(e), 1);
+                }
+                let assure;
+                let produit;
+                if (mots.length === 5) {
+                    assure = `${mots[0]} ${mots[2]}`;
+                    produit = `${mots[1]} ${mots[3]} ${mots[4]}`;
+                } else if (mots.length === 6) {
+                    assure = `${mots[0]} ${mots[1]} ${mots[3]}`;
+                    produit = `${mots[2]} ${mots[4]} ${mots[5]}`;
+                } else if (mots.length < 5) {
+                    assure = `${mots[0]}`;
+                    produit = `${mots[1]} ${mots[2]} ${mots[3]}`;
+                }
 
-                const sousTotalPolice = element.ligne4[2];
-                const sousTotalMontant = element.ligne4[3];
+                const numbers = element.slice();
+                let montantPrime;
+                let taux;
+                let montantCommission;
+                if (numbers.lenght === 1) {
+                    montantPrime = 0;
+                    taux = 0;
+                    montantCommission = parseFloat(numbers[0].split(' ')[0]);
+                } else if (numbers.length === 2) {
+                    montantPrime = parseFloat(numbers[0].split(' ')[0].replace(',', '.'));
+                    montantCommission = parseFloat(numbers[1].split(' ')[0].replace(',', '.'));
+                    taux = Math.ceil((montantCommission / montantPrime) * 100);
+                } else if (numbers.length === 3) {
+                    montantPrime = parseFloat(numbers[0].split(' ')[0].replace(',', '.'));
+                    taux = parseFloat(numbers[1].split(' ')[0].replace(',', '.'));
+                    montantCommission = ((montantPrime * taux) / 100).toFixed(2);
+                }
 
                 const contrat = {
-                    police,
+                    police: sousTotalPolice,
                     assure,
                     produit
                 };
@@ -181,21 +289,21 @@ exports.readPdfMETLIFE = (filesPaths) => {
                     fractionnement,
                     periode,
                     etat,
-                    montant
+                    montant: montantPrime
                 };
                 let commissions = {
                     mode,
                     taux,
                     status,
-                    montant: montantc
-                }
+                    montant: montantCommission
+                };
                 detailDesPolices.push({
                     contrat,
                     prime,
                     commissions,
                     sousTotalPolice,
                     sousTotalMontant
-                })
+                });
             })
             infos.detailDesPolices = detailDesPolices;
         }

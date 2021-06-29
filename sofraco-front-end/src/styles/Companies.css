@@ -18,3 +18,31 @@
     border-radius: 0 !important;
 }
 
+.sofraco-pagination, .sofraco-pagination ul, .sofraco-pagination li, .sofraco-pagination a {
+    color: #ed7102 !important;
+}
+
+.sofraco-pagination .page-item.active a {
+    color: #fff !important;
+    background-color: #ed7102 !important;
+    border-color: #ed7102 !important;
+}
+
+.sofraco-button {
+    margin: auto;
+    text-align: center;
+    color: #fff;
+    background-color: #ed7102;
+    width: 150px;
+}
+
+.sofraco-button:not(:hover) {
+    color: #fff;
+    background-color: #ed7102;
+}
+
+.sofraco-button:hover {
+    color: #fff;
+    background-color: #F39200;
+}
+

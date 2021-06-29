@@ -7,7 +7,7 @@ const documentController =  require('../controllers/document');
 
 const storage = multer.diskStorage({
 	destination: (req, file, callback) => {
-		const destination = path.join(__dirname, '..', '..', 'documents', 'temp');
+		const destination = path.join(__dirname, '..', '..', 'documents', 'uploaded');
 		callback(null, destination);
 	},
 	filename: (req, file, callback) => {
@@ -18,6 +18,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.route('/').post(upload.single('file'), documentController.createDocument);
+router.route('/send').post(upload.single('file'), documentController.sendDocument);
 router.route('/').get(documentController.getDocuments);
 router.route('/:id').get(documentController.getDocument);
 

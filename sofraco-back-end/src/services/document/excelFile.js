@@ -6,7 +6,7 @@ const documentAPICIL = require('./documentAPICIL');
 
 
 exports.readExcel = async (file, company) => {
-    const filePath = file.path;
+    const filePath = file;
     const workbook = new ExcelJS.Workbook();
     await workbook.xlsx.readFile(filePath);
 

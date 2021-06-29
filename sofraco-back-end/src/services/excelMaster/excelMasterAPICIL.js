@@ -8,12 +8,12 @@ exports.getOCRAPICIL = (ocr) => {
 
     for (let collective of collectives) {
         if (codesCourtiers.indexOf(collective.prescRemu) < 0) {
-            codesCourtiers.push(collective.prescRemu);
+            codesCourtiers.push({ cabinet: collective.nomPrescRemu, code: collective.prescRemu });
         }
     }
     for (let individual of individuals) {
         if (codesCourtiers.indexOf(individual.prescRemu) < 0) {
-            codesCourtiers.push(individual.prescRemu);
+            codesCourtiers.push({ cabinet: individual.nomPrescRemu, code: individual.prescRemu });
         }
     }
 
@@ -21,7 +21,7 @@ exports.getOCRAPICIL = (ocr) => {
         let dataCourtierOCR = { code, headers, datas: [] };
         for (let collective of collectives) {
 
-            if (collective.prescRemu === code && !collective.mtEcheance.match(/^-.+/)) {
+            if (collective.prescRemu === code.code && !collective.mtEcheance.match(/^-.+/)) {
                 let data = {
                     contrat: 'collective',
                     contratJuridique: collective.contratJuridique,
@@ -42,7 +42,7 @@ exports.getOCRAPICIL = (ocr) => {
                 };
                 dataCourtierOCR.datas.push(data);
             }
-            if (collective.prescRemu === code && collective.mtEcheance.match(/^-.+/)) {
+            if (collective.prescRemu === code.code && collective.mtEcheance.match(/^-.+/)) {
                 let data = {
                     contrat: 'reprise',
                     contratJuridique: collective.contratJuridique,
@@ -65,7 +65,7 @@ exports.getOCRAPICIL = (ocr) => {
             }
         }
         for (let individual of individuals) {
-            if (individual.prescRemu === code && !individual.mtEcheance.match(/^-.+/)) {
+            if (individual.prescRemu === code.code && !individual.mtEcheance.match(/^-.+/)) {
                 let data = {
                     contrat: 'individual',
                     contratJuridique: individual.contratJuridique,
@@ -87,7 +87,7 @@ exports.getOCRAPICIL = (ocr) => {
                 dataCourtierOCR.datas.push(data);
             }
 
-            if (individual.prescRemu === code && individual.mtEcheance.match(/^-.+/)) {
+            if (individual.prescRemu === code.code && individual.mtEcheance.match(/^-.+/)) {
                 let data = {
                     contrat: 'reprise',
                     contratJuridique: individual.contratJuridique,
@@ -136,7 +136,7 @@ exports.createWorkSheetAPICIL = (workSheet, dataCourtierOCR) => {
     row4.getCell('B').value = 'NO-ADHERENT';
     row4.getCell('C').value = 'INTITULE';
     row4.getCell('D').value = 'PRODUIT';
-    row4.getCell('E').value = '';
+    row4.getCell('E').value = 'MOIS/TRIMESTRE DE SIGNATURE';
     row4.getCell('F').value = 'EXER';
     row4.getCell('G').value = 'MT COTISATIONS';
     row4.getCell('H').value = 'TAUX';
@@ -167,22 +167,28 @@ exports.createWorkSheetAPICIL = (workSheet, dataCourtierOCR) => {
 
     let debut = 5;
     let rowNumber = 5;
-    createPaveAPICIL(workSheet, rowNumber, dataTri.reprise);
+    rowNumber = createPaveAPICIL(workSheet, rowNumber, dataTri.reprise);
 
     workSheet.getRow(rowNumber).getCell('H').value = 'TOTAL';
-    if (workSheet.getRow(rowNumber - 1).getCell('I').value !== '' ||
-        workSheet.getRow(rowNumber - 1).getCell('I').value !== 'MT ECHEANCE') {
-        workSheet.getRow(rowNumber).getCell('I').value = { formula: `SUM(I${debut}:I${rowNumber - 1})` };
+    if (workSheet.getRow(rowNumber - 1).getCell('I').value === '' ||
+        workSheet.getRow(rowNumber - 1).getCell('I').value === 'MT ECHEANCE') {
+            workSheet.getRow(rowNumber).getCell('I').value = 0;
     } else {
-        workSheet.getRow(rowNumber).getCell('I').value = 0;
+        workSheet.getRow(rowNumber).getCell('I').value = { formula: `SUM(I${debut}:I${rowNumber - 1})` };
     }
+    // if (workSheet.getRow(rowNumber - 1).getCell('I').value !== '' ||
+    //     workSheet.getRow(rowNumber - 1).getCell('I').value !== 'MT ECHEANCE') {
+    //     workSheet.getRow(rowNumber).getCell('I').value = { formula: `SUM(I${debut}:I${rowNumber - 1})` };
+    // } else {
+    //     workSheet.getRow(rowNumber).getCell('I').value = 0;
+    // }
     workSheet.getRow(rowNumber).getCell('I').numFmt = '###,##0.00"€";\-###,##0.00"€"';
     const totalRepriseRowNumber = rowNumber;
     rowNumber++;
     rowNumber++;
 
     debut = rowNumber;
-    createPaveAPICIL(workSheet, rowNumber, dataTri.collective);
+    rowNumber = createPaveAPICIL(workSheet, rowNumber, dataTri.collective);
 
     workSheet.getRow(rowNumber).getCell('H').value = 'TOTAL';
     if (workSheet.getRow(rowNumber - 1).getCell('I').value !== '') {
@@ -196,7 +202,7 @@ exports.createWorkSheetAPICIL = (workSheet, dataCourtierOCR) => {
     rowNumber++;
 
     debut = rowNumber;
-    createPaveAPICIL(workSheet, rowNumber, dataTri.individual);
+    rowNumber = createPaveAPICIL(workSheet, rowNumber, dataTri.individual);
 
     workSheet.getRow(rowNumber).getCell('H').value = 'TOTAL';
     if (workSheet.getRow(rowNumber - 1).getCell('I').value !== '') {
@@ -238,4 +244,5 @@ const createPaveAPICIL = (workSheet, rowNumber, dataTri) => {
         workSheet.getRow(rowNumber).getCell('O').value = data.periode;
         rowNumber++;
     }
+    return rowNumber;
 }

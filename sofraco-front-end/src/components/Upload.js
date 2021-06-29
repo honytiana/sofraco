@@ -67,15 +67,15 @@ class Upload extends Component {
         const formData = new FormData();
         formData.append('file', this.state.files);
         formData.append('user', '');
-        formData.append('company', JSON.stringify(this.state.company));
-        axios.post(`${config.nodeUrl}/api/document/`, formData, {
+        formData.append('company', JSON.stringify(this.props.companyName));
+        axios.post(`${config.nodeUrl}/api/document/send`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         }).then((res) => {
             this.setState({
                 toast: true,
-                messageToast: { header: 'success', message: 'Traitement terminé' }
+                messageToast: { header: 'success', message: 'Le document à été envoyé vers le serveur' }
             });
         }).catch((err) => {
             this.setState({
@@ -97,12 +97,80 @@ class Upload extends Component {
 
     onChangeHandler(event) {
         event.preventDefault();
+        const file = event.target.files[0];
+        const fileName = file.name;
+        const fileNameArray = fileName.split('.');
+        const extension = fileNameArray[fileNameArray.length - 1];
+        const company = this.props.companyName;
+        switch (company.toUpperCase()) {
+            case 'APICIL':
+                if (extension.toUpperCase() !== 'XLSX') {
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'warning', message: 'Vous devez donner un fichier Excel' }
+                    });
+                    setTimeout(() => {
+                        this.setState({
+                            toast: false,
+                            messageToast: {}
+                        });
+                    }, 6000);
+                }
+                break;
+            // case 'APREP':
+            //     infos = await readPdfMETLIFE(file);
+            //     break;
+            // case 'AVIVA':
+            //     infos = await readPdfMETLIFE(file);
+            //     break;
+            // case 'AVIVA SURCO':
+            //     infos = await readPdfMETLIFE(file);
+            //     break;
+            // case 'CARDIF':
+            //     infos = await readPdfMETLIFE(file);
+            //     break;
+            // case 'CBP FRANCE':
+            //     infos = await readPdfMETLIFE(file);
+            //     break;
+            // case 'CEGEMA':
+            //     infos = await readPdfMETLIFE(file);
+            //     break;
+            // case 'ERES':
+            //     infos = await readPdfMETLIFE(file);
+            //     break;
+            // case 'GENERALI':
+            //     infos = await readPdfMETLIFE(file);
+            //     break;
+            // case 'HODEVA':
+            //     infos = await readPdfMETLIFE(file);
+            //     break;
+            case 'METLIFE':
+                if (extension.toUpperCase() !== 'PDF') {
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'warning', message: 'Vous devez donner un fichier PDF' }
+                    });
+                    setTimeout(() => {
+                        this.setState({
+                            toast: false,
+                            messageToast: {}
+                        });
+                    }, 6000);
+                }
+                break;
+            // case 'SWISSLIFE':
+            //     infos = await readPdfMETLIFE(file);
+            //     break;
+            // case 'SWISSLIFE SURCO':
+            //     infos = await readPdfMETLIFE(file);
+            //     break;
+            default:
+                console.log('Pas de compagnie correspondante');
+        }
         this.setState({
-            files: null
+            files: file
         });
-        this.setState({
-            files: event.target.files[0]
-        });
+        console.log(this.state.files);
     }
 
     render() {
@@ -142,7 +210,6 @@ class Upload extends Component {
                                 </Dropzone>
                                 <CInput
                                     type="submit"
-                                    id="nf-send"
                                     name="nf-send"
                                 />
                             </CForm>
