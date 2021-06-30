@@ -8,6 +8,9 @@
     "mailPassOutlook": "",
     "mailSenderGmail": "",
     "mailPassGmail": "",
-    "outlookHost": "smtp-mail.outlook.com",
-    "gmailHost": "smtp.gmail.com"
+    "mailSenderInfomaniak": "cassandralacombe@ik.me",
+    "mailPassInfomaniak": "Cassandra7!",
+    "infomaniakHost": "mail.infomaniak.com",
+    "pythonEnv": "/opt/venv_python/Python-3.7.10/easy_ocr/bin/python",
+    "python": "python3"
 }
