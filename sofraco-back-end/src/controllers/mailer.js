@@ -4,16 +4,15 @@ const ejs = require('ejs');
 
 const config = require('../../config.json');
 
-
 const transporter = nodemailer.createTransport({
     pool: true,
-    host: config.outlookHost,
+    host: config.infomaniakHost,
     port: 587,
     secure: false,
     requireTLS: true,
     auth: {
-        user: config.mailSenderOutlook,
-        pass: config.mailPassOutlook
+        user: config.mailSenderInfomaniak,
+        pass: config.mailPassInfomaniak
     }
 });
 
@@ -31,13 +30,13 @@ exports.postMail = (req, res) => {
             console.log(err);
         } else {
             const mailOptions = {
-                from: config.mailSender,
+                from: config.mailSenderInfomaniak,
                 to: emailDestination,
                 subject: 'Send mail test',
                 html: str,
                 attachments: [
                     {
-                        filename: path.join(__dirname, '..', '..', 'files', 'mon_fichier.xlsx'),
+                        filename: path.join(__dirname, '..', '..', 'documents', 'masterExcel', 'Commissions5121.xlsx'),
                     }
                 ]
             };
