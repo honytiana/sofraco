@@ -179,7 +179,7 @@ class Treatments extends Component {
                     .then((data) => {
                         let mt = this.state.messageToast.slice();
                         mt.push({
-                            header: 'success', message: `Le mail à été envoyé aux courtiers ${data.data.accepted}`
+                            header: 'success', message: `Le mail à été envoyé aux courtiers ${data.data.accepted[0]}`
                         });
                         this.setState({
                             toast: true,
@@ -276,17 +276,8 @@ class Treatments extends Component {
                         onClick={() => this.onSendMailHandler()}
                     >
                         Envoyer les emails
-                </CButton>
+                    </CButton>
                 </div>
-                {
-                    this.state.checked.map((courtier, index) => {
-                        return ((courtier.checked === true) && (
-                            <CAlert color="warning" closeButton key={index}>
-                                Le courtier coché est {courtier.email}
-                            </CAlert>
-                        ))
-                    })
-                }
                 {
                     (this.state.toast === true &&
                         this.state.messageToast.length > 0) && (

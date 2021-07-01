@@ -9,7 +9,14 @@ import {
     CAlert,
     CDataTable,
     CButton,
-    CCardBody
+    CCardBody,
+    CCard,
+    CCardHeader,
+    CCardFooter,
+    CModal,
+    CModalHeader,
+    CModalBody,
+    CModalFooter
 } from '@coreui/react';
 import axios from 'axios';
 
@@ -27,7 +34,6 @@ class Companies extends Component {
             companies: [],
             collapsed: [],
             logo: '',
-            fields: [],
             toast: false,
             messageToast: {}
         }
@@ -36,33 +42,6 @@ class Companies extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            fields: [
-                {
-                    key: 'logo',
-                    label: '',
-                    _style: { width: '20%' },
-                    _classes: ['text-center'],
-                    sorter: false,
-                    filter: false
-                },
-                {
-                    key: 'company',
-                    label: '',
-                    _style: { width: '70%' },
-                    _classes: ['text-center'],
-                    sorter: true
-                },
-                {
-                    key: 'show_details',
-                    label: '',
-                    _style: { width: '10%' },
-                    _classes: ['text-center'],
-                    sorter: false,
-                    filter: false
-                }
-            ]
-        });
         axios.get(`${config.nodeUrl}/api/company`)
             .then((data) => {
                 return data.data
@@ -141,68 +120,47 @@ class Companies extends Component {
         return (
             <CContainer fluid>
                 <CRow>
-                    <CCol sm="12">
-                        <CAlert className="sofraco-header">
-                            Liste des compagnies
-                        </CAlert>
-                    </CCol>
-                </CRow>
-                <CDataTable
-                    items={this.state.companies}
-                    fields={this.state.fields}
-                    tableFilter={{ label: 'Filtre', placeholder: 'Filtre' }}
-                    itemsPerPageSelect={{ label: 'Nombre de compagnies par page' }}
-                    itemsPerPage={10}
-                    hover
-                    sorter
-                    pagination={{ className: 'sofraco-pagination' }}
-                    scopedSlots={{
-                        'logo':
-                            (item, index) => {
-                                return (
-                                    <td>
-                                        <CImg src={`data:image/png;base64,${item.logo}`} fluid width={40} />
-                                    </td>
-                                )
-                            },
-                        'company':
-                            (item, index) => {
-                                return (
-                                    <td>
-                                        {item.name}
-                                    </td>
-                                )
-                            },
-                        'show_details':
-                            (item, index) => {
-                                return (
-                                    <td className="py-2">
-                                        <CButton
-                                            color="warning"
-                                            variant="outline"
-                                            shape="square"
-                                            size="sm"
-                                            onClick={() => { this.toggleDetails(index) }}
-                                        >
-                                            {this.state.details.includes(index) ? 'Cacher' : 'Afficher'}
-                                        </CButton>
-                                    </td>
-                                )
-                            },
-                        'details':
-                            (item, index) => {
-                                return (
-                                    <CCollapse show={this.state.details.includes(index)}>
-                                        <CCardBody>
-                                            <Upload company={item._id} companyName={item.name} />
+                    {(this.state.companies.length > 0) ? (
+                        this.state.companies.map((company, index) => {
+                            return (
+                                <CCol key={`${company._id}_Column`} sm="3">
+                                    <CCard key={`${company._id}_Card`} onClick={() => { this.toggleDetails(index) }} >
+                                        <CCardBody key={`${company._id}_CardBody`} className="sofraco-card-body" >
+                                            <CImg className="sofraco-logo-company" key={`${company._id}_Img`} src={`data:image/png;base64,${company.logo}`} fluid width={100} />
                                         </CCardBody>
-                                    </CCollapse>
-                                )
-                            },
+                                        <CCardFooter key={`${company._id}_CardFooter`}>
+                                            {company.name}
+                                        </CCardFooter>
+                                    </CCard>
+                                    <Upload
+                                        key={`${company._id}_Upload`}
+                                        company={company._id}
+                                        companyName={company.name}
+                                        showModal={this.state.details.includes(index)}
+                                        onCloseModal={() => { this.toggleDetails(index) }}
+                                    />
+                                </CCol>
+                            )
+                        })) :
+                        (
+                            <CCol sm="6">
+                                <CCard>
+                                    <CCardHeader>
+                                        Header
+                                    </CCardHeader>
+                                    <CCardBody>
+                                        Body.
+                                    </CCardBody>
+                                    <CCardFooter>
+                                        Footer.
+                                    </CCardFooter>
+                                </CCard>
+                            </CCol>
+                        )
                     }
-                    }
-                />
-                <div>
+                </CRow>
+
+                <div className="sofraco-container-button-traitement">
                     <CButton className="sofraco-button" onClick={() => { this.launchTreatments() }}>Traiter les fichiers</CButton>
                 </div>
 

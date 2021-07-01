@@ -28,21 +28,25 @@
     border-color: #ed7102 !important;
 }
 
-.sofraco-button {
-    margin: auto;
+.sofraco-modal .modal-content {
+    min-height: 525px;
+    max-height: 600px;
+}
+
+.sofraco-modal .modal-dialog.modal-dialog-centered {
+    max-width: 800px;
+}
+
+.sofraco-card-body {
+    min-height: 140px;
+    max-height: 140px;
     text-align: center;
-    color: #fff;
-    background-color: #ed7102;
-    width: 150px;
 }
 
-.sofraco-button:not(:hover) {
-    color: #fff;
-    background-color: #ed7102;
+.sofraco-logo-company {
+    margin: auto;
 }
 
-.sofraco-button:hover {
-    color: #fff;
-    background-color: #F39200;
+.sofraco-container-button-traitement {
+    text-align: center;
 }
-

@@ -7,19 +7,18 @@
     background-color: #6F6F6E !important;
 }
 
-input[type=submit] {
-    margin: auto;
+.sofraco-button {
     color: #fff;
     background-color: #ed7102;
     width: 150px;
 }
 
-input[type=submit]:not(:hover) {
+.sofraco-button:not(:hover) {
     color: #fff;
     background-color: #ed7102;
 }
 
-input[type=submit]:hover {
+.sofraco-button:hover {
     color: #fff;
     background-color: #F39200;
 }
