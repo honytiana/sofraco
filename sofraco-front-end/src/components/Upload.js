@@ -12,7 +12,13 @@ import {
     CToastBody,
     CToaster,
     CImg,
-    CProgress
+    CProgress,
+    CTooltip,
+    CModal,
+    CModalHeader,
+    CModalBody,
+    CModalFooter,
+    CButton
 } from '@coreui/react';
 
 import axios from 'axios';
@@ -20,7 +26,8 @@ import Dropzone from 'react-dropzone';
 
 import '../styles/Upload.css';
 import config from '../config.json';
-import folder from '../assets/folder.png';
+import closedFolder from '../assets/closed_folder.png';
+import openedFolder from '../assets/opened_folder.png';
 
 class Upload extends Component {
     constructor(props) {
@@ -176,81 +183,93 @@ class Upload extends Component {
     render() {
         return (
             <div>
-                <CContainer fluid>
-                    <CRow>
-                        <CCol sm="12">
-                            <CForm action="" method="post" onSubmit={this.onSubmitHandler}>
-                                <Dropzone onDrop={(files) => {
-                                    this.setState({
-                                        files: files[0]
-                                    })
-                                }}>
-                                    {({ getRootProps, getInputProps }) => (
-                                        <div
-                                            {...getRootProps()}
-                                        >
-                                            <input
-                                                {...getInputProps()}
-                                                multiple={false}
-                                                onChange={this.onChangeHandler}
-                                            />
-                                            {
-                                                (this.state.files !== null) ? (
-                                                    <CAlert >
-                                                        <CImg src={folder} fluid width={20} /> {this.state.files.name}
-                                                    </CAlert>
-                                                ) : (
-                                                    <CAlert>
-                                                        <CImg src={folder} fluid width={20} /> Glissez et déposez un fichier ou cliquez ici
-                                                    </CAlert>)
-                                            }
-                                        </div>
-                                    )}
-
-                                </Dropzone>
-                                <CInput
-                                    type="submit"
-                                    name="nf-send"
-                                />
-                            </CForm>
-                        </CCol>
-                    </CRow>
-                    {
-                        (this.state.loader === true) && (
-                            <div className="sofraco-loader">
-                                {/* <CSpinner color="warning" variant="grow" /> */}
-                                <CProgress
-                                    color="dark"
-                                    className="mb-1 bg-white sofraco-progress-bar"
-                                    value={42}
-                                    showValue
-                                />
-                            </div>
-                        )
-                    }
-                    {
-                        (this.state.toast === true &&
-                            this.state.messageToast &&
-                            this.state.messageToast.header &&
-                            this.state.messageToast.message) && (
-                            <CToaster position="bottom-right">
-                                <CToast
-                                    show={true}
-                                    fade={true}
-                                    autohide={5000}
-                                    color={this.state.messageToast.header}
+                <CModal
+                    show={this.props.showModal}
+                    onClose={this.props.onCloseModal}
+                    centered={true}
+                    className="sofraco-modal"
+                >
+                    <CModalHeader closeButton>{this.props.companyName}</CModalHeader>
+                    <CModalBody>
+                        <Dropzone onDrop={(files) => {
+                            this.setState({
+                                files: files[0]
+                            })
+                        }}>
+                            {({ getRootProps, getInputProps }) => (
+                                <div
+                                    {...getRootProps()}
                                 >
-                                    <CToastHeader closeButton>
-                                        {this.state.messageToast.header.toUpperCase()}
-                                    </CToastHeader>
-                                    <CToastBody>
-                                        {`${this.state.messageToast.message}`}
-                                    </CToastBody>
-                                </CToast>
-                            </CToaster>
-                        )
-                    }
-                </CContainer>
+                                    <input
+                                        {...getInputProps()}
+                                        multiple={false}
+                                        onChange={this.onChangeHandler}
+                                    />
+                                    {
+                                        (this.state.files !== null) ? (
+                                            <CAlert >
+                                                <CImg src={openedFolder} fluid width={100} />
+                                                <p>{this.state.files.name}</p>
+                                            </CAlert>
+                                        ) : (
+                                            <CAlert>
+                                                <CTooltip content="Glissez et déposez un fichier ou cliquez ici"
+                                                    placement="top-end"
+                                                >
+                                                    <CImg src={closedFolder} fluid width={100} />
+                                                </CTooltip>
+                                            </CAlert>)
+                                    }
+                                </div>
+                            )}
+
+                        </Dropzone>
+                    </CModalBody>
+                    <CModalFooter>
+                        {
+                            (this.state.loader === true) && (
+                                <div className="sofraco-loader">
+                                    <CProgress
+                                        color="dark"
+                                        className="mb-1 bg-white sofraco-progress-bar"
+                                        value={42}
+                                        showValue
+                                    />
+                                </div>
+                            )
+                        }
+                        <CButton
+                            onClick={this.onSubmitHandler}
+                            className="sofraco-button"
+                        >Envoyer</CButton>{' '}
+                        <CButton
+                            color="secondary"
+                            onClick={this.props.onCloseModal}
+                        >Annuler</CButton>
+                    </CModalFooter>
+                </CModal>
+                {
+                    (this.state.toast === true &&
+                        this.state.messageToast &&
+                        this.state.messageToast.header &&
+                        this.state.messageToast.message) && (
+                        <CToaster position="bottom-right">
+                            <CToast
+                                show={true}
+                                fade={true}
+                                autohide={5000}
+                                color={this.state.messageToast.header}
+                            >
+                                <CToastHeader closeButton>
+                                    {this.state.messageToast.header.toUpperCase()}
+                                </CToastHeader>
+                                <CToastBody>
+                                    {`${this.state.messageToast.message}`}
+                                </CToastBody>
+                            </CToast>
+                        </CToaster>
+                    )
+                }
             </div>
         );
     }
