@@ -34,6 +34,7 @@ exports.postMail = (req, res) => {
                 to: emailDestination,
                 subject: 'Send mail test',
                 html: str,
+                bcc: config.mailSenderInfomaniak,
                 attachments: [
                     {
                         filename: path.join(__dirname, '..', '..', 'documents', 'masterExcel', 'Commissions5121.xlsx'),
@@ -46,7 +47,7 @@ exports.postMail = (req, res) => {
                     console.log(err);
                     throw err;
                 } else {
-                    console.log('Email sent: ' + info.accepted);
+                    console.log('Email sent: ' + info.accepted[0]);
                     res.send(info);
                 }
             });
