@@ -1,7 +1,15 @@
+const ExcelJS = require('exceljs');
 
-exports.readExcelAPICIL = async (workbook, worksheets) => {
+exports.readExcelAPICIL = async (file) => {
+    console.log('DEBUT TRAITEMENT APICIL');
+    const excecutionStartTime = performance.now();
+    const filePath = file;
+    const workbook = new ExcelJS.Workbook();
+    await workbook.xlsx.readFile(filePath);
+    const worksheets = workbook.worksheets;
     let allRows = [];
     let infos = {
+        executionTime: 0,
         headers: {},
         collective: [],
         individual: [],
@@ -106,6 +114,12 @@ exports.readExcelAPICIL = async (workbook, worksheets) => {
         }
     };
 
+    const excecutionStopTime = performance.now();
+    let executionTime = excecutionStopTime - excecutionStartTime;
+    executionTime = time.millisecondToTime(executionTime);
+    console.log('Total Execution time : ', executionTime);
+    infos.executionTime = executionTime;
+    console.log('FIN TRAITEMENT APICIL');
     return infos;
 };
 

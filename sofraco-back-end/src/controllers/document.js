@@ -1,89 +1,103 @@
 const path = require('path');
 const fs = require('fs');
-
+const axios = require('axios');
 const config = require('../../config.json');
 const Document = require('../models/document');
+const documentHandler = require('../handlers/documentHandler');
+const documentAPICIL = require('../services/document/documentAPICIL');
+const documentMETLIFE = require('../services/document/documentMETLIFE');
 const excelFileService = require('../services/document/excelFile');
 const pdfFileService = require('../services/document/pdfFile');
 const imageFileService = require('../services/document/imageFile');
 
 exports.sendDocument = (req, res) => {
-    const file = req.file;
-    const filePathArr = file.path.split('/');
-    filePathArr.pop();
-    const absolutePath = filePathArr.join('/');
-    const fileNameWithExtension = file.filename;
-    const fileName = fileNameWithExtension.split('.')[0];
-    const extension = fileNameWithExtension.split('.')[1];
-    const company = JSON.parse(req.body.company);
-    fs.renameSync(file.path, `${absolutePath}/${fileName}_${company}.${extension}`);
+    documentHandler.sendDocument(req.file, req.body.company);
     res.status(200).end('Sent to Server');
 }
 
-exports.createDocument = async (req, res) => {
-    const user = req.body.user;
+exports.createDocuments = async (req, res) => {
     const files = fs.readdirSync(path.join(__dirname, '..', '..', 'documents', 'uploaded'));
     for (let file of files) {
-        let infos = null;
-        const paths = file.split('/');
-        const fileNameWithExtention = paths[paths.length - 1];
-        const fileName = fileNameWithExtention.split('.')[0];
-        const extension = fileNameWithExtention.split('.')[1];
+        const fileName = file.split('.')[0];
+        const extension = file.split('.')[1];
         const fileNameArr = fileName.split('_');
         const company = fileNameArr[fileNameArr.length - 1];
-        const filePath = path.join(__dirname, '..', '..', 'documents', 'uploaded', fileNameWithExtention);
-        if (extension.toUpperCase() === 'XLSX') {
-            infos = await excelFileService.readExcel(filePath, company);
-        } else if (extension.toUpperCase() === 'PDF') {
-            infos = await pdfFileService.readPdf(filePath, company);
-        } else if (extension.toUpperCase() === 'JPG' ||
-            extension.toUpperCase() === 'JPEG' ||
-            extension.toUpperCase() === 'PNG') {
-            infos = await imageFileService.readImage(filePath, company);
-        } else {
-            return;
-        }
-        const document = new Document();
-        document.name = fileNameWithExtention;
-        document.user = user;
-        document.company = company._id;
-        document.companyName = company;
-        document.upload_date = Date.now();
-        document.path = filePath;
-        document.type = extension;
-        document.is_enabled = true;
-        document.ocr = infos;
-        document.save()
-            .then((data) => {
-                console.log('Post document');
-                res.status(200).json(data);
-            })
-            .catch((err) => {
-                res.status(500);
-                throw err;
-            });
-    }
+        const filePath = path.join(__dirname, '..', '..', 'documents', 'uploaded', file);
+        const options = {
+            filePath: filePath,
+            fileName: fileName,
+            extension: extension
+        };
+        const result = await axios.post(`${config.nodeUrl}/api/document/${company}`, options);
+        res.status(200).json(result.data);
 
+    }
+    res.end();
 };
+
+exports.createDocument = async (req, res) => {
+    let document = {};
+    switch (req.params.company.toUpperCase()) {
+        case 'APICIL':
+            ocr = await documentAPICIL.readExcelAPICIL(req.body.filePath);
+            break;
+        // case 'APREP':
+        //     infos = await readExcel(file);
+        //     break;
+        // case 'AVIVA':
+        //     infos = await readExcel(file);
+        //     break;
+        // case 'AVIVA SURCO':
+        //     infos = await readExcel(file);
+        //     break;
+        // case 'CARDIF':
+        //     infos = await readExcel(file);
+        //     break;
+        // case 'CBP FRANCE':
+        //     infos = await readExcel(file);
+        //     break;
+        // case 'CEGEMA':
+        //     infos = await readExcel(file);
+        //     break;
+        // case 'ERES':
+        //     infos = await readExcel(file);
+        //     break;
+        // case 'GENERALI':
+        //     infos = await readExcel(file);
+        //     break;
+        // case 'HODEVA':
+        //     infos = await readExcel(file);
+        //     break;
+        case 'METLIFE':
+            ocr = await documentMETLIFE.readPdfMETLIFE(req.body.filePath);
+            break;
+        // case 'SWISSLIFE':
+        //     infos = await readExcel(file);
+        //     break;
+        // case 'SWISSLIFE SURCO':
+        //     infos = await readExcel(file);
+        //     break;
+        default:
+            console.log('Pas de compagnie correspondante');
+    }
+    document.name = req.body.filePath;
+    document.company = req.params.company;
+    document.companyName = req.params.company;
+    document.path = req.body.filePath;
+    document.type = req.body.extension;
+    document.ocr = ocr;
+    const doc = documentHandler.createDocument(document);
+    res.status(200).json({ executionTime: ocr.executionTime, company: req.params.company });
+}
 
 exports.getDocument = (req, res) => {
     console.log('get document');
-    Document.findById(req.params.id, (err, doc) => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.status(200).json(doc);
-        }
-    });
+    const document = documentHandler.getDocument(req.params.id);
+    res.status(200).json(document);
 }
 
 exports.getDocuments = (req, res) => {
     console.log('get documents');
-    Document.find((err, doc) => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.status(200).json(doc);
-        }
-    });
+    const documents = documentHandler.getDocuments();
+    res.status(200).json(documents);
 }

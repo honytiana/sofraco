@@ -4,26 +4,23 @@ import {
     CRow,
     CCol,
     CContainer,
-    CCollapse,
     CImg,
-    CAlert,
-    CDataTable,
     CButton,
     CCardBody,
     CCard,
     CCardHeader,
     CCardFooter,
-    CModal,
-    CModalHeader,
-    CModalBody,
-    CModalFooter
+    CSpinner,
+    CToaster,
+    CToast,
+    CToastHeader,
+    CToastBody
 } from '@coreui/react';
 import axios from 'axios';
 
 import config from '../config.json';
 import Upload from './Upload';
 import '../styles/Companies.css';
-
 
 
 class Companies extends Component {
@@ -35,7 +32,8 @@ class Companies extends Component {
             collapsed: [],
             logo: '',
             toast: false,
-            messageToast: {}
+            messageToast: {},
+            loaders: []
         }
         this.toggle = this.toggle.bind(this);
 
@@ -48,19 +46,21 @@ class Companies extends Component {
             })
             .then((companies) => {
                 let collapsed = [];
+                let loaders = [];
                 for (let company of companies) {
-                    collapsed.push({ company: company.name, collapse: false })
+                    collapsed.push({ company: company.name, collapse: false });
+                    loaders.push({ company: company.name, load: false });
                 }
                 this.setState({
                     companies: companies,
-                    collapsed: collapsed
+                    collapsed: collapsed,
+                    loaders: loaders
                 })
             })
             .catch((err) => {
                 console.log(err)
             });
     }
-
 
     toggle(e, index) {
         const collapsed = this.state.collapsed.slice();
@@ -85,7 +85,15 @@ class Companies extends Component {
         })
     }
 
-    launchTreatments() {
+    launchTreatments(e) {
+        e.preventDefault();
+        this.state.loaders.forEach((element, index) => {
+            let newLoading = this.state.loaders.slice();
+            newLoading[index].load = true;
+            this.setState({
+                loaders: newLoading,
+            });
+        })
         axios.post(`${config.nodeUrl}/api/document`, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -93,17 +101,23 @@ class Companies extends Component {
         }).then((res) => {
             this.setState({
                 toast: true,
-                messageToast: { header: 'success', message: 'Traitement terminé' }
+                messageToast: { header: 'success', message: `Traitement terminé pour ${res.data.company}` }
             });
+            this.state.loaders.forEach((element, index) => {
+                if (element.company === res.data.company) {
+                    let newLoading = this.state.loaders.slice();
+                    newLoading[index].load = false;
+                    this.setState({
+                        loaders: newLoading,
+                    });
+                }
+            })
         }).catch((err) => {
             this.setState({
                 toast: true,
                 messageToast: { header: 'error', message: err }
             })
         }).finally(() => {
-            this.setState({
-                loader: false
-            });
             setTimeout(() => {
                 this.setState({
                     toast: false,
@@ -112,6 +126,7 @@ class Companies extends Component {
             }, 6000);
         });
     }
+
 
     render() {
         // const images = this.state.companies.map((companies) => {
@@ -122,11 +137,20 @@ class Companies extends Component {
                 <CRow>
                     {(this.state.companies.length > 0) ? (
                         this.state.companies.map((company, index) => {
+                            const loader = this.state.loaders.filter((element, index) => {
+                                return element.company === company.name;
+                            })[0]
                             return (
                                 <CCol key={`${company._id}_Column`} sm="3">
-                                    <CCard key={`${company._id}_Card`} onClick={() => { this.toggleDetails(index) }} >
+                                    <CCard key={`${company._id}_Card`} onDoubleClick={() => { this.toggleDetails(index) }} >
                                         <CCardBody key={`${company._id}_CardBody`} className="sofraco-card-body" >
                                             <CImg className="sofraco-logo-company" key={`${company._id}_Img`} src={`data:image/png;base64,${company.logo}`} fluid width={100} />
+                                            <div>{
+                                                (loader.load === true) && (
+                                                    <CSpinner color="warning" variant="grow" />
+                                                )
+                                            }
+                                            </div>
                                         </CCardBody>
                                         <CCardFooter key={`${company._id}_CardFooter`}>
                                             {company.name}
@@ -134,10 +158,11 @@ class Companies extends Component {
                                     </CCard>
                                     <Upload
                                         key={`${company._id}_Upload`}
-                                        company={company._id}
+                                        company={company}
                                         companyName={company.name}
                                         showModal={this.state.details.includes(index)}
                                         onCloseModal={() => { this.toggleDetails(index) }}
+                                        loader={this.state.loader}
                                     />
                                 </CCol>
                             )
@@ -161,8 +186,27 @@ class Companies extends Component {
                 </CRow>
 
                 <div className="sofraco-container-button-traitement">
-                    <CButton className="sofraco-button" onClick={() => { this.launchTreatments() }}>Traiter les fichiers</CButton>
+                    <CButton className="sofraco-button" onClick={(e) => { this.launchTreatments(e) }}>Traiter les fichiers</CButton>
                 </div>
+                {
+                    (this.state.toast === true) && (
+                        <CToaster position="bottom-right" >
+                            <CToast
+                                show={true}
+                                fade={true}
+                                autohide={5000}
+                                color='success'
+                            >
+                                <CToastHeader closeButton>
+                                    {this.state.messageToast.header}
+                                </CToastHeader>
+                                <CToastBody>
+                                    {this.state.messageToast.message}
+                                </CToastBody>
+                            </CToast>
+                        </CToaster>
+                    )
+                }
 
             </CContainer>
         );

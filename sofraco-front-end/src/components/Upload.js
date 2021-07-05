@@ -33,7 +33,7 @@ class Upload extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            company: '',
+            company: null,
             location: props.location,
             files: null,
             loader: false,
@@ -49,17 +49,10 @@ class Upload extends Component {
             toast: false,
             messageToast: {}
         });
-        const idCompany = this.props.company;
-        axios.get(`${config.nodeUrl}/api/company/${idCompany}`)
-            .then((data) => {
-                this.setState({
-                    company: data.data
-                })
-                return data;
-            })
-            .catch((err) => {
-                console.log(err)
-            });
+        const company = this.props.company;
+        this.setState({
+            company: company
+        })
     }
 
     componentDidUpdate() {
@@ -74,7 +67,7 @@ class Upload extends Component {
         const formData = new FormData();
         formData.append('file', this.state.files);
         formData.append('user', '');
-        formData.append('company', JSON.stringify(this.props.companyName));
+        formData.append('company', JSON.stringify(this.props.company.name));
         axios.post(`${config.nodeUrl}/api/document/send`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -208,16 +201,37 @@ class Upload extends Component {
                                     {
                                         (this.state.files !== null) ? (
                                             <CAlert >
-                                                <CImg src={openedFolder} fluid width={100} />
-                                                <p>{this.state.files.name}</p>
+                                                <div>
+                                                    <CImg src={openedFolder} fluid width={100} />
+                                                    <p>{this.props.company.name}</p>
+                                                </div>
+                                                {(this.props.company.surco !== null) && (
+                                                    <div>
+                                                        <CImg src={openedFolder} fluid width={100} />
+                                                        <p>{this.props.company.surco.name}</p>
+                                                    </div>
+                                                )}
                                             </CAlert>
                                         ) : (
                                             <CAlert>
-                                                <CTooltip content="Glissez et déposez un fichier ou cliquez ici"
-                                                    placement="top-end"
-                                                >
-                                                    <CImg src={closedFolder} fluid width={100} />
-                                                </CTooltip>
+                                                <div>
+                                                    <CTooltip content="Glissez et déposez un fichier ou cliquez ici"
+                                                        placement="top-end"
+                                                    >
+                                                        <CImg src={closedFolder} fluid width={100} />
+                                                    </CTooltip>
+                                                    <p>{this.props.company.name}</p>
+                                                </div>
+                                                {(this.props.company.surco !== null) && (
+                                                    <div>
+                                                        <CTooltip content="Glissez et déposez un fichier ou cliquez ici"
+                                                            placement="top-end"
+                                                        >
+                                                            <CImg src={closedFolder} fluid width={100} />
+                                                        </CTooltip>
+                                                        <p>{this.props.company.surco.name}</p>
+                                                    </div>
+                                                )}
                                             </CAlert>)
                                     }
                                 </div>
@@ -226,18 +240,12 @@ class Upload extends Component {
                         </Dropzone>
                     </CModalBody>
                     <CModalFooter>
-                        {
-                            (this.state.loader === true) && (
-                                <div className="sofraco-loader">
-                                    <CProgress
-                                        color="dark"
-                                        className="mb-1 bg-white sofraco-progress-bar"
-                                        value={42}
-                                        showValue
-                                    />
-                                </div>
-                            )
-                        }
+                        <CProgress
+                            color="dark"
+                            className="mb-1 bg-white sofraco-progress-bar"
+                            value={42}
+                            showValue
+                        />
                         <CButton
                             onClick={this.onSubmitHandler}
                             className="sofraco-button"

@@ -1,4 +1,12 @@
 const fs = require('fs');
+const path = require('path');
+const { performance } = require('perf_hooks');
+const { exec, execSync, spawnSync } = require('child_process');
+const Jimp = require('jimp');
+const pdfService = require('./pdfFile');
+const splitPdfService = require('../pdf/splitPDF');
+const easyOCR = require('../easyOCR/easyOCR');
+const time = require('../time/time');
 
 
 const reIndexOf = (arr, rx) => {
@@ -11,17 +19,75 @@ const reIndexOf = (arr, rx) => {
     return -1;
 };
 
-exports.readPdfMETLIFE = (filesPaths) => {
+exports.readPdfMETLIFE = async (file) => {
+    let infos = { executionTime: 0, infos: [] };
+    console.log('DEBUT TRAITEMENT METLIFE');
+    const excecutionStartTime = performance.now();
+    const pathsToPDF = await splitPdfService.splitPDF(file);
+    for (let pathToPDF of pathsToPDF) {
+        const images = await pdfService.convertPDFToImg(pathToPDF);
+        const textFilePaths = getTextFromImages(images);
+        const infoBordereau = readBordereauMETLIFE(textFilePaths);
+        infos.infos.push(infoBordereau);
+    }
+    const excecutionStopTime = performance.now();
+    let executionTime = excecutionStopTime - excecutionStartTime;
+    executionTime = time.millisecondToTime(executionTime);
+    console.log('Total Execution time : ', executionTime);
+    infos.executionTime = executionTime;
+    console.log('FIN TRAITEMENT METLIFE');
+    return infos;
+};
+
+const getTextFromImages = (images) => {
+    let textFilePaths = [];
+    for (let image of images) {
+        const filename = image.name.split('.')[0];
+        const name = filename.split('_');
+        const numero = name[name.length - 1];
+        if (numero !== '2') {
+            // const img = await Jimp.read(image.path);
+            // img.contrast(0.5);
+            // const pathImage = `${image.path.split('.')[0]}_edit.png`;
+            // await img.writeAsync(pathImage);
+            const destFullPath = path.join(__dirname, '..', '..', '..', 'documents', 'texte', `${image.name.split('.')[0]}`);
+            try {
+                if (numero === '1') {
+                    const tesseractStartTime = performance.now();
+                    execSync(`tesseract ${image.path} ${destFullPath}`);
+                    const tesseractStopTime = performance.now();
+                    const executionTimeTesseract = tesseractStopTime - tesseractStartTime;
+                    console.log('Execution time Tesseract : ', time.millisecondToTime(executionTimeTesseract));
+                } else {
+                    const easyOCRStartTime = performance.now();
+                    easyOCR(image.path, destFullPath);
+                    const easyOCRStopTime = performance.now();
+                    const executionTimeEasyOCR = easyOCRStopTime - easyOCRStartTime;
+                    console.log('Execution time easy OCR: ', time.millisecondToTime(executionTimeEasyOCR));
+                }
+                textFilePaths.push(`${destFullPath}.txt`);
+            } catch (err) {
+                console.log(err);
+                console.log(`Temps de traitement : ${time}`);
+                clearInterval(timeout);
+            }
+        }
+    }
+    return textFilePaths;
+}
+
+const readBordereauMETLIFE = (textFilePaths) => {
+    const readBordereauMETLIFEStartTime = performance.now();
     let infos = { syntheseDesCommissions: null, detailDesPolices: null };
     let detailDesPolices = [];
     let syntheseDesCommissions = {};
-    for (let filePath of filesPaths) {
-        const content = fs.readFileSync(filePath, { encoding: 'utf-8' });
+    for (let textFilePath of textFilePaths) {
+        const content = fs.readFileSync(textFilePath, { encoding: 'utf-8' });
         let data = content.split('\n');
         data = data.filter((element) => {
             return element.trim() !== '';
         });
-        const filenameA = filePath.split('/');
+        const filenameA = textFilePath.split('/');
         const filenameE = filenameA[filenameA.length - 1];
         const filename = filenameE.split('.')[0];
         const nameA = filename.split('_');
@@ -162,7 +228,7 @@ exports.readPdfMETLIFE = (filesPaths) => {
                 }
                 if (reIndexOf(element, /sold.*/) > 0) {
                     element.splice(reIndexOf(element, /sold.*/), 1);
-                } else if(reIndexOf(element, /soid.*/) > 0) {
+                } else if (reIndexOf(element, /soid.*/) > 0) {
                     element.splice(reIndexOf(element, /soid.*/), 1);
                 }
 
@@ -196,9 +262,9 @@ exports.readPdfMETLIFE = (filesPaths) => {
 
                 let periode = '';
                 const du = element[reIndexOf(element, /du \d{1,2}[/]\d{1,2}[/]\d{1,4}/)] ||
-                element[reIndexOf(element, /du \d{1,2}[/]\d+/)] ||
-                element[reIndexOf(element, /\d{1,2}[/]\d{1,2}[/]\d{1,4}/)] ||
-                element[reIndexOf(element, /\d{1,2}[/]\d+/)];
+                    element[reIndexOf(element, /du \d{1,2}[/]\d+/)] ||
+                    element[reIndexOf(element, /\d{1,2}[/]\d{1,2}[/]\d{1,4}/)] ||
+                    element[reIndexOf(element, /\d{1,2}[/]\d+/)];
                 if (reIndexOf(element, /du \d{1,2}[/]\d{1,2}[/]\d{1,4}/) > 0) {
                     element.splice(reIndexOf(element, /du \d{1,2}[/]\d{1,2}[/]\d{1,4}/), 1);
                 } else if (reIndexOf(element, /du \d{1,2}[/]\d+/) > 0) {
@@ -308,7 +374,8 @@ exports.readPdfMETLIFE = (filesPaths) => {
             infos.detailDesPolices = detailDesPolices;
         }
     }
+    const readBordereauMETLIFEStopTime = performance.now();
+    const executionTimereadBordereauMETLIFE = readBordereauMETLIFEStopTime - readBordereauMETLIFEStartTime;
+    console.log('Read bordereau metlife time : ', time.millisecondToTime(executionTimereadBordereauMETLIFE));
     return infos;
-
-};
-
+}
