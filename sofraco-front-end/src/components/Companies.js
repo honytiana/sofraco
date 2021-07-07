@@ -49,7 +49,7 @@ class Companies extends Component {
                 let loaders = [];
                 for (let company of companies) {
                     collapsed.push({ company: company.name, collapse: false });
-                    loaders.push({ company: company.name, load: false });
+                    loaders.push({ company: company.name, load: false, excecutionTime: null });
                 }
                 this.setState({
                     companies: companies,
@@ -101,12 +101,16 @@ class Companies extends Component {
         }).then((res) => {
             this.setState({
                 toast: true,
-                messageToast: { header: 'success', message: `Traitement terminé pour ${res.data.company}` }
+                messageToast: {
+                    header: 'success',
+                    message: `Traitement terminé pour ${res.data.company}`
+                }
             });
             this.state.loaders.forEach((element, index) => {
                 if (element.company === res.data.company) {
                     let newLoading = this.state.loaders.slice();
                     newLoading[index].load = false;
+                    newLoading[index].executionTime = res.data.executionTime;
                     this.setState({
                         loaders: newLoading,
                     });
@@ -129,9 +133,6 @@ class Companies extends Component {
 
 
     render() {
-        // const images = this.state.companies.map((companies) => {
-        //     return companies.logo
-        // });
         return (
             <CContainer fluid>
                 <CRow>
@@ -144,13 +145,19 @@ class Companies extends Component {
                                 <CCol key={`${company._id}_Column`} sm="3">
                                     <CCard key={`${company._id}_Card`} onDoubleClick={() => { this.toggleDetails(index) }} >
                                         <CCardBody key={`${company._id}_CardBody`} className="sofraco-card-body" >
-                                            <CImg className="sofraco-logo-company" key={`${company._id}_Img`} src={`data:image/png;base64,${company.logo}`} fluid width={100} />
-                                            <div>{
-                                                (loader.load === true) && (
-                                                    <CSpinner color="warning" variant="grow" />
-                                                )
-                                            }
+                                            <div className="sofraco-container-image">
+                                                <CImg className="sofraco-logo-company" key={`${company._id}_Img`} src={`data:image/png;base64,${company.logo}`} fluid width={100} />
                                             </div>
+                                            {(loader.load) && (
+                                                <div>
+                                                    <CSpinner color="warning" variant="grow" />
+                                                </div>
+                                            )}
+                                            {(loader.executionTime) && (
+                                                <div>
+                                                    <p>Traité en : {loader.executionTime}</p>
+                                                </div>
+                                            )}
                                         </CCardBody>
                                         <CCardFooter key={`${company._id}_CardFooter`}>
                                             {company.name}
@@ -163,6 +170,7 @@ class Companies extends Component {
                                         showModal={this.state.details.includes(index)}
                                         onCloseModal={() => { this.toggleDetails(index) }}
                                         loader={this.state.loader}
+                                        executionTime={loader.executionTime}
                                     />
                                 </CCol>
                             )
@@ -170,14 +178,11 @@ class Companies extends Component {
                         (
                             <CCol sm="6">
                                 <CCard>
-                                    <CCardHeader>
-                                        Header
-                                    </CCardHeader>
                                     <CCardBody>
-                                        Body.
+                                        Company
                                     </CCardBody>
                                     <CCardFooter>
-                                        Footer.
+                                        Company
                                     </CCardFooter>
                                 </CCard>
                             </CCol>

@@ -67,7 +67,7 @@ class Upload extends Component {
         const formData = new FormData();
         formData.append('file', this.state.files);
         formData.append('user', '');
-        formData.append('company', JSON.stringify(this.props.company.name));
+        formData.append('company', this.props.company.name);
         axios.post(`${config.nodeUrl}/api/document/send`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -170,7 +170,6 @@ class Upload extends Component {
         this.setState({
             files: file
         });
-        console.log(this.state.files);
     }
 
     render() {
@@ -240,12 +239,11 @@ class Upload extends Component {
                         </Dropzone>
                     </CModalBody>
                     <CModalFooter>
-                        <CProgress
-                            color="dark"
-                            className="mb-1 bg-white sofraco-progress-bar"
-                            value={42}
-                            showValue
-                        />
+                        {
+                            (this.props.executionTime) && (
+                                <p>Traité en : {this.props.executionTime}</p>
+                            )
+                        }
                         <CButton
                             onClick={this.onSubmitHandler}
                             className="sofraco-button"

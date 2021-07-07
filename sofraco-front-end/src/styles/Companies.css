@@ -39,8 +39,13 @@
 
 .sofraco-card-body {
     min-height: 140px;
-    max-height: 140px;
+    max-height: 180px;
     text-align: center;
+}
+
+.sofraco-container-image {
+    min-height: 100px;
+    max-height: 100px;
 }
 
 .sofraco-logo-company {
