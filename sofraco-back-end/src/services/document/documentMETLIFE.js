@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { performance } = require('perf_hooks');
 const { exec, execSync, spawnSync } = require('child_process');
+const PDFParser = require("pdf2json");
 const Jimp = require('jimp');
 const pdfService = require('./pdfFile');
 const splitPdfService = require('../pdf/splitPDF');
@@ -23,11 +24,20 @@ exports.readPdfMETLIFE = async (file) => {
     let infos = { executionTime: 0, infos: [] };
     console.log('DEBUT TRAITEMENT METLIFE');
     const excecutionStartTime = performance.now();
-    const pathsToPDF = await splitPdfService.splitPDF(file);
+    // let pathsToPDF = await splitPdfService.splitPDF(file);
+    let pathsToPDF;
+    pathsToPDF = fs.readdirSync(path.join(__dirname, '..', '..', '..', 'documents', 'splitedPDF'));
     for (let pathToPDF of pathsToPDF) {
-        const images = await pdfService.convertPDFToImg(pathToPDF);
-        const textFilePaths = getTextFromImages(images);
-        const infoBordereau = readBordereauMETLIFE(textFilePaths);
+        pathToPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splitedPDF', pathToPDF);
+        // const images = await pdfService.convertPDFToImg(pathToPDF);
+        // const textFilePaths = getTextFromImages(images);
+        const textFilePaths = fs.readdirSync(path.join(__dirname, '..', '..', '..', 'documents', 'texte'));
+        let paths = [];
+        for (textPath of textFilePaths) {
+            paths.push(path.join(__dirname, '..', '..', '..', 'documents', 'texte', textPath))
+        }
+        const detailDesPolices = await getTextFromPDF(pathToPDF);
+        const infoBordereau = readBordereauMETLIFE(paths, detailDesPolices);
         infos.infos.push(infoBordereau);
     }
     const excecutionStopTime = performance.now();
@@ -69,17 +79,80 @@ const getTextFromImages = (images) => {
             } catch (err) {
                 console.log(err);
                 console.log(`Temps de traitement : ${time}`);
-                clearInterval(timeout);
             }
         }
     }
     return textFilePaths;
 }
 
-const readBordereauMETLIFE = (textFilePaths) => {
+const getTextFromPDF = (file) => {
+    let pdfParser = new PDFParser(this, 1);
+    pdfParser.loadPDF(file);
+    let detailDesPolices = [];
+    return new Promise((resolve, reject) => {
+        pdfParser.on("pdfParser_dataError", (errData) => {
+            reject(errData.parserError);
+        });
+        pdfParser.on("pdfParser_dataReady", async (pdfData) => {
+            const pdfContent = pdfParser.getRawTextContent();
+            const separateur = /-+Page [(]\d+[)] Break-+/i;
+            const pdfContentArr = pdfContent.split(separateur);
+            pdfContentArr.forEach((element, index) => {
+                if (index > 1) {
+                    const ctArr = element.split('\r\n');
+                    const contentArr = ctArr.filter((e, i) => {
+                        return e !== '';
+                    });
+                    const newContentArr = [];
+                    const maxI = contentArr.length / 4;
+                    for (let i = 0; i < maxI; i++) {
+                        if (contentArr.length > 0) {
+                            const d = contentArr.slice(0, reIndexOf(contentArr, /Sous-total/) + 1);
+                            contentArr.splice(0, reIndexOf(contentArr, /Sous-total/) + 1);
+                            newContentArr.push(d);
+                        } else {
+                            break;
+                        }
+                    }
+                    const rPolice = /(^S\d+)[^\d].*/g;
+                    const rMontantTaux = /[^\d]+ [\d]{2}\/[\d]{2}\/[\d]{4}au [\d]{2}\/[\d]{2}\/[\d]{4}[^\d]+([\d]+\.[\d]+) €[^\d]+([\d]+\.[\d]+)[^\d]+([\d]+\.[\d]+) €/g;
+                    for (let content of newContentArr) {
+                        let valPolice = '';
+                        let montantPrime = '';
+                        let taux = '';
+                        let montantCommission = '';
+                        for (let line of content) {
+                            if (line.match(rPolice)) {
+                                valPolice = line.replace(rPolice, '$1');
+                            }
+                            if (line.match(rMontantTaux)) {
+                                montantPrime = line.replace(rMontantTaux, '$1');
+                                montantPrime = parseFloat(montantPrime);
+                                taux = line.replace(rMontantTaux, '$2');
+                                taux = parseFloat(taux);
+                                montantCommission = line.replace(rMontantTaux, '$3');
+                                montantCommission = parseFloat(montantCommission);
+                            }
+                        }
+                        const detail = {
+                            valPolice,
+                            montantPrime,
+                            taux,
+                            montantCommission
+                        }
+                        detailDesPolices.push(detail);
+                    }
+                }
+            })
+            resolve(detailDesPolices);
+        });
+    });
+}
+
+const readBordereauMETLIFE = (textFilePaths, detailDesPolices) => {
     const readBordereauMETLIFEStartTime = performance.now();
     let infos = { syntheseDesCommissions: null, detailDesPolices: null };
-    let detailDesPolices = [];
+    let dDPolice = [];
     let syntheseDesCommissions = {};
     for (let textFilePath of textFilePaths) {
         const content = fs.readFileSync(textFilePath, { encoding: 'utf-8' });
@@ -188,7 +261,7 @@ const readBordereauMETLIFE = (textFilePaths) => {
 
             newDetails.forEach((element, index) => {
                 let i = 0;
-                const police = element[0];
+                let police = element[0];
                 element.splice(0, 1);
 
                 let fractionnement = '';
@@ -303,11 +376,16 @@ const readBordereauMETLIFE = (textFilePaths) => {
                     element.splice(reIndexOf(element, /paye/i), 1);
                 }
 
-                const stPolice = element[reIndexOf(element, /Sous-total/i)].split(' ');
-                const sousTotalPolice = stPolice[stPolice.length - 1];
-                const sousTotalMontant = parseFloat(element[reIndexOf(element, /Sous-total/i) + 1].split(' ')[0]);
-                element.splice(reIndexOf(element, /Sous-total/i), 1);
-                element.splice(element.indexOf(sousTotalMontant), 1);
+                let stPolice;
+                let sousTotalPolice;
+                let sousTotalMontant;
+                if (reIndexOf(element, /Sous-total/i) > 0) {
+                    stPolice = element[reIndexOf(element, /Sous-total/i)].split(' ');
+                    sousTotalPolice = stPolice[stPolice.length - 1];
+                    sousTotalMontant = parseFloat(element[reIndexOf(element, /Sous-total/i) + 1].split(' ')[0]);
+                    element.splice(reIndexOf(element, /Sous-total/i), 1);
+                    element.splice(element.indexOf(sousTotalMontant), 1);
+                }
 
                 const mots = element.filter((e, i) => {
                     return e.match(/^[a-z]+/i);
@@ -346,32 +424,37 @@ const readBordereauMETLIFE = (textFilePaths) => {
                     montantCommission = ((montantPrime * taux) / 100).toFixed(2);
                 }
 
-                const contrat = {
-                    police: sousTotalPolice,
-                    assure,
-                    produit
-                };
-                const prime = {
-                    fractionnement,
-                    periode,
-                    etat,
-                    montant: montantPrime
-                };
-                let commissions = {
-                    mode,
-                    taux,
-                    status,
-                    montant: montantCommission
-                };
-                detailDesPolices.push({
-                    contrat,
-                    prime,
-                    commissions,
-                    sousTotalPolice,
-                    sousTotalMontant
-                });
+                for (let detailPolice of detailDesPolices) {
+                    if (detailPolice.valPolice === sousTotalPolice) {
+                        const contrat = {
+                            police: sousTotalPolice,
+                            assure,
+                            produit
+                        };
+                        const prime = {
+                            fractionnement,
+                            periode,
+                            etat,
+                            montant: detailPolice.montantPrime
+                        };
+                        let commissions = {
+                            mode,
+                            taux: detailPolice.taux,
+                            status,
+                            montant: detailPolice.montantCommission
+                        };
+                        dDPolice.push({
+                            contrat,
+                            prime,
+                            commissions,
+                            sousTotalPolice,
+                            sousTotalMontant
+                        });
+                    }
+                }
+
             })
-            infos.detailDesPolices = detailDesPolices;
+            infos.detailDesPolices = dDPolice;
         }
     }
     const readBordereauMETLIFEStopTime = performance.now();

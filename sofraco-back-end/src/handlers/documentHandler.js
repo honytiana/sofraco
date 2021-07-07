@@ -24,29 +24,18 @@ class DocumentHandler {
         filePathArr.pop();
         const absolutePath = filePathArr.join('/');
         const fileNameWithExtension = file.filename;
-        const fileName = fileNameWithExtension.split('.')[0];
+        let fileName = fileNameWithExtension.split('.')[0];
+        fileName = fileName.replace(/\s/g, '_');
         const extension = fileNameWithExtension.split('.')[1];
         fs.renameSync(file.path, `${absolutePath}/${fileName}_${company}.${extension}`);
     }
 
     getDocument(id) {
-        Document.findById(id, (err, doc) => {
-            if (err) {
-                console.log(err);
-            } else {
-                return doc;
-            }
-        });
+        return Document.findById(id);
     }
 
     getDocuments() {
-        Document.find((err, doc) => {
-            if (err) {
-                console.log(err);
-            } else {
-                return doc;
-            }
-        });
+        return Document.find();
     }
 
     updateDocument() {

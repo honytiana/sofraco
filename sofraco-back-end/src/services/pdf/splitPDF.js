@@ -2,14 +2,16 @@ const path = require('path');
 const fs = require('fs');
 const PDFParser = require("pdf2json");
 const { PDFDocument } = require('pdf-lib');
+const { performance } = require('perf_hooks');
+const time = require('../time/time');
 
 exports.splitPDF = (file) => {
-    let pdfParser = new PDFParser(this, 1);
     console.log('DEBUT SEPARATION PDF');
-    let time = 0;
-    const timeout = setInterval(() => {
-        time++;
-    }, 1000);
+    const excecutionStartTime = performance.now();
+    let pdfParser = new PDFParser(this, 1);
+    const fileArray = file.split('/');
+    const fileNameWithExtension = fileArray[fileArray.length - 1];
+    const fileName = fileNameWithExtension.split('.')[0];
     pdfParser.loadPDF(file);
     return new Promise((resolve, reject) => {
         pdfParser.on("pdfParser_dataError", (errData) => {
@@ -43,12 +45,13 @@ exports.splitPDF = (file) => {
                     newPDF.addPage(page);
                 }
                 const pdfBytes = await newPDF.save();
-                fs.writeFileSync(path.join(__dirname, '..', '..', '..', 'documents', 'splitedPDF', `name_${pdfNumero}.pdf`), pdfBytes);
-                pathToPdf.push(path.join(__dirname, '..', '..', '..', 'documents', 'splitedPDF', `name_${pdfNumero}.pdf`));
+                fs.writeFileSync(path.join(__dirname, '..', '..', '..', 'documents', 'splitedPDF', `${fileName}_${pdfNumero}.pdf`), pdfBytes);
+                pathToPdf.push(path.join(__dirname, '..', '..', '..', 'documents', 'splitedPDF', `${fileName}_${pdfNumero}.pdf`));
                 pdfNumero++;
             }
-            console.log(time);
-            clearInterval(timeout);
+            const excecutionStopTime = performance.now();
+            let executionTime = excecutionStopTime - excecutionStartTime;
+            console.log('Split pdf time : ', time.millisecondToTime(executionTime));
             console.log('FIN SEPARATION PDF');
             resolve(pathToPdf);
         });

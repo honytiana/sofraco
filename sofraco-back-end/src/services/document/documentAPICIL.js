@@ -1,4 +1,6 @@
 const ExcelJS = require('exceljs');
+const { performance } = require('perf_hooks');
+const time = require('../time/time');
 
 exports.readExcelAPICIL = async (file) => {
     console.log('DEBUT TRAITEMENT APICIL');
