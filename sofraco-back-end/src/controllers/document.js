@@ -6,9 +6,7 @@ const Document = require('../models/document');
 const documentHandler = require('../handlers/documentHandler');
 const documentAPICIL = require('../services/document/documentAPICIL');
 const documentMETLIFE = require('../services/document/documentMETLIFE');
-const excelFileService = require('../services/document/excelFile');
-const pdfFileService = require('../services/document/pdfFile');
-const imageFileService = require('../services/document/imageFile');
+const documentAVIVA = require('../services/document/documentAVIVA');
 
 exports.sendDocument = (req, res) => {
     documentHandler.sendDocument(req.file, req.body.company);
@@ -47,9 +45,9 @@ exports.createDocument = async (req, res) => {
         // case 'AVIVA':
         //     infos = await readExcel(file);
         //     break;
-        // case 'AVIVA SURCO':
-        //     infos = await readExcel(file);
-        //     break;
+        case 'AVIVA SURCO':
+            ocr = await documentAVIVA.readExcelAVIVASURCO(req.body.filePath);
+            break;
         // case 'CARDIF':
         //     infos = await readExcel(file);
         //     break;
@@ -96,8 +94,8 @@ exports.getDocument = (req, res) => {
     res.status(200).json(document);
 }
 
-exports.getDocuments = (req, res) => {
+exports.getDocuments = async (req, res) => {
     console.log('get documents');
-    const documents = documentHandler.getDocuments();
+    const documents = await documentHandler.getDocuments();
     res.status(200).json(documents);
 }
