@@ -205,6 +205,7 @@ exports.createWorkSheetAVIVASURCO = (workSheet, dataCourtierOCR) => {
 
             workSheet.getRow(rowNumber).getCell('R').value = { formula: `Q${rowNumber}*40%` };
             workSheet.getRow(rowNumber).getCell('R').value = { formula: `Q${rowNumber}*40%` };
+            workSheet.getRow(rowNumber).getCell('R').value = '#,##0.00"€";[Red]\-#,##0.00"€"';
             workSheet.getRow(rowNumber).getCell('R').border = {
                 top: { style: 'thin' },
                 left: { style: 'thin' },

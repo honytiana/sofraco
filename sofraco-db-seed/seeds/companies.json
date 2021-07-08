@@ -34,7 +34,7 @@
         "website": "aviva.com",
         "is_enabled": true,
         "name": "AVIVA",
-        "logo": "/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/logos/company.png",
+        "logo": "/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/logos/aviva.png",
         "creation_date": "2010-04-02T00:00:00.000Z",
         "surco": {
             "address": "France",
@@ -59,7 +59,7 @@
         "website": "cardif.com",
         "is_enabled": true,
         "name": "CARDIF",
-        "logo": "/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/logos/company.png",
+        "logo": "/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/logos/cardif.png",
         "creation_date": "2010-05-02T00:00:00.000Z",
         "surco": null
     },
@@ -85,7 +85,7 @@
         "website": "cegema.com",
         "is_enabled": true,
         "name": "CEGEMA",
-        "logo": "/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/logos/company.png",
+        "logo": "/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/logos/cegema.png",
         "creation_date": "2010-07-02T00:00:00.000Z",
         "surco": null
     },

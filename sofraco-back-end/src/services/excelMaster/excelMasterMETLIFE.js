@@ -1,10 +1,20 @@
 
 exports.getOCRMETLIFE = (ocr) => {
     let infosOCR = []
-    const syntheseDesCommissions = ocr.syntheseDesCommissions;
-    const detailDesPolices = ocr.detailDesPolices;
-
-    infosOCR.push({ company: 'METLIFE', infosOCR: { syntheseDesCommissions, detailDesPolices } });
+    for (let info of ocr.infos) {
+        const syntheseDesCommissions = info.syntheseDesCommissions;
+        const detailDesPolices = info.detailDesPolices;
+        infosOCR.push({
+            company: 'METLIFE', infosOCR: {
+                code: {
+                    cabinet: syntheseDesCommissions.codeApporteurEmetteur,
+                    code: syntheseDesCommissions.codeApporteurEmetteur
+                },
+                syntheseDesCommissions,
+                detailDesPolices
+            }
+        });
+    }
     return infosOCR;
 
 }
@@ -35,42 +45,42 @@ exports.createWorkSheetMETLIFE = (workSheet, dataCourtierOCR) => {
     row4.getCell('A').value = 'Total des primes encaissées sur la période : ';
     row4.getCell('A').font = { color: { argb: '1E90FF' } };
     row4.getCell('B').value = dataCourtierOCR.infosOCR.syntheseDesCommissions.primesEncaisseesSurLaPeriode;
-    row4.getCell('B').numFmt = '####,##0.00"€";\-####,##0.00"€"';
+    row4.getCell('B').numFmt = '#,##0.00"€";\-#,##0.00"€"';
     row4.getCell('B').font = { color: { argb: '00008B' } };
 
     const row5 = workSheet.getRow(5);
     row5.getCell('A').value = 'Sous-total des commissions calculées sur la période : ';
     row5.getCell('A').font = { color: { argb: '1E90FF' } };
     row5.getCell('B').value = dataCourtierOCR.infosOCR.syntheseDesCommissions.stCommissionsCalculeesSurLaPeriode;
-    row5.getCell('B').numFmt = '####,##0.00"€";\-####,##0.00"€"';
+    row5.getCell('B').numFmt = '#,##0.00"€";\-#,##0.00"€"';
     row5.getCell('B').font = { color: { argb: '00008B' } };
 
     const row6 = workSheet.getRow(6);
     row6.getCell('A').value = 'Sous-total des commissions reprises sur la période : ';
     row6.getCell('A').font = { color: { argb: '1E90FF' } };
     row6.getCell('B').value = dataCourtierOCR.infosOCR.syntheseDesCommissions.stCommissionsReprisesSurLaPeriode;
-    row6.getCell('B').numFmt = '####,##0.00"€";\-####,##0.00"€"';
+    row6.getCell('B').numFmt = '#,##0.00"€";\-#,##0.00"€"';
     row6.getCell('B').font = { color: { argb: '00008B' } };
 
     const row7 = workSheet.getRow(7);
     row7.getCell('A').value = 'Sous-total des commissions déduites sur la période : ';
     row7.getCell('A').font = { color: { argb: '1E90FF' } };
     row7.getCell('B').value = dataCourtierOCR.infosOCR.syntheseDesCommissions.stCommissionsDeduitesSurLaPeriode;
-    row7.getCell('B').numFmt = '####,##0.00"€";\-####,##0.00"€"';
+    row7.getCell('B').numFmt = '#,##0.00"€";\-#,##0.00"€"';
     row7.getCell('B').font = { color: { argb: '00008B' } };
 
     const row8 = workSheet.getRow(8);
     row8.getCell('A').value = 'Sous-total des opérations diverses sur la période : ';
     row8.getCell('A').font = { color: { argb: '1E90FF' } };
     row8.getCell('B').value = dataCourtierOCR.infosOCR.syntheseDesCommissions.stOperationsDiversesSurLaPeriode;
-    row8.getCell('B').numFmt = '####,##0.00"€";\-####,##0.00"€"';
+    row8.getCell('B').numFmt = '#,##0.00"€";\-#,##0.00"€"';
     row8.getCell('B').font = { color: { argb: '00008B' } };
 
     const row9 = workSheet.getRow(9);
     row9.getCell('A').value = 'Total des commissions dues : ';
     row9.getCell('A').font = { bold: true, color: { argb: '1E90FF' } };
     row9.getCell('B').value = dataCourtierOCR.infosOCR.syntheseDesCommissions.totalCommissionsDues;
-    row9.getCell('B').numFmt = '####,##0.00"€";\-####,##0.00"€"';
+    row9.getCell('B').numFmt = '#,##0.00"€";\-#,##0.00"€"';
     row9.getCell('B').font = { color: { argb: '00008B' } };
 
     const row15 = workSheet.getRow(15);
@@ -203,17 +213,17 @@ exports.createWorkSheetMETLIFE = (workSheet, dataCourtierOCR) => {
         workSheet.getRow(rowNumber).getCell('E').value = data.prime.periode;
         workSheet.getRow(rowNumber).getCell('F').value = data.prime.etat;
         workSheet.getRow(rowNumber).getCell('G').value = data.prime.montant;
-        workSheet.getRow(rowNumber).getCell('G').numFmt = '####,##0.00"€";\-####,##0.00"€"';
+        workSheet.getRow(rowNumber).getCell('G').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         workSheet.getRow(rowNumber).getCell('H').value = data.commissions.mode;
         workSheet.getRow(rowNumber).getCell('I').value = data.commissions.taux;
         workSheet.getRow(rowNumber).getCell('J').value = data.commissions.status;
         workSheet.getRow(rowNumber).getCell('K').value = data.commissions.montant;
-        workSheet.getRow(rowNumber).getCell('K').numFmt = '####,##0.00"€";\-####,##0.00"€"';
+        workSheet.getRow(rowNumber).getCell('K').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
         workSheet.getRow(rowNumber).getCell('G').value = 'Sous-total police';
         workSheet.getRow(rowNumber).getCell('I').value = data.sousTotalPolice;
         workSheet.getRow(rowNumber).getCell('K').value = data.sousTotalMontant;
-        workSheet.getRow(rowNumber).getCell('K').numFmt = '####,##0.00"€";\-####,##0.00"€"';
+        workSheet.getRow(rowNumber).getCell('K').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
         rowNumber++;
     }

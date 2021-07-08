@@ -176,12 +176,6 @@ exports.createWorkSheetAPICIL = (workSheet, dataCourtierOCR) => {
     } else {
         workSheet.getRow(rowNumber).getCell('I').value = { formula: `SUM(I${debut}:I${rowNumber - 1})` };
     }
-    // if (workSheet.getRow(rowNumber - 1).getCell('I').value !== '' ||
-    //     workSheet.getRow(rowNumber - 1).getCell('I').value !== 'MT ECHEANCE') {
-    //     workSheet.getRow(rowNumber).getCell('I').value = { formula: `SUM(I${debut}:I${rowNumber - 1})` };
-    // } else {
-    //     workSheet.getRow(rowNumber).getCell('I').value = 0;
-    // }
     workSheet.getRow(rowNumber).getCell('I').numFmt = '###,##0.00"€";\-###,##0.00"€"';
     const totalRepriseRowNumber = rowNumber;
     rowNumber++;

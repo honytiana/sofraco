@@ -7,6 +7,7 @@ const documentHandler = require('../handlers/documentHandler');
 const documentAPICIL = require('../services/document/documentAPICIL');
 const documentMETLIFE = require('../services/document/documentMETLIFE');
 const documentAVIVA = require('../services/document/documentAVIVA');
+const documentCARDIF = require('../services/document/documentCARDIF');
 
 exports.sendDocument = (req, res) => {
     documentHandler.sendDocument(req.file, req.body.company);
@@ -48,9 +49,9 @@ exports.createDocument = async (req, res) => {
         case 'AVIVA SURCO':
             ocr = await documentAVIVA.readExcelAVIVASURCO(req.body.filePath);
             break;
-        // case 'CARDIF':
-        //     infos = await readExcel(file);
-        //     break;
+        case 'CARDIF':
+            ocr = await documentCARDIF.readExcelCARDIF(req.body.filePath);
+            break;
         // case 'CBP FRANCE':
         //     infos = await readExcel(file);
         //     break;
