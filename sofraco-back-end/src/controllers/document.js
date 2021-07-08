@@ -5,9 +5,10 @@ const config = require('../../config.json');
 const Document = require('../models/document');
 const documentHandler = require('../handlers/documentHandler');
 const documentAPICIL = require('../services/document/documentAPICIL');
-const documentMETLIFE = require('../services/document/documentMETLIFE');
 const documentAVIVA = require('../services/document/documentAVIVA');
 const documentCARDIF = require('../services/document/documentCARDIF');
+const documentCEGEMA = require('../services/document/documentCEGEMA');
+const documentMETLIFE = require('../services/document/documentMETLIFE');
 
 exports.sendDocument = (req, res) => {
     documentHandler.sendDocument(req.file, req.body.company);
@@ -55,9 +56,9 @@ exports.createDocument = async (req, res) => {
         // case 'CBP FRANCE':
         //     infos = await readExcel(file);
         //     break;
-        // case 'CEGEMA':
-        //     infos = await readExcel(file);
-        //     break;
+        case 'CEGEMA':
+            ocr = await documentCEGEMA.readExcelCEGEMA(req.body.filePath);
+            break;
         // case 'ERES':
         //     infos = await readExcel(file);
         //     break;
