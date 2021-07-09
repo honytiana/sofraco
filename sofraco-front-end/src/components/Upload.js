@@ -1,18 +1,12 @@
 import { Component } from 'react';
 import '@coreui/coreui/dist/css/coreui.css';
 import {
-    CContainer,
-    CRow,
-    CCol,
-    CForm,
-    CInput,
     CAlert,
     CToast,
     CToastHeader,
     CToastBody,
     CToaster,
     CImg,
-    CProgress,
     CTooltip,
     CModal,
     CModalHeader,
@@ -36,6 +30,7 @@ class Upload extends Component {
             company: null,
             location: props.location,
             files: null,
+            filesSurco: null,
             loader: false,
             toast: false,
             messageToast: {}
@@ -65,9 +60,11 @@ class Upload extends Component {
             loader: true
         });
         const formData = new FormData();
-        formData.append('file', this.state.files);
+        formData.append('files', this.state.files);
+        formData.append('files', this.state.filesSurco);
+        formData.append('surco', this.state.filesSurco ? true : false);
         formData.append('user', '');
-        formData.append('company', this.props.company.name);
+        formData.append('company', JSON.stringify(this.props.company));
         axios.post(`${config.nodeUrl}/api/document/send`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -95,13 +92,13 @@ class Upload extends Component {
         });
     }
 
-    onChangeHandler(event) {
+    onChangeHandler(event, companyName) {
         event.preventDefault();
         const file = event.target.files[0];
         const fileName = file.name;
         const fileNameArray = fileName.split('.');
         const extension = fileNameArray[fileNameArray.length - 1];
-        const company = this.props.companyName;
+        const company = companyName;
         switch (company.toUpperCase()) {
             case 'APICIL':
                 if (extension.toUpperCase() !== 'XLSX') {
@@ -115,6 +112,10 @@ class Upload extends Component {
                             messageToast: {}
                         });
                     }, 6000);
+                } else {
+                    this.setState({
+                        files: file
+                    });
                 }
                 break;
             // case 'APREP':
@@ -123,18 +124,63 @@ class Upload extends Component {
             // case 'AVIVA':
             //     infos = await readPdfMETLIFE(file);
             //     break;
-            // case 'AVIVA SURCO':
-            //     infos = await readPdfMETLIFE(file);
-            //     break;
-            // case 'CARDIF':
-            //     infos = await readPdfMETLIFE(file);
-            //     break;
+            case 'AVIVA SURCO':
+                if (extension.toUpperCase() !== 'XLSX') {
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'warning', message: 'Vous devez donner un fichier Excel' }
+                    });
+                    setTimeout(() => {
+                        this.setState({
+                            toast: false,
+                            messageToast: {}
+                        });
+                    }, 6000);
+                } else {
+                    this.setState({
+                        filesSurco: file
+                    });
+                }
+                break;
+            case 'CARDIF':
+                if (extension.toUpperCase() !== 'XLSX') {
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'warning', message: 'Vous devez donner un fichier Excel' }
+                    });
+                    setTimeout(() => {
+                        this.setState({
+                            toast: false,
+                            messageToast: {}
+                        });
+                    }, 6000);
+                } else {
+                    this.setState({
+                        files: file
+                    });
+                }
+                break;
             // case 'CBP FRANCE':
             //     infos = await readPdfMETLIFE(file);
             //     break;
-            // case 'CEGEMA':
-            //     infos = await readPdfMETLIFE(file);
-            //     break;
+            case 'CEGEMA':
+                if (extension.toUpperCase() !== 'XLSX' || extension.toUpperCase() !== 'XLS') {
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'warning', message: 'Vous devez donner un fichier Excel' }
+                    });
+                    setTimeout(() => {
+                        this.setState({
+                            toast: false,
+                            messageToast: {}
+                        });
+                    }, 6000);
+                } else {
+                    this.setState({
+                        files: file
+                    });
+                }
+                break;
             // case 'ERES':
             //     infos = await readPdfMETLIFE(file);
             //     break;
@@ -156,6 +202,10 @@ class Upload extends Component {
                             messageToast: {}
                         });
                     }, 6000);
+                } else {
+                    this.setState({
+                        files: file
+                    });
                 }
                 break;
             // case 'SWISSLIFE':
@@ -167,9 +217,6 @@ class Upload extends Component {
             default:
                 console.log('Pas de compagnie correspondante');
         }
-        this.setState({
-            files: file
-        });
     }
 
     render() {
@@ -195,7 +242,7 @@ class Upload extends Component {
                                     <input
                                         {...getInputProps()}
                                         multiple={false}
-                                        onChange={this.onChangeHandler}
+                                        onChange={(event) => {this.onChangeHandler(event, this.props.companyName)}}
                                     />
                                     {
                                         (this.state.files !== null) ? (
@@ -204,12 +251,6 @@ class Upload extends Component {
                                                     <CImg src={openedFolder} fluid width={100} />
                                                     <p>{this.props.company.name}</p>
                                                 </div>
-                                                {(this.props.company.surco !== null) && (
-                                                    <div>
-                                                        <CImg src={openedFolder} fluid width={100} />
-                                                        <p>{this.props.company.surco.name}</p>
-                                                    </div>
-                                                )}
                                             </CAlert>
                                         ) : (
                                             <CAlert>
@@ -221,22 +262,53 @@ class Upload extends Component {
                                                     </CTooltip>
                                                     <p>{this.props.company.name}</p>
                                                 </div>
-                                                {(this.props.company.surco !== null) && (
-                                                    <div>
-                                                        <CTooltip content="Glissez et déposez un fichier ou cliquez ici"
-                                                            placement="top-end"
-                                                        >
-                                                            <CImg src={closedFolder} fluid width={100} />
-                                                        </CTooltip>
-                                                        <p>{this.props.company.surco.name}</p>
-                                                    </div>
-                                                )}
                                             </CAlert>)
                                     }
                                 </div>
                             )}
-
                         </Dropzone>
+                        {
+                            (this.props.company.surco !== null) && (
+                                <Dropzone onDrop={(files) => {
+                                    this.setState({
+                                        files: files[0]
+                                    })
+                                }}>
+                                    {({ getRootProps, getInputProps }) => (
+                                        <div
+                                            {...getRootProps()}
+                                        >
+                                            <input
+                                                {...getInputProps()}
+                                                multiple={false}
+                                                onChange={(event) => {this.onChangeHandler(event, this.props.company.surco.name)}}
+                                            />
+                                            {
+                                                (this.state.filesSurco !== null) ? (
+                                                    <CAlert >
+                                                        <div>
+                                                            <CImg src={openedFolder} fluid width={100} />
+                                                            <p>{this.props.company.surco.name}</p>
+                                                        </div>
+                                                    </CAlert>
+                                                ) : (
+                                                    <CAlert>
+                                                        <div>
+                                                            <CTooltip content="Glissez et déposez un fichier ou cliquez ici"
+                                                                placement="top-end"
+                                                            >
+                                                                <CImg src={closedFolder} fluid width={100} />
+                                                            </CTooltip>
+                                                            <p>{this.props.company.surco.name}</p>
+                                                        </div>
+                                                    </CAlert>)
+                                            }
+                                        </div>
+                                    )}
+
+                                </Dropzone>
+                            )
+                        }
                     </CModalBody>
                     <CModalFooter>
                         {

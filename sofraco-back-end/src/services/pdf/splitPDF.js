@@ -4,14 +4,13 @@ const PDFParser = require("pdf2json");
 const { PDFDocument } = require('pdf-lib');
 const { performance } = require('perf_hooks');
 const time = require('../time/time');
+const fileService = require('../document/files');
 
 exports.splitPDF = (file) => {
     console.log('DEBUT SEPARATION PDF');
     const excecutionStartTime = performance.now();
     let pdfParser = new PDFParser(this, 1);
-    const fileArray = file.split('/');
-    const fileNameWithExtension = fileArray[fileArray.length - 1];
-    const fileName = fileNameWithExtension.split('.')[0];
+    const fileName = fileService.getFileNameWithoutExtension(file);
     pdfParser.loadPDF(file);
     return new Promise((resolve, reject) => {
         pdfParser.on("pdfParser_dataError", (errData) => {

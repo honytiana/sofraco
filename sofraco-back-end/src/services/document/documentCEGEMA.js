@@ -4,16 +4,14 @@ const { performance } = require('perf_hooks');
 const fs = require('fs');
 const path = require('path');
 const time = require('../time/time');
+const fileService = require('./files');
 
 exports.readExcelCEGEMA = async (file) => {
     console.log('DEBUT TRAITEMENT CEGEMA');
     const excecutionStartTime = performance.now();
     let filePath = file;
-    const filePathArr = filePath.split('/');
-    const fileNameWithExtension = filePathArr[filePathArr.length - 1];
-    const fileNameArr = fileNameWithExtension.split('.');
-    const fileName = fileNameArr[0];
-    const extension = fileNameArr[1];
+    const fileName = fileService.getFileNameWithoutExtension(filePath);
+    const extension = fileService.getFileExtension(filePath);
     if (extension.toUpperCase() === 'XLS') {
         let originalFile  = XLSX.readFile(filePath);
         filePath = path.join(__dirname, '..', '..', '..', 'documents', 'uploaded', `${fileName}.xlsx`);

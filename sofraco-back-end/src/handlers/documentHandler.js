@@ -8,13 +8,13 @@ class DocumentHandler {
     createDocument(data) {
         let document = new Document();
         document.name = data.name;
-        document.company = null;
+        document.company = data.company;
         document.companyName = data.companyName;
         document.upload_date = Date.now();
-        document.path = data.path;
+        document.path_original_file = data.path_original_file;
         document.type = data.type;
         document.is_enabled = true;
-        document.ocr = data.ocr;
+        document.ocr = null;
         document.save();
         return document;
     }
@@ -27,7 +27,7 @@ class DocumentHandler {
         let fileName = fileNameWithExtension.split('.')[0];
         fileName = fileName.replace(/\s/g, '_');
         const extension = fileNameWithExtension.split('.')[1];
-        fs.renameSync(file.path, `${absolutePath}/${fileName}_${company}.${extension}`);
+        fs.renameSync(file.path, `${absolutePath}/${fileName}_${company.name}.${extension}`);
     }
 
     getDocument(id) {

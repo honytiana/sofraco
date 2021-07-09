@@ -4,7 +4,8 @@
         "user": "",
         "company": "",
         "upload_date": "2021-06-04T15:45:14.415Z",
-        "path": "pathtofile",
+        "treatment_date": null,
+        "path_original_file": "",
         "type": "excel",
         "is_enabled": true,
         "ocr": null

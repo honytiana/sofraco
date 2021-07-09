@@ -8,6 +8,7 @@ const pdfService = require('./pdfFile');
 const splitPdfService = require('../pdf/splitPDF');
 const easyOCR = require('../easyOCR/easyOCR');
 const time = require('../time/time');
+const fileService = require('./files');
 
 
 const reIndexOf = (arr, rx) => {
@@ -160,11 +161,9 @@ const readBordereauMETLIFE = (textFilePaths, detailDesPolices) => {
         data = data.filter((element) => {
             return element.trim() !== '';
         });
-        const filenameA = textFilePath.split('/');
-        const filenameE = filenameA[filenameA.length - 1];
-        const filename = filenameE.split('.')[0];
-        const nameA = filename.split('_');
-        const numero = nameA[nameA.length - 1];
+        const fileNameWithoutExtension = fileService.getFileNameWithoutExtension(textFilePath);
+        const nameArr = fileNameWithoutExtension.split('_');
+        const numero = nameArr[nameArr.length - 1];
         if (numero === '1') {
             let periodeEncaissement;
             let codeApporteurBeneficiaireCommissions;
