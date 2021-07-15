@@ -94,7 +94,7 @@ class Companies extends Component {
                 loaders: newLoading,
             });
         })
-        axios.post(`${config.nodeUrl}/api/document`, {
+        axios.put(`${config.nodeUrl}/api/document`, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -117,10 +117,11 @@ class Companies extends Component {
                 }
             })
         }).catch((err) => {
-            this.setState({
-                toast: true,
-                messageToast: { header: 'error', message: err }
-            })
+            // this.setState({
+            //     toast: true,
+            //     messageToast: { header: 'error', message: err }
+            // })
+            console.log(err);
         }).finally(() => {
             setTimeout(() => {
                 this.setState({

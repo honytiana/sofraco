@@ -62,10 +62,10 @@ class Upload extends Component {
         const formData = new FormData();
         formData.append('files', this.state.files);
         formData.append('files', this.state.filesSurco);
-        formData.append('surco', this.state.filesSurco ? true : false);
+        formData.append('surco', JSON.stringify(this.state.filesSurco ? true : false));
         formData.append('user', '');
         formData.append('company', JSON.stringify(this.props.company));
-        axios.post(`${config.nodeUrl}/api/document/send`, formData, {
+        axios.post(`${config.nodeUrl}/api/document/`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
