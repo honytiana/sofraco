@@ -7,5 +7,5 @@ module.exports = async function ({ app }) {
     await mongooseLoader();
     await expressLoader({ app });
     await routeLoader({ app });
-    await cronLoader();
+    cronLoader();
 };
