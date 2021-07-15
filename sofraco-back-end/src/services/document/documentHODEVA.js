@@ -58,8 +58,6 @@ exports.readExcelHODEVA = async (file) => {
     })
 
     let allContratsPerCourtier = [];
-    let courtiers = [];
-    // code, headers, data
     let contratCourtier = { courtier: '', headers: null, contrats: [], totalMontant: 0 };
     allContrats.forEach((element, index) => {
         if (element.adhesion !== null && (element.adhesion === element.nom && element.adhesion === element.prenom)) {
