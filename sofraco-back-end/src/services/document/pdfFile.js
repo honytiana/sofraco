@@ -1,20 +1,19 @@
 const path = require('path');
 const Pdf2Img = require('pdf2img-promises');
+const { exec, execSync, spawnSync } = require('child_process');
+const splitPdfService = require('../pdf/splitPDF');
+const fileService = require('./files');
 
 
 exports.convertPDFToImg = async (file) => {
     const filePath = file;
-    const fileNameWithExtensionArr = filePath.split('/');
-    const fileNameWithExtension = fileNameWithExtensionArr[fileNameWithExtensionArr.length - 1];
-    const filename = fileNameWithExtension.split('.')[0];
-    let converter = new Pdf2Img();
-    converter.setOptions({
-        type: 'jpg',
-        size: 1024,
-        density: 600,
-        outputdir: path.join(__dirname, '..', '..', '..', 'documents', 'temp'),
-    });
-    const data = await converter.convert(file);
-    const images = data.message;
-    return images;
+    const pdfPaths = await splitPdfService.splitPDFToSinglePagePDF(filePath);
+    let imagePaths = [];
+    for (let pdfPath of pdfPaths) {
+        const pdfName = fileService.getFileNameWithoutExtension(pdfPath);
+        const finalPath = path.join(__dirname, '..', '..', '..', 'documents', 'temp', `${pdfName}.jpg`);
+        execSync(`gm convert -append -flatten -density 300 ${pdfPath} ${finalPath}`);
+        imagePaths.push(finalPath);
+    }
+    return imagePaths;
 }

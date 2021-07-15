@@ -133,7 +133,7 @@ const generateExcelMaster = async (ocrInfos) => {
                         //     break;
                         case 'METLIFE':
                             excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, dataCourtierOCR);
-                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'masterExcel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}${new Date()}.xlsx`);
+                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'masterExcel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : `${date}`}.xlsx`);
                             break;
                         // case 'SWISSLIFE':
                         //     infos = await readExcel(file);

@@ -19,17 +19,6 @@ class DocumentHandler {
         return document;
     }
 
-    sendDocument(file, company) {
-        const filePathArr = file.path.split('/');
-        filePathArr.pop();
-        const absolutePath = filePathArr.join('/');
-        const fileNameWithExtension = file.filename;
-        let fileName = fileNameWithExtension.split('.')[0];
-        fileName = fileName.replace(/\s/g, '_');
-        const extension = fileNameWithExtension.split('.')[1];
-        fs.renameSync(file.path, `${absolutePath}/${fileName}_${company.name}.${extension}`);
-    }
-
     getDocument(id) {
         return Document.findById(id);
     }
@@ -38,8 +27,8 @@ class DocumentHandler {
         return Document.find();
     }
 
-    updateDocument() {
-
+    updateDocument(id, data) {
+        return Document.findByIdAndUpdate(id, data);
     }
 
     deleteDocument() {

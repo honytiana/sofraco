@@ -21,24 +21,30 @@ const reIndexOf = (arr, rx) => {
     return -1;
 };
 
+const reLastIndexOf = (arr, rx) => {
+    const length = arr.length;
+    let lastIndexOf = -1;
+    for (let i = 0; i < length; i++) {
+        if (arr[i].match(rx)) {
+            lastIndexOf = i;
+        }
+    }
+    return lastIndexOf;
+}
+
 exports.readPdfMETLIFE = async (file) => {
     let infos = { executionTime: 0, infos: [] };
     console.log('DEBUT TRAITEMENT METLIFE');
     const excecutionStartTime = performance.now();
-    // let pathsToPDF = await splitPdfService.splitPDF(file);
-    let pathsToPDF;
-    pathsToPDF = fs.readdirSync(path.join(__dirname, '..', '..', '..', 'documents', 'splitedPDF'));
+    let pathsToPDF = await splitPdfService.splitPDFMETLIFE(file);
+    // let pathsToPDF;
+    // pathsToPDF = fs.readdirSync(path.join(__dirname, '..', '..', '..', 'documents', 'splitedPDF'));
     for (let pathToPDF of pathsToPDF) {
-        pathToPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splitedPDF', pathToPDF);
-        // const images = await pdfService.convertPDFToImg(pathToPDF);
-        // const textFilePaths = getTextFromImages(images);
-        const textFilePaths = fs.readdirSync(path.join(__dirname, '..', '..', '..', 'documents', 'texte'));
-        let paths = [];
-        for (textPath of textFilePaths) {
-            paths.push(path.join(__dirname, '..', '..', '..', 'documents', 'texte', textPath))
-        }
-        const detailDesPolices = await getTextFromPDF(pathToPDF);
-        const infoBordereau = readBordereauMETLIFE(paths, detailDesPolices);
+        // pathToPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splitedPDF', pathToPDF);
+        const images = await pdfService.convertPDFToImg(pathToPDF);
+        // const textFilePaths = fs.readdirSync(path.join(__dirname, '..', '..', '..', 'documents', 'texte'));
+        const textFilePaths = getTextFromImages(images);
+        const infoBordereau = readBordereauMETLIFE(textFilePaths);
         infos.infos.push(infoBordereau);
     }
     const excecutionStopTime = performance.now();
@@ -53,25 +59,25 @@ exports.readPdfMETLIFE = async (file) => {
 const getTextFromImages = (images) => {
     let textFilePaths = [];
     for (let image of images) {
-        const filename = image.name.split('.')[0];
-        const name = filename.split('_');
-        const numero = name[name.length - 1];
+        const fileNameWthoutExtension = fileService.getFileNameWithoutExtension(image);
+        const fileNameArr = fileNameWthoutExtension.split('_');
+        const numero = fileNameArr[fileNameArr.length - 1];
         if (numero !== '2') {
             // const img = await Jimp.read(image.path);
             // img.contrast(0.5);
             // const pathImage = `${image.path.split('.')[0]}_edit.png`;
             // await img.writeAsync(pathImage);
-            const destFullPath = path.join(__dirname, '..', '..', '..', 'documents', 'texte', `${image.name.split('.')[0]}`);
+            const destFullPath = path.join(__dirname, '..', '..', '..', 'documents', 'texte', `${fileNameWthoutExtension}`);
             try {
                 if (numero === '1') {
                     const tesseractStartTime = performance.now();
-                    execSync(`tesseract ${image.path} ${destFullPath}`);
+                    execSync(`tesseract ${image} ${destFullPath}`);
                     const tesseractStopTime = performance.now();
                     const executionTimeTesseract = tesseractStopTime - tesseractStartTime;
                     console.log('Execution time Tesseract : ', time.millisecondToTime(executionTimeTesseract));
                 } else {
                     const easyOCRStartTime = performance.now();
-                    easyOCR(image.path, destFullPath);
+                    easyOCR(image, destFullPath);
                     const easyOCRStopTime = performance.now();
                     const executionTimeEasyOCR = easyOCRStopTime - easyOCRStartTime;
                     console.log('Execution time easy OCR: ', time.millisecondToTime(executionTimeEasyOCR));
@@ -86,76 +92,13 @@ const getTextFromImages = (images) => {
     return textFilePaths;
 }
 
-const getTextFromPDF = (file) => {
-    let pdfParser = new PDFParser(this, 1);
-    pdfParser.loadPDF(file);
-    let detailDesPolices = [];
-    return new Promise((resolve, reject) => {
-        pdfParser.on("pdfParser_dataError", (errData) => {
-            reject(errData.parserError);
-        });
-        pdfParser.on("pdfParser_dataReady", async (pdfData) => {
-            const pdfContent = pdfParser.getRawTextContent();
-            const separateur = /-+Page [(]\d+[)] Break-+/i;
-            const pdfContentArr = pdfContent.split(separateur);
-            pdfContentArr.forEach((element, index) => {
-                if (index > 1) {
-                    const ctArr = element.split('\r\n');
-                    const contentArr = ctArr.filter((e, i) => {
-                        return e !== '';
-                    });
-                    const newContentArr = [];
-                    const maxI = contentArr.length / 4;
-                    for (let i = 0; i < maxI; i++) {
-                        if (contentArr.length > 0) {
-                            const d = contentArr.slice(0, reIndexOf(contentArr, /Sous-total/) + 1);
-                            contentArr.splice(0, reIndexOf(contentArr, /Sous-total/) + 1);
-                            newContentArr.push(d);
-                        } else {
-                            break;
-                        }
-                    }
-                    const rPolice = /(^S\d+)[^\d].*/g;
-                    const rMontantTaux = /[^\d]+ [\d]{2}\/[\d]{2}\/[\d]{4}au [\d]{2}\/[\d]{2}\/[\d]{4}[^\d]+([\d]+\.[\d]+) €[^\d]+([\d]+\.[\d]+)[^\d]+([\d]+\.[\d]+) €/g;
-                    for (let content of newContentArr) {
-                        let valPolice = '';
-                        let montantPrime = '';
-                        let taux = '';
-                        let montantCommission = '';
-                        for (let line of content) {
-                            if (line.match(rPolice)) {
-                                valPolice = line.replace(rPolice, '$1');
-                            }
-                            if (line.match(rMontantTaux)) {
-                                montantPrime = line.replace(rMontantTaux, '$1');
-                                montantPrime = parseFloat(montantPrime);
-                                taux = line.replace(rMontantTaux, '$2');
-                                taux = parseFloat(taux);
-                                montantCommission = line.replace(rMontantTaux, '$3');
-                                montantCommission = parseFloat(montantCommission);
-                            }
-                        }
-                        const detail = {
-                            valPolice,
-                            montantPrime,
-                            taux,
-                            montantCommission
-                        }
-                        detailDesPolices.push(detail);
-                    }
-                }
-            })
-            resolve(detailDesPolices);
-        });
-    });
-}
-
-const readBordereauMETLIFE = (textFilePaths, detailDesPolices) => {
+const readBordereauMETLIFE = (textFilePaths) => {
     const readBordereauMETLIFEStartTime = performance.now();
     let infos = { syntheseDesCommissions: null, detailDesPolices: null };
     let dDPolice = [];
     let syntheseDesCommissions = {};
     for (let textFilePath of textFilePaths) {
+        // textFilePath = path.join(__dirname, '..', '..', '..', 'documents', 'texte', textFilePath);
         const content = fs.readFileSync(textFilePath, { encoding: 'utf-8' });
         let data = content.split('\n');
         data = data.filter((element) => {
@@ -183,48 +126,54 @@ const readBordereauMETLIFE = (textFilePaths, detailDesPolices) => {
                 return element.match(/Report solde précédent.+/)
             });
             reportSoldePrecedent = reportSoldePrecedent[0].split(':')[1].trim();
-            reportSoldePrecedent = reportSoldePrecedent.split('€')[0].trim();
+            reportSoldePrecedent = parseFloat(reportSoldePrecedent.split('€')[0].trim());
 
             nombrePolicesSurLaPeriode = data.filter((element) => {
                 return element.match(/Nombre de polices sur la période.+/)
             });
-            nombrePolicesSurLaPeriode = nombrePolicesSurLaPeriode[0].split(':')[1].trim();
+            nombrePolicesSurLaPeriode = parseInt(nombrePolicesSurLaPeriode[0].split(':')[1].trim());
+            if (isNaN(nombrePolicesSurLaPeriode)) {
+                nombrePolicesSurLaPeriode = '';
+            }
 
             primesEncaisseesSurLaPeriode = data.filter((element) => {
                 return element.match(/Total des primes encaissées sur la période.+/)
             });
             primesEncaisseesSurLaPeriode = primesEncaisseesSurLaPeriode[0].split(':')[1].trim();
-            primesEncaisseesSurLaPeriode = primesEncaisseesSurLaPeriode.split('€')[0].trim();
+            primesEncaisseesSurLaPeriode = parseFloat(primesEncaisseesSurLaPeriode.split('€')[0].trim());
 
             stCommissionsCalculeesSurLaPeriode = data.filter((element) => {
                 return element.match(/.+commissions calculées sur la période.+/)
             });
             stCommissionsCalculeesSurLaPeriode = stCommissionsCalculeesSurLaPeriode[0].split(':')[1].trim();
-            stCommissionsCalculeesSurLaPeriode = stCommissionsCalculeesSurLaPeriode.split('€')[0].trim();
+            stCommissionsCalculeesSurLaPeriode = parseFloat(stCommissionsCalculeesSurLaPeriode.split('€')[0].trim());
 
             stCommissionsReprisesSurLaPeriode = data.filter((element) => {
                 return element.match(/.+commissions reprises sur la période.+/)
             });
             stCommissionsReprisesSurLaPeriode = stCommissionsReprisesSurLaPeriode[0].split(':')[1].trim();
-            stCommissionsReprisesSurLaPeriode = stCommissionsReprisesSurLaPeriode.split('€')[0].trim();
+            stCommissionsReprisesSurLaPeriode = parseFloat(stCommissionsReprisesSurLaPeriode.split('€')[0].trim());
 
             stCommissionsDeduitesSurLaPeriode = data.filter((element) => {
                 return element.match(/.+commissions déduites sur la période.+/)
             });
             stCommissionsDeduitesSurLaPeriode = stCommissionsDeduitesSurLaPeriode[0].split(':')[1].trim();
-            stCommissionsDeduitesSurLaPeriode = stCommissionsDeduitesSurLaPeriode.split('€')[0].trim();
+            stCommissionsDeduitesSurLaPeriode = parseFloat(stCommissionsDeduitesSurLaPeriode.split('€')[0].trim());
 
             stOperationsDiversesSurLaPeriode = data.filter((element) => {
                 return element.match(/.+opérations diverses sur la période.+/)
             });
             stOperationsDiversesSurLaPeriode = stOperationsDiversesSurLaPeriode[0].split(':')[1].trim();
-            stOperationsDiversesSurLaPeriode = stOperationsDiversesSurLaPeriode.split('€')[0].trim();
+            stOperationsDiversesSurLaPeriode = parseFloat(stOperationsDiversesSurLaPeriode.split('€')[0].trim());
 
             totalCommissionsDues = data.filter((element) => {
                 return element.match(/.+commissions dues.+/)
             });
             totalCommissionsDues = totalCommissionsDues[0].split(':')[1].trim();
-            totalCommissionsDues = totalCommissionsDues[0].split('€')[0].trim();
+            totalCommissionsDues = parseFloat(totalCommissionsDues.split('€')[0].trim());
+            totalCommissionsDues = isNaN(totalCommissionsDues) ?
+                (reportSoldePrecedent + stCommissionsCalculeesSurLaPeriode + stCommissionsDeduitesSurLaPeriode + stCommissionsReprisesSurLaPeriode + stOperationsDiversesSurLaPeriode) :
+                totalCommissionsDues;
             syntheseDesCommissions = {
                 periodeEncaissement,
                 codeApporteurBeneficiaireCommissions,
@@ -242,9 +191,9 @@ const readBordereauMETLIFE = (textFilePaths, detailDesPolices) => {
         }
         if (numero === '3' || numero === '4') {
             const indexMontant = data.lastIndexOf('Montant');
-            const indexLastUtil = data.lastIndexOf('#WiEs');
+            const indexLastUtil = reLastIndexOf(data, /Sous-total police/);
             const details = data.filter((d, index) => {
-                return index > indexMontant && index < indexLastUtil;
+                return index > indexMontant && index < indexLastUtil + 2;
             });
             let newDetails = [];
             const maxI = details.length / 4;
@@ -259,202 +208,235 @@ const readBordereauMETLIFE = (textFilePaths, detailDesPolices) => {
             }
 
             newDetails.forEach((element, index) => {
-                let i = 0;
-                let police = element[0];
-                element.splice(0, 1);
-
-                let fractionnement = '';
-                if (reIndexOf(element, /mensuel/i) > 0 ||
-                    reIndexOf(element, /men.*/i) > 0 ||
-                    reIndexOf(element, /ncn.*/i) > 0 ||
-                    reIndexOf(element, /nen.*/i) > 0) {
-                    fractionnement = 'Mensuel';
-                    if (reIndexOf(element, /mensuel/i) > 0) {
-                        i = reIndexOf(element, /mensuel/i);
-                    } else if (reIndexOf(element, /men.*/i) > 0) {
-                        i = reIndexOf(element, /men.*/i);
-                    } else if (reIndexOf(element, /ncn.*/i) > 0) {
-                        i = reIndexOf(element, /ncn.*/i);
-                    } else if (reIndexOf(element, /nen.*/i) > 0) {
-                        i = reIndexOf(element, /nen.*/i);
+                let dPolices = [];
+                if (element.length > 10) {
+                    if (reIndexOf(element, /^a{1}$/i) > 0) {
+                        element.splice(reIndexOf(element, /^a{1}$/i), 1);
                     }
-                    element.splice(i, 1);
-                }
-                if (reIndexOf(element, /annuel*/i) > 0 ||
-                    reIndexOf(element, /annu.*/i) > 0 ||
-                    reIndexOf(element, /annucl/i) > 0) {
-                    fractionnement = 'Annuel';
-                    if (reIndexOf(element, /annuel*/i) > 0) {
-                        i = reIndexOf(element, /annuel*/i);
-                    } else if (reIndexOf(element, /annu.*/i) > 0) {
-                        i = reIndexOf(element, /annu.*/i);
-                    } else if (reIndexOf(element, /annucl/i) > 0) {
-                        i = reIndexOf(element, /annucl/i);
-                    }
-                    element.splice(i, 1);
-                }
 
-                let etat = '';
-                if (reIndexOf(element, /sold.*/) > 0 || reIndexOf(element, /soid.*/) > 0) {
-                    etat = 'soldée';
-                }
-                if (reIndexOf(element, /sold.*/) > 0) {
-                    element.splice(reIndexOf(element, /sold.*/), 1);
-                } else if (reIndexOf(element, /soid.*/) > 0) {
-                    element.splice(reIndexOf(element, /soid.*/), 1);
-                }
+                    const polices = element.filter((e, i) => {
+                        return e.match(/^S\d+$/) || e.match(/^A\d+$/);
+                    });
+                    polices.forEach((p, i) => {
+                        element.splice(element.indexOf(p), 1);
+                    });
+                    const policesLength = polices.length;
 
-                let mode = '';
-                if (reIndexOf(element, /escompté/i) > 0 ||
-                    reIndexOf(element, /escamp.*/i) > 0 ||
-                    reIndexOf(element, /escom.*/i) > 0 ||
-                    reIndexOf(element, /esc.*/i) > 0) {
-                    mode = 'escompté';
-                    if (reIndexOf(element, /escompté/i) > 0) {
-                        i = reIndexOf(element, /escompté/i);
-                    } else if (reIndexOf(element, /escamp.*/i) > 0) {
-                        i = reIndexOf(element, /escamp.*/i);
-                    } else if (reIndexOf(element, /escom.*/i) > 0) {
-                        i = reIndexOf(element, /escom.*/i);
-                    } else if (reIndexOf(element, /esc.*/i) > 0) {
-                        i = reIndexOf(element, /esc.*/i);
-                    }
-                    element.splice(i, 1);
-                }
-                if (reIndexOf(element, /linéaire/i) > 0 || reIndexOf(element, /lin.*/i) > 0) {
-                    mode = 'linéaire';
-                    if (reIndexOf(element, /linéaire/i) > 0) {
-                        i = reIndexOf(element, /linéaire/i);
-                    } else if (reIndexOf(element, /lin.*/i) > 0) {
-                        i = reIndexOf(element, /lin.*/i);
-                    }
-                    element.splice(i, 1);
-                }
+                    const chiffres = element.filter((e, i) => {
+                        return e.match(/^[^a-z]{0,1}[\d\s]*\d+[.]{0,1}\d+\s*€*$/i);
+                    });
 
-
-                let periode = '';
-                const du = element[reIndexOf(element, /du \d{1,2}[/]\d{1,2}[/]\d{1,4}/)] ||
-                    element[reIndexOf(element, /du \d{1,2}[/]\d+/)] ||
-                    element[reIndexOf(element, /\d{1,2}[/]\d{1,2}[/]\d{1,4}/)] ||
-                    element[reIndexOf(element, /\d{1,2}[/]\d+/)];
-                if (reIndexOf(element, /du \d{1,2}[/]\d{1,2}[/]\d{1,4}/) > 0) {
-                    element.splice(reIndexOf(element, /du \d{1,2}[/]\d{1,2}[/]\d{1,4}/), 1);
-                } else if (reIndexOf(element, /du \d{1,2}[/]\d+/) > 0) {
-                    element.splice(reIndexOf(element, /du \d{1,2}[/]\d+/), 1);
-                } else if (reIndexOf(element, /\d{1,2}[/]\d{1,2}[/]\d{1,4}/) > 0) {
-                    element.splice(reIndexOf(element, /\d{1,2}[/]\d{1,2}[/]\d{1,4}/), 1);
-                } else if (reIndexOf(element, /\d{1,2}[/]\d+/) > 0) {
-                    element.splice(reIndexOf(element, /\d{1,2}[/]\d+/), 1);
-                }
-
-                const au = element[reIndexOf(element, /au \d{1,2}[/]\d{1,2}[/]\d{1,4}/)] ||
-                    element[reIndexOf(element, /au \d{1,2}[/]\d+/)] ||
-                    element[reIndexOf(element, /\d{1,2}[/]\d{1,2}[/]\d{1,4}/)] ||
-                    element[reIndexOf(element, /\d{1,2}[/]\d+/)];
-                periode = `${du} ${au}`;
-
-                if (reIndexOf(element, /au \d{1,2}[/]\d{1,2}[/]\d{1,4}/) > 0) {
-                    element.splice(reIndexOf(element, /au \d{1,2}[/]\d{1,2}[/]\d{1,4}/), 1);
-                } else if (reIndexOf(element, /au \d{1,2}[/]\d+/) > 0) {
-                    element.splice(reIndexOf(element, /au \d{1,2}[/]\d+/), 1);
-                } else if (reIndexOf(element, /\d{1,2}[/]\d{1,2}[/]\d{1,4}/) > 0) {
-                    element.splice(reIndexOf(element, /\d{1,2}[/]\d{1,2}[/]\d{1,4}/), 1);
-                } else if (reIndexOf(element, /\d{1,2}[/]\d+/) > 0) {
-                    element.splice(reIndexOf(element, /\d{1,2}[/]\d+/), 1);
-                }
-
-                let status = '';
-                if (reIndexOf(element, /calculée/i) > 0) {
-                    status = 'calculée';
-                    element.splice(reIndexOf(element, /calculée/i), 1);
-                } else if (reIndexOf(element, /reprise/i) > 0) {
-                    status = 'reprise';
-                    element.splice(reIndexOf(element, /reprise/i), 1);
-                } else if (reIndexOf(element, /paye/i) > 0) {
-                    status = 'à payer';
-                    element.splice(reIndexOf(element, /paye/i), 1);
-                }
-
-                let stPolice;
-                let sousTotalPolice;
-                let sousTotalMontant;
-                if (reIndexOf(element, /Sous-total/i) > 0) {
-                    stPolice = element[reIndexOf(element, /Sous-total/i)].split(' ');
-                    sousTotalPolice = stPolice[stPolice.length - 1];
-                    sousTotalMontant = parseFloat(element[reIndexOf(element, /Sous-total/i) + 1].split(' ')[0]);
+                    let sousTotalPoliceMontant = chiffres[chiffres.length - 1];
+                    element.splice(element.indexOf(sousTotalPoliceMontant), 1);
+                    sousTotalPoliceMontant = sousTotalPoliceMontant.replace('~', '-');
+                    sousTotalPoliceMontant = parseFloat(sousTotalPoliceMontant);
                     element.splice(reIndexOf(element, /Sous-total/i), 1);
-                    element.splice(element.indexOf(sousTotalMontant), 1);
-                }
+                    const sousTotalPolice = polices[0];
 
-                const mots = element.filter((e, i) => {
-                    return e.match(/^[a-z]+/i);
-                });
-                for (let e of mots) {
-                    element.splice(element.indexOf(e), 1);
-                }
-                let assure;
-                let produit;
-                if (mots.length === 5) {
-                    assure = `${mots[0]} ${mots[2]}`;
-                    produit = `${mots[1]} ${mots[3]} ${mots[4]}`;
-                } else if (mots.length === 6) {
-                    assure = `${mots[0]} ${mots[1]} ${mots[3]}`;
-                    produit = `${mots[2]} ${mots[4]} ${mots[5]}`;
-                } else if (mots.length < 5) {
-                    assure = `${mots[0]}`;
-                    produit = `${mots[1]} ${mots[2]} ${mots[3]}`;
-                }
+                    chiffres.splice(chiffres.length - 1, 1);
+                    chiffres.forEach((c, i) => {
+                        element.splice(element.indexOf(c), 1);
+                    });
+                    let allMontantsEtTaux = [];
+                    const maxLength = chiffres.length / 3;
+                    for (let i = 0; i < maxLength; i++) {
+                        if (chiffres.length > 0) {
+                            const mt = chiffres.slice(0, 3);
+                            chiffres.splice(0, 3);
+                            allMontantsEtTaux.push(mt);
+                        } else {
+                            break;
+                        }
+                    }
 
-                const numbers = element.slice();
-                let montantPrime;
-                let taux;
-                let montantCommission;
-                if (numbers.lenght === 1) {
-                    montantPrime = 0;
-                    taux = 0;
-                    montantCommission = parseFloat(numbers[0].split(' ')[0]);
-                } else if (numbers.length === 2) {
-                    montantPrime = parseFloat(numbers[0].split(' ')[0].replace(',', '.'));
-                    montantCommission = parseFloat(numbers[1].split(' ')[0].replace(',', '.'));
-                    taux = Math.ceil((montantCommission / montantPrime) * 100);
-                } else if (numbers.length === 3) {
-                    montantPrime = parseFloat(numbers[0].split(' ')[0].replace(',', '.'));
-                    taux = parseFloat(numbers[1].split(' ')[0].replace(',', '.'));
-                    montantCommission = ((montantPrime * taux) / 100).toFixed(2);
-                }
+                    const fractionnements = element.filter((e, i) => {
+                        return e.match(/^annuel$/i) || e.match(/^mensuel$/i);
+                    });
+                    fractionnements.forEach((f, i) => {
+                        element.splice(element.indexOf(f), 1);
+                    });
 
-                for (let detailPolice of detailDesPolices) {
-                    if (detailPolice.valPolice === sousTotalPolice) {
+                    const etats = element.filter((e, i) => {
+                        return e.match(/^sold/i) || e.match(/^annul/i) || e.match(/^rembours/i);
+                    });
+                    etats.forEach((e, index) => {
+                        if (etats.length > policesLength) {
+                            if (e.match(/^sold/i)) {
+                                etats.splice(index, 1);
+                            }
+                        }
+                    })
+                    etats.forEach((e, i) => {
+                        element.splice(element.indexOf(e), 1);
+                    });
+
+                    const modes = element.filter((e, i) => {
+                        return e.match(/^escompt/i) || e.match(/^linéaire$/i) || e.match(/^lineaire$/i) || e.match(/^rembours/i);
+                    });
+                    modes.forEach((e, i) => {
+                        element.splice(element.indexOf(e), 1);
+                    });
+
+                    let periodes = element.filter((e, i) => {
+                        return e.match(/^du \d{1,2}[/]\d{1,2}[/]\d{1,4}/) ||
+                            e.match(/^au \d{1,2}[/]\d{1,2}[/]\d{1,4}/) ||
+                            e.match(/^du$/) ||
+                            e.match(/^au$/) ||
+                            e.match(/^\d{1,2}[/]\d{1,2}[/]\d{1,4}/);
+                    });
+                    periodes.forEach((p, i) => {
+                        element.splice(element.indexOf(p), 1);
+                    });
+                    periodes.forEach((p, i) => {
+                        if (p.match(/^du$/) ||
+                            p.match(/^au$/)) {
+                            let pr = `${p} ${periodes[i + 1]}`;
+                            periodes.splice(periodes.indexOf(periodes[i + 1]), 1);
+                            periodes.splice(periodes.indexOf(p), 1, pr);
+                        }
+                    })
+                    let allperiodes = [];
+                    const maxPeriodeLength = periodes.length / 2;
+                    for (let i = 0; i < maxPeriodeLength; i++) {
+                        if (periodes.length > 0) {
+                            const period = periodes.slice(0, 2);
+                            periodes.splice(0, 2);
+                            allperiodes.push(period);
+                        } else {
+                            break;
+                        }
+                    }
+
+                    const status = element.filter((e, i) => {
+                        return e.match(/^sold/i) || e.match(/^reprise$/i) || e.match(/à payer/i) || e.match(/payer/i);
+                    });
+                    status.forEach((s, i) => {
+                        element.splice(element.indexOf(s), 1);
+                    });
+
+                    const mots = element.slice();
+                    mots.forEach((e, i) => {
+                        if (e.match(/^M$/) || e.match(/^Mme$/)) {
+                            const pronom = e;
+                            const nom = mots[i + 1];
+                            const name = `${pronom} ${nom}`;
+                            mots.splice(mots.indexOf(pronom), 1);
+                            mots.splice(mots.indexOf(nom), 1, name);
+                        }
+                    });
+                    let allMots = [];
+                    let lengthMots = mots.length;
+                    for (let i = 0; i < policesLength; i++) {
+                        if (mots.length > lengthMots / policesLength) {
+                            let m = [];
+                            m[0] = mots[0];
+                            mots.splice(0, 1);
+                            m.push(...mots.slice(0, reIndexOf(mots, /^M[me]{0,1}.+/)));
+                            mots.splice(0, reIndexOf(mots, /^M[me]{0,1}.+/));
+                            allMots.push(m);
+                        } else {
+                            let m = mots.slice();
+                            mots.splice(mots.indexOf(m), 1);
+                            allMots.push(m);
+                        }
+                    }
+
+                    let assures = [];
+                    let produits = [];
+                    allMots.forEach((mots, index) => {
+                        if (mots.length === 5) {
+                            assures.push(`${mots[0]} ${mots[2]}`);
+                            produits.push(`${mots[1]} ${mots[3]} ${mots[4]}`);
+                        } else if (mots.length === 6) {
+                            assures.push(`${mots[0]} ${mots[1]} ${mots[3]}`);
+                            produits.push(`${mots[2]} ${mots[4]} ${mots[5]}`);
+                        } else if (mots.length < 5) {
+                            assures.push(`${mots[0]}`);
+                            produits.push(`${mots[1]} ${mots[2]} ${mots[3]}`);
+                        }
+                    });
+
+                    allMontantsEtTaux = allMontantsEtTaux.map((mt, index) => {
+                        let newMt = []
+                        mt.forEach((m, i) => {
+                            m = m.replace('~', '-');
+                            m = m.replace(/\s/, '');
+                            newMt.push(parseFloat(m));
+                        })
+                        return newMt;
+                    });
+
+                    let montantsTaux = [];
+                    allMontantsEtTaux.forEach((mt, index) => {
+                        const montantPrime = mt[0];
+                        const taux = mt[1];
+                        const montantCommission = mt[2];
+                        const vmontantCommission = parseFloat(((montantPrime * taux) / 100).toFixed(2));
+                        let verificationMontantCommission;
+                        if (Math.abs(vmontantCommission) === Math.abs(montantCommission) ||
+                            (Math.abs(vmontantCommission) + 0.01) === Math.abs(montantCommission) ||
+                            (Math.abs(vmontantCommission) - 0.01) === Math.abs(montantCommission)) {
+                            verificationMontantCommission = true;
+                        } else {
+                            verificationMontantCommission = false;
+                        }
+                        const montants = {
+                            montantPrime,
+                            taux,
+                            montantCommission,
+                            verificationMontantCommission
+                        };
+                        montantsTaux.push(montants);
+                    });
+
+                    for (let i = 0; i < policesLength; i++) {
                         const contrat = {
-                            police: sousTotalPolice,
-                            assure,
-                            produit
+                            police: polices[i],
+                            assure: assures[i],
+                            produit: produits[i]
                         };
                         const prime = {
-                            fractionnement,
-                            periode,
-                            etat,
-                            montant: detailPolice.montantPrime
+                            fractionnement: fractionnements[i],
+                            periode: `${allperiodes[i][0]} ${allperiodes[i][1]}`,
+                            etat: etats[i],
+                            montant: montantsTaux[i].montantPrime
                         };
                         let commissions = {
-                            mode,
-                            taux: detailPolice.taux,
-                            status,
-                            montant: detailPolice.montantCommission
+                            mode: modes[i],
+                            taux: montantsTaux[i].taux,
+                            status: status[i],
+                            montant: montantsTaux[i].montantCommission,
+                            verificationMontantCommission: montantsTaux[i].verificationMontantCommission
                         };
-                        dDPolice.push({
+                        dPolices.push({
                             contrat,
                             prime,
-                            commissions,
-                            sousTotalPolice,
-                            sousTotalMontant
+                            commissions
                         });
-                    }
-                }
 
+                    }
+                    let mtcommissions = [];
+                    dPolices.forEach((e, i) => {
+                        mtcommissions.push(e.commissions.montant);
+                    })
+                    let vsTPoliceMonant = mtcommissions.reduce((previous, current) => {
+                        return previous + current;
+                    });
+                    const vsousTotalPoliceMonant = vsTPoliceMonant.toFixed(2);
+                    let verifSousTotalPoliceMonant;
+                    if (parseFloat(vsousTotalPoliceMonant) === sousTotalPoliceMontant ||
+                        parseFloat(vsousTotalPoliceMonant) + 0.01 === sousTotalPoliceMontant ||
+                        parseFloat(vsousTotalPoliceMonant) - 0.01 === sousTotalPoliceMontant) {
+                        verifSousTotalPoliceMonant = true;
+                    } else {
+                        verifSousTotalPoliceMonant = false;
+                    }
+
+                    dDPolice.push({ police: dPolices, sousTotalPolice, sousTotalPoliceMontant, verifSousTotalPoliceMonant });
+                }
             })
-            infos.detailDesPolices = dDPolice;
         }
+        infos.detailDesPolices = dDPolice;
     }
     const readBordereauMETLIFEStopTime = performance.now();
     const executionTimereadBordereauMETLIFE = readBordereauMETLIFEStopTime - readBordereauMETLIFEStartTime;
