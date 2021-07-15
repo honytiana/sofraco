@@ -7,6 +7,7 @@ const excelMasterAPICIL = require('./excelMasterAPICIL');
 const excelMasterAVIVA = require('./excelMasterAVIVA');
 const excelMasterCARDIF = require('./excelMasterCARDIF');
 const excelMasterCEGEMA = require('./excelMasterCEGEMA');
+const excelMasterHODEVA = require('./excelMasterHODEVA');
 const excelMasterMETLIFE = require('./excelMasterMETLIFE');
 
 
@@ -53,9 +54,9 @@ const getOCRInfos = async () => {
             // case 'GENERALI':
             //     infos = await getOCRAPICIL(file);
             //     break;
-            // case 'HODEVA':
-            //     infos = await getOCRAPICIL(file);
-            //     break;
+            case 'HODEVA':
+                infos.push(excelMasterHODEVA.getOCRHODEVA(ocr));
+                break;
             case 'METLIFE':
                 infos.push(excelMasterMETLIFE.getOCRMETLIFE(ocr));
                 break;
@@ -128,9 +129,10 @@ const generateExcelMaster = async (ocrInfos) => {
                         // case 'GENERALI':
                         //     infos = await readExcel(file);
                         //     break;
-                        // case 'HODEVA':
-                        //     infos = await readExcel(file);
-                        //     break;
+                        case 'HODEVA':
+                            excelMasterHODEVA.createWorkSheetHODEVA(workSheet, dataCourtierOCR);
+                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'masterExcel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
+                            break;
                         case 'METLIFE':
                             excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, dataCourtierOCR);
                             excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'masterExcel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : `${date}`}.xlsx`);

@@ -9,6 +9,7 @@ const documentAPICIL = require('../services/document/documentAPICIL');
 const documentAVIVA = require('../services/document/documentAVIVA');
 const documentCARDIF = require('../services/document/documentCARDIF');
 const documentCEGEMA = require('../services/document/documentCEGEMA');
+const documentHODEVA = require('../services/document/documentHODEVA');
 const documentMETLIFE = require('../services/document/documentMETLIFE');
 
 exports.createDocument = (req, res) => {  // create document
@@ -121,9 +122,9 @@ exports.updateDocument = async (req, res) => {
         // case 'GENERALI':
         //     infos = await readExcel(file);
         //     break;
-        // case 'HODEVA':
-        //     infos = await readExcel(file);
-        //     break;
+        case 'HODEVA':
+            ocr = await documentHODEVA.readExcelHODEVA(req.body.filePath);
+            break;
         case 'METLIFE':
             ocr = await documentMETLIFE.readPdfMETLIFE(req.body.filePath);
             break;

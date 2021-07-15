@@ -164,7 +164,7 @@ class Upload extends Component {
             //     infos = await readPdfMETLIFE(file);
             //     break;
             case 'CEGEMA':
-                if (extension.toUpperCase() !== 'XLSX' || extension.toUpperCase() !== 'XLS') {
+                if (extension.toUpperCase() !== 'XLSX' && extension.toUpperCase() !== 'XLS') {
                     this.setState({
                         toast: true,
                         messageToast: { header: 'warning', message: 'Vous devez donner un fichier Excel' }
@@ -187,9 +187,25 @@ class Upload extends Component {
             // case 'GENERALI':
             //     infos = await readPdfMETLIFE(file);
             //     break;
-            // case 'HODEVA':
-            //     infos = await readPdfMETLIFE(file);
-            //     break;
+            case 'HODEVA':
+                if (extension.toUpperCase() !== 'XLSX' && extension.toUpperCase() !== 'XLS') {
+                    console.log(extension.toUpperCase())
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'warning', message: 'Vous devez donner un fichier Excel' }
+                    });
+                    setTimeout(() => {
+                        this.setState({
+                            toast: false,
+                            messageToast: {}
+                        });
+                    }, 6000);
+                } else {
+                    this.setState({
+                        files: file
+                    });
+                }
+                break;
             case 'METLIFE':
                 if (extension.toUpperCase() !== 'PDF') {
                     this.setState({
