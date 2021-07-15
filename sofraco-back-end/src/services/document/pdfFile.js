@@ -1,5 +1,4 @@
 const path = require('path');
-const Pdf2Img = require('pdf2img-promises');
 const { exec, execSync, spawnSync } = require('child_process');
 const splitPdfService = require('../pdf/splitPDF');
 const fileService = require('./files');
