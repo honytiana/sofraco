@@ -1,13 +1,25 @@
 const ExcelJS = require('exceljs');
+const XLSX = require('xlsx');
 const { performance } = require('perf_hooks');
+const fs = require('fs');
+const path = require('path');
 const time = require('../time/time');
+const fileService = require('./files');
 
 exports.readExcelCARDIF = async (file) => {
     console.log('DEBUT TRAITEMENT CARDIF');
     const excecutionStartTime = performance.now();
-    const filePath = file;
+    let filePath = file;
+    const fileName = fileService.getFileNameWithoutExtension(filePath);
+    const extension = fileService.getFileExtension(filePath);
+    if (extension.toUpperCase() === 'XLS') {
+        let originalFile  = XLSX.readFile(filePath);
+        filePath = path.join(__dirname, '..', '..', '..', 'documents', 'uploaded', `${fileName}.xlsx`);
+        XLSX.writeFile(originalFile, filePath);
+    }
     const workbook = new ExcelJS.Workbook();
-    await workbook.xlsx.readFile(filePath);
+    const cardiffile = fs.readFileSync(filePath);
+    await workbook.xlsx.load(cardiffile);
     const worksheets = workbook.worksheets;
     let firstHeaders = [];
     let secondHeaders = [];

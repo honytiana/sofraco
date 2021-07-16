@@ -1,13 +1,25 @@
 const ExcelJS = require('exceljs');
+const XLSX = require('xlsx');
 const { performance } = require('perf_hooks');
+const fs = require('fs');
+const path = require('path');
 const time = require('../time/time');
+const fileService = require('./files');
 
 exports.readExcelAPICIL = async (file) => {
     console.log('DEBUT TRAITEMENT APICIL');
     const excecutionStartTime = performance.now();
-    const filePath = file;
+    let filePath = file;
+    const fileName = fileService.getFileNameWithoutExtension(filePath);
+    const extension = fileService.getFileExtension(filePath);
+    if (extension.toUpperCase() === 'XLS') {
+        let originalFile  = XLSX.readFile(filePath);
+        filePath = path.join(__dirname, '..', '..', '..', 'documents', 'uploaded', `${fileName}.xlsx`);
+        XLSX.writeFile(originalFile, filePath);
+    }
     const workbook = new ExcelJS.Workbook();
-    await workbook.xlsx.readFile(filePath);
+    const apicilfile = fs.readFileSync(filePath);
+    await workbook.xlsx.load(apicilfile);
     const worksheets = workbook.worksheets;
     let allRows = [];
     let infos = {
