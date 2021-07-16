@@ -8,6 +8,7 @@ const excelMasterAVIVA = require('./excelMasterAVIVA');
 const excelMasterCARDIF = require('./excelMasterCARDIF');
 const excelMasterCEGEMA = require('./excelMasterCEGEMA');
 const excelMasterHODEVA = require('./excelMasterHODEVA');
+const excelMasterLOURMEL = require('./excelMasterLOURMEL');
 const excelMasterMETLIFE = require('./excelMasterMETLIFE');
 
 
@@ -42,9 +43,9 @@ const getOCRInfos = async () => {
             case 'CARDIF':
                 infos.push(excelMasterCARDIF.getOCRCARDIF(ocr));
                 break;
-            // case 'CBP FRANCE':
-            //     infos = await getOCRAPICIL(file);
-            //     break;
+            case 'CBP FRANCE': //LOURMEL
+                infos.push(excelMasterLOURMEL.getOCRLOURMEL(ocr));
+                break;
             case 'CEGEMA':
                 infos.push(excelMasterCEGEMA.getOCRCEGEMA(ocr));
                 break;
@@ -81,7 +82,8 @@ const generateExcelMaster = async (ocrInfos) => {
             for (let ocr of ocrInfos) {
                 for (let dataCourtierOCR of ocr) {
                     let excelMaster = {
-                        courtier: dataCourtierOCR.infosOCR.code,
+                        courtier: null,
+                        code_courtier: dataCourtierOCR.infosOCR.code,
                         companies: [],
                         create_date: new Date(),
                         ocr: null,
@@ -116,9 +118,6 @@ const generateExcelMaster = async (ocrInfos) => {
                             excelMasterCARDIF.createWorkSheetCARDIF(workSheet, dataCourtierOCR);
                             excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'masterExcel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
                             break;
-                        // case 'CBP FRANCE':
-                        //     infos = await readExcel(file);
-                        //     break;
                         case 'CEGEMA':
                             excelMasterCEGEMA.createWorkSheetCEGEMA(workSheet, dataCourtierOCR);
                             excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'masterExcel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
@@ -131,6 +130,10 @@ const generateExcelMaster = async (ocrInfos) => {
                         //     break;
                         case 'HODEVA':
                             excelMasterHODEVA.createWorkSheetHODEVA(workSheet, dataCourtierOCR);
+                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'masterExcel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
+                            break;
+                        case 'LOURMEL':  //CBP FRANCE
+                            excelMasterLOURMEL.createWorkSheetLOURMEL(workSheet, dataCourtierOCR);
                             excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'masterExcel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
                             break;
                         case 'METLIFE':
@@ -153,7 +156,7 @@ const generateExcelMaster = async (ocrInfos) => {
             }
             return { excelMasters: eM, message: 'Excel Master générés' };
         }
-        
+
     } catch (err) {
         return err;
     }

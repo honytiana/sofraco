@@ -10,6 +10,7 @@ const documentAVIVA = require('../services/document/documentAVIVA');
 const documentCARDIF = require('../services/document/documentCARDIF');
 const documentCEGEMA = require('../services/document/documentCEGEMA');
 const documentHODEVA = require('../services/document/documentHODEVA');
+const documentLOURMEL = require('../services/document/documentLOURMEL');
 const documentMETLIFE = require('../services/document/documentMETLIFE');
 
 exports.createDocument = (req, res) => {  // create document
@@ -56,7 +57,7 @@ exports.updateDocuments = async (req, res) => {
     documents = documents.filter((doc, index) => {
         const currentMonth = new Date().getMonth();
         const uploadDateMonth = new Date(doc.upload_date).getMonth();
-        return currentMonth === uploadDateMonth;
+        return (currentMonth === uploadDateMonth) && (doc.status === 'draft');
     });
     for (let document of documents) {
         const fileName = fileService.getFileNameWithoutExtension(document.path_original_file);
@@ -94,6 +95,8 @@ exports.updateDoc = async (req, res) => {
 
 exports.updateDocument = async (req, res) => {
     let document = {};
+    document.status = 'processing';
+    const d = await documentHandler.updateDocument(req.body.document, document);
     switch (req.params.company.toUpperCase()) {
         case 'APICIL':
             ocr = await documentAPICIL.readExcelAPICIL(req.body.filePath);
@@ -110,9 +113,9 @@ exports.updateDocument = async (req, res) => {
         case 'CARDIF':
             ocr = await documentCARDIF.readExcelCARDIF(req.body.filePath);
             break;
-        // case 'CBP FRANCE':
-        //     infos = await readExcel(file);
-        //     break;
+        case 'CBP FRANCE': //LOURMEL
+            ocr = await documentLOURMEL.readExcelLOURMEL(req.body.filePath);
+            break;
         case 'CEGEMA':
             ocr = await documentCEGEMA.readExcelCEGEMA(req.body.filePath);
             break;
@@ -139,6 +142,7 @@ exports.updateDocument = async (req, res) => {
     }
     document.treatment_date = new Date();
     document.ocr = ocr;
+    document.status = 'done';
     const doc = await documentHandler.updateDocument(req.body.document, document);
     res.status(202).json({ executionTime: ocr.executionTime, company: req.params.company });
 }

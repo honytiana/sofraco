@@ -101,7 +101,7 @@ class Upload extends Component {
         const company = companyName;
         switch (company.toUpperCase()) {
             case 'APICIL':
-                if (extension.toUpperCase() !== 'XLSX') {
+                if (extension.toUpperCase() !== 'XLSX' && extension.toUpperCase() !== 'XLS') {
                     this.setState({
                         toast: true,
                         messageToast: { header: 'warning', message: 'Vous devez donner un fichier Excel' }
@@ -125,7 +125,7 @@ class Upload extends Component {
             //     infos = await readPdfMETLIFE(file);
             //     break;
             case 'AVIVA SURCO':
-                if (extension.toUpperCase() !== 'XLSX') {
+                if (extension.toUpperCase() !== 'XLSX' && extension.toUpperCase() !== 'XLS') {
                     this.setState({
                         toast: true,
                         messageToast: { header: 'warning', message: 'Vous devez donner un fichier Excel' }
@@ -143,7 +143,7 @@ class Upload extends Component {
                 }
                 break;
             case 'CARDIF':
-                if (extension.toUpperCase() !== 'XLSX') {
+                if (extension.toUpperCase() !== 'XLSX' && extension.toUpperCase() !== 'XLS') {
                     this.setState({
                         toast: true,
                         messageToast: { header: 'warning', message: 'Vous devez donner un fichier Excel' }
@@ -160,9 +160,24 @@ class Upload extends Component {
                     });
                 }
                 break;
-            // case 'CBP FRANCE':
-            //     infos = await readPdfMETLIFE(file);
-            //     break;
+            case 'CBP FRANCE':
+                if (extension.toUpperCase() !== 'XLSX' && extension.toUpperCase() !== 'XLS') {
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'warning', message: 'Vous devez donner un fichier Excel' }
+                    });
+                    setTimeout(() => {
+                        this.setState({
+                            toast: false,
+                            messageToast: {}
+                        });
+                    }, 6000);
+                } else {
+                    this.setState({
+                        files: file
+                    });
+                }
+                break;
             case 'CEGEMA':
                 if (extension.toUpperCase() !== 'XLSX' && extension.toUpperCase() !== 'XLS') {
                     this.setState({
