@@ -48,7 +48,6 @@ exports.readExcelLOURMEL = async (file) => {
                         'MONTANT DE LA COMMISSION'
                     ];
                 }
-                const a = row.hidden;
                 if (rowNumber > 1 && !row.hidden) {
                     const contrat = {
                         courtier: (typeof row.getCell('A').value === 'string') ?

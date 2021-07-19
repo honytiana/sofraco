@@ -147,9 +147,9 @@ exports.updateDocument = async (req, res) => {
     res.status(202).json({ executionTime: ocr.executionTime, company: req.params.company });
 }
 
-exports.getDocument = (req, res) => {
+exports.getDocument = async (req, res) => {
     console.log('get document');
-    const document = documentHandler.getDocument(req.params.id);
+    const document = await documentHandler.getDocument(req.params.id);
     res.status(200).json(document);
 }
 

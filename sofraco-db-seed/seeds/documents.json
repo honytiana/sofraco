@@ -8,6 +8,7 @@
         "path_original_file": "",
         "type": "excel",
         "is_enabled": true,
+        "status": "draft",
         "ocr": null
     }
 ]
