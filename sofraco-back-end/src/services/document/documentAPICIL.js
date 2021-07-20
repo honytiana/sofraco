@@ -129,10 +129,11 @@ exports.readExcelAPICIL = async (file) => {
     };
 
     const excecutionStopTime = performance.now();
-    let executionTime = excecutionStopTime - excecutionStartTime;
-    executionTime = time.millisecondToTime(executionTime);
+    const executionTimeMS = excecutionStopTime - excecutionStartTime;
+    const executionTime = time.millisecondToTime(executionTimeMS);
     console.log('Total Execution time : ', executionTime);
     infos.executionTime = executionTime;
+    infos.executionTimeMS = executionTimeMS;
     console.log('FIN TRAITEMENT APICIL');
     return infos;
 };

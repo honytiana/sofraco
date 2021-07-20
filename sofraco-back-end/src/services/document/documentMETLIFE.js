@@ -271,7 +271,7 @@ const readBordereauMETLIFE = (textFilePaths) => {
                     });
 
                     const modes = element.filter((e, i) => {
-                        return e.match(/^escompt/i) || e.match(/^linéaire$/i) || e.match(/^lineaire$/i) || e.match(/^rembours/i);
+                        return e.match(/^escompt/i) || e.match(/^linéaire$/i) || e.match(/^lineaire$/i) || e.match(/^lin[eé]?/i) || e.match(/^rembours/i);
                     });
                     modes.forEach((e, i) => {
                         element.splice(element.indexOf(e), 1);
@@ -439,7 +439,11 @@ const readBordereauMETLIFE = (textFilePaths) => {
         infos.detailDesPolices = dDPolice;
     }
     const readBordereauMETLIFEStopTime = performance.now();
-    const executionTimereadBordereauMETLIFE = readBordereauMETLIFEStopTime - readBordereauMETLIFEStartTime;
-    console.log('Read bordereau metlife time : ', time.millisecondToTime(executionTimereadBordereauMETLIFE));
+    const executionTimeMS = readBordereauMETLIFEStopTime - readBordereauMETLIFEStartTime;
+    const executionTime = time.millisecondToTime(executionTimeMS);
+    console.log('Total Execution time : ', executionTime);
+    infos.executionTime = executionTime;
+    infos.executionTimeMS = executionTimeMS;
+    console.log('FIN TRAITEMENT LOURMEL');
     return infos;
 }

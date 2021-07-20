@@ -4,6 +4,7 @@ const axios = require('axios');
 const config = require('../../config.json');
 const fileService = require('../services/document/files');
 const Document = require('../models/document');
+const time = require('../services/time/time');
 const documentHandler = require('../handlers/documentHandler');
 const documentAPICIL = require('../services/document/documentAPICIL');
 const documentAVIVA = require('../services/document/documentAVIVA');
@@ -53,11 +54,13 @@ exports.createDocument = (req, res) => {  // create document
 
 exports.updateDocuments = async (req, res) => {
     const result = await axios.get(`${config.nodeUrl}/api/document`);
+    let data = [];
     let documents = result.data;
     documents = documents.filter((doc, index) => {
-        const currentMonth = new Date().getMonth();
-        const uploadDateMonth = new Date(doc.upload_date).getMonth();
-        return (currentMonth === uploadDateMonth) && (doc.status === 'draft');
+        // const currentMonth = new Date().getMonth();
+        // const uploadDateMonth = new Date(doc.upload_date).getMonth();
+        // return (currentMonth === uploadDateMonth) && (doc.status === 'draft');
+        return doc.status === 'draft';
     });
     for (let document of documents) {
         const fileName = fileService.getFileNameWithoutExtension(document.path_original_file);
@@ -69,28 +72,28 @@ exports.updateDocuments = async (req, res) => {
             extension: extension
         };
         const result = await axios.put(`${config.nodeUrl}/api/document/${document.companyName}`, options);
-        res.status(202).json(result.data);
+        data.push(result.data);
     }
+    let executionTime = data.reduce((previous, current) => previous.executionTime + current.executionTime);
+    executionTime = time.millisecondToTime(executionTime);
+    const results = { data, executionTime };
+    res.status(202).json(results);
 };
 
-exports.updateDoc = async (req, res) => {
+exports.setStatusDocument = async (req, res) => {
     const result = await axios.get(`${config.nodeUrl}/api/document`);
     let documents = result.data;
-    for (let d of documents) {
-        for (let o of d.ocr.infos) {
-            for (let dt of o.detailDesPolices) {
-                const mt = parseFloat(((dt.prime.montant * dt.commissions.taux) / 100).toFixed(2));
-                const cmt = dt.commissions.montant;
-                if (mt === cmt || mt === (cmt + 0.01) || mt === (cmt - 0.01)) {
-                    dt.commissions.verificationMontantCommission = true
-                } else {
-                    dt.commissions.verificationMontantCommission = false
-                }
-            }
-        }
-        const doc = await documentHandler.updateDocument(d._id, d);
+    documents = documents.filter((doc, index) => {
+        // const currentMonth = new Date().getMonth();
+        // const uploadDateMonth = new Date(doc.upload_date).getMonth();
+        // return (currentMonth === uploadDateMonth) && (doc.status === 'draft');
+        return doc.status === 'draft';
+    });
+    for (let document of documents) {
+        document.status = req.params.status;
+        await documentHandler.updateDocument(document._id, document);
     }
-    res.end();
+    res.status(200).end();
 }
 
 exports.updateDocument = async (req, res) => {
@@ -144,7 +147,7 @@ exports.updateDocument = async (req, res) => {
     document.ocr = ocr;
     document.status = 'done';
     const doc = await documentHandler.updateDocument(req.body.document, document);
-    res.status(202).json({ executionTime: ocr.executionTime, company: req.params.company });
+    res.status(202).json({ executionTime: ocr.executionTimeMS, company: req.params.company });
 }
 
 exports.getDocument = async (req, res) => {

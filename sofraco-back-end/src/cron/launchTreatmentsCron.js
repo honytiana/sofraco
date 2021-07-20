@@ -7,7 +7,7 @@ exports.launchTreatments = () => {
             'Content-Type': 'multipart/form-data'
         }
     }).then((res) => {
-        console.log(`Traitement terminé pour ${res.data.company}`);
+        const executionTime = res.data.executionTime
     }).catch((err) => {
         console.log(err);
     }).finally(() => {

@@ -22,7 +22,10 @@ exports.create = async () => {
 
 const getOCRInfos = async () => {
     const res = await axios.get(`${config.nodeUrl}/api/document`);
-    const documents = res.data
+    let documents = res.data;
+    documents = documents.filter((doc, index) => {
+        return doc.status === 'done';
+    });
     let infos = [];
     for (let document of documents) {
         const company = document.companyName;

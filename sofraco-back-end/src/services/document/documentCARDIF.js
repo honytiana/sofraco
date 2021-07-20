@@ -140,12 +140,13 @@ exports.readExcelCARDIF = async (file) => {
         allContratsPerCourtier.push(contratCourtier);
     }
 
-    ocr = { headers, allContratsPerCourtier, executionTime: 0 };
+    ocr = { headers, allContratsPerCourtier, executionTime: 0, executionTimeMS: 0 };
     const excecutionStopTime = performance.now();
-    let executionTime = excecutionStopTime - excecutionStartTime;
-    executionTime = time.millisecondToTime(executionTime);
+    const executionTimeMS = excecutionStopTime - excecutionStartTime;
+    const executionTime = time.millisecondToTime(executionTimeMS);
     console.log('Total Execution time : ', executionTime);
     ocr.executionTime = executionTime;
+    ocr.executionTimeMS = executionTimeMS;
     console.log('FIN TRAITEMENT CARDIF');
     return ocr;
 };
