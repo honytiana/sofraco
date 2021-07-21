@@ -63,29 +63,33 @@ exports.updateDocuments = async (req, res) => {
         // return (currentMonth === uploadDateMonth) && (doc.status === 'draft');
         return doc.status === 'draft';
     });
-    for (let document of documents) {
-        const fileName = fileService.getFileNameWithoutExtension(document.path_original_file);
-        const extension = fileService.getFileExtension(document.path_original_file);
-        const options = {
-            document: document._id,
-            filePath: document.path_original_file,
-            fileName: fileName,
-            extension: extension
-        };
-        const result = await axios.put(`${config.nodeUrl}/api/document/${document.companyName}`, options);
-        data.push(result.data);
-    }
-    let executionTime;
-    if (data.length <= 1) {
-        executionTime = data[0].executionTime;
+    if (documents.length > 0) {
+        for (let document of documents) {
+            const fileName = fileService.getFileNameWithoutExtension(document.path_original_file);
+            const extension = fileService.getFileExtension(document.path_original_file);
+            const options = {
+                document: document._id,
+                filePath: document.path_original_file,
+                fileName: fileName,
+                extension: extension
+            };
+            const result = await axios.put(`${config.nodeUrl}/api/document/${document.companyName}`, options);
+            data.push(result.data);
+        }
+        let executionTime;
+        if (data.length <= 1) {
+            executionTime = data[0].executionTime;
+        } else {
+            executionTime = data.reduce((previous, current) => {
+                return (previous.executionTime + current.executionTime);
+            });
+        }
+        executionTime = time.millisecondToTime(executionTime);
+        const results = { data, executionTime };
+        res.status(202).json(results);
     } else {
-        executionTime = data.reduce((previous, current) => {
-            return (previous.executionTime + current.executionTime);
-        });
+        res.status(202).end('Tous les fichiers sont traités');
     }
-    executionTime = time.millisecondToTime(executionTime);
-    const results = { data, executionTime };
-    res.status(202).json(results);
 };
 
 exports.setStatusDocument = async (req, res) => {
