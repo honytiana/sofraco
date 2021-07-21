@@ -4,6 +4,7 @@ const ExcelJS = require('exceljs');
 
 const config = require('../../../config.json');
 const excelMasterAPICIL = require('./excelMasterAPICIL');
+const excelMasterAPREP = require('./excelMasterAPREP');
 const excelMasterAVIVA = require('./excelMasterAVIVA');
 const excelMasterCARDIF = require('./excelMasterCARDIF');
 const excelMasterCEGEMA = require('./excelMasterCEGEMA');
@@ -34,9 +35,9 @@ const getOCRInfos = async () => {
             case 'APICIL':
                 infos.push(excelMasterAPICIL.getOCRAPICIL(ocr));
                 break;
-            // case 'APREP':
-            //     infos = await getOCRAPICIL(file);
-            //     break;
+            case 'APREP':
+                infos.push(excelMasterAPREP.getOCRAPREP(ocr));
+                break;
             // case 'AVIVA':
             //     infos = await getOCRAPICIL(file);
             //     break;
@@ -107,9 +108,10 @@ const generateExcelMaster = async (ocrInfos) => {
                             excelMasterAPICIL.createWorkSheetAPICIL(workSheet, dataCourtierOCR);
                             excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'masterExcel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
                             break;
-                        // case 'APREP':
-                        //     infos = await readExcel(file);
-                        //     break;
+                        case 'APREP':
+                            excelMasterAPREP.createWorkSheetAPREP(workSheet, dataCourtierOCR);
+                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'masterExcel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
+                            break;
                         // case 'AVIVA':
                         //     infos = await readExcel(file);
                         //     break;

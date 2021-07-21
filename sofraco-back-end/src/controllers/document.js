@@ -7,6 +7,7 @@ const Document = require('../models/document');
 const time = require('../services/time/time');
 const documentHandler = require('../handlers/documentHandler');
 const documentAPICIL = require('../services/document/documentAPICIL');
+const documentAPREP = require('../services/document/documentAPREP');
 const documentAVIVA = require('../services/document/documentAVIVA');
 const documentCARDIF = require('../services/document/documentCARDIF');
 const documentCEGEMA = require('../services/document/documentCEGEMA');
@@ -74,7 +75,14 @@ exports.updateDocuments = async (req, res) => {
         const result = await axios.put(`${config.nodeUrl}/api/document/${document.companyName}`, options);
         data.push(result.data);
     }
-    let executionTime = data.reduce((previous, current) => previous.executionTime + current.executionTime);
+    let executionTime;
+    if (data.length <= 1) {
+        executionTime = data[0].executionTime;
+    } else {
+        executionTime = data.reduce((previous, current) => {
+            return (previous.executionTime + current.executionTime);
+        });
+    }
     executionTime = time.millisecondToTime(executionTime);
     const results = { data, executionTime };
     res.status(202).json(results);
@@ -104,9 +112,9 @@ exports.updateDocument = async (req, res) => {
         case 'APICIL':
             ocr = await documentAPICIL.readExcelAPICIL(req.body.filePath);
             break;
-        // case 'APREP':
-        //     infos = await readExcel(file);
-        //     break;
+        case 'APREP':
+            ocr = await documentAPREP.readPdfAPREP(req.body.filePath);
+            break;
         // case 'AVIVA':
         //     infos = await readExcel(file);
         //     break;
