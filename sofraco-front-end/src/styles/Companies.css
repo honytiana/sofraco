@@ -55,3 +55,27 @@
 .sofraco-container-button-traitement {
     text-align: center;
 }
+
+.sofraco-button {
+    color: #fff;
+    background-color: #ed7102;
+    width: 150px;
+}
+
+.sofraco-button:hover {
+    color: #fff;
+    background-color: #F39200;
+}
+
+.sofraco-element-cover {
+    top: 52px !important;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.sofraco-element-cover-content {
+    text-align: center;
+}
