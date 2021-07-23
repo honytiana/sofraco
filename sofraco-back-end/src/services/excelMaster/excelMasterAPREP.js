@@ -28,9 +28,9 @@ exports.createWorkSheetAPREP = (workSheet, dataCourtierOCR) => {
     const row1 = workSheet.getRow(1);
     row1.getCell('A').value = dataCourtierOCR.infosOCR.infosBordereau.lieu;
     row1.getCell('A').font = { name: 'Arial', size: 10 };
-    row1.getCell('B').value = new Date(dataCourtierOCR.infosOCR.infosBordereau.datebordereau);
+    row1.getCell('B').value = dataCourtierOCR.infosOCR.infosBordereau.datebordereau;
     row1.getCell('B').font = { bold: true, name: 'Arial', size: 10 };
-    row1.getCell('B').numFmt = 'dd/mm/yyyy';
+    // row1.getCell('B').numFmt = 'dd/mm/yyyy';
 
     const row2 = workSheet.getRow(2);
     row2.getCell('A').value = 'N° ORIAS';
@@ -68,11 +68,11 @@ exports.createWorkSheetAPREP = (workSheet, dataCourtierOCR) => {
     let debut = 9;
     for (let datas of dataCourtierOCR.infosOCR.datas) {
         workSheet.getRow(rowNumber).font = { name: 'Arial', size: 10 };
-        workSheet.getRow(rowNumber).getCell('A').value = (datas.datePrelevement) ? new Date(datas.datePrelevement) : '';
-        workSheet.getRow(rowNumber).getCell('A').numFmt = 'dd/mm/yyyy';
+        workSheet.getRow(rowNumber).getCell('A').value = datas.datePrelevement;
+        // workSheet.getRow(rowNumber).getCell('A').numFmt = 'dd/mm/yyyy';
         workSheet.getRow(rowNumber).getCell('B').value = datas.numeroContrat;
-        workSheet.getRow(rowNumber).getCell('C').value = (datas.datePaiement) ? new Date(datas.datePaiement) : '';
-        workSheet.getRow(rowNumber).getCell('C').numFmt = 'dd/mm/yyyy';
+        workSheet.getRow(rowNumber).getCell('C').value = datas.datePaiement;
+        // workSheet.getRow(rowNumber).getCell('C').numFmt = 'dd/mm/yyyy';
         workSheet.getRow(rowNumber).getCell('D').value = datas.nom;
         workSheet.getRow(rowNumber).getCell('E').value = datas.prenoms;
         workSheet.getRow(rowNumber).getCell('F').value = datas.fract;
@@ -93,7 +93,7 @@ exports.createWorkSheetAPREP = (workSheet, dataCourtierOCR) => {
     rowNumber++;
     workSheet.getRow(rowNumber).getCell('H').value = 'TOTAL';
     workSheet.getRow(rowNumber).getCell('H').font = { bold: true, name: 'Arial', size: 10 };
-    workSheet.getRow(rowNumber).getCell('I').value = { formula: `SUM(I${debut}:I${rowNumber - 2})` };
+    workSheet.getRow(rowNumber).getCell('I').value = dataCourtierOCR.infosOCR.infosBordereau.montantHT;
     workSheet.getRow(rowNumber).getCell('I').font = { bold: true, name: 'Arial', size: 10 };
     workSheet.getRow(rowNumber).getCell('I').numFmt = '#,##0.00"€";\-#,##0.00"€"';
 }

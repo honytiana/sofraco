@@ -105,7 +105,8 @@ const readBordereauAPREP = (textFilePaths) => {
                     infosBordereau.lieu = d.replace(rDateLieuBordereau, '$1');
                     const dateBordereau = d.replace(rDateLieuBordereau, '$2');
                     const dateBordereauArray = dateBordereau.split('/');
-                    infosBordereau.datebordereau = new Date(parseInt(dateBordereauArray[2]), parseInt(dateBordereauArray[1]) - 1, parseInt(dateBordereauArray[0]), 0, 0, 0);
+                    infosBordereau.datebordereau = dateBordereau;
+                    // infosBordereau.datebordereau = new Date(parseInt(dateBordereauArray[2]), parseInt(dateBordereauArray[1]) - 1, parseInt(dateBordereauArray[0]), 0, 0, 0);
                 }
                 if (d.match(rNumOrias)) {
                     infosBordereau.numOrias = d.replace(rNumOrias, '$2');
@@ -155,13 +156,15 @@ const readBordereauAPREP = (textFilePaths) => {
                 if (element.match(rContrat1)) {
                     const datePrelevement = element.replace(rContrat1, '$1');
                     const datePrelevementArray = datePrelevement.split('/');
-                    contrat.datePrelevement = new Date(parseInt(datePrelevementArray[2]), parseInt(datePrelevementArray[1]) - 1, parseInt(datePrelevementArray[0]), 0, 0, 0);
+                    contrat.datePrelevement = datePrelevement;
+                    // contrat.datePrelevement = new Date(parseInt(datePrelevementArray[2]), parseInt(datePrelevementArray[1]) - 1, parseInt(datePrelevementArray[0]), 0, 0, 0);
 
                     contrat.numeroContrat = element.replace(rContrat1, '$2');
 
                     const datePaiement = element.replace(rContrat1, '$3');
                     const datePaiementArray = datePaiement.split('/');
-                    contrat.datePaiement = new Date(parseInt(datePaiementArray[2]), parseInt(datePaiementArray[1]) - 1 , parseInt(datePaiementArray[0]), 0, 0, 0);
+                    contrat.datePaiement = datePaiement;
+                    // contrat.datePaiement = new Date(parseInt(datePaiementArray[2]), parseInt(datePaiementArray[1]) - 1 , parseInt(datePaiementArray[0]), 0, 0, 0);
 
                     contrat.nom = element.replace(rContrat1, '$4');
                     contrat.prenoms = element.replace(rContrat1, '$5$10');
@@ -179,7 +182,8 @@ const readBordereauAPREP = (textFilePaths) => {
 
                     const datePaiement = element.replace(rContrat2, '$2');
                     const datePaiementArray = datePaiement.split('/');
-                    contrat.datePaiement = new Date(parseInt(datePaiementArray[2]), parseInt(datePaiementArray[1]) - 1, parseInt(datePaiementArray[0]), 0, 0, 0);
+                    contrat.datePaiement = datePaiement;
+                    // contrat.datePaiement = new Date(parseInt(datePaiementArray[2]), parseInt(datePaiementArray[1]) - 1, parseInt(datePaiementArray[0]), 0, 0, 0);
 
                     contrat.nom = element.replace(rContrat2, '$3');
                     contrat.prenoms = element.replace(rContrat2, '$4$9');
