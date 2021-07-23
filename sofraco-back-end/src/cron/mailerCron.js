@@ -3,11 +3,11 @@ const config = require('../../config.json');
 
 exports.sendMail = () => {
     const courtiers = axios.get(`${config.nodeUrl}/api/courtier`);
-    for(let courtier of courtiers) {
+    for (let courtier of courtiers) {
         const options = {
             user: {
                 email: courtier.email,
-                firstName : courtier.firstName,
+                firstName: courtier.firstName,
                 lastName: courtier.lastName
             }
         };
