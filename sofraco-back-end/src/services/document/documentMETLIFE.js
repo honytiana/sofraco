@@ -38,9 +38,9 @@ exports.readPdfMETLIFE = async (file) => {
     const excecutionStartTime = performance.now();
     let pathsToPDF = await splitPdfService.splitPDFMETLIFE(file);
     // let pathsToPDF;
-    // pathsToPDF = fs.readdirSync(path.join(__dirname, '..', '..', '..', 'documents', 'splitedPDF'));
+    // pathsToPDF = fs.readdirSync(path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF'));
     for (let pathToPDF of pathsToPDF) {
-        // pathToPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splitedPDF', pathToPDF);
+        // pathToPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF', pathToPDF);
         const images = await pdfService.convertPDFToImg(pathToPDF);
         // const textFilePaths = fs.readdirSync(path.join(__dirname, '..', '..', '..', 'documents', 'texte'));
         const textFilePaths = getTextFromImages(images);
