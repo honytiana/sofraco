@@ -19,6 +19,7 @@ const upload = multer({ storage: storage });
 
 router.route('/:id').get(excelMasterController.getExcelMaster);
 router.route('/').get(excelMasterController.getExcelMasters);
+router.route('/zip/excels').get(excelMasterController.getExcelMastersZip);
 router.route('/').post(excelMasterController.createExcelMaster);
 router.route('/:id').put(excelMasterController.updateExcelMaster);
 

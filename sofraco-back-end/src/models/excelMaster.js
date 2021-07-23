@@ -2,11 +2,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const excelMasterSchema = new Schema({
-    courtier: { type: Schema.Types.ObjectId, ref: 'Courtier', default: undefined },
-    code_courtier: { type: Schema.Types.Mixed, default: undefined },
-    companies: { type: Array, default: [] },
+    courtier: { type: Schema.Types.ObjectId, ref: 'Courtier', default: null },
+    code_courtier: { type: Schema.Types.Mixed, default: '' },
+    company: { type: String, default: '' },
     create_date: { type: Date, default: Date.now() },
     path: { type: String, default: '' },
+    type: { type: String, required: true, enum: ['excel', 'zip', 'zip of zip'], default: null },
     is_enabled: { type: Boolean, default: true },
 });
 

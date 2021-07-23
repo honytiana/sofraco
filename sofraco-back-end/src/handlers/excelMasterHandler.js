@@ -8,10 +8,11 @@ class ExcelMasterHandler {
     createExcelMaster(data) {
         let excelMaster = new ExcelMaster();
         excelMaster.courtier = null;
-        excelMaster.code_courtier  = data.code_courtier;
-        excelMaster.companies = data.companies;
+        excelMaster.code_courtier = data.code_courtier;
+        excelMaster.company = data.company;
         excelMaster.create_date = Date.now();
         excelMaster.path = data.path;
+        excelMaster.type = data.type;
         excelMaster.is_enabled = true;
         excelMaster.save();
         return excelMaster;
@@ -22,7 +23,16 @@ class ExcelMasterHandler {
     }
 
     getExcelMasters() {
-        return ExcelMaster.find();
+        return ExcelMaster.find({ type: 'excel' });
+    }
+
+    getExcelMastersZip() {
+        return ExcelMaster.find({ type: 'zip' });
+    }
+
+    getZipGlobalContainer() {
+        let month = new Date().getMonth();
+        return ExcelMaster.findOne({ type: 'zip of zip' });
     }
 
     updateExcelMaster(id, data) {
