@@ -96,7 +96,8 @@ class Companies extends Component {
         e.preventDefault();
         this.setState({
             load: true,
-            elementCover: true
+            elementCover: true,
+            executionTime: ''
         });
         axios.put(`${config.nodeUrl}/api/document`, {
             headers: {
