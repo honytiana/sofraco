@@ -37,7 +37,7 @@ exports.postMail = (req, res) => {
                 bcc: config.mailSenderInfomaniak,
                 attachments: [
                     {
-                        filename: path.join(__dirname, '..', '..', 'documents', 'masterExcel', 'Commissions5121.xlsx'),
+                        filename: path.join(__dirname, '..', '..', 'documents', 'master_excel', 'Commissions5121.xlsx'),
                     }
                 ]
             };

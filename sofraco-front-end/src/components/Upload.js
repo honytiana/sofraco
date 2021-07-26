@@ -118,9 +118,24 @@ class Upload extends Component {
                     });
                 }
                 break;
-            // case 'APREP':
-            //     infos = await readPdfMETLIFE(file);
-            //     break;
+            case 'APREP':
+                if (extension.toUpperCase() !== 'PDF') {
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'warning', message: 'Vous devez donner un fichier PDF' }
+                    });
+                    setTimeout(() => {
+                        this.setState({
+                            toast: false,
+                            messageToast: {}
+                        });
+                    }, 6000);
+                } else {
+                    this.setState({
+                        files: file
+                    });
+                }
+                break;
             // case 'AVIVA':
             //     infos = await readPdfMETLIFE(file);
             //     break;
@@ -273,7 +288,7 @@ class Upload extends Component {
                                     <input
                                         {...getInputProps()}
                                         multiple={false}
-                                        onChange={(event) => {this.onChangeHandler(event, this.props.companyName)}}
+                                        onChange={(event) => { this.onChangeHandler(event, this.props.companyName) }}
                                     />
                                     {
                                         (this.state.files !== null) ? (
@@ -312,7 +327,7 @@ class Upload extends Component {
                                             <input
                                                 {...getInputProps()}
                                                 multiple={false}
-                                                onChange={(event) => {this.onChangeHandler(event, this.props.company.surco.name)}}
+                                                onChange={(event) => { this.onChangeHandler(event, this.props.company.surco.name) }}
                                             />
                                             {
                                                 (this.state.filesSurco !== null) ? (
@@ -342,11 +357,11 @@ class Upload extends Component {
                         }
                     </CModalBody>
                     <CModalFooter>
-                        {
+                        {/* {
                             (this.props.executionTime) && (
                                 <p>Traité en : {this.props.executionTime}</p>
                             )
-                        }
+                        } */}
                         <CButton
                             onClick={this.onSubmitHandler}
                             className="sofraco-button"

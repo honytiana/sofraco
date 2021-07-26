@@ -34,8 +34,8 @@ exports.splitPDFMETLIFE = (file) => {
             let pdfNumero = 1;
             for (let numbers of pageNumbers) {
                 if (pageNumbers.length === 1) {
-                    fs.writeFileSync(path.join(__dirname, '..', '..', '..', 'documents', 'splitedPDF', `${fileName}_${pdfNumero}.pdf`), currentPDFBytes);
-                    pathToPdf.push(path.join(__dirname, '..', '..', '..', 'documents', 'splitedPDF', `${fileName}_${pdfNumero}.pdf`));
+                    fs.writeFileSync(path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF', `${fileName}_${pdfNumero}.pdf`), currentPDFBytes);
+                    pathToPdf.push(path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF', `${fileName}_${pdfNumero}.pdf`));
                 } else {
                     let pages = [];
                     for (let i = 0; i < numbers; i++) {
@@ -48,8 +48,8 @@ exports.splitPDFMETLIFE = (file) => {
                         newPDF.addPage(page);
                     }
                     const pdfBytes = await newPDF.save();
-                    fs.writeFileSync(path.join(__dirname, '..', '..', '..', 'documents', 'splitedPDF', `${fileName}_${pdfNumero}.pdf`), pdfBytes);
-                    pathToPdf.push(path.join(__dirname, '..', '..', '..', 'documents', 'splitedPDF', `${fileName}_${pdfNumero}.pdf`));
+                    fs.writeFileSync(path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF', `${fileName}_${pdfNumero}.pdf`), pdfBytes);
+                    pathToPdf.push(path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF', `${fileName}_${pdfNumero}.pdf`));
                     pdfNumero++;
                 }
             }
@@ -71,15 +71,13 @@ exports.splitPDFToSinglePagePDF = async (file) => {
     const pageNumbers = currentPDFDoc.getPageCount();
     let pdfNumero = 1;
     let pathToPdf = [];
-    for (let i = 0 ; i < pageNumbers; i++) {
-        if (pdfNumero !== 2) {
-            const newPDF = await PDFDocument.create();
-            const [page] = await newPDF.copyPages(currentPDFDoc, [i]);
-            newPDF.addPage(page);
-            const pdfBytes = await newPDF.save();
-            fs.writeFileSync(path.join(__dirname, '..', '..', '..', 'documents', 'splitedPDF', `${fileName}_${pdfNumero}.pdf`), pdfBytes);
-            pathToPdf.push(path.join(__dirname, '..', '..', '..', 'documents', 'splitedPDF', `${fileName}_${pdfNumero}.pdf`));
-        }
+    for (let i = 0; i < pageNumbers; i++) {
+        const newPDF = await PDFDocument.create();
+        const [page] = await newPDF.copyPages(currentPDFDoc, [i]);
+        newPDF.addPage(page);
+        const pdfBytes = await newPDF.save();
+        fs.writeFileSync(path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF', `${fileName}_${pdfNumero}.pdf`), pdfBytes);
+        pathToPdf.push(path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF', `${fileName}_${pdfNumero}.pdf`));
         pdfNumero++;
     }
     const excecutionStopTime = performance.now();
