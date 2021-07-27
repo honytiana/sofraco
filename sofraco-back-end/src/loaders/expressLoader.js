@@ -15,4 +15,10 @@ module.exports = async function ({ app }) {
         next();
     });
 
+    app.get('/api/api-status', (req, res) =>{
+        res.status(200).json({
+            'status': 'Sofraco api is OK'
+        });
+    });
+
 }

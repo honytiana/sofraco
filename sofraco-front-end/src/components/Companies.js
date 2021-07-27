@@ -321,7 +321,10 @@ class Companies extends Component {
                         (!this.state.loadGenerateExcelMaster) ? (
                             <span>Générer les Excels Masters</span>
                         ) : (
-                            <span>Génération des Excels Masters en cours<CSpinner color="warning" ></CSpinner> </span>
+                            <div>
+                                <p>Génération des Excels Masters en cours</p>
+                                <CSpinner color="warning" ></CSpinner>
+                            </div>
                         )
                     }
                 </CButton>
