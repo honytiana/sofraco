@@ -8,7 +8,7 @@
         "website": "apicil.com",
         "is_enabled": true,
         "name": "APICIL",
-        "logo": "/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/logos/apicil.png",
+        "logo": "/home/sofraco/Sofraco/sofraco-back-end/documents/logos/apicil.png",
         "creation_date": "2010-01-01T00:00:00.000Z",
         "surco": null
     },
@@ -21,7 +21,7 @@
         "website": "aprep.com",
         "is_enabled": true,
         "name": "APREP",
-        "logo": "/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/logos/aprep.png",
+        "logo": "/home/sofraco/Sofraco/sofraco-back-end/documents/logos/aprep.png",
         "creation_date": "2010-03-02T00:00:00.000Z",
         "surco": null
     },
@@ -34,7 +34,7 @@
         "website": "aviva.com",
         "is_enabled": true,
         "name": "AVIVA",
-        "logo": "/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/logos/aviva.png",
+        "logo": "/home/sofraco/Sofraco/sofraco-back-end/documents/logos/aviva.png",
         "creation_date": "2010-04-02T00:00:00.000Z",
         "surco": {
             "address": "France",
@@ -45,7 +45,7 @@
             "website": "avivasurco.com",
             "is_enabled": true,
             "name": "AVIVA SURCO",
-            "logo": "/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/logos/company.png",
+            "logo": "/home/sofraco/Sofraco/sofraco-back-end/documents/logos/company.png",
             "creation_date": "2010-04-02T00:00:00.000Z",
             "surco": null
         }
@@ -59,7 +59,7 @@
         "website": "cardif.com",
         "is_enabled": true,
         "name": "CARDIF",
-        "logo": "/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/logos/cardif.png",
+        "logo": "/home/sofraco/Sofraco/sofraco-back-end/documents/logos/cardif.png",
         "creation_date": "2010-05-02T00:00:00.000Z",
         "surco": null
     },
@@ -72,7 +72,7 @@
         "website": "cbpfrance.com",
         "is_enabled": true,
         "name": "CBP FRANCE",
-        "logo": "/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/logos/lourmel.png",
+        "logo": "/home/sofraco/Sofraco/sofraco-back-end/documents/logos/lourmel.png",
         "creation_date": "2010-06-02T00:00:00.000Z",
         "surco": null
     },
@@ -85,7 +85,7 @@
         "website": "cegema.com",
         "is_enabled": true,
         "name": "CEGEMA",
-        "logo": "/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/logos/cegema.png",
+        "logo": "/home/sofraco/Sofraco/sofraco-back-end/documents/logos/cegema.png",
         "creation_date": "2010-07-02T00:00:00.000Z",
         "surco": null
     },
@@ -98,7 +98,7 @@
         "website": "eres.com",
         "is_enabled": true,
         "name": "ERES",
-        "logo": "/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/logos/company.png",
+        "logo": "/home/sofraco/Sofraco/sofraco-back-end/documents/logos/company.png",
         "creation_date": "2010-08-02T00:00:00.000Z",
         "surco": null
     },
@@ -111,7 +111,7 @@
         "website": "generali.com",
         "is_enabled": true,
         "name": "GENERALI",
-        "logo": "/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/logos/company.png",
+        "logo": "/home/sofraco/Sofraco/sofraco-back-end/documents/logos/company.png",
         "creation_date": "2010-09-02T00:00:00.000Z",
         "surco": null
     },
@@ -124,7 +124,7 @@
         "website": "hodeva.com",
         "is_enabled": true,
         "name": "HODEVA",
-        "logo": "/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/logos/hodeva.png",
+        "logo": "/home/sofraco/Sofraco/sofraco-back-end/documents/logos/hodeva.png",
         "creation_date": "2010-10-02T00:00:00.000Z",
         "surco": null
     },
@@ -137,7 +137,7 @@
         "website": "metlife.com",
         "is_enabled": true,
         "name": "METLIFE",
-        "logo": "/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/logos/metlife.png",
+        "logo": "/home/sofraco/Sofraco/sofraco-back-end/documents/logos/metlife.png",
         "creation_date": "2010-11-02T00:00:00.000Z",
         "surco": null
     },
@@ -150,7 +150,7 @@
         "website": "swisslife.com",
         "is_enabled": true,
         "name": "SWISSLIFE",
-        "logo": "/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/logos/company.png",
+        "logo": "/home/sofraco/Sofraco/sofraco-back-end/documents/logos/company.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": {
             "address": "France",
@@ -161,7 +161,7 @@
             "website": "swisslifesurco.com",
             "is_enabled": true,
             "name": "SWISSLIFE SURCO",
-            "logo": "/media/tiana/data1/PROJETS/DIRIS/SOFRACO/src/Sofraco/sofraco-back-end/documents/logos/company.png",
+            "logo": "/home/sofraco/Sofraco/sofraco-back-end/documents/logos/company.png",
             "creation_date": "2010-12-02T00:00:00.000Z",
             "surco": null
         }

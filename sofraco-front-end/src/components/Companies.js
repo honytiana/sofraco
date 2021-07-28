@@ -257,7 +257,7 @@ class Companies extends Component {
                                         <CCard key={`${company._id}_Card`} onDoubleClick={() => { this.toggleDetails(index) }} >
                                             <CCardBody key={`${company._id}_CardBody`} className="sofraco-card-body" >
                                                 <div className="sofraco-container-image">
-                                                    <CImg className="sofraco-logo-company" key={`${company._id}_Img`} src={`data:image/png;base64,${company.logo}`} fluid width={100} />
+                                                    <CImg className="sofraco-logo-company" key={`${company._id}_Img`} src={`data:image/png;base64,${company.logo}`} alt={`${company.name}`} fluid width={100} />
                                                 </div>
                                             </CCardBody>
                                             <CCardFooter key={`${company._id}_CardFooter`}>
