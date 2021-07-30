@@ -119,6 +119,9 @@ exports.updateDocument = async (req, res) => {
         case 'APREP':
             ocr = await documentAPREP.readPdfAPREP(req.body.filePath);
             break;
+        case 'APREP ENCOURS':
+            ocr = await documentAPREP.readPdfAPREPENCOURS(req.body.filePath);
+            break;
         // case 'AVIVA':
         //     infos = await readExcel(file);
         //     break;

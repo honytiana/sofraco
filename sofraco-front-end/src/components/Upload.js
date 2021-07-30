@@ -136,8 +136,41 @@ class Upload extends Component {
                     });
                 }
                 break;
+            case 'APREP ENCOURS':
+                if (extension.toUpperCase() !== 'PDF') {
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'warning', message: 'Vous devez donner un fichier PDF' }
+                    });
+                    setTimeout(() => {
+                        this.setState({
+                            toast: false,
+                            messageToast: {}
+                        });
+                    }, 6000);
+                } else {
+                    this.setState({
+                        filesSurco: file
+                    });
+                }
+                break;
             // case 'AVIVA':
-            //     infos = await readPdfMETLIFE(file);
+            //     if (extension.toUpperCase() !== 'XLSX' && extension.toUpperCase() !== 'XLS') {
+            //         this.setState({
+            //             toast: true,
+            //             messageToast: { header: 'warning', message: 'Vous devez donner un fichier Excel' }
+            //         });
+            //         setTimeout(() => {
+            //             this.setState({
+            //                 toast: false,
+            //                 messageToast: {}
+            //             });
+            //         }, 6000);
+            //     } else {
+            //         this.setState({
+            //             files: file
+            //         });
+            //     }
             //     break;
             case 'AVIVA SURCO':
                 if (extension.toUpperCase() !== 'XLSX' && extension.toUpperCase() !== 'XLS') {

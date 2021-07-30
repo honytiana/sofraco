@@ -19,6 +19,8 @@ import {
 import axios from 'axios';
 
 import config from '../config.json';
+// import config from '../jsConfig';
+
 import Upload from './Upload';
 import '../styles/Companies.css';
 

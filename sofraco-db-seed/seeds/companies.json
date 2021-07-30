@@ -23,7 +23,19 @@
         "name": "APREP",
         "logo": "/backend/documents/logos/aprep.png",
         "creation_date": "2010-03-02T00:00:00.000Z",
-        "surco": null
+        "surco": {
+            "address": "France",
+            "zip": "",
+            "city": "France",
+            "country": "France",
+            "phone": "+3300121000",
+            "website": "aprepencours.com",
+            "is_enabled": true,
+            "name": "APREP ENCOURS",
+            "logo": "/backend/documents/logos/company.png",
+            "creation_date": "2010-12-02T00:00:00.000Z",
+            "surco": null
+        }
     },
     {
         "address": "France",

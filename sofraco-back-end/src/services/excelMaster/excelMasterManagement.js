@@ -46,6 +46,9 @@ const getOCRInfos = async () => {
             case 'APREP':
                 infos.push(excelMasterAPREP.getOCRAPREP(ocr));
                 break;
+            case 'APREP ENCOURS':
+                infos.push(excelMasterAPREP.getOCRAPREPENCOURS(ocr));
+                break;
             // case 'AVIVA':
             //     infos = await getOCRAPICIL(file);
             //     break;
@@ -119,6 +122,10 @@ const generateExcelMaster = async (ocrInfos) => {
                             break;
                         case 'APREP':
                             excelMasterAPREP.createWorkSheetAPREP(workSheet, dataCourtierOCR);
+                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
+                            break;
+                        case 'APREP ENCOURS':
+                            excelMasterAPREP.createWorkSheetAPREPENCOURS(workSheet, dataCourtierOCR);
                             excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
                             break;
                         // case 'AVIVA':
