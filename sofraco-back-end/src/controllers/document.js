@@ -11,6 +11,7 @@ const documentAPREP = require('../services/document/documentAPREP');
 const documentAVIVA = require('../services/document/documentAVIVA');
 const documentCARDIF = require('../services/document/documentCARDIF');
 const documentCEGEMA = require('../services/document/documentCEGEMA');
+const documentERES = require('../services/document/documentERES');
 const documentHODEVA = require('../services/document/documentHODEVA');
 const documentLOURMEL = require('../services/document/documentLOURMEL');
 const documentMETLIFE = require('../services/document/documentMETLIFE');
@@ -137,9 +138,9 @@ exports.updateDocument = async (req, res) => {
         case 'CEGEMA':
             ocr = await documentCEGEMA.readExcelCEGEMA(req.body.filePath);
             break;
-        // case 'ERES':
-        //     infos = await readExcel(file);
-        //     break;
+        case 'ERES':
+            ocr = await documentERES.readPdfERES(req.body.filePath);
+            break;
         // case 'GENERALI':
         //     infos = await readExcel(file);
         //     break;

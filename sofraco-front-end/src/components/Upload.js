@@ -244,9 +244,24 @@ class Upload extends Component {
                     });
                 }
                 break;
-            // case 'ERES':
-            //     infos = await readPdfMETLIFE(file);
-            //     break;
+            case 'ERES':
+                if (extension.toUpperCase() !== 'PDF') {
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'warning', message: 'Vous devez donner un fichier PDF' }
+                    });
+                    setTimeout(() => {
+                        this.setState({
+                            toast: false,
+                            messageToast: {}
+                        });
+                    }, 6000);
+                } else {
+                    this.setState({
+                        files: file
+                    });
+                }
+                break;
             // case 'GENERALI':
             //     infos = await readPdfMETLIFE(file);
             //     break;

@@ -11,6 +11,7 @@ const excelMasterAPREP = require('./excelMasterAPREP');
 const excelMasterAVIVA = require('./excelMasterAVIVA');
 const excelMasterCARDIF = require('./excelMasterCARDIF');
 const excelMasterCEGEMA = require('./excelMasterCEGEMA');
+const excelMasterERES = require('./excelMasterERES');
 const excelMasterHODEVA = require('./excelMasterHODEVA');
 const excelMasterLOURMEL = require('./excelMasterLOURMEL');
 const excelMasterMETLIFE = require('./excelMasterMETLIFE');
@@ -64,9 +65,9 @@ const getOCRInfos = async () => {
             case 'CEGEMA':
                 infos.push(excelMasterCEGEMA.getOCRCEGEMA(ocr));
                 break;
-            // case 'ERES':
-            //     infos = await getOCRAPICIL(file);
-            //     break;
+            case 'ERES':
+                infos.push(excelMasterERES.getOCRERES(ocr));
+                break;
             // case 'GENERALI':
             //     infos = await getOCRAPICIL(file);
             //     break;
@@ -143,9 +144,10 @@ const generateExcelMaster = async (ocrInfos) => {
                             excelMasterCEGEMA.createWorkSheetCEGEMA(workSheet, dataCourtierOCR);
                             excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
                             break;
-                        // case 'ERES':
-                        //     infos = await readExcel(file);
-                        //     break;
+                        case 'ERES':
+                            excelMasterERES.createWorkSheetERES(workSheet, dataCourtierOCR);
+                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
+                            break;
                         // case 'GENERALI':
                         //     infos = await readExcel(file);
                         //     break;
