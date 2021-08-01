@@ -41,11 +41,11 @@ exports.createWorkSheetERES = (workSheet, dataCourtierOCR) => {
         workSheet.getRow(rowNumber).getCell('B').value = datas.raisonSocial;
         workSheet.getRow(rowNumber).getCell('C').value = datas.conseiller;
         workSheet.getRow(rowNumber).getCell('D').value = datas.montantVersee;
-        workSheet.getRow(rowNumber).getCell('D').numFmt = '#,##0.00"€";[Red]\-#,##0.00"€"';
+        workSheet.getRow(rowNumber).getCell('D').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         workSheet.getRow(rowNumber).getCell('E').value = datas.droitEntree;
-        workSheet.getRow(rowNumber).getCell('E').numFmt = '#,##0.00"€";[Red]\-#,##0.00"€"';
+        workSheet.getRow(rowNumber).getCell('E').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         workSheet.getRow(rowNumber).getCell('F').value = datas.commissionARegler;
-        workSheet.getRow(rowNumber).getCell('F').numFmt = '#,##0.00"€";[Red]\-#,##0.00"€"';
+        workSheet.getRow(rowNumber).getCell('F').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
     }
     rowNumber++;
@@ -78,7 +78,7 @@ exports.createWorkSheetERES = (workSheet, dataCourtierOCR) => {
         fgColor: { argb: 'ed7d31' }
     };
     workSheet.getRow(rowNumber).getCell('F').value = { formula: `SUM(F${debut}:F${rowNumber - 2})` };
-    workSheet.getRow(rowNumber).getCell('F').numFmt = '#,##0.00"€";[Red]\-#,##0.00"€"';
+    workSheet.getRow(rowNumber).getCell('F').numFmt = '#,##0.00"€";\-#,##0.00"€"';
     workSheet.getRow(rowNumber).getCell('F').fill = {
         type: 'pattern',
         pattern: 'solid',
