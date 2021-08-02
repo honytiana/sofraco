@@ -12,11 +12,13 @@ const documentAVIVA = require('../services/document/documentAVIVA');
 const documentCARDIF = require('../services/document/documentCARDIF');
 const documentCEGEMA = require('../services/document/documentCEGEMA');
 const documentERES = require('../services/document/documentERES');
+const documentGENERALI = require('../services/document/documentGENERALI');
 const documentHODEVA = require('../services/document/documentHODEVA');
 const documentLOURMEL = require('../services/document/documentLOURMEL');
 const documentMETLIFE = require('../services/document/documentMETLIFE');
 
 exports.createDocument = (req, res) => {  // create document
+    console.log('Create document');
     const company = JSON.parse(req.body.company);
     const surco = JSON.parse(req.body.surco);
     if (company.surco !== null && surco && req.files.length > 1) {  // company and surco
@@ -141,9 +143,9 @@ exports.updateDocument = async (req, res) => {
         case 'ERES':
             ocr = await documentERES.readPdfERES(req.body.filePath);
             break;
-        // case 'GENERALI':
-        //     infos = await readExcel(file);
-        //     break;
+        case 'GENERALI':
+            ocr = await documentGENERALI.readExcelGENERALI(req.body.filePath);
+            break;
         case 'HODEVA':
             ocr = await documentHODEVA.readExcelHODEVA(req.body.filePath);
             break;

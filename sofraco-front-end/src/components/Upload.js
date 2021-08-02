@@ -37,6 +37,7 @@ class Upload extends Component {
         }
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.onChangeHandler = this.onChangeHandler.bind(this);
+        this.testExtension = this.testExtension.bind(this);
     }
 
     componentDidMount() {
@@ -101,206 +102,40 @@ class Upload extends Component {
         const company = companyName;
         switch (company.toUpperCase()) {
             case 'APICIL':
-                if (extension.toUpperCase() !== 'XLSX' && extension.toUpperCase() !== 'XLS') {
-                    this.setState({
-                        toast: true,
-                        messageToast: { header: 'warning', message: 'Vous devez donner un fichier Excel' }
-                    });
-                    setTimeout(() => {
-                        this.setState({
-                            toast: false,
-                            messageToast: {}
-                        });
-                    }, 6000);
-                } else {
-                    this.setState({
-                        files: file
-                    });
-                }
+                this.testExtension(extension, 'XLSX', false, file);
                 break;
             case 'APREP':
-                if (extension.toUpperCase() !== 'PDF') {
-                    this.setState({
-                        toast: true,
-                        messageToast: { header: 'warning', message: 'Vous devez donner un fichier PDF' }
-                    });
-                    setTimeout(() => {
-                        this.setState({
-                            toast: false,
-                            messageToast: {}
-                        });
-                    }, 6000);
-                } else {
-                    this.setState({
-                        files: file
-                    });
-                }
+                this.testExtension(extension, 'PDF', false, file);
                 break;
             case 'APREP ENCOURS':
-                if (extension.toUpperCase() !== 'PDF') {
-                    this.setState({
-                        toast: true,
-                        messageToast: { header: 'warning', message: 'Vous devez donner un fichier PDF' }
-                    });
-                    setTimeout(() => {
-                        this.setState({
-                            toast: false,
-                            messageToast: {}
-                        });
-                    }, 6000);
-                } else {
-                    this.setState({
-                        filesSurco: file
-                    });
-                }
+                this.testExtension(extension, 'PDF', false, file);
                 break;
             // case 'AVIVA':
-            //     if (extension.toUpperCase() !== 'XLSX' && extension.toUpperCase() !== 'XLS') {
-            //         this.setState({
-            //             toast: true,
-            //             messageToast: { header: 'warning', message: 'Vous devez donner un fichier Excel' }
-            //         });
-            //         setTimeout(() => {
-            //             this.setState({
-            //                 toast: false,
-            //                 messageToast: {}
-            //             });
-            //         }, 6000);
-            //     } else {
-            //         this.setState({
-            //             files: file
-            //         });
-            //     }
+            //     this.testExtension(extension, 'XLSX', false, file);
             //     break;
             case 'AVIVA SURCO':
-                if (extension.toUpperCase() !== 'XLSX' && extension.toUpperCase() !== 'XLS') {
-                    this.setState({
-                        toast: true,
-                        messageToast: { header: 'warning', message: 'Vous devez donner un fichier Excel' }
-                    });
-                    setTimeout(() => {
-                        this.setState({
-                            toast: false,
-                            messageToast: {}
-                        });
-                    }, 6000);
-                } else {
-                    this.setState({
-                        filesSurco: file
-                    });
-                }
+                this.testExtension(extension, 'XLSX', true, file);
                 break;
             case 'CARDIF':
-                if (extension.toUpperCase() !== 'XLSX' && extension.toUpperCase() !== 'XLS') {
-                    this.setState({
-                        toast: true,
-                        messageToast: { header: 'warning', message: 'Vous devez donner un fichier Excel' }
-                    });
-                    setTimeout(() => {
-                        this.setState({
-                            toast: false,
-                            messageToast: {}
-                        });
-                    }, 6000);
-                } else {
-                    this.setState({
-                        files: file
-                    });
-                }
+                this.testExtension(extension, 'XLSX', false, file);
                 break;
             case 'CBP FRANCE':
-                if (extension.toUpperCase() !== 'XLSX' && extension.toUpperCase() !== 'XLS') {
-                    this.setState({
-                        toast: true,
-                        messageToast: { header: 'warning', message: 'Vous devez donner un fichier Excel' }
-                    });
-                    setTimeout(() => {
-                        this.setState({
-                            toast: false,
-                            messageToast: {}
-                        });
-                    }, 6000);
-                } else {
-                    this.setState({
-                        files: file
-                    });
-                }
+                this.testExtension(extension, 'XLSX', false, file);
                 break;
             case 'CEGEMA':
-                if (extension.toUpperCase() !== 'XLSX' && extension.toUpperCase() !== 'XLS') {
-                    this.setState({
-                        toast: true,
-                        messageToast: { header: 'warning', message: 'Vous devez donner un fichier Excel' }
-                    });
-                    setTimeout(() => {
-                        this.setState({
-                            toast: false,
-                            messageToast: {}
-                        });
-                    }, 6000);
-                } else {
-                    this.setState({
-                        files: file
-                    });
-                }
+                this.testExtension(extension, 'XLSX', false, file);
                 break;
             case 'ERES':
-                if (extension.toUpperCase() !== 'PDF') {
-                    this.setState({
-                        toast: true,
-                        messageToast: { header: 'warning', message: 'Vous devez donner un fichier PDF' }
-                    });
-                    setTimeout(() => {
-                        this.setState({
-                            toast: false,
-                            messageToast: {}
-                        });
-                    }, 6000);
-                } else {
-                    this.setState({
-                        files: file
-                    });
-                }
+                this.testExtension(extension, 'PDF', false, file);
                 break;
-            // case 'GENERALI':
-            //     infos = await readPdfMETLIFE(file);
-            //     break;
+            case 'GENERALI':
+                this.testExtension(extension, 'XLSX', false, file);
+                break;
             case 'HODEVA':
-                if (extension.toUpperCase() !== 'XLSX' && extension.toUpperCase() !== 'XLS') {
-                    console.log(extension.toUpperCase())
-                    this.setState({
-                        toast: true,
-                        messageToast: { header: 'warning', message: 'Vous devez donner un fichier Excel' }
-                    });
-                    setTimeout(() => {
-                        this.setState({
-                            toast: false,
-                            messageToast: {}
-                        });
-                    }, 6000);
-                } else {
-                    this.setState({
-                        files: file
-                    });
-                }
+                this.testExtension(extension, 'XLSX', false, file);
                 break;
             case 'METLIFE':
-                if (extension.toUpperCase() !== 'PDF') {
-                    this.setState({
-                        toast: true,
-                        messageToast: { header: 'warning', message: 'Vous devez donner un fichier PDF' }
-                    });
-                    setTimeout(() => {
-                        this.setState({
-                            toast: false,
-                            messageToast: {}
-                        });
-                    }, 6000);
-                } else {
-                    this.setState({
-                        files: file
-                    });
-                }
+                this.testExtension(extension, 'PDF', false, file);
                 break;
             // case 'SWISSLIFE':
             //     infos = await readPdfMETLIFE(file);
@@ -310,6 +145,57 @@ class Upload extends Component {
             //     break;
             default:
                 console.log('Pas de compagnie correspondante');
+        }
+    }
+
+    testExtension(extension, type, surco, file) {
+        if (type === 'PDF') {
+            if (extension.toUpperCase() !== 'PDF') {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'warning', message: 'Vous devez donner un fichier PDF' }
+                });
+                setTimeout(() => {
+                    this.setState({
+                        toast: false,
+                        messageToast: {}
+                    });
+                }, 6000);
+            } else {
+                if (!surco) {
+                    this.setState({
+                        files: file
+                    });
+                } else {
+                    this.setState({
+                        filesSurco: file
+                    });
+                }
+            }
+        }
+        if (type === 'XLSX') {
+            if (extension.toUpperCase() !== 'XLSX' && extension.toUpperCase() !== 'XLS') {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'warning', message: 'Vous devez donner un fichier Excel' }
+                });
+                setTimeout(() => {
+                    this.setState({
+                        toast: false,
+                        messageToast: {}
+                    });
+                }, 6000);
+            } else {
+                if (!surco) {
+                    this.setState({
+                        files: file
+                    });
+                } else {
+                    this.setState({
+                        filesSurco: file
+                    });
+                }
+            }
         }
     }
 

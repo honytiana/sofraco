@@ -12,6 +12,7 @@ const excelMasterAVIVA = require('./excelMasterAVIVA');
 const excelMasterCARDIF = require('./excelMasterCARDIF');
 const excelMasterCEGEMA = require('./excelMasterCEGEMA');
 const excelMasterERES = require('./excelMasterERES');
+const excelMasterGENERALI = require('./excelMasterGENERALI');
 const excelMasterHODEVA = require('./excelMasterHODEVA');
 const excelMasterLOURMEL = require('./excelMasterLOURMEL');
 const excelMasterMETLIFE = require('./excelMasterMETLIFE');
@@ -68,9 +69,9 @@ const getOCRInfos = async () => {
             case 'ERES':
                 infos.push(excelMasterERES.getOCRERES(ocr));
                 break;
-            // case 'GENERALI':
-            //     infos = await getOCRAPICIL(file);
-            //     break;
+            case 'GENERALI':
+                infos.push(excelMasterGENERALI.getOCRGENERALI(ocr));
+                break;
             case 'HODEVA':
                 infos.push(excelMasterHODEVA.getOCRHODEVA(ocr));
                 break;
@@ -148,9 +149,10 @@ const generateExcelMaster = async (ocrInfos) => {
                             excelMasterERES.createWorkSheetERES(workSheet, dataCourtierOCR);
                             excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
                             break;
-                        // case 'GENERALI':
-                        //     infos = await readExcel(file);
-                        //     break;
+                        case 'GENERALI':
+                            excelMasterGENERALI.createWorkSheetGENERALI(workSheet, dataCourtierOCR);
+                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
+                            break;
                         case 'HODEVA':
                             excelMasterHODEVA.createWorkSheetHODEVA(workSheet, dataCourtierOCR);
                             excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
