@@ -16,6 +16,7 @@ const documentGENERALI = require('../services/document/documentGENERALI');
 const documentHODEVA = require('../services/document/documentHODEVA');
 const documentLOURMEL = require('../services/document/documentLOURMEL');
 const documentMETLIFE = require('../services/document/documentMETLIFE');
+const documentSWISSLIFE = require('../services/document/documentSWISSLIFE');
 
 exports.createDocument = (req, res) => {  // create document
     console.log('Create document');
@@ -155,9 +156,9 @@ exports.updateDocument = async (req, res) => {
         // case 'SWISSLIFE':
         //     infos = await readExcel(file);
         //     break;
-        // case 'SWISSLIFE SURCO':
-        //     infos = await readExcel(file);
-        //     break;
+        case 'SWISSLIFE SURCO':
+            ocr = await documentSWISSLIFE.readExcelSWISSLIFESURCO(req.body.filePath);
+            break;
         default:
             console.log('Pas de compagnie correspondante');
     }

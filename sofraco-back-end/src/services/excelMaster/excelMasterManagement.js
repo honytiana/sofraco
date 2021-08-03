@@ -16,6 +16,7 @@ const excelMasterGENERALI = require('./excelMasterGENERALI');
 const excelMasterHODEVA = require('./excelMasterHODEVA');
 const excelMasterLOURMEL = require('./excelMasterLOURMEL');
 const excelMasterMETLIFE = require('./excelMasterMETLIFE');
+const excelMasterSWISSLIFE = require('./excelMasterSWISSLIFE');
 
 
 exports.create = async () => {
@@ -81,9 +82,9 @@ const getOCRInfos = async () => {
             // case 'SWISSLIFE':
             //     infos = await getOCRAPICIL(file);
             //     break;
-            // case 'SWISSLIFE SURCO':
-            //     infos = await getOCRAPICIL(file);
-            //     break;
+            case 'SWISSLIFE SURCO':
+                infos.push(excelMasterSWISSLIFE.getOCRSWISSLIFESURCO(ocr));
+                break;
             default:
                 console.log('Pas de compagnie correspondante');
         }
@@ -168,9 +169,10 @@ const generateExcelMaster = async (ocrInfos) => {
                         // case 'SWISSLIFE':
                         //     infos = await readExcel(file);
                         //     break;
-                        // case 'SWISSLIFE SURCO':
-                        //     infos = await readExcel(file);
-                        //     break;
+                        case 'SWISSLIFE SURCO':
+                            excelMasterSWISSLIFE.createWorkSheetSWISSLIFESURCO(workSheet, dataCourtierOCR);
+                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : `${date}`}.xlsx`);
+                            break;
                         default:
                             console.log('Pas de compagnie correspondante');
                     }

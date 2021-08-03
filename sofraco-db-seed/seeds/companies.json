@@ -110,7 +110,7 @@
         "website": "eres.com",
         "is_enabled": true,
         "name": "ERES",
-        "logo": "/backend/documents/logos/company.png",
+        "logo": "/backend/documents/logos/eres.png",
         "creation_date": "2010-08-02T00:00:00.000Z",
         "surco": null
     },
@@ -162,7 +162,7 @@
         "website": "swisslife.com",
         "is_enabled": true,
         "name": "SWISSLIFE",
-        "logo": "/backend/documents/logos/company.png",
+        "logo": "/backend/documents/logos/swisslife.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": {
             "address": "France",

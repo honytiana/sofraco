@@ -140,9 +140,9 @@ class Upload extends Component {
             // case 'SWISSLIFE':
             //     infos = await readPdfMETLIFE(file);
             //     break;
-            // case 'SWISSLIFE SURCO':
-            //     infos = await readPdfMETLIFE(file);
-            //     break;
+            case 'SWISSLIFE SURCO':
+                this.testExtension(extension, 'XLSX', true, file);
+                break;
             default:
                 console.log('Pas de compagnie correspondante');
         }
