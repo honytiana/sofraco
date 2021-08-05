@@ -263,13 +263,13 @@ class Companies extends Component {
                                                 </div>
                                             </CCardBody>
                                             <CCardFooter key={`${company._id}_CardFooter`}>
-                                                {company.name}
+                                                {company.globalName}
                                             </CCardFooter>
                                         </CCard>
                                         <Upload
                                             key={`${company._id}_Upload`}
                                             company={company}
-                                            companyName={company.name}
+                                            companyName={company.globalName}
                                             showModal={this.state.details.includes(index)}
                                             onCloseModal={() => { this.toggleDetails(index) }}
                                             loader={false}

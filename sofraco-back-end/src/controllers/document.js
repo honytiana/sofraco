@@ -153,9 +153,9 @@ exports.updateDocument = async (req, res) => {
         case 'METLIFE':
             ocr = await documentMETLIFE.readPdfMETLIFE(req.body.filePath);
             break;
-        // case 'SWISSLIFE':
-        //     infos = await readExcel(file);
-        //     break;
+        case 'SLADE':   // SWISSLIFE
+            ocr = await documentSWISSLIFE.readPdfSLADE(req.body.filePath);
+            break;
         case 'SWISSLIFE SURCO':
             ocr = await documentSWISSLIFE.readExcelSWISSLIFESURCO(req.body.filePath);
             break;

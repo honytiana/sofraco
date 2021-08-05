@@ -137,9 +137,9 @@ class Upload extends Component {
             case 'METLIFE':
                 this.testExtension(extension, 'PDF', false, file);
                 break;
-            // case 'SWISSLIFE':
-            //     infos = await readPdfMETLIFE(file);
-            //     break;
+            case 'SWISSLIFE':
+                this.testExtension(extension, 'PDF', false, file);
+                break;
             case 'SWISSLIFE SURCO':
                 this.testExtension(extension, 'XLSX', true, file);
                 break;
