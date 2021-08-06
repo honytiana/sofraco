@@ -57,6 +57,7 @@ class Upload extends Component {
 
     onSubmitHandler(event) {
         event.preventDefault();
+        const token = JSON.parse(localStorage.getItem('token'));
         this.setState({
             loader: true
         });
@@ -68,17 +69,18 @@ class Upload extends Component {
         formData.append('company', JSON.stringify(this.props.company));
         axios.post(`${config.nodeUrl}/api/document/`, formData, {
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${token.token}`
             }
         }).then((res) => {
             this.setState({
                 toast: true,
-                messageToast: { header: 'success', message: 'Le document à été envoyé vers le serveur' }
+                messageToast: { header: 'SUCCESS', color: 'success', message: 'Le document à été envoyé vers le serveur' }
             });
         }).catch((err) => {
             this.setState({
                 toast: true,
-                messageToast: { header: 'error', message: err }
+                messageToast: { header: 'ERROR', color: 'danger', message: err }
             })
         }).finally(() => {
             this.setState({
@@ -153,7 +155,7 @@ class Upload extends Component {
             if (extension.toUpperCase() !== 'PDF') {
                 this.setState({
                     toast: true,
-                    messageToast: { header: 'warning', message: 'Vous devez donner un fichier PDF' }
+                    messageToast: { header: 'WARNING', color: 'warning', message: 'Vous devez donner un fichier PDF' }
                 });
                 setTimeout(() => {
                     this.setState({
@@ -177,7 +179,7 @@ class Upload extends Component {
             if (extension.toUpperCase() !== 'XLSX' && extension.toUpperCase() !== 'XLS') {
                 this.setState({
                     toast: true,
-                    messageToast: { header: 'warning', message: 'Vous devez donner un fichier Excel' }
+                    messageToast: { header: 'WARNING', color: 'warning', message: 'Vous devez donner un fichier Excel' }
                 });
                 setTimeout(() => {
                     this.setState({
@@ -319,7 +321,7 @@ class Upload extends Component {
                                 color={this.state.messageToast.header}
                             >
                                 <CToastHeader closeButton>
-                                    {this.state.messageToast.header.toUpperCase()}
+                                    {this.state.messageToast.header}
                                 </CToastHeader>
                                 <CToastBody>
                                     {`${this.state.messageToast.message}`}

@@ -7,7 +7,6 @@ import {
     CCollapse,
     CCardBody,
     CInputCheckbox,
-    CAlert,
     CToaster,
     CToast,
     CToastHeader,
@@ -40,6 +39,7 @@ class Treatments extends Component {
     }
 
     componentDidMount() {
+        const token = JSON.parse(localStorage.getItem('token'));
         this.setState({
             fields: [
                 {
@@ -92,7 +92,11 @@ class Treatments extends Component {
             toast: false,
             messageToast: []
         });
-        axios.get(`${config.nodeUrl}/api/courtier`)
+        axios.get(`${config.nodeUrl}/api/courtier`, {
+            headers: {
+                'Authorization': `Bearer ${token.token}`
+            }
+        })
             .then((data) => {
                 return data.data
             })
@@ -166,6 +170,7 @@ class Treatments extends Component {
     }
 
     onSendMailHandler() {
+        const token = JSON.parse(localStorage.getItem('token'));
         for (let courtier of this.state.checked) {
             if (courtier.checked === true) {
                 const options = {
@@ -175,11 +180,17 @@ class Treatments extends Component {
                         lastName: courtier.lastName
                     }
                 };
-                axios.post(`${config.nodeUrl}/api/mailer/`, options)
+                axios.post(`${config.nodeUrl}/api/mailer/`, options, {
+                    headers: {
+                        'Authorization': `Bearer ${token.token}`
+                    }
+                })
                     .then((data) => {
                         let mt = this.state.messageToast.slice();
                         mt.push({
-                            header: 'success', message: `Le mail à été envoyé aux courtiers ${data.data.accepted[0]}`
+                            header: 'SUCCESS',
+                            color: 'success',
+                            message: `Le mail à été envoyé aux courtiers ${data.data.accepted[0]}`
                         });
                         this.setState({
                             toast: true,
@@ -187,7 +198,10 @@ class Treatments extends Component {
                         });
                     }).catch((err) => {
                         let mt = this.state.messageToast.slice();
-                        mt.push({ header: 'error', message: err });
+                        mt.push({ 
+                            header: 'ERROR',
+                            color: 'danger',
+                            message: err });
                         this.setState({
                             toast: true,
                             messageToast: mt
@@ -288,10 +302,10 @@ class Treatments extends Component {
                                         show={true}
                                         fade={true}
                                         autohide={5000}
-                                        color={(toast.header === 'success') ? 'success' : 'danger'}
+                                        color={toast.color}
                                     >
                                         <CToastHeader closeButton>
-                                            {toast.header.toUpperCase()}
+                                            {toast.header}
                                         </CToastHeader>
                                         <CToastBody>
                                             {`${toast.message}`}

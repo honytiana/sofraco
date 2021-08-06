@@ -3,11 +3,13 @@ import '@coreui/coreui/dist/css/coreui.min.css';
 import { CContainer } from '@coreui/react';
 import { io } from 'socket.io-client';
 
+import axios from 'axios';
 import Navbar from './Navbar';
 import RouteComponent from './Routes';
 import Footer from './Footer';
 import '../styles/App.css';
 import config from '../config.json';
+import Access from './Access';
 
 
 class App extends Component {
@@ -20,9 +22,9 @@ class App extends Component {
 
   componentDidMount() {
 
-    const socket = io(config.nodeUrl, {
-      path: '/api/api-status'
-    });
+    // const socket = io(config.nodeUrl, {
+    //   path: '/api/api-status'
+    // });
     // console.log(socket)
     // socket.on('connect', () => {
     //   console.log('connected');
@@ -42,11 +44,20 @@ class App extends Component {
     document.title = 'Sofraco';
     return (
       <CContainer className="sofraco-container" fluid >
-        <Navbar />
-        <div className="sofraco-root" style={{ minHeight: window.innerHeight - 50 }}>
-          <RouteComponent />
-        </div>
-        <Footer />
+        {
+          (localStorage.getItem('token') === null) ?
+            <div style={{height: '100%'}}>
+              <Access />
+              <Footer />
+            </div> :
+            <div>
+              <Navbar />
+              <div className="sofraco-root" style={{ minHeight: window.innerHeight - 50 }}>
+                <RouteComponent />
+              </div>
+              <Footer />
+            </div>
+        }
       </CContainer>
     );
   }

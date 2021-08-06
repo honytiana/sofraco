@@ -51,7 +51,12 @@ class Companies extends Component {
     }
 
     componentDidMount() {
-        axios.get(`${config.nodeUrl}/api/company`)
+        const token = JSON.parse(localStorage.getItem('token'));
+        axios.get(`${config.nodeUrl}/api/company`, {
+            headers: {
+                'Authorization': `Bearer ${token.token}`
+            }
+        })
             .then((data) => {
                 return data.data
             })
@@ -72,7 +77,12 @@ class Companies extends Component {
     }
 
     loadingHandler() {
-        axios.get(`${config.nodeUrl}/api/document`)
+        const token = JSON.parse(localStorage.getItem('token'));
+        axios.get(`${config.nodeUrl}/api/document`, {
+            headers: {
+                'Authorization': `Bearer ${token.token}`
+            }
+        })
             .then((data) => {
                 return data.data
             })
@@ -96,6 +106,7 @@ class Companies extends Component {
 
     launchTreatments(e) {
         e.preventDefault();
+        const token = JSON.parse(localStorage.getItem('token'));
         this.setState({
             load: true,
             elementCover: true,
@@ -103,7 +114,8 @@ class Companies extends Component {
         });
         axios.put(`${config.nodeUrl}/api/document`, {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token.token}`
             }
         })
             .then((res) => {
@@ -111,7 +123,8 @@ class Companies extends Component {
                     this.setState({
                         toast: true,
                         messageToast: {
-                            header: 'success',
+                            header: 'SUCCESS',
+                            color: 'success',
                             message: `Traitements terminés`
                         }
                     });
@@ -122,7 +135,8 @@ class Companies extends Component {
                     this.setState({
                         toast: true,
                         messageToast: {
-                            header: 'success',
+                            header: 'SUCCESS',
+                            color: 'success',
                             message: res.data
                         }
                     });
@@ -178,19 +192,22 @@ class Companies extends Component {
     }
 
     onGenererExcelsMasters() {
+        const token = JSON.parse(localStorage.getItem('token'));
         this.setState({
             loadGenerateExcelMaster: true
         });
         axios.post(`${config.nodeUrl}/api/excelMaster`, {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token.token}`
             }
         })
             .then((res) => {
                 this.setState({
                     toast: true,
                     messageToast: {
-                        header: 'success',
+                        header: 'SUCCESS',
+                        color: 'success',
                         message: res.data.message
                     }
                 });
@@ -213,9 +230,11 @@ class Companies extends Component {
     }
 
     onDownloadExcelMasters() {
+        const token = JSON.parse(localStorage.getItem('token'));
         axios.get(`${config.nodeUrl}/api/excelMaster/zip/excels`, {
             headers: {
-                'Content-Type': 'application/zip'
+                'Content-Type': 'application/zip',
+                'Authorization': `Bearer ${token.token}`
             },
             responseType: 'blob'
         })
@@ -342,7 +361,7 @@ class Companies extends Component {
                             show={true}
                             fade={true}
                             autohide={5000}
-                            color='success'
+                            color={this.state.messageToast.color}
                         >
                             <CToastHeader closeButton>
                                 {this.state.messageToast.header}

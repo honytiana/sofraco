@@ -3,7 +3,6 @@ const fs = require('fs');
 const axios = require('axios');
 const config = require('../../config.json');
 const fileService = require('../services/document/files');
-const Document = require('../models/document');
 const time = require('../services/time/time');
 const documentHandler = require('../handlers/documentHandler');
 const documentAPICIL = require('../services/document/documentAPICIL');

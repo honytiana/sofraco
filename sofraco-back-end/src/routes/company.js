@@ -3,6 +3,7 @@ const router = express.Router();
 const path = require('path');
 const multer = require('multer');
 
+const accessControl = require('../middlewares/accessControl');
 const companyController =  require('../controllers/company');
 
 const storage = multer.diskStorage({
@@ -17,11 +18,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.route('/:id').get(companyController.getCompany);
-router.route('/name/:name').get(companyController.getCompanyByName);
-router.route('/').get(companyController.getCompanies);
-router.route('/').post(upload.single('file'), companyController.createCompany);
-router.route('/:id').put(companyController.updateCompany);
+router.route('/:id').get(accessControl, companyController.getCompany);
+router.route('/name/:name').get(accessControl, companyController.getCompanyByName);
+router.route('/').get(accessControl, companyController.getCompanies);
+router.route('/').post(accessControl, upload.single('file'), companyController.createCompany);
+router.route('/:id').put(accessControl, companyController.updateCompany);
 
 
 module.exports = router;

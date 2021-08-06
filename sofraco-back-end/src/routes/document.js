@@ -3,6 +3,7 @@ const router = express.Router();
 const path = require('path');
 const multer = require('multer');
 
+const accessControl = require('../middlewares/accessControl');
 const documentController =  require('../controllers/document');
 
 const storage = multer.diskStorage({
@@ -17,12 +18,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.route('/').post(upload.array('files'), documentController.createDocument);
-router.route('/').put(documentController.updateDocuments);
-router.route('/status/:status').put(documentController.setStatusDocument);
-router.route('/:company').put(documentController.updateDocument);
-router.route('/').get(documentController.getDocuments);
-router.route('/:id').get(documentController.getDocument);
+router.route('/').post(accessControl, upload.array('files'), documentController.createDocument);
+router.route('/').put(accessControl, documentController.updateDocuments);
+router.route('/status/:status').put(accessControl, documentController.setStatusDocument);
+router.route('/:company').put(accessControl, documentController.updateDocument);
+router.route('/').get(accessControl, documentController.getDocuments);
+router.route('/:id').get(accessControl, documentController.getDocument);
 
 
 

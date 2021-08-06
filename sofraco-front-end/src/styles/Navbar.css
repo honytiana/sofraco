@@ -5,3 +5,15 @@
 .sofraco-navbar .collapse.navbar-collapse ul a {
     color: #fff !important;
 }
+
+.sofraco-dropdown-item {
+    text-align: center;
+}
+
+.sofraco-dropdown-item:hover {
+    color: #ed7102 !important;
+}
+
+.sofraco-dropdown-menu {
+    background-color: #9d8b80;
+}
