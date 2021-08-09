@@ -42,6 +42,11 @@ class Navbar extends Component {
         })
     }
 
+    deconnexion() {
+        localStorage.clear();
+        window.location.reload();
+    }
+
     render() {
         return (
             <CNavbar expandable="sm" className="sofraco-navbar" fixed="top">
@@ -63,7 +68,7 @@ class Navbar extends Component {
                                 {(this.state.user !== null) && this.state.user.email}
                             </CDropdownToggle>
                             <CDropdownMenu className="sofraco-dropdown-menu">
-                                <CDropdownItem className="sofraco-dropdown-item">Deconnexion</CDropdownItem>
+                                <CDropdownItem className="sofraco-dropdown-item" onClick={this.deconnexion} >Deconnexion</CDropdownItem>
                             </CDropdownMenu>
                         </CDropdown>
                     </CNavbarNav>

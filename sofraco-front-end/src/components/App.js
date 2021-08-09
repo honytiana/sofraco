@@ -38,6 +38,10 @@ class App extends Component {
     // socket.on('connect_error', (err) => {
     //   console.log(err);
     // })
+
+    window.addEventListener('close', (e) => {
+      localStorage.clear();
+    });
   }
 
   render() {

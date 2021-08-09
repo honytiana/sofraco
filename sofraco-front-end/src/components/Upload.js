@@ -318,7 +318,7 @@ class Upload extends Component {
                                 show={true}
                                 fade={true}
                                 autohide={5000}
-                                color={this.state.messageToast.header}
+                                color={this.state.messageToast.color}
                             >
                                 <CToastHeader closeButton>
                                     {this.state.messageToast.header}
