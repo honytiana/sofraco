@@ -34,9 +34,9 @@ exports.readPdfSLADE = async (file) => {
     let infos = { executionTime: 0, infos: [] };
     console.log('DEBUT TRAITEMENT SLADE');
     const excecutionStartTime = performance.now();
-    // const images = await pdfService.convertPDFToImg(file);
-    const textFilePaths = fs.readdirSync(path.join(__dirname, '..', '..', '..', 'documents', 'texte'));
-    // const textFilePaths = getTextFromImages(images);
+    const images = await pdfService.convertPDFToImg(file);
+    // const textFilePaths = fs.readdirSync(path.join(__dirname, '..', '..', '..', 'documents', 'texte'));
+    const textFilePaths = getTextFromImages(images);
     const infoBordereau = readBordereauSLADE(textFilePaths);
     infos.infos.push(infoBordereau);
     const excecutionStopTime = performance.now();
@@ -85,11 +85,10 @@ const readBordereauSLADE = (textFilePaths) => {
             reportSoldePrecedent: null,
             totalCommissionsDues: null
         },
-        detailDesPolices: null
+        detailDesPolices: []
     };
-    let dDPolice = [];
     for (let textFilePath of textFilePaths) {
-        textFilePath = path.join(__dirname, '..', '..', '..', 'documents', 'texte', textFilePath);
+        // textFilePath = path.join(__dirname, '..', '..', '..', 'documents', 'texte', textFilePath);
         const content = fs.readFileSync(textFilePath, { encoding: 'utf-8' });
         let data = content.split('\n');
         data = data.filter((element) => {
@@ -98,7 +97,7 @@ const readBordereauSLADE = (textFilePaths) => {
         const fileNameWithoutExtension = fileService.getFileNameWithoutExtension(textFilePath);
         const nameArr = fileNameWithoutExtension.split('_');
         const numero = nameArr[nameArr.length - 1];
-        if(numero === '1') {
+        if (numero === '1') {
             infos.syntheseDesCommissions.periodeConcernee = data[reIndexOf(data, /Période concernée/) + 1];
             infos.syntheseDesCommissions.codeApporteur = data[reIndexOf(data, /Code apporteur/) + 1];
             infos.syntheseDesCommissions.referenceBordereau = data[reIndexOf(data, /Référence bordereau/) + 2];
@@ -124,10 +123,13 @@ const readBordereauSLADE = (textFilePaths) => {
             for (let i = 0; i < maxI; i++) {
                 let contrat = [];
                 if (details.length > 0) {
-                    contrat.push(details[0]);
-                    details.splice(0, 1);
-                    const lastIndexUtil = reIndexOf(details, /^\d+$/);
+                    contrat.push(details[reIndexOf(details, /^\d+$/)]);
+                    details.splice(reIndexOf(details, /^\d+$/), 1);
+                    let lastIndexUtil = reIndexOf(details, /^\d+$/);
                     if (lastIndexUtil > 0) {
+                        if(details[lastIndexUtil - 1].match(/^(du \d{1,2}[/]\d{1,2}[/]\d{1,4} au)$/)) {
+                            lastIndexUtil = lastIndexUtil - 2;
+                        }
                         for (let j = 0; j < lastIndexUtil; j++) {
                             contrat.push(details[j]);
                         }
@@ -141,7 +143,7 @@ const readBordereauSLADE = (textFilePaths) => {
                 }
             }
 
-            newDetails.forEach((element, index) => {
+            for (let newDetail of newDetails) {
                 let detailsPolice = {
                     agence: {
                         code: null,
@@ -166,8 +168,8 @@ const readBordereauSLADE = (textFilePaths) => {
                         montant: null
                     }
                 }
-                let dPolices = [];
                 const rNomPoliceAssure = /^([^\d]+)([\d]+( [\d]*)*)([^\d]*)$/i;
+                const rAssure = /^(([a-z']+\s*)+)$/i;
                 const rDateEffet = /^(\d{1,2}[/]\d{1,2}[/]\d{1,4})$/;
                 const rPrimePeriode = /^(du \d{1,2}[/]\d{1,2}[/]\d{1,4} au)$/;
                 const rPeriodiciteMensuel = /^(mensuel)$/i;
@@ -176,275 +178,176 @@ const readBordereauSLADE = (textFilePaths) => {
                 const rCommissionEscompt = /^(escompté)/i;
                 const rCommissionRembours = /^(rembours)/i;
                 const rContratProduit = /^(slade .+)$/i;
-                detailsPolice.agence.code = element[0];
-                newDetails.splice(0, 1);
-                if (element.match(rNomPoliceAssure)) {
-                    detailsPolice.agence.nom = element.replace(rNomPoliceAssure, '$1');
-                    detailsPolice.contrat.police = element.replace(rNomPoliceAssure, '$2');
-                    detailsPolice.contrat.assure = element.replace(rNomPoliceAssure, '$3');
-                    // continue;
-                }
-                if (element.match(rContratProduit)) {
-                    detailsPolice.contrat.produit = element.replace(rContratProduit, '$1');
-                    // continue;
-                }
-                if (element.match(rDateEffet)) {
-                    detailsPolice.contrat.dateEffet = element.replace(rDateEffet, '$1');
-                    newDetails.splice(index, 1);
-                    // continue;
-                }
-                if (element.match(rPrimePeriode)) {
-                    detailsPolice.prime.periode = element.replace(rPrimePeriode, '$1');
-                    // continue;
-                }
-                if (element.match(rPeriodiciteMensuel)) {
-                    detailsPolice.prime.periodicite = element.replace(rPeriodiciteMensuel, '$1');
-                    // continue;
-                }
-                if (element.match(rPeriodiciteAnnuel)) {
-                    detailsPolice.prime.periodicite = element.replace(rPeriodiciteAnnuel, '$1');
-                    // continue;
-                }
-                if (element.match(rCommissionLineaire)) {
-                    detailsPolice.commissions.mode = element.replace(rCommissionLineaire, '$1');
-                    // continue;
-                }
-                if (element.match(rCommissionEscompt)) {
-                    detailsPolice.commissions.mode = element.replace(rCommissionEscompt, '$1');
-                    // continue;
-                }
-                if (element.match(rCommissionRembours)) {
-                    detailsPolice.commissions.mode = element.replace(rCommissionRembours, '$1');
-                    // continue;
-                }
-                if (element.length > 10) {
-                    if (reIndexOf(element, /^a{1}$/i) > 0) {
-                        element.splice(reIndexOf(element, /^a{1}$/i), 1);
+                const rMontants = /^(\d+,*\d* *€)$/;
+                const rTaux = /^(\d+,*\d* *%)$/;
+                detailsPolice.agence.code = newDetail[0];
+                newDetail.splice(0, 1);
+                let dates = [];
+                let montants = [];
+                for (let element of newDetail) {
+                    if (element.match(rPeriodiciteMensuel)) {
+                        detailsPolice.prime.periodicite = element.replace(rPeriodiciteMensuel, '$1');
+                        continue;
+                    }
+                    if (element.match(rPeriodiciteAnnuel)) {
+                        detailsPolice.prime.periodicite = element.replace(rPeriodiciteAnnuel, '$1');
+                        continue;
+                    }
+                    if (element.match(rCommissionLineaire)) {
+                        detailsPolice.commissions.mode = element.replace(rCommissionLineaire, '$1');
+                        continue;
+                    }
+                    if (element.match(rCommissionEscompt)) {
+                        detailsPolice.commissions.mode = element.replace(rCommissionEscompt, '$1');
+                        continue;
+                    }
+                    if (element.match(rCommissionRembours)) {
+                        detailsPolice.commissions.mode = element.replace(rCommissionRembours, '$1');
+                        continue;
+                    }
+                    if (element.match(rAssure)) {
+                        detailsPolice.contrat.assure = `${(detailsPolice.contrat.assure) ? detailsPolice.contrat.assure : ''} ${element.replace(rAssure, '$1')}`;
+                        continue;
+                    }
+                    if (element.match(rContratProduit)) {
+                        detailsPolice.contrat.produit = element.replace(rContratProduit, '$1');
+                        continue;
+                    }
+                    if (element.match(rNomPoliceAssure)) {
+                        detailsPolice.agence.nom = element.replace(rNomPoliceAssure, '$1');
+                        detailsPolice.contrat.police = element.replace(rNomPoliceAssure, '$2');
+                        detailsPolice.contrat.assure = element.replace(rNomPoliceAssure, '$4');
+                        continue;
+                    }
+                    if (element.match(rDateEffet)) {
+                        dates.push(element.replace(rDateEffet, '$1'));
+                        continue;
+                    }
+                    if (element.match(rPrimePeriode)) {
+                        dates.push(element.replace(rPrimePeriode, '$1'));
+                        continue;
+                    }
+                    if (element.match(rMontants)) {
+                        montants.push(element.replace(rMontants, '$1'));
+                        continue;
+                    }
+                    if (element.match(rTaux)) {
+                        detailsPolice.commissions.taux = element.replace(rTaux, '$1');
+                        continue;
                     }
 
-                    const polices = element.filter((e, i) => {
-                        return e.match(/^S\d+$/) || e.match(/^A\d+$/);
-                    });
-                    polices.forEach((p, i) => {
-                        element.splice(element.indexOf(p), 1);
-                    });
-                    const policesLength = polices.length;
+                    if (element.length > 10) {
 
-                    const chiffres = element.filter((e, i) => {
-                        return e.match(/^[^a-z]{0,1}[\d\s]*\d+[.]{0,1}\d+\s*€*$/i);
-                    });
+                        // allMontantsEtTaux = allMontantsEtTaux.map((mt, index) => {
+                        //     let newMt = []
+                        //     mt.forEach((m, i) => {
+                        //         m = m.replace('~', '-');
+                        //         m = m.replace(/\s/, '');
+                        //         newMt.push(parseFloat(m));
+                        //     })
+                        //     return newMt;
+                        // });
 
-                    let sousTotalPoliceMontant = chiffres[chiffres.length - 1];
-                    element.splice(element.indexOf(sousTotalPoliceMontant), 1);
-                    sousTotalPoliceMontant = sousTotalPoliceMontant.replace('~', '-');
-                    sousTotalPoliceMontant = parseFloat(sousTotalPoliceMontant);
-                    element.splice(reIndexOf(element, /Sous-total/i), 1);
-                    const sousTotalPolice = polices[0];
+                        // let montantsTaux = [];
+                        // allMontantsEtTaux.forEach((mt, index) => {
+                        //     const montantPrime = mt[0];
+                        //     const taux = mt[1];
+                        //     const montantCommission = mt[2];
+                        //     const vmontantCommission = parseFloat(((montantPrime * taux) / 100).toFixed(2));
+                        //     let verificationMontantCommission;
+                        //     if (Math.abs(vmontantCommission) === Math.abs(montantCommission) ||
+                        //         (Math.abs(vmontantCommission) + 0.01) === Math.abs(montantCommission) ||
+                        //         (Math.abs(vmontantCommission) - 0.01) === Math.abs(montantCommission)) {
+                        //         verificationMontantCommission = true;
+                        //     } else {
+                        //         verificationMontantCommission = false;
+                        //     }
+                        //     const montants = {
+                        //         montantPrime,
+                        //         taux,
+                        //         montantCommission,
+                        //         verificationMontantCommission
+                        //     };
+                        //     montantsTaux.push(montants);
+                        // });
 
-                    chiffres.splice(chiffres.length - 1, 1);
-                    chiffres.forEach((c, i) => {
-                        element.splice(element.indexOf(c), 1);
-                    });
-                    let allMontantsEtTaux = [];
-                    const maxLength = chiffres.length / 3;
-                    for (let i = 0; i < maxLength; i++) {
-                        if (chiffres.length > 0) {
-                            const mt = chiffres.slice(0, 3);
-                            chiffres.splice(0, 3);
-                            allMontantsEtTaux.push(mt);
+                        // for (let i = 0; i < policesLength; i++) {
+                        //     const contrat = {
+                        //         police: polices[i],
+                        //         assure: assures[i],
+                        //         produit: produits[i]
+                        //     };
+                        //     const prime = {
+                        //         fractionnement: fractionnements[i],
+                        //         periode: `${allperiodes[i][0]} ${allperiodes[i][1]}`,
+                        //         etat: etats[i],
+                        //         montant: montantsTaux[i].montantPrime
+                        //     };
+                        //     let commissions = {
+                        //         mode: modes[i],
+                        //         taux: montantsTaux[i].taux,
+                        //         status: status[i],
+                        //         montant: montantsTaux[i].montantCommission,
+                        //         verificationMontantCommission: montantsTaux[i].verificationMontantCommission
+                        //     };
+                        //     dPolices.push({
+                        //         contrat,
+                        //         prime,
+                        //         commissions
+                        //     });
+
+                        // }
+                        // let mtcommissions = [];
+                        // dPolices.forEach((e, i) => {
+                        //     mtcommissions.push(e.commissions.montant);
+                        // })
+                        // let vsTPoliceMonant = mtcommissions.reduce((previous, current) => {
+                        //     return previous + current;
+                        // });
+                        // const vsousTotalPoliceMonant = vsTPoliceMonant.toFixed(2);
+                        // let verifSousTotalPoliceMonant;
+                        // if (parseFloat(vsousTotalPoliceMonant) === sousTotalPoliceMontant ||
+                        //     parseFloat(vsousTotalPoliceMonant) + 0.01 === sousTotalPoliceMontant ||
+                        //     parseFloat(vsousTotalPoliceMonant) - 0.01 === sousTotalPoliceMontant) {
+                        //     verifSousTotalPoliceMonant = true;
+                        // } else {
+                        //     verifSousTotalPoliceMonant = false;
+                        // }
+
+                        // dDPolice.push({ police: dPolices, sousTotalPolice, sousTotalPoliceMontant, verifSousTotalPoliceMonant });
+                    }
+                }
+                for(let d of dates) {
+                    if(d.match(rDateEffet)) {
+                        if(detailsPolice.contrat.dateEffet === null) {
+                            detailsPolice.contrat.dateEffet = d;
                         } else {
-                            break;
+                            detailsPolice.prime.periode = `${detailsPolice.prime.periode} ${d}`;
                         }
                     }
-
-                    const fractionnements = element.filter((e, i) => {
-                        return e.match(/^annuel$/i) || e.match(/^mensuel$/i);
-                    });
-                    fractionnements.forEach((f, i) => {
-                        element.splice(element.indexOf(f), 1);
-                    });
-
-                    const etats = element.filter((e, i) => {
-                        return e.match(/^sold/i) || e.match(/^annul/i) || e.match(/^rembours/i);
-                    });
-                    etats.forEach((e, index) => {
-                        if (etats.length > policesLength) {
-                            if (e.match(/^sold/i)) {
-                                etats.splice(index, 1);
-                            }
-                        }
-                    })
-                    etats.forEach((e, i) => {
-                        element.splice(element.indexOf(e), 1);
-                    });
-
-                    const modes = element.filter((e, i) => {
-                        return e.match(/^escompt/i) || e.match(/^linéaire$/i) || e.match(/^lineaire$/i) || e.match(/^lin[eé]?/i) || e.match(/^rembours/i);
-                    });
-                    modes.forEach((e, i) => {
-                        element.splice(element.indexOf(e), 1);
-                    });
-
-                    let periodes = element.filter((e, i) => {
-                        return e.match(/^du \d{1,2}[/]\d{1,2}[/]\d{1,4}/) ||
-                            e.match(/^au \d{1,2}[/]\d{1,2}[/]\d{1,4}/) ||
-                            e.match(/^du$/) ||
-                            e.match(/^au$/) ||
-                            e.match(/^\d{1,2}[/]\d{1,2}[/]\d{1,4}/);
-                    });
-                    periodes.forEach((p, i) => {
-                        element.splice(element.indexOf(p), 1);
-                    });
-                    periodes.forEach((p, i) => {
-                        if (p.match(/^du$/) ||
-                            p.match(/^au$/)) {
-                            let pr = `${p} ${periodes[i + 1]}`;
-                            periodes.splice(periodes.indexOf(periodes[i + 1]), 1);
-                            periodes.splice(periodes.indexOf(p), 1, pr);
-                        }
-                    })
-                    let allperiodes = [];
-                    const maxPeriodeLength = periodes.length / 2;
-                    for (let i = 0; i < maxPeriodeLength; i++) {
-                        if (periodes.length > 0) {
-                            const period = periodes.slice(0, 2);
-                            periodes.splice(0, 2);
-                            allperiodes.push(period);
+                    if(d.match(rPrimePeriode)) {
+                        if(detailsPolice.prime.periode === null) {
+                            detailsPolice.prime.periode = d;
                         } else {
-                            break;
+                            detailsPolice.commissions.periode = `${detailsPolice.commissions.periode} ${d}`;
                         }
                     }
-
-                    const status = element.filter((e, i) => {
-                        return e.match(/^sold/i) || e.match(/^reprise$/i) || e.match(/à payer/i) || e.match(/payer/i);
-                    });
-                    status.forEach((s, i) => {
-                        element.splice(element.indexOf(s), 1);
-                    });
-
-                    const mots = element.slice();
-                    mots.forEach((e, i) => {
-                        if (e.match(/^M$/) || e.match(/^Mme$/)) {
-                            const pronom = e;
-                            const nom = mots[i + 1];
-                            const name = `${pronom} ${nom}`;
-                            mots.splice(mots.indexOf(pronom), 1);
-                            mots.splice(mots.indexOf(nom), 1, name);
-                        }
-                    });
-                    let allMots = [];
-                    let lengthMots = mots.length;
-                    for (let i = 0; i < policesLength; i++) {
-                        if (mots.length > lengthMots / policesLength) {
-                            let m = [];
-                            m[0] = mots[0];
-                            mots.splice(0, 1);
-                            m.push(...mots.slice(0, reIndexOf(mots, /^M[me]{0,1}.+/)));
-                            mots.splice(0, reIndexOf(mots, /^M[me]{0,1}.+/));
-                            allMots.push(m);
-                        } else {
-                            let m = mots.slice();
-                            mots.splice(mots.indexOf(m), 1);
-                            allMots.push(m);
-                        }
-                    }
-
-                    let assures = [];
-                    let produits = [];
-                    allMots.forEach((mots, index) => {
-                        if (mots.length === 5) {
-                            assures.push(`${mots[0]} ${mots[2]}`);
-                            produits.push(`${mots[1]} ${mots[3]} ${mots[4]}`);
-                        } else if (mots.length === 6) {
-                            assures.push(`${mots[0]} ${mots[1]} ${mots[3]}`);
-                            produits.push(`${mots[2]} ${mots[4]} ${mots[5]}`);
-                        } else if (mots.length < 5) {
-                            assures.push(`${mots[0]}`);
-                            produits.push(`${mots[1]} ${mots[2]} ${mots[3]}`);
-                        }
-                    });
-
-                    allMontantsEtTaux = allMontantsEtTaux.map((mt, index) => {
-                        let newMt = []
-                        mt.forEach((m, i) => {
-                            m = m.replace('~', '-');
-                            m = m.replace(/\s/, '');
-                            newMt.push(parseFloat(m));
-                        })
-                        return newMt;
-                    });
-
-                    let montantsTaux = [];
-                    allMontantsEtTaux.forEach((mt, index) => {
-                        const montantPrime = mt[0];
-                        const taux = mt[1];
-                        const montantCommission = mt[2];
-                        const vmontantCommission = parseFloat(((montantPrime * taux) / 100).toFixed(2));
-                        let verificationMontantCommission;
-                        if (Math.abs(vmontantCommission) === Math.abs(montantCommission) ||
-                            (Math.abs(vmontantCommission) + 0.01) === Math.abs(montantCommission) ||
-                            (Math.abs(vmontantCommission) - 0.01) === Math.abs(montantCommission)) {
-                            verificationMontantCommission = true;
-                        } else {
-                            verificationMontantCommission = false;
-                        }
-                        const montants = {
-                            montantPrime,
-                            taux,
-                            montantCommission,
-                            verificationMontantCommission
-                        };
-                        montantsTaux.push(montants);
-                    });
-
-                    for (let i = 0; i < policesLength; i++) {
-                        const contrat = {
-                            police: polices[i],
-                            assure: assures[i],
-                            produit: produits[i]
-                        };
-                        const prime = {
-                            fractionnement: fractionnements[i],
-                            periode: `${allperiodes[i][0]} ${allperiodes[i][1]}`,
-                            etat: etats[i],
-                            montant: montantsTaux[i].montantPrime
-                        };
-                        let commissions = {
-                            mode: modes[i],
-                            taux: montantsTaux[i].taux,
-                            status: status[i],
-                            montant: montantsTaux[i].montantCommission,
-                            verificationMontantCommission: montantsTaux[i].verificationMontantCommission
-                        };
-                        dPolices.push({
-                            contrat,
-                            prime,
-                            commissions
-                        });
-
-                    }
-                    let mtcommissions = [];
-                    dPolices.forEach((e, i) => {
-                        mtcommissions.push(e.commissions.montant);
-                    })
-                    let vsTPoliceMonant = mtcommissions.reduce((previous, current) => {
-                        return previous + current;
-                    });
-                    const vsousTotalPoliceMonant = vsTPoliceMonant.toFixed(2);
-                    let verifSousTotalPoliceMonant;
-                    if (parseFloat(vsousTotalPoliceMonant) === sousTotalPoliceMontant ||
-                        parseFloat(vsousTotalPoliceMonant) + 0.01 === sousTotalPoliceMontant ||
-                        parseFloat(vsousTotalPoliceMonant) - 0.01 === sousTotalPoliceMontant) {
-                        verifSousTotalPoliceMonant = true;
-                    } else {
-                        verifSousTotalPoliceMonant = false;
-                    }
-
-                    dDPolice.push({ police: dPolices, sousTotalPolice, sousTotalPoliceMontant, verifSousTotalPoliceMonant });
                 }
-            })
+                if (dates[0].match(rDateEffet)) {
+                    detailsPolice.contrat.dateEffet = dates[0];
+                    detailsPolice.prime.periode = `${dates[1]} ${dates[3]}`;
+                    detailsPolice.commissions.periode = `${dates[2]} ${dates[4]}`;
+                } else {
+                    detailsPolice.contrat.dateEffet = dates[2];
+                    detailsPolice.prime.periode = `${dates[0]} ${dates[3]}`;
+                    detailsPolice.commissions.periode = `${dates[1]} ${dates[4]}`;
+                }
+                detailsPolice.prime.montantPreleveTTC = montants[0];
+                detailsPolice.commissions.montantBaseHT = montants[1];
+                detailsPolice.commissions.montant = montants[2];
+                infos.detailDesPolices.push(detailsPolice);
+            }
         }
-        infos.detailDesPolices = dDPolice;
     }
     const readBordereauSLADEStopTime = performance.now();
     const executionTimeMS = readBordereauSLADEStopTime - readBordereauSLADEStartTime;

@@ -112,7 +112,10 @@ class Companies extends Component {
             elementCover: true,
             executionTime: ''
         });
-        axios.put(`${config.nodeUrl}/api/document`, {
+        const options = {
+            userId: token.userId
+        }
+        axios.put(`${config.nodeUrl}/api/document`, options, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token.token}`
@@ -146,10 +149,16 @@ class Companies extends Component {
                 }
                 this.loadingHandler();
             }).catch((err) => {
-                // this.setState({
-                //     toast: true,
-                //     messageToast: { header: 'error', message: err }
-                // })
+                this.setState({
+                    toast: true,
+                    messageToast: {
+                        header: 'ERROR',
+                        color: 'danger',
+                        message: (err && err.response && err.response.data && err.response.data.error) ?
+                            err.response.data.error
+                            : err.message
+                    }
+                });
                 console.log(err);
             }).finally(() => {
                 setTimeout(() => {
@@ -196,7 +205,10 @@ class Companies extends Component {
         this.setState({
             loadGenerateExcelMaster: true
         });
-        axios.post(`${config.nodeUrl}/api/excelMaster`, {
+        const options = {
+            userId: token.userId
+        }
+        axios.post(`${config.nodeUrl}/api/excelMaster`, options, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token.token}`

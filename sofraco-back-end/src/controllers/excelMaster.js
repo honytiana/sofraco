@@ -7,7 +7,8 @@ const excelMasterHandler = require('../handlers/excelMasterHandler');
 const excelMasterService = require('../services/excelMaster/excelMasterManagement');
 
 exports.createExcelMaster = async (req, res) => {
-    const result = await excelMasterService.create();
+    const authorization = req.headers.authorization;
+    const result = await excelMasterService.create(authorization);
     if (result.excelMasters && result.excelsMastersZipped && result.singleZip && result.message) {
         for (let excelMaster of result.excelMasters) {
             const ems = await excelMasterHandler.createExcelMaster(excelMaster);

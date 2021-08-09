@@ -57,7 +57,11 @@ exports.createDocument = (req, res) => {  // create document
 }
 
 exports.updateDocuments = async (req, res) => {
-    const result = await axios.get(`${config.nodeUrl}/api/document`);
+    const result = await axios.get(`${config.nodeUrl}/api/document`, {
+        headers: {
+            'Authorization': `${req.headers.authorization}`
+        }
+    });
     let data = [];
     let documents = result.data;
     documents = documents.filter((doc, index) => {
@@ -76,7 +80,11 @@ exports.updateDocuments = async (req, res) => {
                 fileName: fileName,
                 extension: extension
             };
-            const result = await axios.put(`${config.nodeUrl}/api/document/${document.companyName}`, options);
+            const result = await axios.put(`${config.nodeUrl}/api/document/${document.companyName}`, options, {
+                headers: {
+                    'Authorization': `${req.headers.authorization}`
+                }
+            });
             data.push(result.data);
         }
         let executionTime;
@@ -96,7 +104,11 @@ exports.updateDocuments = async (req, res) => {
 };
 
 exports.setStatusDocument = async (req, res) => {
-    const result = await axios.get(`${config.nodeUrl}/api/document`);
+    const result = await axios.get(`${config.nodeUrl}/api/document`, {
+        headers: {
+            'Authorization': `${req.headers.authorization}`
+        }
+    });
     let documents = result.data;
     documents = documents.filter((doc, index) => {
         // const currentMonth = new Date().getMonth();

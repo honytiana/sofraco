@@ -19,9 +19,9 @@ const excelMasterMETLIFE = require('./excelMasterMETLIFE');
 const excelMasterSWISSLIFE = require('./excelMasterSWISSLIFE');
 
 
-exports.create = async () => {
+exports.create = async (authorization) => {
     console.log('DEBUT GENERATION EXCEL MASTER');
-    const ocrInfos = await getOCRInfos();
+    const ocrInfos = await getOCRInfos(authorization);
     const excelMasters = await generateExcelMaster(ocrInfos);
     console.log('FIN GENERATION EXCEL MASTER');
     console.log('DEBUT GENERATION ZIP');
@@ -32,8 +32,12 @@ exports.create = async () => {
     return { excelMasters, excelsMastersZipped, singleZip, message: 'Excel Master générés' };
 };
 
-const getOCRInfos = async () => {
-    const res = await axios.get(`${config.nodeUrl}/api/document`);
+const getOCRInfos = async (authorization) => {
+    const res = await axios.get(`${config.nodeUrl}/api/document`, {
+        headers: {
+            authorization: authorization
+        }
+    });
     let documents = res.data;
     documents = documents.filter((doc, index) => {
         return doc.status === 'done';
@@ -79,9 +83,9 @@ const getOCRInfos = async () => {
             case 'METLIFE':
                 infos.push(excelMasterMETLIFE.getOCRMETLIFE(ocr));
                 break;
-            // case 'SWISSLIFE':
-            //     infos = await getOCRAPICIL(file);
-            //     break;
+            case 'SLADE':   // swisslife
+                infos.push(excelMasterSWISSLIFE.getOCRSLADE(ocr));
+                break;
             case 'SWISSLIFE SURCO':
                 infos.push(excelMasterSWISSLIFE.getOCRSWISSLIFESURCO(ocr));
                 break;
@@ -166,12 +170,13 @@ const generateExcelMaster = async (ocrInfos) => {
                             excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, dataCourtierOCR);
                             excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : `${date}`}.xlsx`);
                             break;
-                        // case 'SWISSLIFE':
-                        //     infos = await readExcel(file);
-                        //     break;
+                        case 'SLADE':   // SWISSLIFE
+                            excelMasterSWISSLIFE.createWorkSheetSLADE(workSheet, dataCourtierOCR);
+                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ``}.xlsx`);
+                            break;
                         case 'SWISSLIFE SURCO':
                             excelMasterSWISSLIFE.createWorkSheetSWISSLIFESURCO(workSheet, dataCourtierOCR);
-                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : `${date}`}.xlsx`);
+                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ``}.xlsx`);
                             break;
                         default:
                             console.log('Pas de compagnie correspondante');
