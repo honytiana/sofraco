@@ -11,7 +11,7 @@ exports.convertPDFToImg = async (file) => {
     for (let pdfPath of pdfPaths) {
         const pdfName = fileService.getFileNameWithoutExtension(pdfPath);
         const finalPath = path.join(__dirname, '..', '..', '..', 'documents', 'temp', `${pdfName}.jpg`);
-        execSync(`gm convert -append -flatten -density 600 ${pdfPath} ${finalPath}`);
+        execSync(`gm convert -append -flatten -density 300 ${pdfPath} ${finalPath}`);
         imagePaths.push(finalPath);
     }
     return imagePaths;

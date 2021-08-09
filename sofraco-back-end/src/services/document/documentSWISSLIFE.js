@@ -99,9 +99,12 @@ const readBordereauSLADE = (textFilePaths) => {
         const numero = nameArr[nameArr.length - 1];
         if (numero === '1') {
             infos.syntheseDesCommissions.periodeConcernee = data[reIndexOf(data, /Période concernée/) + 1];
-            infos.syntheseDesCommissions.codeApporteur = data[reIndexOf(data, /Code apporteur/) + 1];
+            infos.syntheseDesCommissions.codeApporteur = (data[reIndexOf(data, /Code apporteur/) + 1]).match(/^\d+$/) ?
+                data[reIndexOf(data, /Code apporteur/) + 1] :
+                data[reIndexOf(data, /Code apporteur/) + 2];
             infos.syntheseDesCommissions.referenceBordereau = data[reIndexOf(data, /Référence bordereau/) + 2];
-            infos.syntheseDesCommissions.nombrePrimeSurLaPeriode = data[reIndexOf(data, /Nombre de primes sur la période/) - 1];
+            infos.syntheseDesCommissions.nombrePrimeSurLaPeriode = (data[reIndexOf(data, /Nombre de primes sur la période/) - 1].match(/^\d$/)) ?
+                data[reIndexOf(data, /Nombre de primes sur la période/) - 1] : '';
             infos.syntheseDesCommissions.totalPrimesEncaisseesSurLaPeriode = data[reIndexOf(data, /Total des primes encaissées sur la période/) + 1];
             infos.syntheseDesCommissions.totalCommissionsCalculeesSurLaPeriode = data[reIndexOf(data, /Total des commissions calculées sur la période/) + 1];
             infos.syntheseDesCommissions.reportSoldePrecedent = data[reIndexOf(data, /Report solde précédent/) + 1];
@@ -116,18 +119,26 @@ const readBordereauSLADE = (textFilePaths) => {
             data.splice(data.indexOf(infos.syntheseDesCommissions.totalCommissionsDues), 1);
         }
         if (numero === '1' || numero === '2') {
-            const firstCode = reIndexOf(data, /^\d+$/);
-            const details = data.slice(firstCode);
+            const indexfirstCode = reIndexOf(data, /^\d+$/);
+            let details = [];
+            if (data[indexfirstCode - 1].match(/^(du \d{1,2}[/]\d{1,2}[/]\d{1,4} au)$/) &&
+                data[indexfirstCode - 2].match(/^(du \d{1,2}[/]\d{1,2}[/]\d{1,4} au)$/)) {
+                details = data.slice(indexfirstCode - 2);
+            }
+            else {
+                details = data.slice(indexfirstCode);
+            }
             let newDetails = [];
             const maxI = details.length / 4;
             for (let i = 0; i < maxI; i++) {
                 let contrat = [];
                 if (details.length > 0) {
-                    contrat.push(details[reIndexOf(details, /^\d+$/)]);
-                    details.splice(reIndexOf(details, /^\d+$/), 1);
+                    const indexCode = reIndexOf(details, /^\d+$/);
+                    contrat.push(details[indexCode]);
+                    details.splice(indexCode, 1);
                     let lastIndexUtil = reIndexOf(details, /^\d+$/);
                     if (lastIndexUtil > 0) {
-                        if(details[lastIndexUtil - 1].match(/^(du \d{1,2}[/]\d{1,2}[/]\d{1,4} au)$/)) {
+                        if (details[lastIndexUtil - 1].match(/^(du \d{1,2}[/]\d{1,2}[/]\d{1,4} au)$/)) {
                             lastIndexUtil = lastIndexUtil - 2;
                         }
                         for (let j = 0; j < lastIndexUtil; j++) {
@@ -317,22 +328,6 @@ const readBordereauSLADE = (textFilePaths) => {
                         // dDPolice.push({ police: dPolices, sousTotalPolice, sousTotalPoliceMontant, verifSousTotalPoliceMonant });
                     }
                 }
-                for(let d of dates) {
-                    if(d.match(rDateEffet)) {
-                        if(detailsPolice.contrat.dateEffet === null) {
-                            detailsPolice.contrat.dateEffet = d;
-                        } else {
-                            detailsPolice.prime.periode = `${detailsPolice.prime.periode} ${d}`;
-                        }
-                    }
-                    if(d.match(rPrimePeriode)) {
-                        if(detailsPolice.prime.periode === null) {
-                            detailsPolice.prime.periode = d;
-                        } else {
-                            detailsPolice.commissions.periode = `${detailsPolice.commissions.periode} ${d}`;
-                        }
-                    }
-                }
                 if (dates[0].match(rDateEffet)) {
                     detailsPolice.contrat.dateEffet = dates[0];
                     detailsPolice.prime.periode = `${dates[1]} ${dates[3]}`;
@@ -352,7 +347,7 @@ const readBordereauSLADE = (textFilePaths) => {
     const readBordereauSLADEStopTime = performance.now();
     const executionTimeMS = readBordereauSLADEStopTime - readBordereauSLADEStartTime;
     const executionTime = time.millisecondToTime(executionTimeMS);
-    console.log('Read bordereau APREP time : ', executionTime);
+    console.log('Read bordereau SLADE time : ', executionTime);
     return infos;
 }
 
