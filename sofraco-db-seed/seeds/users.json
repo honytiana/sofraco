@@ -1,10 +1,12 @@
-{
-    "firstName": "Sofraco",
-    "lastName": "Sofraco",
-    "email": "sofraco@test.fr",
-    "login": "Sofraco",
-    "password": "$2b$10$BMcEMo57NRD6l5UCKLside3HJBzdhms4cbrPQPBMGkfZlX.jbpIhe",
-    "role": "security",
-    "create_date": "2021-08-05T11:36:30.955Z",
-    "is_enabled": true
-}
+[
+    {
+        "firstName": "Sofraco",
+        "lastName": "Sofraco",
+        "email": "sofraco@test.fr",
+        "login": "Sofraco",
+        "password": "$2b$10$BMcEMo57NRD6l5UCKLside3HJBzdhms4cbrPQPBMGkfZlX.jbpIhe",
+        "role": "security",
+        "create_date": "2021-08-05T11:36:30.955Z",
+        "is_enabled": true
+    }
+]
