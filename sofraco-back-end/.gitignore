@@ -25,3 +25,12 @@ yarn-error.log*
 /.vscode
 package-lock.json
 config.json
+
+/documents/archived/
+/documents/attachments/
+/documents/master_excel/
+/documents/ocr/
+/documents/splited_PDF/
+/documents/temp/
+/documents/texte/
+/documents/uploaded/

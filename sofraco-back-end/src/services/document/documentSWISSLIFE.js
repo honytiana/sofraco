@@ -112,7 +112,9 @@ const readBordereauSLADE = (textFilePaths) => {
             data.splice(data.indexOf(infos.syntheseDesCommissions.periodeConcernee), 1);
             data.splice(data.indexOf(infos.syntheseDesCommissions.codeApporteur), 1);
             data.splice(data.indexOf(infos.syntheseDesCommissions.referenceBordereau), 1);
-            data.splice(data.indexOf(infos.syntheseDesCommissions.nombrePrimeSurLaPeriode), 1);
+            if(infos.syntheseDesCommissions.nombrePrimeSurLaPeriode !== '') {
+                data.splice(data.indexOf(infos.syntheseDesCommissions.nombrePrimeSurLaPeriode), 1);
+            }
             data.splice(data.indexOf(infos.syntheseDesCommissions.totalPrimesEncaisseesSurLaPeriode), 1);
             data.splice(data.indexOf(infos.syntheseDesCommissions.totalCommissionsCalculeesSurLaPeriode), 1);
             data.splice(data.indexOf(infos.syntheseDesCommissions.reportSoldePrecedent), 1);

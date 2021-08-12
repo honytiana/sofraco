@@ -19,7 +19,7 @@ exports.createUser = async (req, res) => {      // signup
             role: data.role
         };
         try {
-            const u = userHandler.createUser(user);
+            const u = await userHandler.createUser(user);
             res.status(200).json(u);
         } catch (error) {
             res.status(400).json({ error })
@@ -60,9 +60,9 @@ exports.createToken = (req, res, next) => {
 
 };
 
-exports.getUsers = (req, res) => {
+exports.getUsers = async (req, res) => {
     console.log('get users');
-    const users = userHandler.getUsers();
+    const users = await userHandler.getUsers();
     res.status(200).json(users);
 }
 

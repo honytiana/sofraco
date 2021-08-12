@@ -28,6 +28,7 @@ class Upload extends Component {
         super(props);
         this.state = {
             company: null,
+            companySurco: null,
             location: props.location,
             files: null,
             filesSurco: null,
@@ -41,6 +42,7 @@ class Upload extends Component {
     }
 
     componentDidMount() {
+        const token = JSON.parse(localStorage.getItem('token'));
         this.setState({
             toast: false,
             messageToast: {}
@@ -49,6 +51,26 @@ class Upload extends Component {
         this.setState({
             company: company
         })
+        if (company.surco) {
+            const companySurco = company.companySurco;
+            axios.get(`${config.nodeUrl}/api/company/name/${companySurco}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token.token}`
+                }
+            })
+            .then((res) => {
+                this.setState({
+                    companySurco: res.data
+                });
+            })
+            .catch((err) => {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'ERROR', color: 'danger', message: err }
+                })
+            })
+        }
     }
 
     componentDidUpdate() {
@@ -67,11 +89,12 @@ class Upload extends Component {
         formData.append('surco', JSON.stringify(this.state.filesSurco ? true : false));
         formData.append('user', '');
         formData.append('company', JSON.stringify(this.props.company));
+        formData.append('companySurco', JSON.stringify(this.state.companySurco));
         axios.post(`${config.nodeUrl}/api/document/`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${token.token}`
-            }
+            } 
         }).then((res) => {
             this.setState({
                 toast: true,
@@ -110,7 +133,7 @@ class Upload extends Component {
                 this.testExtension(extension, 'PDF', false, file);
                 break;
             case 'APREP ENCOURS':
-                this.testExtension(extension, 'PDF', false, file);
+                this.testExtension(extension, 'PDF', true, file);
                 break;
             // case 'AVIVA':
             //     this.testExtension(extension, 'XLSX', false, file);
@@ -250,7 +273,7 @@ class Upload extends Component {
                             )}
                         </Dropzone>
                         {
-                            (this.props.company.surco !== null) && (
+                            (this.props.company.surco && this.state.companySurco !== null) && (
                                 <Dropzone onDrop={(files) => {
                                     this.setState({
                                         files: files[0]
@@ -263,14 +286,14 @@ class Upload extends Component {
                                             <input
                                                 {...getInputProps()}
                                                 multiple={false}
-                                                onChange={(event) => { this.onChangeHandler(event, this.props.company.surco.name) }}
+                                                onChange={(event) => { this.onChangeHandler(event, this.state.companySurco.name) }}
                                             />
                                             {
                                                 (this.state.filesSurco !== null) ? (
                                                     <CAlert >
                                                         <div>
                                                             <CImg src={openedFolder} fluid width={100} />
-                                                            <p>{this.props.company.surco.name}</p>
+                                                            <p>{this.state.companySurco.name}</p>
                                                         </div>
                                                     </CAlert>
                                                 ) : (
@@ -281,7 +304,7 @@ class Upload extends Component {
                                                             >
                                                                 <CImg src={closedFolder} fluid width={100} />
                                                             </CTooltip>
-                                                            <p>{this.props.company.surco.name}</p>
+                                                            <p>{this.state.companySurco.name}</p>
                                                         </div>
                                                     </CAlert>)
                                             }

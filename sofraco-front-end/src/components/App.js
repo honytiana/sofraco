@@ -50,10 +50,7 @@ class App extends Component {
       <CContainer className="sofraco-container" fluid >
         {
           (localStorage.getItem('token') === null) ?
-            <div style={{height: '100%'}}>
-              <Access />
-              <Footer />
-            </div> :
+            <Access /> :
             <div>
               <Navbar />
               <div className="sofraco-root" style={{ minHeight: window.innerHeight - 50 }}>

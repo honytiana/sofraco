@@ -2,40 +2,46 @@ const path = require('path');
 
 const config = require('../../config.json');
 const Courtier = require('../models/courtier');
+const courtierHandler = require('../handlers/courtierHandler');
 
 
-exports.createCourtier = (req, res) => {
+exports.createCourtier = async (req, res) => {
     const data = req.body;
-    const courtier = new Courtier(data);
-    courtier.save()
-    .then((data) => {
-        console.log('Post courtier');
-        res.status(200).json(data);
-    })
-    .catch((err) => {
-        throw err;
-    });
+    let courtier = {
+        lastName: data.lastName,
+        firstName: data.firstName,
+        cabinet: data.cabinet,
+        email: data.email,
+        phone: data.phone,
+        status: data.status,
+        role: data.role,
+        is_enabled: data.is_enabled
+    };
+    try {
+        const c = await courtierHandler.createCourtier(courtier);
+        res.status(200).json(c);
+    } catch (error) {
+        res.status(400).json({ error })
+    }
 
 };
 
-exports.getCourtier = (req, res) => {
+exports.getCourtier = async (req, res) => {
     console.log('get courtier');
-    Courtier.findById(req.params.id, (err, doc) => {
-        if (err) {
-            throw err;
-        } else {
-            res.status(200).json(doc);
-        }
-    });
+    try {
+        const courtier = await courtierHandler.getCourtierById(req.params.id);
+        res.status(200).json(courtier);
+    } catch (error) {
+        res.status(400).json({ error })
+    }
 }
 
-exports.getCourtiers = (req, res) => {
-    console.log('get courtier');
-    Courtier.find((err, doc) => {
-        if (err) {
-            throw err;
-        } else {
-            res.status(200).json(doc);
-        }
-    });
+exports.getCourtiers = async (req, res) => {
+    console.log('get courtiers');
+    try {
+        const courtiers = await courtierHandler.getCourtiers();
+        res.status(200).json(courtiers);
+    } catch (error) {
+        res.status(400).json({ error })
+    }
 }

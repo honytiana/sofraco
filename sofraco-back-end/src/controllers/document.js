@@ -20,8 +20,9 @@ const documentSWISSLIFE = require('../services/document/documentSWISSLIFE');
 exports.createDocument = (req, res) => {  // create document
     console.log('Create document');
     const company = JSON.parse(req.body.company);
+    const companySurco = JSON.parse(req.body.companySurco);
     const surco = JSON.parse(req.body.surco);
-    if (company.surco !== null && surco && req.files.length > 1) {  // company and surco
+    if (company.surco && surco && companySurco !== null && req.files.length > 1) {  // company and surco
         let document = {};
         document.name = req.files[0].path;
         document.company = company._id;
@@ -31,20 +32,20 @@ exports.createDocument = (req, res) => {  // create document
         const doc = documentHandler.createDocument(document);
         let documentSurco = {};
         documentSurco.name = req.files[1].path;
-        documentSurco.company = company._id;
-        documentSurco.companyName = company.surco.name;
+        documentSurco.company = companySurco._id;
+        documentSurco.companyName = companySurco.name;
         documentSurco.path_original_file = req.files[1].path;
         documentSurco.type = req.body.extension;
         const docSurco = documentHandler.createDocument(documentSurco);
-    } else if (company.surco !== null && surco && req.files.length === 1) { // surco
+    } else if (company.surco && surco && companySurco !== null && req.files.length === 1) { // surco
         let document = {};
         document.name = req.files[0].path;
-        document.company = company._id;
-        document.companyName = company.surco.name;
+        document.company = companySurco._id;
+        document.companyName = companySurco.name;
         document.path_original_file = req.files[0].path;
         document.type = req.body.extension;
         const doc = documentHandler.createDocument(document);
-    } else if ((company.surco !== null && !surco) || (company.surco === null && !surco)) {     // company
+    } else if ((company.surco && !surco) || (!company.surco && !surco)) {     // company
         let document = {};
         document.name = req.files[0].path;
         document.company = company._id;

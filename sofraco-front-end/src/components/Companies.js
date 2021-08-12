@@ -285,28 +285,31 @@ class Companies extends Component {
                     <CRow>
                         {(this.state.companies.length > 0) ? (
                             this.state.companies.map((company, index) => {
-                                return (
-                                    <CCol key={`${company._id}_Column`} sm="3">
-                                        <CCard key={`${company._id}_Card`} onDoubleClick={() => { this.toggleDetails(index) }} >
-                                            <CCardBody key={`${company._id}_CardBody`} className="sofraco-card-body" >
-                                                <div className="sofraco-container-image">
-                                                    <CImg className="sofraco-logo-company" key={`${company._id}_Img`} src={`data:image/png;base64,${company.logo}`} alt={`${company.name}`} fluid width={100} />
-                                                </div>
-                                            </CCardBody>
-                                            <CCardFooter key={`${company._id}_CardFooter`}>
-                                                {company.globalName}
-                                            </CCardFooter>
-                                        </CCard>
-                                        <Upload
-                                            key={`${company._id}_Upload`}
-                                            company={company}
-                                            companyName={company.globalName}
-                                            showModal={this.state.details.includes(index)}
-                                            onCloseModal={() => { this.toggleDetails(index) }}
-                                            loader={false}
-                                        />
-                                    </CCol>
-                                )
+                                if (company.type === 'simple') {
+                                    return (
+                                        <CCol key={`${company._id}_Column`} sm="3">
+                                            <CCard key={`${company._id}_Card`} onDoubleClick={() => { this.toggleDetails(index) }} >
+                                                <CCardBody key={`${company._id}_CardBody`} className="sofraco-card-body" >
+                                                    <div className="sofraco-container-image">
+                                                        <CImg className="sofraco-logo-company" key={`${company._id}_Img`} src={`data:image/png;base64,${company.logo}`} alt={`${company.name}`} fluid width={100} />
+                                                    </div>
+                                                </CCardBody>
+                                                <CCardFooter key={`${company._id}_CardFooter`}>
+                                                    {company.globalName}
+                                                </CCardFooter>
+                                            </CCard>
+                                            <Upload
+                                                key={`${company._id}_Upload`}
+                                                company={company}
+                                                companyName={company.globalName}
+                                                showModal={this.state.details.includes(index)}
+                                                onCloseModal={() => { this.toggleDetails(index) }}
+                                                loader={false}
+                                            />
+                                        </CCol>
+                                    )
+                                }
+                                return (<span key={`${company._id}_Span`}></span>);
                             })) :
                             (
                                 <CCol sm="6">

@@ -3,58 +3,68 @@ const fs = require('fs');
 
 const config = require('../../config.json');
 const Company = require('../models/company');
+const companyHandler = require('../handlers/companyHandler');
 
-exports.createCompany = (req, res) => {
+exports.createCompany = async (req, res) => {
     const data = req.body;
     const file = req.file;
-    const company = new Company(data);
-    company.logo = file.path;
-    company.save()
-        .then((data) => {
-            console.log('Post company');
-            res.status(200).json(data);
-        })
-        .catch((err) => {
-            throw err;
-        });
+    let company = {
+        globalName: data.globalName,
+        name: data.name,
+        logo: file,
+        address: data.address,
+        zip: data.zip,
+        city: data.city,
+        country: data.country,
+        creation_date: data.creation_date,
+        phone: data.phone,
+        website: data.website,
+        surco: data.surco,
+        companySurco: data.companySurco,
+        is_enabled: data.is_enabled,
+    };
+    try {
+        const c = await companyHandler.createCompany(company);
+        res.status(200).json(c);
+    } catch (error) {
+        res.status(400).json({ error })
+    }
 
 };
 
-exports.getCompany = (req, res) => {
+exports.getCompany = async (req, res) => {
     console.log('get company');
-    Company.findById(req.params.id, (err, doc) => {
-        if (err) {
-            throw err;
-        } else {
-            res.status(200).json(doc);
-        }
-    });
+    try {
+        const c = await companyHandler.getCompany(req.params.id);
+        res.status(200).json(c);
+    } catch (error) {
+        res.status(400).json({ error });
+    }
 }
 
-exports.getCompanyByName = (req, res) => {
-    Company.findOne({ name: req.params.name }, (err, doc) => {
-        if (err) {
-            throw err;
-        } else {
-            res.status(200).json(doc);
-        }
-    });
+exports.getCompanyByName = async (req, res) => {
+    console.log('get company by name');
+    try {
+        const company = await companyHandler.getCompanyByName(req.params.name);
+        res.status(200).json(company);
+    } catch (error) {
+        res.status(400).json({ error });
+    }
 }
 
-exports.getCompanies = (req, res) => {
-    console.log('get companies');
-    Company.find((err, doc) => {
-        if (err) {
-            throw err;
-        } else {
-            let newDoc = [];
-            for (let c of doc) {
-                c.logo = fs.readFileSync(c.logo, {encoding: 'base64'});
-                newDoc.push(c);
-            }
-            res.status(200).json(newDoc);
+exports.getCompanies = async (req, res) => {
+    console.log('get company');
+    try {
+        const companies = await companyHandler.getCompanies();
+        const newCompanies = [];
+        for (let company of companies) {
+            company.logo = fs.readFileSync(company.logo, { encoding: 'base64' });
+            newCompanies.push(company);
         }
-    });
+        res.status(200).json(newCompanies);
+    } catch (error) {
+        res.status(400).json({ error });
+    }
 }
 
 exports.updateCompany = (req, res) => {
