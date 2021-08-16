@@ -161,7 +161,14 @@ exports.createWorkSheetCARDIF = (workSheet, dataCourtierOCR) => {
     rowNumber++;
     workSheet.getRow(rowNumber).getCell('Q').value = 'TOTAL';
     workSheet.getRow(rowNumber).getCell('Q').font = { bold: true, name: 'Arial', size: 10 };
-    workSheet.getRow(rowNumber).getCell('R').value = { formula: `SUM(R${debut}:R${rowNumber - 2})` };
+    let result = 0;
+    for (let i = debut; i <= rowNumber - 2; i++) {
+        result += workSheet.getRow(i).getCell('R').value;
+    }
+    workSheet.getRow(rowNumber).getCell('R').value = { 
+        formula: `SUM(R${debut}:R${rowNumber - 2})`,
+        result: result
+    };
     workSheet.getRow(rowNumber).getCell('R').font = { bold: true, name: 'Arial', size: 10 };
     workSheet.getRow(rowNumber).getCell('R').numFmt = '#,##0.00"€";[Red]\-#,##0.00"€"';
 }

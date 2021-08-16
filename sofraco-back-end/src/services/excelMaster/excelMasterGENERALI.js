@@ -86,7 +86,14 @@ exports.createWorkSheetGENERALI = (workSheet, dataCourtierOCR) => {
     rowNumber++;
     workSheet.getRow(rowNumber).getCell('AJ').value = 'TOTAL';
     workSheet.getRow(rowNumber).getCell('AJ').font = { bold: true, name: 'Arial', size: 10 };
-    workSheet.getRow(rowNumber).getCell('AK').value = { formula: `SUM(AK${debut}:AK${rowNumber - 2})` };
+    let result = 0;
+    for (let i = debut; i <= rowNumber - 2; i++) {
+        result += workSheet.getRow(i).getCell('AK').value;
+    }
+    workSheet.getRow(rowNumber).getCell('AK').value = { 
+        formula: `SUM(AK${debut}:AK${rowNumber - 2})`,
+        result: result
+    };
     workSheet.getRow(rowNumber).getCell('AK').font = { bold: true, name: 'Arial', size: 10 };
     workSheet.getRow(rowNumber).getCell('AK').numFmt = '#,##0.00"€";[Red]\-#,##0.00"€"';
     for(let i = 1; i <= dataCourtierOCR.infosOCR.headers.length; i++) {

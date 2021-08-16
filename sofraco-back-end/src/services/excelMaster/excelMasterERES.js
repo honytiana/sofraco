@@ -77,7 +77,14 @@ exports.createWorkSheetERES = (workSheet, dataCourtierOCR) => {
         pattern: 'solid',
         fgColor: { argb: 'ed7d31' }
     };
-    workSheet.getRow(rowNumber).getCell('F').value = { formula: `SUM(F${debut}:F${rowNumber - 2})` };
+    let result = 0;
+    for (let i = debut; i <= rowNumber - 2; i++) {
+        result += workSheet.getRow(i).getCell('F').value;
+    }
+    workSheet.getRow(rowNumber).getCell('F').value = { 
+        formula: `SUM(F${debut}:F${rowNumber - 2})`,
+        result: result
+    };
     workSheet.getRow(rowNumber).getCell('F').numFmt = '#,##0.00"€";\-#,##0.00"€"';
     workSheet.getRow(rowNumber).getCell('F').fill = {
         type: 'pattern',

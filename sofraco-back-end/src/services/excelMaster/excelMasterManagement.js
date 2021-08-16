@@ -17,12 +17,13 @@ const excelMasterHODEVA = require('./excelMasterHODEVA');
 const excelMasterLOURMEL = require('./excelMasterLOURMEL');
 const excelMasterMETLIFE = require('./excelMasterMETLIFE');
 const excelMasterSWISSLIFE = require('./excelMasterSWISSLIFE');
+const excelMasterRecap = require('./excelMasterRecap');
 
 
 exports.create = async (authorization) => {
     console.log('DEBUT GENERATION EXCEL MASTER');
     const ocrInfos = await getOCRInfos(authorization);
-    const excelMasters = await generateExcelMaster(ocrInfos);
+    const excelMasters = await generateExcelMaster(ocrInfos, authorization);
     console.log('FIN GENERATION EXCEL MASTER');
     console.log('DEBUT GENERATION ZIP');
     const em = groupExcelsByCompany(excelMasters);
@@ -97,97 +98,134 @@ const getOCRInfos = async (authorization) => {
 
 }
 
-const generateExcelMaster = async (ocrInfos) => {
-    let excelMasters = [];
+const getCorrespondances = async () => {
     try {
-        if (ocrInfos.length > 0) {
+        const result = await axios.get(`${config.nodeUrl}/api/correspondance`);
+        return result.data;
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+const generateExcelMaster = async (ocrInfos, authorization) => {
+    let excelMasters = [];
+    let allOCRPerCourtiers = [];
+    const correspondances = await getCorrespondances();
+    for (let correspondance of correspondances) {
+        const courtier = correspondance.courtier;
+        let infos = [];
+        for (let company of correspondance.companies) {
             for (let ocr of ocrInfos) {
                 for (let dataCourtierOCR of ocr) {
-                    let excelMaster = {
-                        courtier: null,
-                        code_courtier: dataCourtierOCR.infosOCR.code,
-                        company: null,
-                        create_date: new Date(),
-                        ocr: null,
-                        path: null,
-                        type: 'excel',
-                        is_enabled: true
+                    if (dataCourtierOCR.company === company.company &&
+                        dataCourtierOCR.infosOCR.code.code === company.code) {
+                        if (company.particular !== '') {
+                            dataCourtierOCR.particular = company.particular;
+                        }
+                        infos.push(dataCourtierOCR);
+                        break;
                     }
-                    const workbook = new ExcelJS.Workbook();
-                    workbook.addWorksheet('RECAP');
-                    const workSheet = workbook.addWorksheet(dataCourtierOCR.company);
-                    excelMaster.company = dataCourtierOCR.company;
-                    workSheet.properties.defaultColWidth = 20;
-                    let excelPath = '';
-                    let month = new Date().getMonth();
-                    month = (month + 1 < 10) ? `0${month + 1}` : `${month}`;
-                    const date = `${month}${new Date().getFullYear()}`;
-                    switch (dataCourtierOCR.company.toUpperCase()) {
-                        case 'APICIL':
-                            excelMasterAPICIL.createWorkSheetAPICIL(workSheet, dataCourtierOCR);
-                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
-                            break;
-                        case 'APREP':
-                            excelMasterAPREP.createWorkSheetAPREP(workSheet, dataCourtierOCR);
-                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
-                            break;
-                        case 'APREP ENCOURS':
-                            excelMasterAPREP.createWorkSheetAPREPENCOURS(workSheet, dataCourtierOCR);
-                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
-                            break;
-                        // case 'AVIVA':
-                        //     infos = await readExcel(file);
-                        //     break;
-                        case 'AVIVA SURCO':
-                            excelMasterAVIVA.createWorkSheetAVIVASURCO(workSheet, dataCourtierOCR);
-                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
-                            break;
-                        case 'CARDIF':
-                            excelMasterCARDIF.createWorkSheetCARDIF(workSheet, dataCourtierOCR);
-                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
-                            break;
-                        case 'CEGEMA':
-                            excelMasterCEGEMA.createWorkSheetCEGEMA(workSheet, dataCourtierOCR);
-                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
-                            break;
-                        case 'ERES':
-                            excelMasterERES.createWorkSheetERES(workSheet, dataCourtierOCR);
-                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
-                            break;
-                        case 'GENERALI':
-                            excelMasterGENERALI.createWorkSheetGENERALI(workSheet, dataCourtierOCR);
-                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
-                            break;
-                        case 'HODEVA':
-                            excelMasterHODEVA.createWorkSheetHODEVA(workSheet, dataCourtierOCR);
-                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
-                            break;
-                        case 'LOURMEL':  //CBP FRANCE
-                            excelMasterLOURMEL.createWorkSheetLOURMEL(workSheet, dataCourtierOCR);
-                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ''}.xlsx`);
-                            break;
-                        case 'METLIFE':
-                            excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, dataCourtierOCR);
-                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : `${date}`}.xlsx`);
-                            break;
-                        case 'SLADE':   // SWISSLIFE
-                            excelMasterSWISSLIFE.createWorkSheetSLADE(workSheet, dataCourtierOCR);
-                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ``}.xlsx`);
-                            break;
-                        case 'SWISSLIFE SURCO':
-                            excelMasterSWISSLIFE.createWorkSheetSWISSLIFESURCO(workSheet, dataCourtierOCR);
-                            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(dataCourtierOCR.infosOCR.code) ? dataCourtierOCR.infosOCR.code.cabinet : ``}.xlsx`);
-                            break;
-                        default:
-                            console.log('Pas de compagnie correspondante');
-                    }
-                    await workbook.xlsx.writeFile(excelPath);
-                    excelMaster.path = excelPath;
-                    excelMasters.push(excelMaster);
                 }
             }
-            return excelMasters;
         }
+        if (infos.length > 0) {
+            allOCRPerCourtiers.push({
+                courtier,
+                infos
+            });
+        }
+    }
+    try {
+        for (let ocrPerCourtier of allOCRPerCourtiers) {
+            let excelMaster = {
+                courtier: ocrPerCourtier.courtier,
+                code_courtier: null,
+                create_date: new Date(),
+                ocr: null,
+                path: null,
+                type: 'excel',
+                is_enabled: true
+            }
+            const result = await axios.get(`${config.nodeUrl}/api/courtier/${ocrPerCourtier.courtier}`, {
+                headers: {
+                    'Authorization': `${authorization}`
+                }
+            });
+            const courtier = result.data.cabinet.replace(/[/]/g, '_');
+            excelMaster.code_courtier = courtier;
+            const workbook = new ExcelJS.Workbook();
+            const recapWorkSheet = workbook.addWorksheet('RECAP');
+            let month = new Date().getMonth();
+            month = (month + 1 < 10) ? `0${month + 1}` : `${month}`;
+            const date = `${month}${new Date().getFullYear()}`;
+            for (let ocr of ocrPerCourtier.infos) {
+                let workSheet;
+                if (ocr.particular) {
+                    if (!workbook.getWorksheet(ocr.particular.replace(/[\s.]/g, ''))) {
+                        workSheet = workbook.addWorksheet(ocr.particular.replace(/[\s.]/g, ''));
+                    } else {
+                        workSheet = workbook.addWorksheet(`${ocr.particular.replace(/[\s.]/g, '')}_`);
+                    }
+                } else {
+                    workSheet = workbook.addWorksheet(ocr.company);
+                }
+                workSheet.properties.defaultColWidth = 20;
+                switch (ocr.company.toUpperCase()) {
+                    case 'APICIL':
+                        excelMasterAPICIL.createWorkSheetAPICIL(workSheet, ocr);
+                        break;
+                    case 'APREP':
+                        excelMasterAPREP.createWorkSheetAPREP(workSheet, ocr);
+                        break;
+                    case 'APREP ENCOURS':
+                        excelMasterAPREP.createWorkSheetAPREPENCOURS(workSheet, ocr);
+                        break;
+                    // case 'AVIVA':
+                    //     infos = await readExcel(file);
+                    //     break;
+                    case 'AVIVA SURCO':
+                        excelMasterAVIVA.createWorkSheetAVIVASURCO(workSheet, ocr);
+                        break;
+                    case 'CARDIF':
+                        excelMasterCARDIF.createWorkSheetCARDIF(workSheet, ocr);
+                        break;
+                    case 'CEGEMA':
+                        excelMasterCEGEMA.createWorkSheetCEGEMA(workSheet, ocr);
+                        break;
+                    case 'ERES':
+                        excelMasterERES.createWorkSheetERES(workSheet, ocr);
+                        break;
+                    case 'GENERALI':
+                        excelMasterGENERALI.createWorkSheetGENERALI(workSheet, ocr);
+                        break;
+                    case 'HODEVA':
+                        excelMasterHODEVA.createWorkSheetHODEVA(workSheet, ocr);
+                        break;
+                    case 'LOURMEL':  //CBP FRANCE
+                        excelMasterLOURMEL.createWorkSheetLOURMEL(workSheet, ocr);
+                        break;
+                    case 'METLIFE':
+                        excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, ocr);
+                        break;
+                    case 'SLADE':   // SWISSLIFE
+                        excelMasterSWISSLIFE.createWorkSheetSLADE(workSheet, ocr);
+                        break;
+                    case 'SWISSLIFE SURCO':
+                        excelMasterSWISSLIFE.createWorkSheetSWISSLIFESURCO(workSheet, ocr);
+                        break;
+                    default:
+                        console.log('Pas de compagnie correspondante');
+                }
+
+            }
+            const sheets = excelMasterRecap.getWorkSheets(workbook);
+            excelMasterRecap.createWorkSheetRECAP(recapWorkSheet, sheets);
+            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(courtier) ? courtier : ''}.xlsx`);
+            await workbook.xlsx.writeFile(excelPath);
+            excelMaster.path = excelPath;
+            excelMasters.push(excelMaster);
+        }
+        return excelMasters;
 
     } catch (err) {
         return err;

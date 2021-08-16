@@ -174,7 +174,14 @@ exports.createWorkSheetAPICIL = (workSheet, dataCourtierOCR) => {
         workSheet.getRow(rowNumber - 1).getCell('I').value === 'MT ECHEANCE') {
             workSheet.getRow(rowNumber).getCell('I').value = 0;
     } else {
-        workSheet.getRow(rowNumber).getCell('I').value = { formula: `SUM(I${debut}:I${rowNumber - 1})` };
+        let result = 0;
+        for (let i = debut; i <= rowNumber - 1; i++) {
+            result += workSheet.getRow(i).getCell('I').value;
+        }
+        workSheet.getRow(rowNumber).getCell('I').value = { 
+            formula: `SUM(I${debut}:I${rowNumber - 1})`,
+            result: result
+        };
     }
     workSheet.getRow(rowNumber).getCell('I').numFmt = '###,##0.00"€";\-###,##0.00"€"';
     const totalRepriseRowNumber = rowNumber;
@@ -186,7 +193,14 @@ exports.createWorkSheetAPICIL = (workSheet, dataCourtierOCR) => {
 
     workSheet.getRow(rowNumber).getCell('H').value = 'TOTAL';
     if (workSheet.getRow(rowNumber - 1).getCell('I').value !== '') {
-        workSheet.getRow(rowNumber).getCell('I').value = { formula: `SUM(I${debut}:I${rowNumber - 1})` };
+        let result = 0;
+        for (let i = debut; i <= rowNumber - 1; i++) {
+            result += workSheet.getRow(i).getCell('I').value;
+        }
+        workSheet.getRow(rowNumber).getCell('I').value = { 
+            formula: `SUM(I${debut}:I${rowNumber - 1})`,
+            result: result
+        };
     } else {
         workSheet.getRow(rowNumber).getCell('I').value = 0;
     }
@@ -200,7 +214,14 @@ exports.createWorkSheetAPICIL = (workSheet, dataCourtierOCR) => {
 
     workSheet.getRow(rowNumber).getCell('H').value = 'TOTAL';
     if (workSheet.getRow(rowNumber - 1).getCell('I').value !== '') {
-        workSheet.getRow(rowNumber).getCell('I').value = { formula: `SUM(I${debut}:I${rowNumber - 1})` };
+        let result = 0;
+        for (let i = debut; i <= rowNumber - 1; i++) {
+            result += workSheet.getRow(i).getCell('I').value;
+        }
+        workSheet.getRow(rowNumber).getCell('I').value = { 
+            formula: `SUM(I${debut}:I${rowNumber - 1})`,
+            result: result
+        };
     } else {
         workSheet.getRow(rowNumber).getCell('I').value = 0;
     }
@@ -210,7 +231,14 @@ exports.createWorkSheetAPICIL = (workSheet, dataCourtierOCR) => {
     rowNumber++;
 
     workSheet.getRow(rowNumber).getCell('H').value = 'TOTAL';
-    workSheet.getRow(rowNumber).getCell('I').value = { formula: `I${totalRepriseRowNumber}+I${totalCollectiveRowNumber}+I${totalIndividualRowNumber}` };
+    const trr = workSheet.getRow(totalRepriseRowNumber).getCell('I').value;
+    const tcr = workSheet.getRow(totalCollectiveRowNumber).getCell('I').value;
+    const tir = workSheet.getRow(totalIndividualRowNumber).getCell('I').value;
+    let result = (trr.result ? trr.result : trr) + (tcr.result ? tcr.result : tcr) + (tir.result ? tir.result : tir);
+    workSheet.getRow(rowNumber).getCell('I').value = { 
+        formula: `I${totalRepriseRowNumber}+I${totalCollectiveRowNumber}+I${totalIndividualRowNumber}`,
+        result: result
+    };
     workSheet.getRow(rowNumber).getCell('I').numFmt = '####,##0.00"€";\-####,##0.00"€"';
 
 }

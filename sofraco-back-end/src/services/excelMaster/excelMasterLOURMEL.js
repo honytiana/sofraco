@@ -66,7 +66,14 @@ exports.createWorkSheetLOURMEL = (workSheet, dataCourtierOCR) => {
     }
     workSheet.getRow(rowNumber).getCell('P').value = 'TOTAL';
     workSheet.getRow(rowNumber).getCell('P').font = { bold: true, name: 'Arial', size: 10 };
-    workSheet.getRow(rowNumber).getCell('Q').value = { formula: `SUM(Q${debut}:Q${rowNumber - 1})` };
+    let result = 0;
+    for (let i = debut; i <= rowNumber - 2; i++) {
+        result += workSheet.getRow(i).getCell('Q').value;
+    }
+    workSheet.getRow(rowNumber).getCell('Q').value = { 
+        formula: `SUM(Q${debut}:Q${rowNumber - 1})`,
+        result: result
+    };
     workSheet.getRow(rowNumber).getCell('Q').font = { bold: true, name: 'Arial', size: 10 };
     workSheet.getRow(rowNumber).getCell('Q').numFmt = '#,##0.00"€";\-#,##0.00"€"';
     workSheet.getRow(rowNumber).getCell('Q').fill = {

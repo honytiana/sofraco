@@ -453,7 +453,14 @@ exports.createWorkSheetSWISSLIFESURCO = (workSheet, dataCourtierOCR) => {
     rowNumber++;
     workSheet.getRow(rowNumber).getCell('M').value = 'TOTAL';
     workSheet.getRow(rowNumber).getCell('M').font = { bold: true, name: 'Verdana', size: 8, color: { argb: 'ff0000' } };
-    workSheet.getRow(rowNumber).getCell('N').value = { formula: `SUM(N${debut}:N${rowNumber - 2})` };
+    let result = 0;
+    for (let i = debut; i <= rowNumber - 2; i++) {
+        result += workSheet.getRow(i).getCell('N').value;
+    }
+    workSheet.getRow(rowNumber).getCell('N').value = { 
+        formula: `SUM(N${debut}:N${rowNumber - 2})`,
+        result: result
+    };
     workSheet.getRow(rowNumber).getCell('N').font = { bold: true, name: 'Verdana', size: 8, color: { argb: 'ff0000' } };
     workSheet.getRow(rowNumber).getCell('N').numFmt = '#,##0.00"€";\-#,##0.00"€"';
 }

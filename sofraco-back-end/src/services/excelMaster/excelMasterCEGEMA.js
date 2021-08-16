@@ -46,7 +46,14 @@ exports.createWorkSheetCEGEMA = (workSheet, dataCourtierOCR) => {
     }
     workSheet.getRow(rowNumber).getCell('G').value = 'TOTAL';
     workSheet.getRow(rowNumber).getCell('G').font = { bold: true, name: 'Arial', size: 10 };
-    workSheet.getRow(rowNumber).getCell('H').value = { formula: `SUM(H${debut}:H${rowNumber - 1})` };
+    let result = 0;
+    for (let i = debut; i <= rowNumber - 1; i++) {
+        result += workSheet.getRow(i).getCell('H').value;
+    }
+    workSheet.getRow(rowNumber).getCell('H').value = { 
+        formula: `SUM(H${debut}:H${rowNumber - 1})`,
+        result: result
+    };
     workSheet.getRow(rowNumber).getCell('H').font = { bold: true, name: 'Arial', size: 10 };
     workSheet.getRow(rowNumber).getCell('H').numFmt = '#,##0.00"€";[Red]\-#,##0.00"€"';
 }
