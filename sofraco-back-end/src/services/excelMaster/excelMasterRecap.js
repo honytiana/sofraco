@@ -25,6 +25,9 @@ exports.createWorkSheetRECAP = (workSheetRecap, workSheets) => {
         let total;
         if (worksheet.name === 'METLIFE') {
             total = worksheet.getRow(9).getCell('B').value;
+            if(total < 25) {
+                total = 'Montant inférieur à 25€';
+            }
         } else if (worksheet.name === 'SLADE') {
             total = worksheet.getRow(7).getCell('B').value;
         } else if (worksheet.name === 'APREP ENCOURS') {
