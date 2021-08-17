@@ -9,7 +9,7 @@ const axios = require('axios');
 const config = require('../../../config.json');
 
 exports.readExcelTableauCorrespondance = async (authorization) => {
-    const file = path.join(__dirname, '..', '..', '..', 'documents', 'uploaded', 'courtier.xlsx');
+    const file = path.join(__dirname, '..', '..', '..', 'documents', 'courtier.xlsx');
     console.log('DEBUT LECTURE DU TABLEAU DE CORRESPONDANCE');
     const excecutionStartTime = performance.now();
     let filePath = file;
