@@ -9,6 +9,7 @@ router.route('/').get(correspondanceController.getCorrespondances);
 router.route('/courtier/:courtier').get(correspondanceController.getCorrespondanceByCourtier);
 router.route('/').post(accessControl, correspondanceController.createCorrespondance);
 router.route('/:id').put(correspondanceController.updateCorrespondance);
+router.route('/').delete(accessControl, correspondanceController.deleteAllCorrespondances);
 
 
 module.exports = router;

@@ -40,3 +40,9 @@ exports.getCorrespondances = async (req, res) => {
 exports.updateCorrespondance = (req, res) => {
     console.log('update')
 }
+
+exports.deleteAllCorrespondances = async (req, res) => {
+    console.log('Delete all correspondances');
+    await correspondanceHandler.deleteAllCorrespondances();
+    res.status(200).end('Correspondances deleted');
+}

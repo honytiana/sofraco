@@ -34,6 +34,10 @@ class CorrespondanceHandler {
 
     }
 
+    deleteAllCorrespondances() {
+        return Correspondance.deleteMany({});
+    }
+
 }
 
 module.exports = new CorrespondanceHandler();
