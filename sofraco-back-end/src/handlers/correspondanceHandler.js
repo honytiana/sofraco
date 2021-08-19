@@ -9,6 +9,7 @@ class CorrespondanceHandler {
         let correspondance = new Correspondance();
         correspondance.courtier = data.courtier;
         correspondance.companies = data.companies;
+        correspondance.role_courtier = data.role_courtier;
         correspondance.is_enabled = data.is_enabled;
         correspondance.save();
         return correspondance;

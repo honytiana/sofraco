@@ -3,8 +3,7 @@ const Schema = mongoose.Schema;
 
 const excelMasterSchema = new Schema({
     courtier: { type: Schema.Types.ObjectId, ref: 'Courtier', default: null },
-    code_courtier: { type: Schema.Types.Mixed, default: '' },
-    company: { type: String, default: '' },
+    cabinet: { type: String, default: '' },
     create_date: { type: Date, default: Date.now() },
     path: { type: String, default: '' },
     type: { type: String, required: true, enum: ['excel', 'zip', 'zip of zip'], default: null },

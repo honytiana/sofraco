@@ -8,8 +8,8 @@ const fileService = require('../document/files');
 const axios = require('axios');
 const config = require('../../../config.json');
 
-exports.readExcelTableauCorrespondance = async (authorization) => {
-    const file = path.join(__dirname, '..', '..', '..', 'documents', 'courtier.xlsx');
+exports.readExcelTableauCorrespondance = async (authorization, role) => {
+    const file = path.join(__dirname, '..', '..', '..', 'documents', `${role}.xlsx`);
     console.log('DEBUT LECTURE DU TABLEAU DE CORRESPONDANCE');
     const excecutionStartTime = performance.now();
     let filePath = file;
@@ -19,7 +19,7 @@ exports.readExcelTableauCorrespondance = async (authorization) => {
     try {
         if (extension.toUpperCase() === 'XLS') {
             let originalFile = XLSX.readFile(filePath);
-            filePath = path.join(__dirname, '..', '..', '..', 'documents', 'uploaded', `${fileName}.xlsx`);
+            filePath = path.join(__dirname, '..', '..', '..', 'documents', `${fileName}.xlsx`);
             XLSX.writeFile(originalFile, filePath);
         }
         const workbook = new ExcelJS.Workbook();
@@ -39,6 +39,7 @@ exports.readExcelTableauCorrespondance = async (authorization) => {
         });
         const comp = resultCompanies.data;
         let courtier;
+        let role_courtier;
         for (let worksheet of worksheets) {
             worksheet.eachRow((row, rowNumber) => {
                 if (rowNumber > 1) {
@@ -51,13 +52,9 @@ exports.readExcelTableauCorrespondance = async (authorization) => {
                             (row.getCell('A').value.trim() === cr.lastName &&
                                 row.getCell('B').value.trim() === cr.firstName)) {
                             courtier = cr._id;
+                            role_courtier = cr.role;
                             let companies = [];
                             for (let i = 4; i <= 72; i++) {
-                                let company = {
-                                    idCompany: null,
-                                    particular: null,
-                                    code: null
-                                };
                                 for (let c of comp) {
                                     if (worksheet.getRow(1).getCell(i).value !== null) {
                                         if (worksheet.getRow(1).getCell(i).value.toUpperCase().match(c.name)) {
@@ -94,6 +91,7 @@ exports.readExcelTableauCorrespondance = async (authorization) => {
                             }
                             correspondance.push({
                                 courtier,
+                                role_courtier,
                                 companies
                             });
                         }
@@ -101,6 +99,7 @@ exports.readExcelTableauCorrespondance = async (authorization) => {
                 }
             });
         }
+        console.log('FIN LECTURE DU TABLEAU DE CORRESPONDANCE');
         return correspondance;
 
     } catch (err) {

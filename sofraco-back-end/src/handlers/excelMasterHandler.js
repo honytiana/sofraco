@@ -7,9 +7,7 @@ class ExcelMasterHandler {
 
     createExcelMaster(data) {
         let excelMaster = new ExcelMaster();
-        excelMaster.courtier = null;
-        excelMaster.code_courtier = data.code_courtier;
-        excelMaster.company = data.company;
+        excelMaster.courtier = data.courtier;
         excelMaster.create_date = Date.now();
         excelMaster.path = data.path;
         excelMaster.type = data.type;

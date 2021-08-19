@@ -26,8 +26,8 @@ exports.create = async (authorization) => {
     const excelMasters = await generateExcelMaster(ocrInfos, authorization);
     console.log('FIN GENERATION EXCEL MASTER');
     console.log('DEBUT GENERATION ZIP');
-    const em = groupExcelsByCompany(excelMasters);
-    const excelsMastersZipped = await generateZipFilesEM(em);
+    const excelMastersPerCourtier = groupExcelsByCourtier(excelMasters);
+    const excelsMastersZipped = await generateZipFilesEM(excelMastersPerCourtier);
     const singleZip = await generateSingleZipForAllZippedEM(excelsMastersZipped);
     console.log('FIN GENERATION ZIP');
     return { excelMasters, excelsMastersZipped, singleZip, message: 'Excel Master générés' };
@@ -137,86 +137,88 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
     }
     try {
         for (let ocrPerCourtier of allOCRPerCourtiers) {
+            const cr = await getCourtier(authorization, ocrPerCourtier.courtier);
             let excelMaster = {
                 courtier: ocrPerCourtier.courtier,
-                code_courtier: null,
+                cabinet: cr.cabinet,
                 create_date: new Date(),
-                ocr: null,
                 path: null,
                 type: 'excel',
                 is_enabled: true
             }
-            const result = await axios.get(`${config.nodeUrl}/api/courtier/${ocrPerCourtier.courtier}`, {
-                headers: {
-                    'Authorization': `${authorization}`
-                }
-            });
-            const courtier = result.data.cabinet.replace(/[/]/g, '_');
+            const courtier = cr.cabinet.replace(/[/]/g, '_');
             excelMaster.code_courtier = courtier;
             const workbook = new ExcelJS.Workbook();
             const recapWorkSheet = workbook.addWorksheet('RECAP');
             let month = new Date().getMonth();
             month = (month + 1 < 10) ? `0${month + 1}` : `${month}`;
             const date = `${month}${new Date().getFullYear()}`;
+            let datas = { company: null, ocr: [] };
             for (let ocr of ocrPerCourtier.infos) {
-                let workSheet;
-                if (ocr.particular) {
-                    if (!workbook.getWorksheet(ocr.particular.replace(/[\s.]/g, ''))) {
-                        workSheet = workbook.addWorksheet(ocr.particular.replace(/[\s.]/g, ''));
-                    } else {
-                        workSheet = workbook.addWorksheet(`${ocr.particular.replace(/[\s.]/g, '')}_`);
+                if (ocr.company === 'CARDIF' && ocr.particular) {
+                    datas.company = 'CARDIF';
+                    datas.ocr.push(ocr);
+                }
+            }
+            for (let d of datas.ocr) {
+                for (let ocr of ocrPerCourtier.infos) {
+                    if(d === ocr) {
+                        ocrPerCourtier.infos.splice(ocrPerCourtier.infos.indexOf(ocr), 1);
                     }
-                } else {
-                    workSheet = workbook.addWorksheet(ocr.company);
                 }
-                workSheet.properties.defaultColWidth = 20;
-                switch (ocr.company.toUpperCase()) {
-                    case 'APICIL':
-                        excelMasterAPICIL.createWorkSheetAPICIL(workSheet, ocr);
-                        break;
-                    case 'APREP':
-                        excelMasterAPREP.createWorkSheetAPREP(workSheet, ocr);
-                        break;
-                    case 'APREP ENCOURS':
-                        excelMasterAPREP.createWorkSheetAPREPENCOURS(workSheet, ocr);
-                        break;
-                    // case 'AVIVA':
-                    //     infos = await readExcel(file);
-                    //     break;
-                    case 'AVIVA SURCO':
-                        excelMasterAVIVA.createWorkSheetAVIVASURCO(workSheet, ocr);
-                        break;
-                    case 'CARDIF':
-                        excelMasterCARDIF.createWorkSheetCARDIF(workSheet, ocr);
-                        break;
-                    case 'CEGEMA':
-                        excelMasterCEGEMA.createWorkSheetCEGEMA(workSheet, ocr);
-                        break;
-                    case 'ERES':
-                        excelMasterERES.createWorkSheetERES(workSheet, ocr);
-                        break;
-                    case 'GENERALI':
-                        excelMasterGENERALI.createWorkSheetGENERALI(workSheet, ocr);
-                        break;
-                    case 'HODEVA':
-                        excelMasterHODEVA.createWorkSheetHODEVA(workSheet, ocr);
-                        break;
-                    case 'LOURMEL':  //CBP FRANCE
-                        excelMasterLOURMEL.createWorkSheetLOURMEL(workSheet, ocr);
-                        break;
-                    case 'METLIFE':
-                        excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, ocr);
-                        break;
-                    case 'SLADE':   // SWISSLIFE
-                        excelMasterSWISSLIFE.createWorkSheetSLADE(workSheet, ocr);
-                        break;
-                    case 'SWISSLIFE SURCO':
-                        excelMasterSWISSLIFE.createWorkSheetSWISSLIFESURCO(workSheet, ocr);
-                        break;
-                    default:
-                        console.log('Pas de compagnie correspondante');
+            }
+            ocrPerCourtier.infos = [...ocrPerCourtier.infos, datas];
+            for (let ocr of ocrPerCourtier.infos) {
+                if (ocr.company !== null) {
+                    let workSheet = workbook.addWorksheet(ocr.company);
+                    workSheet.properties.defaultColWidth = 20;
+                    switch (ocr.company.toUpperCase()) {
+                        case 'APICIL':
+                            excelMasterAPICIL.createWorkSheetAPICIL(workSheet, ocr);
+                            break;
+                        case 'APREP':
+                            excelMasterAPREP.createWorkSheetAPREP(workSheet, ocr);
+                            break;
+                        case 'APREP ENCOURS':
+                            excelMasterAPREP.createWorkSheetAPREPENCOURS(workSheet, ocr);
+                            break;
+                        // case 'AVIVA':
+                        //     infos = await readExcel(file);
+                        //     break;
+                        case 'AVIVA SURCO':
+                            excelMasterAVIVA.createWorkSheetAVIVASURCO(workSheet, ocr);
+                            break;
+                        case 'CARDIF':
+                            excelMasterCARDIF.createWorkSheetCARDIF(workSheet, ocr);
+                            break;
+                        case 'CEGEMA':
+                            excelMasterCEGEMA.createWorkSheetCEGEMA(workSheet, ocr);
+                            break;
+                        case 'ERES':
+                            excelMasterERES.createWorkSheetERES(workSheet, ocr);
+                            break;
+                        case 'GENERALI':
+                            excelMasterGENERALI.createWorkSheetGENERALI(workSheet, ocr);
+                            break;
+                        case 'HODEVA':
+                            excelMasterHODEVA.createWorkSheetHODEVA(workSheet, ocr);
+                            break;
+                        case 'LOURMEL':  //CBP FRANCE
+                            excelMasterLOURMEL.createWorkSheetLOURMEL(workSheet, ocr);
+                            break;
+                        case 'METLIFE':
+                            excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, ocr);
+                            break;
+                        case 'SLADE':   // SWISSLIFE
+                            excelMasterSWISSLIFE.createWorkSheetSLADE(workSheet, ocr);
+                            break;
+                        case 'SWISSLIFE SURCO':
+                            excelMasterSWISSLIFE.createWorkSheetSWISSLIFESURCO(workSheet, ocr);
+                            break;
+                        default:
+                            console.log('Pas de compagnie correspondante');
+                    }
                 }
-
             }
             const sheets = excelMasterRecap.getWorkSheets(workbook);
             excelMasterRecap.createWorkSheetRECAP(recapWorkSheet, sheets);
@@ -232,36 +234,43 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
     }
 };
 
-const groupExcelsByCompany = (excelMasters) => {
-    let companies = [];
-    let excelMastersPerCompany = []
-    excelMasters.forEach((excel, index) => {
-        if (!companies.includes(excel.company)) {
-            companies.push(excel.company);
+const getCourtier = async (authorization, id) => {
+    const result = await axios.get(`${config.nodeUrl}/api/courtier/${id}`, {
+        headers: {
+            'Authorization': `${authorization}`
         }
     });
-    companies.forEach((company, i) => {
-        let eM = { company, excelMasters: [] };
-        excelMasters.forEach((excel, index) => {
-            if (excel.company === company) {
+    const courtier = result.data;
+    return courtier;
+}
+
+const groupExcelsByCourtier = (excelMasters) => {
+    let courtiers = [];
+    let excelMastersPerCourtier = []
+    for (let excel of excelMasters) {
+        if (!courtiers.includes(excel.cabinet)) {
+            courtiers.push(excel.cabinet);
+        }
+    };
+    for (let courtier of courtiers) {
+        let eM = { courtier, excelMasters: [] };
+        for (let excel of excelMasters) {
+            if (excel.cabinet === courtier) {
                 eM.excelMasters.push(excel);
             }
-        });
-        excelMastersPerCompany.push(eM);
-    });
-    return excelMastersPerCompany;
+        };
+        excelMastersPerCourtier.push(eM);
+    }
+    return excelMastersPerCourtier;
 };
 
-const generateZipFilesEM = async (excelMastersPerCompany) => {
+const generateZipFilesEM = async (excelMastersPerCourtier) => {
     const excelMastersZips = [];
-    for (let em of excelMastersPerCompany) {
-        const zipPath = await generateZip(em.company, em.excelMasters);
+    for (let em of excelMastersPerCourtier) {
+        const zipPath = await generateZip(em.courtier.replace(/[/]/g, '_'), em.excelMasters);
         const excelMastersZip = {
-            courtier: null,
-            code_courtier: null,
-            company: em.company,
+            cabinet: em.courtier,
             create_date: new Date(),
-            ocr: null,
             path: zipPath,
             type: 'zip',
             is_enabled: true
@@ -296,10 +305,10 @@ const generateZip = async (zipName, files) => {
         zlib: { level: 9 }
     });
     output.on('close', () => {
-        console.log(archive.pointer() + ' total bytes');
+        // console.log(archive.pointer() + ' total bytes');
     });
     output.on('end', () => {
-        console.log('Data has been drained');
+        // console.log('Data has been drained');
     });
     output.on('error', (err) => {
         console.log(err);
