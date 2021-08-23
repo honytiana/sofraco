@@ -27,6 +27,26 @@ class CourtierHandler {
         return Courtier.find();
     }
 
+    getCourtiersByRole(role) {
+        return Courtier.find({ role: role });
+    }
+
+    async getMandatairesOfCourtier(courtier) {
+        const cr = await Courtier.findById(courtier);
+        return Courtier.find({
+            cabinet: cr.cabinet,
+            role: 'mandataire'
+        });
+    }
+
+    async getCourtierOfMandataire(mandataire) {
+        const md = await Courtier.findById(mandataire);
+        return Courtier.find({
+            cabinet: md.cabinet,
+            role: 'courtier'
+        });
+    }
+
     getCourtierById(id) {
         return Courtier.findOne({ _id: id });
     }
@@ -35,8 +55,8 @@ class CourtierHandler {
         return Courtier.findByIdAndUpdate(id, data);
     }
 
-    deleteCourtier() {
-
+    deleteCourtier(id) {
+        return Courtier.findByIdAndUpdate(id, { active: 'Inactive', is_enabled: false });
     }
 
 }

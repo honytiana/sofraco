@@ -1,0 +1,10 @@
+.sofraco-button {
+    color: #fff;
+    background-color: #ed7102;
+    width: 250px;
+}
+
+.sofraco-button:hover {
+    color: #fff;
+    background-color: #F39200;
+}

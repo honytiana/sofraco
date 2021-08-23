@@ -21,28 +21,60 @@ exports.createCorrespondance = async (req, res) => {
 
 exports.getCorrespondance = async (req, res) => {
     console.log('get correspondance');
-    const correspondance = await correspondanceHandler.getCorrespondance(req.params.id);
-    res.status(200).json(correspondance);
+    try {
+        const correspondance = await correspondanceHandler.getCorrespondance(req.params.id);
+        res.status(200).json(correspondance);
+    } catch (error) {
+        res.status(400).json({ error });
+    }
 }
 
 exports.getCorrespondanceByCourtier = async (req, res) => {
     console.log('get correspondance by courtier');
-    const correspondance = await correspondanceHandler.getCorrespondanceByCourtier(req.params.courtier);
-    res.status(200).json(correspondance);
+    try {
+        const correspondance = await correspondanceHandler.getCorrespondanceByCourtier(req.params.courtier);
+        res.status(200).json(correspondance);
+    } catch (error) {
+        res.status(400).json({ error });
+    }
 }
 
 exports.getCorrespondances = async (req, res) => {
     console.log('get correspondances');
-    const correspondances = await correspondanceHandler.getCorrespondances();
-    res.status(200).json(correspondances);
+    try {
+        const correspondances = await correspondanceHandler.getCorrespondances();
+        res.status(200).json(correspondances);
+    } catch (error) {
+        res.status(400).json({ error });
+    }
 }
 
-exports.updateCorrespondance = (req, res) => {
-    console.log('update')
+exports.updateCorrespondance = async (req, res) => {
+    console.log('update correpondance');
+    try {
+        const correspondance = await correspondanceHandler.updateCorrespondance(req.params.id, req.body);
+        res.status(200).json(correspondance);
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+}
+
+exports.deleteCorrespondance = async (req, res) => {
+    console.log('Delete correspondance');
+    try {
+        const corr = await correspondanceHandler.deleteCorrespondance(req.params.id);
+        res.status(200).end('Correspondance deleted');
+    } catch (error) {
+        res.status(500).json({ error });
+    }
 }
 
 exports.deleteAllCorrespondances = async (req, res) => {
     console.log('Delete all correspondances');
-    await correspondanceHandler.deleteAllCorrespondances();
-    res.status(200).end('Correspondances deleted');
+    try {
+        await correspondanceHandler.deleteAllCorrespondances();
+        res.status(200).end('Correspondances deleted');
+    } catch (error) {
+        res.status(500).json({ error });
+    }
 }

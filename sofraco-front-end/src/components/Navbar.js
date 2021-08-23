@@ -63,6 +63,7 @@ class Navbar extends Component {
                         <CNavLink href='/treatments'>Traitements</CNavLink>
                     </CNavbarNav>
                     <CNavbarNav className="ml-auto">
+                        <CNavLink href='/admin' >Administration</CNavLink>
                         <CDropdown inNav >
                             <CDropdownToggle color="primary">
                                 {(this.state.user !== null) && this.state.user.email}

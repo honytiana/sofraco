@@ -10,7 +10,7 @@ class CorrespondanceHandler {
         correspondance.courtier = data.courtier;
         correspondance.companies = data.companies;
         correspondance.role_courtier = data.role_courtier;
-        correspondance.is_enabled = data.is_enabled;
+        correspondance.is_enabled = true;
         correspondance.save();
         return correspondance;
     }
@@ -31,8 +31,8 @@ class CorrespondanceHandler {
         return Correspondance.findByIdAndUpdate(id, data);
     }
 
-    deleteCorrespondance() {
-
+    deleteCorrespondance(id) {
+        return Correspondance.findByIdAndUpdate(id, { is_enabled: false });
     }
 
     deleteAllCorrespondances() {

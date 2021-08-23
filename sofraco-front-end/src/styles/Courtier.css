@@ -1,0 +1,28 @@
+.sofraco-loader {
+    margin: auto;
+    text-align: center;
+}
+
+.sofraco-progress-bar .progress-bar{
+    background-color: #6F6F6E !important;
+}
+
+.sofraco-button {
+    color: #fff;
+    background-color: #ed7102;
+    width: 150px;
+}
+
+.sofraco-button:not(:hover) {
+    color: #fff;
+    background-color: #ed7102;
+}
+
+.sofraco-button:hover {
+    color: #fff;
+    background-color: #F39200;
+}
+
+.sofraco-input {
+    width: 400px !important;
+}

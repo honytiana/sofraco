@@ -10,6 +10,7 @@ router.route('/courtier/:courtier').get(correspondanceController.getCorrespondan
 router.route('/:role').post(accessControl, correspondanceController.createCorrespondance);
 router.route('/:id').put(correspondanceController.updateCorrespondance);
 router.route('/').delete(accessControl, correspondanceController.deleteAllCorrespondances);
+router.route('/:id').delete(accessControl, correspondanceController.deleteCorrespondance);
 
 
 module.exports = router;

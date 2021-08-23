@@ -4,37 +4,43 @@ import {
     CDataTable,
     CBadge,
     CButton,
-    CCollapse,
-    CCardBody,
-    CInputCheckbox,
     CToaster,
     CToast,
     CToastHeader,
-    CToastBody
+    CToastBody,
+    CTabs,
+    CNav,
+    CNavItem,
+    CNavLink,
+    CTabContent,
+    CTabPane,
+    CModal,
+    CModalHeader,
+    CModalBody,
+    CModalFooter
 } from '@coreui/react';
 import axios from 'axios';
 
-import '../styles/Treatments.css';
+import '../styles/Administration.css';
 import config from '../config.json';
+import Courtier from './Courtier';
+import Mandataire from './Mandataire';
 
-class Treatments extends Component {
+class Administration extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             details: [],
-            checked: [],
-            courtiersChecked: [],
             courtiers: [],
             fields: [],
             toast: false,
-            messageToast: []
+            messageToast: [],
+            activePage: 1
         }
         this.getBadge = this.getBadge.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
-        this.onCheckHandler = this.onCheckHandler.bind(this);
-        this.onCheckAllHandler = this.onCheckAllHandler.bind(this);
-        this.onSendMailHandler = this.onSendMailHandler.bind(this);
+        this.changeActivePage = this.changeActivePage.bind(this);
 
     }
 
@@ -45,19 +51,19 @@ class Treatments extends Component {
                 {
                     key: 'cabinet',
                     label: 'Cabinet',
-                    _style: { width: '10%' },
+                    _style: { width: '20%' },
                     _classes: ['text-center']
                 },
                 {
                     key: 'firstName',
                     label: 'Nom',
-                    _style: { width: '20%' },
+                    _style: { width: '15%' },
                     _classes: ['text-center']
                 },
                 {
                     key: 'lastName',
                     label: 'Prénom',
-                    _style: { width: '20%' },
+                    _style: { width: '15%' },
                     _classes: ['text-center']
                 },
                 {
@@ -67,18 +73,16 @@ class Treatments extends Component {
                     _classes: ['text-center']
                 },
                 {
-                    key: 'status',
-                    label: 'Status',
+                    key: 'phone',
+                    label: 'Telephone',
                     _style: { width: '10%' },
                     _classes: ['text-center']
                 },
                 {
-                    key: 'check',
-                    label: <CInputCheckbox onChange={() => this.onCheckAllHandler()} />,
+                    key: 'status',
+                    label: 'Status',
                     _style: { width: '10%' },
-                    _classes: ['text-center'],
-                    sorter: false,
-                    filter: false
+                    _classes: ['text-center']
                 },
                 {
                     key: 'show_details',
@@ -92,7 +96,7 @@ class Treatments extends Component {
             toast: false,
             messageToast: []
         });
-        axios.get(`${config.nodeUrl}/api/courtier`, {
+        axios.get(`${config.nodeUrl}/api/courtier/role/courtier`, {
             headers: {
                 'Authorization': `Bearer ${token.token}`
             }
@@ -101,18 +105,8 @@ class Treatments extends Component {
                 return data.data
             })
             .then((data) => {
-                const checked = data.map(element => {
-                    return {
-                        code: element.code,
-                        email: element.email,
-                        firstName: element.firstName,
-                        lastName: element.lastName,
-                        checked: false
-                    };
-                });
                 const courtiers = data;
                 this.setState({
-                    checked,
                     courtiers
                 });
             })
@@ -123,10 +117,8 @@ class Treatments extends Component {
 
     getBadge(status) {
         switch (status) {
-            case 'Active': return 'success'
-            case 'Inactive': return 'secondary'
-            case 'Pending': return 'warning'
-            case 'Banned': return 'danger'
+            case true: return 'success'
+            case false: return 'danger'
             default: return 'primary'
         }
     }
@@ -144,79 +136,10 @@ class Treatments extends Component {
         })
     }
 
-    onCheckHandler(item, index) {
-        this.state.checked.forEach((element, index) => {
-            if (element.code === item.code) {
-                let newChecked = this.state.checked.slice();
-                newChecked[index].checked = !this.state.checked[index].checked;
-                this.setState({
-                    checked: newChecked,
-                });
-            }
-        })
-    }
-
-    onCheckAllHandler() {
-        this.state.checked.forEach((element, index) => {
-            let newChecked = this.state.checked.slice();
-            newChecked[index].checked = !this.state.checked[index].checked;
-            this.setState({
-                checked: newChecked
-            });
+    changeActivePage(page) {
+        this.setState({
+            activePage: page
         });
-        for (let element of document.getElementsByClassName('sofraco-checkbox')) {
-            element.checked = !element.checked;
-        }
-    }
-
-    onSendMailHandler() {
-        const token = JSON.parse(localStorage.getItem('token'));
-        for (let courtier of this.state.checked) {
-            if (courtier.checked === true) {
-                const options = {
-                    user: {
-                        email: courtier.email,
-                        firstName: courtier.firstName,
-                        lastName: courtier.lastName
-                    }
-                };
-                axios.post(`${config.nodeUrl}/api/mailer/`, options, {
-                    headers: {
-                        'Authorization': `Bearer ${token.token}`
-                    }
-                })
-                    .then((data) => {
-                        let mt = this.state.messageToast.slice();
-                        mt.push({
-                            header: 'SUCCESS',
-                            color: 'success',
-                            message: `Le mail à été envoyé aux courtiers ${data.data.accepted[0]}`
-                        });
-                        this.setState({
-                            toast: true,
-                            messageToast: mt
-                        });
-                    }).catch((err) => {
-                        let mt = this.state.messageToast.slice();
-                        mt.push({ 
-                            header: 'ERROR',
-                            color: 'danger',
-                            message: err });
-                        this.setState({
-                            toast: true,
-                            messageToast: mt
-                        })
-                    }).finally(() => {
-                        setTimeout(() => {
-                            this.setState({
-                                toast: false,
-                                messageToast: []
-                            });
-                        }, 10000);
-                    });
-            }
-
-        }
     }
 
     render() {
@@ -229,16 +152,18 @@ class Treatments extends Component {
                     columnFilter
                     tableFilter={{ label: 'Filtre', placeholder: 'Filtre' }}
                     itemsPerPageSelect={{ label: 'Nombre de courtiers par page' }}
-                    itemsPerPage={5}
+                    itemsPerPage={10}
                     hover
                     sorter
+                    activePage={this.state.activePage}
+                    onPaginationChange={(i) => this.changeActivePage(i)}
                     pagination={{ className: 'sofraco-pagination' }}
                     scopedSlots={{
                         'status':
                             (item) => (
                                 <td className="text-center" >
-                                    <CBadge color={this.getBadge(item.status)}>
-                                        {item.status}
+                                    <CBadge color={this.getBadge(item.is_enabled)}>
+                                        {item.is_enabled ? 'Active' : 'Inactive'}
                                     </CBadge>
                                 </td>
                             ),
@@ -253,7 +178,7 @@ class Treatments extends Component {
                                             size="sm"
                                             onClick={() => { this.toggleDetails(index) }}
                                         >
-                                            {this.state.details.includes(index) ? 'Cacher' : 'Afficher'}
+                                            Afficher
                                         </CButton>
                                     </td>
                                 )
@@ -261,37 +186,49 @@ class Treatments extends Component {
                         'details':
                             (item, index) => {
                                 return (
-                                    <CCollapse show={this.state.details.includes(index)}>
-                                        <CCardBody>
-                                            <h4>
-                                                {item.firstName}
-                                            </h4>
-                                        </CCardBody>
-                                    </CCollapse>
-                                )
-                            },
-                        'check':
-                            (item, index) => {
-                                return (
-                                    <td className="text-center" >
-                                        <CInputCheckbox className="sofraco-checkbox" onChange={() => {
-                                            this.onCheckHandler(item, index)
-                                        }} />
-                                    </td>
+                                    <CModal
+                                        show={this.state.details.includes(index)}
+                                        onClose={() => { this.toggleDetails(index) }}
+                                        centered={true}
+                                        className="sofraco-modal"
+                                    >
+                                        <CModalHeader closeButton>{item.cabinet}</CModalHeader>
+                                        <CModalBody>
+                                            <CTabs activeTab="mandataires">
+                                                <CNav variant="tabs">
+                                                    <CNavItem>
+                                                        <CNavLink data-tab="courtier">
+                                                            Courtier
+                                                        </CNavLink>
+                                                    </CNavItem>
+                                                    <CNavItem>
+                                                        <CNavLink data-tab="mandataires">
+                                                            Mandataires
+                                                        </CNavLink>
+                                                    </CNavItem>
+                                                </CNav>
+                                                <CTabContent>
+                                                    <CTabPane data-tab="courtier">
+                                                        <Courtier courtier={item} />
+                                                    </CTabPane>
+                                                    <CTabPane data-tab="mandataires">
+                                                        <Mandataire courtier={item} sIndex={index} />
+                                                    </CTabPane>
+                                                </CTabContent>
+                                            </CTabs>
+                                        </CModalBody>
+                                        <CModalFooter>
+                                            <CButton
+                                                color="secondary"
+                                                onClick={() => { this.toggleDetails(index) }}
+                                            >Annuler</CButton>
+                                        </CModalFooter>
+                                    </CModal>
                                 )
                             }
                     }
                     }
                 />
-                <div className="sofraco-send-mail-button">
-                    <CButton
-                        size=""
-                        className="m-2"
-                        onClick={() => this.onSendMailHandler()}
-                    >
-                        Envoyer les emails
-                    </CButton>
-                </div>
                 {
                     (this.state.toast === true &&
                         this.state.messageToast.length > 0) && (
@@ -323,4 +260,4 @@ class Treatments extends Component {
 
 }
 
-export default Treatments;
+export default Administration;

@@ -8,6 +8,8 @@ const Home = React.lazy(() => import('./Home'));
 const Companies = React.lazy(() => import('./Companies'));
 // const Upload = React.lazy(() => import('./Upload'));
 const Treatments = React.lazy(() => import('./Treatments'));
+const Administration = React.lazy(() => import('./Administration'));
+
 
 const RouteComponent = () => {
     return (
@@ -19,6 +21,7 @@ const RouteComponent = () => {
                 <Route path="/companies" component={Companies} />
                 {/* <Route path="/upload" component={Upload} /> */}
                 <Route path="/treatments" component={Treatments} />
+                <Route path="/admin" component={Administration} />
             </Switch>
         </Suspense>
     </Router>
