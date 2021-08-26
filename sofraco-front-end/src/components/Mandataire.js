@@ -34,49 +34,18 @@ class Mandataire extends Component {
             toast: false,
             messageToast: {},
             fields: [],
-            ajoutMandataire: false
+            ajoutMandataire: false,
+            newP: this.props.newP
         }
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
         this.activerAjoutMandataire = this.activerAjoutMandataire.bind(this);
+        this.fetchMandataires = this.fetchMandataires.bind(this);
+        this.token = JSON.parse(localStorage.getItem('token'));
     }
 
     componentDidMount() {
-        const token = JSON.parse(localStorage.getItem('token'));
-        const courtier = this.props.courtier;
-        this.setState({
-            courtier,
-            toast: false,
-            messageToast: {}
-        });
-        axios.get(`${config.nodeUrl}/api/courtier/mandataires/${courtier._id}`, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${token.token}`
-            }
-        })
-            .then((res) => {
-                this.setState({
-                    mandataires: res.data
-                });
-            })
-            .catch((err) => {
-                this.setState({
-                    toast: true,
-                    messageToast: { header: 'ERROR', color: 'danger', message: err }
-                })
-            })
-            .finally(() => {
-                this.setState({
-                    loader: false
-                });
-                setTimeout(() => {
-                    this.setState({
-                        toast: false,
-                        messageToast: {}
-                    });
-                }, 6000);
-            });
+        this.fetchMandataires();
         this.setState({
             fields: [
                 {
@@ -133,8 +102,40 @@ class Mandataire extends Component {
         });
     }
 
-    componentDidUpdate() {
+    fetchMandataires() {
+        const courtier = this.props.courtier;
+        axios.get(`${config.nodeUrl}/api/courtier/mandataires/${courtier._id}`, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${this.token.token}`
+            }
+        })
+            .then((res) => {
+                this.setState({
+                    mandataires: res.data
+                });
+            })
+            .catch((err) => {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'ERROR', color: 'danger', message: err }
+                })
+            })
+            .finally(() => {
+                this.setState({
+                    loader: false
+                });
+                setTimeout(() => {
+                    this.setState({
+                        toast: false,
+                        messageToast: {}
+                    });
+                }, 6000);
+            });
+    }
 
+    componentDidUpdate() {
+        this.render();
     }
 
     getBadge(status) {
@@ -147,7 +148,6 @@ class Mandataire extends Component {
 
     onSubmitHandler(event, mandataire) {
         event.preventDefault();
-        const token = JSON.parse(localStorage.getItem('token'));
         this.setState({
             loader: true
         });
@@ -166,7 +166,7 @@ class Mandataire extends Component {
             axios.put(`${config.nodeUrl}/api/courtier/${mandataire._id}`, options, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token.token}`
+                    'Authorization': `Bearer ${this.token.token}`
                 }
             }).then((res) => {
                 let mandataires = this.state.mandataires;
@@ -201,11 +201,10 @@ class Mandataire extends Component {
 
     deleteMandataire(e, mandataire) {
         e.preventDefault();
-        const token = JSON.parse(localStorage.getItem('token'));
         axios.delete(`${config.nodeUrl}/api/courtier/${mandataire._id}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token.token}`
+                'Authorization': `Bearer ${this.token.token}`
             }
         })
             .then((res) => {
@@ -261,7 +260,6 @@ class Mandataire extends Component {
 
     ajouterMandataire(event) {
         event.preventDefault();
-        const token = JSON.parse(localStorage.getItem('token'));
         this.setState({
             loader: true
         });
@@ -281,7 +279,7 @@ class Mandataire extends Component {
             axios.post(`${config.nodeUrl}/api/courtier/`, options, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token.token}`
+                    'Authorization': `Bearer ${this.token.token}`
                 }
             }).then((res) => {
                 let mandataires = this.state.mandataires;

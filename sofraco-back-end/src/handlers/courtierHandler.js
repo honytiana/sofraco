@@ -24,11 +24,11 @@ class CourtierHandler {
     }
 
     getCourtiers() {
-        return Courtier.find();
+        return Courtier.find({});
     }
 
-    getCourtiersByRole(role) {
-        return Courtier.find({ role: role });
+    getCourtiersByRole(role, limit=0, skip=0) {
+        return Courtier.find({ role: role }).skip(skip).limit(limit);
     }
 
     async getMandatairesOfCourtier(courtier) {

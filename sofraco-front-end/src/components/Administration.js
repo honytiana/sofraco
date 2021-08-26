@@ -36,16 +36,18 @@ class Administration extends Component {
             fields: [],
             toast: false,
             messageToast: [],
-            activePage: 1
+            activePage: 1,
+            num: 0
         }
         this.getBadge = this.getBadge.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
         this.changeActivePage = this.changeActivePage.bind(this);
+        this.fetchCourtiers = this.fetchCourtiers.bind(this);
+        this.token = JSON.parse(localStorage.getItem('token'));
 
     }
 
     componentDidMount() {
-        const token = JSON.parse(localStorage.getItem('token'));
         this.setState({
             fields: [
                 {
@@ -96,9 +98,13 @@ class Administration extends Component {
             toast: false,
             messageToast: []
         });
+        this.fetchCourtiers();
+    }
+
+    fetchCourtiers() {
         axios.get(`${config.nodeUrl}/api/courtier/role/courtier`, {
             headers: {
-                'Authorization': `Bearer ${token.token}`
+                'Authorization': `Bearer ${this.token.token}`
             }
         })
             .then((data) => {
@@ -132,8 +138,10 @@ class Administration extends Component {
             newDetails = [...this.state.details, index]
         }
         this.setState({
-            details: newDetails
-        })
+            details: newDetails,
+            num: index
+        });
+        this.fetchCourtiers();
     }
 
     changeActivePage(page) {
@@ -155,9 +163,9 @@ class Administration extends Component {
                     itemsPerPage={10}
                     hover
                     sorter
-                    activePage={this.state.activePage}
-                    onPaginationChange={(i) => this.changeActivePage(i)}
-                    pagination={{ className: 'sofraco-pagination' }}
+                    pagination={{
+                        className: 'sofraco-pagination'
+                    }}
                     scopedSlots={{
                         'status':
                             (item) => (
@@ -209,10 +217,10 @@ class Administration extends Component {
                                                 </CNav>
                                                 <CTabContent>
                                                     <CTabPane data-tab="courtier">
-                                                        <Courtier courtier={item} />
+                                                        <Courtier courtier={item} key={this.state.num} />
                                                     </CTabPane>
                                                     <CTabPane data-tab="mandataires">
-                                                        <Mandataire courtier={item} sIndex={index} />
+                                                        <Mandataire courtier={item} key={this.state.num} sIndex={index} />
                                                     </CTabPane>
                                                 </CTabContent>
                                             </CTabs>

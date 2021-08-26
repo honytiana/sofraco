@@ -10,7 +10,9 @@ import {
     CForm,
     CFormGroup,
     CLabel,
-    CInput
+    CInput,
+    CListGroup,
+    CListGroupItem
 } from '@coreui/react';
 
 import axios from 'axios';
@@ -23,29 +25,25 @@ class Courtier extends Component {
         super(props);
         this.state = {
             loader: false,
+            courtier: null,
             toast: false,
-            messageToast: {}
+            messageToast: {},
+            newP: this.props.newP
         }
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
+        this.token = JSON.parse(localStorage.getItem('token'));
     }
 
     componentDidMount() {
-        const token = JSON.parse(localStorage.getItem('token'));
-        const courtier = this.props.courtier;
         this.setState({
-            courtier,
+            courtier: this.props.courtier,
             toast: false,
             messageToast: {}
         });
     }
 
-    componentDidUpdate() {
-
-    }
-
     onSubmitHandler(event) {
         event.preventDefault();
-        const token = JSON.parse(localStorage.getItem('token'));
         this.setState({
             loader: true
         });
@@ -64,10 +62,11 @@ class Courtier extends Component {
             axios.put(`${config.nodeUrl}/api/courtier/${this.props.courtier._id}`, options, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token.token}`
+                    'Authorization': `Bearer ${this.token.token}`
                 }
             }).then((res) => {
                 this.setState({
+                    courtier: res.data,
                     toast: true,
                     messageToast: { header: 'SUCCESS', color: 'success', message: `Le courtier ${res.data.cabinet} à été modifié` }
                 });
@@ -93,11 +92,13 @@ class Courtier extends Component {
     render() {
         return (
             <div>
-                {/* <div>{this.props.courtier.lastName}
-                    {this.props.courtier.firstName}
-                    {this.props.courtier.cabinet}
-                    {this.props.courtier.phone}
-                    {this.props.courtier.email}</div> */}
+                {/* <CListGroup>
+                    <CListGroupItem color="warning">{this.props.courtier.cabinet}</CListGroupItem>
+                    <CListGroupItem color="warning">{this.props.courtier.lastName}</CListGroupItem>
+                    <CListGroupItem color="warning">{this.props.courtier.firstName}</CListGroupItem>
+                    {this.props.courtier.phone && <CListGroupItem color="warning">{this.props.courtier.phone}</CListGroupItem>}
+                    {this.props.courtier.email && <CListGroupItem color="warning">{this.props.courtier.email}</CListGroupItem>}
+                </CListGroup> */}
                 <CForm action="" method="post" onSubmit={(e) => this.onSubmitHandler(e)}>
                     <CFormGroup row>
                         <CLabel className="col-sm-2" htmlFor={`sofraco-cabinet_${this.props.courtier._id}`}>Cabinet</CLabel>
@@ -105,7 +106,6 @@ class Courtier extends Component {
                             type="text"
                             id={`sofraco-cabinet_${this.props.courtier._id}`}
                             name={`sofraco-cabinet`}
-                            placeholder={this.props.courtier.cabinet}
                             defaultValue={this.props.courtier.cabinet}
                             autoComplete="cabinet"
                             className="sofraco-input"
@@ -117,7 +117,6 @@ class Courtier extends Component {
                             type="text"
                             id={`sofraco-nom_${this.props.courtier._id}`}
                             name={`sofraco-nom`}
-                            placeholder={this.props.courtier.lastName}
                             defaultValue={this.props.courtier.lastName}
                             autoComplete="nom"
                             className="sofraco-input"
@@ -129,7 +128,6 @@ class Courtier extends Component {
                             type="text"
                             id={`sofraco-prenom_${this.props.courtier._id}`}
                             name={`sofraco-prenom`}
-                            placeholder={this.props.courtier.firstName}
                             defaultValue={this.props.courtier.firstName}
                             autoComplete="prenom"
                             className="sofraco-input"
@@ -141,7 +139,6 @@ class Courtier extends Component {
                             type="text"
                             id={`sofraco-email_${this.props.courtier._id}`}
                             name={`sofraco-email`}
-                            placeholder={this.props.courtier.email}
                             defaultValue={this.props.courtier.email}
                             autoComplete="email"
                             className="sofraco-input"
@@ -153,7 +150,6 @@ class Courtier extends Component {
                             type="text"
                             id={`sofraco-phone_${this.props.courtier._id}`}
                             name={`sofraco-phone`}
-                            placeholder={this.props.courtier.phone}
                             defaultValue={this.props.courtier.phone}
                             autoComplete="phone"
                             className="sofraco-input"

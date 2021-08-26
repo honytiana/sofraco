@@ -48,8 +48,10 @@ exports.getCourtiers = async (req, res) => {
 
 exports.getCourtiersByRole = async (req, res) => {
     console.log('get courtiers by role');
+    const limit = parseInt(req.query.limit);
+    const skip = parseInt(req.query.skip);
     try {
-        const courtiers = await courtierHandler.getCourtiersByRole(req.params.role);
+        const courtiers = await courtierHandler.getCourtiersByRole(req.params.role, limit, skip);
         res.status(200).json(courtiers);
     } catch (error) {
         res.status(400).json({ error });
