@@ -20,6 +20,7 @@ const upload = multer({ storage: storage });
 
 router.route('/:id').get(accessControl, companyController.getCompany);
 router.route('/name/:name').get(accessControl, companyController.getCompanyByName);
+router.route('/companySurco/:companySurco').get(accessControl, companyController.getCompanyByCompanySurco);
 router.route('/').get(accessControl, companyController.getCompanies);
 router.route('/').post(accessControl, upload.single('file'), companyController.createCompany);
 router.route('/:id').put(accessControl, companyController.updateCompany);

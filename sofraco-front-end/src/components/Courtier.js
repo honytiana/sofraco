@@ -10,9 +10,7 @@ import {
     CForm,
     CFormGroup,
     CLabel,
-    CInput,
-    CListGroup,
-    CListGroupItem
+    CInput
 } from '@coreui/react';
 
 import axios from 'axios';

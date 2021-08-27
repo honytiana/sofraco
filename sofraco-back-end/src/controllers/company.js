@@ -52,6 +52,16 @@ exports.getCompanyByName = async (req, res) => {
     }
 }
 
+exports.getCompanyByCompanySurco = async (req, res) => {
+    console.log('get company by company surco');
+    try {
+        const company = await companyHandler.getCompanyByCompanySurco(req.params.companySurco);
+        res.status(200).json(company);
+    } catch (error) {
+        res.status(400).json({ error });
+    }
+}
+
 exports.getCompanies = async (req, res) => {
     console.log('get company');
     try {

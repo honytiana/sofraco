@@ -14,8 +14,12 @@ import {
     CToast,
     CToastHeader,
     CToastBody,
-    CElementCover
+    CElementCover,
+    CBadge,
+    CProgress
 } from '@coreui/react';
+import CIcon from '@coreui/icons-react';
+
 import axios from 'axios';
 
 import config from '../config.json';
@@ -23,6 +27,8 @@ import config from '../config.json';
 
 import Upload from './Upload';
 import '../styles/Companies.css';
+import check from '../assets/check.png';
+import { millisecondToTime } from '../utils/timeUtil';
 
 
 class Companies extends Component {
@@ -32,6 +38,8 @@ class Companies extends Component {
             details: [],
             companies: [],
             collapsed: [],
+            drafts: [],
+            infoDrafts: [],
             logo: '',
             toast: false,
             messageToast: {},
@@ -40,47 +48,118 @@ class Companies extends Component {
             showButtonDownload: false,
             elementCover: false,
             executionTime: '',
-            message: ''
+            message: '',
+            progress: 0
         }
+        this.getCompanies = this.getCompanies.bind(this);
+        this.getDraftDocument = this.getDraftDocument.bind(this);
+        this.checkCompanyOfDraftsDocuments = this.checkCompanyOfDraftsDocuments.bind(this);
         this.toggle = this.toggle.bind(this);
         this.loadingHandler = this.loadingHandler.bind(this);
         this.onValiderHandler = this.onValiderHandler.bind(this);
         this.onGenererExcelsMasters = this.onGenererExcelsMasters.bind(this);
         this.onDownloadExcelMasters = this.onDownloadExcelMasters.bind(this);
+        this.token = JSON.parse(localStorage.getItem('token'));
 
     }
 
     componentDidMount() {
-        const token = JSON.parse(localStorage.getItem('token'));
-        axios.get(`${config.nodeUrl}/api/company`, {
+        this.getCompanies();
+        this.loadingHandler();
+        this.getDraftDocument();
+    }
+
+    getDraftDocument() {
+        axios.get(`${config.nodeUrl}/api/document`, {
             headers: {
-                'Authorization': `Bearer ${token.token}`
+                'Authorization': `Bearer ${this.token.token}`
             }
         })
             .then((data) => {
                 return data.data
             })
-            .then((companies) => {
-                let collapsed = [];
-                for (let company of companies) {
-                    collapsed.push({ company: company.name, collapse: false });
+            .then(async (documents) => {
+                let drafts = [];
+                for (let doc of documents) {
+                    if (doc.status === 'draft' || doc.status === 'processing') {
+                        drafts.push(doc);
+                    }
                 }
                 this.setState({
-                    companies: companies,
-                    collapsed: collapsed,
-                })
+                    drafts
+                });
+                await this.checkCompanyOfDraftsDocuments();
             })
             .catch((err) => {
                 console.log(err)
             });
-        this.loadingHandler();
+    }
+
+    async checkCompanyOfDraftsDocuments() {
+        const drafts = this.state.drafts;
+        let infoDrafts = [];
+        for (let draft of drafts) {
+            try {
+                const result = await axios.get(`${config.nodeUrl}/api/company/${draft.company}`, {
+                    headers: {
+                        'Authorization': `Bearer ${this.token.token}`
+                    }
+                });
+                const company = result.data;
+                if (company.type === 'surco') {
+                    try {
+                        const result = await axios.get(`${config.nodeUrl}/api/company/companySurco/${company.name}`, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${this.token.token}`
+                            }
+                        });
+                        const companyParent = result.data;
+                        const info = { company: companyParent, surco: company, owner: 'surco' };
+                        infoDrafts.push(info);
+                    } catch (err) {
+                        this.setState({
+                            toast: true,
+                            messageToast: { header: 'ERROR', color: 'danger', message: err }
+                        })
+                    }
+                    continue;
+                }
+                if (company.surco) {
+                    const companySurco = company.companySurco;
+                    try {
+                        const result = await axios.get(`${config.nodeUrl}/api/company/name/${companySurco}`, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${this.token.token}`
+                            }
+                        });
+                        const info = { company: company, surco: result.data, owner: 'parent' };
+                        infoDrafts.push(info);
+                    } catch (err) {
+                        this.setState({
+                            toast: true,
+                            messageToast: { header: 'ERROR', color: 'danger', message: err }
+                        })
+                    }
+                } else {
+                    const info = { company: company, surco: null };
+                    infoDrafts.push(info);
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        this.setState({
+            infoDrafts
+        });
+
     }
 
     loadingHandler() {
-        const token = JSON.parse(localStorage.getItem('token'));
         axios.get(`${config.nodeUrl}/api/document`, {
             headers: {
-                'Authorization': `Bearer ${token.token}`
+                'Authorization': `Bearer ${this.token.token}`
             }
         })
             .then((data) => {
@@ -101,73 +180,115 @@ class Companies extends Component {
             .catch((err) => {
                 console.log(err)
             });
-
     }
 
-    launchTreatments(e) {
+    getCompanies() {
+        axios.get(`${config.nodeUrl}/api/company`, {
+            headers: {
+                'Authorization': `Bearer ${this.token.token}`
+            }
+        })
+            .then((data) => {
+                return data.data
+            })
+            .then((companies) => {
+                let collapsed = [];
+                for (let company of companies) {
+                    collapsed.push({ company: company.name, collapse: false });
+                }
+                this.setState({
+                    companies: companies,
+                    collapsed: collapsed,
+                })
+            })
+            .catch((err) => {
+                console.log(err)
+            });
+    }
+
+    getProgress(value, length) {
+        const progress = (value * 100) / length;
+        return progress;
+    }
+
+    async launchTreatments(e) {
         e.preventDefault();
-        const token = JSON.parse(localStorage.getItem('token'));
         this.setState({
             load: true,
             elementCover: true,
             executionTime: ''
         });
-        const options = {
-            userId: token.userId
-        }
-        axios.put(`${config.nodeUrl}/api/document`, options, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token.token}`
-            }
-        })
-            .then((res) => {
-                if (typeof res.data !== 'string') {
-                    this.setState({
-                        toast: true,
-                        messageToast: {
-                            header: 'SUCCESS',
-                            color: 'success',
-                            message: `Traitements terminés`
-                        }
-                    });
-                    this.setState({
-                        executionTime: res.data.executionTime
-                    });
-                } else {
-                    this.setState({
-                        toast: true,
-                        messageToast: {
-                            header: 'SUCCESS',
-                            color: 'success',
-                            message: res.data
-                        }
-                    });
-                    this.setState({
-                        message: res.data
-                    });
+        let executionTimes = [];
+        try {
+            const draftsLength = this.state.drafts.length;
+            for (let draft of this.state.drafts) {
+                const indexOfDraft = this.state.drafts.indexOf(draft);
+                const options = {
+                    userId: this.token.userId,
+                    document: draft._id
                 }
-                this.loadingHandler();
-            }).catch((err) => {
+                const res = await axios.put(`${config.nodeUrl}/api/document`, options, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${this.token.token}`
+                    }
+                });
+                executionTimes.push(res.data.executionTime);
+                const progress = this.getProgress(indexOfDraft + 1, draftsLength);
+                this.setState({
+                    progress
+                });
+            }
+            this.loadingHandler();
+            if (this.state.drafts.length > 0) {
                 this.setState({
                     toast: true,
                     messageToast: {
-                        header: 'ERROR',
-                        color: 'danger',
-                        message: (err && err.response && err.response.data && err.response.data.error) ?
-                            err.response.data.error
-                            : err.message
+                        header: 'SUCCESS',
+                        color: 'success',
+                        message: `Traitements terminés`
                     }
                 });
-                console.log(err);
-            }).finally(() => {
-                setTimeout(() => {
-                    this.setState({
-                        toast: false,
-                        messageToast: {}
-                    });
-                }, 6000);
+            } else {
+                this.setState({
+                    toast: true,
+                    messageToast: {
+                        header: 'SUCCESS',
+                        color: 'success',
+                        message: 'Tous les fichiers sont traités'
+                    }
+                });
+                this.setState({
+                    message: 'Tous les fichiers sont traités'
+                });
+            }
+            let executionTime = executionTimes.reduce((previous, current) => {
+                return (previous + current);
             });
+            this.setState({
+                executionTime: millisecondToTime(executionTime)
+            });
+        } catch (err) {
+            this.setState({
+                toast: true,
+                messageToast: {
+                    header: 'ERROR',
+                    color: 'danger',
+                    message: (err && err.response && err.response.data && err.response.data.error) ?
+                        err.response.data.error
+                        : err.message
+                }
+            });
+            console.log(err);
+        } finally {
+            setTimeout(() => {
+                this.setState({
+                    drafts: [],
+                    toast: false,
+                    messageToast: {}
+                });
+            }, 6000);
+        }
     }
 
     toggle(e, index) {
@@ -181,16 +302,19 @@ class Companies extends Component {
     }
 
     toggleDetails(index) {
-        const position = this.state.details.indexOf(index)
-        let newDetails = this.state.details.slice()
-        if (position !== -1) {
-            newDetails.splice(position, 1)
-        } else {
-            newDetails = [...this.state.details, index]
+        if (!this.state.load) {
+            const position = this.state.details.indexOf(index)
+            let newDetails = this.state.details.slice()
+            if (position !== -1) {
+                newDetails.splice(position, 1)
+            } else {
+                newDetails = [...this.state.details, index]
+            }
+            this.setState({
+                details: newDetails
+            });
+            this.getDraftDocument();
         }
-        this.setState({
-            details: newDetails
-        })
     }
 
     onValiderHandler() {
@@ -201,17 +325,16 @@ class Companies extends Component {
     }
 
     onGenererExcelsMasters() {
-        const token = JSON.parse(localStorage.getItem('token'));
         this.setState({
             loadGenerateExcelMaster: true
         });
         const options = {
-            userId: token.userId
+            userId: this.token.userId
         }
         axios.post(`${config.nodeUrl}/api/excelMaster`, options, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token.token}`
+                'Authorization': `Bearer ${this.token.token}`
             }
         })
             .then((res) => {
@@ -242,11 +365,10 @@ class Companies extends Component {
     }
 
     onDownloadExcelMasters() {
-        const token = JSON.parse(localStorage.getItem('token'));
         axios.get(`${config.nodeUrl}/api/excelMaster/zip/excels`, {
             headers: {
                 'Content-Type': 'application/zip',
-                'Authorization': `Bearer ${token.token}`
+                'Authorization': `Bearer ${this.token.token}`
             },
             responseType: 'blob'
         })
@@ -279,6 +401,19 @@ class Companies extends Component {
     }
 
     render() {
+        let companies = [];
+        let occurences = [];
+        for (let infoDraft of this.state.infoDrafts) {
+            if (!companies.includes(infoDraft.company)) {
+                companies.push(infoDraft.company);
+            }
+        }
+        for (let company of companies) {
+            const count = this.state.infoDrafts.filter((infoDraft, indew) => {
+                return infoDraft.company === company;
+            }).length;
+            occurences.push({ count, company });
+        }
         return (
             <CContainer fluid>
                 <div>
@@ -290,12 +425,25 @@ class Companies extends Component {
                                         <CCol key={`${company._id}_Column`} sm="3">
                                             <CCard key={`${company._id}_Card`} onDoubleClick={() => { this.toggleDetails(index) }} >
                                                 <CCardBody key={`${company._id}_CardBody`} className="sofraco-card-body" >
-                                                    <div className="sofraco-container-image">
+                                                    <div key={`${company._id}_CardBodyDiv`} className="sofraco-container-image">
                                                         <CImg className="sofraco-logo-company" key={`${company._id}_Img`} src={`data:image/png;base64,${company.logo}`} alt={`${company.name}`} fluid width={100} />
                                                     </div>
                                                 </CCardBody>
-                                                <CCardFooter key={`${company._id}_CardFooter`}>
-                                                    {company.globalName}
+                                                <CCardFooter className="d-flex justify-content-between" key={`${company._id}_CardFooter`}>
+                                                    <div key={`${company._id}_CardFooterdiv`} >{company.globalName}</div>
+                                                    {occurences.map((occ, index) => {
+                                                        if (occ.company._id === company._id) {
+                                                            if (!company.surco) {
+                                                                return (<CBadge key={`${company._id}_CardBodydraft${index}`} ><CImg className="sofraco-img-check" size="sm" src={check}></CImg></CBadge>)
+                                                            } else {
+                                                                if (occ.count === 1) {
+                                                                    return (<CBadge key={`${company._id}_badge${index}`} color="warning">1/2</CBadge>)
+                                                                } else {
+                                                                    return (<CBadge key={`${company._id}_CardBodydraft${index}`} ><CImg className="sofraco-img-check" size="sm" src={check}></CImg></CBadge>)
+                                                                }
+                                                            }
+                                                        }
+                                                    })}
                                                 </CCardFooter>
                                             </CCard>
                                             <Upload
@@ -330,29 +478,7 @@ class Companies extends Component {
                         <CButton className="sofraco-button" onClick={(e) => { this.launchTreatments(e) }} disabled={this.state.load}>Traiter les fichiers</CButton>
                     </div>
                 </div>
-                {(this.state.elementCover) && (
-                    <CElementCover className="sofraco-element-cover" opacity={0.8}>
-                        {(this.state.load) && (
-                            <div className="sofraco-element-cover-content">
-                                <h3>Traitement en cours</h3>
-                                <CSpinner color="warning" ></CSpinner>
-                            </div>
-                        )}
-                        {(this.state.executionTime !== '') && (
-                            <div className="sofraco-element-cover-content">
-                                <h3>Traité en : {this.state.executionTime}</h3>
-                                <CButton className="sofraco-button" onClick={this.onValiderHandler}>Valider</CButton>
-                            </div>
-                        )}
-                        {(this.state.message !== '') && (
-                            <div className="sofraco-element-cover-content">
-                                <h3>{this.state.message}</h3>
-                                <CButton className="sofraco-button" onClick={this.onValiderHandler}>Valider</CButton>
-                            </div>
-                        )}
-                    </CElementCover>
-                )}
-                <CButton className="sofraco-button" onClick={this.onGenererExcelsMasters}>
+                <CButton className="sofraco-button" onClick={this.onGenererExcelsMasters} disabled={this.state.load}>
                     {
                         (!this.state.loadGenerateExcelMaster) ? (
                             <span>Générer les Excels Masters</span>
@@ -388,6 +514,28 @@ class Companies extends Component {
                     </CToaster>
                 )
                 }
+                {(this.state.elementCover) && (
+                    <CCard className="sofraco-progress-bar">
+                        {(this.state.load) && (
+                            <CCardBody>
+                                <h4>Traitement en cours</h4>
+                                <CProgress animated striped showValue color="warning" value={this.state.progress} className="mb-1 bg-white" />
+                            </CCardBody>
+                        )}
+                        {(this.state.executionTime !== '') && (
+                            <CCardBody>
+                                <h4>Traité en : {this.state.executionTime}</h4>
+                                <CButton className="sofraco-button" onClick={this.onValiderHandler}>Valider</CButton>
+                            </CCardBody>
+                        )}
+                        {(this.state.message !== '') && (
+                            <CCardBody>
+                                <h4>{this.state.message}</h4>
+                                <CButton className="sofraco-button" onClick={this.onValiderHandler}>Valider</CButton>
+                            </CCardBody>
+                        )}
+                    </CCard>
+                )}
 
             </CContainer>
         );

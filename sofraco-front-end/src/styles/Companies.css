@@ -79,3 +79,18 @@
 .sofraco-element-cover-content {
     text-align: center;
 }
+
+.sofraco-img-check {
+    width: 15px;
+}
+
+.sofraco-progress-bar {
+    position: fixed;
+    bottom: 5px;
+    right: 5px;
+    width: 300px;
+}
+
+.sofraco-progress-bar .progress-bar {
+    background-color: #6F6F6E !important;
+}

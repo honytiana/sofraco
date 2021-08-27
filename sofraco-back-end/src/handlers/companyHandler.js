@@ -32,6 +32,10 @@ class CompanyHandler {
         return Company.findOne({ name: name });
     }
 
+    getCompanyByCompanySurco(companySurco) {
+        return Company.findOne({ companySurco : companySurco });
+    }
+
     getCompanies() {
         return Company.find();
     }
