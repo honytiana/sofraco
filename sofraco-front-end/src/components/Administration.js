@@ -158,7 +158,7 @@ class Administration extends Component {
                     items={this.state.courtiers}
                     fields={this.state.fields}
                     columnFilter
-                    tableFilter={{ label: 'Filtre', placeholder: 'Filtre' }}
+                    tableFilter={{ label: 'Recherche', placeholder: '...' }}
                     itemsPerPageSelect={{ label: 'Nombre de courtiers par page' }}
                     itemsPerPage={10}
                     hover

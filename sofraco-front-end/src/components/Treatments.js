@@ -35,11 +35,11 @@ class Treatments extends Component {
         this.onCheckHandler = this.onCheckHandler.bind(this);
         this.onCheckAllHandler = this.onCheckAllHandler.bind(this);
         this.onSendMailHandler = this.onSendMailHandler.bind(this);
+        this.token = JSON.parse(localStorage.getItem('token'));
 
     }
 
     componentDidMount() {
-        const token = JSON.parse(localStorage.getItem('token'));
         this.setState({
             fields: [
                 {
@@ -94,7 +94,7 @@ class Treatments extends Component {
         });
         axios.get(`${config.nodeUrl}/api/courtier`, {
             headers: {
-                'Authorization': `Bearer ${token.token}`
+                'Authorization': `Bearer ${this.token.token}`
             }
         })
             .then((data) => {
@@ -170,7 +170,6 @@ class Treatments extends Component {
     }
 
     onSendMailHandler() {
-        const token = JSON.parse(localStorage.getItem('token'));
         for (let courtier of this.state.checked) {
             if (courtier.checked === true) {
                 const options = {
@@ -182,7 +181,7 @@ class Treatments extends Component {
                 };
                 axios.post(`${config.nodeUrl}/api/mailer/`, options, {
                     headers: {
-                        'Authorization': `Bearer ${token.token}`
+                        'Authorization': `Bearer ${this.token.token}`
                     }
                 })
                     .then((data) => {
@@ -227,7 +226,7 @@ class Treatments extends Component {
                     items={this.state.courtiers}
                     fields={this.state.fields}
                     columnFilter
-                    tableFilter={{ label: 'Filtre', placeholder: 'Filtre' }}
+                    tableFilter={{ label: 'Recherche', placeholder: '...' }}
                     itemsPerPageSelect={{ label: 'Nombre de courtiers par page' }}
                     itemsPerPage={5}
                     hover
