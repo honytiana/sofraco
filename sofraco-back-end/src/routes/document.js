@@ -24,7 +24,10 @@ router.route('/status/:status').put(accessControl, documentController.setStatusD
 router.route('/:company').put(accessControl, documentController.updateDocument);
 router.route('/').get(accessControl, documentController.getDocuments);
 router.route('/:id').get(accessControl, documentController.getDocument);
-
+router.route('/date/:date').get(accessControl, documentController.getDocumentsByDate);
+router.route('/year/:year/month/:month').get(accessControl, documentController.getDocumentsByYearMonth);
+router.route('/company/:company/year/:year/month/:month').get(accessControl, documentController.getDocumentsCompanyByYearMonth);
+router.route('/company/:company').get(accessControl, documentController.getDocumentsCompany);
 
 
 module.exports = router;

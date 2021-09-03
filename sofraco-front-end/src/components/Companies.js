@@ -25,10 +25,10 @@ import axios from 'axios';
 import config from '../config.json';
 // import config from '../jsConfig';
 
-import Upload from './Upload';
 import '../styles/Companies.css';
 import check from '../assets/check.png';
 import { millisecondToTime } from '../utils/timeUtil';
+import CompanyFolder from './CompanyFolder';
 
 
 class Companies extends Component {
@@ -446,8 +446,8 @@ class Companies extends Component {
                                                     })}
                                                 </CCardFooter>
                                             </CCard>
-                                            <Upload
-                                                key={`${company._id}_Upload`}
+                                            <CompanyFolder
+                                                key={`${company._id}_CompanyFolder`}
                                                 company={company}
                                                 companyName={company.globalName}
                                                 showModal={this.state.details.includes(index)}

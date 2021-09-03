@@ -103,7 +103,6 @@ class Treatments extends Component {
             .then((data) => {
                 const checked = data.map(element => {
                     return {
-                        code: element.code,
                         email: element.email,
                         firstName: element.firstName,
                         lastName: element.lastName,
@@ -146,7 +145,7 @@ class Treatments extends Component {
 
     onCheckHandler(item, index) {
         this.state.checked.forEach((element, index) => {
-            if (element.code === item.code) {
+            if (element.firstName === item.firstName && element.lastName === item.lastName) {
                 let newChecked = this.state.checked.slice();
                 newChecked[index].checked = !this.state.checked[index].checked;
                 this.setState({
@@ -273,7 +272,7 @@ class Treatments extends Component {
                             (item, index) => {
                                 return (
                                     <td className="text-center" >
-                                        <CInputCheckbox className="sofraco-checkbox" onChange={() => {
+                                        <CInputCheckbox key={this.state.checked} className="sofraco-checkbox" onChange={() => {
                                             this.onCheckHandler(item, index)
                                         }} />
                                     </td>

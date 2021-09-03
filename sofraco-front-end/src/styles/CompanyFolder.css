@@ -1,0 +1,5 @@
+.sofraco-modal .modal-content {
+    min-height: 525px;
+    max-height: 600px;
+    overflow: auto;
+}

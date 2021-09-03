@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@coreui/coreui": "^3.4.0",
+    "@coreui/icons": "^2.0.1",
     "@coreui/react": "^3.4.6",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",

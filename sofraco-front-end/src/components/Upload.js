@@ -8,10 +8,6 @@ import {
     CToaster,
     CImg,
     CTooltip,
-    CModal,
-    CModalHeader,
-    CModalBody,
-    CModalFooter,
     CButton
 } from '@coreui/react';
 
@@ -59,17 +55,17 @@ class Upload extends Component {
                     'Authorization': `Bearer ${this.token.token}`
                 }
             })
-            .then((res) => {
-                this.setState({
-                    companySurco: res.data
-                });
-            })
-            .catch((err) => {
-                this.setState({
-                    toast: true,
-                    messageToast: { header: 'ERROR', color: 'danger', message: err }
+                .then((res) => {
+                    this.setState({
+                        companySurco: res.data
+                    });
                 })
-            })
+                .catch((err) => {
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'ERROR', color: 'danger', message: err }
+                    })
+                })
         }
     }
 
@@ -93,7 +89,7 @@ class Upload extends Component {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${this.token.token}`
-            } 
+            }
         }).then((res) => {
             this.setState({
                 toast: true,
@@ -226,14 +222,45 @@ class Upload extends Component {
     render() {
         return (
             <div>
-                <CModal
-                    show={this.props.showModal}
-                    onClose={this.props.onCloseModal}
-                    centered={true}
-                    className="sofraco-modal"
-                >
-                    <CModalHeader closeButton>{this.props.companyName}</CModalHeader>
-                    <CModalBody>
+                <Dropzone onDrop={(files) => {
+                    this.setState({
+                        files: files[0]
+                    })
+                }}>
+                    {({ getRootProps, getInputProps }) => (
+                        <div
+                            {...getRootProps()}
+                        >
+                            <input
+                                {...getInputProps()}
+                                multiple={false}
+                                onChange={(event) => { this.onChangeHandler(event, this.props.companyName) }}
+                            />
+                            {
+                                (this.state.files !== null) ? (
+                                    <CAlert >
+                                        <div>
+                                            <CImg src={openedFolder} fluid width={100} />
+                                            <p>{this.props.company.name}</p>
+                                        </div>
+                                    </CAlert>
+                                ) : (
+                                    <CAlert>
+                                        <div>
+                                            <CTooltip content="Glissez et déposez un fichier ou cliquez ici"
+                                                placement="top-end"
+                                            >
+                                                <CImg src={closedFolder} fluid width={100} />
+                                            </CTooltip>
+                                            <p>{this.props.company.name}</p>
+                                        </div>
+                                    </CAlert>)
+                            }
+                        </div>
+                    )}
+                </Dropzone>
+                {
+                    (this.props.company.surco && this.state.companySurco !== null) && (
                         <Dropzone onDrop={(files) => {
                             this.setState({
                                 files: files[0]
@@ -246,14 +273,14 @@ class Upload extends Component {
                                     <input
                                         {...getInputProps()}
                                         multiple={false}
-                                        onChange={(event) => { this.onChangeHandler(event, this.props.companyName) }}
+                                        onChange={(event) => { this.onChangeHandler(event, this.state.companySurco.name) }}
                                     />
                                     {
-                                        (this.state.files !== null) ? (
+                                        (this.state.filesSurco !== null) ? (
                                             <CAlert >
                                                 <div>
                                                     <CImg src={openedFolder} fluid width={100} />
-                                                    <p>{this.props.company.name}</p>
+                                                    <p>{this.state.companySurco.name}</p>
                                                 </div>
                                             </CAlert>
                                         ) : (
@@ -264,72 +291,20 @@ class Upload extends Component {
                                                     >
                                                         <CImg src={closedFolder} fluid width={100} />
                                                     </CTooltip>
-                                                    <p>{this.props.company.name}</p>
+                                                    <p>{this.state.companySurco.name}</p>
                                                 </div>
                                             </CAlert>)
                                     }
                                 </div>
                             )}
-                        </Dropzone>
-                        {
-                            (this.props.company.surco && this.state.companySurco !== null) && (
-                                <Dropzone onDrop={(files) => {
-                                    this.setState({
-                                        files: files[0]
-                                    })
-                                }}>
-                                    {({ getRootProps, getInputProps }) => (
-                                        <div
-                                            {...getRootProps()}
-                                        >
-                                            <input
-                                                {...getInputProps()}
-                                                multiple={false}
-                                                onChange={(event) => { this.onChangeHandler(event, this.state.companySurco.name) }}
-                                            />
-                                            {
-                                                (this.state.filesSurco !== null) ? (
-                                                    <CAlert >
-                                                        <div>
-                                                            <CImg src={openedFolder} fluid width={100} />
-                                                            <p>{this.state.companySurco.name}</p>
-                                                        </div>
-                                                    </CAlert>
-                                                ) : (
-                                                    <CAlert>
-                                                        <div>
-                                                            <CTooltip content="Glissez et déposez un fichier ou cliquez ici"
-                                                                placement="top-end"
-                                                            >
-                                                                <CImg src={closedFolder} fluid width={100} />
-                                                            </CTooltip>
-                                                            <p>{this.state.companySurco.name}</p>
-                                                        </div>
-                                                    </CAlert>)
-                                            }
-                                        </div>
-                                    )}
 
-                                </Dropzone>
-                            )
-                        }
-                    </CModalBody>
-                    <CModalFooter>
-                        {/* {
-                            (this.props.executionTime) && (
-                                <p>Traité en : {this.props.executionTime}</p>
-                            )
-                        } */}
-                        <CButton
-                            onClick={this.onSubmitHandler}
-                            className="sofraco-button"
-                        >Envoyer</CButton>{' '}
-                        <CButton
-                            color="secondary"
-                            onClick={this.props.onCloseModal}
-                        >Annuler</CButton>
-                    </CModalFooter>
-                </CModal>
+                        </Dropzone>
+                    )
+                }
+                <CButton
+                    onClick={this.onSubmitHandler}
+                    className="sofraco-button"
+                >Envoyer</CButton>
                 {
                     (this.state.toast === true &&
                         this.state.messageToast &&

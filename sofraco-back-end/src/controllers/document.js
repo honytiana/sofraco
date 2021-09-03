@@ -24,14 +24,16 @@ exports.createDocument = (req, res) => {  // create document
     const surco = JSON.parse(req.body.surco);
     if (company.surco && surco && companySurco !== null && req.files.length > 1) {  // company and surco
         let document = {};
-        document.name = req.files[0].path;
+        const fileName = fileService.getFileName(req.files[0].path);
+        document.name = fileName;
         document.company = company._id;
         document.companyName = company.name;
         document.path_original_file = req.files[0].path;
         document.type = req.body.extension;
         const doc = documentHandler.createDocument(document);
         let documentSurco = {};
-        documentSurco.name = req.files[1].path;
+        const fileNameSurco = fileService.getFileName(req.files[1].path);
+        documentSurco.name = fileNameSurco;
         documentSurco.company = companySurco._id;
         documentSurco.companyName = companySurco.name;
         documentSurco.path_original_file = req.files[1].path;
@@ -39,7 +41,8 @@ exports.createDocument = (req, res) => {  // create document
         const docSurco = documentHandler.createDocument(documentSurco);
     } else if (company.surco && surco && companySurco !== null && req.files.length === 1) { // surco
         let document = {};
-        document.name = req.files[0].path;
+        const fileName = fileService.getFileName(req.files[0].path);
+        document.name = fileName;
         document.company = companySurco._id;
         document.companyName = companySurco.name;
         document.path_original_file = req.files[0].path;
@@ -47,7 +50,8 @@ exports.createDocument = (req, res) => {  // create document
         const doc = documentHandler.createDocument(document);
     } else if ((company.surco && !surco) || (!company.surco && !surco)) {     // company
         let document = {};
-        document.name = req.files[0].path;
+        const fileName = fileService.getFileName(req.files[0].path);
+        document.name = fileName;
         document.company = company._id;
         document.companyName = company.name;
         document.path_original_file = req.files[0].path;
@@ -164,12 +168,66 @@ exports.updateDocument = async (req, res) => {
 
 exports.getDocument = async (req, res) => {
     console.log('get document');
-    const document = await documentHandler.getDocument(req.params.id);
-    res.status(200).json(document);
+    try {
+        const document = await documentHandler.getDocument(req.params.id);
+        res.status(200).json(document);
+    } catch (err) {
+        res.status(400).json({ err });
+    }
 }
 
 exports.getDocuments = async (req, res) => {
     console.log('get documents');
-    const documents = await documentHandler.getDocuments();
-    res.status(200).json(documents);
+    try {
+        const documents = await documentHandler.getDocuments();
+        res.status(200).json(documents);
+    } catch (err) {
+        res.status(400).json({ err });
+    }
+}
+
+exports.getDocumentsByDate = async (req, res) => {
+    console.log('get documents');
+    try {
+        const documents = await documentHandler.getDocuments();
+        res.status(200).json(documents);
+    } catch (err) {
+        res.status(400).json({ err });
+    }
+}
+
+exports.getDocumentsByYearMonth = async (req, res) => {
+    console.log('get documents by year and month');
+    try {
+        const year = req.params.year;
+        const month = req.params.month;
+        const documents = await documentHandler.getDocumentsByYearMonth(year, month);
+        res.status(200).json(documents);
+    } catch (err) {
+        res.status(400).json({ err });
+    }
+}
+
+exports.getDocumentsCompanyByYearMonth = async (req, res) => {
+    console.log('get documents of company by year and month');
+    try {
+        const company = req.params.company;
+        const year = req.params.year;
+        const month = req.params.month;
+        const documents = await documentHandler.getDocumentsByYearMonth(company, year, month);
+        res.status(200).json(documents);
+    } catch (err) {
+        res.status(400).json({ err });
+    }
+}
+
+exports.getDocumentsCompany = async (req, res) => {
+    console.log('get documents of company');
+    try {
+        const company = req.params.company;
+        const documents = await documentHandler.getDocumentsCompany(company);
+        res.status(200).json(documents);
+    } catch (err) {
+        res.status(400).json({ err });
+    }
 }

@@ -27,6 +27,42 @@ class DocumentHandler {
         return Document.find();
     }
 
+    getDocumentsByYearMonth(year, month) {
+        const myear = parseInt(year);
+        const mmonth = parseInt(month);
+        return Document.find({
+            upload_date: {
+                $gte: new Date(myear, mmonth - 1, 1),
+                $lt: new Date(myear, mmonth, 1)
+            }
+        });
+    }
+
+    getDocumentsByYearMonth(company, year, month) {
+        const myear = parseInt(year);
+        const mmonth = parseInt(month);
+        return Document.find({
+            $and: [
+                {
+                    upload_date: {
+                        $gte: new Date(myear, mmonth - 1, 1),
+                        $lt: new Date(myear, mmonth, 1)
+                    }
+                },
+                {
+                    company: company
+                }
+            ]
+        }
+        );
+    }
+
+    getDocumentsCompany(company) {
+        return Document.find({
+            company: company
+        });
+    }
+
     updateDocument(id, data) {
         return Document.findByIdAndUpdate(id, data);
     }
