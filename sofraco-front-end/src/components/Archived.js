@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import '@coreui/coreui/dist/css/coreui.css';
 import {
-    CAlert,
     CToast,
     CToastHeader,
     CToastBody,
@@ -10,7 +9,6 @@ import {
     CCard,
     CCollapse,
     CCardBody,
-    CCardFooter,
     CButton,
     CCardHeader,
     CListGroup,
@@ -20,12 +18,9 @@ import {
 import CIcon from '@coreui/icons-react';
 import { freeSet } from '@coreui/icons';
 
-import axios from 'axios';
-
 import '../styles/Archived.css';
 import config from '../config.json';
 import closedFolder from '../assets/closed_folder.png';
-import openedFolder from '../assets/opened_folder.png';
 
 class Archived extends Component {
     constructor(props) {

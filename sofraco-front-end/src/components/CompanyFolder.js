@@ -5,8 +5,6 @@ import {
     CToastHeader,
     CToastBody,
     CToaster,
-    CImg,
-    CTooltip,
     CModal,
     CModalHeader,
     CModalBody,

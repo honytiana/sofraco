@@ -162,7 +162,7 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
             }
             for (let d of datas.ocr) {
                 for (let ocr of ocrPerCourtier.infos) {
-                    if(d === ocr) {
+                    if (d === ocr) {
                         ocrPerCourtier.infos.splice(ocrPerCourtier.infos.indexOf(ocr), 1);
                     }
                 }
@@ -248,14 +248,14 @@ const groupExcelsByCourtier = (excelMasters) => {
     let courtiers = [];
     let excelMastersPerCourtier = []
     for (let excel of excelMasters) {
-        if (!courtiers.includes(excel.cabinet)) {
-            courtiers.push(excel.cabinet);
+        if (!courtiers.includes({ cabinet: excel.cabinet, courtier: excel.courtier })) {
+            courtiers.push({ cabinet: excel.cabinet, courtier: excel.courtier });
         }
     };
     for (let courtier of courtiers) {
         let eM = { courtier, excelMasters: [] };
         for (let excel of excelMasters) {
-            if (excel.cabinet === courtier) {
+            if (excel.cabinet === courtier.cabinet) {
                 eM.excelMasters.push(excel);
             }
         };
@@ -267,15 +267,18 @@ const groupExcelsByCourtier = (excelMasters) => {
 const generateZipFilesEM = async (excelMastersPerCourtier) => {
     const excelMastersZips = [];
     for (let em of excelMastersPerCourtier) {
-        const zipPath = await generateZip(em.courtier.replace(/[/]/g, '_'), em.excelMasters);
-        const excelMastersZip = {
-            cabinet: em.courtier,
-            create_date: new Date(),
-            path: zipPath,
-            type: 'zip',
-            is_enabled: true
-        };
-        excelMastersZips.push(excelMastersZip);
+        if(em.excelMasters.length > 0) {
+            const zipPath = await generateZip(em.courtier.cabinet.replace(/[/]/g, '_'), em.excelMasters);
+            const excelMastersZip = {
+                courtier: em.courtier.courtier,
+                cabinet: em.courtier.cabinet,
+                create_date: new Date(),
+                path: zipPath,
+                type: 'zip',
+                is_enabled: true
+            };
+            excelMastersZips.push(excelMastersZip);
+        }
     }
     return excelMastersZips;
 };

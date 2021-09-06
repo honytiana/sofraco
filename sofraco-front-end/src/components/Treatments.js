@@ -10,7 +10,8 @@ import {
     CToaster,
     CToast,
     CToastHeader,
-    CToastBody
+    CToastBody,
+    CSelect
 } from '@coreui/react';
 import axios from 'axios';
 
@@ -28,13 +29,17 @@ class Treatments extends Component {
             courtiers: [],
             fields: [],
             toast: false,
-            messageToast: []
+            messageToast: [],
+            month: null,
+            year: null
         }
         this.getBadge = this.getBadge.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
         this.onCheckHandler = this.onCheckHandler.bind(this);
         this.onCheckAllHandler = this.onCheckAllHandler.bind(this);
         this.onSendMailHandler = this.onSendMailHandler.bind(this);
+        this.onChangeSelectFilterYearHandler = this.onChangeSelectFilterYearHandler.bind(this);
+        this.onChangeSelectFilterMonthHandler = this.onChangeSelectFilterMonthHandler.bind(this);
         this.token = JSON.parse(localStorage.getItem('token'));
 
     }
@@ -103,6 +108,7 @@ class Treatments extends Component {
             .then((data) => {
                 const checked = data.map(element => {
                     return {
+                        courtier: element._id,
                         email: element.email,
                         firstName: element.firstName,
                         lastName: element.lastName,
@@ -169,58 +175,133 @@ class Treatments extends Component {
     }
 
     onSendMailHandler() {
-        for (let courtier of this.state.checked) {
-            if (courtier.checked === true) {
-                const options = {
-                    user: {
+        if (this.state.month === null || this.state.year === null) {
+            let mt = this.state.messageToast.slice();
+            mt.push({
+                header: 'ERROR',
+                color: 'danger',
+                message: 'Veuillez selectionner le mois et l\'année'
+            });
+            this.setState({
+                toast: true,
+                messageToast: mt
+            });
+        } else {
+            for (let courtier of this.state.checked) {
+                if (courtier.checked) {
+                    const options = {
+                        courtier: courtier.courtier,
                         email: courtier.email,
                         firstName: courtier.firstName,
-                        lastName: courtier.lastName
-                    }
-                };
-                axios.post(`${config.nodeUrl}/api/mailer/`, options, {
-                    headers: {
-                        'Authorization': `Bearer ${this.token.token}`
-                    }
-                })
-                    .then((data) => {
-                        let mt = this.state.messageToast.slice();
-                        mt.push({
-                            header: 'SUCCESS',
-                            color: 'success',
-                            message: `Le mail à été envoyé aux courtiers ${data.data.accepted[0]}`
-                        });
-                        this.setState({
-                            toast: true,
-                            messageToast: mt
-                        });
-                    }).catch((err) => {
-                        let mt = this.state.messageToast.slice();
-                        mt.push({ 
-                            header: 'ERROR',
-                            color: 'danger',
-                            message: err });
-                        this.setState({
-                            toast: true,
-                            messageToast: mt
-                        })
-                    }).finally(() => {
-                        setTimeout(() => {
-                            this.setState({
-                                toast: false,
-                                messageToast: []
-                            });
-                        }, 10000);
-                    });
-            }
+                        lastName: courtier.lastName,
+                        month: this.state.month,
+                        year: this.state.year
+                    };
 
+                    axios.post(`${config.nodeUrl}/api/mailer/`, options, {
+                        headers: {
+                            'Authorization': `Bearer ${this.token.token}`
+                        }
+                    })
+                        .then((data) => {
+                            let mt = this.state.messageToast.slice();
+                            mt.push({
+                                header: 'SUCCESS',
+                                color: 'success',
+                                message: `Le mail à été envoyé aux courtiers ${data.data.accepted[0]}`
+                            });
+                            this.setState({
+                                toast: true,
+                                messageToast: mt
+                            });
+                        }).catch((err) => {
+                            let mt = this.state.messageToast.slice();
+                            mt.push({
+                                header: 'ERROR',
+                                color: 'danger',
+                                message: err
+                            });
+                            this.setState({
+                                toast: true,
+                                messageToast: mt
+                            })
+                        }).finally(() => {
+                            setTimeout(() => {
+                                this.setState({
+                                    toast: false,
+                                    messageToast: []
+                                });
+                            }, 10000);
+                        });
+                }
+
+            }
         }
     }
 
+    onChangeSelectFilterMonthHandler(e) {
+        console.log(e.target.value);
+        this.setState({
+            month: e.target.value
+        });
+    }
+
+    onChangeSelectFilterYearHandler(e) {
+        console.log(e.target.value);
+        this.setState({
+            year: e.target.value
+        });
+    }
+
     render() {
+        const months = [
+            { month: 'Janvier', index: 1 },
+            { month: 'Février', index: 2 },
+            { month: 'Mars', index: 3 },
+            { month: 'Avril', index: 4 },
+            { month: 'Mai', index: 5 },
+            { month: 'Juin', index: 6 },
+            { month: 'Juillet', index: 7 },
+            { month: 'Août', index: 8 },
+            { month: 'Septembre', index: 9 },
+            { month: 'Octobre', index: 10 },
+            { month: 'Novembre', index: 11 },
+            { month: 'Décembre', index: 12 }
+        ];
+        let years = [];
+        const currentYear = new Date().getFullYear();
+        for (let i = 2020; i <= currentYear; i++) {
+            years.push(i);
+        }
 
         return (
             <div>
+                <div className="sofraco-content-filtre">
+                    <CSelect
+                        label="Année"
+                        className="sofraco-select-filtre"
+                        onChange={(e) => this.onChangeSelectFilterYearHandler(e)}
+                    >
+                        <option>Selectionnez une année</option>
+                        {years.map((year, index) => {
+                            return (
+                                <option key={`yearoption${index}`} value={year}>{year}</option>
+                            )
+                        })}
+                    </CSelect>
+                    <CSelect
+                        label="Mois"
+                        className="sofraco-select-filtre"
+                        onChange={(e) => this.onChangeSelectFilterMonthHandler(e)}
+                    >
+                        <option>Selectionnez une année</option>
+                        {months.map((month, index) => {
+                            return (
+                                <option key={`monthoption${index}`} value={month.index}>{month.month}</option>
+                            )
+                        })}
+                    </CSelect>
+                </div>
                 <CDataTable
                     items={this.state.courtiers}
                     fields={this.state.fields}
@@ -272,7 +353,7 @@ class Treatments extends Component {
                             (item, index) => {
                                 return (
                                     <td className="text-center" >
-                                        <CInputCheckbox key={this.state.checked} className="sofraco-checkbox" onChange={() => {
+                                        <CInputCheckbox key="" className="sofraco-checkbox" onChange={() => {
                                             this.onCheckHandler(item, index)
                                         }} />
                                     </td>

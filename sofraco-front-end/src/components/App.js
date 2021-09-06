@@ -42,6 +42,18 @@ class App extends Component {
     window.addEventListener('close', (e) => {
       localStorage.clear();
     });
+
+    window.onclose = ((e) => {
+      localStorage.clear();
+    });
+
+    // window.onunload = ((e) => {
+    //   localStorage.clear();
+    // });
+
+    // window.onbeforeunload = ((e) => {
+    //   localStorage.clear();
+    // });
   }
 
   render() {
