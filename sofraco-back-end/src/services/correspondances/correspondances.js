@@ -82,7 +82,8 @@ exports.readExcelTableauCorrespondance = async (authorization, role) => {
                                                     idCompany,
                                                     company,
                                                     particular,
-                                                    code
+                                                    code,
+                                                    is_enabled: true
                                                 });
                                             }
                                         }
@@ -92,7 +93,8 @@ exports.readExcelTableauCorrespondance = async (authorization, role) => {
                             correspondance.push({
                                 courtier,
                                 role_courtier,
-                                companies
+                                companies,
+                                is_enabled: true
                             });
                         }
                     }

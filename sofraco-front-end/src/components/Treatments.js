@@ -48,6 +48,14 @@ class Treatments extends Component {
         this.setState({
             fields: [
                 {
+                    key: 'check',
+                    label: <CInputCheckbox onChange={() => this.onCheckAllHandler()} />,
+                    _style: { width: '10%' },
+                    _classes: ['text-center'],
+                    sorter: false,
+                    filter: false
+                },
+                {
                     key: 'cabinet',
                     label: 'Cabinet',
                     _style: { width: '10%' },
@@ -76,14 +84,6 @@ class Treatments extends Component {
                     label: 'Status',
                     _style: { width: '10%' },
                     _classes: ['text-center']
-                },
-                {
-                    key: 'check',
-                    label: <CInputCheckbox onChange={() => this.onCheckAllHandler()} />,
-                    _style: { width: '10%' },
-                    _classes: ['text-center'],
-                    sorter: false,
-                    filter: false
                 },
                 {
                     key: 'show_details',
@@ -149,7 +149,9 @@ class Treatments extends Component {
         })
     }
 
-    onCheckHandler(item, index) {
+    onCheckHandler(e, item, index) {
+        e.preventDefault();
+        console.log(e.target);
         this.state.checked.forEach((element, index) => {
             if (element.firstName === item.firstName && element.lastName === item.lastName) {
                 let newChecked = this.state.checked.slice();
@@ -294,7 +296,7 @@ class Treatments extends Component {
                         className="sofraco-select-filtre"
                         onChange={(e) => this.onChangeSelectFilterMonthHandler(e)}
                     >
-                        <option>Selectionnez une année</option>
+                        <option>Selectionnez le mois</option>
                         {months.map((month, index) => {
                             return (
                                 <option key={`monthoption${index}`} value={month.index}>{month.month}</option>
@@ -308,11 +310,21 @@ class Treatments extends Component {
                     columnFilter
                     tableFilter={{ label: 'Recherche', placeholder: '...' }}
                     itemsPerPageSelect={{ label: 'Nombre de courtiers par page' }}
-                    itemsPerPage={5}
+                    itemsPerPage={10}
                     hover
                     sorter
                     pagination={{ className: 'sofraco-pagination' }}
                     scopedSlots={{
+                        'check':
+                            (item, index) => {
+                                return (
+                                    <td className="text-center" >
+                                        <CInputCheckbox id={`courtier${index}`} key="" className="sofraco-checkbox" onChange={(e) => {
+                                            this.onCheckHandler(e, item, index)
+                                        }} />
+                                    </td>
+                                )
+                            },
                         'status':
                             (item) => (
                                 <td className="text-center" >
@@ -347,16 +359,6 @@ class Treatments extends Component {
                                             </h4>
                                         </CCardBody>
                                     </CCollapse>
-                                )
-                            },
-                        'check':
-                            (item, index) => {
-                                return (
-                                    <td className="text-center" >
-                                        <CInputCheckbox key="" className="sofraco-checkbox" onChange={() => {
-                                            this.onCheckHandler(item, index)
-                                        }} />
-                                    </td>
                                 )
                             }
                     }

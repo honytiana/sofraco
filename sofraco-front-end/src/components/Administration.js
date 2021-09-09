@@ -25,6 +25,7 @@ import '../styles/Administration.css';
 import config from '../config.json';
 import Courtier from './Courtier';
 import Mandataire from './Mandataire';
+import Correspondance from './Correspondance';
 
 class Administration extends Component {
 
@@ -214,6 +215,11 @@ class Administration extends Component {
                                                             Mandataires
                                                         </CNavLink>
                                                     </CNavItem>
+                                                    <CNavItem>
+                                                        <CNavLink data-tab="code">
+                                                            Code courtier
+                                                        </CNavLink>
+                                                    </CNavItem>
                                                 </CNav>
                                                 <CTabContent>
                                                     <CTabPane data-tab="courtier">
@@ -221,6 +227,9 @@ class Administration extends Component {
                                                     </CTabPane>
                                                     <CTabPane data-tab="mandataires">
                                                         <Mandataire courtier={item} key={this.state.num} sIndex={index} />
+                                                    </CTabPane>
+                                                    <CTabPane data-tab="code">
+                                                        <Correspondance courtier={item} key={this.state.num} sIndex={index} />
                                                     </CTabPane>
                                                 </CTabContent>
                                             </CTabs>

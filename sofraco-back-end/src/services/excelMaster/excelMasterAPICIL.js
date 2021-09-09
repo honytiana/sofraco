@@ -204,7 +204,7 @@ exports.createWorkSheetAPICIL = (workSheet, dataCourtierOCR) => {
     } else {
         workSheet.getRow(rowNumber).getCell('I').value = 0;
     }
-    workSheet.getRow(rowNumber).getCell('I').numFmt = '####,##0.00"€";\-####,##0.00"€"';
+    workSheet.getRow(rowNumber).getCell('I').numFmt = '#,##0.00"€";\-#,##0.00"€"';
     const totalCollectiveRowNumber = rowNumber;
     rowNumber++;
     rowNumber++;
@@ -225,7 +225,7 @@ exports.createWorkSheetAPICIL = (workSheet, dataCourtierOCR) => {
     } else {
         workSheet.getRow(rowNumber).getCell('I').value = 0;
     }
-    workSheet.getRow(rowNumber).getCell('I').numFmt = '####,##0.00"€";\-####,##0.00"€"';
+    workSheet.getRow(rowNumber).getCell('I').numFmt = '#,##0.00"€";\-#,##0.00"€"';
     const totalIndividualRowNumber = rowNumber;
     rowNumber++;
     rowNumber++;
@@ -239,7 +239,7 @@ exports.createWorkSheetAPICIL = (workSheet, dataCourtierOCR) => {
         formula: `I${totalRepriseRowNumber}+I${totalCollectiveRowNumber}+I${totalIndividualRowNumber}`,
         result: result
     };
-    workSheet.getRow(rowNumber).getCell('I').numFmt = '####,##0.00"€";\-####,##0.00"€"';
+    workSheet.getRow(rowNumber).getCell('I').numFmt = '#,##0.00"€";\-#,##0.00"€"';
 
 }
 
@@ -252,10 +252,10 @@ const createPaveAPICIL = (workSheet, rowNumber, dataTri) => {
         workSheet.getRow(rowNumber).getCell('E').value = data.nombre;
         workSheet.getRow(rowNumber).getCell('F').value = data.exer;
         workSheet.getRow(rowNumber).getCell('G').value = parseFloat(data.mtCotisation);
-        workSheet.getRow(rowNumber).getCell('G').numFmt = '####,##0.00"€";\-####,##0.00"€"';
+        workSheet.getRow(rowNumber).getCell('G').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         workSheet.getRow(rowNumber).getCell('H').value = data.taux;
         workSheet.getRow(rowNumber).getCell('I').value = parseFloat(data.mtEcheance);
-        workSheet.getRow(rowNumber).getCell('I').numFmt = '####,##0.00"€";\-####,##0.00"€"';
+        workSheet.getRow(rowNumber).getCell('I').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         workSheet.getRow(rowNumber).getCell('J').value = (data.debContr) ? new Date(data.debContr) : '';
         workSheet.getRow(rowNumber).getCell('J').numFmt = 'dd/mm/yyyy';
         workSheet.getRow(rowNumber).getCell('K').value = (data.finContr) ? new Date(data.finContr) : '';

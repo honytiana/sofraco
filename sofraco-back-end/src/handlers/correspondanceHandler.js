@@ -27,12 +27,52 @@ class CorrespondanceHandler {
         return Correspondance.find();
     }
 
+    addCodeCourtier(courtier, idCompany, company, particular, code) {
+        return Correspondance.findOneAndUpdate(
+            {
+                courtier: courtier
+            },
+            {
+                $push: {
+                    companies: {
+                        idCompany: idCompany,
+                        company: company,
+                        particular: particular,
+                        code: code,
+                        is_enabled: true
+                    }
+                }
+            }
+        )
+    }
+
+    editCodeCourtier(courtier, company, code) {
+        return Correspondance.findOneAndUpdate(
+            {
+                courtier: courtier,
+                'companies.company': company
+            },
+            { $set: { 'companies.$.code': code } }
+        )
+    }
+
     updateCorrespondance(id, data) {
         return Correspondance.findByIdAndUpdate(id, data);
     }
 
     deleteCorrespondance(id) {
         return Correspondance.findByIdAndUpdate(id, { is_enabled: false });
+    }
+
+    deleteCodeCourtier(courtier, code) {
+        return Correspondance.findOneAndUpdate(
+            {
+                courtier: courtier,
+                'companies.code': code
+            },
+            { $set: { 'companies.$.is_enabled': false } }
+        );
+
     }
 
     deleteAllCorrespondances() {
