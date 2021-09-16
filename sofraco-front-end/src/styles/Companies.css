@@ -94,3 +94,11 @@
 .sofraco-progress-bar .progress-bar {
     background-color: #6F6F6E !important;
 }
+
+.sofraco-spinner {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

@@ -6,6 +6,7 @@ const fileService = require('../services/document/files');
 const time = require('../services/time/time');
 const documentHandler = require('../handlers/documentHandler');
 const documentAPICIL = require('../services/document/documentAPICIL');
+const documentAPIVIA = require('../services/document/documentAPIVIA');
 const documentAPREP = require('../services/document/documentAPREP');
 const documentAVIVA = require('../services/document/documentAVIVA');
 const documentCARDIF = require('../services/document/documentCARDIF');
@@ -16,6 +17,7 @@ const documentHODEVA = require('../services/document/documentHODEVA');
 const documentLOURMEL = require('../services/document/documentLOURMEL');
 const documentMETLIFE = require('../services/document/documentMETLIFE');
 const documentSWISSLIFE = require('../services/document/documentSWISSLIFE');
+const documentUAFLIFE = require('../services/document/documentUAFLIFE');
 
 exports.createDocument = (req, res) => {  // create document
     console.log('Create document');
@@ -117,6 +119,9 @@ exports.updateDocument = async (req, res) => {
         case 'APICIL':
             ocr = await documentAPICIL.readExcelAPICIL(req.body.filePath);
             break;
+        case 'APIVIA':
+            ocr = await documentAPIVIA.readPdfAPIVIA(req.body.filePath);
+            break;
         case 'APREP':
             ocr = await documentAPREP.readPdfAPREP(req.body.filePath);
             break;
@@ -155,6 +160,9 @@ exports.updateDocument = async (req, res) => {
             break;
         case 'SWISSLIFE SURCO':
             ocr = await documentSWISSLIFE.readExcelSWISSLIFESURCO(req.body.filePath);
+            break;
+        case 'UAF LIFE PATRIMOINE':
+            ocr = await documentUAFLIFE.readExcelUAFLIFE(req.body.filePath);
             break;
         default:
             console.log('Pas de compagnie correspondante');

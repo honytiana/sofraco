@@ -17,6 +17,7 @@ const excelMasterHODEVA = require('./excelMasterHODEVA');
 const excelMasterLOURMEL = require('./excelMasterLOURMEL');
 const excelMasterMETLIFE = require('./excelMasterMETLIFE');
 const excelMasterSWISSLIFE = require('./excelMasterSWISSLIFE');
+const excelMasterUAFLIFE = require('./excelMasterUAFLIFE');
 const excelMasterRecap = require('./excelMasterRecap');
 
 
@@ -89,6 +90,9 @@ const getOCRInfos = async (authorization) => {
                 break;
             case 'SWISSLIFE SURCO':
                 infos.push(excelMasterSWISSLIFE.getOCRSWISSLIFESURCO(ocr));
+                break;
+            case 'UAF LIFE PATRIMOINE':
+                infos.push(excelMasterUAFLIFE.getOCRUAFLIFE(ocr));
                 break;
             default:
                 console.log('Pas de compagnie correspondante');
@@ -215,6 +219,9 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
                         case 'SWISSLIFE SURCO':
                             excelMasterSWISSLIFE.createWorkSheetSWISSLIFESURCO(workSheet, ocr);
                             break;
+                        case 'UAF LIFE PATRIMOINE':
+                            excelMasterUAFLIFE.createWorkSheetUAFLIFE(workSheet, ocr);
+                            break;
                         default:
                             console.log('Pas de compagnie correspondante');
                     }
@@ -267,7 +274,7 @@ const groupExcelsByCourtier = (excelMasters) => {
 const generateZipFilesEM = async (excelMastersPerCourtier) => {
     const excelMastersZips = [];
     for (let em of excelMastersPerCourtier) {
-        if(em.excelMasters.length > 0) {
+        if (em.excelMasters.length > 0) {
             const zipPath = await generateZip(em.courtier.cabinet.replace(/[/]/g, '_'), em.excelMasters);
             const excelMastersZip = {
                 courtier: em.courtier.courtier,

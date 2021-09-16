@@ -2,9 +2,6 @@ import { Component } from 'react';
 import '@coreui/coreui/dist/css/coreui.min.css';
 import {
     CImg,
-    CContainer,
-    CRow,
-    CCol,
     CForm,
     CCardBody,
     CCard,
@@ -23,7 +20,6 @@ import axios from 'axios';
 import sofraco_logo from '../assets/sofraco_groupe_logo.png';
 import config from '../config.json';
 import '../styles/Access.css';
-import { Redirect } from 'react-router-dom';
 
 class Access extends Component {
     constructor(props) {

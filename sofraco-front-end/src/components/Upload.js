@@ -69,10 +69,6 @@ class Upload extends Component {
         }
     }
 
-    componentDidUpdate() {
-
-    }
-
     onSubmitHandler(event) {
         event.preventDefault();
         this.setState({
@@ -124,6 +120,9 @@ class Upload extends Component {
             case 'APICIL':
                 this.testExtension(extension, 'XLSX', false, file);
                 break;
+            case 'APIVIA':
+                this.testExtension(extension, 'PDF', false, file);
+                break;
             case 'APREP':
                 this.testExtension(extension, 'PDF', false, file);
                 break;
@@ -162,6 +161,9 @@ class Upload extends Component {
                 break;
             case 'SWISSLIFE SURCO':
                 this.testExtension(extension, 'XLSX', true, file);
+                break;
+            case 'UAF LIFE PATRIMOINE':
+                this.testExtension(extension, 'XLSX', false, file);
                 break;
             default:
                 console.log('Pas de compagnie correspondante');

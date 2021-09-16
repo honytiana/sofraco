@@ -414,10 +414,10 @@ class Companies extends Component {
         }
         return (
             <CContainer fluid>
-                <div>
-                    <CRow>
-                        {(this.state.companies.length > 0) ? (
-                            this.state.companies.map((company, index) => {
+                {(this.state.companies.length > 0) ? (
+                    <div>
+                        <CRow>
+                            {this.state.companies.map((company, index) => {
                                 if (company.type === 'simple') {
                                     return (
                                         <CCol key={`${company._id}_Column`} sm="3">
@@ -456,38 +456,33 @@ class Companies extends Component {
                                     )
                                 }
                                 return (<span key={`${company._id}_Span`}></span>);
-                            })) :
-                            (
-                                <CCol sm="6">
-                                    <CCard>
-                                        <CCardBody>
-                                            Company
-                                        </CCardBody>
-                                        <CCardFooter>
-                                            Company
-                                        </CCardFooter>
-                                    </CCard>
-                                </CCol>
-                            )
-                        }
-                    </CRow>
+                            })}
+                        </CRow>
 
-                    <div className="sofraco-container-button-traitement">
-                        <CButton className="sofraco-button" onClick={(e) => { this.launchTreatments(e) }} disabled={this.state.load}>Traiter les fichiers</CButton>
-                    </div>
-                </div>
-                <CButton className="sofraco-button" onClick={this.onGenererExcelsMasters} disabled={this.state.load}>
-                    {
-                        (!this.state.loadGenerateExcelMaster) ? (
-                            <span>Générer les Excels Masters</span>
-                        ) : (
-                            <div>
-                                <p>Génération des Excels Masters en cours</p>
-                                <CSpinner color="warning" ></CSpinner>
-                            </div>
-                        )
-                    }
-                </CButton>
+                        <div className="sofraco-container-button-traitement">
+                            <CButton className="sofraco-button" onClick={(e) => { this.launchTreatments(e) }} disabled={this.state.load}>Traiter les fichiers</CButton>
+                        </div>
+                        <CButton className="sofraco-button" onClick={this.onGenererExcelsMasters} disabled={this.state.load}>
+                            {
+                                (!this.state.loadGenerateExcelMaster) ? (
+                                    <span>Générer les Excels Masters</span>
+                                ) : (
+                                    <div>
+                                        <p>Génération des Excels Masters en cours</p>
+                                        <CSpinner color="warning" ></CSpinner>
+                                    </div>
+                                )
+                            }
+                        </CButton>
+                    </div>) :
+                    (
+                        <div className="sofraco-spinner">
+                            <CSpinner
+                                color="warning" variant="grow"
+                            />
+                        </div>
+                    )
+                }
                 {
                     (this.state.showButtonDownload) && (
                         <CButton className="sofraco-button" onClick={this.onDownloadExcelMasters}>Télécharger les Excels Masters</CButton>
