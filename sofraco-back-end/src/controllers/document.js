@@ -17,6 +17,7 @@ const documentHODEVA = require('../services/document/documentHODEVA');
 const documentLOURMEL = require('../services/document/documentLOURMEL');
 const documentMETLIFE = require('../services/document/documentMETLIFE');
 const documentMMA = require('../services/document/documentMMA');
+const documentSPVIE = require('../services/document/documentSPVIE');
 const documentSWISSLIFE = require('../services/document/documentSWISSLIFE');
 const documentUAFLIFE = require('../services/document/documentUAFLIFE');
 
@@ -161,6 +162,9 @@ exports.updateDocument = async (req, res) => {
             break;
         case 'SLADE':   // SWISSLIFE
             ocr = await documentSWISSLIFE.readPdfSLADE(req.body.filePath);
+            break;
+        case 'SPVIE':
+            ocr = await documentSPVIE.readExcelSPVIE(req.body.filePath);
             break;
         case 'SWISSLIFE SURCO':
             ocr = await documentSWISSLIFE.readExcelSWISSLIFESURCO(req.body.filePath);

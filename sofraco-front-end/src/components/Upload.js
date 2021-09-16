@@ -159,6 +159,9 @@ class Upload extends Component {
             case 'MMA':
                 this.testExtension(extension, 'XLSX', false, file);
                 break;
+            case 'SPVIE':
+                this.testExtension(extension, 'XLSX', false, file);
+                break;
             case 'SWISSLIFE':
                 this.testExtension(extension, 'PDF', false, file);
                 break;

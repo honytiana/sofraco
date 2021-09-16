@@ -17,6 +17,7 @@ const excelMasterHODEVA = require('./excelMasterHODEVA');
 const excelMasterLOURMEL = require('./excelMasterLOURMEL');
 const excelMasterMETLIFE = require('./excelMasterMETLIFE');
 const excelMasterMMA = require('./excelMasterMMA');
+const excelMasterSPVIE = require('./excelMasterSPVIE');
 const excelMasterSWISSLIFE = require('./excelMasterSWISSLIFE');
 const excelMasterUAFLIFE = require('./excelMasterUAFLIFE');
 const excelMasterRecap = require('./excelMasterRecap');
@@ -91,6 +92,9 @@ const getOCRInfos = async (authorization) => {
                 break;
             case 'SLADE':   // swisslife
                 infos.push(excelMasterSWISSLIFE.getOCRSLADE(ocr));
+                break;
+            case 'SPVIE':
+                infos.push(excelMasterSPVIE.getOCRSPVIE(ocr));
                 break;
             case 'SWISSLIFE SURCO':
                 infos.push(excelMasterSWISSLIFE.getOCRSWISSLIFESURCO(ocr));
@@ -222,6 +226,9 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
                             break;
                         case 'SLADE':   // SWISSLIFE
                             excelMasterSWISSLIFE.createWorkSheetSLADE(workSheet, ocr);
+                            break;
+                        case 'SPVIE':
+                            excelMasterSPVIE.createWorkSheetSPVIE(workSheet, ocr);
                             break;
                         case 'SWISSLIFE SURCO':
                             excelMasterSWISSLIFE.createWorkSheetSWISSLIFESURCO(workSheet, ocr);
