@@ -5,8 +5,6 @@ import {
     CToastHeader,
     CToastBody,
     CToaster,
-    CImg,
-    CButton,
     CForm,
     CFormGroup,
     CLabel,
@@ -90,13 +88,6 @@ class Courtier extends Component {
     render() {
         return (
             <div>
-                {/* <CListGroup>
-                    <CListGroupItem color="warning">{this.props.courtier.cabinet}</CListGroupItem>
-                    <CListGroupItem color="warning">{this.props.courtier.lastName}</CListGroupItem>
-                    <CListGroupItem color="warning">{this.props.courtier.firstName}</CListGroupItem>
-                    {this.props.courtier.phone && <CListGroupItem color="warning">{this.props.courtier.phone}</CListGroupItem>}
-                    {this.props.courtier.email && <CListGroupItem color="warning">{this.props.courtier.email}</CListGroupItem>}
-                </CListGroup> */}
                 <CForm action="" method="post" onSubmit={(e) => this.onSubmitHandler(e)}>
                     <CFormGroup row>
                         <CLabel className="col-sm-2" htmlFor={`sofraco-cabinet_${this.props.courtier._id}`}>Cabinet</CLabel>

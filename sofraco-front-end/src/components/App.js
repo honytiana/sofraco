@@ -54,6 +54,9 @@ class App extends Component {
     // window.onbeforeunload = ((e) => {
     //   localStorage.clear();
     // });
+    // setInterval(() => {
+      
+    // }, 1000)
   }
 
   render() {

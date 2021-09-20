@@ -2,7 +2,7 @@
     {
         "lastName": "Courtier1",
         "firstName": "Test1",
-        "cabinet": "",
+        "cabinet": "cabinet 1",
         "email": "courtier1@test.com",
         "phone": "+33000000001",
         "status": "Active",
@@ -12,7 +12,7 @@
     {
         "lastName": "Courtier2",
         "firstName": "Test2",
-        "cabinet": "",
+        "cabinet": "cabinet 2",
         "email": "courtier2@test.com",
         "phone": "+33000000002",
         "status": "Active",
@@ -22,7 +22,7 @@
     {
         "lastName": "Courtier3",
         "firstName": "Test3",
-        "cabinet": "",
+        "cabinet": "cabinet 3",
         "email": "courtier3@test.com",
         "phone": "+33000000003",
         "status": "Active",
@@ -32,7 +32,7 @@
     {
         "lastName": "Courtier4",
         "firstName": "Test4",
-        "cabinet": "",
+        "cabinet": "cabinet 4",
         "email": "courtier4@test.com",
         "phone": "+33000000004",
         "status": "Active",
@@ -42,7 +42,7 @@
     {
         "lastName": "Courtier5",
         "firstName": "Test5",
-        "cabinet": "",
+        "cabinet": "cabinet 5",
         "email": "courtier5@test.com",
         "phone": "+33000000005",
         "status": "Active",
@@ -52,7 +52,7 @@
     {
         "lastName": "Courtier6",
         "firstName": "Test6",
-        "cabinet": "",
+        "cabinet": "cabinet 6",
         "email": "courtier6@test.com",
         "phone": "+33000000006",
         "status": "Active",
@@ -62,7 +62,7 @@
     {
         "lastName": "Courtier7",
         "firstName": "Test7",
-        "cabinet": "",
+        "cabinet": "cabinet 7",
         "email": "courtier6@test.com",
         "phone": "+33000000007",
         "status": "Active",
@@ -72,7 +72,7 @@
     {
         "lastName": "Courtier8",
         "firstName": "Test8",
-        "cabinet": "",
+        "cabinet": "cabinet 8",
         "email": "courtier8@test.com",
         "phone": "+33000000008",
         "status": "Active",
@@ -82,7 +82,7 @@
     {
         "lastName": "Courtier9",
         "firstName": "Test9",
-        "cabinet": "",
+        "cabinet": "cabinet 9",
         "email": "courtier9@test.com",
         "phone": "+33000000009",
         "status": "Active",
@@ -92,7 +92,7 @@
     {
         "lastName": "Courtier10",
         "firstName": "Test10",
-        "cabinet": "",
+        "cabinet": "cabinet 10",
         "email": "courtier10@test.com",
         "phone": "+33000000010",
         "status": "Active",
@@ -3868,5 +3868,1325 @@
         "status": "Active",
         "role": "courtier",
         "is_enabled": true
+    },
+    {
+        "lastName": "CARRIERE",
+        "firstName": "Romain",
+        "cabinet": "E2BIS CONSEILS",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "REINHART",
+        "firstName": "Guillaume",
+        "cabinet": "E2BIS CONSEILS",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "GROIZIER",
+        "firstName": "Sylvain",
+        "cabinet": "ANAO COURTAGE CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "RIZZATO",
+        "firstName": "Florent",
+        "cabinet": "AMADEUS CONSEILS",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "AMMI",
+        "firstName": "Jean-Marie",
+        "cabinet": "AF CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "BRIAND",
+        "firstName": "Elodie",
+        "cabinet": "FINABANK CONSULTING GROUP",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "CHAUSSEPIED",
+        "firstName": "Samuel",
+        "cabinet": "FINABANK CONSULTING GROUP",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "AUGER",
+        "firstName": "Adrien",
+        "cabinet": "FINABANK CONSULTING GROUP",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "AFTE",
+        "firstName": "Jérôme",
+        "cabinet": "E2BIS CONSEILS",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "PIOT",
+        "firstName": "Laurent",
+        "cabinet": "AB2C",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "HELMSTETTER",
+        "firstName": "Francis",
+        "cabinet": "FINABANK CONSULTING GROUP",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "CAZAJUS",
+        "firstName": "Eric",
+        "cabinet": "GLOBALREM",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "DOUBRERE",
+        "firstName": "Mandataire",
+        "cabinet": "GLOBALREM",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "FAUTHOUX",
+        "firstName": "Frédéric",
+        "cabinet": "GLOBALREM",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "CALLIER",
+        "firstName": "Mandataire",
+        "cabinet": "CABINET GAIA",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "GENOT",
+        "firstName": "Betty",
+        "cabinet": "GLOBALREM",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "FOURCADE",
+        "firstName": "Corinne",
+        "cabinet": "FINABANK CONSULTING GROUP",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "MOUSSET",
+        "firstName": "Ludovic",
+        "cabinet": "FINABANK CONSULTING GROUP",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "COLLE",
+        "firstName": "Stéphane",
+        "cabinet": "CABINET THIERRY CHAMARET",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "MAMIN",
+        "firstName": "Cédric",
+        "cabinet": "RESO COURTAGE & ASSOCIES",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "BOURBON",
+        "firstName": "Pascale",
+        "cabinet": "CABINET PHI PROTEC",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "CLAVERIE",
+        "firstName": "Suzanne",
+        "cabinet": "CABINET PHI PROTEC",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "MACHET",
+        "firstName": "Aurore",
+        "cabinet": "CABINET PHI PROTEC",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "LEBRUN",
+        "firstName": "Patricia",
+        "cabinet": "NC COURTAGE",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "RIPOCHE",
+        "firstName": "Séverine",
+        "cabinet": "NC COURTAGE",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "POUNDALL",
+        "firstName": "Stéphane",
+        "cabinet": "G2C VIE",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "FRACH",
+        "firstName": "Olivier",
+        "cabinet": "JAURES INVEST",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "MILONET",
+        "firstName": "Stéphane",
+        "cabinet": "JAURES INVEST",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "PRORIOL",
+        "firstName": "Philippe",
+        "cabinet": "JAURES INVEST",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "BOYER",
+        "firstName": "Frédéric",
+        "cabinet": "GMPC",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "DREVET",
+        "firstName": "S.",
+        "cabinet": "GMPC",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "GOMES",
+        "firstName": "Johnny",
+        "cabinet": "GMPC",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "LAFFAY",
+        "firstName": "Mathieu",
+        "cabinet": "GMPC",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "LAURENDON",
+        "firstName": "Nathalie",
+        "cabinet": "GMPC",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "MBALOULA",
+        "firstName": "Samba",
+        "cabinet": "GMPC",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "MICHELAND",
+        "firstName": "Jocelyne",
+        "cabinet": "ALPES PROTECTION SOCIALE",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "LANDON",
+        "firstName": "Arthur",
+        "cabinet": "ASSUR WELL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "RELAIX",
+        "firstName": "Swan",
+        "cabinet": "CAPPA COURTAGE",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "LANDON",
+        "firstName": "Arthur",
+        "cabinet": "STAR APS",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "BARBIER",
+        "firstName": "Jérémy",
+        "cabinet": "LAPS",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "ENVAIN",
+        "firstName": "Emeline",
+        "cabinet": "LAPS",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "FUCHS",
+        "firstName": "Véronique",
+        "cabinet": "LAPS",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "FRANCOIS",
+        "firstName": "Gérard",
+        "cabinet": "AR2P",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "HAU",
+        "firstName": "Christophe",
+        "cabinet": "LAPS",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "SALEMBIER",
+        "firstName": "François",
+        "cabinet": "LAPS",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "VINCENT",
+        "firstName": "Hervé",
+        "cabinet": "LAPS",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "GENDEK",
+        "firstName": "Jocelyn",
+        "cabinet": "REPPI",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "ALLOUACHE",
+        "firstName": "Nadia",
+        "cabinet": "ABH COURTAGE",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "RUAT",
+        "firstName": "Eliane",
+        "cabinet": "CFP AGENCY",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "D'AGARO",
+        "firstName": "Eric",
+        "cabinet": "SOVITAE",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "BOSSE",
+        "firstName": "Sébastien",
+        "cabinet": "APREM CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "GALLIX",
+        "firstName": "Jérôme",
+        "cabinet": "APREM CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "CHARON",
+        "firstName": "Romain",
+        "cabinet": "APREM CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "LAM",
+        "firstName": "Minh-Giang",
+        "cabinet": "CAP CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "CHAUVEROCHE",
+        "firstName": "Loïc",
+        "cabinet": "APC INVESTMENT",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "VIAL-PAILLER",
+        "firstName": "Nicolas",
+        "cabinet": "APC INVESTMENT",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "DENIS",
+        "firstName": "Géraldine",
+        "cabinet": "A2LJ Conseil",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "ROSA",
+        "firstName": "Thierry",
+        "cabinet": "A2LJ Conseil",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "GAUTHIER",
+        "firstName": "Aude",
+        "cabinet": "LM CONSILIUM",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "MADEC",
+        "firstName": "Hervé",
+        "cabinet": "APREM CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "SARRAZIN",
+        "firstName": "Serge",
+        "cabinet": "INGELS COURTAGE CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "MOUTIER",
+        "firstName": "Rodolphe",
+        "cabinet": "AMSC2",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "NEIL",
+        "firstName": "Gérald",
+        "cabinet": "AMSC2",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "BRANDILY",
+        "firstName": "Jordan",
+        "cabinet": "ALL IN ONE ASSURANCES - CO COURTAGE",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "GARCIA",
+        "firstName": "Caroline",
+        "cabinet": "du cabinet INFINEO ASSURANCES",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "OUZOUNIAN",
+        "firstName": "Maxime",
+        "cabinet": "de INFINEO ASSURANCES",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "RENARD",
+        "firstName": "Elodie",
+        "cabinet": "de INFINEO ASSURANCES",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "CASSAGNE",
+        "firstName": "Julie",
+        "cabinet": "EO2C SOLUTIONS VIE",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "GARDET",
+        "firstName": "Valérie",
+        "cabinet": "ARAVIS FINANCES CONSEILS",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "GUYOT",
+        "firstName": "Aurélien",
+        "cabinet": "LM CONSILIUM",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "ETAVE",
+        "firstName": "Allan",
+        "cabinet": "AMSC2",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "OLLER",
+        "firstName": "Françoise",
+        "cabinet": "MBPA",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "GIHR",
+        "firstName": "Didier",
+        "cabinet": "CABINET CESAM CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "JORGE",
+        "firstName": "Aurélia",
+        "cabinet": "BOOST ENTREPRISES",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "RUIZ",
+        "firstName": "Céline",
+        "cabinet": "BOOST ENTREPRISES",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "BARON",
+        "firstName": "Thomas",
+        "cabinet": "EO2C SOLUTIONS-VIE",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "LESCHER",
+        "firstName": "Peire",
+        "cabinet": "EO2C SOLUTIONS-VIE",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "ZENOUDA",
+        "firstName": "Audrey",
+        "cabinet": "EO2C SOLUTIONS-VIE",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "NICOT",
+        "firstName": "Mickael",
+        "cabinet": "C2R",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "AY",
+        "firstName": "Ugur",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "BORGETTO",
+        "firstName": "Patricia",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "BRUNET",
+        "firstName": "Pierre",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "CANDONI",
+        "firstName": "Kariman",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "CORDIER",
+        "firstName": "Jean-Philippe",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "DESFORGES",
+        "firstName": "Samuel",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "CIVIDINO",
+        "firstName": "Sabrina",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "HEMIMED",
+        "firstName": "Salima",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "DIEUX",
+        "firstName": "Carine",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "JOLION",
+        "firstName": "Marc",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "JOLION",
+        "firstName": "Emilie",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "LABBE",
+        "firstName": "Nicolas",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "LEYDIER",
+        "firstName": "Loïc",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "MARZYNSKI",
+        "firstName": "Karine",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "MASSIMELLI",
+        "firstName": "Nicolas",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "PENON",
+        "firstName": "Patrice",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "PIULATS-RAMI",
+        "firstName": "Amandine",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "PELABON",
+        "firstName": "Jean-Marc",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "STEINMETZ",
+        "firstName": "Frédéric",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "TOUBOUL",
+        "firstName": "Bernard",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "THIVILLIER",
+        "firstName": "Pierre",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "YVORA",
+        "firstName": "Audrey",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "VERGIER",
+        "firstName": "Mathieu",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "JACOB",
+        "firstName": "Raphael",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "LACOMBRADE",
+        "firstName": "Alexandre",
+        "cabinet": "CAP CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "BROUILLARD",
+        "firstName": "Nicolas",
+        "cabinet": "LABEL ASSURANCES",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "CASADEMONT",
+        "firstName": "Richard",
+        "cabinet": "LABEL ASSURANCES",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "MOUNIER",
+        "firstName": "Anne-Sophie",
+        "cabinet": "COURTAGE ASSURANCE CONSEIL 43",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "FOATELLI",
+        "firstName": "Julien",
+        "cabinet": "ETUDE & COURTAGE",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "FERLIN",
+        "firstName": "Estelle",
+        "cabinet": "LABEL ASSURANCES",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "BORRELLI",
+        "firstName": "Gilles",
+        "cabinet": "LABEL ASSURANCES",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "FELIX",
+        "firstName": "Christophe",
+        "cabinet": "LABEL ASSURANCES",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "FELLOUS",
+        "firstName": "Michael",
+        "cabinet": "LABEL ASSURANCES",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "JOUTEAU",
+        "firstName": "Karine",
+        "cabinet": "LABEL ASSURANCES",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "LE PORS",
+        "firstName": "Sandra",
+        "cabinet": "LABEL ASSURANCES",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "LEBAILLIF",
+        "firstName": "Adrien",
+        "cabinet": "LABEL ASSURANCES",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "LESNE",
+        "firstName": "Zakia",
+        "cabinet": "LABEL ASSURANCES",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "ROLLAND",
+        "firstName": "Valérie",
+        "cabinet": "LABEL ASSURANCES",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "ROLLAND",
+        "firstName": "Cathy",
+        "cabinet": "LABEL ASSURANCES",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "SALOMEZ",
+        "firstName": "Corinne",
+        "cabinet": "LABEL ASSURANCES",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "TORRAS",
+        "firstName": "Sylvie",
+        "cabinet": "LABEL ASSURANCES",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "DUVIGNEAU-LOBRE",
+        "firstName": "Nicolas",
+        "cabinet": "GROUPE SOFRACO",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "ROBY",
+        "firstName": "Jean-Luc",
+        "cabinet": "GROUPE SOFRACO",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "BARADELLO",
+        "firstName": "Françoise",
+        "cabinet": "SERIANCE CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "BORY",
+        "firstName": "Alexandre",
+        "cabinet": "RSO CONSULT",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "BRIAT",
+        "firstName": "Alexia",
+        "cabinet": "SERIANCE CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "FOUCHER",
+        "firstName": "Magali",
+        "cabinet": "SERIANCE CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "VEYSSIERE",
+        "firstName": "Severine",
+        "cabinet": "SERIANCE CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "KUPPER",
+        "firstName": "Patrick",
+        "cabinet": "AUDIT & VOUS",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "JUSSIERE",
+        "firstName": "Hervé",
+        "cabinet": "RSO CONSULT",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "SOL",
+        "firstName": "Lionel",
+        "cabinet": "RSO CONSULT",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "BARBERY",
+        "firstName": "Valérie",
+        "cabinet": "SERIANCE CONSEIL",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
+    },
+    {
+        "lastName": "ZANINETTI",
+        "firstName": "Jean-Fabrice",
+        "cabinet": "AUDIT & VOUS",
+        "email": "",
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": "true"
     }
 ]

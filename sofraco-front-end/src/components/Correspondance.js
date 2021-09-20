@@ -55,7 +55,7 @@ class Correspondance extends Component {
                 {
                     key: 'company',
                     label: 'Compagnies',
-                    _style: { width: '10%' },
+                    _style: { width: '20%' },
                     _classes: ['text-center']
                 },
                 {
@@ -64,26 +64,26 @@ class Correspondance extends Component {
                     _style: { width: '20%' },
                     _classes: ['text-center']
                 },
-                {
-                    key: 'status',
-                    label: 'Status',
-                    _style: { width: '10%' },
-                    _classes: ['text-center']
-                },
+                // {
+                //     key: 'status',
+                //     label: 'Status',
+                //     _style: { width: '10%' },
+                //     _classes: ['text-center']
+                // },
                 {
                     key: 'edit',
                     label: '',
-                    _style: { width: '10%' },
+                    _style: { width: '20%' },
                     _classes: ['text-center'],
                     sorter: false,
                     filter: false
                 },
-                {
-                    key: 'delete',
-                    label: '',
-                    _style: { width: '5%' },
-                    _classes: ['text-center']
-                }
+                // {
+                //     key: 'delete',
+                //     label: '',
+                //     _style: { width: '5%' },
+                //     _classes: ['text-center']
+                // }
             ],
             toast: false,
             messageToast: []
@@ -440,22 +440,22 @@ class Correspondance extends Component {
                                         </CModal>
                                     )
                                 },
-                            'delete':
-                                (item, index) => {
-                                    return (
-                                        <td className="py-2">
-                                            <CButton
-                                                color="danger"
-                                                variant="outline"
-                                                shape="square"
-                                                size="sm"
-                                                onClick={(e) => { this.deleteCorrespondance(e, item) }}
-                                            >
-                                                Delete
-                                            </CButton>
-                                        </td>
-                                    )
-                                },
+                            // 'delete':
+                            //     (item, index) => {
+                            //         return (
+                            //             <td className="py-2">
+                            //                 <CButton
+                            //                     color="danger"
+                            //                     variant="outline"
+                            //                     shape="square"
+                            //                     size="sm"
+                            //                     onClick={(e) => { this.deleteCorrespondance(e, item) }}
+                            //                 >
+                            //                     Delete
+                            //                 </CButton>
+                            //             </td>
+                            //         )
+                            //     },
                         }
                         }
                     />
