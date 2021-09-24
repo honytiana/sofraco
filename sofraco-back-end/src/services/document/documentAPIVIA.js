@@ -32,7 +32,7 @@ exports.readPdfAPIVIA = async (file) => {
     let infos = { executionTime: 0, infos: null };
     console.log('DEBUT TRAITEMENT APIVIA');
     const excecutionStartTime = performance.now();
-    let useFiles = true;
+    let useFiles = false;
     let allTextFiles = [];
     if (useFiles) {
         let allFiles = fs.readFileSync(path.join(__dirname, 'apiviaimg.json'), { encoding: 'utf-8' });
