@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const config = require('../../config.json');
 
 module.exports = async () => {
-    const facteurMilli = 1000;
+    const facteurMilli = 100000;
     mongoose.connect(config.database, {
         useUnifiedTopology: true,
         useNewUrlParser: true,

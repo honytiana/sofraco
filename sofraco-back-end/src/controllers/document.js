@@ -67,12 +67,7 @@ exports.createDocument = (req, res) => {  // create document
 
 exports.updateDocuments = async (req, res) => {
     try {
-        const r = await axios.get(`${config.nodeUrl}/api/document/${req.body.document}`, {
-            headers: {
-                'Authorization': `${req.headers.authorization}`
-            }
-        });
-        const document = r.data;
+        const document = await documentHandler.getDocument(req.body.document);
         const fileName = fileService.getFileNameWithoutExtension(document.path_original_file);
         const extension = fileService.getFileExtension(document.path_original_file);
         const options = {
@@ -94,12 +89,8 @@ exports.updateDocuments = async (req, res) => {
 };
 
 exports.setStatusDocument = async (req, res) => {
-    const result = await axios.get(`${config.nodeUrl}/api/document`, {
-        headers: {
-            'Authorization': `${req.headers.authorization}`
-        }
-    });
-    let documents = result.data;
+    console.log('set status document');
+    let documents = await documentHandler.getDocuments();
     documents = documents.filter((doc, index) => {
         // const currentMonth = new Date().getMonth();
         // const uploadDateMonth = new Date(doc.upload_date).getMonth();
