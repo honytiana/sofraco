@@ -1,10 +1,10 @@
-FROM ubuntu:latest
+FROM node:latest
 
-RUN apt update
-RUN apt install python-pip
-RUN apt install graphicsmagick
-RUN pip install easyocr
-RUN apt install nodejs
+RUN apt update -y
+RUN apt install graphicsmagick -y
+RUN apt install python3-pip
+
+RUN pip3 install easyocr
 
 WORKDIR /backend    
 COPY package*.json /backend/
