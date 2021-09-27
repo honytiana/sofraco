@@ -22,6 +22,9 @@ const excelMasterSPVIE = require('./excelMasterSPVIE');
 const excelMasterSWISSLIFE = require('./excelMasterSWISSLIFE');
 const excelMasterUAFLIFE = require('./excelMasterUAFLIFE');
 const excelMasterRecap = require('./excelMasterRecap');
+const documentHandler = require('../../handlers/documentHandler');
+const correspondanceHandler = require('../../handlers/correspondanceHandler');
+const courtierHandler = require('../../handlers/courtierHandler');
 
 
 exports.create = async (authorization) => {
@@ -38,12 +41,7 @@ exports.create = async (authorization) => {
 };
 
 const getOCRInfos = async (authorization) => {
-    const res = await axios.get(`${config.nodeUrl}/api/document`, {
-        headers: {
-            authorization: authorization
-        }
-    });
-    let documents = res.data;
+    let documents = await documentHandler.getDocuments();
     documents = documents.filter((doc, index) => {
         return doc.status === 'done';
     });
@@ -74,6 +72,9 @@ const getOCRInfos = async (authorization) => {
                 infos.push(excelMasterCARDIF.getOCRCARDIF(ocr));
                 break;
             case 'CBP FRANCE': //LOURMEL
+                infos.push(excelMasterLOURMEL.getOCRLOURMEL(ocr));
+                break;
+            case 'LOURMEL': //LOURMEL
                 infos.push(excelMasterLOURMEL.getOCRLOURMEL(ocr));
                 break;
             case 'CEGEMA':
@@ -114,20 +115,11 @@ const getOCRInfos = async (authorization) => {
 
 }
 
-const getCorrespondances = async () => {
-    try {
-        const result = await axios.get(`${config.nodeUrl}/api/correspondance`);
-        return result.data;
-    } catch (err) {
-        console.log(err);
-    }
-};
-
 const generateExcelMaster = async (ocrInfos, authorization) => {
     let excelMasters = [];
     let allOCRPerCourtiers = [];
     try {
-        const correspondances = await getCorrespondances();
+        const correspondances = await correspondanceHandler.getCorrespondances();
         for (let correspondance of correspondances) {
             const courtier = correspondance.courtier;
             let infos = [];
@@ -184,7 +176,7 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
                     excelMasterAPIVIA.createWorkSheetAPIVIA(workSheet, ocrPerCourtier);
                 }
             } else {
-                cr = await getCourtier(authorization, ocrPerCourtier.courtier);
+                cr = await courtierHandler.getCourtierById(ocrPerCourtier.courtier);
                 excelMaster = {
                     courtier: ocrPerCourtier.courtier,
                     cabinet: cr.cabinet,
@@ -296,16 +288,6 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
         return err;
     }
 };
-
-const getCourtier = async (authorization, id) => {
-    const result = await axios.get(`${config.nodeUrl}/api/courtier/${id}`, {
-        headers: {
-            'Authorization': `${authorization}`
-        }
-    });
-    const courtier = result.data;
-    return courtier;
-}
 
 const groupExcelsByCourtier = (excelMasters) => {
     let courtiers = [];

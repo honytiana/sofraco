@@ -29,14 +29,14 @@ const reLastIndexOf = (arr, rx) => {
 }
 
 exports.readPdfAPIVIA = async (file) => {
-    let infos = { executionTime: 0, infos: null };
+    let infos = { executionTime: 0, executionTimeMS: 0, infos: null };
     console.log('DEBUT TRAITEMENT APIVIA');
     const excecutionStartTime = performance.now();
     let useFiles = false;
     let allTextFiles = [];
     if (useFiles) {
-        let allFiles = fs.readFileSync(path.join(__dirname, 'apiviaimg.json'), { encoding: 'utf-8' });
-        allFiles = JSON.parse(allFiles);
+        // let allFiles = fs.readFileSync(path.join(__dirname, 'apiviaimg.json'), { encoding: 'utf-8' });
+        // allFiles = JSON.parse(allFiles);
         console.log('DEBUT IMPORTER LINES APIVIA');
         allTextFiles = fs.readFileSync(path.join(__dirname, 'apiviatxtfile.json'), { encoding: 'utf-8' });
         allTextFiles = JSON.parse(allTextFiles);
@@ -47,7 +47,6 @@ exports.readPdfAPIVIA = async (file) => {
         const allFiles = await imageAPIVIA.loadOpenCV(images);
         console.log('FIN TRAITEMENT IMAGES APIVIA');
         console.log('DEBUT IMPORTER LINES APIVIA');
-        let allTextFiles = [];
         for (let files of allFiles) {
             let contratTextsFiles = [];
             for (let lines of files) {
@@ -63,7 +62,8 @@ exports.readPdfAPIVIA = async (file) => {
     const excecutionStopTime = performance.now();
     let executionTimeMS = excecutionStopTime - excecutionStartTime;
     infos.executionTime = time.millisecondToTime(executionTimeMS);
-    console.log('Total Execution time : ', executionTime);
+    infos.executionTimeMS = executionTimeMS;
+    console.log('Total Execution time : ', infos.executionTime);
     console.log('FIN TRAITEMENT APIVIA');
     return infos;
 };

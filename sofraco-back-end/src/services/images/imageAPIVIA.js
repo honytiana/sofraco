@@ -122,7 +122,7 @@ const getCellFromImageAPIVIA = async (file_name, input_path, output_path, show_t
                         let rectangleColor = new cv.Scalar(255, 0, 0);
                         let point1 = new cv.Point(x_cell, y1);
                         let point2 = new cv.Point(x2_cell, y2_cell);
-                        console.log("x_cell: " + x_cell + " y2_cell: " + y2_cell + " width_rect: " + width_rect + " h: " + height_rect)
+                        // console.log("x_cell: " + x_cell + " y2_cell: " + y2_cell + " width_rect: " + width_rect + " h: " + height_rect)
                         // if (is_valid_ord(y2_cell, img) && is_valid_abcisse(x2_cell, img)) {
                         if (show_tracage) {
                             try {
