@@ -2,7 +2,7 @@ FROM node:latest
 
 RUN apt update -y
 RUN apt install graphicsmagick -y
-RUN apt install python3-pip
+RUN apt install python3-pip -y
 
 RUN pip3 install easyocr
 
