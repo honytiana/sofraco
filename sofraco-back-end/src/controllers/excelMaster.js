@@ -110,3 +110,13 @@ exports.getExcelMasterZip = async (req, res) => {
 exports.updateExcelMaster = (req, res) => {
     console.log('update')
 }
+
+exports.deleteAllCorrespondances = async (req, res) => {
+    console.log('Delete all excelMasters');
+    try {
+        await excelMasterHandler.deleteAllExcelMaster();
+        res.status(200).end('excelMasters deleted');
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+}

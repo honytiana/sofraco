@@ -26,6 +26,7 @@ router.route('/').post(accessControl, excelMasterController.createExcelMaster);
 router.route('/:id').put(accessControl, excelMasterController.updateExcelMaster);
 router.route('/year/:year/month/:month').get(accessControl, excelMasterController.getExcelMastersByYearMonth);
 router.route('/courtier/:courtier/year/:year/month/:month/type/:type').get(accessControl, excelMasterController.getExcelMastersCourtierByYearMonth);
+router.route('/').delete(accessControl, excelMasterController.deleteAllCorrespondances);
 
 
 module.exports = router;

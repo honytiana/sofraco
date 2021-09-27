@@ -74,8 +74,8 @@ class ExcelMasterHandler {
         return ExcelMaster.findByIdAndUpdate(id, data);
     }
 
-    deleteExcelMaster() {
-
+    deleteAllExcelMaster() {
+        return ExcelMaster.deleteMany({});
     }
 
 }

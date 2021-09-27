@@ -182,9 +182,11 @@ const getCellFromImageAPIVIA = async (file_name, input_path, output_path, show_t
                 .write(outputPathTracage);
         }
         img.delete();
+        const jimp_img_out = await Jimp.read(input);
     } catch (err) {
         console.log(err);
     }
+
     return data_output;
 }
 
