@@ -71,6 +71,10 @@ class DocumentHandler {
 
     }
 
+    deleteAllDocuments() {
+        return Document.deleteMany({});
+    }
+
 }
 
 module.exports = new DocumentHandler();

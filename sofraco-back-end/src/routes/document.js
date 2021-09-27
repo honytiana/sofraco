@@ -28,6 +28,7 @@ router.route('/date/:date').get(accessControl, documentController.getDocumentsBy
 router.route('/year/:year/month/:month').get(accessControl, documentController.getDocumentsByYearMonth);
 router.route('/company/:company/year/:year/month/:month').get(accessControl, documentController.getDocumentsCompanyByYearMonth);
 router.route('/company/:company').get(accessControl, documentController.getDocumentsCompany);
+router.route('/').delete(accessControl, documentController.deleteAllDocuments);
 
 
 module.exports = router;

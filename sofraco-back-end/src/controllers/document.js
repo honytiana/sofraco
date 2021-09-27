@@ -107,6 +107,7 @@ exports.setStatusDocument = async (req, res) => {
 exports.updateDocument = async (req, res) => {
     let document = {};
     document.status = 'processing';
+    let ocr;
     const d = await documentHandler.updateDocument(req.body.document, document);
     switch (req.params.company.toUpperCase()) {
         case 'APICIL':
@@ -131,6 +132,9 @@ exports.updateDocument = async (req, res) => {
             ocr = await documentCARDIF.readExcelCARDIF(req.body.filePath);
             break;
         case 'CBP FRANCE': //LOURMEL
+            ocr = await documentLOURMEL.readExcelLOURMEL(req.body.filePath);
+            break;
+        case 'LOURMEL': //LOURMEL
             ocr = await documentLOURMEL.readExcelLOURMEL(req.body.filePath);
             break;
         case 'CEGEMA':
@@ -236,5 +240,15 @@ exports.getDocumentsCompany = async (req, res) => {
         res.status(200).json(documents);
     } catch (err) {
         res.status(400).json({ err });
+    }
+}
+
+exports.deleteAllDocuments = async (req, res) => {
+    console.log('Delete all documents');
+    try {
+        await documentHandler.deleteAllDocuments();
+        res.status(200).end('Documents deleted');
+    } catch (error) {
+        res.status(500).json({ error });
     }
 }

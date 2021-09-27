@@ -62,7 +62,7 @@ exports.readPdfAPIVIA = async (file) => {
     infos.infos = infoBordereau;
     const excecutionStopTime = performance.now();
     let executionTimeMS = excecutionStopTime - excecutionStartTime;
-    const executionTime = time.millisecondToTime(executionTimeMS);
+    infos.executionTime = time.millisecondToTime(executionTimeMS);
     console.log('Total Execution time : ', executionTime);
     console.log('FIN TRAITEMENT APIVIA');
     return infos;
@@ -73,16 +73,17 @@ const getTextFromImages = (images) => {
     for (let cell of images.cell) {
         const fileNameWthoutExtension = fileService.getFileNameWithoutExtension(cell);
         const destFullPath = path.join(__dirname, '..', '..', '..', 'documents', 'texte', `${fileNameWthoutExtension}`);
+        let executionTimeTesseract;
         try {
             const tesseractStartTime = performance.now();
             execSync(`tesseract ${cell} ${destFullPath} --psm 6`);
             const tesseractStopTime = performance.now();
-            const executionTimeTesseract = tesseractStopTime - tesseractStartTime;
+            executionTimeTesseract = tesseractStopTime - tesseractStartTime;
             console.log('Execution time Tesseract : ', time.millisecondToTime(executionTimeTesseract));
             textFilePaths.push(`${destFullPath}.txt`);
         } catch (err) {
             console.log(err);
-            console.log(`Temps de traitement : ${time}`);
+            console.log(`Temps de traitement : ${time.millisecondToTime(executionTimeTesseract)}`);
         }
     }
     return textFilePaths;
