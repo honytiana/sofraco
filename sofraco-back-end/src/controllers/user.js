@@ -62,12 +62,20 @@ exports.createToken = (req, res, next) => {
 
 exports.getUsers = async (req, res) => {
     console.log('get users');
-    const users = await userHandler.getUsers();
-    res.status(200).json(users);
+    try {
+        const users = await userHandler.getUsers();
+        res.status(200).json(users);
+    } catch (err) {
+        res.status(400).json({ err });
+    }
 }
 
 exports.getUser = async (req, res) => {
     console.log('get user');
-    const user = await userHandler.getUserById(req.params.id);
-    res.status(200).json(user);
+    try {
+        const user = await userHandler.getUserById(req.params.id);
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(400).json({ err });
+    }
 }

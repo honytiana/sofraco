@@ -150,7 +150,6 @@ class Treatments extends Component {
     }
 
     onCheckHandler(e, item, index) {
-        e.preventDefault();
         console.log(e.target);
         this.state.checked.forEach((element, index) => {
             if (element.firstName === item.firstName && element.lastName === item.lastName) {

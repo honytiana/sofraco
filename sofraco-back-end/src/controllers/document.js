@@ -23,46 +23,50 @@ const documentUAFLIFE = require('../services/document/documentUAFLIFE');
 
 exports.createDocument = (req, res) => {  // create document
     console.log('Create document');
-    const company = JSON.parse(req.body.company);
-    const companySurco = JSON.parse(req.body.companySurco);
-    const surco = JSON.parse(req.body.surco);
-    if (company.surco && surco && companySurco !== null && req.files.length > 1) {  // company and surco
-        let document = {};
-        const fileName = fileService.getFileName(req.files[0].path);
-        document.name = fileName;
-        document.company = company._id;
-        document.companyName = company.name;
-        document.path_original_file = req.files[0].path;
-        document.type = req.body.extension;
-        const doc = documentHandler.createDocument(document);
-        let documentSurco = {};
-        const fileNameSurco = fileService.getFileName(req.files[1].path);
-        documentSurco.name = fileNameSurco;
-        documentSurco.company = companySurco._id;
-        documentSurco.companyName = companySurco.name;
-        documentSurco.path_original_file = req.files[1].path;
-        documentSurco.type = req.body.extension;
-        const docSurco = documentHandler.createDocument(documentSurco);
-    } else if (company.surco && surco && companySurco !== null && req.files.length === 1) { // surco
-        let document = {};
-        const fileName = fileService.getFileName(req.files[0].path);
-        document.name = fileName;
-        document.company = companySurco._id;
-        document.companyName = companySurco.name;
-        document.path_original_file = req.files[0].path;
-        document.type = req.body.extension;
-        const doc = documentHandler.createDocument(document);
-    } else if ((company.surco && !surco) || (!company.surco && !surco)) {     // company
-        let document = {};
-        const fileName = fileService.getFileName(req.files[0].path);
-        document.name = fileName;
-        document.company = company._id;
-        document.companyName = company.name;
-        document.path_original_file = req.files[0].path;
-        document.type = req.body.extension;
-        const doc = documentHandler.createDocument(document);
+    try {
+        const company = JSON.parse(req.body.company);
+        const companySurco = JSON.parse(req.body.companySurco);
+        const surco = JSON.parse(req.body.surco);
+        if (company.surco && surco && companySurco !== null && req.files.length > 1) {  // company and surco
+            let document = {};
+            const fileName = fileService.getFileName(req.files[0].path);
+            document.name = fileName;
+            document.company = company._id;
+            document.companyName = company.name;
+            document.path_original_file = req.files[0].path;
+            document.type = req.body.extension;
+            const doc = documentHandler.createDocument(document);
+            let documentSurco = {};
+            const fileNameSurco = fileService.getFileName(req.files[1].path);
+            documentSurco.name = fileNameSurco;
+            documentSurco.company = companySurco._id;
+            documentSurco.companyName = companySurco.name;
+            documentSurco.path_original_file = req.files[1].path;
+            documentSurco.type = req.body.extension;
+            const docSurco = documentHandler.createDocument(documentSurco);
+        } else if (company.surco && surco && companySurco !== null && req.files.length === 1) { // surco
+            let document = {};
+            const fileName = fileService.getFileName(req.files[0].path);
+            document.name = fileName;
+            document.company = companySurco._id;
+            document.companyName = companySurco.name;
+            document.path_original_file = req.files[0].path;
+            document.type = req.body.extension;
+            const doc = documentHandler.createDocument(document);
+        } else if ((company.surco && !surco) || (!company.surco && !surco)) {     // company
+            let document = {};
+            const fileName = fileService.getFileName(req.files[0].path);
+            document.name = fileName;
+            document.company = company._id;
+            document.companyName = company.name;
+            document.path_original_file = req.files[0].path;
+            document.type = req.body.extension;
+            const doc = documentHandler.createDocument(document);
+        }
+        res.status(200).end('Sent to Server');
+    } catch (err) {
+        res.status(500).json({ err });
     }
-    res.status(200).end('Sent to Server');
 }
 
 exports.updateDocuments = async (req, res) => {
@@ -90,91 +94,99 @@ exports.updateDocuments = async (req, res) => {
 
 exports.setStatusDocument = async (req, res) => {
     console.log('set status document');
-    let documents = await documentHandler.getDocuments();
-    documents = documents.filter((doc, index) => {
-        // const currentMonth = new Date().getMonth();
-        // const uploadDateMonth = new Date(doc.upload_date).getMonth();
-        // return (currentMonth === uploadDateMonth) && (doc.status === 'draft');
-        return doc.status === 'draft';
-    });
-    for (let document of documents) {
-        document.status = req.params.status;
-        await documentHandler.updateDocument(document._id, document);
+    try {
+        let documents = await documentHandler.getDocuments();
+        documents = documents.filter((doc, index) => {
+            // const currentMonth = new Date().getMonth();
+            // const uploadDateMonth = new Date(doc.upload_date).getMonth();
+            // return (currentMonth === uploadDateMonth) && (doc.status === 'draft');
+            return doc.status === 'draft';
+        });
+        for (let document of documents) {
+            document.status = req.params.status;
+            await documentHandler.updateDocument(document._id, document);
+        }
+        res.status(200).end();
+    } catch (err) {
+        res.status(500).json({ err });
     }
-    res.status(200).end();
 }
 
 exports.updateDocument = async (req, res) => {
-    let document = {};
-    document.status = 'processing';
-    let ocr;
-    const d = await documentHandler.updateDocument(req.body.document, document);
-    switch (req.params.company.toUpperCase()) {
-        case 'APICIL':
-            ocr = await documentAPICIL.readExcelAPICIL(req.body.filePath);
-            break;
-        case 'APIVIA':
-            ocr = await documentAPIVIA.readPdfAPIVIA(req.body.filePath);
-            break;
-        case 'APREP':
-            ocr = await documentAPREP.readPdfAPREP(req.body.filePath);
-            break;
-        case 'APREP ENCOURS':
-            ocr = await documentAPREP.readPdfAPREPENCOURS(req.body.filePath);
-            break;
-        // case 'AVIVA':
-        //     infos = await readExcel(file);
-        //     break;
-        case 'AVIVA SURCO':
-            ocr = await documentAVIVA.readExcelAVIVASURCO(req.body.filePath);
-            break;
-        case 'CARDIF':
-            ocr = await documentCARDIF.readExcelCARDIF(req.body.filePath);
-            break;
-        case 'CBP FRANCE': //LOURMEL
-            ocr = await documentLOURMEL.readExcelLOURMEL(req.body.filePath);
-            break;
-        case 'LOURMEL': //LOURMEL
-            ocr = await documentLOURMEL.readExcelLOURMEL(req.body.filePath);
-            break;
-        case 'CEGEMA':
-            ocr = await documentCEGEMA.readExcelCEGEMA(req.body.filePath);
-            break;
-        case 'ERES':
-            ocr = await documentERES.readPdfERES(req.body.filePath);
-            break;
-        case 'GENERALI':
-            ocr = await documentGENERALI.readExcelGENERALI(req.body.filePath);
-            break;
-        case 'HODEVA':
-            ocr = await documentHODEVA.readExcelHODEVA(req.body.filePath);
-            break;
-        case 'METLIFE':
-            ocr = await documentMETLIFE.readPdfMETLIFE(req.body.filePath);
-            break;
-        case 'MMA':
-            ocr = await documentMMA.readExcelMMA(req.body.filePath);
-            break;
-        case 'SLADE':   // SWISSLIFE
-            ocr = await documentSWISSLIFE.readPdfSLADE(req.body.filePath);
-            break;
-        case 'SPVIE':
-            ocr = await documentSPVIE.readExcelSPVIE(req.body.filePath);
-            break;
-        case 'SWISSLIFE SURCO':
-            ocr = await documentSWISSLIFE.readExcelSWISSLIFESURCO(req.body.filePath);
-            break;
-        case 'UAF LIFE PATRIMOINE':
-            ocr = await documentUAFLIFE.readExcelUAFLIFE(req.body.filePath);
-            break;
-        default:
-            console.log('Pas de compagnie correspondante');
+    try {
+        let document = {};
+        document.status = 'processing';
+        let ocr;
+        const d = await documentHandler.updateDocument(req.body.document, document);
+        switch (req.params.company.toUpperCase()) {
+            case 'APICIL':
+                ocr = await documentAPICIL.readExcelAPICIL(req.body.filePath);
+                break;
+            case 'APIVIA':
+                ocr = await documentAPIVIA.readPdfAPIVIA(req.body.filePath);
+                break;
+            case 'APREP':
+                ocr = await documentAPREP.readPdfAPREP(req.body.filePath);
+                break;
+            case 'APREP ENCOURS':
+                ocr = await documentAPREP.readPdfAPREPENCOURS(req.body.filePath);
+                break;
+            // case 'AVIVA':
+            //     infos = await readExcel(file);
+            //     break;
+            case 'AVIVA SURCO':
+                ocr = await documentAVIVA.readExcelAVIVASURCO(req.body.filePath);
+                break;
+            case 'CARDIF':
+                ocr = await documentCARDIF.readExcelCARDIF(req.body.filePath);
+                break;
+            case 'CBP FRANCE': //LOURMEL
+                ocr = await documentLOURMEL.readExcelLOURMEL(req.body.filePath);
+                break;
+            case 'LOURMEL': //LOURMEL
+                ocr = await documentLOURMEL.readExcelLOURMEL(req.body.filePath);
+                break;
+            case 'CEGEMA':
+                ocr = await documentCEGEMA.readExcelCEGEMA(req.body.filePath);
+                break;
+            case 'ERES':
+                ocr = await documentERES.readPdfERES(req.body.filePath);
+                break;
+            case 'GENERALI':
+                ocr = await documentGENERALI.readExcelGENERALI(req.body.filePath);
+                break;
+            case 'HODEVA':
+                ocr = await documentHODEVA.readExcelHODEVA(req.body.filePath);
+                break;
+            case 'METLIFE':
+                ocr = await documentMETLIFE.readPdfMETLIFE(req.body.filePath);
+                break;
+            case 'MMA':
+                ocr = await documentMMA.readExcelMMA(req.body.filePath);
+                break;
+            case 'SLADE':   // SWISSLIFE
+                ocr = await documentSWISSLIFE.readPdfSLADE(req.body.filePath);
+                break;
+            case 'SPVIE':
+                ocr = await documentSPVIE.readExcelSPVIE(req.body.filePath);
+                break;
+            case 'SWISSLIFE SURCO':
+                ocr = await documentSWISSLIFE.readExcelSWISSLIFESURCO(req.body.filePath);
+                break;
+            case 'UAF LIFE PATRIMOINE':
+                ocr = await documentUAFLIFE.readExcelUAFLIFE(req.body.filePath);
+                break;
+            default:
+                console.log('Pas de compagnie correspondante');
+        }
+        document.treatment_date = new Date();
+        document.ocr = ocr;
+        document.status = 'done';
+        const doc = await documentHandler.updateDocument(req.body.document, document);
+        res.status(202).json({ executionTime: ocr.executionTimeMS, company: req.params.company });
+    } catch (err) {
+        res.status(500).json({ err });
     }
-    document.treatment_date = new Date();
-    document.ocr = ocr;
-    document.status = 'done';
-    const doc = await documentHandler.updateDocument(req.body.document, document);
-    res.status(202).json({ executionTime: ocr.executionTimeMS, company: req.params.company });
 }
 
 exports.getDocument = async (req, res) => {

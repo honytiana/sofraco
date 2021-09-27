@@ -45,7 +45,7 @@ exports.postMail = async (req, res) => {
                         const mailOptions = {
                             from: config.mailSenderInfomaniak,
                             to: emailDestination,
-                            subject: 'Send mail test',
+                            subject: `VOS COMMISSIONS DU MOIS`,
                             html: str,
                             bcc: config.mailSenderInfomaniak,
                             attachments: [
