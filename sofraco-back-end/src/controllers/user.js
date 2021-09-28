@@ -46,7 +46,8 @@ exports.login = async (req, res) => {
                     { userId: user._id },
                     'SOFRACO_TOKEN_SECRET',
                     { expiresIn: '4h' }
-                )
+                ),
+                expiresIn: 4
             });
         } catch (error) {
             res.status(500).json({ error });

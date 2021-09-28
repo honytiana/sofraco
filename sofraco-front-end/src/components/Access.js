@@ -49,6 +49,9 @@ class Access extends Component {
                 messageToast: { header: 'SUCCESS', color: 'success', message: 'Vous êtes connecté' }
             });
             localStorage.setItem('token', JSON.stringify(data));
+            setTimeout(() => {
+                localStorage.clear();
+            }, data.expiresIn * 3600 * 1000);
             window.location.replace(`${config.reactUrl}/home`);
         }).catch((err) => {
             this.setState({
