@@ -4,7 +4,7 @@ RUN apt-get update -y
 RUN apt-get install graphicsmagick -y
 RUN apt-get install python -y
 RUN apt-get install python-pip -y
-RUN pip install easyocr
+RUN pip install --upgrade pip
 
 WORKDIR /backend    
 COPY package*.json /backend/
