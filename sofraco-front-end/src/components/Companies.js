@@ -416,10 +416,12 @@ class Companies extends Component {
                 occurences.push({ count, company });
             }
             if (company.surco) {
-                if (occurences.some(o => { return o.company.globalName === company.globalName })) {
+                if (occurences.some(o => { return o.company.globalName === company.globalName && o.company.surco })) {
                     const newOcc = occurences.slice();
                     for (let i = 0; i < newOcc.length; i ++) {
-                        newOcc[i].count = 2;
+                        if (newOcc[i].company.globalName === company.globalName) {
+                            newOcc[i].count = 2;
+                        }
                     }
                     occurences = newOcc;
                 } else {

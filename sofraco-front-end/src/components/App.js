@@ -47,16 +47,12 @@ class App extends Component {
       localStorage.clear();
     });
 
-    // window.onunload = ((e) => {
-    //   localStorage.clear();
-    // });
-
-    // window.onbeforeunload = ((e) => {
-    //   localStorage.clear();
-    // });
-    // setInterval(() => {
-      
-    // }, 1000)
+    if (localStorage.getItem('token') !== null) {
+      const expiresIn = JSON.parse(localStorage.getItem('token')).expiresIn;
+      setTimeout(() => {
+        localStorage.clear();
+      }, expiresIn * 3600 * 1000);
+    }
   }
 
   render() {
