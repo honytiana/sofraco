@@ -410,7 +410,14 @@ class Companies extends Component {
             const count = this.state.infoDrafts.filter((infoDraft, indew) => {
                 return infoDraft.company === company;
             }).length;
-            occurences.push({ count, company });
+            if (!company.surco &&
+                !occurences.some(o => { return o.company.globalName === company.globalName })
+            ) {
+                occurences.push({ count, company });
+            }
+            if (company.surco) {
+                occurences.push({ count, company });
+            }
         }
         return (
             <CContainer fluid>
