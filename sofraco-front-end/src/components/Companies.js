@@ -407,7 +407,7 @@ class Companies extends Component {
             }
         }
         for (let company of companies) {
-            const count = this.state.infoDrafts.filter((infoDraft, indew) => {
+            let count = this.state.infoDrafts.filter((infoDraft, indew) => {
                 return infoDraft.company === company;
             }).length;
             if (!company.surco &&
@@ -416,7 +416,16 @@ class Companies extends Component {
                 occurences.push({ count, company });
             }
             if (company.surco) {
-                occurences.push({ count, company });
+                if (occurences.some(o => { return o.company.globalName === company.globalName })) {
+                    const newOcc = occurences.slice();
+                    for (let i = 0; i < newOcc.length; i ++) {
+                        newOcc[i].count = 2;
+                    }
+                    occurences = newOcc;
+                } else {
+                    count = 1;
+                    occurences.push({ count, company });
+                }
             }
         }
         return (
