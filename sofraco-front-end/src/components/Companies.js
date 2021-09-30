@@ -79,8 +79,12 @@ class Companies extends Component {
             .then(async (documents) => {
                 let drafts = [];
                 for (let doc of documents) {
-                    if (doc.status === 'draft' || doc.status === 'processing') {
-                        drafts.push(doc);
+                    const uploadDateMonth = new Date(doc.upload_date).getMonth();
+                    const currentMonth = new Date().getMonth();
+                    if (uploadDateMonth === currentMonth) {
+                        if (doc.status === 'draft' || doc.status === 'processing') {
+                            drafts.push(doc);
+                        }
                     }
                 }
                 this.setState({
