@@ -38,22 +38,34 @@ class CompanyFolder extends Component {
             filesSurco: null,
             loader: false,
             toast: false,
-            messageToast: {}
+            messageToast: {},
+            token: null
         }
-        this.token = JSON.parse(localStorage.getItem('token'));
         this.fetchDocumentsCompanyByYearAndMonth = this.fetchDocumentsCompanyByYearAndMonth.bind(this);
         this.fetchDocumentsCompany = this.fetchDocumentsCompany.bind(this);
         this.fetchCompany = this.fetchCompany.bind(this);
     }
 
     componentDidMount() {
-        this.setState({
-            toast: false,
-            messageToast: {}
-        });
-        this.fetchCompany();
-        this.fetchDocumentsCompany();
-        this.fetchDocumentsCompanyByYearAndMonth();
+        const user = JSON.parse(localStorage.getItem('user'));
+        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((res) => {
+                this.setState({
+                    toast: false,
+                    messageToast: {},
+                    token: res.data
+                });
+                this.fetchCompany();
+                this.fetchDocumentsCompany();
+                this.fetchDocumentsCompanyByYearAndMonth();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     componentDidUpdate() {
@@ -70,7 +82,7 @@ class CompanyFolder extends Component {
             axios.get(`${config.nodeUrl}/api/company/name/${companySurco}`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.token.token}`
+                    'Authorization': `Bearer ${this.state.token.value}`
                 }
             })
                 .then((res) => {
@@ -91,7 +103,7 @@ class CompanyFolder extends Component {
         axios.get(`${config.nodeUrl}/api/document/company/${this.props.company._id}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token.token}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((result) => {
@@ -136,7 +148,7 @@ class CompanyFolder extends Component {
                     axios.get(`${config.nodeUrl}/api/document/company/${this.props.company._id}/year/${year}/month/${month.index}`, {
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${this.token.token}`
+                            'Authorization': `Bearer ${this.state.token.value}`
                         }
                     })
                         .then((result) => {

@@ -31,7 +31,8 @@ class Treatments extends Component {
             toast: false,
             messageToast: [],
             month: null,
-            year: null
+            year: null,
+            token: null
         }
         this.getBadge = this.getBadge.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
@@ -40,89 +41,100 @@ class Treatments extends Component {
         this.onSendMailHandler = this.onSendMailHandler.bind(this);
         this.onChangeSelectFilterYearHandler = this.onChangeSelectFilterYearHandler.bind(this);
         this.onChangeSelectFilterMonthHandler = this.onChangeSelectFilterMonthHandler.bind(this);
-        this.token = JSON.parse(localStorage.getItem('token'));
 
     }
 
     componentDidMount() {
-        this.setState({
-            fields: [
-                {
-                    key: 'check',
-                    label: <CInputCheckbox onChange={() => this.onCheckAllHandler()} />,
-                    _style: { width: '10%' },
-                    _classes: ['text-center'],
-                    sorter: false,
-                    filter: false
-                },
-                {
-                    key: 'cabinet',
-                    label: 'Cabinet',
-                    _style: { width: '10%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'firstName',
-                    label: 'Nom',
-                    _style: { width: '20%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'lastName',
-                    label: 'Prénom',
-                    _style: { width: '20%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'email',
-                    label: 'Email',
-                    _style: { width: '20%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'status',
-                    label: 'Status',
-                    _style: { width: '10%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'show_details',
-                    label: '',
-                    _style: { width: '10%' },
-                    _classes: ['text-center'],
-                    sorter: false,
-                    filter: false
-                }
-            ],
-            toast: false,
-            messageToast: []
-        });
-        axios.get(`${config.nodeUrl}/api/courtier`, {
+        const user = JSON.parse(localStorage.getItem('user'));
+        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
             headers: {
-                'Authorization': `Bearer ${this.token.token}`
+                'Content-Type': 'application/json',
             }
         })
-            .then((data) => {
-                return data.data
-            })
-            .then((data) => {
-                const checked = data.map(element => {
-                    return {
-                        courtier: element._id,
-                        email: element.email,
-                        firstName: element.firstName,
-                        lastName: element.lastName,
-                        checked: false
-                    };
-                });
-                const courtiers = data;
+            .then((res) => {
                 this.setState({
-                    checked,
-                    courtiers
+                    fields: [
+                        {
+                            key: 'check',
+                            label: <CInputCheckbox onChange={() => this.onCheckAllHandler()} />,
+                            _style: { width: '10%' },
+                            _classes: ['text-center'],
+                            sorter: false,
+                            filter: false
+                        },
+                        {
+                            key: 'cabinet',
+                            label: 'Cabinet',
+                            _style: { width: '10%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'firstName',
+                            label: 'Nom',
+                            _style: { width: '20%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'lastName',
+                            label: 'Prénom',
+                            _style: { width: '20%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'email',
+                            label: 'Email',
+                            _style: { width: '20%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'status',
+                            label: 'Status',
+                            _style: { width: '10%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'show_details',
+                            label: '',
+                            _style: { width: '10%' },
+                            _classes: ['text-center'],
+                            sorter: false,
+                            filter: false
+                        }
+                    ],
+                    toast: false,
+                    messageToast: [],
+                    token: res.data,
                 });
+                axios.get(`${config.nodeUrl}/api/courtier`, {
+                    headers: {
+                        'Authorization': `Bearer ${this.state.token.value}`
+                    }
+                })
+                    .then((data) => {
+                        return data.data
+                    })
+                    .then((data) => {
+                        const checked = data.map(element => {
+                            return {
+                                courtier: element._id,
+                                email: element.email,
+                                firstName: element.firstName,
+                                lastName: element.lastName,
+                                checked: false
+                            };
+                        });
+                        const courtiers = data;
+                        this.setState({
+                            checked,
+                            courtiers
+                        });
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    });
             })
             .catch((err) => {
-                console.log(err)
+                console.log(err);
             });
     }
 
@@ -202,7 +214,7 @@ class Treatments extends Component {
                     mailPromises.push(
                         axios.post(`${config.nodeUrl}/api/mailer/`, options, {
                             headers: {
-                                'Authorization': `Bearer ${this.token.token}`
+                                'Authorization': `Bearer ${this.state.token.value}`
                             }
                         })
                             .then((data) => {

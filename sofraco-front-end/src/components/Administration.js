@@ -38,74 +38,86 @@ class Administration extends Component {
             toast: false,
             messageToast: [],
             activePage: 1,
-            num: 0
+            num: 0,
+            token: null
         }
         this.getBadge = this.getBadge.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
         this.changeActivePage = this.changeActivePage.bind(this);
         this.fetchCourtiers = this.fetchCourtiers.bind(this);
-        this.token = JSON.parse(localStorage.getItem('token'));
 
     }
 
     componentDidMount() {
-        this.setState({
-            fields: [
-                {
-                    key: 'cabinet',
-                    label: 'Cabinet',
-                    _style: { width: '20%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'firstName',
-                    label: 'Nom',
-                    _style: { width: '15%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'lastName',
-                    label: 'Prénom',
-                    _style: { width: '15%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'email',
-                    label: 'Email',
-                    _style: { width: '20%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'phone',
-                    label: 'Telephone',
-                    _style: { width: '10%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'status',
-                    label: 'Status',
-                    _style: { width: '10%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'show_details',
-                    label: '',
-                    _style: { width: '10%' },
-                    _classes: ['text-center'],
-                    sorter: false,
-                    filter: false
-                }
-            ],
-            toast: false,
-            messageToast: []
-        });
-        this.fetchCourtiers();
+        const user = JSON.parse(localStorage.getItem('user'));
+        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((res) => {
+                this.setState({
+                    fields: [
+                        {
+                            key: 'cabinet',
+                            label: 'Cabinet',
+                            _style: { width: '20%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'firstName',
+                            label: 'Nom',
+                            _style: { width: '15%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'lastName',
+                            label: 'Prénom',
+                            _style: { width: '15%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'email',
+                            label: 'Email',
+                            _style: { width: '20%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'phone',
+                            label: 'Telephone',
+                            _style: { width: '10%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'status',
+                            label: 'Status',
+                            _style: { width: '10%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'show_details',
+                            label: '',
+                            _style: { width: '10%' },
+                            _classes: ['text-center'],
+                            sorter: false,
+                            filter: false
+                        }
+                    ],
+                    toast: false,
+                    messageToast: [],
+                    token: res.data
+                });
+                this.fetchCourtiers();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     fetchCourtiers() {
         axios.get(`${config.nodeUrl}/api/courtier/role/courtier`, {
             headers: {
-                'Authorization': `Bearer ${this.token.token}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((data) => {

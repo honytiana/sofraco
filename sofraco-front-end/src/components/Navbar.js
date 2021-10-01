@@ -28,23 +28,35 @@ class Navbar extends Component {
     }
 
     componentDidMount() {
-        const userId = JSON.parse(localStorage.getItem('token')).userId;
+        const userId = JSON.parse(localStorage.getItem('user'));
         axios.get(`${config.nodeUrl}/api/user/${userId}`, {
             headers: {
                 'Content-Type': 'application/json'
             }
         })
-        .then((res) => {
-            const user = res.data;
-            this.setState({
-                user
-            });
-        })
+            .then((res) => {
+                const user = res.data;
+                this.setState({
+                    user
+                });
+            })
     }
 
     deconnexion() {
-        localStorage.clear();
-        window.location.reload();
+        const user = JSON.parse(localStorage.getItem('user'));
+        axios.delete(`${config.nodeUrl}/api/token/user/${user}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => {
+                console.log('Déconnexion');
+                localStorage.clear();
+                window.location.reload();
+            }).catch((err) => {
+                console.log('Erreur');
+            }).finally(() => {
+            });
     }
 
     render() {
@@ -55,7 +67,7 @@ class Navbar extends Component {
                 }))} />
                 <CNavbarBrand>
                     Sofraco
-                    </CNavbarBrand>
+                </CNavbarBrand>
                 <CCollapse show={this.state.isOpen} navbar>
                     <CNavbarNav>
                         <CNavLink href='/home' >Home</CNavLink>

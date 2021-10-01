@@ -37,57 +37,70 @@ class Correspondance extends Component {
             messageToast: {},
             fields: [],
             ajoutCorrespondance: false,
-            newP: this.props.newP
+            newP: this.props.newP,
+            token: null
         }
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
         this.activerAjoutCorrespondance = this.activerAjoutCorrespondance.bind(this);
         this.fetchCorrespondances = this.fetchCorrespondances.bind(this);
         this.getCompanies = this.getCompanies.bind(this);
-        this.token = JSON.parse(localStorage.getItem('token'));
     }
 
     componentDidMount() {
-        this.fetchCorrespondances();
-        this.getCompanies();
-        this.setState({
-            fields: [
-                {
-                    key: 'company',
-                    label: 'Compagnies',
-                    _style: { width: '20%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'code',
-                    label: 'Code',
-                    _style: { width: '20%' },
-                    _classes: ['text-center']
-                },
-                // {
-                //     key: 'status',
-                //     label: 'Status',
-                //     _style: { width: '10%' },
-                //     _classes: ['text-center']
-                // },
-                {
-                    key: 'edit',
-                    label: '',
-                    _style: { width: '20%' },
-                    _classes: ['text-center'],
-                    sorter: false,
-                    filter: false
-                },
-                // {
-                //     key: 'delete',
-                //     label: '',
-                //     _style: { width: '5%' },
-                //     _classes: ['text-center']
-                // }
-            ],
-            toast: false,
-            messageToast: []
-        });
+        const user = JSON.parse(localStorage.getItem('user'));
+        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((res) => {
+                this.setState({
+                    fields: [
+                        {
+                            key: 'company',
+                            label: 'Compagnies',
+                            _style: { width: '20%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'code',
+                            label: 'Code',
+                            _style: { width: '20%' },
+                            _classes: ['text-center']
+                        },
+                        // {
+                        //     key: 'status',
+                        //     label: 'Status',
+                        //     _style: { width: '10%' },
+                        //     _classes: ['text-center']
+                        // },
+                        {
+                            key: 'edit',
+                            label: '',
+                            _style: { width: '20%' },
+                            _classes: ['text-center'],
+                            sorter: false,
+                            filter: false
+                        },
+                        // {
+                        //     key: 'delete',
+                        //     label: '',
+                        //     _style: { width: '5%' },
+                        //     _classes: ['text-center']
+                        // }
+                    ],
+                    toast: false,
+                    messageToast: [],
+                    token: res.data
+                });
+                this.fetchCorrespondances();
+                this.getCompanies();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        
     }
 
     fetchCorrespondances() {
@@ -95,7 +108,7 @@ class Correspondance extends Component {
         axios.get(`${config.nodeUrl}/api/correspondance/courtier/${courtier._id}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${this.token.token}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((res) => {
@@ -125,7 +138,7 @@ class Correspondance extends Component {
     getCompanies() {
         axios.get(`${config.nodeUrl}/api/company`, {
             headers: {
-                'Authorization': `Bearer ${this.token.token}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((res) => {
@@ -173,7 +186,7 @@ class Correspondance extends Component {
         axios.put(`${config.nodeUrl}/api/correspondance/code/courtier/edit/${this.props.courtier._id}`, options, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token.token}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         }).then((res) => {
             this.setState({
@@ -204,7 +217,7 @@ class Correspondance extends Component {
         axios.delete(`${config.nodeUrl}/api/correspondance/code/courtier/${this.props.courtier._id}/code/${correspondance.code}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token.token}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((res) => {
@@ -265,7 +278,7 @@ class Correspondance extends Component {
         axios.put(`${config.nodeUrl}/api/correspondance/code/courtier/${this.props.courtier._id}`, options, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token.token}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         }).then((res) => {
             this.setState({

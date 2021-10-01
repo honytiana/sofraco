@@ -48,10 +48,39 @@ class Access extends Component {
                 toast: true,
                 messageToast: { header: 'SUCCESS', color: 'success', message: 'Vous êtes connecté' }
             });
-            localStorage.setItem('token', JSON.stringify(data));
+            // localStorage.setItem('token', JSON.stringify(data));
+            localStorage.setItem('user', JSON.stringify(data.userId));
+
             setTimeout(() => {
+                axios.delete(`${config.nodeUrl}/api/token/${data.userId}`, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then((res) => {
+                        this.setState({
+                            toast: true,
+                            messageToast: { header: 'SUCCESS', color: 'success', message: `Déconnexion` }
+                        });
+                    }).catch((err) => {
+                        this.setState({
+                            toast: true,
+                            messageToast: { header: 'ERROR', color: 'danger', message: err }
+                        })
+                    }).finally(() => {
+                        this.setState({
+                            loader: false
+                        });
+                        setTimeout(() => {
+                            this.setState({
+                                toast: false,
+                                messageToast: {}
+                            });
+                        }, 6000);
+                    });
                 localStorage.clear();
             }, data.expiresIn * 3600 * 1000);
+
             window.location.replace(`${config.reactUrl}/home`);
         }).catch((err) => {
             this.setState({

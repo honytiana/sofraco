@@ -24,18 +24,30 @@ class Courtier extends Component {
             courtier: null,
             toast: false,
             messageToast: {},
-            newP: this.props.newP
+            newP: this.props.newP,
+            token: null
         }
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
-        this.token = JSON.parse(localStorage.getItem('token'));
     }
 
     componentDidMount() {
-        this.setState({
-            courtier: this.props.courtier,
-            toast: false,
-            messageToast: {}
-        });
+        const user = JSON.parse(localStorage.getItem('user'));
+        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((res) => {
+                this.setState({
+                    token: res.data,
+                    courtier: this.props.courtier,
+                    toast: false,
+                    messageToast: {}
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     onSubmitHandler(event) {
@@ -58,7 +70,7 @@ class Courtier extends Component {
             axios.put(`${config.nodeUrl}/api/courtier/${this.props.courtier._id}`, options, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.token.token}`
+                    'Authorization': `Bearer ${this.state.token.value}`
                 }
             }).then((res) => {
                 this.setState({

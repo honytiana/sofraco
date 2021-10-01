@@ -47,7 +47,8 @@ class Companies extends Component {
             elementCover: false,
             executionTime: '',
             message: '',
-            progress: 0
+            progress: 0,
+            token: null
         }
         this.getCompanies = this.getCompanies.bind(this);
         this.getDraftDocument = this.getDraftDocument.bind(this);
@@ -57,20 +58,33 @@ class Companies extends Component {
         this.onValiderHandler = this.onValiderHandler.bind(this);
         this.onGenererExcelsMasters = this.onGenererExcelsMasters.bind(this);
         this.onDownloadExcelMasters = this.onDownloadExcelMasters.bind(this);
-        this.token = JSON.parse(localStorage.getItem('token'));
 
     }
 
     componentDidMount() {
-        this.getCompanies();
-        this.loadingHandler();
-        this.getDraftDocument();
+        const user = JSON.parse(localStorage.getItem('user'));
+        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then((res) => {
+            this.setState({
+                token: res.data
+            });
+            this.getCompanies();
+            this.loadingHandler();
+            this.getDraftDocument();
+        })
+        .catch((err) => {
+            console.log(err);
+        });
     }
 
     getDraftDocument() {
         axios.get(`${config.nodeUrl}/api/document`, {
             headers: {
-                'Authorization': `Bearer ${this.token.token}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((data) => {
@@ -104,7 +118,7 @@ class Companies extends Component {
             try {
                 const result = await axios.get(`${config.nodeUrl}/api/company/${draft.company}`, {
                     headers: {
-                        'Authorization': `Bearer ${this.token.token}`
+                        'Authorization': `Bearer ${this.state.token.value}`
                     }
                 });
                 const company = result.data;
@@ -113,7 +127,7 @@ class Companies extends Component {
                         const result = await axios.get(`${config.nodeUrl}/api/company/companySurco/${company.name}`, {
                             headers: {
                                 'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${this.token.token}`
+                                'Authorization': `Bearer ${this.state.token.value}`
                             }
                         });
                         const companyParent = result.data;
@@ -133,7 +147,7 @@ class Companies extends Component {
                         const result = await axios.get(`${config.nodeUrl}/api/company/name/${companySurco}`, {
                             headers: {
                                 'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${this.token.token}`
+                                'Authorization': `Bearer ${this.state.token.value}`
                             }
                         });
                         const info = { company: company, surco: result.data, owner: 'parent' };
@@ -161,7 +175,7 @@ class Companies extends Component {
     loadingHandler() {
         axios.get(`${config.nodeUrl}/api/document`, {
             headers: {
-                'Authorization': `Bearer ${this.token.token}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((data) => {
@@ -187,7 +201,7 @@ class Companies extends Component {
     getCompanies() {
         axios.get(`${config.nodeUrl}/api/company`, {
             headers: {
-                'Authorization': `Bearer ${this.token.token}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((data) => {
@@ -226,13 +240,13 @@ class Companies extends Component {
             for (let draft of this.state.drafts) {
                 const indexOfDraft = this.state.drafts.indexOf(draft);
                 const options = {
-                    userId: this.token.userId,
+                    userId: JSON.parse(localStorage.getItem('user')),
                     document: draft._id
                 }
                 const res = await axios.put(`${config.nodeUrl}/api/document`, options, {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${this.token.token}`
+                        'Authorization': `Bearer ${this.state.token.value}`
                     }
                 });
                 executionTimes.push(res.data.executionTime);
@@ -331,12 +345,12 @@ class Companies extends Component {
             loadGenerateExcelMaster: true
         });
         const options = {
-            userId: this.token.userId
+            userId: JSON.parse(localStorage.getItem('user'))
         }
         axios.post(`${config.nodeUrl}/api/excelMaster`, options, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token.token}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((res) => {
@@ -370,7 +384,7 @@ class Companies extends Component {
         axios.get(`${config.nodeUrl}/api/excelMaster/zip/excels`, {
             headers: {
                 'Content-Type': 'application/zip',
-                'Authorization': `Bearer ${this.token.token}`
+                'Authorization': `Bearer ${this.state.token.value}`
             },
             responseType: 'blob'
         })
