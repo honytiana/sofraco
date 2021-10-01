@@ -1,27 +1,71 @@
 const path = require('path');
+const nodemailer = require('nodemailer');
+const ejs = require('ejs');
 const Imap = require('node-imap');
 const inspect = require('util').inspect;
 const fs = require('fs');
 const { Base64Decode } = require('base64-stream')
 
-const config = require('../../config.json');
-const mailManagement = require('../services/mail/mailManagement');
+const config = require('../../../config.json');
+const excelMasterHandler = require('../../handlers/excelMasterHandler');
+const filesService = require('../document/files');
 
+const transporter = nodemailer.createTransport({
+    pool: true,
+    host: config.infomaniakHost,
+    port: 587,
+    secure: false,
+    requireTLS: true,
+    auth: {
+        user: config.mailSenderInfomaniak,
+        pass: config.mailPassInfomaniak
+    }
+});
 
-exports.sendMail = async (req, res) => {
-    console.log('Send email');
+exports.sendMail = async (emailDestination, data, courtier, year, month) => {
     try {
-        const emailDestination = req.body.email;
-        const data = {
-            firstName: req.body.firstName,
-            lastName: req.body.lastName
+        if (emailDestination !== '') {
+            const excelMasters = await excelMasterHandler.getExcelMastersCourtierByYearMonth(courtier, year, month, 'zip');
+            if (excelMasters.length > 0) {
+                ejs.renderFile(path.join(__dirname, '..', '..', 'views', 'mail.ejs'), { data: data }, async (err, str) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        let attachments = [];
+                        for (let excelMaster of excelMasters) {
+                            const attachementPath = excelMaster.path;
+                            const fileNameAttachement = filesService.getFileName(attachementPath);
+                            attachments.push({
+                                filename: fileNameAttachement,
+                                path: attachementPath
+                            });
+                        }
+                        const mailOptions = {
+                            from: config.mailSenderInfomaniak,
+                            to: emailDestination,
+                            subject: `VOS COMMISSIONS DU MOIS`,
+                            html: str,
+                            bcc: config.mailSenderInfomaniak,
+                            attachments
+                        };
+
+                        transporter.sendMail(mailOptions, (err, info) => {
+                            if (err) {
+                                console.log(err);
+                                throw err;
+                            } else {
+                                console.log('Email sent: ' + info.accepted[0]);
+                                return info;
+                            }
+                        });
+                    }
+                });
+            }
         }
-        const info = await mailManagement.sendMail(emailDestination, data, req.body.courtier, req.body.year, req.body.month);
-        res.status(200).send();
     } catch (err) {
         throw err;
     }
-}
+};
 
 const imap = new Imap({
     user: config.mailSenderInfomaniak,

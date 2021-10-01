@@ -188,6 +188,7 @@ class Treatments extends Component {
                 messageToast: mt
             });
         } else {
+            let mailPromises = [];
             for (let courtier of this.state.checked) {
                 if (courtier.checked) {
                     const options = {
@@ -198,45 +199,49 @@ class Treatments extends Component {
                         month: this.state.month,
                         year: this.state.year
                     };
-
-                    axios.post(`${config.nodeUrl}/api/mailer/`, options, {
-                        headers: {
-                            'Authorization': `Bearer ${this.token.token}`
-                        }
-                    })
-                        .then((data) => {
-                            let mt = this.state.messageToast.slice();
-                            mt.push({
-                                header: 'SUCCESS',
-                                color: 'success',
-                                message: `Le mail à été envoyé aux courtiers ${data.data.accepted[0]}`
-                            });
-                            this.setState({
-                                toast: true,
-                                messageToast: mt
-                            });
-                        }).catch((err) => {
-                            let mt = this.state.messageToast.slice();
-                            mt.push({
-                                header: 'ERROR',
-                                color: 'danger',
-                                message: err
-                            });
-                            this.setState({
-                                toast: true,
-                                messageToast: mt
+                    mailPromises.push(
+                        axios.post(`${config.nodeUrl}/api/mailer/`, options, {
+                            headers: {
+                                'Authorization': `Bearer ${this.token.token}`
+                            }
+                        })
+                            .then((data) => {
+                            }).catch((err) => {
+                            }).finally(() => {
                             })
-                        }).finally(() => {
-                            setTimeout(() => {
-                                this.setState({
-                                    toast: false,
-                                    messageToast: []
-                                });
-                            }, 10000);
-                        });
+                    );
                 }
 
             }
+            Promise.all(mailPromises)
+                .then(() => {
+                    this.setState({
+                        toast: true,
+                        messageToast: {
+                            header: 'SUCCESS',
+                            color: 'success',
+                            message: `Les emails ont été envoyé aux courtiers`
+                        }
+                    });
+                })
+                .catch((err) => {
+                    this.setState({
+                        toast: true,
+                        messageToast: {
+                            header: 'ERROR',
+                            color: 'danger',
+                            message: err
+                        }
+                    })
+                })
+                .finally(() => {
+                    setTimeout(() => {
+                        this.setState({
+                            toast: false,
+                            messageToast: {}
+                        })
+                    }, 10000)
+                });
         }
     }
 
