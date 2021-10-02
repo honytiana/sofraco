@@ -61,7 +61,7 @@ class Administration extends Component {
                         {
                             key: 'cabinet',
                             label: 'Cabinet',
-                            _style: { width: '20%' },
+                            _style: { width: '30%' },
                             _classes: ['text-center']
                         },
                         {
@@ -176,6 +176,7 @@ class Administration extends Component {
                     itemsPerPage={10}
                     hover
                     sorter
+                    size={'sm'}
                     pagination={{
                         className: 'sofraco-pagination'
                     }}

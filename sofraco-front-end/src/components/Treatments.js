@@ -29,7 +29,7 @@ class Treatments extends Component {
             courtiers: [],
             fields: [],
             toast: false,
-            messageToast: [],
+            messageToast: null,
             month: null,
             year: null,
             token: null
@@ -56,7 +56,7 @@ class Treatments extends Component {
                     fields: [
                         {
                             key: 'check',
-                            label: <CInputCheckbox onChange={() => this.onCheckAllHandler()} />,
+                            label: <input type="checkbox" onChange={() => this.onCheckAllHandler()} />,
                             _style: { width: '10%' },
                             _classes: ['text-center'],
                             sorter: false,
@@ -65,19 +65,19 @@ class Treatments extends Component {
                         {
                             key: 'cabinet',
                             label: 'Cabinet',
-                            _style: { width: '10%' },
+                            _style: { width: '30%' },
                             _classes: ['text-center']
                         },
                         {
                             key: 'firstName',
                             label: 'Nom',
-                            _style: { width: '20%' },
+                            _style: { width: '15%' },
                             _classes: ['text-center']
                         },
                         {
                             key: 'lastName',
                             label: 'Prénom',
-                            _style: { width: '20%' },
+                            _style: { width: '15%' },
                             _classes: ['text-center']
                         },
                         {
@@ -92,14 +92,14 @@ class Treatments extends Component {
                             _style: { width: '10%' },
                             _classes: ['text-center']
                         },
-                        {
-                            key: 'show_details',
-                            label: '',
-                            _style: { width: '10%' },
-                            _classes: ['text-center'],
-                            sorter: false,
-                            filter: false
-                        }
+                        // {
+                        //     key: 'show_details',
+                        //     label: '',
+                        //     _style: { width: '10%' },
+                        //     _classes: ['text-center'],
+                        //     sorter: false,
+                        //     filter: false
+                        // }
                     ],
                     toast: false,
                     messageToast: [],
@@ -117,6 +117,7 @@ class Treatments extends Component {
                         const checked = data.map(element => {
                             return {
                                 courtier: element._id,
+                                cabinet: element.cabinet,
                                 email: element.email,
                                 firstName: element.firstName,
                                 lastName: element.lastName,
@@ -321,21 +322,22 @@ class Treatments extends Component {
                     </CSelect>
                 </div>
                 <CDataTable
-                    items={this.state.courtiers}
+                    items={this.state.checked}
                     fields={this.state.fields}
                     columnFilter
                     tableFilter={{ label: 'Recherche', placeholder: '...' }}
                     itemsPerPageSelect={{ label: 'Nombre de courtiers par page' }}
-                    itemsPerPage={10}
+                    itemsPerPage={20}
                     hover
                     sorter
                     pagination={{ className: 'sofraco-pagination' }}
+                    size={'sm'}
                     scopedSlots={{
                         'check':
                             (item, index) => {
                                 return (
                                     <td className="text-center" >
-                                        <CInputCheckbox id={`courtier${index}`} key="" className="sofraco-checkbox" onChange={(e) => {
+                                        <CInputCheckbox type="checkbox" checked={item.checked} id={`courtier${index}`} key="" className="sofraco-checkbox" onChange={(e) => {
                                             this.onCheckHandler(e, item, index)
                                         }} />
                                     </td>
@@ -349,34 +351,34 @@ class Treatments extends Component {
                                     </CBadge>
                                 </td>
                             ),
-                        'show_details':
-                            (item, index) => {
-                                return (
-                                    <td className="py-2">
-                                        <CButton
-                                            color="warning"
-                                            variant="outline"
-                                            shape="square"
-                                            size="sm"
-                                            onClick={() => { this.toggleDetails(index) }}
-                                        >
-                                            {this.state.details.includes(index) ? 'Cacher' : 'Afficher'}
-                                        </CButton>
-                                    </td>
-                                )
-                            },
-                        'details':
-                            (item, index) => {
-                                return (
-                                    <CCollapse show={this.state.details.includes(index)}>
-                                        <CCardBody>
-                                            <h4>
-                                                {item.firstName}
-                                            </h4>
-                                        </CCardBody>
-                                    </CCollapse>
-                                )
-                            }
+                        // 'show_details':
+                        //     (item, index) => {
+                        //         return (
+                        //             <td className="py-2">
+                        //                 <CButton
+                        //                     color="warning"
+                        //                     variant="outline"
+                        //                     shape="square"
+                        //                     size="sm"
+                        //                     onClick={() => { this.toggleDetails(index) }}
+                        //                 >
+                        //                     {this.state.details.includes(index) ? 'Cacher' : 'Afficher'}
+                        //                 </CButton>
+                        //             </td>
+                        //         )
+                        //     },
+                        // 'details':
+                        //     (item, index) => {
+                        //         return (
+                        //             <CCollapse show={this.state.details.includes(index)}>
+                        //                 <CCardBody>
+                        //                     <h4>
+                        //                         {item.firstName}
+                        //                     </h4>
+                        //                 </CCardBody>
+                        //             </CCollapse>
+                        //         )
+                        //     }
                     }
                     }
                 />
