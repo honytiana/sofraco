@@ -56,7 +56,7 @@ class Treatments extends Component {
                     fields: [
                         {
                             key: 'check',
-                            label: <input type="checkbox" onChange={() => this.onCheckAllHandler()} />,
+                            label: <input type="checkbox" onChange={(e) => this.onCheckAllHandler(e)} />,
                             _style: { width: '10%' },
                             _classes: ['text-center'],
                             sorter: false,
@@ -162,8 +162,7 @@ class Treatments extends Component {
         })
     }
 
-    onCheckHandler(e, item, index) {
-        console.log(e.target);
+    onCheckHandler(e, item) {
         this.state.checked.forEach((element, index) => {
             if (element.firstName === item.firstName && element.lastName === item.lastName) {
                 let newChecked = this.state.checked.slice();
@@ -175,10 +174,10 @@ class Treatments extends Component {
         })
     }
 
-    onCheckAllHandler() {
+    onCheckAllHandler(e) {
         this.state.checked.forEach((element, index) => {
             let newChecked = this.state.checked.slice();
-            newChecked[index].checked = !this.state.checked[index].checked;
+            newChecked[index].checked = (e.target.checked) ? true : false;
             this.setState({
                 checked: newChecked
             });

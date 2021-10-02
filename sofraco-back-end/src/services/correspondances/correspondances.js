@@ -5,8 +5,9 @@ const fs = require('fs');
 const path = require('path');
 const time = require('../time/time');
 const fileService = require('../document/files');
-const axios = require('axios');
 const config = require('../../../config.json');
+const companyHandler = require('../../handlers/companyHandler');
+const courtierHandler = require('../../handlers/courtierHandler');
 
 exports.readExcelTableauCorrespondance = async (authorization, role) => {
     const file = path.join(__dirname, '..', '..', '..', 'documents', `${role}.xlsx`);
@@ -26,18 +27,8 @@ exports.readExcelTableauCorrespondance = async (authorization, role) => {
         const correspondancefile = fs.readFileSync(filePath);
         await workbook.xlsx.load(correspondancefile);
         const worksheets = workbook.worksheets;
-        const resultCourtiers = await axios.get(`${config.nodeUrl}/api/courtier`, {
-            headers: {
-                'Authorization': `${authorization}`
-            }
-        });
-        const courtiers = resultCourtiers.data;
-        const resultCompanies = await axios.get(`${config.nodeUrl}/api/company`, {
-            headers: {
-                'Authorization': `${authorization}`
-            }
-        });
-        const comp = resultCompanies.data;
+        const courtiers = await courtierHandler.getCourtiers();
+        const comp = await companyHandler.getCompanies();
         let courtier;
         let role_courtier;
         for (let worksheet of worksheets) {
