@@ -1,6 +1,7 @@
 const Tokens = require('../models/tokens');
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 class TokensHandler {
 
@@ -25,12 +26,12 @@ class TokensHandler {
     }
 
     async checkToken(userId, value) {
-        const tk = await Tokens.findOne({ userID: userId });
+        const tk = await Tokens.findOne({ userId: userId });
         if (!tk) {
             throw 'Token not found';
         }
 
-        const isValid = await bcrypt.compare(value, tk.value);
+        const isValid = (value === tk.value) ? true : false;
         if (!isValid) {
             throw "value doesn't match";
         }

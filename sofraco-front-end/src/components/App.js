@@ -16,6 +16,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      token: null
     }
 
   }
@@ -47,12 +48,34 @@ class App extends Component {
       localStorage.clear();
     });
 
-    // if (localStorage.getItem('token') !== null) {
-    //   const expiresIn = JSON.parse(localStorage.getItem('token')).expiresIn;
-    //   setTimeout(() => {
-    //     localStorage.clear();
-    //   }, expiresIn * 3600 * 1000);
-    // }
+    const user = JSON.parse(localStorage.getItem('user'));
+    axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((res) => {
+        this.setState({
+          token: res.data
+        });
+        axios.get(`${config.nodeUrl}/api/token/user/${user}/token/${this.state.token.value}`, {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        })
+          .then((res) => {
+            console.log(res);
+
+          })
+          .catch((err) => {
+            localStorage.clear();
+            window.location.reload();
+          });
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   render() {
