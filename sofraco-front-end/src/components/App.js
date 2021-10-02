@@ -68,8 +68,19 @@ class App extends Component {
 
           })
           .catch((err) => {
-            localStorage.clear();
-            window.location.reload();
+            axios.delete(`${config.nodeUrl}/api/token/user/${user}`, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then((res) => {
+                    console.log('Déconnexion');
+                    localStorage.clear();
+                    window.location.reload();
+                }).catch((err) => {
+                    console.log('Erreur');
+                }).finally(() => {
+                });
           });
 
       })
