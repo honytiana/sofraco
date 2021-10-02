@@ -299,6 +299,7 @@ class Treatments extends Component {
                         label="Année"
                         className="sofraco-select-filtre"
                         onChange={(e) => this.onChangeSelectFilterYearHandler(e)}
+                        style={{display: "inline-block"}}
                     >
                         <option>Selectionnez une année</option>
                         {years.map((year, index) => {
@@ -311,6 +312,7 @@ class Treatments extends Component {
                         label="Mois"
                         className="sofraco-select-filtre"
                         onChange={(e) => this.onChangeSelectFilterMonthHandler(e)}
+                        style={{display: "inline-block"}}
                     >
                         <option>Selectionnez le mois</option>
                         {months.map((month, index) => {
