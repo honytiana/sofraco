@@ -13,6 +13,10 @@
     /* margin: auto; */
 }
 
+.sofraco-company-card {
+    cursor: pointer;
+}
+
 .sofraco-company-container {
     width: 50%;
     border-radius: 0 !important;

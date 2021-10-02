@@ -216,7 +216,7 @@ class Administration extends Component {
                                     >
                                         <CModalHeader closeButton>{item.cabinet}</CModalHeader>
                                         <CModalBody>
-                                            <CTabs activeTab="mandataires">
+                                            <CTabs activeTab="courtier">
                                                 <CNav variant="tabs">
                                                     <CNavItem>
                                                         <CNavLink data-tab="courtier">
