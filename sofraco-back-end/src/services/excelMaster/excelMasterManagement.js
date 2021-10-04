@@ -17,6 +17,7 @@ const excelMasterGENERALI = require('./excelMasterGENERALI');
 const excelMasterHODEVA = require('./excelMasterHODEVA');
 const excelMasterLOURMEL = require('./excelMasterLOURMEL');
 const excelMasterMETLIFE = require('./excelMasterMETLIFE');
+const excelMasterMILTIS = require('./excelMasterMILTIS');
 const excelMasterMMA = require('./excelMasterMMA');
 const excelMasterSPVIE = require('./excelMasterSPVIE');
 const excelMasterSWISSLIFE = require('./excelMasterSWISSLIFE');
@@ -91,6 +92,9 @@ const getOCRInfos = async (authorization) => {
                 break;
             case 'METLIFE':
                 infos.push(excelMasterMETLIFE.getOCRMETLIFE(ocr));
+                break;
+            case 'MILTIS':
+                infos.push(excelMasterMILTIS.getOCRMILTIS(ocr));
                 break;
             case 'MMA':
                 infos.push(excelMasterMMA.getOCRMMA(ocr));
@@ -252,6 +256,9 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
                                 break;
                             case 'METLIFE':
                                 excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, ocr);
+                                break;
+                            case 'MILTIS':
+                                excelMasterMILTIS.createWorkSheetMILTIS(workSheet, ocr);
                                 break;
                             case 'MMA':
                                 excelMasterMMA.createWorkSheetMMA(workSheet, ocr);
