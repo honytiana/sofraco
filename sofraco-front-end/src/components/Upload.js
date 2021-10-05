@@ -166,8 +166,11 @@ class Upload extends Component {
             case 'METLIFE':
                 this.testExtension(extension, 'PDF', false, file);
                 break;
-            case 'MIEL MUTUELLE':
+            case 'MIEL MUTUELLE': // 'MIEL CREASIO'
                 this.testExtension(extension, 'XLSX', false, file);
+                break;
+            case 'MIEL MCMS':
+                this.testExtension(extension, 'XLSX', true, file);
                 break;
             case 'MILTIS':
                 this.testExtension(extension, 'XLSX', false, file);

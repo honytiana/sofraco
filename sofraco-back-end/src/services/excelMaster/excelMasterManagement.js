@@ -94,8 +94,11 @@ const getOCRInfos = async (authorization) => {
             case 'METLIFE':
                 infos.push(excelMasterMETLIFE.getOCRMETLIFE(ocr));
                 break;
-            case 'MIEL MUTUELLE':
-                infos.push(excelMasterMIEL.getOCRMIEL(ocr));
+            case 'MIEL CREASIO':
+                infos.push(excelMasterMIEL.getOCRMIEL(ocr, 'CREASIO'));
+                break;
+            case 'MIEL MCMS':
+                infos.push(excelMasterMIEL.getOCRMIEL(ocr, 'MCMS'));
                 break;
             case 'MILTIS':
                 infos.push(excelMasterMILTIS.getOCRMILTIS(ocr));
@@ -261,8 +264,11 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
                             case 'METLIFE':
                                 excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, ocr);
                                 break;
-                            case 'MIEL MUTUELLE':
-                                excelMasterMIEL.createWorkSheetMIEL(workSheet, ocr);
+                            case 'MIEL CREASIO':
+                                excelMasterMIEL.createWorkSheetMIELCREASIO(workSheet, ocr);
+                                break;
+                            case 'MIEL MCMS':
+                                excelMasterMIEL.createWorkSheetMIELMCMS(workSheet, ocr);
                                 break;
                             case 'MILTIS':
                                 excelMasterMILTIS.createWorkSheetMILTIS(workSheet, ocr);

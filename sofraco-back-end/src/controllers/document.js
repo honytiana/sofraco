@@ -163,8 +163,11 @@ exports.updateDocument = async (req, res) => {
             case 'METLIFE':
                 ocr = await documentMETLIFE.readPdfMETLIFE(req.body.filePath);
                 break;
-            case 'MIEL':
-                ocr = await documentMIEL.readExcelMIEL(req.body.filePath);
+            case 'MIEL CREASIO': //'MUTUELLE'
+                ocr = await documentMIEL.readExcelMIELCREASIO(req.body.filePath);
+                break;
+            case 'MIEL MCMS':
+                ocr = await documentMIEL.readExcelMIELMCMS(req.body.filePath);
                 break;
             case 'MILTIS':
                 ocr = await documentMILTIS.readExcelMILTIS(req.body.filePath);
