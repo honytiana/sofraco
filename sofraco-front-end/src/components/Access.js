@@ -12,7 +12,6 @@ import {
     CToast,
     CToastHeader,
     CToastBody,
-    CCardTitle,
     CCardHeader
 } from '@coreui/react';
 import axios from 'axios';

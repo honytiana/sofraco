@@ -4,8 +4,6 @@ import {
     CDataTable,
     CBadge,
     CButton,
-    CCollapse,
-    CCardBody,
     CInputCheckbox,
     CToaster,
     CToast,

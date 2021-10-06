@@ -7,7 +7,6 @@ import {
     CToaster,
     CButton,
     CDataTable,
-    CBadge,
     CModal,
     CModalHeader,
     CModalBody,

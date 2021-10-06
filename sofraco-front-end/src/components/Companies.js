@@ -477,6 +477,7 @@ class Companies extends Component {
                                                                 }
                                                             }
                                                         }
+                                                        return (<span key={`${company._id}_Spanf`}></span>);
                                                     })}
                                                 </CCardFooter>
                                             </CCard>
