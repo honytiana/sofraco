@@ -20,6 +20,7 @@ const excelMasterMETLIFE = require('./excelMasterMETLIFE');
 const excelMasterMIEL = require('./excelMasterMIEL');
 const excelMasterMILTIS = require('./excelMasterMILTIS');
 const excelMasterMMA = require('./excelMasterMMA');
+const excelMasterPAVILLON = require('./excelMasterPAVILLON');
 const excelMasterSPVIE = require('./excelMasterSPVIE');
 const excelMasterSWISSLIFE = require('./excelMasterSWISSLIFE');
 const excelMasterUAFLIFE = require('./excelMasterUAFLIFE');
@@ -105,6 +106,12 @@ const getOCRInfos = async (authorization) => {
                 break;
             case 'MMA':
                 infos.push(excelMasterMMA.getOCRMMA(ocr));
+                break;
+            case 'PAVILLON ACTIO':
+                infos.push(excelMasterPAVILLON.getOCRPAVILLON(ocr, 'ACTIO'));
+                break;
+            case 'PAVILLON MCMS':
+                infos.push(excelMasterPAVILLON.getOCRPAVILLON(ocr, 'MCMS'));
                 break;
             case 'SLADE':   // swisslife
                 infos.push(excelMasterSWISSLIFE.getOCRSLADE(ocr));
@@ -275,6 +282,12 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
                                 break;
                             case 'MMA':
                                 excelMasterMMA.createWorkSheetMMA(workSheet, ocr);
+                                break;
+                            case 'PAVILLON ACTIO':
+                                excelMasterPAVILLON.createWorkSheetPAVILLON(workSheet, ocr);
+                                break;
+                            case 'PAVILLON MCMS':
+                                excelMasterPAVILLON.createWorkSheetPAVILLONMCMS(workSheet, ocr);
                                 break;
                             case 'SLADE':   // SWISSLIFE
                                 excelMasterSWISSLIFE.createWorkSheetSLADE(workSheet, ocr);

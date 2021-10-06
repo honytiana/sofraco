@@ -551,13 +551,29 @@
         "phone": "+3300330000",
         "website": "pavillonprevoyance.com",
         "is_enabled": true,
-        "name": "PAVILLON PREVOYANCE",
+        "name": "PAVILLON ACTIO",
         "globalName": "PAVILLON PREVOYANCE",
-        "logo": "/backend/documents/logos/company.png",
+        "logo": "/backend/documents/logos/pavillon_prevoyance.png",
+        "creation_date": "2010-12-02T00:00:00.000Z",
+        "surco": true,
+        "companySurco": "PAVILLON MCMS",
+        "type": "simple"
+    },
+    {
+        "address": "France",
+        "zip": "",
+        "city": "France",
+        "country": "France",
+        "phone": "+3300330000",
+        "website": "pavillonprevoyance.com",
+        "is_enabled": true,
+        "name": "PAVILLON MCMS",
+        "globalName": "PAVILLON PREVOYANCE",
+        "logo": "/backend/documents/logos/pavillon_prevoyance.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
         "companySurco": "",
-        "type": "simple"
+        "type": "surco"
     },
     {
         "address": "France",

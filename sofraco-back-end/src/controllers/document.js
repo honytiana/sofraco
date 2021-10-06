@@ -19,6 +19,7 @@ const documentMETLIFE = require('../services/document/documentMETLIFE');
 const documentMIEL = require('../services/document/documentMIEL');
 const documentMILTIS = require('../services/document/documentMILTIS');
 const documentMMA = require('../services/document/documentMMA');
+const documentPAVILLON = require('../services/document/documentPAVILLON');
 const documentSPVIE = require('../services/document/documentSPVIE');
 const documentSWISSLIFE = require('../services/document/documentSWISSLIFE');
 const documentUAFLIFE = require('../services/document/documentUAFLIFE');
@@ -174,6 +175,12 @@ exports.updateDocument = async (req, res) => {
                 break;
             case 'MMA':
                 ocr = await documentMMA.readExcelMMA(req.body.filePath);
+                break;
+            case 'PAVILLON ACTIO': //'PAVILLON PREVOYANCE'
+                ocr = await documentPAVILLON.readExcelPAVILLON(req.body.filePath);
+                break;
+            case 'PAVILLON MCMS':
+                ocr = await documentPAVILLON.readExcelPAVILLONMCMS(req.body.filePath);
                 break;
             case 'SLADE':   // SWISSLIFE
                 ocr = await documentSWISSLIFE.readPdfSLADE(req.body.filePath);

@@ -178,6 +178,12 @@ class Upload extends Component {
             case 'MMA':
                 this.testExtension(extension, 'XLSX', false, file);
                 break;
+            case 'PAVILLON PREVOYANCE': // PAVILLON ACTIO
+                this.testExtension(extension, 'XLSX', false, file);
+                break;
+            case 'PAVILLON MCMS':
+                this.testExtension(extension, 'XLSX', true, file);
+                break;
             case 'SPVIE':
                 this.testExtension(extension, 'XLSX', false, file);
                 break;
