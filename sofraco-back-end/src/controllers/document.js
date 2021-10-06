@@ -16,6 +16,7 @@ const documentGENERALI = require('../services/document/documentGENERALI');
 const documentHODEVA = require('../services/document/documentHODEVA');
 const documentLOURMEL = require('../services/document/documentLOURMEL');
 const documentMETLIFE = require('../services/document/documentMETLIFE');
+const documentMIE = require('../services/document/documentMIE');
 const documentMIEL = require('../services/document/documentMIEL');
 const documentMILTIS = require('../services/document/documentMILTIS');
 const documentMMA = require('../services/document/documentMMA');
@@ -163,6 +164,12 @@ exports.updateDocument = async (req, res) => {
                 break;
             case 'METLIFE':
                 ocr = await documentMETLIFE.readPdfMETLIFE(req.body.filePath);
+                break;
+            case 'MIE ACTIOM': //'MUTUELLE'
+                ocr = await documentMIE.readExcelMIE(req.body.filePath);
+                break;
+            case 'MIE MCMS':
+                ocr = await documentMIE.readExcelMIEMCMS(req.body.filePath);
                 break;
             case 'MIEL CREASIO': //'MUTUELLE'
                 ocr = await documentMIEL.readExcelMIELCREASIO(req.body.filePath);

@@ -18,6 +18,7 @@ const excelMasterHODEVA = require('./excelMasterHODEVA');
 const excelMasterLOURMEL = require('./excelMasterLOURMEL');
 const excelMasterMETLIFE = require('./excelMasterMETLIFE');
 const excelMasterMIEL = require('./excelMasterMIEL');
+const excelMasterMIE = require('./excelMasterMIE');
 const excelMasterMILTIS = require('./excelMasterMILTIS');
 const excelMasterMMA = require('./excelMasterMMA');
 const excelMasterPAVILLON = require('./excelMasterPAVILLON');
@@ -94,6 +95,12 @@ const getOCRInfos = async (authorization) => {
                 break;
             case 'METLIFE':
                 infos.push(excelMasterMETLIFE.getOCRMETLIFE(ocr));
+                break;
+            case 'MIE ACTIOM':
+                infos.push(excelMasterMIE.getOCRMIE(ocr, 'ACTIOM'));
+                break;
+            case 'MIE MCMS':
+                infos.push(excelMasterMIE.getOCRMIE(ocr, 'MCMS'));
                 break;
             case 'MIEL CREASIO':
                 infos.push(excelMasterMIEL.getOCRMIEL(ocr, 'CREASIO'));
@@ -270,6 +277,12 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
                                 break;
                             case 'METLIFE':
                                 excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, ocr);
+                                break;
+                            case 'MIE CREASIO':
+                                excelMasterMIE.createWorkSheetMIE(workSheet, ocr);
+                                break;
+                            case 'MIE MCMS':
+                                excelMasterMIE.createWorkSheetMIEMCMS(workSheet, ocr);
                                 break;
                             case 'MIEL CREASIO':
                                 excelMasterMIEL.createWorkSheetMIELCREASIO(workSheet, ocr);

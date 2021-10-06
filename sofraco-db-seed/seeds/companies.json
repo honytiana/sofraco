@@ -439,13 +439,29 @@
         "phone": "+3300270000",
         "website": "mie.com",
         "is_enabled": true,
-        "name": "MIE",
+        "name": "MIE ACTIOM",
         "globalName": "MIE",
-        "logo": "/backend/documents/logos/company.png",
+        "logo": "/backend/documents/logos/mie.png",
+        "creation_date": "2010-12-02T00:00:00.000Z",
+        "surco": true,
+        "companySurco": "MIE MCMS",
+        "type": "simple"
+    },
+    {
+        "address": "France",
+        "zip": "",
+        "city": "France",
+        "country": "France",
+        "phone": "+3300270000",
+        "website": "mie.com",
+        "is_enabled": true,
+        "name": "MIE MCMS",
+        "globalName": "MIE",
+        "logo": "/backend/documents/logos/mie.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
         "companySurco": "",
-        "type": "simple"
+        "type": "surco"
     },
     {
         "address": "France",
@@ -459,7 +475,7 @@
         "globalName": "MIEL MUTUELLE",
         "logo": "/backend/documents/logos/miel.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
-        "surco": false,
+        "surco": true,
         "companySurco": "MIEL MCMS",
         "type": "simple"
     },
@@ -475,7 +491,7 @@
         "globalName": "MIEL MUTUELLE",
         "logo": "/backend/documents/logos/miel.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
-        "surco": true,
+        "surco": false,
         "companySurco": "",
         "type": "surco"
     },
