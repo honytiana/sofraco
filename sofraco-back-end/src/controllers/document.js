@@ -29,9 +29,13 @@ exports.createDocument = (req, res) => {  // create document
     console.log('Create document');
     try {
         const company = JSON.parse(req.body.company);
-        const companySurco = JSON.parse(req.body.companySurco);
+        let companySurco;
+        if (req.body.companySurco !== 'undefined') {
+            companySurco = JSON.parse(req.body.companySurco);
+        }
         const surco = JSON.parse(req.body.surco);
-        if (company.surco && surco && companySurco !== null && req.files.length > 1) {  // company and surco
+        const mcms = JSON.parse(req.body.mcms);
+        if (company.surco && surco && companySurco && req.files.length > 1) {  // company and surco
             let document = {};
             const fileName = fileService.getFileName(req.files[0].path);
             document.name = fileName;
@@ -48,7 +52,8 @@ exports.createDocument = (req, res) => {  // create document
             documentSurco.path_original_file = req.files[1].path;
             documentSurco.type = req.body.extension;
             const docSurco = documentHandler.createDocument(documentSurco);
-        } else if (company.surco && surco && companySurco !== null && req.files.length === 1) { // surco
+        } 
+        if (company.surco && surco && companySurco && req.files.length === 1) { // surco
             let document = {};
             const fileName = fileService.getFileName(req.files[0].path);
             document.name = fileName;
@@ -57,7 +62,8 @@ exports.createDocument = (req, res) => {  // create document
             document.path_original_file = req.files[0].path;
             document.type = req.body.extension;
             const doc = documentHandler.createDocument(document);
-        } else if ((company.surco && !surco) || (!company.surco && !surco)) {     // company
+        } 
+        if (((company.surco && !surco) || (!company.surco && !surco)) && !mcms) {     // company
             let document = {};
             const fileName = fileService.getFileName(req.files[0].path);
             document.name = fileName;
@@ -66,6 +72,18 @@ exports.createDocument = (req, res) => {  // create document
             document.path_original_file = req.files[0].path;
             document.type = req.body.extension;
             const doc = documentHandler.createDocument(document);
+        }
+        if (mcms) { // MCMS 
+            for (let file of req.files) {
+                let document = {};
+                const fileName = fileService.getFileName(file.path);
+                document.name = fileName;
+                document.company = company._id;
+                document.companyName = company.name;
+                document.path_original_file = file.path;
+                document.type = req.body.extension;
+                const doc = documentHandler.createDocument(document);
+            }
         }
         res.status(200).end('Sent to Server');
     } catch (err) {
@@ -183,11 +201,8 @@ exports.updateDocument = async (req, res) => {
             case 'MMA':
                 ocr = await documentMMA.readExcelMMA(req.body.filePath);
                 break;
-            case 'PAVILLON ACTIO': //'PAVILLON PREVOYANCE'
+            case 'PAVILLON PREVOYANCE': //'MCMS'
                 ocr = await documentPAVILLON.readExcelPAVILLON(req.body.filePath);
-                break;
-            case 'PAVILLON MCMS':
-                ocr = await documentPAVILLON.readExcelPAVILLONMCMS(req.body.filePath);
                 break;
             case 'SLADE':   // SWISSLIFE
                 ocr = await documentSWISSLIFE.readPdfSLADE(req.body.filePath);

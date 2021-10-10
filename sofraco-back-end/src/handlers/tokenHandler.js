@@ -46,6 +46,10 @@ class TokensHandler {
         return Tokens.findOne({ userId: userId });
     }
 
+    getTokens(userId) {
+        return Tokens.find({});
+    }
+
     removeTokenById(id) {
         return Tokens.findByIdAndRemove(id);
     }

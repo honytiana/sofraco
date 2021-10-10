@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import '@coreui/coreui/dist/css/coreui.min.css';
 import { CContainer } from '@coreui/react';
-import { io } from 'socket.io-client';
+// import { io } from 'socket.io-client';
 
 import axios from 'axios';
 import Navbar from './Navbar';

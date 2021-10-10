@@ -85,12 +85,31 @@ class Upload extends Component {
             loader: true
         });
         const formData = new FormData();
-        formData.append('files', this.state.files);
-        formData.append('files', this.state.filesSurco);
+        for (let file of this.state.files) {
+            formData.append('files', file);
+        }
+        if (this.state.filesSurco !== null) {
+            for (let fileSurco of this.state.filesSurco) {
+                formData.append('files', fileSurco);
+            }
+        }
+        const company = {
+            _id: this.props.company._id,
+            name: this.props.company.name,
+            surco: this.props.company.surco,
+        }
+        let companySurco;
+        if (this.props.companySurco) {
+            companySurco = {
+                _id: this.props.companySurco._id,
+                name: this.props.companySurco.name,
+            }
+        }
         formData.append('surco', JSON.stringify(this.state.filesSurco ? true : false));
+        formData.append('mcms', JSON.stringify(this.props.company.mcms ? true : false));
         formData.append('user', '');
-        formData.append('company', JSON.stringify(this.props.company));
-        formData.append('companySurco', JSON.stringify(this.state.companySurco));
+        formData.append('company', JSON.stringify(company));
+        formData.append('companySurco', JSON.stringify(companySurco));
         axios.post(`${config.nodeUrl}/api/document/`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -121,6 +140,7 @@ class Upload extends Component {
 
     onChangeHandler(event, companyName) {
         event.preventDefault();
+        const files = event.target.files;
         const file = event.target.files[0];
         const fileName = file.name;
         const fileNameArray = fileName.split('.');
@@ -128,79 +148,76 @@ class Upload extends Component {
         const company = companyName;
         switch (company.toUpperCase()) {
             case 'APICIL':
-                this.testExtension(extension, 'XLSX', false, file);
+                this.testExtension(extension, 'XLSX', false, files);
                 break;
             case 'APIVIA':
-                this.testExtension(extension, 'PDF', false, file);
+                this.testExtension(extension, 'PDF', false, files);
                 break;
             case 'APREP':
-                this.testExtension(extension, 'PDF', false, file);
+                this.testExtension(extension, 'PDF', false, files);
                 break;
             case 'APREP ENCOURS':
-                this.testExtension(extension, 'PDF', true, file);
+                this.testExtension(extension, 'PDF', true, files);
                 break;
             // case 'AVIVA':
-            //     this.testExtension(extension, 'XLSX', false, file);
+            //     this.testExtension(extension, 'XLSX', false, files);
             //     break;
             case 'AVIVA SURCO':
-                this.testExtension(extension, 'XLSX', true, file);
+                this.testExtension(extension, 'XLSX', true, files);
                 break;
             case 'CARDIF':
-                this.testExtension(extension, 'XLSX', false, file);
+                this.testExtension(extension, 'XLSX', false, files);
                 break;
             case 'CBP FRANCE':
-                this.testExtension(extension, 'XLSX', false, file);
+                this.testExtension(extension, 'XLSX', false, files);
                 break;
             case 'CEGEMA':
-                this.testExtension(extension, 'XLSX', false, file);
+                this.testExtension(extension, 'XLSX', false, files);
                 break;
             case 'ERES':
-                this.testExtension(extension, 'PDF', false, file);
+                this.testExtension(extension, 'PDF', false, files);
                 break;
             case 'GENERALI':
-                this.testExtension(extension, 'XLSX', false, file);
+                this.testExtension(extension, 'XLSX', false, files);
                 break;
             case 'HODEVA':
-                this.testExtension(extension, 'XLSX', false, file);
+                this.testExtension(extension, 'XLSX', false, files);
                 break;
             case 'METLIFE':
-                this.testExtension(extension, 'PDF', false, file);
+                this.testExtension(extension, 'PDF', false, files);
                 break;
             case 'MIE': // 'MIE ACTIOM'
-                this.testExtension(extension, 'XLSX', false, file);
+                this.testExtension(extension, 'XLSX', false, files);
                 break;
             case 'MIE MCMS':
-                this.testExtension(extension, 'XLSX', true, file);
+                this.testExtension(extension, 'XLSX', true, files);
                 break;
             case 'MIEL MUTUELLE': // 'MIEL CREASIO'
-                this.testExtension(extension, 'XLSX', false, file);
+                this.testExtension(extension, 'XLSX', false, files);
                 break;
             case 'MIEL MCMS':
-                this.testExtension(extension, 'XLSX', true, file);
+                this.testExtension(extension, 'XLSX', true, files);
                 break;
             case 'MILTIS':
-                this.testExtension(extension, 'XLSX', false, file);
+                this.testExtension(extension, 'XLSX', false, files);
                 break;
             case 'MMA':
-                this.testExtension(extension, 'XLSX', false, file);
+                this.testExtension(extension, 'XLSX', false, files);
                 break;
-            case 'PAVILLON PREVOYANCE': // PAVILLON ACTIO
-                this.testExtension(extension, 'XLSX', false, file);
-                break;
-            case 'PAVILLON MCMS':
-                this.testExtension(extension, 'XLSX', true, file);
+            case 'PAVILLON PREVOYANCE': // MCMS
+                this.testExtension(extension, 'XLSX', false, files);
                 break;
             case 'SPVIE':
-                this.testExtension(extension, 'XLSX', false, file);
+                this.testExtension(extension, 'XLSX', false, files);
                 break;
             case 'SWISSLIFE':
-                this.testExtension(extension, 'PDF', false, file);
+                this.testExtension(extension, 'PDF', false, files);
                 break;
             case 'SWISSLIFE SURCO':
-                this.testExtension(extension, 'XLSX', true, file);
+                this.testExtension(extension, 'XLSX', true, files);
                 break;
             case 'UAF LIFE PATRIMOINE':
-                this.testExtension(extension, 'XLSX', false, file);
+                this.testExtension(extension, 'XLSX', false, files);
                 break;
             default:
                 console.log('Pas de compagnie correspondante');
@@ -272,7 +289,7 @@ class Upload extends Component {
                         >
                             <input
                                 {...getInputProps()}
-                                multiple={false}
+                                multiple={(this.props.company.mcms) ? true : false}
                                 onChange={(event) => { this.onChangeHandler(event, this.props.companyName) }}
                             />
                             {
@@ -311,7 +328,7 @@ class Upload extends Component {
                                 >
                                     <input
                                         {...getInputProps()}
-                                        multiple={false}
+                                        multiple={(this.props.company.mcms) ? true : false}
                                         onChange={(event) => { this.onChangeHandler(event, this.state.companySurco.name) }}
                                     />
                                     {

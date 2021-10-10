@@ -296,11 +296,8 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
                             case 'MMA':
                                 excelMasterMMA.createWorkSheetMMA(workSheet, ocr);
                                 break;
-                            case 'PAVILLON ACTIO':
+                            case 'PAVILLON PREVOYANCE':
                                 excelMasterPAVILLON.createWorkSheetPAVILLON(workSheet, ocr);
-                                break;
-                            case 'PAVILLON MCMS':
-                                excelMasterPAVILLON.createWorkSheetPAVILLONMCMS(workSheet, ocr);
                                 break;
                             case 'SLADE':   // SWISSLIFE
                                 excelMasterSWISSLIFE.createWorkSheetSLADE(workSheet, ocr);

@@ -16,7 +16,9 @@ const storage = multer.diskStorage({
 	},
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ 
+	storage: storage
+});
 
 router.route('/').post(accessControl, upload.array('files'), documentController.createDocument);
 router.route('/').put(accessControl, documentController.updateDocuments);
