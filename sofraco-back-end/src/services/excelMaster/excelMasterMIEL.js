@@ -1,4 +1,4 @@
-exports.getOCRMIEL = (ocr, typeCompany) => {
+exports.getOCRMIEL = (ocr) => {
     const headers = ocr.headers;
     let infosOCR = [];
     ocr.allContratsPerCourtier.forEach((contrat, index) => {
