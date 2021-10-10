@@ -61,31 +61,31 @@ exports.createWorkSheetPAVILLON = (workSheet, dataCourtierOCR) => {
 
     let debut = rowNumber;
     if (pavActio) {
-        createPavetPAVILLONACTIO(row);
+        createPavetPAVILLONACTIO(dataCourtierOCR, workSheet, rowNumber);
     }
     if (pavV1) {
-        createPavetPAVILLONV1(row);
+        createPavetPAVILLONV1(dataCourtierOCR, workSheet, rowNumber);
     }
     if (pavV2) {
-        createPavetPAVILLONV2(row);
+        createPavetPAVILLONV2(dataCourtierOCR, workSheet, rowNumber);
     }
     if (pavV3) {
-        createPavetPAVILLONV3(row);
+        createPavetPAVILLONV3(dataCourtierOCR, workSheet, rowNumber);
     }
     if (pavV4) {
-        createPavetPAVILLONV4(row);
+        createPavetPAVILLONV4(dataCourtierOCR, workSheet, rowNumber);
     }
     if (pavV5) {
-        createPavetPAVILLONV5(row);
+        createPavetPAVILLONV5(dataCourtierOCR, workSheet, rowNumber);
     }
     if (pavV6) {
-        createPavetPAVILLONV6(row);
+        createPavetPAVILLONV6(dataCourtierOCR, workSheet, rowNumber);
     }
     if (pavV7) {
-        createPavetPAVILLONV7(row);
+        createPavetPAVILLONV7(dataCourtierOCR, workSheet, rowNumber);
     }
     if (pavV8) {
-        createPavetPAVILLONV8(row);
+        createPavetPAVILLONV8(dataCourtierOCR, workSheet, rowNumber);
     }
     rowNumber++;
     workSheet.getRow(rowNumber).getCell('T').value = 'TOTAL';
