@@ -68,7 +68,7 @@ exports.readExcelPAVILLON = async (file) => {
                         }
                     });
                 }
-                if (rowNumber > rowNumberHeader) {
+                if (rowNumber > rowNumberHeader && !row.hidden) {
                     let contrat;
                     if (pavActio) {
                         contrat = getContratPAVILLONACTIO(row);
