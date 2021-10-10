@@ -284,11 +284,8 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
                             case 'MIE MCMS':
                                 excelMasterMIE.createWorkSheetMIEMCMS(workSheet, ocr);
                                 break;
-                            case 'MIEL CREASIO':
-                                excelMasterMIEL.createWorkSheetMIELCREASIO(workSheet, ocr);
-                                break;
-                            case 'MIEL MCMS':
-                                excelMasterMIEL.createWorkSheetMIELMCMS(workSheet, ocr);
+                            case 'MIEL':
+                                excelMasterMIEL.createWorkSheetMIEL(workSheet, ocr);
                                 break;
                             case 'MILTIS':
                                 excelMasterMILTIS.createWorkSheetMILTIS(workSheet, ocr);

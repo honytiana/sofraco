@@ -471,29 +471,14 @@
         "phone": "+3300280000",
         "website": "mielmutuelle.com",
         "is_enabled": true,
-        "name": "MIEL CREASIO",
-        "globalName": "MIEL MUTUELLE",
-        "logo": "/backend/documents/logos/miel.png",
-        "creation_date": "2010-12-02T00:00:00.000Z",
-        "surco": true,
-        "companySurco": "MIEL MCMS",
-        "type": "simple"
-    },
-    {
-        "address": "France",
-        "zip": "",
-        "city": "France",
-        "country": "France",
-        "phone": "+3300280000",
-        "website": "mielmutuelle.com",
-        "is_enabled": true,
-        "name": "MIEL MCMS",
+        "name": "MIEL MUTUELLE",
         "globalName": "MIEL MUTUELLE",
         "logo": "/backend/documents/logos/miel.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "mcms": true,
         "companySurco": "",
-        "type": "surco"
+        "type": "simple"
     },
     {
         "address": "France",
