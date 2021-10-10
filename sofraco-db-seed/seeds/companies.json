@@ -439,29 +439,14 @@
         "phone": "+3300270000",
         "website": "mie.com",
         "is_enabled": true,
-        "name": "MIE ACTIOM",
-        "globalName": "MIE",
-        "logo": "/backend/documents/logos/mie.png",
-        "creation_date": "2010-12-02T00:00:00.000Z",
-        "surco": true,
-        "companySurco": "MIE MCMS",
-        "type": "simple"
-    },
-    {
-        "address": "France",
-        "zip": "",
-        "city": "France",
-        "country": "France",
-        "phone": "+3300270000",
-        "website": "mie.com",
-        "is_enabled": true,
-        "name": "MIE MCMS",
+        "name": "MIE",
         "globalName": "MIE",
         "logo": "/backend/documents/logos/mie.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "mcms": true,
         "companySurco": "",
-        "type": "surco"
+        "type": "simple"
     },
     {
         "address": "France",

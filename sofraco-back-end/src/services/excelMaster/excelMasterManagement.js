@@ -96,17 +96,11 @@ const getOCRInfos = async (authorization) => {
             case 'METLIFE':
                 infos.push(excelMasterMETLIFE.getOCRMETLIFE(ocr));
                 break;
-            case 'MIE ACTIOM':
-                infos.push(excelMasterMIE.getOCRMIE(ocr, 'ACTIOM'));
+            case 'MIE':
+                infos.push(excelMasterMIE.getOCRMIE(ocr));
                 break;
-            case 'MIE MCMS':
-                infos.push(excelMasterMIE.getOCRMIE(ocr, 'MCMS'));
-                break;
-            case 'MIEL CREASIO':
-                infos.push(excelMasterMIEL.getOCRMIEL(ocr, 'CREASIO'));
-                break;
-            case 'MIEL MCMS':
-                infos.push(excelMasterMIEL.getOCRMIEL(ocr, 'MCMS'));
+            case 'MIEL MUTUELLE':
+                infos.push(excelMasterMIEL.getOCRMIEL(ocr));
                 break;
             case 'MILTIS':
                 infos.push(excelMasterMILTIS.getOCRMILTIS(ocr));
@@ -114,11 +108,8 @@ const getOCRInfos = async (authorization) => {
             case 'MMA':
                 infos.push(excelMasterMMA.getOCRMMA(ocr));
                 break;
-            case 'PAVILLON ACTIO':
-                infos.push(excelMasterPAVILLON.getOCRPAVILLON(ocr, 'ACTIO'));
-                break;
-            case 'PAVILLON MCMS':
-                infos.push(excelMasterPAVILLON.getOCRPAVILLON(ocr, 'MCMS'));
+            case 'PAVILLON PREVOYANCE':
+                infos.push(excelMasterPAVILLON.getOCRPAVILLON(ocr));
                 break;
             case 'SLADE':   // swisslife
                 infos.push(excelMasterSWISSLIFE.getOCRSLADE(ocr));
@@ -278,11 +269,8 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
                             case 'METLIFE':
                                 excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, ocr);
                                 break;
-                            case 'MIE CREASIO':
+                            case 'MIE':
                                 excelMasterMIE.createWorkSheetMIE(workSheet, ocr);
-                                break;
-                            case 'MIE MCMS':
-                                excelMasterMIE.createWorkSheetMIEMCMS(workSheet, ocr);
                                 break;
                             case 'MIEL':
                                 excelMasterMIEL.createWorkSheetMIEL(workSheet, ocr);
