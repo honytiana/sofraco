@@ -9,7 +9,7 @@ services:
         links:
             - backend
         networks:
-            - netbridges
+            - sofraco-network
     backend:
         build: ./sofraco-back-end
         restart: always
@@ -20,7 +20,7 @@ services:
         environment:
             MONGO_URL: mongodb://mongodb-sofraco:27017/sofraco
         networks:
-            - netbridges
+            - sofraco-network
 
     mongodb-sofraco:
         image: mongo
@@ -32,7 +32,7 @@ services:
 #             - 27017:27017
         command: mongod --noauth
         networks:
-            - netbridges
+            - sofraco-network
 
 networks:
     netbridges:
