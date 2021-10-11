@@ -10,6 +10,16 @@ exports.getTokenByUser = async (req, res) => {
     }
 };
 
+exports.getTokens = async (req, res) => {
+    console.log('Get all tokens');
+    try {
+        const tokens = await tokenHandler.getTokens();
+        res.status(200).json(tokens);
+    } catch (err) {
+        res.status(400).json({ err });
+    }
+};
+
 exports.checkToken = async (req, res) => {
     console.log('Check token');
     try {
