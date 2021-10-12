@@ -67,8 +67,8 @@ class DocumentHandler {
         return Document.findByIdAndUpdate(id, data);
     }
 
-    deleteDocument() {
-
+    deleteDocument(id) {
+        return Document.deleteOne({_id: id});
     }
 
     deleteAllDocuments() {

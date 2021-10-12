@@ -289,6 +289,16 @@ exports.getDocumentsCompany = async (req, res) => {
     }
 }
 
+exports.deleteDocument = async (req, res) => {
+    console.log('Delete document');
+    try {
+        await documentHandler.deleteDocument(req.params.id);
+        res.status(200).end('Document deleted');
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+}
+
 exports.deleteAllDocuments = async (req, res) => {
     console.log('Delete all documents');
     try {
