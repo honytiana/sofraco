@@ -85,8 +85,10 @@ class Upload extends Component {
             loader: true
         });
         const formData = new FormData();
-        for (let file of this.state.files) {
-            formData.append('files', file);
+        if (this.state.files !== null) {
+            for (let file of this.state.files) {
+                formData.append('files', file);
+            }
         }
         if (this.state.filesSurco !== null) {
             for (let fileSurco of this.state.filesSurco) {
@@ -140,8 +142,87 @@ class Upload extends Component {
 
     onChangeHandler(event, companyName) {
         event.preventDefault();
+        console.log(event.target)
         const files = event.target.files;
         const file = event.target.files[0];
+        const fileName = file.name;
+        const fileNameArray = fileName.split('.');
+        const extension = fileNameArray[fileNameArray.length - 1];
+        const company = companyName;
+        switch (company.toUpperCase()) {
+            case 'APICIL':
+                this.testExtension(extension, 'XLSX', false, files);
+                break;
+            case 'APIVIA':
+                this.testExtension(extension, 'PDF', false, files);
+                break;
+            case 'APREP':
+                this.testExtension(extension, 'PDF', false, files);
+                break;
+            case 'APREP ENCOURS':
+                this.testExtension(extension, 'PDF', true, files);
+                break;
+            // case 'AVIVA':
+            //     this.testExtension(extension, 'XLSX', false, files);
+            //     break;
+            case 'AVIVA SURCO':
+                this.testExtension(extension, 'XLSX', true, files);
+                break;
+            case 'CARDIF':
+                this.testExtension(extension, 'XLSX', false, files);
+                break;
+            case 'CBP FRANCE':
+                this.testExtension(extension, 'XLSX', false, files);
+                break;
+            case 'CEGEMA':
+                this.testExtension(extension, 'XLSX', false, files);
+                break;
+            case 'ERES':
+                this.testExtension(extension, 'PDF', false, files);
+                break;
+            case 'GENERALI':
+                this.testExtension(extension, 'XLSX', false, files);
+                break;
+            case 'HODEVA':
+                this.testExtension(extension, 'XLSX', false, files);
+                break;
+            case 'METLIFE':
+                this.testExtension(extension, 'PDF', false, files);
+                break;
+            case 'MIE': // 'MCMS'
+                this.testExtension(extension, 'XLSX', false, files);
+                break;
+            case 'MIEL MUTUELLE': // 'MCMS'
+                this.testExtension(extension, 'XLSX', false, files);
+                break;
+            case 'MILTIS':
+                this.testExtension(extension, 'XLSX', false, files);
+                break;
+            case 'MMA':
+                this.testExtension(extension, 'XLSX', false, files);
+                break;
+            case 'PAVILLON PREVOYANCE': // MCMS
+                this.testExtension(extension, 'XLSX', false, files);
+                break;
+            case 'SPVIE':
+                this.testExtension(extension, 'XLSX', false, files);
+                break;
+            case 'SWISSLIFE':
+                this.testExtension(extension, 'PDF', false, files);
+                break;
+            case 'SWISSLIFE SURCO':
+                this.testExtension(extension, 'XLSX', true, files);
+                break;
+            case 'UAF LIFE PATRIMOINE':
+                this.testExtension(extension, 'XLSX', false, files);
+                break;
+            default:
+                console.log('Pas de compagnie correspondante');
+        }
+    }
+
+    onDropHandler(files, companyName) {
+        const file = files[0];
         const fileName = file.name;
         const fileNameArray = fileName.split('.');
         const extension = fileNameArray[fileNameArray.length - 1];
@@ -272,11 +353,10 @@ class Upload extends Component {
     render() {
         return (
             <div>
-                <Dropzone onDrop={(files) => {
-                    this.setState({
-                        files: files
-                    })
-                }}>
+                <Dropzone
+                    onDrop={(files) => {
+                        this.onDropHandler(files, this.props.companyName);
+                    }}>
                     {({ getRootProps, getInputProps }) => (
                         <div
                             {...getRootProps()}
@@ -311,11 +391,10 @@ class Upload extends Component {
                 </Dropzone>
                 {
                     (this.props.company.surco && this.state.companySurco !== null) && (
-                        <Dropzone onDrop={(files) => {
-                            this.setState({
-                                files: files
-                            })
-                        }}>
+                        <Dropzone
+                            onDrop={(files) => {
+                                this.onDropHandler(files, this.state.companySurco.name);
+                            }}>
                             {({ getRootProps, getInputProps }) => (
                                 <div
                                     {...getRootProps()}
