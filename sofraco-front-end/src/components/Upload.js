@@ -274,7 +274,7 @@ class Upload extends Component {
             <div>
                 <Dropzone onDrop={(files) => {
                     this.setState({
-                        files: files[0]
+                        files: files
                     })
                 }}>
                     {({ getRootProps, getInputProps }) => (
@@ -313,7 +313,7 @@ class Upload extends Component {
                     (this.props.company.surco && this.state.companySurco !== null) && (
                         <Dropzone onDrop={(files) => {
                             this.setState({
-                                files: files[0]
+                                files: files
                             })
                         }}>
                             {({ getRootProps, getInputProps }) => (
