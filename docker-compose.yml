@@ -35,5 +35,5 @@ services:
             - sofraco-network
 
 networks:
-    netbridges:
+    sofraco-network:
         driver: bridge
