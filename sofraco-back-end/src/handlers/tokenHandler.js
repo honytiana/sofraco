@@ -12,12 +12,12 @@ class TokensHandler {
             const token = jwt.sign(
                 { userId },
                 'SOFRACO_TOKEN_SECRET',
-                { expiresIn: '4h' }
+                { expiresIn: '10h' }
             );
             let tokens = new Tokens();
             tokens.value = token;
             tokens.userId = userId;
-            tokens.expiresIn = + new Date() + 4 * 3600 * 1000;
+            tokens.expiresIn = + new Date() + 10 * 3600 * 1000;
             tokens.save();
             return tokens;
         } catch (err) {
