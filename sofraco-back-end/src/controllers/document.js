@@ -35,7 +35,15 @@ exports.createDocument = (req, res) => {  // create document
         }
         const surco = JSON.parse(req.body.surco);
         const mcms = JSON.parse(req.body.mcms);
-        if (company.surco && surco && companySurco && req.files.length > 1) {  // company and surco
+        let fileLength = 0;
+        let surcoLength = 0;
+        if (req.body.fileLength !== 'undefined') {
+            fileLength = parseInt(req.body.fileLength);
+        }
+        if (req.body.surcoLength !== 'undefined') {
+            surcoLength = parseInt(req.body.surcoLength);
+        }
+        if (company.surco && surco && companySurco && req.files.length > 1 && !mcms) {  // company and surco
             let document = {};
             const fileName = fileService.getFileName(req.files[0].path);
             document.name = fileName;
@@ -52,8 +60,8 @@ exports.createDocument = (req, res) => {  // create document
             documentSurco.path_original_file = req.files[1].path;
             documentSurco.type = req.body.extension;
             const docSurco = documentHandler.createDocument(documentSurco);
-        } 
-        if (company.surco && surco && companySurco && req.files.length === 1) { // surco
+        }
+        if (company.surco && surco && companySurco && req.files.length === 1 && !mcms) { // surco
             let document = {};
             const fileName = fileService.getFileName(req.files[0].path);
             document.name = fileName;
@@ -62,8 +70,8 @@ exports.createDocument = (req, res) => {  // create document
             document.path_original_file = req.files[0].path;
             document.type = req.body.extension;
             const doc = documentHandler.createDocument(document);
-        } 
-        if (((company.surco && !surco) || (!company.surco && !surco)) && !mcms) {     // company
+        }
+        if (((company.surco && !surco) || (!company.surco && !surco))) {     // company
             let document = {};
             const fileName = fileService.getFileName(req.files[0].path);
             document.name = fileName;
@@ -73,7 +81,7 @@ exports.createDocument = (req, res) => {  // create document
             document.type = req.body.extension;
             const doc = documentHandler.createDocument(document);
         }
-        if (mcms) { // MCMS 
+        if (company.surco && surco && companySurco && mcms && surcoLength > 0 && fileLength === 0) { // MCMS 
             for (let file of req.files) {
                 let document = {};
                 const fileName = fileService.getFileName(file.path);
@@ -83,6 +91,27 @@ exports.createDocument = (req, res) => {  // create document
                 document.path_original_file = file.path;
                 document.type = req.body.extension;
                 const doc = documentHandler.createDocument(document);
+            }
+        }
+        if (company.surco && surco && companySurco && mcms && surcoLength > 0 && fileLength > 0) { // company & MCMS 
+            let document = {};
+            const fileName = fileService.getFileName(req.files[0].path);
+            document.name = fileName;
+            document.company = company._id;
+            document.companyName = company.name;
+            document.path_original_file = req.files[0].path;
+            document.type = req.body.extension;
+            const doc = documentHandler.createDocument(document);
+            const files = req.files.splice(1, req.files.length - 1);
+            for (let file of files) {
+                let documentMCMS = {};
+                const fileName = fileService.getFileName(file.path);
+                documentMCMS.name = fileName;
+                documentMCMS.company = companySurco._id;
+                documentMCMS.companyName = companySurco.name;
+                documentMCMS.path_original_file = file.path;
+                documentMCMS.type = req.body.extension;
+                const doc = documentHandler.createDocument(documentMCMS);
             }
         }
         res.status(200).end('Sent to Server');

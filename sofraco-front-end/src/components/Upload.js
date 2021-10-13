@@ -101,15 +101,21 @@ class Upload extends Component {
             surco: this.props.company.surco,
         }
         let companySurco;
-        if (this.props.companySurco) {
+        if (this.state.companySurco) {
             companySurco = {
-                _id: this.props.companySurco._id,
-                name: this.props.companySurco.name,
+                _id: this.state.companySurco._id,
+                name: this.state.companySurco.name,
             }
         }
-        formData.append('surco', JSON.stringify(this.state.filesSurco ? true : false));
-        formData.append('mcms', JSON.stringify(this.props.company.mcms ? true : false));
+        formData.append('surco', JSON.stringify((this.state.filesSurco !== null) ? true : false));
+        if (this.state.companySurco !== null && this.state.companySurco.mcms) {
+            formData.append('mcms', JSON.stringify(true));
+        } else {
+            formData.append('mcms', JSON.stringify(false));
+        }
         formData.append('user', '');
+        formData.append('fileLength', (this.state.files !== null) ? this.state.files.length : 0);
+        formData.append('surcoLength', (this.state.filesSurco !== null) ? this.state.filesSurco.length : 0);
         formData.append('company', JSON.stringify(company));
         formData.append('companySurco', JSON.stringify(companySurco));
         axios.post(`${config.nodeUrl}/api/document/`, formData, {
@@ -191,8 +197,14 @@ class Upload extends Component {
             case 'MIE': // 'MCMS'
                 this.testExtension(extension, 'XLSX', false, files);
                 break;
+            case 'MIE MCMS': // 'MCMS'
+                this.testExtension(extension, 'XLSX', true, files);
+                break;
             case 'MIEL MUTUELLE': // 'MCMS'
                 this.testExtension(extension, 'XLSX', false, files);
+                break;
+            case 'MIEL MCMS': // 'MCMS'
+                this.testExtension(extension, 'XLSX', true, files);
                 break;
             case 'MILTIS':
                 this.testExtension(extension, 'XLSX', false, files);
@@ -202,6 +214,9 @@ class Upload extends Component {
                 break;
             case 'PAVILLON PREVOYANCE': // MCMS
                 this.testExtension(extension, 'XLSX', false, files);
+                break;
+            case 'PAVILLON MCMS': // MCMS
+                this.testExtension(extension, 'XLSX', true, files);
                 break;
             case 'SPVIE':
                 this.testExtension(extension, 'XLSX', false, files);
@@ -269,8 +284,14 @@ class Upload extends Component {
             case 'MIE': // 'MCMS'
                 this.testExtension(extension, 'XLSX', false, files);
                 break;
+            case 'MIE MCMS': // 'MCMS'
+                this.testExtension(extension, 'XLSX', true, files);
+                break;
             case 'MIEL MUTUELLE': // 'MCMS'
                 this.testExtension(extension, 'XLSX', false, files);
+                break;
+            case 'MIEL MCMS': // 'MCMS'
+                this.testExtension(extension, 'XLSX', true, files);
                 break;
             case 'MILTIS':
                 this.testExtension(extension, 'XLSX', false, files);
@@ -280,6 +301,9 @@ class Upload extends Component {
                 break;
             case 'PAVILLON PREVOYANCE': // MCMS
                 this.testExtension(extension, 'XLSX', false, files);
+                break;
+            case 'PAVILLON MCMS': // MCMS
+                this.testExtension(extension, 'XLSX', true, files);
                 break;
             case 'SPVIE':
                 this.testExtension(extension, 'XLSX', false, files);
@@ -400,7 +424,7 @@ class Upload extends Component {
                                 >
                                     <input
                                         {...getInputProps()}
-                                        multiple={(this.props.company.mcms) ? true : false}
+                                        multiple={(this.state.companySurco.mcms) ? true : false}
                                         onChange={(event) => { this.onChangeHandler(event, this.state.companySurco.name) }}
                                     />
                                     {
