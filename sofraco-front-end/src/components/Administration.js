@@ -17,7 +17,11 @@ import {
     CModal,
     CModalHeader,
     CModalBody,
-    CModalFooter
+    CModalFooter,
+    CForm,
+    CFormGroup,
+    CLabel,
+    CInput
 } from '@coreui/react';
 import axios from 'axios';
 
@@ -39,12 +43,15 @@ class Administration extends Component {
             messageToast: [],
             activePage: 1,
             num: 0,
-            token: null
+            token: null,
+            ajoutCourtier: false
         }
         this.getBadge = this.getBadge.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
         this.changeActivePage = this.changeActivePage.bind(this);
         this.fetchCourtiers = this.fetchCourtiers.bind(this);
+        this.activerAjoutCourtier = this.activerAjoutCourtier.bind(this);
+        this.ajouterCourtier = this.ajouterCourtier.bind(this);
 
     }
 
@@ -163,10 +170,144 @@ class Administration extends Component {
         });
     }
 
+    activerAjoutCourtier() {
+        let activer = this.state.ajoutCourtier;
+        this.setState({
+            ajoutCourtier: !activer
+        });
+    }
+
+    ajouterCourtier(event) {
+        event.preventDefault();
+        this.setState({
+            loader: true
+        });
+        const options = {
+            cabinet: event.target['sofraco-cabinet'].value,
+            lastName: event.target['sofraco-nom'].value,
+            firstName: event.target['sofraco-prenom'].value,
+            email: event.target['sofraco-email'].value,
+            phone: event.target['sofraco-phone'].value,
+            role: 'courtier'
+        };
+        if (options.cabinet !== '' ||
+            options.lastName !== '' ||
+            options.firstName !== '' ||
+            options.email !== '' ||
+            options.phone !== '') {
+            axios.post(`${config.nodeUrl}/api/courtier/`, options, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.state.token.value}`
+                }
+            }).then((res) => {
+                let courtiers = this.state.courtiers;
+                courtiers.push(res.data);
+                this.setState({
+                    courtiers: courtiers,
+                    toast: true,
+                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le courtier ${res.data.cabinet} à été ajouté` }
+                });
+            }).catch((err) => {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'ERROR', color: 'danger', message: err }
+                })
+            }).finally(() => {
+                this.setState({
+                    loader: false
+                });
+                setTimeout(() => {
+                    this.setState({
+                        toast: false,
+                        messageToast: {}
+                    });
+                }, 6000);
+            });
+        }
+    }
+
     render() {
 
         return (
             <div>
+                <CButton className="sofraco-button" onClick={this.activerAjoutCourtier}>Ajouter un courtier</CButton>
+                <CModal
+                    show={this.state.ajoutCourtier}
+                    onClose={() => { this.activerAjoutCourtier() }}
+                    centered={true}
+                    className="sofraco-modal"
+                >
+                    <CModalHeader closeButton>Creez un courtier</CModalHeader>
+                    <CModalBody>
+                        <CForm action="" method="post" onSubmit={(e) => this.ajouterCourtier(e)}>
+                            <CFormGroup row>
+                                <CLabel className="col-sm-2" htmlFor={`sofraco-cabinet-courtier${this.props.sIndex}`}>Cabinet</CLabel>
+                                <CInput
+                                    type="text"
+                                    id={`sofraco-cabinet-courtiers${this.props.sIndex}`}
+                                    name={`sofraco-cabinet`}
+                                    autoComplete="cabinet"
+                                    className="sofraco-input"
+                                />
+                            </CFormGroup>
+                            <CFormGroup row>
+                                <CLabel className="col-sm-2" htmlFor={`sofraco-nom-courtier_${this.props.sIndex}`}>Nom</CLabel>
+                                <CInput
+                                    type="text"
+                                    id={`sofraco-nom-courtier-courtier_${this.props.sIndex}`}
+                                    name={`sofraco-nom`}
+                                    autoComplete="nom"
+                                    className="sofraco-input"
+                                />
+                            </CFormGroup>
+                            <CFormGroup row>
+                                <CLabel className="col-sm-2" htmlFor={`sofraco-prenom-courtier_${this.props.sIndex}`}>Prénoms</CLabel>
+                                <CInput
+                                    type="text"
+                                    id={`sofraco-prenom-courtier_${this.props.sIndex}`}
+                                    name={`sofraco-prenom`}
+                                    autoComplete="prenom"
+                                    className="sofraco-input"
+                                />
+                            </CFormGroup>
+                            <CFormGroup row>
+                                <CLabel className="col-sm-2" htmlFor={`sofraco-email-courtier_${this.props.sIndex}`}>Email</CLabel>
+                                <CInput
+                                    type="text"
+                                    id={`sofraco-email-courtier_${this.props.sIndex}`}
+                                    name={`sofraco-email`}
+                                    autoComplete="email"
+                                    className="sofraco-input"
+                                />
+                            </CFormGroup>
+                            <CFormGroup row>
+                                <CLabel className="col-sm-2" htmlFor={`sofraco-phone-courtier_${this.props.sIndex}`}>Téléphone</CLabel>
+                                <CInput
+                                    type="text"
+                                    id={`sofraco-phone-courtier_${this.props.sIndex}`}
+                                    name={`sofraco-phone`}
+                                    autoComplete="phone"
+                                    className="sofraco-input"
+                                />
+                            </CFormGroup>
+                            <CFormGroup>
+                                <CInput
+                                    type="submit"
+                                    name="sofraco-submit"
+                                    value="Sauvegarder"
+                                    className="sofraco-button"
+                                />
+                            </CFormGroup>
+                        </CForm>
+                    </CModalBody>
+                    <CModalFooter>
+                        <CButton
+                            color="secondary"
+                            onClick={() => { this.activerAjoutCourtier() }}
+                        >Annuler</CButton>
+                    </CModalFooter>
+                </CModal>
                 <CDataTable
                     items={this.state.courtiers}
                     fields={this.state.fields}

@@ -142,7 +142,6 @@ class Upload extends Component {
 
     onChangeHandler(event, companyName) {
         event.preventDefault();
-        console.log(event.target)
         const files = event.target.files;
         const file = event.target.files[0];
         const fileName = file.name;
