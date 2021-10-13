@@ -8,7 +8,8 @@ import {
     CToaster,
     CImg,
     CTooltip,
-    CButton
+    CButton,
+    CSpinner
 } from '@coreui/react';
 
 import axios from 'axios';
@@ -456,7 +457,16 @@ class Upload extends Component {
                 <CButton
                     onClick={this.onSubmitHandler}
                     className="sofraco-button"
+                    disabled={this.state.loader}
                 >Envoyer</CButton>
+                {
+                    (this.state.loader) && (
+                        <div className="sofraco-spinner">
+                            <p>Upload en cours, veuillez ne pas quitter la page</p>
+                            <p><CSpinner color="warning" ></CSpinner></p>
+                        </div>
+                    )
+                }
                 {
                     (this.state.toast === true &&
                         this.state.messageToast &&

@@ -200,7 +200,8 @@ class CompanyFolder extends Component {
                                     <Upload
                                         key=""
                                         company={this.props.company}
-                                        companyName={this.props.companyName} />
+                                        companyName={this.props.companyName}
+                                        />
                                 </CTabPane>
                                 <CTabPane data-tab="historique">
                                     <Archived

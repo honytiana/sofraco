@@ -487,7 +487,6 @@ class Companies extends Component {
                                                 companyName={company.globalName}
                                                 showModal={this.state.details.includes(index)}
                                                 onCloseModal={() => { this.toggleDetails(index) }}
-                                                loader={false}
                                             />
                                         </CCol>
                                     )

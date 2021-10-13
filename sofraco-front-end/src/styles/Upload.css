@@ -18,3 +18,10 @@
     color: #fff;
     background-color: #F39200;
 }
+
+.sofraco-spinner {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
