@@ -1,4 +1,8 @@
-exports.getOCRMIEL = (ocr) => {
+exports.getOCRMIEL = (ocr) => { };
+
+exports.createWorkSheetMIEL = (workSheet, dataCourtierOCR) => { };
+
+exports.getOCRMIELMCMS = (ocr) => {
     const headers = ocr.headers;
     let infosOCR = [];
     ocr.allContratsPerCourtier.forEach((contrat, index) => {
@@ -18,7 +22,7 @@ exports.getOCRMIEL = (ocr) => {
     return infosOCR;
 }
 
-exports.createWorkSheetMIEL = (workSheet, dataCourtierOCR) => {
+exports.createWorkSheetMIELMCMS = (workSheet, dataCourtierOCR) => {
     let mielCreasio, mielV1, mielV2, mielV3, mielV4 = false;
     switch (dataCourtierOCR.mielVersion) {
         case 'mielCreasio':

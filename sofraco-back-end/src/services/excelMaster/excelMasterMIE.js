@@ -1,4 +1,8 @@
-exports.getOCRMIE = (ocr) => {
+exports.getOCRMIE = (ocr) => { };
+
+exports.createWorkSheetMIE = (workSheet, dataCourtierOCR) => { };
+
+exports.getOCRMIEMCMS = (ocr) => {
     const headers = ocr.headers;
     let infosOCR = [];
     ocr.allContratsPerCourtier.forEach((contrat, index) => {
@@ -18,7 +22,7 @@ exports.getOCRMIE = (ocr) => {
     return infosOCR;
 }
 
-exports.createWorkSheetMIE = (workSheet, dataCourtierOCR) => {
+exports.createWorkSheetMIEMCMS = (workSheet, dataCourtierOCR) => {
     let mieAxiom, mieV1 = false;
     switch (dataCourtierOCR.mieVersion) {
         case 'mieAxiom':

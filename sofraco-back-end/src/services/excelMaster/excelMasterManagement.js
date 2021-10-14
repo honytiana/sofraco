@@ -100,8 +100,14 @@ const getOCRInfos = async (authorization) => {
             case 'MIE':
                 infos.push(excelMasterMIE.getOCRMIE(ocr));
                 break;
+            case 'MIE MCMS':
+                infos.push(excelMasterMIE.getOCRMIEMCMS(ocr));
+                break;
             case 'MIEL MUTUELLE':
                 infos.push(excelMasterMIEL.getOCRMIEL(ocr));
+                break;
+            case 'MIEL MCMS':
+                infos.push(excelMasterMIEL.getOCRMIELMCMS(ocr));
                 break;
             case 'MILTIS':
                 infos.push(excelMasterMILTIS.getOCRMILTIS(ocr));
@@ -112,15 +118,18 @@ const getOCRInfos = async (authorization) => {
             case 'PAVILLON PREVOYANCE':
                 infos.push(excelMasterPAVILLON.getOCRPAVILLON(ocr));
                 break;
+            case 'PAVILLON MCMS':
+                infos.push(excelMasterPAVILLON.getOCRPAVILLONMCMS(ocr));
+                break;
             case 'SLADE':   // swisslife
                 infos.push(excelMasterSWISSLIFE.getOCRSLADE(ocr));
                 break;
             case 'SPVIE':
                 infos.push(excelMasterSPVIE.getOCRSPVIE(ocr));
                 break;
-            // case 'SMATIS':
-            //     infos.push(excelMasterSMATIS.getOCRSMATIS(ocr));
-            //     break;
+            case 'SMATIS':
+                infos.push(excelMasterSMATIS.getOCRSMATIS(ocr));
+                break;
             case 'SMATIS MCMS':
                 infos.push(excelMasterSMATIS.getOCRSMATISMCMS(ocr));
                 break;
@@ -279,8 +288,14 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
                             case 'MIE':
                                 excelMasterMIE.createWorkSheetMIE(workSheet, ocr);
                                 break;
-                            case 'MIEL':
+                            case 'MIE MCMS':
+                                excelMasterMIE.createWorkSheetMIEMCMS(workSheet, ocr);
+                                break;
+                            case 'MIEL MUTUELLE':
                                 excelMasterMIEL.createWorkSheetMIEL(workSheet, ocr);
+                                break;
+                            case 'MIEL MCMS':
+                                excelMasterMIEL.createWorkSheetMIELMCMS(workSheet, ocr);
                                 break;
                             case 'MILTIS':
                                 excelMasterMILTIS.createWorkSheetMILTIS(workSheet, ocr);
@@ -290,6 +305,9 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
                                 break;
                             case 'PAVILLON PREVOYANCE':
                                 excelMasterPAVILLON.createWorkSheetPAVILLON(workSheet, ocr);
+                                break;
+                            case 'PAVILLON MCMS':
+                                excelMasterPAVILLON.createWorkSheetPAVILLONMCMS(workSheet, ocr);
                                 break;
                             case 'SLADE':   // SWISSLIFE
                                 excelMasterSWISSLIFE.createWorkSheetSLADE(workSheet, ocr);

@@ -1,4 +1,8 @@
-exports.getOCRPAVILLON = (ocr) => {
+exports.getOCRPAVILLON = (ocr) => { };
+
+exports.createWorkSheetPAVILLON = (workSheet, dataCourtierOCR) => { };
+
+exports.getOCRPAVILLONMCMS = (ocr) => {
     const headers = ocr.headers;
     let infosOCR = [];
     ocr.allContratsPerCourtier.forEach((contrat, index) => {
@@ -18,7 +22,7 @@ exports.getOCRPAVILLON = (ocr) => {
     return infosOCR;
 }
 
-exports.createWorkSheetPAVILLON = (workSheet, dataCourtierOCR) => {
+exports.createWorkSheetPAVILLONMCMS = (workSheet, dataCourtierOCR) => {
     let pavActio, pavV1, pavV2, pavV3, pavV4, pavV5, pavV6, pavV7, pavV8 = false;
     switch (dataCourtierOCR.pavVersion) {
         case 'pavActio':
