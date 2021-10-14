@@ -623,11 +623,29 @@
         "is_enabled": true,
         "name": "SMATIS",
         "globalName": "SMATIS",
-        "logo": "/backend/documents/logos/company.png",
+        "logo": "/backend/documents/logos/smatis.png",
+        "creation_date": "2010-12-02T00:00:00.000Z",
+        "surco": true,
+        "mcms": false,
+        "companySurco": "SMATIS MCMS",
+        "type": "simple"
+    },
+    {
+        "address": "France",
+        "zip": "",
+        "city": "France",
+        "country": "France",
+        "phone": "+3300350000",
+        "website": "smatis.com",
+        "is_enabled": true,
+        "name": "SMATIS MCMS",
+        "globalName": "SMATIS",
+        "logo": "/backend/documents/logos/smatis.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "mcms": true,
         "companySurco": "",
-        "type": "simple"
+        "type": "surco"
     },
     {
         "address": "France",

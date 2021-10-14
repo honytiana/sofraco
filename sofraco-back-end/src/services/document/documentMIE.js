@@ -103,7 +103,7 @@ const getContratMIEAXIOM = (row) => {
     const contrat = {
         dateComptable: (typeof row.getCell('A').value === 'string') ?
             row.getCell('A').value.trim() :
-            (row.getCell('A').value !== null) ? new Date(0, 0, row.getCell('N').value, 0, 0, 0) : '',
+            (row.getCell('A').value !== null) ? new Date(0, 0, row.getCell('A').value, 0, 0, 0) : '',
         codeCourtier: (typeof row.getCell('B').value === 'string') ?
             row.getCell('B').value.trim() :
             row.getCell('B').value,
@@ -133,7 +133,7 @@ const getContratMIEAXIOM = (row) => {
             row.getCell('J').value,
         dateEffetContrat: (typeof row.getCell('K').value === 'string') ?
             row.getCell('K').value.trim() :
-            (row.getCell('K').value !== null) ? new Date(0, 0, row.getCell('N').value, 0, 0, 0) : '',
+            (row.getCell('K').value !== null) ? new Date(0, 0, row.getCell('K').value, 0, 0, 0) : '',
         dateFinContrat: (typeof row.getCell('L').value === 'string') ?
             row.getCell('L').value.trim() :
             (row.getCell('L').value !== null) ? new Date(0, 0, row.getCell('L').value, 0, 0, 0) : '',
@@ -190,7 +190,7 @@ const getContratMIEV1 = (row) => {
     const contrat = {
         dateComptable: (typeof row.getCell('A').value === 'string') ?
             row.getCell('A').value.trim() :
-            (row.getCell('A').value !== null) ? new Date(0, 0, row.getCell('N').value, 0, 0, 0) : '',
+            (row.getCell('A').value !== null) ? new Date(0, 0, row.getCell('A').value, 0, 0, 0) : '',
         codeCourtier: (typeof row.getCell('B').value === 'string') ?
             row.getCell('B').value.trim() :
             row.getCell('B').value,
@@ -220,7 +220,7 @@ const getContratMIEV1 = (row) => {
             row.getCell('J').value,
         dateEffetContrat: (typeof row.getCell('K').value === 'string') ?
             row.getCell('K').value.trim() :
-            (row.getCell('K').value !== null) ? new Date(0, 0, row.getCell('N').value, 0, 0, 0) : '',
+            (row.getCell('K').value !== null) ? new Date(0, 0, row.getCell('K').value, 0, 0, 0) : '',
         dateFinContrat: (typeof row.getCell('L').value === 'string') ?
             row.getCell('L').value.trim() :
             (row.getCell('L').value !== null) ? new Date(0, 0, row.getCell('L').value, 0, 0, 0) : '',

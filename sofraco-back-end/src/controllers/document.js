@@ -21,6 +21,7 @@ const documentMIEL = require('../services/document/documentMIEL');
 const documentMILTIS = require('../services/document/documentMILTIS');
 const documentMMA = require('../services/document/documentMMA');
 const documentPAVILLON = require('../services/document/documentPAVILLON');
+const documentSMATIS = require('../services/document/documentSMATIS');
 const documentSPVIE = require('../services/document/documentSPVIE');
 const documentSWISSLIFE = require('../services/document/documentSWISSLIFE');
 const documentUAFLIFE = require('../services/document/documentUAFLIFE');
@@ -246,6 +247,12 @@ const setOCRDocument = async (companyName, documentId, filePath) => {
                 break;
             case 'SLADE':   // SWISSLIFE
                 ocr = await documentSWISSLIFE.readPdfSLADE(filePath);
+                break;
+            case 'SMATIS':
+                ocr = await documentSMATIS.readExcelSMATIS(filePath);
+                break;
+            case 'SMATIS MCMS': //'MCMS'
+                ocr = await documentSMATIS.readExcelSMATISMCMS(filePath);
                 break;
             case 'SPVIE':
                 ocr = await documentSPVIE.readExcelSPVIE(filePath);

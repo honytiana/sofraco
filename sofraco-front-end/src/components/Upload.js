@@ -195,13 +195,13 @@ class Upload extends Component {
             case 'METLIFE':
                 this.testExtension(extension, 'PDF', false, files);
                 break;
-            case 'MIE': // 'MCMS'
+            case 'MIE':
                 this.testExtension(extension, 'XLSX', false, files);
                 break;
             case 'MIE MCMS': // 'MCMS'
                 this.testExtension(extension, 'XLSX', true, files);
                 break;
-            case 'MIEL MUTUELLE': // 'MCMS'
+            case 'MIEL MUTUELLE':
                 this.testExtension(extension, 'XLSX', false, files);
                 break;
             case 'MIEL MCMS': // 'MCMS'
@@ -213,10 +213,16 @@ class Upload extends Component {
             case 'MMA':
                 this.testExtension(extension, 'XLSX', false, files);
                 break;
-            case 'PAVILLON PREVOYANCE': // MCMS
+            case 'PAVILLON PREVOYANCE':
                 this.testExtension(extension, 'XLSX', false, files);
                 break;
             case 'PAVILLON MCMS': // MCMS
+                this.testExtension(extension, 'XLSX', true, files);
+                break;
+            case 'SMATIS':
+                this.testExtension(extension, 'XLSX', false, files);
+                break;
+            case 'SMATIS MCMS': // MCMS
                 this.testExtension(extension, 'XLSX', true, files);
                 break;
             case 'SPVIE':
@@ -304,6 +310,12 @@ class Upload extends Component {
                 this.testExtension(extension, 'XLSX', false, files);
                 break;
             case 'PAVILLON MCMS': // MCMS
+                this.testExtension(extension, 'XLSX', true, files);
+                break;
+            case 'SMATIS':
+                this.testExtension(extension, 'XLSX', false, files);
+                break;
+            case 'SMATIS MCMS':
                 this.testExtension(extension, 'XLSX', true, files);
                 break;
             case 'SPVIE':
@@ -462,9 +474,9 @@ class Upload extends Component {
                 {
                     (this.state.loader) && (
                         <div className="sofraco-spinner">
-                            {/* <p>Upload en cours, veuillez ne pas quitter la page</p>
-                            <p><CSpinner color="warning" ></CSpinner></p> */}
-                            <div id="my_modal" style={{
+                            <p>Upload en cours, veuillez ne pas quitter la page</p>
+                            <p><CSpinner color="warning" ></CSpinner></p>
+                            {/* <div id="my_modal" style={{
                                 background: 'black',
                                 opacity: 0.5,
                                 position: 'absolute',
@@ -472,33 +484,33 @@ class Upload extends Component {
                                 left: 0,
                                 width: '100%',
                                 height: '100%',
-                                zindex:500000
-                              }}></div>
+                                zindex: 500000
+                            }}></div> */}
                         </div>
-        )
-    }
+                    )
+                }
                 {
-    (this.state.toast === true &&
-        this.state.messageToast &&
-        this.state.messageToast.header &&
-        this.state.messageToast.message) && (
-            <CToaster position="bottom-right">
-                <CToast
-                    show={true}
-                    fade={true}
-                    autohide={5000}
-                    color={this.state.messageToast.color}
-                >
-                    <CToastHeader closeButton>
-                        {this.state.messageToast.header}
-                    </CToastHeader>
-                    <CToastBody>
-                        {`${this.state.messageToast.message}`}
-                    </CToastBody>
-                </CToast>
-            </CToaster>
-        )
-}
+                    (this.state.toast === true &&
+                        this.state.messageToast &&
+                        this.state.messageToast.header &&
+                        this.state.messageToast.message) && (
+                        <CToaster position="bottom-right">
+                            <CToast
+                                show={true}
+                                fade={true}
+                                autohide={5000}
+                                color={this.state.messageToast.color}
+                            >
+                                <CToastHeader closeButton>
+                                    {this.state.messageToast.header}
+                                </CToastHeader>
+                                <CToastBody>
+                                    {`${this.state.messageToast.message}`}
+                                </CToastBody>
+                            </CToast>
+                        </CToaster>
+                    )
+                }
             </div >
         );
     }

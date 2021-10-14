@@ -74,7 +74,7 @@ exports.readExcelMILTIS = async (file) => {
                             row.getCell('K').value,
                         dateDeCalcul: (typeof row.getCell('L').value === 'string') ?
                             row.getCell('L').value.trim() :
-                            (row.getCell('L').value !== null) ? new Date(0, 0, row.getCell('Q').value, 0, 0, 0) : '',
+                            (row.getCell('L').value !== null) ? new Date(0, 0, row.getCell('L').value, 0, 0, 0) : '',
                         codePostal: (typeof row.getCell('M').value === 'string') ?
                             row.getCell('M').value.trim() :
                             row.getCell('M').value,

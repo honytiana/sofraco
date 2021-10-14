@@ -22,6 +22,7 @@ const excelMasterMIE = require('./excelMasterMIE');
 const excelMasterMILTIS = require('./excelMasterMILTIS');
 const excelMasterMMA = require('./excelMasterMMA');
 const excelMasterPAVILLON = require('./excelMasterPAVILLON');
+const excelMasterSMATIS = require('./excelMasterSMATIS');
 const excelMasterSPVIE = require('./excelMasterSPVIE');
 const excelMasterSWISSLIFE = require('./excelMasterSWISSLIFE');
 const excelMasterUAFLIFE = require('./excelMasterUAFLIFE');
@@ -116,6 +117,12 @@ const getOCRInfos = async (authorization) => {
                 break;
             case 'SPVIE':
                 infos.push(excelMasterSPVIE.getOCRSPVIE(ocr));
+                break;
+            // case 'SMATIS':
+            //     infos.push(excelMasterSMATIS.getOCRSMATIS(ocr));
+            //     break;
+            case 'SMATIS MCMS':
+                infos.push(excelMasterSMATIS.getOCRSMATISMCMS(ocr));
                 break;
             case 'SWISSLIFE SURCO':
                 infos.push(excelMasterSWISSLIFE.getOCRSWISSLIFESURCO(ocr));
@@ -289,6 +296,12 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
                                 break;
                             case 'SPVIE':
                                 excelMasterSPVIE.createWorkSheetSPVIE(workSheet, ocr);
+                                break;
+                            // case 'SMATIS':
+                            //     excelMasterSMATIS.createWorkSheetSMATIS(workSheet, ocr);
+                            //     break;
+                            case 'SMATIS MCMS':
+                                excelMasterSMATIS.createWorkSheetSMATISMCMS(workSheet, ocr);
                                 break;
                             case 'SWISSLIFE SURCO':
                                 excelMasterSWISSLIFE.createWorkSheetSWISSLIFESURCO(workSheet, ocr);
