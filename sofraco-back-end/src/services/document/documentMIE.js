@@ -6,9 +6,10 @@ const path = require('path');
 const time = require('../time/time');
 const fileService = require('./files');
 
+exports.readExcelMIE = async (file) => {};
 
-exports.readExcelMIE = async (file) => {
-    console.log('DEBUT TRAITEMENT MIE');
+exports.readExcelMIEMCMS = async (file) => {
+    console.log('DEBUT TRAITEMENT MIE MCMS');
     const excecutionStartTime = performance.now();
     let filePath = file;
     const fileName = fileService.getFileNameWithoutExtension(filePath);
@@ -94,7 +95,7 @@ exports.readExcelMIE = async (file) => {
     console.log('Total Execution time : ', executionTime);
     ocr.executionTime = executionTime;
     ocr.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT MIE');
+    console.log('FIN TRAITEMENT MIE MCMS');
     return ocr;
 };
 

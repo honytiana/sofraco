@@ -24,6 +24,7 @@ const documentPAVILLON = require('../services/document/documentPAVILLON');
 const documentSPVIE = require('../services/document/documentSPVIE');
 const documentSWISSLIFE = require('../services/document/documentSWISSLIFE');
 const documentUAFLIFE = require('../services/document/documentUAFLIFE');
+const treatmentHandler = require('../handlers/treatmentHandler');
 
 exports.createDocument = (req, res) => {  // create document
     console.log('Create document');
@@ -86,8 +87,8 @@ exports.createDocument = (req, res) => {  // create document
                 let document = {};
                 const fileName = fileService.getFileName(file.path);
                 document.name = fileName;
-                document.company = company._id;
-                document.companyName = company.name;
+                document.company = companySurco._id;
+                document.companyName = companySurco.name;
                 document.path_original_file = file.path;
                 document.type = req.body.extension;
                 const doc = documentHandler.createDocument(document);
@@ -122,22 +123,25 @@ exports.createDocument = (req, res) => {  // create document
 
 exports.updateDocuments = async (req, res) => {
     try {
-        const document = await documentHandler.getDocument(req.body.document);
-        const fileName = fileService.getFileNameWithoutExtension(document.path_original_file);
-        const extension = fileService.getFileExtension(document.path_original_file);
-        const options = {
-            document: document._id,
-            filePath: document.path_original_file,
-            fileName: fileName,
-            extension: extension
+        let executionTimes = [];
+        const treatment = {
+            user: req.body.user,
+            begin_treatment: Date.now(),
+            status: 'processing',
+            progress: 0,
         };
-        const rs = await axios.put(`${config.nodeUrl}/api/document/${document.companyName}`, options, {
-            headers: {
-                'Authorization': `${req.headers.authorization}`
-            }
-        });
-        const result = { data: rs.data.company, executionTime: rs.data.executionTime };
-        res.status(202).json(result);
+        const resultTreatment = await treatmentHandler.createTreatment(treatment);
+        for (let id of req.body.documents) {
+            const indexOfDoc = req.body.documents.indexOf(id);
+            const document = await documentHandler.getDocument(id);
+            const rs = await setOCRDocument(document.companyName, document._id, document.path_original_file);
+            const result = { data: rs.company, executionTime: rs.executionTime };
+            const progress = ((indexOfDoc + 1) * 100) / req.body.documents.length;
+            const treatment = await treatmentHandler.updateTreatment(resultTreatment._id, { progress: progress });
+            executionTimes.push(result.executionTime);
+        }
+        await treatmentHandler.updateTreatment(resultTreatment._id, { status: 'done', end_treatment: Date.now() });
+        res.status(202).json({ executionTimes });
     } catch (err) {
         res.status(500).json({ err });
     }
@@ -164,80 +168,93 @@ exports.setStatusDocument = async (req, res) => {
 }
 
 exports.updateDocument = async (req, res) => {
+
+};
+
+const setOCRDocument = async (companyName, documentId, filePath) => {
     try {
         let document = {};
         document.status = 'processing';
         let ocr;
-        const d = await documentHandler.updateDocument(req.body.document, document);
-        switch (req.params.company.toUpperCase()) {
+        const d = await documentHandler.updateDocument(documentId, document);
+        switch (companyName.toUpperCase()) {
             case 'APICIL':
-                ocr = await documentAPICIL.readExcelAPICIL(req.body.filePath);
+                ocr = await documentAPICIL.readExcelAPICIL(filePath);
                 break;
             case 'APIVIA':
-                ocr = await documentAPIVIA.readPdfAPIVIA(req.body.filePath);
+                ocr = await documentAPIVIA.readPdfAPIVIA(filePath);
                 break;
             case 'APREP':
-                ocr = await documentAPREP.readPdfAPREP(req.body.filePath);
+                ocr = await documentAPREP.readPdfAPREP(filePath);
                 break;
             case 'APREP ENCOURS':
-                ocr = await documentAPREP.readPdfAPREPENCOURS(req.body.filePath);
+                ocr = await documentAPREP.readPdfAPREPENCOURS(filePath);
                 break;
             // case 'AVIVA':
-            //     infos = await readExcel(file);
-            //     break;
+            // ocr = await documentAVIVA.readExcelAVIVASURCO(filePath);
+            // break;
             case 'AVIVA SURCO':
-                ocr = await documentAVIVA.readExcelAVIVASURCO(req.body.filePath);
+                ocr = await documentAVIVA.readExcelAVIVASURCO(filePath);
                 break;
             case 'CARDIF':
-                ocr = await documentCARDIF.readExcelCARDIF(req.body.filePath);
+                ocr = await documentCARDIF.readExcelCARDIF(filePath);
                 break;
             case 'CBP FRANCE': //LOURMEL
-                ocr = await documentLOURMEL.readExcelLOURMEL(req.body.filePath);
+                ocr = await documentLOURMEL.readExcelLOURMEL(filePath);
                 break;
             case 'LOURMEL': //LOURMEL
-                ocr = await documentLOURMEL.readExcelLOURMEL(req.body.filePath);
+                ocr = await documentLOURMEL.readExcelLOURMEL(filePath);
                 break;
             case 'CEGEMA':
-                ocr = await documentCEGEMA.readExcelCEGEMA(req.body.filePath);
+                ocr = await documentCEGEMA.readExcelCEGEMA(filePath);
                 break;
             case 'ERES':
-                ocr = await documentERES.readPdfERES(req.body.filePath);
+                ocr = await documentERES.readPdfERES(filePath);
                 break;
             case 'GENERALI':
-                ocr = await documentGENERALI.readExcelGENERALI(req.body.filePath);
+                ocr = await documentGENERALI.readExcelGENERALI(filePath);
                 break;
             case 'HODEVA':
-                ocr = await documentHODEVA.readExcelHODEVA(req.body.filePath);
+                ocr = await documentHODEVA.readExcelHODEVA(filePath);
                 break;
             case 'METLIFE':
-                ocr = await documentMETLIFE.readPdfMETLIFE(req.body.filePath);
+                ocr = await documentMETLIFE.readPdfMETLIFE(filePath);
                 break;
-            case 'MIE': //'MCMS'
-                ocr = await documentMIE.readExcelMIE(req.body.filePath);
+            case 'MIE':
+                ocr = await documentMIE.readExcelMIE(filePath);
                 break;
-            case 'MIEL MUTUELLE': //'MCMS'
-                ocr = await documentMIEL.readExcelMIEL(req.body.filePath);
+            case 'MIE MCMS': //'MCMS'
+                ocr = await documentMIE.readExcelMIEMCMS(filePath);
+                break;
+            case 'MIEL MUTUELLE':
+                ocr = await documentMIEL.readExcelMIEL(filePath);
+                break;
+            case 'MIEL MCMS': //'MCMS'
+                ocr = await documentMIEL.readExcelMIELMCMS(filePath);
                 break;
             case 'MILTIS':
-                ocr = await documentMILTIS.readExcelMILTIS(req.body.filePath);
+                ocr = await documentMILTIS.readExcelMILTIS(filePath);
                 break;
             case 'MMA':
-                ocr = await documentMMA.readExcelMMA(req.body.filePath);
+                ocr = await documentMMA.readExcelMMA(filePath);
                 break;
-            case 'PAVILLON PREVOYANCE': //'MCMS'
-                ocr = await documentPAVILLON.readExcelPAVILLON(req.body.filePath);
+            case 'PAVILLON PREVOYANCE':
+                ocr = await documentPAVILLON.readExcelPAVILLON(filePath);
+                break;
+            case 'PAVILLON MCMS': //'MCMS'
+                ocr = await documentPAVILLON.readExcelPAVILLONMCMS(filePath);
                 break;
             case 'SLADE':   // SWISSLIFE
-                ocr = await documentSWISSLIFE.readPdfSLADE(req.body.filePath);
+                ocr = await documentSWISSLIFE.readPdfSLADE(filePath);
                 break;
             case 'SPVIE':
-                ocr = await documentSPVIE.readExcelSPVIE(req.body.filePath);
+                ocr = await documentSPVIE.readExcelSPVIE(filePath);
                 break;
             case 'SWISSLIFE SURCO':
-                ocr = await documentSWISSLIFE.readExcelSWISSLIFESURCO(req.body.filePath);
+                ocr = await documentSWISSLIFE.readExcelSWISSLIFESURCO(filePath);
                 break;
             case 'UAF LIFE PATRIMOINE':
-                ocr = await documentUAFLIFE.readExcelUAFLIFE(req.body.filePath);
+                ocr = await documentUAFLIFE.readExcelUAFLIFE(filePath);
                 break;
             default:
                 console.log('Pas de compagnie correspondante');
@@ -245,8 +262,8 @@ exports.updateDocument = async (req, res) => {
         document.treatment_date = new Date();
         document.ocr = ocr;
         document.status = 'done';
-        const doc = await documentHandler.updateDocument(req.body.document, document);
-        res.status(202).json({ executionTime: ocr.executionTimeMS, company: req.params.company });
+        const doc = await documentHandler.updateDocument(documentId, document);
+        return { executionTime: ocr.executionTimeMS, company: companyName };
     } catch (err) {
         res.status(500).json({ err });
     }

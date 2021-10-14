@@ -52,33 +52,37 @@ class Companies extends Component {
         }
         this.getCompanies = this.getCompanies.bind(this);
         this.getDraftDocument = this.getDraftDocument.bind(this);
+        this.getTreatment = this.getTreatment.bind(this);
         this.checkCompanyOfDraftsDocuments = this.checkCompanyOfDraftsDocuments.bind(this);
         this.toggle = this.toggle.bind(this);
         this.loadingHandler = this.loadingHandler.bind(this);
         this.onValiderHandler = this.onValiderHandler.bind(this);
         this.onGenererExcelsMasters = this.onGenererExcelsMasters.bind(this);
         this.onDownloadExcelMasters = this.onDownloadExcelMasters.bind(this);
+        this.user = JSON.parse(localStorage.getItem('user'));
 
     }
 
     componentDidMount() {
-        const user = JSON.parse(localStorage.getItem('user'));
-        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
+        axios.get(`${config.nodeUrl}/api/token/user/${this.user}`, {
             headers: {
                 'Content-Type': 'application/json',
             }
         })
-        .then((res) => {
-            this.setState({
-                token: res.data
+            .then((res) => {
+                this.setState({
+                    token: res.data
+                });
+                this.getCompanies();
+                // this.loadingHandler();
+                this.getDraftDocument();
+                setInterval(() => {
+                    this.getTreatment();
+                }, 1000);
+            })
+            .catch((err) => {
+                console.log(err);
             });
-            this.getCompanies();
-            this.loadingHandler();
-            this.getDraftDocument();
-        })
-        .catch((err) => {
-            console.log(err);
-        });
     }
 
     getDraftDocument() {
@@ -222,9 +226,37 @@ class Companies extends Component {
             });
     }
 
-    getProgress(value, length) {
-        const progress = (value * 100) / length;
-        return progress;
+    getTreatment() {
+        axios.get(`${config.nodeUrl}/api/treatment/user/${this.user}`, {
+            headers: {
+                'Authorization': `Bearer ${this.state.token.value}`
+            }
+        })
+            .then((data) => {
+                return data.data
+            })
+            .then((treatments) => {
+                if (treatments !== null) {
+                    const treatment = treatments.filter((treatment) => {
+                        return treatment.status === 'processing';
+                    });
+                    if (treatment.length > 0) {
+                        this.setState({
+                            progress: treatment[0].progress,
+                            load: true,
+                            elementCover: true
+                        });
+                    } else {
+                        this.setState({
+                            load: false,
+                            elementCover: false
+                        });
+                    }
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+            });
     }
 
     async launchTreatments(e) {
@@ -234,28 +266,21 @@ class Companies extends Component {
             elementCover: true,
             executionTime: ''
         });
-        let executionTimes = [];
         try {
-            const draftsLength = this.state.drafts.length;
-            for (let draft of this.state.drafts) {
-                const indexOfDraft = this.state.drafts.indexOf(draft);
-                const options = {
-                    userId: JSON.parse(localStorage.getItem('user')),
-                    document: draft._id
-                }
-                const res = await axios.put(`${config.nodeUrl}/api/document`, options, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${this.state.token.value}`
-                    }
-                });
-                executionTimes.push(res.data.executionTime);
-                const progress = this.getProgress(indexOfDraft + 1, draftsLength);
-                this.setState({
-                    progress
-                });
+            const documents = this.state.drafts.map((draft) => {
+                return draft._id
+            });
+            const options = {
+                user: JSON.parse(localStorage.getItem('user')),
+                documents: documents
             }
-            this.loadingHandler();
+            const res = await axios.put(`${config.nodeUrl}/api/document`, options, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.state.token.value}`
+                }
+            });
+            let executionTimes = res.data.executionTimes;
             if (this.state.drafts.length > 0) {
                 this.setState({
                     toast: true,
@@ -278,6 +303,7 @@ class Companies extends Component {
                     message: 'Tous les fichiers sont traités'
                 });
             }
+            this.getDraftDocument();
             let executionTime = executionTimes.reduce((previous, current) => {
                 return (previous + current);
             });
@@ -436,7 +462,7 @@ class Companies extends Component {
             if (company.surco) {
                 if (occurences.some(o => { return o.company.globalName === company.globalName && o.company.surco })) {
                     const newOcc = occurences.slice();
-                    for (let i = 0; i < newOcc.length; i ++) {
+                    for (let i = 0; i < newOcc.length; i++) {
                         if (newOcc[i].company.globalName === company.globalName) {
                             newOcc[i].count = 2;
                         }
@@ -477,7 +503,7 @@ class Companies extends Component {
                                                                 }
                                                             }
                                                         }
-                                                        return (<span key={`${company._id}_Spanf${index}`}></span>);
+                                                        // return (<span key={`${company._id}_Spanf${index}`}></span>);
                                                     })}
                                                 </CCardFooter>
                                             </CCard>

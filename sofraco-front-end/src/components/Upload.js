@@ -462,34 +462,44 @@ class Upload extends Component {
                 {
                     (this.state.loader) && (
                         <div className="sofraco-spinner">
-                            <p>Upload en cours, veuillez ne pas quitter la page</p>
-                            <p><CSpinner color="warning" ></CSpinner></p>
+                            {/* <p>Upload en cours, veuillez ne pas quitter la page</p>
+                            <p><CSpinner color="warning" ></CSpinner></p> */}
+                            <div id="my_modal" style={{
+                                background: 'black',
+                                opacity: 0.5,
+                                position: 'absolute',
+                                top: 0,
+                                left: 0,
+                                width: '100%',
+                                height: '100%',
+                                zindex:500000
+                              }}></div>
                         </div>
-                    )
-                }
+        )
+    }
                 {
-                    (this.state.toast === true &&
-                        this.state.messageToast &&
-                        this.state.messageToast.header &&
-                        this.state.messageToast.message) && (
-                        <CToaster position="bottom-right">
-                            <CToast
-                                show={true}
-                                fade={true}
-                                autohide={5000}
-                                color={this.state.messageToast.color}
-                            >
-                                <CToastHeader closeButton>
-                                    {this.state.messageToast.header}
-                                </CToastHeader>
-                                <CToastBody>
-                                    {`${this.state.messageToast.message}`}
-                                </CToastBody>
-                            </CToast>
-                        </CToaster>
-                    )
-                }
-            </div>
+    (this.state.toast === true &&
+        this.state.messageToast &&
+        this.state.messageToast.header &&
+        this.state.messageToast.message) && (
+            <CToaster position="bottom-right">
+                <CToast
+                    show={true}
+                    fade={true}
+                    autohide={5000}
+                    color={this.state.messageToast.color}
+                >
+                    <CToastHeader closeButton>
+                        {this.state.messageToast.header}
+                    </CToastHeader>
+                    <CToastBody>
+                        {`${this.state.messageToast.message}`}
+                    </CToastBody>
+                </CToast>
+            </CToaster>
+        )
+}
+            </div >
         );
     }
 }

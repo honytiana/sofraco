@@ -7,8 +7,10 @@ const time = require('../time/time');
 const fileService = require('./files');
 
 
-exports.readExcelMIEL = async (file) => {
-    console.log('DEBUT TRAITEMENT MIEL');
+exports.readExcelMIEL = async (file) => {};
+
+exports.readExcelMIELMCMS = async (file) => {
+    console.log('DEBUT TRAITEMENT MIEL MCMS');
     const excecutionStartTime = performance.now();
     let filePath = file;
     const fileName = fileService.getFileNameWithoutExtension(filePath);

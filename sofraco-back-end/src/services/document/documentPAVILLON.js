@@ -6,8 +6,11 @@ const path = require('path');
 const time = require('../time/time');
 const fileService = require('./files');
 
-exports.readExcelPAVILLON = async (file) => {
-    console.log('DEBUT TRAITEMENT PAVILLON PREVOYANCE');
+
+exports.readExcelPAVILLON = async (file) => {}
+
+exports.readExcelPAVILLONMCMS = async (file) => {
+    console.log('DEBUT TRAITEMENT PAVILLON MCMS');
     const excecutionStartTime = performance.now();
     let filePath = file;
     const fileName = fileService.getFileNameWithoutExtension(filePath);
@@ -155,7 +158,7 @@ exports.readExcelPAVILLON = async (file) => {
     console.log('Total Execution time : ', executionTime);
     ocr.executionTime = executionTime;
     ocr.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT PAVILLON PREVOYANCE');
+    console.log('FIN TRAITEMENT PAVILLON MCMS');
     return ocr;
 };
 

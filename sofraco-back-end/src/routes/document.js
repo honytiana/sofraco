@@ -23,7 +23,7 @@ const upload = multer({
 router.route('/').post(accessControl, upload.array('files'), documentController.createDocument);
 router.route('/').put(accessControl, documentController.updateDocuments);
 router.route('/status/:status').put(accessControl, documentController.setStatusDocument);
-router.route('/:company').put(accessControl, documentController.updateDocument);
+router.route('/:id').put(accessControl, documentController.updateDocument);
 router.route('/').get(accessControl, documentController.getDocuments);
 router.route('/:id').get(accessControl, documentController.getDocument);
 router.route('/date/:date').get(accessControl, documentController.getDocumentsByDate);

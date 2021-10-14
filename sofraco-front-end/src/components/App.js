@@ -48,6 +48,8 @@ class App extends Component {
       localStorage.clear();
     });
 
+    // window.caches.delete();
+
     const user = JSON.parse(localStorage.getItem('user'));
     axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
       headers: {
