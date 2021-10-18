@@ -1,34 +1,14 @@
 const ExcelJS = require('exceljs');
 const XLSX = require('xlsx');
 const { performance } = require('perf_hooks');
-const { exec, execSync, spawnSync } = require('child_process');
-const easyOCR = require('../easyOCR/easyOCR');
+const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
-const time = require('../time/time');
-const fileService = require('./files');
-const pdfService = require('./pdfFile');
+const time = require('../utils/time');
+const fileService = require('../utils/files');
+const pdfService = require('../utils/pdfFile');
+const redefinition = require('../utils/redefinition');
 
-const reIndexOf = (arr, rx) => {
-    const length = arr.length;
-    for (let i = 0; i < length; i++) {
-        if (arr[i].match(rx)) {
-            return i;
-        }
-    }
-    return -1;
-};
-
-const reLastIndexOf = (arr, rx) => {
-    const length = arr.length;
-    let lastIndexOf = -1;
-    for (let i = 0; i < length; i++) {
-        if (arr[i].match(rx)) {
-            lastIndexOf = i;
-        }
-    }
-    return lastIndexOf;
-}
 
 exports.readPdfSLADE = async (file) => {
     let infos = { executionTime: 0, infos: [] };
@@ -98,17 +78,17 @@ const readBordereauSLADE = (textFilePaths) => {
         const nameArr = fileNameWithoutExtension.split('_');
         const numero = nameArr[nameArr.length - 1];
         if (numero === '1') {
-            infos.syntheseDesCommissions.periodeConcernee = data[reIndexOf(data, /Période concernée/) + 1];
-            infos.syntheseDesCommissions.codeApporteur = (data[reIndexOf(data, /Code apporteur/) + 1]).match(/^\d+$/) ?
-                data[reIndexOf(data, /Code apporteur/) + 1] :
-                data[reIndexOf(data, /Code apporteur/) + 2];
-            infos.syntheseDesCommissions.referenceBordereau = data[reIndexOf(data, /Référence bordereau/) + 2];
-            infos.syntheseDesCommissions.nombrePrimeSurLaPeriode = (data[reIndexOf(data, /Nombre de primes sur la période/) - 1].match(/^\d$/)) ?
-                data[reIndexOf(data, /Nombre de primes sur la période/) - 1] : '';
-            infos.syntheseDesCommissions.totalPrimesEncaisseesSurLaPeriode = data[reIndexOf(data, /Total des primes encaissées sur la période/) + 1];
-            infos.syntheseDesCommissions.totalCommissionsCalculeesSurLaPeriode = data[reIndexOf(data, /Total des commissions calculées sur la période/) + 1];
-            infos.syntheseDesCommissions.reportSoldePrecedent = data[reIndexOf(data, /Report solde précédent/) + 1];
-            infos.syntheseDesCommissions.totalCommissionsDues = data[reIndexOf(data, /Total des commissions dues/) + 1];
+            infos.syntheseDesCommissions.periodeConcernee = data[redefinition.reIndexOf(data, /Période concernée/) + 1];
+            infos.syntheseDesCommissions.codeApporteur = (data[redefinition.reIndexOf(data, /Code apporteur/) + 1]).match(/^\d+$/) ?
+                data[redefinition.reIndexOf(data, /Code apporteur/) + 1] :
+                data[redefinition.reIndexOf(data, /Code apporteur/) + 2];
+            infos.syntheseDesCommissions.referenceBordereau = data[redefinition.reIndexOf(data, /Référence bordereau/) + 2];
+            infos.syntheseDesCommissions.nombrePrimeSurLaPeriode = (data[redefinition.reIndexOf(data, /Nombre de primes sur la période/) - 1].match(/^\d$/)) ?
+                data[redefinition.reIndexOf(data, /Nombre de primes sur la période/) - 1] : '';
+            infos.syntheseDesCommissions.totalPrimesEncaisseesSurLaPeriode = data[redefinition.reIndexOf(data, /Total des primes encaissées sur la période/) + 1];
+            infos.syntheseDesCommissions.totalCommissionsCalculeesSurLaPeriode = data[redefinition.reIndexOf(data, /Total des commissions calculées sur la période/) + 1];
+            infos.syntheseDesCommissions.reportSoldePrecedent = data[redefinition.reIndexOf(data, /Report solde précédent/) + 1];
+            infos.syntheseDesCommissions.totalCommissionsDues = data[redefinition.reIndexOf(data, /Total des commissions dues/) + 1];
             data.splice(data.indexOf(infos.syntheseDesCommissions.periodeConcernee), 1);
             data.splice(data.indexOf(infos.syntheseDesCommissions.codeApporteur), 1);
             data.splice(data.indexOf(infos.syntheseDesCommissions.referenceBordereau), 1);
@@ -121,7 +101,7 @@ const readBordereauSLADE = (textFilePaths) => {
             data.splice(data.indexOf(infos.syntheseDesCommissions.totalCommissionsDues), 1);
         }
         if (numero === '1' || numero === '2') {
-            const indexfirstCode = reIndexOf(data, /^\d+$/);
+            const indexfirstCode = redefinition.reIndexOf(data, /^\d+$/);
             let details = [];
             if (data[indexfirstCode - 1].match(/^(du \d{1,2}[/]\d{1,2}[/]\d{1,4} au)$/) &&
                 data[indexfirstCode - 2].match(/^(du \d{1,2}[/]\d{1,2}[/]\d{1,4} au)$/)) {
@@ -135,10 +115,10 @@ const readBordereauSLADE = (textFilePaths) => {
             for (let i = 0; i < maxI; i++) {
                 let contrat = [];
                 if (details.length > 0) {
-                    const indexCode = reIndexOf(details, /^\d+$/);
+                    const indexCode = redefinition.reIndexOf(details, /^\d+$/);
                     contrat.push(details[indexCode]);
                     details.splice(indexCode, 1);
-                    let lastIndexUtil = reIndexOf(details, /^\d+$/);
+                    let lastIndexUtil = redefinition.reIndexOf(details, /^\d+$/);
                     if (lastIndexUtil > 0) {
                         if (details[lastIndexUtil - 1].match(/^(du \d{1,2}[/]\d{1,2}[/]\d{1,4} au)$/)) {
                             lastIndexUtil = lastIndexUtil - 2;

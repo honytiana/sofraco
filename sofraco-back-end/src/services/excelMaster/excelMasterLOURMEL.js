@@ -1,3 +1,5 @@
+const excelFile = require('../utils/excelFile');
+
 exports.getOCRLOURMEL = (ocr) => {
     const headers = ocr.headers;
     let infosOCR = [];
@@ -64,23 +66,16 @@ exports.createWorkSheetLOURMEL = (workSheet, dataCourtierOCR) => {
         };
         rowNumber++;
     }
-    workSheet.getRow(rowNumber).getCell('P').value = 'TOTAL';
-    workSheet.getRow(rowNumber).getCell('P').font = { bold: true, name: 'Arial', size: 10 };
+    excelFile.setSimpleCell(workSheet, rowNumber, 'P', 'TOTAL', { bold: true, name: 'Arial', size: 10 });
     let result = 0;
     for (let i = debut; i <= rowNumber - 2; i++) {
         result += workSheet.getRow(i).getCell('Q').value;
     }
-    workSheet.getRow(rowNumber).getCell('Q').value = { 
+    const value = { 
         formula: `SUM(Q${debut}:Q${rowNumber - 1})`,
         result: result
     };
-    workSheet.getRow(rowNumber).getCell('Q').font = { bold: true, name: 'Arial', size: 10 };
-    workSheet.getRow(rowNumber).getCell('Q').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-    workSheet.getRow(rowNumber).getCell('Q').fill = {
-        type: 'pattern',
-        pattern: 'solid',
-        fgColor: { argb: 'ffff00' }
-    };
+    excelFile.setStylizedCell(workSheet, rowNumber, 'Q', value, false, {}, { bold: true, name: 'Arial', size: 10 }, '#,##0.00"€";\-#,##0.00"€"', 'ffff00');
 }
 
 

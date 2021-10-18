@@ -3,8 +3,8 @@ const fs = require('fs');
 const PDFParser = require("pdf2json");
 const { PDFDocument } = require('pdf-lib');
 const { performance } = require('perf_hooks');
-const time = require('../time/time');
-const fileService = require('../document/files');
+const time = require('../utils/time');
+const fileService = require('../utils/files');
 
 exports.splitPDFMETLIFE = (file) => {
     console.log('DEBUT SEPARATION PDF METLIFE');

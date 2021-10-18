@@ -2,42 +2,11 @@ const fs = require('fs');
 const path = require('path');
 const { performance } = require('perf_hooks');
 const { execSync } = require('child_process');
-const pdfService = require('./pdfFile');
-const time = require('../time/time');
-const fileService = require('./files');
+const pdfService = require('../utils/pdfFile');
+const time = require('../utils/time');
+const fileService = require('../utils/files');
+const redefinition = require('../utils/redefinition');
 
-
-const reIndexOf = (arr, rx) => {
-    const length = arr.length;
-    for (let i = 0; i < length; i++) {
-        if (arr[i].match(rx)) {
-            return i;
-        }
-    }
-    return -1;
-};
-
-const reLastIndexOf = (arr, rx) => {
-    const length = arr.length;
-    let lastIndexOf = -1;
-    for (let i = 0; i < length; i++) {
-        if (arr[i].match(rx)) {
-            lastIndexOf = i;
-        }
-    }
-    return lastIndexOf;
-}
-
-const reAllIndexOf = (arr, rx) => {
-    const length = arr.length;
-    let allIndexOf = [];
-    for (let i = 0; i < length; i++) {
-        if (arr[i].match(rx)) {
-            allIndexOf.push(i);
-        }
-    }
-    return allIndexOf;
-}
 
 exports.readPdfERES = async (file) => {
     let infos = { executionTime: 0, infos: null };
@@ -98,10 +67,10 @@ const readBordereauERES = (textFilePaths) => {
             const rLast = /régler en €/i;
             const rMontant = /^\d+ ?\d*,?\d*$/;
             const rWord = /[a-z.' ]+/i;
-            const newData = data.slice(reIndexOf(data, rLast) + 1, data.length - 1);
+            const newData = data.slice(redefinition.reIndexOf(data, rLast) + 1, data.length - 1);
             const lengthNewData = newData.length / 4;
             for (let i = 0; i < lengthNewData; i++) {
-                const allIndexOfMontants = reAllIndexOf(newData, rMontant);
+                const allIndexOfMontants = redefinition.reAllIndexOf(newData, rMontant);
                 if (allIndexOfMontants.length > 0) {
                     const contrat = newData.slice(0, allIndexOfMontants[3] + 1);
                     if (!newData[allIndexOfMontants[3] + 1].match(/total/i)) {
@@ -138,7 +107,7 @@ const readBordereauERES = (textFilePaths) => {
                     droitEntree: null,
                     commissionARegler: null
                 };
-                const allIndexOfChiffres = reAllIndexOf(detail, rMontant);
+                const allIndexOfChiffres = redefinition.reAllIndexOf(detail, rMontant);
                 contrat.codeEntreprise = detail[allIndexOfChiffres[0]];
                 contrat.montantVersee = detail[allIndexOfChiffres[1]];
                 contrat.droitEntree = detail[allIndexOfChiffres[2]];

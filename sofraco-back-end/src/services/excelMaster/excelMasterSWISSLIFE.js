@@ -1,3 +1,4 @@
+const excelFile = require('../utils/excelFile');
 
 exports.getOCRSLADE = (ocr) => {
     let infosOCR = []
@@ -20,217 +21,71 @@ exports.getOCRSLADE = (ocr) => {
 }
 
 exports.createWorkSheetSLADE = (workSheet, dataCourtierOCR) => {
+    const font1 = { name: 'Arial', size: 12, bold: true, color: { argb: '960f2f' } };
+    const font2 = { name: 'Arial', size: 10 };
+    const font3 = { name: 'Arial', size: 10, bold: true, color: { argb: '960f2f' } };
+    const font4 = { name: 'Arial', size: 11, bold: true, color: { argb: '960f2f' } };
+    const border1 = {
+        top: { style: 'thin', color: { argb: '960f2f' } },
+        left: { style: 'thin', color: { argb: '960f2f' } },
+        bottom: { style: 'thin', color: { argb: '960f2f' } },
+        right: { style: 'thin', color: { argb: '960f2f' } }
+    };
+
     workSheet.getColumn('A').width = 40;
-    const row1 = workSheet.getRow(1);
-    row1.font = { name: 'Arial', size: 10 };
-    row1.getCell('A').value = 'Synthèse de vos commissions';
-    row1.getCell('A').font = { name: 'Arial', size: 12, bold: true, color: { argb: '960f2f' } };
+    excelFile.setSimpleCell(workSheet, 1, 'A', 'Synthèse de vos commissions', font1);
 
-    const row3 = workSheet.getRow(3);
-    row3.getCell('A').value = 'Nombre de primes sur la période : ';
-    row3.getCell('A').font = { name: 'Arial', size: 10 };
-    row3.getCell('A').border = {
-        top: { style: 'thin', color: {argb:'960f2f'} },
-        left: { style: 'thin', color: {argb:'960f2f'} },
-        bottom: { style: 'thin', color: {argb:'960f2f'} },
-        right: { style: 'thin', color: {argb:'960f2f'} }
-    };
-    row3.getCell('B').value = dataCourtierOCR.infosOCR.syntheseDesCommissions.nombrePrimeSurLaPeriode;
-    row3.getCell('B').font = { name: 'Arial', size: 10 };
-    row3.getCell('B').border = {
-        top: { style: 'thin', color: {argb:'960f2f'} },
-        left: { style: 'thin', color: {argb:'960f2f'} },
-        bottom: { style: 'thin', color: {argb:'960f2f'} },
-        right: { style: 'thin', color: {argb:'960f2f'} }
-    };
+    excelFile.setStylizedCell(workSheet, 3, 'A', 'Nombre de primes sur la période : ', true, border1, font2);
+    excelFile.setStylizedCell(workSheet, 3, 'B', dataCourtierOCR.infosOCR.syntheseDesCommissions.nombrePrimeSurLaPeriode, true, border1, font2);
 
-    const row4 = workSheet.getRow(4);
-    row4.getCell('A').value = 'Total des primes encaissées sur la période : ';
-    row4.getCell('A').font = { name: 'Arial', size: 10 };
-    row4.getCell('A').border = {
-        top: { style: 'thin', color: {argb:'960f2f'} },
-        left: { style: 'thin', color: {argb:'960f2f'} },
-        bottom: { style: 'thin', color: {argb:'960f2f'} },
-        right: { style: 'thin', color: {argb:'960f2f'} }
-    };
-    row4.getCell('B').value = dataCourtierOCR.infosOCR.syntheseDesCommissions.totalPrimesEncaisseesSurLaPeriode;
-    row4.getCell('B').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-    row4.getCell('B').font = { name: 'Arial', size: 10 };
-    row4.getCell('B').border = {
-        top: { style: 'thin', color: {argb:'960f2f'} },
-        left: { style: 'thin', color: {argb:'960f2f'} },
-        bottom: { style: 'thin', color: {argb:'960f2f'} },
-        right: { style: 'thin', color: {argb:'960f2f'} }
-    };
+    excelFile.setStylizedCell(workSheet, 4, 'A', 'Total des primes encaissées sur la période : ', true, border1, font2);
+    excelFile.setStylizedCell(workSheet, 4, 'B', dataCourtierOCR.infosOCR.syntheseDesCommissions.totalPrimesEncaisseesSurLaPeriode, true, border1, font2, '#,##0.00"€";\-#,##0.00"€"');
 
-    const row5 = workSheet.getRow(5);
-    row5.getCell('A').value = 'Total des commissions calculées sur la période : ';
-    row5.getCell('A').font = { name: 'Arial', size: 10 };
-    row5.getCell('A').border = {
-        top: { style: 'thin', color: {argb:'960f2f'} },
-        left: { style: 'thin', color: {argb:'960f2f'} },
-        bottom: { style: 'thin', color: {argb:'960f2f'} },
-        right: { style: 'thin', color: {argb:'960f2f'} }
-    };
-    row5.getCell('B').value = dataCourtierOCR.infosOCR.syntheseDesCommissions.totalCommissionsCalculeesSurLaPeriode;
-    row5.getCell('B').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-    row5.getCell('B').font = { name: 'Arial', size: 10 };
-    row5.getCell('B').border = {
-        top: { style: 'thin', color: {argb:'960f2f'} },
-        left: { style: 'thin', color: {argb:'960f2f'} },
-        bottom: { style: 'thin', color: {argb:'960f2f'} },
-        right: { style: 'thin', color: {argb:'960f2f'} }
-    };
+    excelFile.setStylizedCell(workSheet, 5, 'A', 'Total des commissions calculées sur la période : ', true, border1, font2);
+    excelFile.setStylizedCell(workSheet, 5, 'B', dataCourtierOCR.infosOCR.syntheseDesCommissions.totalCommissionsCalculeesSurLaPeriode, true, border1, font2, '#,##0.00"€";\-#,##0.00"€"');
 
-    const row6 = workSheet.getRow(6);
-    row6.getCell('A').value = 'Report solde précédent : ';
-    row6.getCell('A').font = { name: 'Arial', size: 10 };
-    row6.getCell('A').border = {
-        top: { style: 'thin', color: {argb:'960f2f'} },
-        left: { style: 'thin', color: {argb:'960f2f'} },
-        bottom: { style: 'thin', color: {argb:'960f2f'} },
-        right: { style: 'thin', color: {argb:'960f2f'} }
-    };
-    row6.getCell('B').value = dataCourtierOCR.infosOCR.syntheseDesCommissions.reportSoldePrecedent;
-    row6.getCell('B').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-    row6.getCell('B').font = { name: 'Arial', size: 10 };
-    row6.getCell('B').border = {
-        top: { style: 'thin', color: {argb:'960f2f'} },
-        left: { style: 'thin', color: {argb:'960f2f'} },
-        bottom: { style: 'thin', color: {argb:'960f2f'} },
-        right: { style: 'thin', color: {argb:'960f2f'} }
-    };
+    excelFile.setStylizedCell(workSheet, 6, 'A', 'Report solde précédent : ', true, border1, font2);
+    excelFile.setStylizedCell(workSheet, 6, 'B', dataCourtierOCR.infosOCR.syntheseDesCommissions.reportSoldePrecedent, true, border1, font2, '#,##0.00"€";\-#,##0.00"€"');
 
-    const row7 = workSheet.getRow(7);
-    row7.getCell('A').value = 'Total des commissions dues : ';
-    row7.getCell('A').font = { name: 'Arial', size: 10, bold: true, color: { argb: '960f2f' } };
-    row7.getCell('A').border = {
-        top: { style: 'thin', color: {argb:'960f2f'} },
-        left: { style: 'thin', color: {argb:'960f2f'} },
-        bottom: { style: 'thin', color: {argb:'960f2f'} },
-        right: { style: 'thin', color: {argb:'960f2f'} }
-    };
-    row7.getCell('B').value = dataCourtierOCR.infosOCR.syntheseDesCommissions.totalCommissionsDues;
-    row7.getCell('B').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-    row7.getCell('B').font = { name: 'Arial', size: 10, bold: true, color: { argb: '960f2f' } };
-    row7.getCell('B').border = {
-        top: { style: 'thin', color: {argb:'960f2f'} },
-        left: { style: 'thin', color: {argb:'960f2f'} },
-        bottom: { style: 'thin', color: {argb:'960f2f'} },
-        right: { style: 'thin', color: {argb:'960f2f'} }
-    };
+    excelFile.setStylizedCell(workSheet, 7, 'A', 'Total des commissions dues : ', true, border1, font2);
+    excelFile.setStylizedCell(workSheet, 7, 'B', dataCourtierOCR.infosOCR.syntheseDesCommissions.totalCommissionsDues, true, border1, font2, '#,##0.00"€";\-#,##0.00"€"');
 
-    const row9 = workSheet.getRow(9);
-    row9.getCell('A').value = 'BORDEREAU DE COMMISSIONS';
-    row9.getCell('A').font = { name: 'Arial', size: 10, bold: true, color: { argb: '960f2f' } };
+    excelFile.setSimpleCell(workSheet, 9, 'A', 'BORDEREAU DE COMMISSIONS', font3);
+    excelFile.setSimpleCell(workSheet, 10, 'A', 'Détail des polices', font3);
 
-    const row10 = workSheet.getRow(10);
-    row10.getCell('A').value = 'Détail des polices';
-    row10.getCell('A').font = { name: 'Arial', size: 10, bold: true, color: { argb: '960f2f' } };
+    const cellInfoA = { workSheet, rowNumber: 12, cell: 'A', value: 'AGENCE', mergedCells: 'A12:B12' };
+    excelFile.setMergedCell(cellInfoA, true, border1, font4);
 
-    const row12 = workSheet.getRow(12);
-    workSheet.mergeCells('A12:B12');
-    workSheet.mergeCells('C12:F12');
-    workSheet.mergeCells('G12:I12');
-    workSheet.mergeCells('J12:N12');
-    row12.getCell('A').value = 'AGENCE';
-    row12.getCell('A').alignment = { horizontal: 'center' };
-    row12.getCell('A').font = { name: 'Arial', size: 11, bold: true, color: { argb: '960f2f' } };
-    row12.getCell('A').border = {
-        top: { style: 'thin', color: {argb:'960f2f'} },
-        left: { style: 'thin', color: {argb:'960f2f'} },
-        bottom: { style: 'thin', color: {argb:'960f2f'} },
-        right: { style: 'thin', color: {argb:'960f2f'} }
-    };
+    const cellInfoC = { workSheet, rowNumber: 12, cell: 'C', value: 'CONTRAT', mergedCells: 'C12:F12' };
+    excelFile.setMergedCell(cellInfoC, true, border1, font4);
 
-    row12.getCell('C').value = 'CONTRAT';
-    row12.getCell('C').alignment = { horizontal: 'center' };
-    row12.getCell('C').font = { name: 'Arial', size: 11, bold: true, color: { argb: '960f2f' } };
-    row12.getCell('C').border = {
-        top: { style: 'thin', color: {argb:'960f2f'} },
-        left: { style: 'thin', color: {argb:'960f2f'} },
-        bottom: { style: 'thin', color: {argb:'960f2f'} },
-        right: { style: 'thin', color: {argb:'960f2f'} }
-    };
+    const cellInfoG = { workSheet, rowNumber: 12, cell: 'G', value: 'PRIME', mergedCells: 'G12:I12' };
+    excelFile.setMergedCell(cellInfoG, true, border1, font4);
 
-    row12.getCell('G').value = 'PRIME';
-    row12.getCell('G').alignment = { horizontal: 'center' };
-    row12.getCell('G').font = { name: 'Arial', size: 11, bold: true, color: { argb: '960f2f' } };
-    row12.getCell('G').border = {
-        top: { style: 'thin', color: {argb:'960f2f'} },
-        left: { style: 'thin', color: {argb:'960f2f'} },
-        bottom: { style: 'thin', color: {argb:'960f2f'} },
-        right: { style: 'thin', color: {argb:'960f2f'} }
-    };
+    const cellInfoJ = { workSheet, rowNumber: 12, cell: 'J', value: 'COMMISSIONS', mergedCells: 'J12:N12' };
+    excelFile.setMergedCell(cellInfoJ, true, border1, font4);
 
-    row12.getCell('J').value = 'COMMISSIONS';
-    row12.getCell('J').alignment = { horizontal: 'center' };
-    row12.getCell('J').font = { name: 'Arial', size: 11, bold: true, color: { argb: '960f2f' } };
-    row12.getCell('J').border = {
-        top: { style: 'thin', color: {argb:'960f2f'} },
-        left: { style: 'thin', color: {argb:'960f2f'} },
-        bottom: { style: 'thin', color: {argb:'960f2f'} },
-        right: { style: 'thin', color: {argb:'960f2f'} }
-    };
-
-    const row13 = workSheet.getRow(13);
-    row13.getCell('A').value = 'Code';
-    row13.getCell('A').font = { name: 'Arial', size: 11, bold: true, color: { argb: '960f2f' } };
-
-    row13.getCell('B').value = 'Nom';
-    row13.getCell('B').font = { name: 'Arial', size: 11, bold: true, color: { argb: '960f2f' } };
-
-    row13.getCell('C').value = 'Police';
-    row13.getCell('C').font = { name: 'Arial', size: 11, bold: true, color: { argb: '960f2f' } };
-
-    row13.getCell('D').value = 'Assuré';
-    row13.getCell('D').font = { name: 'Arial', size: 11, bold: true, color: { argb: '960f2f' } };
-
-    row13.getCell('E').value = 'Produit';
-    row13.getCell('E').font = { name: 'Arial', size: 11, bold: true, color: { argb: '960f2f' } };
-
-    row13.getCell('F').value = 'Date d\'effet';
-    row13.getCell('F').font = { name: 'Arial', size: 11, bold: true, color: { argb: '960f2f' } };
-
-    row13.getCell('G').value = 'Périodicité';
-    row13.getCell('G').font = { name: 'Arial', size: 11, bold: true, color: { argb: '960f2f' } };
-
-    row13.getCell('H').value = 'Période';
-    row13.getCell('H').font = { name: 'Arial', size: 11, bold: true, color: { argb: '960f2f' } };
-
-    row13.getCell('I').value = 'Montant prélevé TTC';
-    row13.getCell('I').font = { name: 'Arial', size: 11, bold: true, color: { argb: '960f2f' } };
-
-    row13.getCell('J').value = 'Période';
-    row13.getCell('J').font = { name: 'Arial', size: 11, bold: true, color: { argb: '960f2f' } };
-
-    row13.getCell('K').value = 'Mode';
-    row13.getCell('K').font = { name: 'Arial', size: 11, bold: true, color: { argb: '960f2f' } };
-
-    row13.getCell('L').value = 'Montant Base HT';
-    row13.getCell('L').font = { name: 'Arial', size: 11, bold: true, color: { argb: '960f2f' } };
-
-    row13.getCell('M').value = 'Taux';
-    row13.getCell('M').font = { name: 'Arial', size: 11, bold: true, color: { argb: '960f2f' } };
-
-    row13.getCell('N').value = 'Montant';
-    row13.getCell('N').font = { name: 'Arial', size: 11, bold: true, color: { argb: '960f2f' } };
-    for (let i = 1; i <= 14; i++) {
-        row13.getCell(i).border = {
-            top: { style: 'thin', color: {argb:'960f2f'} },
-            left: { style: 'thin', color: {argb:'960f2f'} },
-            bottom: { style: 'thin', color: {argb:'960f2f'} },
-            right: { style: 'thin', color: {argb:'960f2f'} }
-        };
-    }
-
+    excelFile.setSimpleCell(workSheet, 13, 'A', 'Code', true, border1, font4);
+    excelFile.setSimpleCell(workSheet, 13, 'B', 'Nom', true, border1, font4);
+    excelFile.setSimpleCell(workSheet, 13, 'C', 'Police', true, border1, font4);
+    excelFile.setSimpleCell(workSheet, 13, 'D', 'Assuré', true, border1, font4);
+    excelFile.setSimpleCell(workSheet, 13, 'E', 'Produit', true, border1, font4);
+    excelFile.setSimpleCell(workSheet, 13, 'F', 'Date d\'effet', true, border1, font4);
+    excelFile.setSimpleCell(workSheet, 13, 'G', 'Périodicité', true, border1, font4);
+    excelFile.setSimpleCell(workSheet, 13, 'H', 'Période', true, border1, font4);
+    excelFile.setSimpleCell(workSheet, 13, 'I', 'Montant prélevé TTC', true, border1, font4);
+    excelFile.setSimpleCell(workSheet, 13, 'J', 'Période', true, border1, font4);
+    excelFile.setSimpleCell(workSheet, 13, 'K', 'Mode', true, border1, font4);
+    excelFile.setSimpleCell(workSheet, 13, 'L', 'Montant Base HT', true, border1, font4);
+    excelFile.setSimpleCell(workSheet, 13, 'M', 'Taux', true, border1, font4);
+    excelFile.setSimpleCell(workSheet, 13, 'N', 'Montant', true, border1, font4);
 
     let detailDesPolices = dataCourtierOCR.infosOCR.detailDesPolices;
 
     let rowNumber = 14;
     const debut = 14;
     for (let datas of detailDesPolices) {
-        workSheet.getRow(rowNumber).font = { name: 'Arial', size: 10 };
+        workSheet.getRow(rowNumber).font = font2;
         workSheet.getRow(rowNumber).getCell('A').value = datas.agence.code;
         workSheet.getRow(rowNumber).getCell('B').value = datas.agence.nom;
         workSheet.getRow(rowNumber).getCell('C').value = datas.contrat.police;
@@ -259,12 +114,7 @@ exports.createWorkSheetSLADE = (workSheet, dataCourtierOCR) => {
     }
     for (let i = debut; i <= rowNumber; i++) {
         workSheet.getRow(i).eachCell((cell, colNumber) => {
-            cell.border = {
-                top: { style: 'thin', color: {argb:'960f2f'} },
-                left: { style: 'thin', color: {argb:'960f2f'} },
-                bottom: { style: 'thin', color: {argb:'960f2f'} },
-                right: { style: 'thin', color: {argb:'960f2f'} }
-            };
+            cell.border = border1;
         });
     }
 
@@ -289,6 +139,15 @@ exports.getOCRSWISSLIFESURCO = (ocr) => {
 }
 
 exports.createWorkSheetSWISSLIFESURCO = (workSheet, dataCourtierOCR) => {
+    const font1 = { bold: true, name: 'Verdana', size: 8 };
+    const font2 = { bold: true, name: 'Verdana', size: 8, color: { argb: 'ff0000' } };
+    const font3 = { name: 'Verdana', size: 8 };
+    const border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' }
+    };
     workSheet.getColumn('A').width = 10;
     workSheet.getColumn('C').width = 15;
     workSheet.getColumn('D').width = 15;
@@ -302,23 +161,12 @@ exports.createWorkSheetSWISSLIFESURCO = (workSheet, dataCourtierOCR) => {
     workSheet.getColumn('L').width = 10;
     workSheet.getColumn('M').width = 10;
     workSheet.getColumn('N').width = 10;
+
     const row1 = workSheet.getRow(1);
-    row1.font = { bold: true, name: 'Verdana', size: 8 };
+    row1.font = font1;
     let cellNumber = 1;
     dataCourtierOCR.infosOCR.headers.forEach((header, index) => {
-        row1.getCell(cellNumber).value = header;
-        row1.getCell(cellNumber).fill = {
-            type: 'pattern',
-            pattern: 'solid',
-            fgColor: { argb: '800000' }
-        };
-        row1.getCell(cellNumber).border = {
-            top: { style: 'thin' },
-            left: { style: 'thin' },
-            bottom: { style: 'thin' },
-            right: { style: 'thin' }
-        };
-        row1.getCell(cellNumber).alignment = { vertical: 'middle' };
+        excelFile.setStylizedCell(workSheet, 1, cellNumber, header, true, border, font1, '', '800000');
         cellNumber++;
     });
     row1.height = 50;
@@ -326,142 +174,33 @@ exports.createWorkSheetSWISSLIFESURCO = (workSheet, dataCourtierOCR) => {
     let rowNumber = 2;
     let debut = 2;
     for (let datas of dataCourtierOCR.infosOCR.datas) {
-        workSheet.getRow(rowNumber).font = { name: 'Verdana', size: 8 };
-        workSheet.getRow(rowNumber).getCell('A').value = datas.apporteurVente;
-        workSheet.getRow(rowNumber).getCell('A').border = {
-            top: { style: 'thin' },
-            left: { style: 'thin' },
-            bottom: { style: 'thin' },
-            right: { style: 'thin' }
-        };
-
-        workSheet.getRow(rowNumber).getCell('B').value = (datas.dateComptabVente) ? new Date(0, 0, datas.dateComptabVente, 0, 0, 0) : '';
-        workSheet.getRow(rowNumber).getCell('B').numFmt = 'dd/mm/yyyy';
-        workSheet.getRow(rowNumber).getCell('B').border = {
-            top: { style: 'thin' },
-            left: { style: 'thin' },
-            bottom: { style: 'thin' },
-            right: { style: 'thin' }
-        };
-
-        workSheet.getRow(rowNumber).getCell('C').value = datas.numeroPolice;
-        workSheet.getRow(rowNumber).getCell('C').border = {
-            top: { style: 'thin' },
-            left: { style: 'thin' },
-            bottom: { style: 'thin' },
-            right: { style: 'thin' }
-        };
-
-        workSheet.getRow(rowNumber).getCell('D').value = datas.codeProduit;
-        workSheet.getRow(rowNumber).getCell('D').border = {
-            top: { style: 'thin' },
-            left: { style: 'thin' },
-            bottom: { style: 'thin' },
-            right: { style: 'thin' }
-        };
-
-        workSheet.getRow(rowNumber).getCell('E').value = datas.nomClient;
-        workSheet.getRow(rowNumber).getCell('E').border = {
-            top: { style: 'thin' },
-            left: { style: 'thin' },
-            bottom: { style: 'thin' },
-            right: { style: 'thin' }
-        };
-
-        workSheet.getRow(rowNumber).getCell('F').value = datas.cotisationPonderee;
-        workSheet.getRow(rowNumber).getCell('F').numFmt = '#,##0.00;\-#,##0.00';
-        workSheet.getRow(rowNumber).getCell('F').border = {
-            top: { style: 'thin' },
-            left: { style: 'thin' },
-            bottom: { style: 'thin' },
-            right: { style: 'thin' }
-        };
-
-        workSheet.getRow(rowNumber).getCell('G').value = datas.montantPP;
-        workSheet.getRow(rowNumber).getCell('G').numFmt = '#,##0.00;\-#,##0.00';
-        workSheet.getRow(rowNumber).getCell('G').border = {
-            top: { style: 'thin' },
-            left: { style: 'thin' },
-            bottom: { style: 'thin' },
-            right: { style: 'thin' }
-        };
-
-        workSheet.getRow(rowNumber).getCell('H').value = datas.dontParUCsurPP;
-        workSheet.getRow(rowNumber).getCell('H').numFmt = '#,##0.00;\-#,##0.00';
-        workSheet.getRow(rowNumber).getCell('H').border = {
-            top: { style: 'thin' },
-            left: { style: 'thin' },
-            bottom: { style: 'thin' },
-            right: { style: 'thin' }
-        };
-
-        workSheet.getRow(rowNumber).getCell('I').value = datas.montantPU;
-        workSheet.getRow(rowNumber).getCell('I').numFmt = '#,##0.00;\-#,##0.00';
-        workSheet.getRow(rowNumber).getCell('I').border = {
-            top: { style: 'thin' },
-            left: { style: 'thin' },
-            bottom: { style: 'thin' },
-            right: { style: 'thin' }
-        };
-
-        workSheet.getRow(rowNumber).getCell('J').value = datas.dontParUCsurPU;
-        workSheet.getRow(rowNumber).getCell('J').numFmt = '#,##0.00;\-#,##0.00';
-        workSheet.getRow(rowNumber).getCell('J').border = {
-            top: { style: 'thin' },
-            left: { style: 'thin' },
-            bottom: { style: 'thin' },
-            right: { style: 'thin' }
-        };
-
-        workSheet.getRow(rowNumber).getCell('K').value = datas.tauxChargement;
-        workSheet.getRow(rowNumber).getCell('K').border = {
-            top: { style: 'thin' },
-            left: { style: 'thin' },
-            bottom: { style: 'thin' },
-            right: { style: 'thin' }
-        };
-
-        workSheet.getRow(rowNumber).getCell('L').value = datas.avanceSurco;
-        workSheet.getRow(rowNumber).getCell('L').numFmt = '#,##0.00;\-#,##0.00';
-        workSheet.getRow(rowNumber).getCell('L').border = {
-            top: { style: 'thin' },
-            left: { style: 'thin' },
-            bottom: { style: 'thin' },
-            right: { style: 'thin' }
-        };
-
-        workSheet.getRow(rowNumber).getCell('M').value = datas.incompressible;
-        workSheet.getRow(rowNumber).getCell('M').numFmt = '#,##0.00;\-#,##0.00';
-        workSheet.getRow(rowNumber).getCell('M').border = {
-            top: { style: 'thin' },
-            left: { style: 'thin' },
-            bottom: { style: 'thin' },
-            right: { style: 'thin' }
-        };
-
-        workSheet.getRow(rowNumber).getCell('N').value = datas.avanceComprisRepriseIncompressible;
-        workSheet.getRow(rowNumber).getCell('N').numFmt = '#,##0.00;\-#,##0.00';
-        workSheet.getRow(rowNumber).getCell('N').border = {
-            top: { style: 'thin' },
-            left: { style: 'thin' },
-            bottom: { style: 'thin' },
-            right: { style: 'thin' }
-        };
-
+        excelFile.setStylizedCell(workSheet, rowNumber, 'A', datas.apporteurVente, true, border, font3);
+        excelFile.setStylizedCell(workSheet, rowNumber, 'B', (datas.dateComptabVente) ? new Date(0, 0, datas.dateComptabVente, 0, 0, 0) : '', true, border, font3, 'dd/mm/yyyy');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'C', datas.numeroPolice, true, border, font3, '');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'D', datas.codeProduit, true, border, font3, '');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'E', datas.nomClient, true, border, font3, '');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'F', datas.cotisationPonderee, true, border, font3, '#,##0.00;\-#,##0.00');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'G', datas.montantPP, true, border, font3, '#,##0.00;\-#,##0.00');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'H', datas.dontParUCsurPP, true, border, font3, '#,##0.00;\-#,##0.00');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'I', datas.montantPU, true, border, font3, '#,##0.00;\-#,##0.00');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'J', datas.dontParUCsurPU, true, border, font3, '#,##0.00;\-#,##0.00');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'K', datas.tauxChargement, true, border, font3, '');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'L', datas.avanceSurco, true, border, font3, '#,##0.00;\-#,##0.00');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'M', datas.incompressible, true, border, font3, '#,##0.00;\-#,##0.00');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'N', datas.avanceComprisRepriseIncompressible, true, border, font3, '#,##0.00;\-#,##0.00');
         rowNumber++;
     }
     rowNumber++;
-    workSheet.getRow(rowNumber).getCell('M').value = 'TOTAL';
-    workSheet.getRow(rowNumber).getCell('M').font = { bold: true, name: 'Verdana', size: 8, color: { argb: 'ff0000' } };
+
+    excelFile.setSimpleCell(workSheet, rowNumber, 'M', 'TOTAL', font2);
     let result = 0;
     for (let i = debut; i <= rowNumber - 2; i++) {
         result += workSheet.getRow(i).getCell('N').value;
     }
-    workSheet.getRow(rowNumber).getCell('N').value = { 
+    const value = {
         formula: `SUM(N${debut}:N${rowNumber - 2})`,
         result: result
     };
-    workSheet.getRow(rowNumber).getCell('N').font = { bold: true, name: 'Verdana', size: 8, color: { argb: 'ff0000' } };
-    workSheet.getRow(rowNumber).getCell('N').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+    excelFile.setStylizedCell(workSheet, rowNumber, 'N', value, false, {}, font2, '#,##0.00"€";\-#,##0.00"€"');
 }
 

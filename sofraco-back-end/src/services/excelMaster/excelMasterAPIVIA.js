@@ -1,3 +1,5 @@
+const excelFile = require('../utils/excelFile');
+
 exports.getOCRAPIVIA = (ocr) => {
     const headers = ocr.infos.headers;
     let infosOCR = [];
@@ -24,13 +26,7 @@ exports.createWorkSheetAPIVIA = (workSheet, dataCourtierOCR) => {
     row.font = { bold: true, name: 'Arial', size: 10 };
     let cellNumber = 1;
     dataCourtierOCR.infosOCR.headers.forEach((header, index) => {
-        row.getCell(cellNumber).value = header;
-        row.getCell(cellNumber).alignment = { vertical: 'middle', horizontal: 'center' };
-        row.getCell(cellNumber).fill = {
-            type: 'pattern',
-            pattern: 'solid',
-            fgColor: { argb: 'f2f2f2' }
-        };
+        excelFile.setStylizedCell(workSheet, rowNumber, cellNumber, header, false, {}, { bold: true, name: 'Arial', size: 10 }, '', 'f2f2f2');
         cellNumber++;
     });
     rowNumber++;

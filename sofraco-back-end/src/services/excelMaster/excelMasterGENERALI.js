@@ -1,4 +1,5 @@
 const fs = require('fs');
+const excelFile = require('../utils/excelFile');
 
 exports.getOCRGENERALI = (ocr) => {
     const headers = ocr.headers;
@@ -21,11 +22,12 @@ exports.getOCRGENERALI = (ocr) => {
 }
 
 exports.createWorkSheetGENERALI = (workSheet, dataCourtierOCR) => {
+    const font1 = { bold: true, name: 'Arial', size: 10 };
     const row1 = workSheet.getRow(1);
-    row1.font = { bold: true, name: 'Arial', size: 10 };
+    row1.font = font1;
     let cellNumber = 1;
     dataCourtierOCR.infosOCR.headers.forEach((header, index) => {
-        row1.getCell(cellNumber).value = header;
+        excelFile.setSimpleCell(workSheet, rowNumber, cellNumber, header, font1);
         cellNumber++;
     });
 
@@ -84,18 +86,16 @@ exports.createWorkSheetGENERALI = (workSheet, dataCourtierOCR) => {
         rowNumber++;
     }
     rowNumber++;
-    workSheet.getRow(rowNumber).getCell('AJ').value = 'TOTAL';
-    workSheet.getRow(rowNumber).getCell('AJ').font = { bold: true, name: 'Arial', size: 10 };
+    excelFile.setSimpleCell(workSheet, rowNumber, 'AJ', 'TOTAL', font1);
     let result = 0;
     for (let i = debut; i <= rowNumber - 2; i++) {
         result += workSheet.getRow(i).getCell('AK').value;
     }
-    workSheet.getRow(rowNumber).getCell('AK').value = { 
+    const value = { 
         formula: `SUM(AK${debut}:AK${rowNumber - 2})`,
         result: result
     };
-    workSheet.getRow(rowNumber).getCell('AK').font = { bold: true, name: 'Arial', size: 10 };
-    workSheet.getRow(rowNumber).getCell('AK').numFmt = '#,##0.00"€";[Red]\-#,##0.00"€"';
+    excelFile.setStylizedCell(workSheet, rowNumber, 'AK', value, false, {}, font1, '#,##0.00"€";[Red]\-#,##0.00"€"');
     for(let i = 1; i <= dataCourtierOCR.infosOCR.headers.length; i++) {
         workSheet.getRow(rowNumber).getCell(i).fill = {
             type: 'pattern',

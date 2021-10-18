@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 
 const config = require('../../config.json');
-const fileService = require('../services/document/files');
+const fileService = require('../services/utils/files');
 const excelMasterHandler = require('../handlers/excelMasterHandler');
 const excelMasterService = require('../services/excelMaster/excelMasterManagement');
 

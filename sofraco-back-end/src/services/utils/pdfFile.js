@@ -1,5 +1,5 @@
 const path = require('path');
-const { exec, execSync, spawnSync } = require('child_process');
+const { execSync } = require('child_process');
 const splitPdfService = require('../pdf/splitPDF');
 const fileService = require('./files');
 

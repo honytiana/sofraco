@@ -280,7 +280,7 @@ class Companies extends Component {
                     'Authorization': `Bearer ${this.state.token.value}`
                 }
             });
-            let executionTimes = res.data.executionTimes;
+            let executionTime = res.data.executionTime;
             if (this.state.drafts.length > 0) {
                 this.setState({
                     toast: true,
@@ -304,11 +304,8 @@ class Companies extends Component {
                 });
             }
             this.getDraftDocument();
-            let executionTime = executionTimes.reduce((previous, current) => {
-                return (previous + current);
-            });
             this.setState({
-                executionTime: millisecondToTime(executionTime)
+                executionTime
             });
         } catch (err) {
             this.setState({

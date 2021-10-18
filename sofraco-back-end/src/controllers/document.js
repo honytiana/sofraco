@@ -2,8 +2,8 @@ const path = require('path');
 const fs = require('fs');
 const axios = require('axios');
 const config = require('../../config.json');
-const fileService = require('../services/document/files');
-const time = require('../services/time/time');
+const fileService = require('../services/utils/files');
+const time = require('../services/utils/time');
 const documentHandler = require('../handlers/documentHandler');
 const documentAPICIL = require('../services/document/documentAPICIL');
 const documentAPIVIA = require('../services/document/documentAPIVIA');
@@ -142,7 +142,9 @@ exports.updateDocuments = async (req, res) => {
             executionTimes.push(result.executionTime);
         }
         await treatmentHandler.updateTreatment(resultTreatment._id, { status: 'done', end_treatment: Date.now() });
-        res.status(202).json({ executionTimes });
+        let executionTime = Date.now() - treatment.begin_treatment;
+        executionTime = time.millisecondToTime(executionTime);
+        res.status(202).json({ executionTime });
     } catch (err) {
         res.status(500).json({ err });
     }

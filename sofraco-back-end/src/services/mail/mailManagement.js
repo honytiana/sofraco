@@ -8,7 +8,7 @@ const { Base64Decode } = require('base64-stream')
 
 const config = require('../../../config.json');
 const excelMasterHandler = require('../../handlers/excelMasterHandler');
-const filesService = require('../document/files');
+const filesService = require('../utils/files');
 
 const transporter = nodemailer.createTransport({
     pool: true,

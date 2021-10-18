@@ -1,3 +1,5 @@
+const excelFile = require('../utils/excelFile');
+
 exports.getOCRMIEL = (ocr) => { };
 
 exports.createWorkSheetMIEL = (workSheet, dataCourtierOCR) => { };
@@ -42,11 +44,9 @@ exports.createWorkSheetMIELMCMS = (workSheet, dataCourtierOCR) => {
             break;
     }
     let rowNumber = 1;
-    const row = workSheet.getRow(rowNumber);
-    row.font = { bold: true, name: 'Arial', size: 10 };
     let cellNumber = 1;
     dataCourtierOCR.infosOCR.headers.forEach((header, index) => {
-        row.getCell(cellNumber).value = header;
+        excelFile.setSimpleCell(workSheet, rowNumber, cellNumber, header, { bold: true, name: 'Arial', size: 10 });
         cellNumber++;
     });
     rowNumber++;
@@ -68,18 +68,16 @@ exports.createWorkSheetMIELMCMS = (workSheet, dataCourtierOCR) => {
         createPavetMIELV4();
     }
     rowNumber++;
-    workSheet.getRow(rowNumber).getCell('T').value = 'TOTAL';
-    workSheet.getRow(rowNumber).getCell('T').font = { bold: true, name: 'Arial', size: 10 };
+    excelFile.setSimpleCell(workSheet, rowNumber, 'T', 'TOTAL', { bold: true, name: 'Arial', size: 10 });
     let result = 0;
     for (let i = debut; i <= rowNumber - 2; i++) {
         result += workSheet.getRow(i).getCell('U').value;
     }
-    workSheet.getRow(rowNumber).getCell('U').value = {
+    const value =  {
         formula: `SUM(U${debut}:U${rowNumber - 2})`,
         result: result
     };
-    workSheet.getRow(rowNumber).getCell('U').font = { bold: true, name: 'Arial', size: 10 };
-    workSheet.getRow(rowNumber).getCell('U').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+    excelFile.setStylizedCell(workSheet, rowNumber, 'U', value, false, {}, { bold: true, name: 'Arial', size: 10 }, '#,##0.00"€";\-#,##0.00"€"');
 }
 
 const createPavetMIELCREASIO = (dataCourtierOCR, workSheet, rowNumber) => {

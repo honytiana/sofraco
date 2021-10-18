@@ -3,8 +3,8 @@ const XLSX = require('xlsx');
 const { performance } = require('perf_hooks');
 const fs = require('fs');
 const path = require('path');
-const time = require('../time/time');
-const fileService = require('./files');
+const time = require('../utils/time');
+const fileService = require('../utils/files');
 
 exports.readExcelMILTIS = async (file) => {
     console.log('DEBUT TRAITEMENT MILTIS');

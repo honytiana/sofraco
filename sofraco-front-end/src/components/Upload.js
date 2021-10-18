@@ -475,7 +475,7 @@ class Upload extends Component {
                     (this.state.loader) && (
                         <div className="sofraco-spinner">
                             <p>Upload en cours, veuillez ne pas quitter la page</p>
-                            <p><CSpinner color="warning" ></CSpinner></p>
+                            <CSpinner color="warning" ></CSpinner>
                             {/* <div id="my_modal" style={{
                                 background: 'black',
                                 opacity: 0.5,

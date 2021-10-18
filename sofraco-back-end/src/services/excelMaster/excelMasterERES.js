@@ -1,3 +1,5 @@
+const excelFile = require('../utils/excelFile');
+
 exports.getOCRERES = (ocr) => {
     const headers = [
         'Code Entreprise',
@@ -49,47 +51,22 @@ exports.createWorkSheetERES = (workSheet, dataCourtierOCR) => {
         rowNumber++;
     }
     rowNumber++;
-    workSheet.getRow(rowNumber).font = { bold: true, name: 'Arial', size: 11, color: { argb: 'FFFFFF' } };
-    workSheet.getRow(rowNumber).getCell('A').fill = {
-        type: 'pattern',
-        pattern: 'solid',
-        fgColor: { argb: 'ed7d31' }
-    };
-    workSheet.getRow(rowNumber).getCell('B').fill = {
-        type: 'pattern',
-        pattern: 'solid',
-        fgColor: { argb: 'ed7d31' }
-    };
-    workSheet.getRow(rowNumber).getCell('C').fill = {
-        type: 'pattern',
-        pattern: 'solid',
-        fgColor: { argb: 'ed7d31' }
-    };
-    workSheet.getRow(rowNumber).getCell('D').fill = {
-        type: 'pattern',
-        pattern: 'solid',
-        fgColor: { argb: 'ed7d31' }
-    };
-    workSheet.getRow(rowNumber).getCell('E').value = 'TOTAL';
-    workSheet.getRow(rowNumber).getCell('E').font = { bold: true, name: 'Arial', size: 10 };
-    workSheet.getRow(rowNumber).getCell('E').fill = {
-        type: 'pattern',
-        pattern: 'solid',
-        fgColor: { argb: 'ed7d31' }
-    };
+    const font1 = { bold: true, name: 'Arial', size: 11, color: { argb: 'FFFFFF' } };
+    const font2 = { bold: true, name: 'Arial', size: 10 };
+    workSheet.getRow(rowNumber).font = font1;
+    excelFile.setStylizedCell(workSheet, rowNumber, 'A',  '', false, {}, font1, '', 'ed7d31');
+    excelFile.setStylizedCell(workSheet, rowNumber, 'B',  '', false, {}, font1, '', 'ed7d31');
+    excelFile.setStylizedCell(workSheet, rowNumber, 'C',  '', false, {}, font1, '', 'ed7d31');
+    excelFile.setStylizedCell(workSheet, rowNumber, 'D',  '', false, {}, font1, '', 'ed7d31');
+    excelFile.setStylizedCell(workSheet, rowNumber, 'E',  'TOTAL', false, {}, font2, '', 'ed7d31');
     let result = 0;
     for (let i = debut; i <= rowNumber - 2; i++) {
         result += workSheet.getRow(i).getCell('F').value;
     }
-    workSheet.getRow(rowNumber).getCell('F').value = { 
+    const value = { 
         formula: `SUM(F${debut}:F${rowNumber - 2})`,
         result: result
     };
-    workSheet.getRow(rowNumber).getCell('F').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-    workSheet.getRow(rowNumber).getCell('F').fill = {
-        type: 'pattern',
-        pattern: 'solid',
-        fgColor: { argb: 'ed7d31' }
-    };
+    excelFile.setStylizedCell(workSheet, rowNumber, 'F',  value, false, {}, font2, '#,##0.00"€";\-#,##0.00"€"', 'ed7d31');
 }
 

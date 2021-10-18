@@ -1,3 +1,5 @@
+const excelFile = require('../utils/excelFile');
+
 exports.getOCRCEGEMA = (ocr) => {
     const headers = ocr.headers;
     let infosOCR = [];
@@ -18,8 +20,9 @@ exports.getOCRCEGEMA = (ocr) => {
 }
 
 exports.createWorkSheetCEGEMA = (workSheet, dataCourtierOCR) => {
+    const font1 = { bold: true, name: 'Arial', size: 10 };
     const row1 = workSheet.getRow(1);
-    row1.font = { bold: true, name: 'Arial', size: 10 };
+    row1.font = font1;
     let cellNumber = 1;
     dataCourtierOCR.infosOCR.headers.forEach((header, index) => {
         row1.getCell(cellNumber).value = header;
@@ -44,18 +47,16 @@ exports.createWorkSheetCEGEMA = (workSheet, dataCourtierOCR) => {
         workSheet.getRow(rowNumber).getCell('I').value = datas.modeMotif;
         rowNumber++;
     }
-    workSheet.getRow(rowNumber).getCell('G').value = 'TOTAL';
-    workSheet.getRow(rowNumber).getCell('G').font = { bold: true, name: 'Arial', size: 10 };
+    excelFile.setSimpleCell(workSheet, rowNumber, 'G', 'TOTAL', font1);
     let result = 0;
     for (let i = debut; i <= rowNumber - 1; i++) {
         result += workSheet.getRow(i).getCell('H').value;
     }
-    workSheet.getRow(rowNumber).getCell('H').value = { 
+    const value = { 
         formula: `SUM(H${debut}:H${rowNumber - 1})`,
         result: result
     };
-    workSheet.getRow(rowNumber).getCell('H').font = { bold: true, name: 'Arial', size: 10 };
-    workSheet.getRow(rowNumber).getCell('H').numFmt = '#,##0.00"€";[Red]\-#,##0.00"€"';
+    excelFile.setStylizedCell(workSheet, rowNumber, 'H', value, false, {}, font1, '#,##0.00"€";[Red]\-#,##0.00"€"');
 }
 
 

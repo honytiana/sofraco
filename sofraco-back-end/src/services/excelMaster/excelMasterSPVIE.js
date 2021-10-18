@@ -1,3 +1,5 @@
+const excelFile = require('../utils/excelFile');
+
 exports.getOCRSPVIE = (ocr) => {
     const headers = ocr.headers;
     let infosOCR = [];
@@ -18,110 +20,39 @@ exports.getOCRSPVIE = (ocr) => {
 }
 
 exports.createWorkSheetSPVIE = (workSheet, dataCourtierOCR) => {
+    const font1 = { bold: true, name: 'Arial', size: 10 };
+    const font2 = { bold: true, name: 'Arial', size: 10, color: { argb: 'FFFFFF' } };
+    const border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' }
+    };
+
     const row1 = workSheet.getRow(1);
-    row1.font = { bold: true, name: 'Arial', size: 10 };
-    workSheet.mergeCells('A1:F1');
-    row1.getCell('A').value = dataCourtierOCR.infosOCR.headers.firstHeaders[0];
-    row1.getCell('A').alignment = { horizontal: 'center' };
-    row1.getCell('A').fill = {
-        type: 'pattern',
-        pattern: 'solid',
-        fgColor: { argb: '000000' }
-    };
-    row1.getCell('A').border = {
-        top: { style: 'thin' },
-        left: { style: 'thin' },
-        bottom: { style: 'thin' },
-        right: { style: 'thin' }
-    };
+    row1.font = font1;
+    
+    const cellInfoA = { workSheet, rowNumber: 1, cell: 'A', value: dataCourtierOCR.infosOCR.headers.firstHeaders[0], mergedCells: 'A1:F1' };
+    excelFile.setMergedCell(cellInfoA, false, {}, font2, '', '000000');
 
-    workSheet.mergeCells('G1:M1');
-    row1.getCell('G').value = dataCourtierOCR.infosOCR.headers.firstHeaders[1];
-    row1.getCell('G').alignment = { horizontal: 'center' };
-    row1.getCell('G').fill = {
-        type: 'pattern',
-        pattern: 'solid',
-        fgColor: { argb: '66ffcc' }
-    };
-    row1.getCell('G').border = {
-        top: { style: 'thin' },
-        left: { style: 'thin' },
-        bottom: { style: 'thin' },
-        right: { style: 'thin' }
-    };
+    const cellInfoG = { workSheet, rowNumber: 1, cell: 'G', value: dataCourtierOCR.infosOCR.headers.firstHeaders[1], mergedCells: 'G1:M1' };
+    excelFile.setMergedCell(cellInfoG, false, {}, font1, '', '66ffcc');
 
-    workSheet.mergeCells('N1:O1');
-    row1.getCell('N').value = dataCourtierOCR.infosOCR.headers.firstHeaders[2];
-    row1.getCell('N').alignment = { horizontal: 'center' };
-    row1.getCell('N').fill = {
-        type: 'pattern',
-        pattern: 'solid',
-        fgColor: { argb: 'ccffcc' }
-    };
-    row1.getCell('N').border = {
-        top: { style: 'thin' },
-        left: { style: 'thin' },
-        bottom: { style: 'thin' },
-        right: { style: 'thin' }
-    };
+    const cellInfoN = { workSheet, rowNumber: 1, cell: 'N', value: dataCourtierOCR.infosOCR.headers.firstHeaders[2], mergedCells: 'N1:O1' };
+    excelFile.setMergedCell(cellInfoN, false, {}, font1, '', 'ccffcc');
 
-    workSheet.mergeCells('P1:V1');
-    row1.getCell('P').value = dataCourtierOCR.infosOCR.headers.firstHeaders[3];
-    row1.getCell('P').alignment = { horizontal: 'center' };
-    row1.getCell('P').fill = {
-        type: 'pattern',
-        pattern: 'solid',
-        fgColor: { argb: 'ffccff' }
-    };
-    row1.getCell('P').border = {
-        top: { style: 'thin' },
-        left: { style: 'thin' },
-        bottom: { style: 'thin' },
-        right: { style: 'thin' }
-    };
+    const cellInfoP = { workSheet, rowNumber: 1, cell: 'P', value: dataCourtierOCR.infosOCR.headers.firstHeaders[3], mergedCells: 'P1:V1' };
+    excelFile.setMergedCell(cellInfoP, false, {}, font1, '', 'ffccff');
 
-    workSheet.mergeCells('W1:AC1');
-    row1.getCell('W').value = dataCourtierOCR.infosOCR.headers.firstHeaders[4];
-    row1.getCell('W').alignment = { horizontal: 'center' };
-    row1.getCell('W').fill = {
-        type: 'pattern',
-        pattern: 'solid',
-        fgColor: { argb: 'fff0c1' }
-    };
-    row1.getCell('W').border = {
-        top: { style: 'thin' },
-        left: { style: 'thin' },
-        bottom: { style: 'thin' },
-        right: { style: 'thin' }
-    };
+    const cellInfoW = { workSheet, rowNumber: 1, cell: 'W', value: dataCourtierOCR.infosOCR.headers.firstHeaders[4], mergedCells: 'W1:AC1' };
+    excelFile.setMergedCell(cellInfoW, false, {}, font1, '', 'fff0c1');
 
-    workSheet.mergeCells('AD1:AM1');
-    row1.getCell('AD').value = dataCourtierOCR.infosOCR.headers.firstHeaders[5];
-    row1.getCell('AD').alignment = { horizontal: 'center' };
-    row1.getCell('AD').fill = {
-        type: 'pattern',
-        pattern: 'solid',
-        fgColor: { argb: 'ccffff' }
-    };
-    row1.getCell('AD').border = {
-        top: { style: 'thin' },
-        left: { style: 'thin' },
-        bottom: { style: 'thin' },
-        right: { style: 'thin' }
-    };
+    const cellInfoAD = { workSheet, rowNumber: 1, cell: 'AD', value: dataCourtierOCR.infosOCR.headers.firstHeaders[5], mergedCells: 'AD1:AM1' };
+    excelFile.setMergedCell(cellInfoAD, false, {}, font1, '', 'ccffff');
 
-
-    const row2 = workSheet.getRow(2);
-    row2.font = { bold: true, name: 'Arial', size: 10 };
     let cellNumber = 1;
     dataCourtierOCR.infosOCR.headers.secondHeaders.forEach((secondHeader, index) => {
-        row2.getCell(cellNumber).value = secondHeader;
-        row2.getCell(cellNumber).border = {
-            top: { style: 'thin' },
-            left: { style: 'thin' },
-            bottom: { style: 'thin' },
-            right: { style: 'thin' }
-        };
+        excelFile.setStylizedCell(workSheet, 2, cellNumber, secondHeader, true, border, font1);
         cellNumber++;
     });
     
@@ -187,18 +118,16 @@ exports.createWorkSheetSPVIE = (workSheet, dataCourtierOCR) => {
         rowNumber++;
     }
     rowNumber++;
-    workSheet.getRow(rowNumber).getCell('AJ').value = 'TOTAL';
-    workSheet.getRow(rowNumber).getCell('AJ').font = { bold: true, name: 'Arial', size: 10 };
+    excelFile.setSimpleCell(workSheet, rowNumber, 'AJ', 'TOTAL', font1);
     let result = 0;
     for (let i = debut; i <= rowNumber - 2; i++) {
         result += workSheet.getRow(i).getCell('AK').value;
     }
-    workSheet.getRow(rowNumber).getCell('AK').value = { 
+    const value =  { 
         formula: `SUM(AK${debut}:AK${rowNumber - 2})`,
         result: result
     };
-    workSheet.getRow(rowNumber).getCell('AK').font = { bold: true, name: 'Arial', size: 10 };
-    workSheet.getRow(rowNumber).getCell('AK').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+    excelFile.setStylizedCell(workSheet, rowNumber, 'AK', value, false, {}, font1, '#,##0.00"€";\-#,##0.00"€"');
 }
 
 

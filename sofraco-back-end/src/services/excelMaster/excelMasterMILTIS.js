@@ -1,3 +1,5 @@
+const excelFile = require('../utils/excelFile');
+
 exports.getOCRMILTIS = (ocr) => {
     const headers = ocr.headers;
     let infosOCR = [];
@@ -20,11 +22,9 @@ exports.getOCRMILTIS = (ocr) => {
 
 exports.createWorkSheetMILTIS = (workSheet, dataCourtierOCR) => {
     let rowNumber = 1;
-    const row = workSheet.getRow(rowNumber);
-    row.font = { bold: true, name: 'Arial', size: 10 };
     let cellNumber = 1;
     dataCourtierOCR.infosOCR.headers.forEach((header, index) => {
-        row.getCell(cellNumber).value = header;
+        excelFile.setSimpleCell(workSheet, rowNumber, cellNumber, header, { bold: true, name: 'Arial', size: 10 });
         cellNumber++;
     });
     rowNumber++;
@@ -68,18 +68,16 @@ exports.createWorkSheetMILTIS = (workSheet, dataCourtierOCR) => {
         rowNumber++;
     }
     rowNumber++;
-    workSheet.getRow(rowNumber).getCell('J').value = 'TOTAL';
-    workSheet.getRow(rowNumber).getCell('J').font = { bold: true, name: 'Arial', size: 10 };
+    excelFile.setSimpleCell(workSheet, rowNumber, 'J', 'TOTAL', { bold: true, name: 'Arial', size: 10 });
     let result = 0;
     for (let i = debut; i <= rowNumber - 2; i++) {
-        result += workSheet.getRow(i).getCell('K').value;
+        result += workSheet.getRow(i).getCell('').value;
     }
-    workSheet.getRow(rowNumber).getCell('K').value = { 
-        formula: `SUM(Z${debut}:K${rowNumber - 2})`,
+    const value =  {
+        formula: `SUM(K${debut}:K${rowNumber - 2})`,
         result: result
     };
-    workSheet.getRow(rowNumber).getCell('K').font = { bold: true, name: 'Arial', size: 10 };
-    workSheet.getRow(rowNumber).getCell('K').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+    excelFile.setStylizedCell(workSheet, rowNumber, 'K', value, false, {}, { bold: true, name: 'Arial', size: 10 }, '#,##0.00"€";\-#,##0.00"€"');
 }
 
 

@@ -2,31 +2,11 @@ const fs = require('fs');
 const path = require('path');
 const { performance } = require('perf_hooks');
 const { execSync } = require('child_process');
-const pdfService = require('./pdfFile');
-const time = require('../time/time');
-const fileService = require('./files');
+const pdfService = require('../utils/pdfFile');
+const time = require('../utils/time');
+const fileService = require('../utils/files');
 const imageAPIVIA = require('../images/imageAPIVIA');
 
-const reIndexOf = (arr, rx) => {
-    const length = arr.length;
-    for (let i = 0; i < length; i++) {
-        if (arr[i].match(rx)) {
-            return i;
-        }
-    }
-    return -1;
-};
-
-const reLastIndexOf = (arr, rx) => {
-    const length = arr.length;
-    let lastIndexOf = -1;
-    for (let i = 0; i < length; i++) {
-        if (arr[i].match(rx)) {
-            lastIndexOf = i;
-        }
-    }
-    return lastIndexOf;
-}
 
 exports.readPdfAPIVIA = async (file) => {
     let infos = { executionTime: 0, executionTimeMS: 0, infos: null };

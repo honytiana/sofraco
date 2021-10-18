@@ -5,7 +5,7 @@ const archiver = require('archiver');
 const fs = require('fs');
 
 const config = require('../../../config.json');
-const fileService = require('../document/files');
+const fileService = require('../utils/files');
 const excelMasterAPICIL = require('./excelMasterAPICIL');
 const excelMasterAPIVIA = require('./excelMasterAPIVIA');
 const excelMasterAPREP = require('./excelMasterAPREP');

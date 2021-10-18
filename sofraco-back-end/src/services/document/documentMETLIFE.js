@@ -1,34 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 const { performance } = require('perf_hooks');
-const { exec, execSync, spawnSync } = require('child_process');
-const pdfService = require('./pdfFile');
+const { execSync } = require('child_process');
+const pdfService = require('../utils/pdfFile');
 const splitPdfService = require('../pdf/splitPDF');
 const easyOCR = require('../easyOCR/easyOCR');
-const time = require('../time/time');
-const fileService = require('./files');
+const time = require('../utils/time');
+const fileService = require('../utils/files');
+const redefinition = require('../utils/redefinition');
 
-
-const reIndexOf = (arr, rx) => {
-    const length = arr.length;
-    for (let i = 0; i < length; i++) {
-        if (arr[i].match(rx)) {
-            return i;
-        }
-    }
-    return -1;
-};
-
-const reLastIndexOf = (arr, rx) => {
-    const length = arr.length;
-    let lastIndexOf = -1;
-    for (let i = 0; i < length; i++) {
-        if (arr[i].match(rx)) {
-            lastIndexOf = i;
-        }
-    }
-    return lastIndexOf;
-}
 
 exports.readPdfMETLIFE = async (file) => {
     let infos = { executionTime: 0, infos: [] };
@@ -118,9 +98,9 @@ const readBordereauMETLIFE = (textFilePaths) => {
             let stCommissionsDeduitesSurLaPeriode;
             let stOperationsDiversesSurLaPeriode;
             let totalCommissionsDues;
-            periodeEncaissement = data[reIndexOf(data, /Période d'encaissement du/) + 1];
-            codeApporteurBeneficiaireCommissions = data[reIndexOf(data, /Code apporteur bénéficiaire des commissions/) + 1];
-            codeApporteurEmetteur = data[reIndexOf(data, /Code apporteur émetteur/) + 1];
+            periodeEncaissement = data[redefinition.reIndexOf(data, /Période d'encaissement du/) + 1];
+            codeApporteurBeneficiaireCommissions = data[redefinition.reIndexOf(data, /Code apporteur bénéficiaire des commissions/) + 1];
+            codeApporteurEmetteur = data[redefinition.reIndexOf(data, /Code apporteur émetteur/) + 1];
             reportSoldePrecedent = data.filter((element) => {
                 return element.match(/Report solde précédent.+/)
             });
@@ -190,7 +170,7 @@ const readBordereauMETLIFE = (textFilePaths) => {
         }
         if (numero === '3' || numero === '4') {
             const indexMontant = data.lastIndexOf('Montant');
-            const indexLastUtil = reLastIndexOf(data, /Sous-total police/);
+            const indexLastUtil = redefinition.reLastIndexOf(data, /Sous-total police/);
             const details = data.filter((d, index) => {
                 return index > indexMontant && index < indexLastUtil + 2;
             });
@@ -198,8 +178,8 @@ const readBordereauMETLIFE = (textFilePaths) => {
             const maxI = details.length / 4;
             for (let i = 0; i < maxI; i++) {
                 if (details.length > 0) {
-                    const d = details.slice(0, reIndexOf(details, /Sous-total/) + 2);
-                    details.splice(0, reIndexOf(details, /Sous-total/) + 2);
+                    const d = details.slice(0, redefinition.reIndexOf(details, /Sous-total/) + 2);
+                    details.splice(0, redefinition.reIndexOf(details, /Sous-total/) + 2);
                     newDetails.push(d);
                 } else {
                     break;
@@ -209,8 +189,8 @@ const readBordereauMETLIFE = (textFilePaths) => {
             newDetails.forEach((element, index) => {
                 let dPolices = [];
                 if (element.length > 10) {
-                    if (reIndexOf(element, /^a{1}$/i) > 0) {
-                        element.splice(reIndexOf(element, /^a{1}$/i), 1);
+                    if (redefinition.reIndexOf(element, /^a{1}$/i) > 0) {
+                        element.splice(redefinition.reIndexOf(element, /^a{1}$/i), 1);
                     }
 
                     const polices = element.filter((e, i) => {
@@ -229,7 +209,7 @@ const readBordereauMETLIFE = (textFilePaths) => {
                     element.splice(element.indexOf(sousTotalPoliceMontant), 1);
                     sousTotalPoliceMontant = sousTotalPoliceMontant.replace('~', '-');
                     sousTotalPoliceMontant = parseFloat(sousTotalPoliceMontant);
-                    element.splice(reIndexOf(element, /Sous-total/i), 1);
+                    element.splice(redefinition.reIndexOf(element, /Sous-total/i), 1);
                     const sousTotalPolice = polices[0];
 
                     chiffres.splice(chiffres.length - 1, 1);
@@ -330,8 +310,8 @@ const readBordereauMETLIFE = (textFilePaths) => {
                             let m = [];
                             m[0] = mots[0];
                             mots.splice(0, 1);
-                            m.push(...mots.slice(0, reIndexOf(mots, /^M[me]{0,1}.+/)));
-                            mots.splice(0, reIndexOf(mots, /^M[me]{0,1}.+/));
+                            m.push(...mots.slice(0, redefinition.reIndexOf(mots, /^M[me]{0,1}.+/)));
+                            mots.splice(0, redefinition.reIndexOf(mots, /^M[me]{0,1}.+/));
                             allMots.push(m);
                         } else {
                             let m = mots.slice();

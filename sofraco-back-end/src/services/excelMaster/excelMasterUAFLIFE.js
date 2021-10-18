@@ -1,3 +1,5 @@
+const excelFile = require('../utils/excelFile');
+
 exports.getOCRUAFLIFE = (ocr) => {
     const headers = ocr.headers;
     let infosOCR = [];
@@ -19,25 +21,26 @@ exports.getOCRUAFLIFE = (ocr) => {
 }
 
 exports.createWorkSheetUAFLIFE = (workSheet, dataCourtierOCR) => {
+    const font1 = { bold: true, name: 'Arial', size: 10 };
+    const font2 = { name: 'Arial', size: 10 };
+
     let rowNumber = 1;
     for (let details of dataCourtierOCR.infosOCR.detailsBordereau) {
-        workSheet.getRow(rowNumber).font = { name: 'Arial', size: 10 };
-        workSheet.getRow(rowNumber).getCell('A').value = details;
+        excelFile.setSimpleCell(workSheet, rowNumber, 'A', details, font2);
         rowNumber++;
     }
     rowNumber++;
-    const row = workSheet.getRow(rowNumber);
-    row.font = { bold: true, name: 'Arial', size: 10 };
+    
     let cellNumber = 1;
     dataCourtierOCR.infosOCR.headers.forEach((header, index) => {
-        row.getCell(cellNumber).value = header;
+        excelFile.setSimpleCell(workSheet, rowNumber, cellNumber, header, font1);
         cellNumber++;
     });
     rowNumber++;
     
     let debut = rowNumber;
     for (let datas of dataCourtierOCR.infosOCR.datas) {
-        workSheet.getRow(rowNumber).font = { name: 'Arial', size: 10 };
+        workSheet.getRow(rowNumber).font = font2;
         workSheet.getRow(rowNumber).getCell('A').value = datas.codeIntermediaireDestinataireReglements;
         workSheet.getRow(rowNumber).getCell('B').value = datas.nomIntermediaireDestinataireReglements;
         workSheet.getRow(rowNumber).getCell('C').value = datas.codeIntermediaireResponsableContrat;
@@ -82,18 +85,17 @@ exports.createWorkSheetUAFLIFE = (workSheet, dataCourtierOCR) => {
         rowNumber++;
     }
     rowNumber++;
-    workSheet.getRow(rowNumber).getCell('Y').value = 'TOTAL';
-    workSheet.getRow(rowNumber).getCell('Y').font = { bold: true, name: 'Arial', size: 10 };
+
+    excelFile.setSimpleCell(workSheet, rowNumber, 'Y', 'TOTAL', font1);
     let result = 0;
     for (let i = debut; i <= rowNumber - 2; i++) {
         result += workSheet.getRow(i).getCell('Z').value;
     }
-    workSheet.getRow(rowNumber).getCell('Z').value = { 
+    const value = {
         formula: `SUM(Z${debut}:Z${rowNumber - 2})`,
         result: result
     };
-    workSheet.getRow(rowNumber).getCell('Z').font = { bold: true, name: 'Arial', size: 10 };
-    workSheet.getRow(rowNumber).getCell('Z').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+    excelFile.setStylizedCell(workSheet, rowNumber, 'Z', value, false, {}, font1, '#,##0.00"€";\-#,##0.00"€"');
 }
 
 

@@ -1,36 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 const { performance } = require('perf_hooks');
-const { exec, execSync, spawnSync } = require('child_process');
-const PDFParser = require("pdf2json");
-const Jimp = require('jimp');
-const pdfService = require('./pdfFile');
-const splitPdfService = require('../pdf/splitPDF');
-const easyOCR = require('../easyOCR/easyOCR');
-const time = require('../time/time');
-const fileService = require('./files');
+const { execSync } = require('child_process');
+const pdfService = require('../utils/pdfFile');
+const time = require('../utils/time');
+const fileService = require('../utils/files');
+const redefinition = require('../utils/redefinition');
 
-
-const reIndexOf = (arr, rx) => {
-    const length = arr.length;
-    for (let i = 0; i < length; i++) {
-        if (arr[i].match(rx)) {
-            return i;
-        }
-    }
-    return -1;
-};
-
-const reLastIndexOf = (arr, rx) => {
-    const length = arr.length;
-    let lastIndexOf = -1;
-    for (let i = 0; i < length; i++) {
-        if (arr[i].match(rx)) {
-            lastIndexOf = i;
-        }
-    }
-    return lastIndexOf;
-}
 
 exports.readPdfAPREP = async (file) => {
     let infos = { executionTime: 0, infos: null };
@@ -159,8 +135,8 @@ const readBordereauAPREP = (textFilePaths) => {
             infos.infosBordereau = infosBordereau;
         } else {
             const regex = /^(\d{1,2}[/]\d{1,2}[/]\d{1,4})?.+(\d{1,2}[/]\d{1,2}[/]\d{1,4})+.+\d+[,]?\d % \d+[,]\d+$/i;
-            const firstIndexUtil = reIndexOf(data, regex);
-            const lastIndexUtil = reLastIndexOf(data, regex);
+            const firstIndexUtil = redefinition.reIndexOf(data, regex);
+            const lastIndexUtil = redefinition.reLastIndexOf(data, regex);
             const details = data.filter((d, index) => {
                 return index >= firstIndexUtil && index <= lastIndexUtil;
             });
@@ -266,10 +242,10 @@ const readBordereauAPREPENCOURS = (textFilePath) => {
     const numero = nameArr[nameArr.length - 1];
     let details = [];
     data.forEach((d, i) => {
-        if (reIndexOf(data, /contact.+/i) >= 0 && reIndexOf(data, /total ((?!aprep).)/i) >= 0) {
-            const contrat = data.slice(reIndexOf(data, /contact.+/i), reIndexOf(data, /total ((?!aprep).)/i) + 1);
+        if (redefinition.reIndexOf(data, /contact.+/i) >= 0 && redefinition.reIndexOf(data, /total ((?!aprep).)/i) >= 0) {
+            const contrat = data.slice(redefinition.reIndexOf(data, /contact.+/i), redefinition.reIndexOf(data, /total ((?!aprep).)/i) + 1);
             details.push(contrat);
-            data.splice(reIndexOf(data, /contact.+/i), contrat.length);
+            data.splice(redefinition.reIndexOf(data, /contact.+/i), contrat.length);
         }
     });
     let months = [];

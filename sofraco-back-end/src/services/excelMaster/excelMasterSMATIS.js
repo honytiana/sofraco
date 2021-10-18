@@ -1,3 +1,5 @@
+const excelFile = require('../utils/excelFile');
+
 exports.getOCRSMATIS = (ocr) => {
     const headers = ocr.headers;
     let infosOCR = [];
@@ -48,17 +50,12 @@ exports.createWorkSheetSMATISMCMS = (workSheet, dataCourtierOCR) => {
     //         smatisAxiom = true;
     //         break;
     // }
-    const writeCell = (workSheet, rowNumber, colCode, content, ftType = { bold: true, name: 'Arial', size: 10 } ) => {
-        const row = workSheet.getRow(rowNumber);
-        row.font = ftType;
-        row.getCell(colCode).value = content;
-    };
-    writeCell(workSheet, 1, 'D', header.firstHeader[0]);
-    writeCell(workSheet, 2, 'N', header.firstHeader[1]);
+    excelFile.setSimpleCell(workSheet, 1, 'D', header.firstHeader[0], { bold: true, name: 'Arial', size: 10 });
+    excelFile.setSimpleCell(workSheet, 2, 'M', header.firstHeader[1], { bold: true, name: 'Arial', size: 10 });
     
     let cellNumber = 1;
     dataCourtierOCR.infosOCR.headers.secondHeader.forEach((secondHeader, index) => {
-        writeCell(workSheet, 3, cellNumber, secondHeader);
+        excelFile.setSimpleCell(workSheet, 3, cellNumber, secondHeader, { bold: true, name: 'Arial', size: 10 });
         cellNumber++;
     });
     rowNumber++;
@@ -68,18 +65,16 @@ exports.createWorkSheetSMATISMCMS = (workSheet, dataCourtierOCR) => {
     createPavetSMATISMCMS();
     // }
     rowNumber++;
-    workSheet.getRow(rowNumber).getCell('T').value = 'TOTAL';
-    workSheet.getRow(rowNumber).getCell('T').font = { bold: true, name: 'Arial', size: 10 };
+    excelFile.setSimpleCell(workSheet, rowNumber, 'T', 'TOTAL', font1);
     let result = 0;
     for (let i = debut; i <= rowNumber - 2; i++) {
-        result += workSheet.getRow(i).getCell('U').value;
+        result += workSheet.getRow(i).getCell('H').value;
     }
-    workSheet.getRow(rowNumber).getCell('U').value = {
+    const value =  {
         formula: `SUM(U${debut}:U${rowNumber - 2})`,
         result: result
     };
-    workSheet.getRow(rowNumber).getCell('U').font = { bold: true, name: 'Arial', size: 10 };
-    workSheet.getRow(rowNumber).getCell('U').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+    excelFile.setStylizedCell(workSheet, rowNumber, 'U', value, false, {}, font1, '#,##0.00"€";\-#,##0.00"€"');
 }
 
 const createPavetSMATISMCMS = (dataCourtierOCR, workSheet, rowNumber) => {
