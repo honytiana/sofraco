@@ -68,13 +68,13 @@ class Treatments extends Component {
                         },
                         {
                             key: 'firstName',
-                            label: 'Nom',
+                            label: 'Prénom',
                             _style: { width: '15%' },
                             _classes: ['text-center']
                         },
                         {
                             key: 'lastName',
-                            label: 'Prénom',
+                            label: 'Nom',
                             _style: { width: '15%' },
                             _classes: ['text-center']
                         },

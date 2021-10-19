@@ -73,13 +73,13 @@ class Administration extends Component {
                         },
                         {
                             key: 'firstName',
-                            label: 'Nom',
+                            label: 'Prénom',
                             _style: { width: '15%' },
                             _classes: ['text-center']
                         },
                         {
                             key: 'lastName',
-                            label: 'Prénom',
+                            label: 'Nom',
                             _style: { width: '15%' },
                             _classes: ['text-center']
                         },
@@ -231,7 +231,6 @@ class Administration extends Component {
 
         return (
             <div>
-                <CButton className="sofraco-button" onClick={this.activerAjoutCourtier}>Ajouter un courtier</CButton>
                 <CModal
                     show={this.state.ajoutCourtier}
                     onClose={() => { this.activerAjoutCourtier() }}
@@ -377,13 +376,13 @@ class Administration extends Component {
                                                 </CNav>
                                                 <CTabContent>
                                                     <CTabPane data-tab="courtier">
-                                                        <Courtier courtier={item} key={this.state.num} />
+                                                        <Courtier courtier={item} key={`courtier${this.state.num}${item._id}`} />
                                                     </CTabPane>
                                                     <CTabPane data-tab="mandataires">
-                                                        <Mandataire courtier={item} key={this.state.num} sIndex={index} />
+                                                        <Mandataire courtier={item} key={`mandataire${this.state.num}${item._id}`} sIndex={index} />
                                                     </CTabPane>
                                                     <CTabPane data-tab="code">
-                                                        <Correspondance courtier={item} key={this.state.num} sIndex={index} />
+                                                        <Correspondance courtier={item} key={`correspondance${this.state.num}${item._id}`} sIndex={index} />
                                                     </CTabPane>
                                                 </CTabContent>
                                             </CTabs>
@@ -400,6 +399,7 @@ class Administration extends Component {
                     }
                     }
                 />
+                <CButton className="sofraco-button" onClick={this.activerAjoutCourtier}>Ajouter un courtier</CButton>
                 {
                     (this.state.toast === true &&
                         this.state.messageToast.length > 0) && (
