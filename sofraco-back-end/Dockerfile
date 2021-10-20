@@ -6,7 +6,7 @@ RUN apt-get install software-properties-common -y
 RUN apt-get update
 RUN apt-get install python3 -y
 RUN apt-get install python3-pip -y
-RUN pip3 install opencv-python==3.4.0.12
+RUN pip3 install opencv-python
 RUN pip3 install easyocr
 
 WORKDIR /backend    
