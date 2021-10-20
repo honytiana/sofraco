@@ -33,7 +33,7 @@ class Companies extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            local: true,
+            local: false,
             details: [],
             companies: [],
             collapsed: [],

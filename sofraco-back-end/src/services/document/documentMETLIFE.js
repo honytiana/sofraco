@@ -8,6 +8,7 @@ const easyOCR = require('../easyOCR/easyOCR');
 const time = require('../utils/time');
 const fileService = require('../utils/files');
 const redefinition = require('../utils/redefinition');
+const imageMETLIFE = require('../images/imageMETLIFE');
 
 
 exports.readPdfMETLIFE = async (file) => {
@@ -20,10 +21,14 @@ exports.readPdfMETLIFE = async (file) => {
     for (let pathToPDF of pathsToPDF) {
         // pathToPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF', pathToPDF);
         const images = await pdfService.convertPDFToImg(pathToPDF);
+        console.log('DEBUT TRAITEMENT IMAGES METLIFE');
+        const allFiles = await imageMETLIFE.loadOpenCV(images);
+        console.log('FIN TRAITEMENT IMAGES METLIFE');
+        console.log('DEBUT IMPORTER LINES METLIFE');
         // const textFilePaths = fs.readdirSync(path.join(__dirname, '..', '..', '..', 'documents', 'texte'));
-        const textFilePaths = getTextFromImages(images);
-        const infoBordereau = readBordereauMETLIFE(textFilePaths);
-        infos.infos.push(infoBordereau);
+        // const textFilePaths = getTextFromImages(images);
+        // const infoBordereau = readBordereauMETLIFE(textFilePaths);
+        // infos.infos.push(infoBordereau);
     }
     const excecutionStopTime = performance.now();
     let executionTimeMS = excecutionStopTime - excecutionStartTime;
