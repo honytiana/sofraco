@@ -2,11 +2,12 @@ FROM node:latest
 
 RUN apt-get update -y
 RUN apt-get install graphicsmagick -y
-RUN apt update
-RUN apt install software-properties-common -y
-RUN add-apt-repository ppa:deadsnakes/ppa -y
-RUN apt update
-RUN apt install python3.8 -y
+RUN apt-get install software-properties-common -y
+RUN add-apt-repository ppa:deadsnakes/ppa
+RUN apt-get update
+RUN apt-get install python3.8 -y
+ 
+
 #RUN apt-get install python -y
 RUN apt-get install python3-pip -y
 #RUN pip install --upgrade pip
