@@ -27,6 +27,12 @@ class DocumentHandler {
         return Document.find();
     }
 
+    getDocumentsByStatus(status) {
+        return Document.find({
+            status: status
+        });
+    }
+
     getDocumentsByYearMonth(year, month) {
         const myear = parseInt(year);
         const mmonth = parseInt(month);

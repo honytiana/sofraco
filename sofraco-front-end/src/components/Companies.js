@@ -33,6 +33,7 @@ class Companies extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            local: true,
             details: [],
             companies: [],
             collapsed: [],
@@ -47,8 +48,10 @@ class Companies extends Component {
             elementCover: false,
             executionTime: '',
             message: '',
-            progress: 0,
-            token: null
+            progress: 1,
+            token: null,
+            treatmentTimeMS: 0,
+            treatmentTimeStr: null
         }
         this.getCompanies = this.getCompanies.bind(this);
         this.getDraftDocument = this.getDraftDocument.bind(this);
@@ -76,9 +79,22 @@ class Companies extends Component {
                 this.getCompanies();
                 // this.loadingHandler();
                 this.getDraftDocument();
-                setInterval(() => {
-                    this.getTreatment();
-                }, 1000);
+                if (this.state.local) {
+                    this.getTreatmentTime();
+                    setInterval(() => {
+                        if (this.state.load) {
+                            let treatmentTimeMS = this.state.treatmentTimeMS + 1000;
+                            let treatmentTimeStr = millisecondToTime(treatmentTimeMS);
+                            this.setState({
+                                treatmentTimeMS,
+                                treatmentTimeStr
+                            });
+                        }
+                    }, 1000);
+                    setInterval(() => {
+                        this.getTreatment();
+                    }, 1000);
+                }
             })
             .catch((err) => {
                 console.log(err);
@@ -227,7 +243,7 @@ class Companies extends Component {
     }
 
     getTreatment() {
-        axios.get(`${config.nodeUrl}/api/treatment/user/${this.user}`, {
+        axios.get(`${config.nodeUrl}/api/treatment/user/${this.user}/status/processing`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token.value}`
             }
@@ -235,24 +251,35 @@ class Companies extends Component {
             .then((data) => {
                 return data.data
             })
-            .then((treatments) => {
-                if (treatments !== null) {
-                    const treatment = treatments.filter((treatment) => {
-                        return treatment.status === 'processing';
+            .then((treatment) => {
+                if (treatment.treatment) {
+                    this.setState({
+                        progress: treatment.treatment.progress,
+                        load: true,
+                        elementCover: true,
+                        treatmentTimeMS: treatment.time
                     });
-                    if (treatment.length > 0) {
-                        this.setState({
-                            progress: treatment[0].progress,
-                            load: true,
-                            elementCover: true
-                        });
-                    } else {
-                        this.setState({
-                            load: false,
-                            elementCover: false
-                        });
-                    }
                 }
+            })
+            .catch((err) => {
+                console.log(err)
+            });
+    }
+
+    getTreatmentTime() {
+        axios.get(`${config.nodeUrl}/api/treatment/user/${this.user}/status/processing`, {
+            headers: {
+                'Authorization': `Bearer ${this.state.token.value}`
+            }
+        })
+            .then((data) => {
+                return data.data
+            })
+            .then((treatment) => {
+                const treatmentTime = treatment.time;
+                this.setState({
+                    treatmentTime,
+                });
             })
             .catch((err) => {
                 console.log(err)
@@ -267,12 +294,11 @@ class Companies extends Component {
             executionTime: ''
         });
         try {
-            const documents = this.state.drafts.map((draft) => {
-                return draft._id
-            });
+            // const documents = this.state.drafts.map((draft) => {
+            //     return draft._id
+            // });
             const options = {
-                user: JSON.parse(localStorage.getItem('user')),
-                documents: documents
+                user: JSON.parse(localStorage.getItem('user'))
             }
             const res = await axios.put(`${config.nodeUrl}/api/document`, options, {
                 headers: {
@@ -288,7 +314,8 @@ class Companies extends Component {
                         header: 'SUCCESS',
                         color: 'success',
                         message: `Traitements terminés`
-                    }
+                    },
+                    progress: 0
                 });
             } else {
                 this.setState({
@@ -297,15 +324,14 @@ class Companies extends Component {
                         header: 'SUCCESS',
                         color: 'success',
                         message: 'Tous les fichiers sont traités'
-                    }
-                });
-                this.setState({
-                    message: 'Tous les fichiers sont traités'
+                    },
+                    progress: 0
                 });
             }
             this.getDraftDocument();
             this.setState({
-                executionTime
+                executionTime,
+                load: false
             });
         } catch (err) {
             this.setState({
@@ -359,7 +385,11 @@ class Companies extends Component {
     onValiderHandler() {
         this.setState({
             elementCover: false,
-            executionTime: ''
+            executionTime: '',
+            progress: 0,
+            load: false,
+            treatmentTimeStr: '',
+            treatmentTimeMS: 0
         });
     }
 
@@ -517,10 +547,11 @@ class Companies extends Component {
                                 return (<span key={`${company._id}_Span`}></span>);
                             })}
                         </CRow>
-
-                        <div className="sofraco-container-button-traitement">
-                            <CButton className="sofraco-button" onClick={(e) => { this.launchTreatments(e) }} disabled={this.state.load}>Traiter les fichiers</CButton>
-                        </div>
+                        {(this.state.local) && (
+                            <div className="sofraco-container-button-traitement">
+                                <CButton className="sofraco-button" onClick={(e) => { this.launchTreatments(e) }} disabled={this.state.load}>Traiter les fichiers</CButton>
+                            </div>
+                        )}
                         <CButton className="sofraco-button" onClick={this.onGenererExcelsMasters} disabled={this.state.load}>
                             {
                                 (!this.state.loadGenerateExcelMaster) ? (
@@ -547,7 +578,30 @@ class Companies extends Component {
                         <CButton className="sofraco-button" onClick={this.onDownloadExcelMasters}>Télécharger les Excels Masters</CButton>
                     )
                 }
-
+                {(this.state.elementCover) && (
+                    <CCard className="sofraco-progress-bar">
+                        {(this.state.load) && (
+                            <CCardBody>
+                                <h4>Traitement en cours</h4>
+                                <CProgress animated striped showValue color="warning" value={this.state.progress} className="mb-1 bg-white" />
+                                <span>{this.state.treatmentTimeStr}
+                                </span>
+                            </CCardBody>
+                        )}
+                        {(this.state.executionTime !== '' && !this.state.load) && (
+                            <CCardBody>
+                                <h4>Traité en : {this.state.treatmentTimeStr}</h4>
+                                <CButton className="sofraco-button" onClick={this.onValiderHandler}>Valider</CButton>
+                            </CCardBody>
+                        )}
+                        {(this.state.message !== '') && (
+                            <CCardBody>
+                                <h4>{this.state.message}</h4>
+                                <CButton className="sofraco-button" onClick={this.onValiderHandler}>Valider</CButton>
+                            </CCardBody>
+                        )}
+                    </CCard>
+                )}
                 {(this.state.toast === true) && (
                     <CToaster position="bottom-right" >
                         <CToast
@@ -566,28 +620,6 @@ class Companies extends Component {
                     </CToaster>
                 )
                 }
-                {(this.state.elementCover) && (
-                    <CCard className="sofraco-progress-bar">
-                        {(this.state.load) && (
-                            <CCardBody>
-                                <h4>Traitement en cours</h4>
-                                <CProgress animated striped showValue color="warning" value={this.state.progress} className="mb-1 bg-white" />
-                            </CCardBody>
-                        )}
-                        {(this.state.executionTime !== '') && (
-                            <CCardBody>
-                                <h4>Traité en : {this.state.executionTime}</h4>
-                                <CButton className="sofraco-button" onClick={this.onValiderHandler}>Valider</CButton>
-                            </CCardBody>
-                        )}
-                        {(this.state.message !== '') && (
-                            <CCardBody>
-                                <h4>{this.state.message}</h4>
-                                <CButton className="sofraco-button" onClick={this.onValiderHandler}>Valider</CButton>
-                            </CCardBody>
-                        )}
-                    </CCard>
-                )}
 
             </CContainer>
         );

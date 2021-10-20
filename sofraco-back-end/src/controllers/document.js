@@ -124,6 +124,7 @@ exports.createDocument = (req, res) => {  // create document
 
 exports.updateDocuments = async (req, res) => {
     try {
+        console.log(`${new Date()} TRAITEMENT DES FICHIERS`);
         let executionTimes = [];
         const treatment = {
             user: req.body.user,
@@ -132,18 +133,28 @@ exports.updateDocuments = async (req, res) => {
             progress: 0,
         };
         const resultTreatment = await treatmentHandler.createTreatment(treatment);
-        for (let id of req.body.documents) {
-            const indexOfDoc = req.body.documents.indexOf(id);
-            const document = await documentHandler.getDocument(id);
+        const resultDraftDocuments = await documentHandler.getDocumentsByStatus('draft');
+        let drafts = [];
+        for (let draftDocument of resultDraftDocuments) {
+            const uploadDateMonth = new Date(draftDocument.upload_date).getMonth();
+            const currentMonth = new Date().getMonth();
+            if (uploadDateMonth === currentMonth) {
+                drafts.push(draftDocument._id);
+            }
+        }
+        for (let draftId of drafts) {
+            const indexOfDoc = drafts.indexOf(draftId);
+            const document = await documentHandler.getDocument(draftId);
             const rs = await setOCRDocument(document.companyName, document._id, document.path_original_file);
             const result = { data: rs.company, executionTime: rs.executionTime };
-            const progress = ((indexOfDoc + 1) * 100) / req.body.documents.length;
+            const progress = ((indexOfDoc + 1) * 100) / drafts.length;
             const treatment = await treatmentHandler.updateTreatment(resultTreatment._id, { progress: progress });
             executionTimes.push(result.executionTime);
         }
         await treatmentHandler.updateTreatment(resultTreatment._id, { status: 'done', end_treatment: Date.now() });
         let executionTime = Date.now() - treatment.begin_treatment;
         executionTime = time.millisecondToTime(executionTime);
+        console.log(`${new Date()} FIN TRAITEMENT DES FICHIERS`);
         res.status(202).json({ executionTime });
     } catch (err) {
         res.status(500).json({ err });
@@ -302,6 +313,16 @@ exports.getDocumentsByDate = async (req, res) => {
     console.log('get documents');
     try {
         const documents = await documentHandler.getDocuments();
+        res.status(200).json(documents);
+    } catch (err) {
+        res.status(400).json({ err });
+    }
+}
+
+exports.getDocumentsByStatus = async (req, res) => {
+    console.log(`get documents by status ${req.params.status}`);
+    try {
+        const documents = await documentHandler.getDocumentsByStatus(req.params.status);
         res.status(200).json(documents);
     } catch (err) {
         res.status(400).json({ err });

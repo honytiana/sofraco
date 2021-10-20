@@ -2,14 +2,18 @@ const axios = require('axios');
 const config = require('../../config.json');
 
 exports.launchTreatments = () => {
+    console.log('DEBUT DU TRAITEMENT DES FICHIERS UPLOADES');
     axios.put(`${config.nodeUrl}/api/document`, {
         headers: {
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'application/json'
         }
     }).then((res) => {
-        const executionTime = res.data.executionTime
+        let executionTime = res.data.executionTime;
+        console.log(`TRAITEMENT FAIT EN : ${executionTime}`);
     }).catch((err) => {
+        console.log('ERREUR LORS DU TRAITEMENT DES FICHIERS UPLOADES');
         console.log(err);
     }).finally(() => {
+        console.log('FIN DU TRAITEMENT DES FICHIERS UPLOADES');
     });
 };

@@ -32,6 +32,24 @@ exports.getTreatmentByUser = async (req, res) => {
     }
 }
 
+exports.getProcessingTreatmentByUser = async (req, res) => {
+    console.log('get treatment by user, status processing');
+    try {
+        const c = await treatmentHandler.getTreatmentByUser(req.params.user);
+        const treatment = c.filter((treatment) => {
+            return treatment.status === 'processing';
+        });
+        if (treatment.length > 0) {
+            const time = Date.now() - treatment[0].begin_treatment;
+            res.status(200).json({ treatment: treatment[0], time: time });
+        } else {
+            res.status(200).json({});
+        }
+    } catch (error) {
+        res.status(400).json({ error });
+    }
+}
+
 exports.getTreatments = async (req, res) => {
     console.log('get treatments');
     try {
