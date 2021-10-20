@@ -15,10 +15,11 @@ jobs:
     - name: Executing remote command
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.HOST }}
+        HOST: ${{ secrets.HOST }}
         USERNAME: ${{ secrets.USER }}
         PORT: ${{ secrets.PORT }}
         KEY: ${{ secrets.KEY }}
+        command_timeout: 30m
         script: |
           cd /home/data/Sofraco
           git pull
