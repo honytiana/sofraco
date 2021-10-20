@@ -4,7 +4,7 @@ RUN apt-get update -y
 RUN apt-get install graphicsmagick -y
 RUN apt-get install python -y
 RUN apt-get install python-pip -y
-RUN pip install opencv-python==4.*
+RUN pip install opencv-python==4.3.*
 RUN pip install easyocr==1.3.*
 
 WORKDIR /backend    
