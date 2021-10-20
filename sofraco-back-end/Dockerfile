@@ -2,11 +2,16 @@ FROM node:latest
 
 RUN apt-get update -y
 RUN apt-get install graphicsmagick -y
-RUN apt-get install python -y
-RUN apt-get install python-pip -y
-RUN pip install --upgrade pip
-RUN python -m pip install opencv-python==3.4.0.12
-RUN pip install easyocr
+RUN apt update
+RUN apt install software-properties-common -y
+RUN add-apt-repository ppa:deadsnakes/ppa -y
+RUN apt update
+RUN apt install python3.8 -y
+#RUN apt-get install python -y
+RUN apt-get install python3-pip -y
+#RUN pip install --upgrade pip
+RUN python -m pip3 install opencv-python==3.4.0.12
+RUN pip3 install easyocr
 
 WORKDIR /backend    
 COPY package*.json /backend/
