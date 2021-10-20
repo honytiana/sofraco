@@ -2,10 +2,10 @@ FROM node:latest
 
 RUN apt-get update -y
 RUN apt-get install graphicsmagick -y
-RUN apt-get install python -y
-RUN apt-get install python-pip -y
-RUN python -m pip install opencv-python==4.*
-RUN pip install easyocr
+RUN apt-get install python3 -y
+RUN apt-get install python3-pip -y
+RUN python3 -m pip3 install opencv-python==4.*
+RUN pip3 install easyocr
 
 WORKDIR /backend    
 COPY package*.json /backend/
