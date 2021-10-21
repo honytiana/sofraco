@@ -75,23 +75,24 @@ const getCellFromImageMETLIFE = async (file_name, input_path, output_path, show_
 
             d = Math.abs(y1 - yi_1);
             if (i > 0 && d > 20 && x2 - x1 > 2200) {
-                lines_tab[i].height = d;
+                // lines_tab[i].height = d;
+                lines_tab_valid[lines_tab_valid.length - 1].height = d;
                 lines_tab_valid.push(lines_tab[i]);
             }
         }
 
         // compute average heigth
-        let heights = [];
-        let one_tier = Math.floor(lines_tab_valid.length / 3);
-        for (let i = one_tier; i < lines_tab_valid.length - one_tier; i++) {
-            heights.push(lines_tab_valid[i].height);
-        }
+        // let heights = [];
+        // let one_tier = Math.floor(lines_tab_valid.length / 3);
+        // for (let i = one_tier; i < lines_tab_valid.length - one_tier; i++) {
+        //     heights.push(lines_tab_valid[i].height);
+        // }
         // for (let l2 of lines_tab_valid) {
         //     heights.push(l2.height);
         // }
-        let avg_h = heights.reduce((a, b) => a + b) / heights.length;
+        // let avg_h = heights.reduce((a, b) => a + b) / heights.length;
 
-        lines_tab_valid[0].height = avg_h;
+        lines_tab_valid[lines_tab_valid.length - 1].height = 50;
 
         let i = 1;
         for (let line of lines_tab_valid) {
@@ -101,53 +102,94 @@ const getCellFromImageMETLIFE = async (file_name, input_path, output_path, show_
             let y2 = line.coord[3];
             if (x2 - x1 > 2200) {
                 let line_output = {};
-                let h = parseInt(line.height)
-                if ((avg_h * 0.9 > h || h > avg_h * 1.2) && i < 4) {
-                    h = parseInt(avg_h);
-                }
-                if (h > avg_h * 1.2) {
-                    h = parseInt(avg_h);
-                }
+                let h = -parseInt(line.height)
+                console.log(`height : ${line.height}`)
+                // if ((avg_h * 0.9 > h || h > avg_h * 1.2) && i < 4) {
+                //     h = parseInt(avg_h);
+                // }
+                // if (h > avg_h * 1.2) {
+                //     h = parseInt(avg_h);
+                // }
                 let y_rows = y1 - h;
                 let width_rows = x2 - x1
                 let x_cell = x1;
                 if (is_valid_ord(y_rows, img)) {
                     let c = 1;
                     let cells_output = [];
-                    for (let w_cell of cell_width) {
-                        let x2_cell = x_cell + w_cell;
-                        let y2_cell = y1 - h;
-                        let width_rect = x2_cell - x_cell;
-                        let height_rect = h
-                        let rectangleColor = new cv.Scalar(255, 0, 0);
-                        let point1 = new cv.Point(x_cell, y1);
-                        let point2 = new cv.Point(x2_cell, y2_cell);
-                        // console.log("x_cell: " + x_cell + " y2_cell: " + y2_cell + " width_rect: " + width_rect + " h: " + height_rect)
-                        // if (is_valid_ord(y2_cell, img) && is_valid_abcisse(x2_cell, img)) {
-                        if (show_tracage) {
-                            try {
-                                cv.rectangle(img, point1, point2, rectangleColor, 2, cv.LINE_AA, 0);
-                            } catch (err) {
-                                console.log("error tracage");
-                                console.log(err);
+                    if (-h > 100) {
+                        for (let w_cell of cell_width) {
+                            let x2_cell = x_cell + w_cell;
+                            let y2_cell = y1 - h;
+                            let width_rect = x2_cell - x_cell;
+                            let height_rect = h
+                            let rectangleColor = new cv.Scalar(255, 0, 0);
+                            let point1 = new cv.Point(x_cell, y1);
+                            let point2 = new cv.Point(x2_cell, y2_cell);
+                            // console.log("x_cell: " + x_cell + " y2_cell: " + y2_cell + " width_rect: " + width_rect + " h: " + height_rect)
+                            // if (is_valid_ord(y2_cell, img) && is_valid_abcisse(x2_cell, img)) {
+                            if (show_tracage) {
+                                try {
+                                    cv.rectangle(img, point1, point2, rectangleColor, 2, cv.LINE_AA, 0);
+                                } catch (err) {
+                                    console.log("error tracage");
+                                    console.log(err);
+                                }
                             }
-                        }
-                        if (crop_cell) {
-                            try {
-                                // const cropped_cell = await Jimp.read(input);
-                                const cropped_cell = new Jimp(jimp_img);
-                                cropped_cell.crop(x_cell, y2_cell, width_rect, height_rect);
-                                name_cell = output.replace('.', '_l_' + i + '_c_' + c + '.');
-                                cropped_cell.write(name_cell);
-                                cells_output.push(name_cell);
-                            } catch (err) {
-                                console.log("error crop");
-                                console.log(err);
+                            if (crop_cell) {
+                                try {
+                                    // const cropped_cell = await Jimp.read(input);
+                                    const cropped_cell = new Jimp(jimp_img);
+                                    cropped_cell.crop(x_cell, y2_cell, width_rect, height_rect);
+                                    name_cell = output.replace('.', '_l_' + i + '_c_' + c + '.');
+                                    cropped_cell.write(name_cell);
+                                    cells_output.push(name_cell);
+                                } catch (err) {
+                                    console.log("error crop");
+                                    console.log(err);
+                                }
                             }
+                            // }
+                            x_cell = x2_cell
+                            c += 1
                         }
-                        // }
-                        x_cell = x2_cell
-                        c += 1
+                    }
+                    let cell_width2 = [1246, 355, 250, 200, 200];
+                    if (-h < 60) {
+                        for (let w_cell of cell_width2) {
+                            let x2_cell = x_cell + w_cell;
+                            let y2_cell = y1 - h;
+                            let width_rect = x2_cell - x_cell;
+                            let height_rect = h
+                            let rectangleColor = new cv.Scalar(255, 0, 0);
+                            let point1 = new cv.Point(x_cell, y1);
+                            let point2 = new cv.Point(x2_cell, y2_cell);
+                            // console.log("x_cell: " + x_cell + " y2_cell: " + y2_cell + " width_rect: " + width_rect + " h: " + height_rect)
+                            // if (is_valid_ord(y2_cell, img) && is_valid_abcisse(x2_cell, img)) {
+                            if (show_tracage) {
+                                try {
+                                    cv.rectangle(img, point1, point2, rectangleColor, 2, cv.LINE_AA, 0);
+                                } catch (err) {
+                                    console.log("error tracage");
+                                    console.log(err);
+                                }
+                            }
+                            if (crop_cell) {
+                                try {
+                                    // const cropped_cell = await Jimp.read(input);
+                                    const cropped_cell = new Jimp(jimp_img);
+                                    cropped_cell.crop(x_cell, y2_cell, width_rect, height_rect);
+                                    name_cell = output.replace('.', '_l_' + i + '_c_' + c + '.');
+                                    cropped_cell.write(name_cell);
+                                    cells_output.push(name_cell);
+                                } catch (err) {
+                                    console.log("error crop");
+                                    console.log(err);
+                                }
+                            }
+                            // }
+                            x_cell = x2_cell
+                            c += 1
+                        }
                     }
                     if (cells_output.length > 0) { line_output.cell = cells_output; }
 
@@ -195,7 +237,7 @@ exports.loadOpenCV = (images) => {
         global.Module = {
             async onRuntimeInitialized() {
                 // let cw = [190, 180, 160, 100, 260, 200, 220, 80, 190, 190, 172, 172, 172];
-                let cw = [176, 219, 199, 270, 175, 202, 198, 200, 200, 200, 199];
+                let cw = [170, 230, 199, 270, 175, 202, 198, 200, 200, 200, 199];
                 const dirPath = path.join(__dirname, '..', '..', '..', 'documents', 'temp');
                 let allFiles = []
                 for (let image_name of images) {
