@@ -196,7 +196,7 @@ exports.loadOpenCV = (images) => {
             async onRuntimeInitialized() {
                 let cw = [190, 180, 160, 100, 260, 200, 220, 80, 190, 190, 172, 172, 172];
                 const dirPath = path.join(__dirname, '..', '..', '..', 'documents', 'temp');
-                let allFiles = []
+                let allFiles = [];
                 for (let image_name of images) {
                     const file_names = await getCellFromImageAPIVIA(
                         image_name.replace(/.+\/([^/])/, '$1'),
