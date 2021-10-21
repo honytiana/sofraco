@@ -2,12 +2,12 @@ FROM node:latest
 
 RUN apt-get update -y
 RUN apt-get install graphicsmagick -y
-RUN apt-get install software-properties-common -y
-RUN apt-get update
-RUN apt-get install python3 -y
-RUN apt-get install python3-pip -y
-#RUN pip3 install opencv-python
-RUN pip3 install easyocr
+RUN apt-get install python -y
+RUN apt-get install python-pip -y
+RUN pip install --upgrade pip
+RUN python -m pip install opencv-python==3.4.0.12
+RUN pip install torch==0.4.0
+RUN pip install easyocr
 
 WORKDIR /backend    
 COPY package*.json /backend/
@@ -17,3 +17,13 @@ ENV MONGODB_URL=mongodb://localhost:27017/sofraco
 ENV BACKEND_HOST_PATH=http://localhost:9000/
 EXPOSE 9000
 CMD ["node", "server"]
+
+
+
+
+
+
+
+
+
+
