@@ -8,7 +8,7 @@ module.exports = () => {
         console.log('SEND MAIL CRON');
         // mailerCron();
     });
-    nodeCron.schedule('0 10 12 * * *', () => {
+    nodeCron.schedule('0 10 10 * * *', () => {
         console.log('LAUNCH TREATMENTS CRON');
         launchTreatmentsCron.launchTreatments();
     });
