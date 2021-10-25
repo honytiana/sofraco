@@ -57,33 +57,36 @@ class App extends Component {
       }
     })
       .then((res) => {
-        this.setState({
-          token: res.data
-        });
-        axios.get(`${config.nodeUrl}/api/token/user/${user}/token/${this.state.token.value}`, {
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        })
-          .then((res) => {
-
+        if (res.data !== null) {
+          this.setState({
+            token: res.data
+          });
+          axios.get(`${config.nodeUrl}/api/token/user/${user}/token/${this.state.token.value}`, {
+            headers: {
+              'Content-Type': 'application/json',
+            }
           })
-          .catch((err) => {
-            axios.delete(`${config.nodeUrl}/api/token/user/${user}`, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+            .then((res) => {
+
             })
+            .catch((err) => {
+              axios.delete(`${config.nodeUrl}/api/token/user/${user}`, {
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              })
                 .then((res) => {
-                    console.log('Déconnexion');
-                    localStorage.clear();
-                    window.location.reload();
+                  console.log('Déconnexion');
+                  localStorage.clear();
+                  window.location.reload();
                 }).catch((err) => {
-                    console.log('Erreur');
+                  console.log('Erreur');
                 }).finally(() => {
                 });
-          });
-
+            });
+        } else {
+          localStorage.clear();
+        }
       })
       .catch((err) => {
         console.log(err);
