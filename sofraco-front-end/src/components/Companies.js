@@ -33,7 +33,7 @@ class Companies extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            local: false,
+            local: true,
             details: [],
             companies: [],
             collapsed: [],
@@ -79,22 +79,22 @@ class Companies extends Component {
                 this.getCompanies();
                 // this.loadingHandler();
                 this.getDraftDocument();
-                if (this.state.local) {
-                    this.getTreatmentTime();
-                    setInterval(() => {
-                        if (this.state.load) {
-                            let treatmentTimeMS = this.state.treatmentTimeMS + 1000;
-                            let treatmentTimeStr = millisecondToTime(treatmentTimeMS);
-                            this.setState({
-                                treatmentTimeMS,
-                                treatmentTimeStr
-                            });
-                        }
-                    }, 1000);
-                    setInterval(() => {
-                        this.getTreatment();
-                    }, 1000);
-                }
+                // if (this.state.local) {
+                //     this.getTreatmentTime();
+                //     setInterval(() => {
+                //         if (this.state.load) {
+                //             let treatmentTimeMS = this.state.treatmentTimeMS + 1000;
+                //             let treatmentTimeStr = millisecondToTime(treatmentTimeMS);
+                //             this.setState({
+                //                 treatmentTimeMS,
+                //                 treatmentTimeStr
+                //             });
+                //         }
+                //     }, 1000);
+                //     setInterval(() => {
+                //         this.getTreatment();
+                //     }, 1000);
+                // }
             })
             .catch((err) => {
                 console.log(err);
@@ -288,11 +288,11 @@ class Companies extends Component {
 
     async launchTreatments(e) {
         e.preventDefault();
-        this.setState({
-            load: true,
-            elementCover: true,
-            executionTime: ''
-        });
+        // this.setState({
+        //     load: true,
+        //     elementCover: true,
+        //     executionTime: ''
+        // });
         try {
             // const documents = this.state.drafts.map((draft) => {
             //     return draft._id
@@ -306,33 +306,33 @@ class Companies extends Component {
                     'Authorization': `Bearer ${this.state.token.value}`
                 }
             });
-            let executionTime = res.data.executionTime;
-            if (this.state.drafts.length > 0) {
-                this.setState({
-                    toast: true,
-                    messageToast: {
-                        header: 'SUCCESS',
-                        color: 'success',
-                        message: `Traitements terminés`
-                    },
-                    progress: 0
-                });
-            } else {
-                this.setState({
-                    toast: true,
-                    messageToast: {
-                        header: 'SUCCESS',
-                        color: 'success',
-                        message: 'Tous les fichiers sont traités'
-                    },
-                    progress: 0
-                });
-            }
-            this.getDraftDocument();
-            this.setState({
-                executionTime,
-                load: false
-            });
+            // let executionTime = res.data.executionTime;
+            // if (this.state.drafts.length > 0) {
+            //     this.setState({
+            //         toast: true,
+            //         messageToast: {
+            //             header: 'SUCCESS',
+            //             color: 'success',
+            //             message: `Traitements terminés`
+            //         },
+            //         progress: 0
+            //     });
+            // } else {
+            //     this.setState({
+            //         toast: true,
+            //         messageToast: {
+            //             header: 'SUCCESS',
+            //             color: 'success',
+            //             message: 'Tous les fichiers sont traités'
+            //         },
+            //         progress: 0
+            //     });
+            // }
+            // this.getDraftDocument();
+            // this.setState({
+            //     executionTime,
+            //     load: false
+            // });
         } catch (err) {
             this.setState({
                 toast: true,
