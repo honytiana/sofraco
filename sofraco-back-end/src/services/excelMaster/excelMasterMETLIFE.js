@@ -3,8 +3,8 @@ const excelFile = require('../utils/excelFile');
 exports.getOCRMETLIFE = (ocr) => {
     let infosOCR = []
     for (let info of ocr.infos) {
-        const syntheseDesCommissions = info.syntheseDesCommissions;
-        const detailDesPolices = info.detailDesPolices;
+        const syntheseDesCommissions = info.infos.syntheseDesCommissions;
+        const detailDesPolices = info.infos.detailDesPolices;
         infosOCR.push({
             company: 'METLIFE', infosOCR: {
                 code: {
@@ -12,7 +12,8 @@ exports.getOCRMETLIFE = (ocr) => {
                     code: syntheseDesCommissions.codeApporteurEmetteur
                 },
                 syntheseDesCommissions,
-                detailDesPolices
+                detailDesPolices,
+                headers: info.headers
             }
         });
     }
@@ -73,64 +74,47 @@ exports.createWorkSheetMETLIFE = (workSheet, dataCourtierOCR) => {
     const cellInfoH = { workSheet, rowNumber: 15, cell: 'H', value: 'COMMISSIONS', mergedCells: 'H15:K15' };
     excelFile.setMergedCell(cellInfoH, false, {}, font7, '', '050080');
 
-    excelFile.setStylizedCell(workSheet, 16, 'A', 'Police', false, {}, font7, '', '007abc');
-    excelFile.setStylizedCell(workSheet, 16, 'B', 'Assuré', false, {}, font7, '', '007abc');
-    excelFile.setStylizedCell(workSheet, 16, 'C', 'Produit', false, {}, font7, '', '007abc');
-    excelFile.setStylizedCell(workSheet, 16, 'D', 'Fractionnement', false, {}, font7, '', '007abc');
-    excelFile.setStylizedCell(workSheet, 16, 'E', 'Période', false, {}, font7, '', '007abc');
-    excelFile.setStylizedCell(workSheet, 16, 'F', 'Etat', false, {}, font7, '', '007abc');
-    excelFile.setStylizedCell(workSheet, 16, 'G', 'Montant', false, {}, font7, '', '007abc');
-    excelFile.setStylizedCell(workSheet, 16, 'H', 'Mode', false, {}, font7, '', '007abc');
-    excelFile.setStylizedCell(workSheet, 16, 'I', 'Taux', false, {}, font7, '', '007abc');
-    excelFile.setStylizedCell(workSheet, 16, 'j', 'Statut', false, {}, font7, '', '007abc');
-    excelFile.setStylizedCell(workSheet, 16, 'K', 'Montant', false, {}, font7, '', '007abc');
-
+    let cellNumber = 1;
+    dataCourtierOCR.infosOCR.headers.secondHeader.forEach((header, index) => {
+        excelFile.setStylizedCell(workSheet, 16, cellNumber, header, false, {}, font7, '', '007abc');
+        cellNumber++;
+    });
     
     let detailDesPolices = dataCourtierOCR.infosOCR.detailDesPolices;
 
     let rowNumber = 18;
     for (let datas of detailDesPolices) {
         workSheet.getRow(rowNumber).font = font1;
-        for (let data of datas.police) {
-            workSheet.getRow(rowNumber).font = font1;
-            workSheet.getRow(rowNumber).getCell('A').value = datas.sousTotalPolice || data.contrat.police;
-            workSheet.getRow(rowNumber).getCell('B').value = data.contrat.assure;
-            workSheet.getRow(rowNumber).getCell('C').value = data.contrat.produit;
-            workSheet.getRow(rowNumber).getCell('D').value = data.prime.fractionnement;
-            workSheet.getRow(rowNumber).getCell('E').value = data.prime.periode;
-            workSheet.getRow(rowNumber).getCell('F').value = data.prime.etat;
-            workSheet.getRow(rowNumber).getCell('G').value = data.prime.montant;
-            workSheet.getRow(rowNumber).getCell('G').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-            workSheet.getRow(rowNumber).getCell('H').value = data.commissions.mode;
-            workSheet.getRow(rowNumber).getCell('I').value = data.commissions.taux;
-            workSheet.getRow(rowNumber).getCell('J').value = data.commissions.status;
-            workSheet.getRow(rowNumber).getCell('K').value = data.commissions.montant;
-            workSheet.getRow(rowNumber).getCell('K').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-            if (!data.commissions.verificationMontantCommission) {
-                workSheet.getRow(rowNumber).getCell('K').fill = {
-                    type: 'pattern',
-                    pattern: 'solid',
-                    fgColor: { argb: 'FF0000' }
-                };
+        for (let data of datas) {
+            if (data.contrat && data.prime && data.commission) {
+                workSheet.getRow(rowNumber).font = font1;
+                workSheet.getRow(rowNumber).getCell('A').value = data.contrat.police;
+                workSheet.getRow(rowNumber).getCell('B').value = data.contrat.assure;
+                workSheet.getRow(rowNumber).getCell('C').value = data.contrat.produit;
+                workSheet.getRow(rowNumber).getCell('D').value = data.prime.fractionnement;
+                workSheet.getRow(rowNumber).getCell('E').value = data.prime.periode;
+                workSheet.getRow(rowNumber).getCell('F').value = data.prime.etat;
+                workSheet.getRow(rowNumber).getCell('G').value = data.prime.montant;
+                workSheet.getRow(rowNumber).getCell('G').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+                workSheet.getRow(rowNumber).getCell('H').value = data.commission.mode;
+                workSheet.getRow(rowNumber).getCell('I').value = data.commission.taux;
+                workSheet.getRow(rowNumber).getCell('J').value = data.commission.status;
+                workSheet.getRow(rowNumber).getCell('K').value = data.commission.montant;
+                workSheet.getRow(rowNumber).getCell('K').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+                rowNumber++;
             }
-            rowNumber++;
+            if (data.police && data.sousTotalPolice) {
+                workSheet.getRow(rowNumber).getCell('G').value = 'Sous-total police';
+                workSheet.getRow(rowNumber).getCell('G').font = font8;
+                workSheet.getRow(rowNumber).getCell('I').value = data.police;
+                workSheet.getRow(rowNumber).getCell('I').font = font8;
+                workSheet.getRow(rowNumber).getCell('K').value = data.sousTotalPolice;
+                workSheet.getRow(rowNumber).getCell('K').font = font8;
+                workSheet.getRow(rowNumber).getCell('K').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+                rowNumber++;
+                rowNumber++;
+            }
         }
-        workSheet.getRow(rowNumber).getCell('G').value = 'Sous-total police';
-        workSheet.getRow(rowNumber).getCell('G').font = font8;
-        workSheet.getRow(rowNumber).getCell('I').value = datas.sousTotalPolice;
-        workSheet.getRow(rowNumber).getCell('I').font = font8;
-        workSheet.getRow(rowNumber).getCell('K').value = datas.sousTotalPoliceMontant;
-        workSheet.getRow(rowNumber).getCell('K').font = font8;
-        workSheet.getRow(rowNumber).getCell('K').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        if (!datas.verifSousTotalPoliceMonant) {
-            workSheet.getRow(rowNumber).getCell('K').fill = {
-                type: 'pattern',
-                pattern: 'solid',
-                fgColor: { argb: 'FF0000' }
-            };
-        }
-        rowNumber++;
-        rowNumber++;
     }
 
 }
