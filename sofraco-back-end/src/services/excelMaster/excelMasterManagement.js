@@ -174,12 +174,10 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
                     courtier,
                     infos
                 });
+            } else {
+                allOCRPerCourtiers = ocrInfos[0];
             }
-            // } else {
-            //     allOCRPerCourtiers = ocrInfos[0];
-            // }
         }
-        // if ()
         for (let ocrPerCourtier of allOCRPerCourtiers) {
             let excelMaster;
             let cr;
@@ -212,123 +210,132 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
             cr = await courtierHandler.getCourtierById(ocrPerCourtier.courtier);
             excelMaster = {
                 courtier: ocrPerCourtier.courtier,
-                cabinet: cr.cabinet,
+                cabinet: cr !== null ? cr.cabinet : '',
                 create_date: new Date(),
                 path: null,
                 type: 'excel',
                 is_enabled: true
             }
-            courtier = cr.cabinet.replace(/[/]/g, '_');
+            courtier = cr !== null ? cr.cabinet.replace(/[/]/g, '_') : `cabMet${Date.now()}`;
             excelMaster.code_courtier = courtier;
             let datas = { company: null, ocr: [] };
-            for (let ocr of ocrPerCourtier.infos) {
-                if (ocr.company === 'CARDIF' && ocr.particular) {
-                    datas.company = 'CARDIF';
-                    datas.ocr.push(ocr);
-                }
-            }
-            for (let d of datas.ocr) {
+            if (ocrPerCourtier.company !== 'METLIFE') {
                 for (let ocr of ocrPerCourtier.infos) {
-                    if (d === ocr) {
-                        ocrPerCourtier.infos.splice(ocrPerCourtier.infos.indexOf(ocr), 1);
+                    if (ocr.company === 'CARDIF' && ocr.particular) {
+                        datas.company = 'CARDIF';
+                        datas.ocr.push(ocr);
                     }
                 }
+                for (let d of datas.ocr) {
+                    for (let ocr of ocrPerCourtier.infos) {
+                        if (d === ocr) {
+                            ocrPerCourtier.infos.splice(ocrPerCourtier.infos.indexOf(ocr), 1);
+                        }
+                    }
+                }
+                ocrPerCourtier.infos = [...ocrPerCourtier.infos, datas];
             }
-            ocrPerCourtier.infos = [...ocrPerCourtier.infos, datas];
             workbook = new ExcelJS.Workbook();
             recapWorkSheet = workbook.addWorksheet('RECAP');
             let month = new Date().getMonth();
             month = (month + 1 < 10) ? `0${month + 1}` : `${month}`;
             date = `${month}${new Date().getFullYear()}`;
-            for (let ocr of ocrPerCourtier.infos) {
-                if (ocr.company !== null) {
-                    if (!workbook.worksheets.some(worksheet => worksheet.name === ocr.company)) {
-                        let workSheet = workbook.addWorksheet(ocr.company);
-                        workSheet.properties.defaultColWidth = 20;
-                        switch (ocr.company.toUpperCase()) {
-                            case 'APICIL':
-                                excelMasterAPICIL.createWorkSheetAPICIL(workSheet, ocr);
-                                break;
-                            case 'APIVIA':
-                                excelMasterAPIVIA.createWorkSheetAPIVIA(workSheet, ocrPerCourtier);
-                                break;
-                            case 'APREP':
-                                excelMasterAPREP.createWorkSheetAPREP(workSheet, ocr);
-                                break;
-                            case 'APREP ENCOURS':
-                                excelMasterAPREP.createWorkSheetAPREPENCOURS(workSheet, ocr);
-                                break;
-                            // case 'AVIVA':
-                            //     infos = await readExcel(file);
-                            //     break;
-                            case 'AVIVA SURCO':
-                                excelMasterAVIVA.createWorkSheetAVIVASURCO(workSheet, ocr);
-                                break;
-                            case 'CARDIF':
-                                excelMasterCARDIF.createWorkSheetCARDIF(workSheet, ocr);
-                                break;
-                            case 'CEGEMA':
-                                excelMasterCEGEMA.createWorkSheetCEGEMA(workSheet, ocr);
-                                break;
-                            case 'ERES':
-                                excelMasterERES.createWorkSheetERES(workSheet, ocr);
-                                break;
-                            case 'GENERALI':
-                                excelMasterGENERALI.createWorkSheetGENERALI(workSheet, ocr);
-                                break;
-                            case 'HODEVA':
-                                excelMasterHODEVA.createWorkSheetHODEVA(workSheet, ocr);
-                                break;
-                            case 'LOURMEL':  //CBP FRANCE
-                                excelMasterLOURMEL.createWorkSheetLOURMEL(workSheet, ocr);
-                                break;
-                            case 'METLIFE':
-                                excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, ocr);
-                                break;
-                            case 'MIE':
-                                excelMasterMIE.createWorkSheetMIE(workSheet, ocr);
-                                break;
-                            case 'MIE MCMS':
-                                excelMasterMIE.createWorkSheetMIEMCMS(workSheet, ocr);
-                                break;
-                            case 'MIEL MUTUELLE':
-                                excelMasterMIEL.createWorkSheetMIEL(workSheet, ocr);
-                                break;
-                            case 'MIEL MCMS':
-                                excelMasterMIEL.createWorkSheetMIELMCMS(workSheet, ocr);
-                                break;
-                            case 'MILTIS':
-                                excelMasterMILTIS.createWorkSheetMILTIS(workSheet, ocr);
-                                break;
-                            case 'MMA':
-                                excelMasterMMA.createWorkSheetMMA(workSheet, ocr);
-                                break;
-                            case 'PAVILLON PREVOYANCE':
-                                excelMasterPAVILLON.createWorkSheetPAVILLON(workSheet, ocr);
-                                break;
-                            case 'PAVILLON MCMS':
-                                excelMasterPAVILLON.createWorkSheetPAVILLONMCMS(workSheet, ocr);
-                                break;
-                            case 'SLADE':   // SWISSLIFE
-                                excelMasterSWISSLIFE.createWorkSheetSLADE(workSheet, ocr);
-                                break;
-                            case 'SPVIE':
-                                excelMasterSPVIE.createWorkSheetSPVIE(workSheet, ocr);
-                                break;
-                            // case 'SMATIS':
-                            //     excelMasterSMATIS.createWorkSheetSMATIS(workSheet, ocr);
-                            //     break;
-                            case 'SMATIS MCMS':
-                                excelMasterSMATIS.createWorkSheetSMATISMCMS(workSheet, ocr);
-                                break;
-                            case 'SWISSLIFE SURCO':
-                                excelMasterSWISSLIFE.createWorkSheetSWISSLIFESURCO(workSheet, ocr);
-                                break;
-                            case 'UAF LIFE PATRIMOINE':
-                                excelMasterUAFLIFE.createWorkSheetUAFLIFE(workSheet, ocr);
-                                break;
-                            default:
-                                console.log('Pas de compagnie correspondante');
+            if (ocrPerCourtier.company === 'METLIFE') {
+                let workSheet = workbook.addWorksheet(ocrPerCourtier.company);
+                workSheet.properties.defaultColWidth = 20;
+                excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, ocrPerCourtier);
+            }
+            else {
+                for (let ocr of ocrPerCourtier.infos) {
+                    if (ocr.company !== null) {
+                        if (!workbook.worksheets.some(worksheet => worksheet.name === ocr.company)) {
+                            let workSheet = workbook.addWorksheet(ocr.company);
+                            workSheet.properties.defaultColWidth = 20;
+                            switch (ocr.company.toUpperCase()) {
+                                case 'APICIL':
+                                    excelMasterAPICIL.createWorkSheetAPICIL(workSheet, ocr);
+                                    break;
+                                case 'APIVIA':
+                                    excelMasterAPIVIA.createWorkSheetAPIVIA(workSheet, ocrPerCourtier);
+                                    break;
+                                case 'APREP':
+                                    excelMasterAPREP.createWorkSheetAPREP(workSheet, ocr);
+                                    break;
+                                case 'APREP ENCOURS':
+                                    excelMasterAPREP.createWorkSheetAPREPENCOURS(workSheet, ocr);
+                                    break;
+                                // case 'AVIVA':
+                                //     infos = await readExcel(file);
+                                //     break;
+                                case 'AVIVA SURCO':
+                                    excelMasterAVIVA.createWorkSheetAVIVASURCO(workSheet, ocr);
+                                    break;
+                                case 'CARDIF':
+                                    excelMasterCARDIF.createWorkSheetCARDIF(workSheet, ocr);
+                                    break;
+                                case 'CEGEMA':
+                                    excelMasterCEGEMA.createWorkSheetCEGEMA(workSheet, ocr);
+                                    break;
+                                case 'ERES':
+                                    excelMasterERES.createWorkSheetERES(workSheet, ocr);
+                                    break;
+                                case 'GENERALI':
+                                    excelMasterGENERALI.createWorkSheetGENERALI(workSheet, ocr);
+                                    break;
+                                case 'HODEVA':
+                                    excelMasterHODEVA.createWorkSheetHODEVA(workSheet, ocr);
+                                    break;
+                                case 'LOURMEL':  //CBP FRANCE
+                                    excelMasterLOURMEL.createWorkSheetLOURMEL(workSheet, ocr);
+                                    break;
+                                case 'METLIFE':
+                                    excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, ocrPerCourtier);
+                                    break;
+                                case 'MIE':
+                                    excelMasterMIE.createWorkSheetMIE(workSheet, ocr);
+                                    break;
+                                case 'MIE MCMS':
+                                    excelMasterMIE.createWorkSheetMIEMCMS(workSheet, ocr);
+                                    break;
+                                case 'MIEL MUTUELLE':
+                                    excelMasterMIEL.createWorkSheetMIEL(workSheet, ocr);
+                                    break;
+                                case 'MIEL MCMS':
+                                    excelMasterMIEL.createWorkSheetMIELMCMS(workSheet, ocr);
+                                    break;
+                                case 'MILTIS':
+                                    excelMasterMILTIS.createWorkSheetMILTIS(workSheet, ocr);
+                                    break;
+                                case 'MMA':
+                                    excelMasterMMA.createWorkSheetMMA(workSheet, ocr);
+                                    break;
+                                case 'PAVILLON PREVOYANCE':
+                                    excelMasterPAVILLON.createWorkSheetPAVILLON(workSheet, ocr);
+                                    break;
+                                case 'PAVILLON MCMS':
+                                    excelMasterPAVILLON.createWorkSheetPAVILLONMCMS(workSheet, ocr);
+                                    break;
+                                case 'SLADE':   // SWISSLIFE
+                                    excelMasterSWISSLIFE.createWorkSheetSLADE(workSheet, ocr);
+                                    break;
+                                case 'SPVIE':
+                                    excelMasterSPVIE.createWorkSheetSPVIE(workSheet, ocr);
+                                    break;
+                                // case 'SMATIS':
+                                //     excelMasterSMATIS.createWorkSheetSMATIS(workSheet, ocr);
+                                //     break;
+                                case 'SMATIS MCMS':
+                                    excelMasterSMATIS.createWorkSheetSMATISMCMS(workSheet, ocr);
+                                    break;
+                                case 'SWISSLIFE SURCO':
+                                    excelMasterSWISSLIFE.createWorkSheetSWISSLIFESURCO(workSheet, ocr);
+                                    break;
+                                case 'UAF LIFE PATRIMOINE':
+                                    excelMasterUAFLIFE.createWorkSheetUAFLIFE(workSheet, ocr);
+                                    break;
+                                default:
+                                    console.log('Pas de compagnie correspondante');
+                            }
                         }
                     }
                 }
