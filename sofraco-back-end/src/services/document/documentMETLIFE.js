@@ -8,6 +8,7 @@ const time = require('../utils/time');
 const fileService = require('../utils/files');
 const redefinition = require('../utils/redefinition');
 const imageMETLIFE = require('../images/imageMETLIFE');
+const imageManagment = require('../images/imageManagment');
 
 const getTextFromImages = (images) => {
     let textFilePaths = [];
@@ -40,16 +41,19 @@ exports.readPdfMETLIFE = async (file) => {
     let infos = { executionTime: 0, executionTimeMS: 0, infos: [] };
     console.log('DEBUT TRAITEMENT METLIFE');
     const excecutionStartTime = performance.now();
-    let pathsToPDF = await splitPdfService.splitPDFMETLIFE(file);
-    // let pathsToPDF;
-    // pathsToPDF = fs.readdirSync(path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF'));
+    let pathsToPDF;
+    const useFile = false;
+    if (useFile) {
+        pathsToPDF = fs.readFileSync(path.join(__dirname, 'pdfMetlife.json'), { encoding: 'utf-8' });
+        pathsToPDF = JSON.parse(pathsToPDF);
+    } else {
+        pathsToPDF = await splitPdfService.splitPDFMETLIFE(file);
+    }
     for (let pathToPDF of pathsToPDF) {
         // pathToPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF', pathToPDF);
         let useFiles = false;
         let allTextFiles = [];
         if (useFiles) {
-            // let allFiles = fs.readFileSync(path.join(__dirname, 'apiviaimg.json'), { encoding: 'utf-8' });
-            // allFiles = JSON.parse(allFiles);
             console.log('DEBUT IMPORTER LINES METLIFE');
             allTextFiles = fs.readFileSync(path.join(__dirname, 'apiviatxtfile.json'), { encoding: 'utf-8' });
             allTextFiles = JSON.parse(allTextFiles);
@@ -70,7 +74,7 @@ exports.readPdfMETLIFE = async (file) => {
                     imageFirstPage = image;
                 }
             }
-            const allFilesFromOpenCV = await imageMETLIFE.loadOpenCV(imagesOpenCV);
+            const allFilesFromOpenCV = await imageManagment.loadOpenCV(imagesOpenCV, 'METLIFE');
             console.log('FIN TRAITEMENT IMAGES METLIFE');
             const allFilesFromFirstPage = getTextFromImages([imageFirstPage]);
             allTextFiles.push(allFilesFromFirstPage[0]);

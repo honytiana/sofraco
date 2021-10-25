@@ -6,6 +6,7 @@ const pdfService = require('../utils/pdfFile');
 const time = require('../utils/time');
 const fileService = require('../utils/files');
 const imageAPIVIA = require('../images/imageAPIVIA');
+const imageManagment = require('../images/imageManagment');
 
 
 exports.readPdfAPIVIA = async (file) => {
@@ -24,7 +25,7 @@ exports.readPdfAPIVIA = async (file) => {
     } else {
         const images = await pdfService.convertPDFToImg(file);
         console.log('DEBUT TRAITEMENT IMAGES APIVIA');
-        const allFiles = await imageAPIVIA.loadOpenCV(images);
+        const allFiles = await imageManagment.loadOpenCV(images, 'APIVIA');
         console.log('FIN TRAITEMENT IMAGES APIVIA');
         console.log('DEBUT IMPORTER LINES APIVIA');
         for (let files of allFiles) {

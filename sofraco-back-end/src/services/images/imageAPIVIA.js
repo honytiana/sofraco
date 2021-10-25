@@ -27,7 +27,7 @@ function is_valid_ord(cy, img_cv) {
     return res
 }
 
-const getCellFromImageAPIVIA = async (file_name, input_path, output_path, show_tracage = false, frame_data = false, crop_lines = false, crop_cell = false, cell_width = []) => {
+exports.getCellFromImageAPIVIA = async (cv, file_name, input_path, output_path, show_tracage = false, frame_data = false, crop_lines = false, crop_cell = false, cell_width = []) => {
     let data_output = []
     try {
         const input = input_path + '/' + file_name;
@@ -188,32 +188,4 @@ const getCellFromImageAPIVIA = async (file_name, input_path, output_path, show_t
     }
 
     return data_output;
-}
-
-exports.loadOpenCV = (images) => {
-    return new Promise((resolve, reject) => {
-        global.Module = {
-            async onRuntimeInitialized() {
-                let cw = [190, 180, 160, 100, 260, 200, 220, 80, 190, 190, 172, 172, 172];
-                const dirPath = path.join(__dirname, '..', '..', '..', 'documents', 'temp');
-                let allFiles = [];
-                for (let image_name of images) {
-                    const file_names = await getCellFromImageAPIVIA(
-                        image_name.replace(/.+\/([^/])/, '$1'),
-                        dirPath,
-                        dirPath,
-                        show_tracage = false,
-                        frame_data = false,
-                        crop_lines = false,
-                        crop_cell = true,
-                        cell_width = cw
-                    );
-                    allFiles.push(file_names);
-                }
-                resolve(allFiles);
-            }
-        }
-
-        global.cv = require('../../../opencv.js');
-    })
 }
