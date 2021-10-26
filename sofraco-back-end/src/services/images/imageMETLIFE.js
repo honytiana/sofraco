@@ -1,5 +1,6 @@
 const Jimp = require('jimp');
 const path = require('path');
+const fs = require('fs');
 
 const { JSDOM } = require('jsdom');
 const { Canvas, createCanvas, Image, ImageData, loadImage } = require('canvas');
@@ -65,9 +66,12 @@ const draw_and_crop_cell = (cv, img, jimp_img, x_cell, y_cell, x2_cell, y2_cell,
 exports.getCellFromImageMETLIFE = async (cv, file_name, input_path, output_path, show_tracage = false, frame_data = false, crop_lines = false, crop_cell = false, cell_width = []) => {
     let data_output = [];
     try {
-        const input = input_path + '/' + file_name;
-        const output = output_path + '/' + file_name.replace('.', '_out.');
-        const outputPathTracage = output_path + '/tracage/' + file_name.replace('.', '_out.');
+        const input = path.join(input_path, file_name);
+        const output = path.join(output_path, file_name.replace('.', '_out.'));
+        if (!fs.existsSync(path.join(output_path, 'tracage'))) {
+            fs.mkdirSync(path.join(output_path, 'tracage'));
+        }
+        const outputPathTracage = path.join(output_path, 'tracage', file_name.replace('.', '_out.'));
         const image = await loadImage(input);
         const img = cv.imread(image);
         const jimp_img = await Jimp.read(input);
@@ -195,4 +199,63 @@ exports.getCellFromImageMETLIFE = async (cv, file_name, input_path, output_path,
     }
 
     return data_output;
+}
+
+exports.getImageBottom = async (cv, file_name, input_path, output_path, show_tracage = false, crop_cell = false) => {
+    let data_output = []
+    try {
+        const input = input_path + '/' + file_name;
+        const output = output_path + '/' + file_name.replace('.', '_out.');
+        const outputPathTracage = output_path + '/tracage/' + file_name.replace('.', '_out.');
+        const image = await loadImage(input);
+        const img = cv.imread(image);
+        const jimp_img = await Jimp.read(input);
+        let name_cell;
+
+        let gray = new cv.Mat();
+        cv.cvtColor(img, gray, cv.COLOR_BGR2GRAY);
+        let edges = new cv.Mat();
+        cv.Canny(gray, edges, 50, 500, 3);
+        let rectangleColor = new cv.Scalar(255, 0, 0);
+        let point1 = new cv.Point(2050, 3400);
+        let point2 = new cv.Point(2350, 3500);
+        // console.log("x_cell: " + x_cell + " y2_cell: " + y2_cell + " width_rect: " + width_rect + " h: " + height_rect)
+        // if (is_valid_ord(y2_cell, img) && is_valid_abcisse(x2_cell, img)) {
+        if (show_tracage) {
+            try {
+                cv.rectangle(img, point1, point2, rectangleColor, 2, cv.LINE_AA, 0);
+            } catch (err) {
+                console.log("error tracage");
+                console.log(err);
+            }
+        }
+        if (crop_cell) {
+            try {
+                // const cropped_cell = await Jimp.read(input);
+                const cropped_cell = new Jimp(jimp_img);
+                cropped_cell.crop(2050, 3400, 300, 100);
+                name_cell = output.replace('.', '_l_' + '_c_' + '.');
+                cropped_cell.write(name_cell);
+            } catch (err) {
+                console.log("error crop");
+                console.log(err);
+            }
+        }
+
+        if (show_tracage) {
+            // cv.imwrite(output, img)
+            new Jimp({
+                width: img.cols,
+                height: img.rows,
+                data: Buffer.from(img.data)
+            })
+                .write(outputPathTracage);
+        }
+        img.delete();
+        const jimp_img_out = await Jimp.read(input);
+        return name_cell;
+    } catch (err) {
+        console.log(err);
+    }
+
 }

@@ -4,6 +4,8 @@ const imageAPIVIA = require('./imageAPIVIA');
 
 exports.loadOpenCV = (images, company) => {
     delete require.cache[require.resolve('../../../opencv.js')];
+    delete require.cache[require.resolve('./imageMETLIFE')];
+    delete require.cache[require.resolve('./imageAPIVIA')];
     return new Promise((resolve, reject) => {
         try {
             global.Module = {
@@ -40,6 +42,16 @@ exports.loadOpenCV = (images, company) => {
                                     crop_lines = false,
                                     crop_cell = true,
                                     cell_width = cw
+                                );
+                                break;
+                            case 'METLIFE2':
+                                file_names = await imageMETLIFE.getImageBottom(
+                                    cv,
+                                    image_name.replace(/.+\/([^/])/, '$1'),
+                                    dirPath,
+                                    dirPath,
+                                    show_tracage = false,
+                                    crop_cell = true
                                 );
                                 break;
                         }

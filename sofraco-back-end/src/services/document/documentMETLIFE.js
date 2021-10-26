@@ -45,16 +45,15 @@ exports.readPdfMETLIFE = async (file) => {
     let infos = { executionTime: 0, executionTimeMS: 0, infos: [] };
     console.log(`${new Date()} DEBUT TRAITEMENT METLIFE`);
     const excecutionStartTime = performance.now();
-    let pathsToPDF;
+    let imagesPDF;
     const useFile = false;
     if (useFile) {
-        pathsToPDF = fs.readFileSync(path.join(__dirname, 'pdfMetlife.json'), { encoding: 'utf-8' });
-        pathsToPDF = JSON.parse(pathsToPDF);
+        imagesPDF = fs.readFileSync(path.join(__dirname, 'imagesMetlife.json'), { encoding: 'utf-8' });
+        imagesPDF = JSON.parse(imagesPDF);
     } else {
-        pathsToPDF = await splitPdfService.splitPDFMETLIFE(file);
+        imagesPDF = await splitPdfService.splitPDFMETLIFE(file);
     }
-    for (let pathToPDF of pathsToPDF) {
-        console.log(`PDF : ${pathToPDF}`);
+    for (let images of imagesPDF) {
         // pathToPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF', pathToPDF);
         let useFiles = false;
         let allTextFiles = [];
@@ -64,19 +63,15 @@ exports.readPdfMETLIFE = async (file) => {
             allTextFiles = JSON.parse(allTextFiles);
             console.log('FIN IMPORTER LINES METLIFE');
         } else {
-            const images = await pdfService.convertPDFToImg(pathToPDF);
             console.log(`${new Date()} DEBUT TRAITEMENT IMAGES METLIFE`);
             let imagesOpenCV = [];
             let imageFirstPage;
-            for (let image of images) {
-                const fileNameWthoutExtension = fileService.getFileNameWithoutExtension(image);
-                const fileNameArr = fileNameWthoutExtension.split('_');
-                const numero = fileNameArr[fileNameArr.length - 1];
-                if (parseInt(numero) > 2) {
-                    imagesOpenCV.push(image);
+            for (let i = 0; i < images.length; i++) {
+                if (i === 0) {
+                    imageFirstPage = images[i];
                 }
-                if (parseInt(numero) === 1) {
-                    imageFirstPage = image;
+                if (i > 1) {
+                    imagesOpenCV.push(images[i]);
                 }
             }
             const allFilesFromOpenCV = await imageManagment.loadOpenCV(imagesOpenCV, 'METLIFE');
@@ -120,6 +115,16 @@ exports.readPdfMETLIFE = async (file) => {
     infos.executionTimeMS = executionTimeMS;
     console.log('Total Execution time : ', infos.executionTime);
     console.log(`${new Date()} FIN TRAITEMENT METLIFE`);
+    const directoryTemp = path.join(__dirname, '..', '..', '..', 'documents', 'temp');
+    const directoryTexte = path.join(__dirname, '..', '..', '..', 'documents', 'texte');
+    const directorySplitedPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF');
+    try {
+        fileService.deleteFilesinDirectory(directoryTemp);
+        fileService.deleteFilesinDirectory(directoryTexte);
+        fileService.deleteFilesinDirectory(directorySplitedPDF);
+    } catch (err) {
+        console.log(err);
+    }
     return infos;
 };
 

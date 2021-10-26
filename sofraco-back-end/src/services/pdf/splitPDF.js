@@ -1,70 +1,64 @@
 const path = require('path');
 const fs = require('fs');
-const PDFParser = require("pdf2json");
 const { PDFDocument } = require('pdf-lib');
 const { performance } = require('perf_hooks');
+const { execSync } = require('child_process');
 const time = require('../utils/time');
 const fileService = require('../utils/files');
+const pdfService = require('../utils/pdfFile');
+const imageManagment = require('../images/imageManagment');
 
-exports.splitPDFMETLIFE = (file) => {
+exports.splitPDFMETLIFE = async (file) => {
     console.log(`${new Date()} DEBUT SEPARATION PDF METLIFE`);
-    const excecutionStartTime = performance.now();
-    try {
-        let pdfParser = new PDFParser(this, 1);
-        const fileName = fileService.getFileNameWithoutExtension(file);
-        pdfParser.loadPDF(file);
-        console.log(`${new Date()} PDF PARSER`);
-        return new Promise((resolve, reject) => {
-            pdfParser.on("pdfParser_dataError", (errData) => {
-                console.log(`${new Date()} PDF PARSER ERROR`);
-                console.log(`${errData} `);
-                reject(errData.parserError);
-            });
-            pdfParser.on("pdfParser_dataReady", async (pdfData) => {
-                console.log(`${new Date()} PDF PARSER READY`);
-                const pdfContent = pdfParser.getRawTextContent();
-                const separateur = '\r\n';
-                const pdfContentArr = pdfContent.split(separateur);
-                let pathToPdf = [];
-                const pageNumero = pdfContentArr.filter((mot, index) => {
-                    return mot.match(/^Page 1[/]\d/i);
-                });
-                const pageNumbers = pageNumero.map((numero, index) => {
-                    return parseInt(numero.charAt(numero.length - 1));
-                });
-
-                let currentPDFBytes = fs.readFileSync(file);
-                const currentPDFDoc = await PDFDocument.load(currentPDFBytes);
-                let currentPageNumero = 0;
-                let pdfNumero = 1;
-                for (let numbers of pageNumbers) {
-                    if (pageNumbers.length === 1) {
-                        fs.writeFileSync(path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF', `${fileName}_${pdfNumero}.pdf`), currentPDFBytes);
-                        pathToPdf.push(path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF', `${fileName}_${pdfNumero}.pdf`));
-                    } else {
-                        let pages = [];
-                        for (let i = 0; i < numbers; i++) {
-                            pages.push(currentPageNumero);
-                            currentPageNumero++;
-                        }
-                        const newPDF = await PDFDocument.create();
-                        const copiedPages = await newPDF.copyPages(currentPDFDoc, pages);
-                        for (let page of copiedPages) {
-                            newPDF.addPage(page);
-                        }
-                        const pdfBytes = await newPDF.save();
-                        fs.writeFileSync(path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF', `${fileName}_${pdfNumero}.pdf`), pdfBytes);
-                        pathToPdf.push(path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF', `${fileName}_${pdfNumero}.pdf`));
-                        pdfNumero++;
-                    }
+    const pathsToPDF = await this.splitPDFToSinglePagePDF(file);
+    console.log(`${new Date()} FIN SEPARATION PDF METLIFE`);
+    let images = [];
+    let i = 0;
+    console.log(`${new Date()} DEBUT REGROUPEMENT PAR BORDEREAU METLIFE`);
+    while (pathsToPDF.length > 0) {
+        const image = await pdfService.convertPDFToImg(pathsToPDF[0]);
+        const allFilesFromOpenCV = await imageManagment.loadOpenCV(image, 'METLIFE2');
+        const textFilePath = getTextFromImages(allFilesFromOpenCV);
+        const content = fs.readFileSync(textFilePath, { encoding: 'utf-8' });
+        let data = content.split('\n');
+        for (let d of data) {
+            if (d.match(/Page 1[/]\d/i)) {
+                const dArray = d.split('/');
+                const numero = parseInt(dArray[dArray.length - 1]);
+                let img = [];
+                for (let i = 0; i < numero; i++) {
+                    const image = await pdfService.convertPDFToImg(pathsToPDF[i]);
+                    img.push(image[0]);
                 }
-                const excecutionStopTime = performance.now();
-                let executionTime = excecutionStopTime - excecutionStartTime;
-                console.log('Split pdf time : ', time.millisecondToTime(executionTime));
-                console.log(`${new Date()} FIN SEPARATION PDF METLIFE`);
-                resolve(pathToPdf);
-            });
-        });
+                images.push(img);
+                pathsToPDF.splice(0, numero);
+                break;
+            }
+        }
+        i++;
+    }
+    console.log(`${new Date()} FIN REGROUPEMENT PAR BORDEREAU METLIFE`);
+    return images;
+};
+
+const getTextFromImages = (image) => {
+    let textFilePath;
+    try {
+        const fileNameWthoutExtension = fileService.getFileNameWithoutExtension(image[0]);
+        const destFullPath = path.join(__dirname, '..', '..', '..', 'documents', 'texte', `${fileNameWthoutExtension}`);
+        let executionTimeTesseract;
+        try {
+            const tesseractStartTime = performance.now();
+            execSync(`tesseract ${image[0]} ${destFullPath} --psm 6`);
+            const tesseractStopTime = performance.now();
+            executionTimeTesseract = tesseractStopTime - tesseractStartTime;
+            console.log('Execution time Tesseract : ', time.millisecondToTime(executionTimeTesseract));
+            textFilePath = `${destFullPath}.txt`;
+            return textFilePath;
+        } catch (err) {
+            console.log(err);
+            console.log(`Temps de traitement : ${time.millisecondToTime(executionTimeTesseract)}`);
+        }
     } catch (err) {
         console.log(err);
     }

@@ -1,5 +1,6 @@
 const Jimp = require('jimp');
 const path = require('path');
+const fs = require('fs');
 
 const { JSDOM } = require('jsdom');
 const { Canvas, createCanvas, Image, ImageData, loadImage } = require('canvas');
@@ -30,9 +31,12 @@ function is_valid_ord(cy, img_cv) {
 exports.getCellFromImageAPIVIA = async (cv, file_name, input_path, output_path, show_tracage = false, frame_data = false, crop_lines = false, crop_cell = false, cell_width = []) => {
     let data_output = []
     try {
-        const input = input_path + '/' + file_name;
-        const output = output_path + '/' + file_name.replace('.', '_out.');
-        const outputPathTracage = output_path + '/tracage/' + file_name.replace('.', '_out.');
+        const input = path.join(input_path, file_name);
+        const output = path.join(output_path, file_name.replace('.', '_out.'));
+        if (!fs.existsSync(path.join(output_path, 'tracage'))) {
+            fs.mkdirSync(path.join(output_path, 'tracage'));
+        }
+        const outputPathTracage = path.join(output_path, 'tracage', file_name.replace('.', '_out.'));
         const image = await loadImage(input);
         const img = cv.imread(image);
         const jimp_img = await Jimp.read(input);

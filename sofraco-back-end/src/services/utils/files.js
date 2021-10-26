@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 exports.getFileName = (filePath) => {
     const filePathArr = filePath.split('/');
     const fileName = filePathArr[filePathArr.length - 1];
@@ -16,4 +19,16 @@ exports.getFileNameWithoutExtension = (filePath) => {
     const fileNameArr = fileName.split('.');
     const fileNameWithoutExtension = fileNameArr[0];
     return fileNameWithoutExtension;
+}
+
+exports.deleteFilesinDirectory = (directory) => {
+    fs.readdir(directory, (err, files) => {
+        if (err) throw err;
+
+        for (const file of files) {
+            fs.unlink(path.join(directory, file), err => {
+                if (err) throw err;
+            });
+        }
+    });
 }
