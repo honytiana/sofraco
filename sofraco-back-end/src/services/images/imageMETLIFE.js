@@ -27,7 +27,7 @@ const is_valid_ord = (cy, img_cv) => {
     return res
 }
 
-const draw_and_crop_cell = (cv, img, jimp_img, x_cell, y_cell, x2_cell, y2_cell, name_cell, cells_output, crop_cell=true, show_tracage=false) => {
+const draw_and_crop_cell = (cv, img, jimp_img, x_cell, y_cell, x2_cell, y2_cell, name_cell, cells_output, crop_cell = true, show_tracage = false) => {
     // draw
     // x2_cell, y2_cell
     // let x2_cell = x_cell + w_cell;
@@ -116,78 +116,80 @@ exports.getCellFromImageMETLIFE = async (cv, file_name, input_path, output_path,
             }
         }
 
-        lines_tab_valid[lines_tab_valid.length - 1].height = 50;
-
-        let i = 1;
-        for (let line of lines_tab_valid) {
-            let x1_line = line.coord[0];
-            let y1_line = line.coord[1];
-            let x2_line = line.coord[2];
-            let y2_line = line.coord[3];
-            if (x2_line - x1_line > 2200) {
-                let line_output = {};
-                let height_rect = parseInt(line.height);
-                let y_rows = y1_line + height_rect;
-                let width_rows = x2_line - x1_line;
-                let x_cell = x1_line;
-                if (is_valid_ord(y_rows, img)) {
-                    let c = 1;
-                    let cells_output = [];
-                    if (height_rect > 100) {
-                        for (let w_cell of cell_width) {
-                            let x2_cell = x_cell + w_cell;
-                            let y2_cell = y_rows;
-                            const name_cell = output.replace('.', '_l_' + i + '_c_' + c + '.');
-                            draw_and_crop_cell(cv, img, jimp_img, x_cell, y1_line, x2_cell, y2_cell, name_cell, cells_output, crop_cell=true, show_tracage=true);
-                            x_cell = x2_cell;
-                            c += 1;
+        if (lines_tab_valid[lines_tab_valid.length - 1]) {
+            lines_tab_valid[lines_tab_valid.length - 1].height = 50; let i = 1;
+            for (let line of lines_tab_valid) {
+                let x1_line = line.coord[0];
+                let y1_line = line.coord[1];
+                let x2_line = line.coord[2];
+                let y2_line = line.coord[3];
+                if (x2_line - x1_line > 2200) {
+                    let line_output = {};
+                    let height_rect = parseInt(line.height);
+                    let y_rows = y1_line + height_rect;
+                    let width_rows = x2_line - x1_line;
+                    let x_cell = x1_line;
+                    if (is_valid_ord(y_rows, img)) {
+                        let c = 1;
+                        let cells_output = [];
+                        if (height_rect > 80) {
+                            for (let w_cell of cell_width) {
+                                let x2_cell = x_cell + w_cell;
+                                let y2_cell = y_rows;
+                                const name_cell = output.replace('.', '_l_' + i + '_c_' + c + '.');
+                                draw_and_crop_cell(cv, img, jimp_img, x_cell, y1_line, x2_cell, y2_cell, name_cell, cells_output, crop_cell = true, show_tracage = true);
+                                x_cell = x2_cell;
+                                c += 1;
+                            }
                         }
-                    }
-                    let cell_width2 = [1246, 355, 250, 200, 200];
-                    if (height_rect < 60) {
-                        for (let w_cell of cell_width2) {
-                            let x2_cell = x_cell + w_cell;
-                            let y2_cell = y_rows;
-                            const name_cell = output.replace('.', '_l_' + i + '_c_' + c + '.');
-                            draw_and_crop_cell(cv, img, jimp_img, x_cell, y1_line, x2_cell, y2_cell, name_cell, cells_output, crop_cell=true, show_tracage=true);
-                            x_cell = x2_cell;
-                            c += 1;
+                        let cell_width2 = [1246, 355, 250, 200, 200];
+                        if (height_rect < 60) {
+                            for (let w_cell of cell_width2) {
+                                let x2_cell = x_cell + w_cell;
+                                let y2_cell = y_rows;
+                                const name_cell = output.replace('.', '_l_' + i + '_c_' + c + '.');
+                                draw_and_crop_cell(cv, img, jimp_img, x_cell, y1_line, x2_cell, y2_cell, name_cell, cells_output, crop_cell = true, show_tracage = true);
+                                x_cell = x2_cell;
+                                c += 1;
+                            }
                         }
-                    }
-                    if (cells_output.length > 0) { line_output.cell = cells_output; }
+                        if (cells_output.length > 0) { line_output.cell = cells_output; }
 
-                    if (crop_lines) {
-                        try {
-                            // const cropped_image = await Jimp.read(input);
-                            const cropped_image = new Jimp(jimp_img);
-                            cropped_image.crop(x1_line, y_rows, width_rows, h);
-                            n = output.replace('.', '_l_' + i + '.');
-                            cropped_image.write(n);
-                            line_output.line = n;
-                            // if (frame_data):
-                            //     detect_cell(n)
-                        } catch (err) {
-                            console.log("error crop 2");
-                            console.log(err);
+                        if (crop_lines) {
+                            try {
+                                // const cropped_image = await Jimp.read(input);
+                                const cropped_image = new Jimp(jimp_img);
+                                cropped_image.crop(x1_line, y_rows, width_rows, h);
+                                n = output.replace('.', '_l_' + i + '.');
+                                cropped_image.write(n);
+                                line_output.line = n;
+                                // if (frame_data):
+                                //     detect_cell(n)
+                            } catch (err) {
+                                console.log("error crop 2");
+                                console.log(err);
+                            }
+
                         }
-
+                        i += 1;
+                        data_output.push(line_output);
                     }
-                    i += 1;
-                    data_output.push(line_output);
                 }
             }
+            if (show_tracage) {
+                // cv.imwrite(output, img)
+                new Jimp({
+                    width: img.cols,
+                    height: img.rows,
+                    data: Buffer.from(img.data)
+                })
+                    .write(outputPathTracage);
+            }
+            img.delete();
+            const jimp_img_out = await Jimp.read(input);
         }
-        if (show_tracage) {
-            // cv.imwrite(output, img)
-            new Jimp({
-                width: img.cols,
-                height: img.rows,
-                data: Buffer.from(img.data)
-            })
-                .write(outputPathTracage);
-        }
-        img.delete();
-        const jimp_img_out = await Jimp.read(input);
+
+
     } catch (err) {
         console.log(err);
     }

@@ -12,34 +12,38 @@ const imageManagment = require('../images/imageManagment');
 
 const getTextFromImages = (images) => {
     let textFilePaths = [];
-    let imgs;
-    if (images.cell) {
-        imgs = images.cell;
-    } else {
-        imgs = images;
-    }
-    for (let image of imgs) {
-        const fileNameWthoutExtension = fileService.getFileNameWithoutExtension(image);
-        const destFullPath = path.join(__dirname, '..', '..', '..', 'documents', 'texte', `${fileNameWthoutExtension}`);
-        let executionTimeTesseract;
-        try {
-            const tesseractStartTime = performance.now();
-            execSync(`tesseract ${image} ${destFullPath} --psm 6`);
-            const tesseractStopTime = performance.now();
-            executionTimeTesseract = tesseractStopTime - tesseractStartTime;
-            console.log('Execution time Tesseract : ', time.millisecondToTime(executionTimeTesseract));
-            textFilePaths.push(`${destFullPath}.txt`);
-        } catch (err) {
-            console.log(err);
-            console.log(`Temps de traitement : ${time.millisecondToTime(executionTimeTesseract)}`);
+    try {
+        let imgs;
+        if (images.cell) {
+            imgs = images.cell;
+        } else {
+            imgs = images;
         }
+        for (let image of imgs) {
+            const fileNameWthoutExtension = fileService.getFileNameWithoutExtension(image);
+            const destFullPath = path.join(__dirname, '..', '..', '..', 'documents', 'texte', `${fileNameWthoutExtension}`);
+            let executionTimeTesseract;
+            try {
+                const tesseractStartTime = performance.now();
+                execSync(`tesseract ${image} ${destFullPath} --psm 6`);
+                const tesseractStopTime = performance.now();
+                executionTimeTesseract = tesseractStopTime - tesseractStartTime;
+                console.log('Execution time Tesseract : ', time.millisecondToTime(executionTimeTesseract));
+                textFilePaths.push(`${destFullPath}.txt`);
+            } catch (err) {
+                console.log(err);
+                console.log(`Temps de traitement : ${time.millisecondToTime(executionTimeTesseract)}`);
+            }
+        }
+        return textFilePaths;
+    } catch (err) {
+        console.log(err);
     }
-    return textFilePaths;
 }
 
 exports.readPdfMETLIFE = async (file) => {
     let infos = { executionTime: 0, executionTimeMS: 0, infos: [] };
-    console.log('DEBUT TRAITEMENT METLIFE');
+    console.log(`${new Date()} DEBUT TRAITEMENT METLIFE`);
     const excecutionStartTime = performance.now();
     let pathsToPDF;
     const useFile = false;
@@ -50,6 +54,7 @@ exports.readPdfMETLIFE = async (file) => {
         pathsToPDF = await splitPdfService.splitPDFMETLIFE(file);
     }
     for (let pathToPDF of pathsToPDF) {
+        console.log(`PDF : ${pathToPDF}`);
         // pathToPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF', pathToPDF);
         let useFiles = false;
         let allTextFiles = [];
@@ -60,7 +65,7 @@ exports.readPdfMETLIFE = async (file) => {
             console.log('FIN IMPORTER LINES METLIFE');
         } else {
             const images = await pdfService.convertPDFToImg(pathToPDF);
-            console.log('DEBUT TRAITEMENT IMAGES METLIFE');
+            console.log(`${new Date()} DEBUT TRAITEMENT IMAGES METLIFE`);
             let imagesOpenCV = [];
             let imageFirstPage;
             for (let image of images) {
@@ -75,10 +80,10 @@ exports.readPdfMETLIFE = async (file) => {
                 }
             }
             const allFilesFromOpenCV = await imageManagment.loadOpenCV(imagesOpenCV, 'METLIFE');
-            console.log('FIN TRAITEMENT IMAGES METLIFE');
+            console.log(`${new Date()} FIN TRAITEMENT IMAGES METLIFE`);
             const allFilesFromFirstPage = getTextFromImages([imageFirstPage]);
             allTextFiles.push(allFilesFromFirstPage[0]);
-            console.log('DEBUT IMPORTER LINES METLIFE');
+            console.log(`${new Date()} DEBUT IMPORTER LINES METLIFE`);
             for (let files of allFilesFromOpenCV) {
                 let i = 0;
                 let contratTextsFiles = [];
@@ -103,7 +108,7 @@ exports.readPdfMETLIFE = async (file) => {
                     i++;
                 }
             }
-            console.log('FIN IMPORTER LINES METLIFE');
+            console.log(`${new Date()} FIN IMPORTER LINES METLIFE`);
         }
         const infoBordereau = readBordereauMETLIFE(allTextFiles);
         infos.infos.push(infoBordereau);
@@ -114,7 +119,7 @@ exports.readPdfMETLIFE = async (file) => {
     infos.executionTime = time.millisecondToTime(executionTimeMS);
     infos.executionTimeMS = executionTimeMS;
     console.log('Total Execution time : ', infos.executionTime);
-    console.log('FIN TRAITEMENT METLIFE');
+    console.log(`${new Date()} FIN TRAITEMENT METLIFE`);
     return infos;
 };
 

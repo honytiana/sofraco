@@ -7,7 +7,7 @@ const time = require('../utils/time');
 const fileService = require('../utils/files');
 
 exports.splitPDFMETLIFE = (file) => {
-    console.log('DEBUT SEPARATION PDF METLIFE');
+    console.log(`${new Date()} DEBUT SEPARATION PDF METLIFE`);
     const excecutionStartTime = performance.now();
     try {
         let pdfParser = new PDFParser(this, 1);
@@ -57,7 +57,7 @@ exports.splitPDFMETLIFE = (file) => {
                 const excecutionStopTime = performance.now();
                 let executionTime = excecutionStopTime - excecutionStartTime;
                 console.log('Split pdf time : ', time.millisecondToTime(executionTime));
-                console.log('FIN SEPARATION PDF METLIFE');
+                console.log(`${new Date()} FIN SEPARATION PDF METLIFE`);
                 resolve(pathToPdf);
             });
         });
