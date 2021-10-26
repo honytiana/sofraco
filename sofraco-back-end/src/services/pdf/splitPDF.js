@@ -13,11 +13,15 @@ exports.splitPDFMETLIFE = (file) => {
         let pdfParser = new PDFParser(this, 1);
         const fileName = fileService.getFileNameWithoutExtension(file);
         pdfParser.loadPDF(file);
+        console.log(`${new Date()} PDF PARSER`);
         return new Promise((resolve, reject) => {
             pdfParser.on("pdfParser_dataError", (errData) => {
+                console.log(`${new Date()} PDF PARSER ERROR`);
+                console.log(`${errData} `);
                 reject(errData.parserError);
             });
             pdfParser.on("pdfParser_dataReady", async (pdfData) => {
+                console.log(`${new Date()} PDF PARSER READY`);
                 const pdfContent = pdfParser.getRawTextContent();
                 const separateur = '\r\n';
                 const pdfContentArr = pdfContent.split(separateur);
