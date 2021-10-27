@@ -35,7 +35,13 @@ exports.createDocument = (req, res) => {  // create document
         if (req.body.companySurco !== 'undefined') {
             companySurco = JSON.parse(req.body.companySurco);
         }
+        let companySurco2;
+        if (req.body.companySurco2 !== 'undefined') {
+            companySurco2 = JSON.parse(req.body.companySurco2);
+        }
+        const simple = JSON.parse(req.body.simple);
         const surco = JSON.parse(req.body.surco);
+        const surco2 = JSON.parse(req.body.surco2);
         const mcms = JSON.parse(req.body.mcms);
         let fileLength = 0;
         let surcoLength = 0;
@@ -45,75 +51,51 @@ exports.createDocument = (req, res) => {  // create document
         if (req.body.surcoLength !== 'undefined') {
             surcoLength = parseInt(req.body.surcoLength);
         }
-        if (company.surco && surco && companySurco && req.files.length > 1 && !mcms) {  // company and surco
-            let document = {};
-            const fileName = fileService.getFileName(req.files[0].path);
-            document.name = fileName;
-            document.company = company._id;
-            document.companyName = company.name;
-            document.path_original_file = req.files[0].path;
-            document.type = req.body.extension;
-            const doc = documentHandler.createDocument(document);
-            let documentSurco = {};
-            const fileNameSurco = fileService.getFileName(req.files[1].path);
-            documentSurco.name = fileNameSurco;
-            documentSurco.company = companySurco._id;
-            documentSurco.companyName = companySurco.name;
-            documentSurco.path_original_file = req.files[1].path;
-            documentSurco.type = req.body.extension;
-            const docSurco = documentHandler.createDocument(documentSurco);
+
+        if (simple && surco && surco2 && !mcms) {  // company and surco ans surco2
+            saveDocument(company, req.files[0].path, req.body.extension);
+            saveDocument(companySurco, req.files[1].path, req.body.extension);
+            saveDocument(companySurco2, req.files[2].path, req.body.extension);
         }
-        if (company.surco && surco && companySurco && req.files.length === 1 && !mcms) { // surco
-            let document = {};
-            const fileName = fileService.getFileName(req.files[0].path);
-            document.name = fileName;
-            document.company = companySurco._id;
-            document.companyName = companySurco.name;
-            document.path_original_file = req.files[0].path;
-            document.type = req.body.extension;
-            const doc = documentHandler.createDocument(document);
+
+        if (simple && surco && !surco2 && !mcms) {  // company and surco
+            saveDocument(company, req.files[0].path, req.body.extension);
+            saveDocument(companySurco, req.files[1].path, req.body.extension);
         }
-        if (((company.surco && !surco) || (!company.surco && !surco))) {     // company
-            let document = {};
-            const fileName = fileService.getFileName(req.files[0].path);
-            document.name = fileName;
-            document.company = company._id;
-            document.companyName = company.name;
-            document.path_original_file = req.files[0].path;
-            document.type = req.body.extension;
-            const doc = documentHandler.createDocument(document);
+
+        if (!simple && surco && surco2 && !mcms) { // surco and surco2
+            saveDocument(companySurco, req.files[0].path, req.body.extension);
+            saveDocument(companySurco2, req.files[1].path, req.body.extension);
         }
-        if (company.surco && surco && companySurco && mcms && surcoLength > 0 && fileLength === 0) { // MCMS 
+
+        if (simple && !surco && surco2 && !mcms) { // company and surco2
+            saveDocument(company, req.files[0].path, req.body.extension);
+            saveDocument(companySurco2, req.files[1].path, req.body.extension);
+        }
+
+        if (simple && !surco && !surco2 && !mcms) {     // company
+            saveDocument(company, req.files[0].path, req.body.extension);
+        }
+
+        if (!simple && surco && !surco2 && !mcms) { // surco
+            saveDocument(companySurco, req.files[0].path, req.body.extension);
+        }
+
+        if (!simple && !surco && surco2 && !mcms) { // surco2
+            saveDocument(companySurco2, req.files[0].path, req.body.extension);
+        }
+
+        if (!simple && surco && !surco2 && mcms && surcoLength > 0 && fileLength === 0) { // MCMS 
             for (let file of req.files) {
-                let document = {};
-                const fileName = fileService.getFileName(file.path);
-                document.name = fileName;
-                document.company = companySurco._id;
-                document.companyName = companySurco.name;
-                document.path_original_file = file.path;
-                document.type = req.body.extension;
-                const doc = documentHandler.createDocument(document);
+                saveDocument(companySurco, file.path, req.body.extension);
             }
         }
-        if (company.surco && surco && companySurco && mcms && surcoLength > 0 && fileLength > 0) { // company & MCMS 
-            let document = {};
-            const fileName = fileService.getFileName(req.files[0].path);
-            document.name = fileName;
-            document.company = company._id;
-            document.companyName = company.name;
-            document.path_original_file = req.files[0].path;
-            document.type = req.body.extension;
+        if (simple && surco && !surco2 && mcms && surcoLength > 0 && fileLength > 0) { // company & MCMS 
+            saveDocument(company, req.files[0].path, req.body.extension);
             const doc = documentHandler.createDocument(document);
             const files = req.files.splice(1, req.files.length - 1);
             for (let file of files) {
-                let documentMCMS = {};
-                const fileName = fileService.getFileName(file.path);
-                documentMCMS.name = fileName;
-                documentMCMS.company = companySurco._id;
-                documentMCMS.companyName = companySurco.name;
-                documentMCMS.path_original_file = file.path;
-                documentMCMS.type = req.body.extension;
-                const doc = documentHandler.createDocument(documentMCMS);
+                saveDocument(companySurco, file.path, req.body.extension);
             }
         }
         res.status(200).end('Sent to Server');
@@ -121,6 +103,17 @@ exports.createDocument = (req, res) => {  // create document
         res.status(500).json({ err });
     }
 }
+
+const saveDocument = (company, filePath, extension) => {
+    let document = {};
+    const fileName = fileService.getFileName(filePath);
+    document.name = fileName;
+    document.company = company._id;
+    document.companyName = company.name;
+    document.path_original_file = filePath;
+    document.type = extension;
+    const doc = documentHandler.createDocument(document);
+};
 
 exports.updateDocuments = async (req, res) => {
     try {

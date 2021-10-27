@@ -15,7 +15,7 @@ const companySchema = new Schema({
     is_enabled: { type: Boolean, default: true },
     surco: { type: Boolean, default: false },
     companySurco: { type: String, default: '' },
-    type: { type: String, enum: ['simple', 'surco'] }
+    type: { type: String, enum: ['simple', 'surco', 'surco2'] }
 });
 
 const Company = mongoose.model('Company', companySchema);

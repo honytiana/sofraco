@@ -26,9 +26,11 @@ class Upload extends Component {
         this.state = {
             company: null,
             companySurco: null,
+            companySurco2: null,
             location: props.location,
             files: null,
             filesSurco: null,
+            filesSurco2: null,
             loader: false,
             toast: false,
             messageToast: {},
@@ -37,6 +39,8 @@ class Upload extends Component {
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.onChangeHandler = this.onChangeHandler.bind(this);
         this.testExtension = this.testExtension.bind(this);
+        this.generateDropzone = this.generateDropzone.bind(this);
+        this.setStateFile = this.setStateFile.bind(this);
     }
 
     componentDidMount() {
@@ -63,9 +67,29 @@ class Upload extends Component {
                         }
                     })
                         .then((res) => {
+                            const companySurco = res.data;
                             this.setState({
-                                companySurco: res.data
+                                companySurco
                             });
+                            if (companySurco.surco) {
+                                axios.get(`${config.nodeUrl}/api/company/name/${companySurco.companySurco}`, {
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': `Bearer ${this.state.token.value}`
+                                    }
+                                })
+                                    .then((res) => {
+                                        this.setState({
+                                            companySurco2: res.data
+                                        });
+                                    })
+                                    .catch((err) => {
+                                        this.setState({
+                                            toast: true,
+                                            messageToast: { header: 'ERROR', color: 'danger', message: err }
+                                        })
+                                    })
+                            }
                         })
                         .catch((err) => {
                             this.setState({
@@ -74,6 +98,7 @@ class Upload extends Component {
                             })
                         })
                 }
+
             })
             .catch((err) => {
                 console.log(err);
@@ -96,6 +121,11 @@ class Upload extends Component {
                 formData.append('files', fileSurco);
             }
         }
+        if (this.state.filesSurco2 !== null) {
+            for (let fileSurco2 of this.state.filesSurco2) {
+                formData.append('files', fileSurco2);
+            }
+        }
         const company = {
             _id: this.props.company._id,
             name: this.props.company.name,
@@ -108,7 +138,16 @@ class Upload extends Component {
                 name: this.state.companySurco.name,
             }
         }
+        let companySurco2;
+        if (this.state.companySurco2) {
+            companySurco2 = {
+                _id: this.state.companySurco2._id,
+                name: this.state.companySurco2.name,
+            }
+        }
+        formData.append('simple', JSON.stringify((this.state.files !== null) ? true : false));
         formData.append('surco', JSON.stringify((this.state.filesSurco !== null) ? true : false));
+        formData.append('surco2', JSON.stringify((this.state.filesSurco2 !== null) ? true : false));
         if (this.state.companySurco !== null && this.state.companySurco.mcms) {
             formData.append('mcms', JSON.stringify(true));
         } else {
@@ -119,6 +158,7 @@ class Upload extends Component {
         formData.append('surcoLength', (this.state.filesSurco !== null) ? this.state.filesSurco.length : 0);
         formData.append('company', JSON.stringify(company));
         formData.append('companySurco', JSON.stringify(companySurco));
+        formData.append('companySurco2', JSON.stringify(companySurco2));
         axios.post(`${config.nodeUrl}/api/document/`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -147,6 +187,101 @@ class Upload extends Component {
         });
     }
 
+    testCompanyName(companyName, extension, files) {
+        const company = companyName;
+        switch (company.toUpperCase()) {
+            case 'APICIL':
+                this.testExtension(extension, 'XLSX', false, false, files);
+                break;
+            case 'APIVIA':
+                this.testExtension(extension, 'PDF', false, false, files);
+                break;
+            case 'APREP':
+                this.testExtension(extension, 'PDF', false, false, files);
+                break;
+            case 'APREP ENCOURS':
+                this.testExtension(extension, 'PDF', true, false, files);
+                break;
+            // case 'AVIVA':
+            //     this.testExtension(extension, 'XLSX', false, false, files);
+            //     break;
+            case 'AVIVA SURCO':
+                this.testExtension(extension, 'XLSX', true, false, files);
+                break;
+            case 'CARDIF':
+                this.testExtension(extension, 'XLSX', false, false, files);
+                break;
+            case 'CBP FRANCE':
+                this.testExtension(extension, 'XLSX', false, false, files);
+                break;
+            case 'CEGEMA':
+                this.testExtension(extension, 'XLSX', false, false, files);
+                break;
+            case 'ERES':
+                this.testExtension(extension, 'PDF', false, false, files);
+                break;
+            case 'GENERALI':
+                this.testExtension(extension, 'XLSX', false, false, files);
+                break;
+            case 'HODEVA':
+                this.testExtension(extension, 'XLSX', false, false, files);
+                break;
+            case 'METLIFE':
+                this.testExtension(extension, 'PDF', false, false, files);
+                break;
+            case 'MIE':
+                this.testExtension(extension, 'XLSX', false, false, files);
+                break;
+            case 'MIE MCMS': // 'MCMS'
+                this.testExtension(extension, 'XLSX', true, false, files);
+                break;
+            case 'MIEL MUTUELLE':
+                this.testExtension(extension, 'XLSX', false, false, files);
+                break;
+            case 'MIEL MCMS': // 'MCMS'
+                this.testExtension(extension, 'XLSX', true, false, files);
+                break;
+            case 'MILTIS':
+                this.testExtension(extension, 'XLSX', false, false, files);
+                break;
+            case 'MMA INCITATION':
+                this.testExtension(extension, 'XLSX', false, false, files);
+                break;
+            case 'MMA ACQUISITION':
+                this.testExtension(extension, 'XLSX', true, false, files);
+                break;
+            case 'MMA ENCOURS':
+                this.testExtension(extension, 'XLSX', false, true, files);
+                break;
+            case 'PAVILLON PREVOYANCE':
+                this.testExtension(extension, 'XLSX', false, false, files);
+                break;
+            case 'PAVILLON MCMS': // MCMS
+                this.testExtension(extension, 'XLSX', true, false, files);
+                break;
+            case 'SMATIS':
+                this.testExtension(extension, 'XLSX', false, false, files);
+                break;
+            case 'SMATIS MCMS': // MCMS
+                this.testExtension(extension, 'XLSX', true, false, files);
+                break;
+            case 'SPVIE':
+                this.testExtension(extension, 'XLSX', false, false, files);
+                break;
+            case 'SWISSLIFE':
+                this.testExtension(extension, 'PDF', false, false, files);
+                break;
+            case 'SWISSLIFE SURCO':
+                this.testExtension(extension, 'XLSX', true, false, files);
+                break;
+            case 'UAF LIFE PATRIMOINE':
+                this.testExtension(extension, 'XLSX', false, false, files);
+                break;
+            default:
+                console.log('Pas de compagnie correspondante');
+        }
+    }
+
     onChangeHandler(event, companyName) {
         event.preventDefault();
         const files = event.target.files;
@@ -154,92 +289,7 @@ class Upload extends Component {
         const fileName = file.name;
         const fileNameArray = fileName.split('.');
         const extension = fileNameArray[fileNameArray.length - 1];
-        const company = companyName;
-        switch (company.toUpperCase()) {
-            case 'APICIL':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'APIVIA':
-                this.testExtension(extension, 'PDF', false, files);
-                break;
-            case 'APREP':
-                this.testExtension(extension, 'PDF', false, files);
-                break;
-            case 'APREP ENCOURS':
-                this.testExtension(extension, 'PDF', true, files);
-                break;
-            // case 'AVIVA':
-            //     this.testExtension(extension, 'XLSX', false, files);
-            //     break;
-            case 'AVIVA SURCO':
-                this.testExtension(extension, 'XLSX', true, files);
-                break;
-            case 'CARDIF':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'CBP FRANCE':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'CEGEMA':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'ERES':
-                this.testExtension(extension, 'PDF', false, files);
-                break;
-            case 'GENERALI':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'HODEVA':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'METLIFE':
-                this.testExtension(extension, 'PDF', false, files);
-                break;
-            case 'MIE':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'MIE MCMS': // 'MCMS'
-                this.testExtension(extension, 'XLSX', true, files);
-                break;
-            case 'MIEL MUTUELLE':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'MIEL MCMS': // 'MCMS'
-                this.testExtension(extension, 'XLSX', true, files);
-                break;
-            case 'MILTIS':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'MMA':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'PAVILLON PREVOYANCE':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'PAVILLON MCMS': // MCMS
-                this.testExtension(extension, 'XLSX', true, files);
-                break;
-            case 'SMATIS':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'SMATIS MCMS': // MCMS
-                this.testExtension(extension, 'XLSX', true, files);
-                break;
-            case 'SPVIE':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'SWISSLIFE':
-                this.testExtension(extension, 'PDF', false, files);
-                break;
-            case 'SWISSLIFE SURCO':
-                this.testExtension(extension, 'XLSX', true, files);
-                break;
-            case 'UAF LIFE PATRIMOINE':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            default:
-                console.log('Pas de compagnie correspondante');
-        }
+        this.testCompanyName(companyName, extension, files);
     }
 
     onDropHandler(files, companyName) {
@@ -247,95 +297,28 @@ class Upload extends Component {
         const fileName = file.name;
         const fileNameArray = fileName.split('.');
         const extension = fileNameArray[fileNameArray.length - 1];
-        const company = companyName;
-        switch (company.toUpperCase()) {
-            case 'APICIL':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'APIVIA':
-                this.testExtension(extension, 'PDF', false, files);
-                break;
-            case 'APREP':
-                this.testExtension(extension, 'PDF', false, files);
-                break;
-            case 'APREP ENCOURS':
-                this.testExtension(extension, 'PDF', true, files);
-                break;
-            // case 'AVIVA':
-            //     this.testExtension(extension, 'XLSX', false, files);
-            //     break;
-            case 'AVIVA SURCO':
-                this.testExtension(extension, 'XLSX', true, files);
-                break;
-            case 'CARDIF':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'CBP FRANCE':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'CEGEMA':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'ERES':
-                this.testExtension(extension, 'PDF', false, files);
-                break;
-            case 'GENERALI':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'HODEVA':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'METLIFE':
-                this.testExtension(extension, 'PDF', false, files);
-                break;
-            case 'MIE': // 'MCMS'
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'MIE MCMS': // 'MCMS'
-                this.testExtension(extension, 'XLSX', true, files);
-                break;
-            case 'MIEL MUTUELLE': // 'MCMS'
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'MIEL MCMS': // 'MCMS'
-                this.testExtension(extension, 'XLSX', true, files);
-                break;
-            case 'MILTIS':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'MMA':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'PAVILLON PREVOYANCE': // MCMS
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'PAVILLON MCMS': // MCMS
-                this.testExtension(extension, 'XLSX', true, files);
-                break;
-            case 'SMATIS':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'SMATIS MCMS':
-                this.testExtension(extension, 'XLSX', true, files);
-                break;
-            case 'SPVIE':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            case 'SWISSLIFE':
-                this.testExtension(extension, 'PDF', false, files);
-                break;
-            case 'SWISSLIFE SURCO':
-                this.testExtension(extension, 'XLSX', true, files);
-                break;
-            case 'UAF LIFE PATRIMOINE':
-                this.testExtension(extension, 'XLSX', false, files);
-                break;
-            default:
-                console.log('Pas de compagnie correspondante');
+        this.testCompanyName(companyName, extension, files);
+    }
+
+    setStateFile(surco, surco2, file) {
+        if (!surco && !surco2) {
+            this.setState({
+                files: file
+            });
+        } 
+        if (surco && !surco2) {
+            this.setState({
+                filesSurco: file
+            });
+        }
+        if (!surco && surco2) {
+            this.setState({
+                filesSurco2: file
+            });
         }
     }
 
-    testExtension(extension, type, surco, file) {
+    testExtension(extension, type, surco, surco2, file) {
         if (type === 'PDF') {
             if (extension.toUpperCase() !== 'PDF') {
                 this.setState({
@@ -349,15 +332,7 @@ class Upload extends Component {
                     });
                 }, 6000);
             } else {
-                if (!surco) {
-                    this.setState({
-                        files: file
-                    });
-                } else {
-                    this.setState({
-                        filesSurco: file
-                    });
-                }
+                this.setStateFile(surco, surco2, file);
             }
         }
         if (type === 'XLSX') {
@@ -373,97 +348,65 @@ class Upload extends Component {
                     });
                 }, 6000);
             } else {
-                if (!surco) {
-                    this.setState({
-                        files: file
-                    });
-                } else {
-                    this.setState({
-                        filesSurco: file
-                    });
-                }
+                this.setStateFile(surco, surco2, file);
             }
         }
+    }
+
+    generateDropzone(company, file) {
+        return (
+            <Dropzone
+                onDrop={(files) => {
+                    this.onDropHandler(files, company.name);
+                }}>
+                {({ getRootProps, getInputProps }) => (
+                    <div
+                        {...getRootProps()}
+                    >
+                        <input
+                            {...getInputProps()}
+                            multiple={(company.mcms) ? true : false}
+                            onChange={(event) => { this.onChangeHandler(event, company.name) }}
+                        />
+                        {
+                            (file !== null) ? (
+                                <CAlert >
+                                    <div>
+                                        <CImg src={openedFolder} fluid width={100} />
+                                        <p>{company.name}</p>
+                                    </div>
+                                </CAlert>
+                            ) : (
+                                <CAlert>
+                                    <div>
+                                        <CTooltip content="Glissez et déposez un fichier ou cliquez ici"
+                                            placement="top-end"
+                                        >
+                                            <CImg src={closedFolder} fluid width={100} />
+                                        </CTooltip>
+                                        <p>{company.name}</p>
+                                    </div>
+                                </CAlert>)
+                        }
+                    </div>
+                )}
+
+            </Dropzone>
+        )
     }
 
     render() {
         return (
             <div>
-                <Dropzone
-                    onDrop={(files) => {
-                        this.onDropHandler(files, this.props.companyName);
-                    }}>
-                    {({ getRootProps, getInputProps }) => (
-                        <div
-                            {...getRootProps()}
-                        >
-                            <input
-                                {...getInputProps()}
-                                multiple={(this.props.company.mcms) ? true : false}
-                                onChange={(event) => { this.onChangeHandler(event, this.props.companyName) }}
-                            />
-                            {
-                                (this.state.files !== null) ? (
-                                    <CAlert >
-                                        <div>
-                                            <CImg src={openedFolder} fluid width={100} />
-                                            <p>{this.props.company.name}</p>
-                                        </div>
-                                    </CAlert>
-                                ) : (
-                                    <CAlert>
-                                        <div>
-                                            <CTooltip content="Glissez et déposez un fichier ou cliquez ici"
-                                                placement="top-end"
-                                            >
-                                                <CImg src={closedFolder} fluid width={100} />
-                                            </CTooltip>
-                                            <p>{this.props.company.name}</p>
-                                        </div>
-                                    </CAlert>)
-                            }
-                        </div>
-                    )}
-                </Dropzone>
+                {this.generateDropzone(this.props.company, this.state.files)}
                 {
                     (this.props.company.surco && this.state.companySurco !== null) && (
-                        <Dropzone
-                            onDrop={(files) => {
-                                this.onDropHandler(files, this.state.companySurco.name);
-                            }}>
-                            {({ getRootProps, getInputProps }) => (
-                                <div
-                                    {...getRootProps()}
-                                >
-                                    <input
-                                        {...getInputProps()}
-                                        multiple={(this.state.companySurco.mcms) ? true : false}
-                                        onChange={(event) => { this.onChangeHandler(event, this.state.companySurco.name) }}
-                                    />
-                                    {
-                                        (this.state.filesSurco !== null) ? (
-                                            <CAlert >
-                                                <div>
-                                                    <CImg src={openedFolder} fluid width={100} />
-                                                    <p>{this.state.companySurco.name}</p>
-                                                </div>
-                                            </CAlert>
-                                        ) : (
-                                            <CAlert>
-                                                <div>
-                                                    <CTooltip content="Glissez et déposez un fichier ou cliquez ici"
-                                                        placement="top-end"
-                                                    >
-                                                        <CImg src={closedFolder} fluid width={100} />
-                                                    </CTooltip>
-                                                    <p>{this.state.companySurco.name}</p>
-                                                </div>
-                                            </CAlert>)
-                                    }
-                                </div>
-                            )}
-
-                        </Dropzone>
+                        this.generateDropzone(this.state.companySurco, this.state.filesSurco)
+                    )
+                }
+                {
+                    (this.state.companySurco !== null && this.state.companySurco.surco && this.state.companySurco2 !== null) && (
+                        this.generateDropzone(this.state.companySurco2, this.state.filesSurco2)
                     )
                 }
                 <CButton

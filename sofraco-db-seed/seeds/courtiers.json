@@ -5188,5 +5188,15 @@
         "status": "Active",
         "role": "mandataire",
         "is_enabled": "true"
+    },
+    {
+        "lastName": "LACOMBE",
+        "firstName": "Cassandra",
+        "cabinet": "Cassandra Courtage",
+        "email": "cassandra@groupesofraco.com",
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
     }
 ]
