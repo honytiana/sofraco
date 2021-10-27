@@ -1,6 +1,7 @@
 FROM node:latest
 
 RUN apt-get update -y
+RUN apt-get install tesseract-ocr -y
 RUN apt-get install graphicsmagick -y
 RUN apt-get install python -y
 RUN apt-get install python-pip -y
