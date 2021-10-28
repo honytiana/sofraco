@@ -112,8 +112,14 @@ const getOCRInfos = async (authorization) => {
             case 'MILTIS':
                 infos.push(excelMasterMILTIS.getOCRMILTIS(ocr));
                 break;
-            case 'MMA':
-                infos.push(excelMasterMMA.getOCRMMA(ocr));
+            case 'MMA INCITATION':
+                infos.push(excelMasterMMA.getOCRMMAINCITATION(ocr));
+                break;
+            case 'MMA ACQUISITION':
+                infos.push(excelMasterMMA.getOCRMMAACQUISITION(ocr));
+                break;
+            case 'MMA ENCOURS':
+                infos.push(excelMasterMMA.getOCRMMAENCOURS(ocr));
                 break;
             case 'PAVILLON PREVOYANCE':
                 infos.push(excelMasterPAVILLON.getOCRPAVILLON(ocr));
@@ -174,8 +180,6 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
                     courtier,
                     infos
                 });
-            } else {
-                allOCRPerCourtiers = ocrInfos[0];
             }
         }
         for (let ocrPerCourtier of allOCRPerCourtiers) {
@@ -219,22 +223,20 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
             courtier = cr !== null ? cr.cabinet.replace(/[/]/g, '_') : `cabMet${Date.now()}`;
             excelMaster.code_courtier = courtier;
             let datas = { company: null, ocr: [] };
-            if (ocrPerCourtier.company !== 'METLIFE') {
-                for (let ocr of ocrPerCourtier.infos) {
-                    if (ocr.company === 'CARDIF' && ocr.particular) {
-                        datas.company = 'CARDIF';
-                        datas.ocr.push(ocr);
-                    }
+            for (let ocr of ocrPerCourtier.infos) {
+                if (ocr.company === 'CARDIF' && ocr.particular) {
+                    datas.company = 'CARDIF';
+                    datas.ocr.push(ocr);
                 }
-                for (let d of datas.ocr) {
-                    for (let ocr of ocrPerCourtier.infos) {
-                        if (d === ocr) {
-                            ocrPerCourtier.infos.splice(ocrPerCourtier.infos.indexOf(ocr), 1);
-                        }
-                    }
-                }
-                ocrPerCourtier.infos = [...ocrPerCourtier.infos, datas];
             }
+            for (let d of datas.ocr) {
+                for (let ocr of ocrPerCourtier.infos) {
+                    if (d === ocr) {
+                        ocrPerCourtier.infos.splice(ocrPerCourtier.infos.indexOf(ocr), 1);
+                    }
+                }
+            }
+            ocrPerCourtier.infos = [...ocrPerCourtier.infos, datas];
             workbook = new ExcelJS.Workbook();
             recapWorkSheet = workbook.addWorksheet('RECAP');
             let month = new Date().getMonth();
@@ -289,7 +291,7 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
                                     excelMasterLOURMEL.createWorkSheetLOURMEL(workSheet, ocr);
                                     break;
                                 case 'METLIFE':
-                                    excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, ocrPerCourtier);
+                                    excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, ocr);
                                     break;
                                 case 'MIE':
                                     excelMasterMIE.createWorkSheetMIE(workSheet, ocr);
@@ -306,8 +308,14 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
                                 case 'MILTIS':
                                     excelMasterMILTIS.createWorkSheetMILTIS(workSheet, ocr);
                                     break;
-                                case 'MMA':
-                                    excelMasterMMA.createWorkSheetMMA(workSheet, ocr);
+                                case 'MMA INCITATION':
+                                    excelMasterMMA.createWorkSheetMMAINCITATION(workSheet, ocr);
+                                    break;
+                                case 'MMA ACQUISITION':
+                                    excelMasterMMA.createWorkSheetMMAACQUISITION(workSheet, ocr);
+                                    break;
+                                case 'MMA ENCOURS':
+                                    excelMasterMMA.createWorkSheetMMAENCOURS(workSheet, ocr);
                                     break;
                                 case 'PAVILLON PREVOYANCE':
                                     excelMasterPAVILLON.createWorkSheetPAVILLON(workSheet, ocr);

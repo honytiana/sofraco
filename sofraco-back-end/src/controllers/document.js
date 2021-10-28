@@ -242,8 +242,14 @@ const setOCRDocument = async (companyName, documentId, filePath) => {
             case 'MILTIS':
                 ocr = await documentMILTIS.readExcelMILTIS(filePath);
                 break;
-            case 'MMA':
-                ocr = await documentMMA.readExcelMMA(filePath);
+            case 'MMA INCITATION':
+                ocr = await documentMMA.readExcelMMAINCITATION(filePath);
+                break;
+            case 'MMA ACQUISITION':
+                ocr = await documentMMA.readExcelMMAACQUISITION(filePath);
+                break;
+            case 'MMA ENCOURS':
+                ocr = await documentMMA.readExcelMMAENCOURS(filePath);
                 break;
             case 'PAVILLON PREVOYANCE':
                 ocr = await documentPAVILLON.readExcelPAVILLON(filePath);
