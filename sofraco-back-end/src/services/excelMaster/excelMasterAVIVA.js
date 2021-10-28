@@ -6,8 +6,8 @@ exports.getOCRAVIVASURCO = (ocr) => {
     ocr.allContratsPerCourtier.forEach((contrat, index) => {
         const dataCourtierOCR = {
             code: {
-                cabinet: contrat.apporteur,
-                code: contrat.apporteur,
+                cabinet: contrat.courtier,
+                code: contrat.courtier,
             },
             headers,
             datas: contrat.contrats

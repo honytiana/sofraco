@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const time = require('../utils/time');
 const fileService = require('../utils/files');
+const generals = require('../utils/generals');
 
 
 exports.readExcelPAVILLON = async (file) => {}
@@ -106,23 +107,7 @@ exports.readExcelPAVILLONMCMS = async (file) => {
         }
     });
 
-    let allContratsPerCourtier = [];
-    let courtiers = [];
-    allContrats.forEach((element, index) => {
-        if (courtiers.indexOf(element.codeCourtier) < 0) {
-            courtiers.push(element.codeCourtier);
-        }
-    })
-    for (let courtier of courtiers) {
-        let contratCourtier = { courtier: '', contrats: [] };
-        allContrats.forEach((element, index) => {
-            contratCourtier.courtier = courtier;
-            if (element.codeCourtier === contratCourtier.courtier) {
-                contratCourtier.contrats.push(element);
-            }
-        });
-        allContratsPerCourtier.push(contratCourtier);
-    }
+    const allContratsPerCourtier = generals.regroupContratByCourtier(allContrats, 'codeCourtier');
 
     ocr = { headers, allContratsPerCourtier, pavVersion: null, executionTime: 0, executionTimeMS: 0 };
     if (pavActio) {

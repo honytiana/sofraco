@@ -4,6 +4,7 @@ const { performance } = require('perf_hooks');
 const fs = require('fs');
 const path = require('path');
 const time = require('../utils/time');
+const generals = require('../utils/generals');
 const fileService = require('../utils/files');
 
 exports.readExcelMMAINCITATION = async (file) => {
@@ -97,23 +98,7 @@ exports.readExcelMMAINCITATION = async (file) => {
         }
     });
 
-    let allContratsPerCourtier = [];
-    let courtiers = [];
-    allContrats.forEach((element, index) => {
-        if (courtiers.indexOf(element.codeApporteur) < 0) {
-            courtiers.push(element.codeApporteur);
-        }
-    })
-    for (let courtier of courtiers) {
-        let contratCourtier = { courtier: '', contrats: [] };
-        allContrats.forEach((element, index) => {
-            contratCourtier.courtier = courtier;
-            if (element.codeApporteur === contratCourtier.courtier) {
-                contratCourtier.contrats.push(element);
-            }
-        });
-        allContratsPerCourtier.push(contratCourtier);
-    }
+    const allContratsPerCourtier = generals.regroupContratByCourtier(allContrats, 'codeApporteur');
 
     ocr = { headers, detailsBordereau, allContratsPerCourtier, executionTime: 0, executionTimeMS: 0 };
     const excecutionStopTime = performance.now();
@@ -205,23 +190,7 @@ exports.readExcelMMAACQUISITION = async (file) => {
         }
     });
 
-    let allContratsPerCourtier = [];
-    let courtiers = [];
-    allContrats.forEach((element, index) => {
-        if (courtiers.indexOf(element.numCourtier) < 0) {
-            courtiers.push(element.numCourtier);
-        }
-    })
-    for (let courtier of courtiers) {
-        let contratCourtier = { courtier: '', contrats: [] };
-        allContrats.forEach((element, index) => {
-            contratCourtier.courtier = courtier;
-            if (element.numCourtier === contratCourtier.courtier) {
-                contratCourtier.contrats.push(element);
-            }
-        });
-        allContratsPerCourtier.push(contratCourtier);
-    }
+    const allContratsPerCourtier = generals.regroupContratByCourtier(allContrats, 'numCourtier');
 
     ocr = { headers, allContratsPerCourtier, executionTime: 0, executionTimeMS: 0 };
     const excecutionStopTime = performance.now();
@@ -235,7 +204,7 @@ exports.readExcelMMAACQUISITION = async (file) => {
 };
 
 exports.readExcelMMAENCOURS = async (file) => {
-    console.log('DEBUT TRAITEMENT MMA');
+    console.log('DEBUT TRAITEMENT MMA ENCOURS');
     const excecutionStartTime = performance.now();
     let filePath = file;
     const fileName = fileService.getFileNameWithoutExtension(filePath);
@@ -323,23 +292,7 @@ exports.readExcelMMAENCOURS = async (file) => {
         }
     });
 
-    let allContratsPerCourtier = [];
-    let courtiers = [];
-    allContrats.forEach((element, index) => {
-        if (courtiers.indexOf(element.codeApporteur) < 0) {
-            courtiers.push(element.codeApporteur);
-        }
-    })
-    for (let courtier of courtiers) {
-        let contratCourtier = { courtier: '', contrats: [] };
-        allContrats.forEach((element, index) => {
-            contratCourtier.courtier = courtier;
-            if (element.codeApporteur === contratCourtier.courtier) {
-                contratCourtier.contrats.push(element);
-            }
-        });
-        allContratsPerCourtier.push(contratCourtier);
-    }
+    const allContratsPerCourtier = generals.regroupContratByCourtier(allContrats, 'codeApporteur');
 
     ocr = { headers, detailsBordereau, allContratsPerCourtier, executionTime: 0, executionTimeMS: 0 };
     const excecutionStopTime = performance.now();
@@ -348,7 +301,6 @@ exports.readExcelMMAENCOURS = async (file) => {
     console.log('Total Execution time : ', executionTime);
     ocr.executionTime = executionTime;
     ocr.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT MMA');
+    console.log('FIN TRAITEMENT MMA EN COURS');
     return ocr;
 };
-

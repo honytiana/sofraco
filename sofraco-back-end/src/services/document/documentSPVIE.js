@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const time = require('../utils/time');
 const fileService = require('../utils/files');
+const generals = require('../utils/generals');
 
 exports.readExcelSPVIE = async (file) => {
     console.log('DEBUT TRAITEMENT SPVIE');
@@ -181,6 +182,8 @@ exports.readExcelSPVIE = async (file) => {
             })
         }
     });
+
+    // const allContratsPerCourtier = generals.regroupContratByCourtier(allContrats, 'distribution.codeVendeur');
 
     let allContratsPerCourtier = [];
     let courtiers = [];

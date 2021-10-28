@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const time = require('../utils/time');
 const fileService = require('../utils/files');
+const generals = require('../utils/generals');
 
 
 exports.readExcelMIEL = async (file) => {};
@@ -83,23 +84,7 @@ exports.readExcelMIELMCMS = async (file) => {
         }
     });
 
-    let allContratsPerCourtier = [];
-    let courtiers = [];
-    allContrats.forEach((element, index) => {
-        if (courtiers.indexOf(element.codeApporteurAffaire) < 0) {
-            courtiers.push(element.codeApporteurAffaire);
-        }
-    })
-    for (let courtier of courtiers) {
-        let contratCourtier = { courtier: '', contrats: [] };
-        allContrats.forEach((element, index) => {
-            contratCourtier.courtier = courtier;
-            if (element.codeApporteurAffaire === contratCourtier.courtier) {
-                contratCourtier.contrats.push(element);
-            }
-        });
-        allContratsPerCourtier.push(contratCourtier);
-    }
+    const allContratsPerCourtier = generals.regroupContratByCourtier(allContrats, 'codeApporteurAffaire');
 
     ocr = { headers, allContratsPerCourtier, executionTime: 0, executionTimeMS: 0 };
     if (mielCreasio) {

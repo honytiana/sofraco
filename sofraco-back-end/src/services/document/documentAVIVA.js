@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const time = require('../utils/time');
 const fileService = require('../utils/files');
+const generals = require('../utils/generals');
 
 exports.readExcelAVIVASURCO = async (file) => {
     console.log('DEBUT TRAITEMENT AVIVA SURCO');
@@ -101,23 +102,7 @@ exports.readExcelAVIVASURCO = async (file) => {
         })
     }
 
-    let allContratsPerCourtier = [];
-    let apporteurs = [];
-    allContrats.forEach((element, index) => {
-        if (apporteurs.indexOf(element.apporteur) < 0) {
-            apporteurs.push(element.apporteur);
-        }
-    })
-    for (let apporteur of apporteurs) {
-        let contratCourtier = { apporteur: '', contrats: [] };
-        allContrats.forEach((element, index) => {
-            contratCourtier.apporteur = apporteur;
-            if (element.apporteur === contratCourtier.apporteur) {
-                contratCourtier.contrats.push(element.contrats);
-            }
-        });
-        allContratsPerCourtier.push(contratCourtier);
-    }
+    const allContratsPerCourtier = generals.regroupContratByCourtier(allContrats, 'apporteur');
 
     ocr = { headers, allContratsPerCourtier, executionTime: 0 , executionTimeMS: 0};
     const excecutionStopTime = performance.now();

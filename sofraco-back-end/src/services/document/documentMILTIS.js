@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const time = require('../utils/time');
 const fileService = require('../utils/files');
+const generals = require('../utils/generals');
 
 exports.readExcelMILTIS = async (file) => {
     console.log('DEBUT TRAITEMENT MILTIS');
@@ -112,23 +113,7 @@ exports.readExcelMILTIS = async (file) => {
         }
     });
 
-    let allContratsPerCourtier = [];
-    let courtiers = [];
-    allContrats.forEach((element, index) => {
-        if (courtiers.indexOf(element.codeMiltis) < 0) {
-            courtiers.push(element.codeMiltis);
-        }
-    })
-    for (let courtier of courtiers) {
-        let contratCourtier = { courtier: '', contrats: [] };
-        allContrats.forEach((element, index) => {
-            contratCourtier.courtier = courtier;
-            if (element.codeMiltis === contratCourtier.courtier) {
-                contratCourtier.contrats.push(element);
-            }
-        });
-        allContratsPerCourtier.push(contratCourtier);
-    }
+    const allContratsPerCourtier = generals.regroupContratByCourtier(allContrats, 'codeMiltis');
 
     ocr = { headers, allContratsPerCourtier, executionTime: 0, executionTimeMS: 0 };
     const excecutionStopTime = performance.now();

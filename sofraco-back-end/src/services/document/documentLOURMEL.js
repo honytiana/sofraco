@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const time = require('../utils/time');
 const fileService = require('../utils/files');
+const generals = require('../utils/generals');
 
 exports.readExcelLOURMEL = async (file) => {
     console.log('DEBUT TRAITEMENT LOURMEL');
@@ -108,23 +109,7 @@ exports.readExcelLOURMEL = async (file) => {
         }
     });
 
-    let allContratsPerCourtier = [];
-    let courtiers = [];
-    allContrats.forEach((element, index) => {
-        if (courtiers.indexOf(element.courtier) < 0) {
-            courtiers.push(element.courtier);
-        }
-    })
-    for (let courtier of courtiers) {
-        let contratCourtier = { courtier: '', contrats: [] };
-        allContrats.forEach((element, index) => {
-            contratCourtier.courtier = courtier;
-            if (element.courtier === contratCourtier.courtier) {
-                contratCourtier.contrats.push(element);
-            }
-        });
-        allContratsPerCourtier.push(contratCourtier);
-    }
+    const allContratsPerCourtier = generals.regroupContratByCourtier(allContrats, 'courtier');
 
     ocr = { headers, allContratsPerCourtier, executionTime: 0, executionTimeMS: 0 };
     const excecutionStopTime = performance.now();

@@ -8,6 +8,7 @@ const time = require('../utils/time');
 const fileService = require('../utils/files');
 const pdfService = require('../utils/pdfFile');
 const redefinition = require('../utils/redefinition');
+const generals = require('../utils/generals');
 
 
 exports.readPdfSLADE = async (file) => {
