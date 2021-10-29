@@ -34,3 +34,8 @@ config.json
 /documents/temp/
 /documents/texte/
 /documents/uploaded/
+
+/logs/all/
+/logs/errors/
+/logs/infos/
+/logs/warnings/
