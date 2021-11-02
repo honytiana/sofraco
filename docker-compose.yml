@@ -19,6 +19,8 @@ services:
             - mongodb-sofraco
         environment:
             MONGO_URL: mongodb://mongodb-sofraco:27017/sofraco
+        volumes:
+            - ./sofraco-back-end/documents:/documents
         networks:
             - sofraco-network
 
