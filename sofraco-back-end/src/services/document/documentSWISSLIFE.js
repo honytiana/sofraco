@@ -10,6 +10,10 @@ const pdfService = require('../utils/pdfFile');
 const redefinition = require('../utils/redefinition');
 const generals = require('../utils/generals');
 
+const { workerData, parentPort } = require('worker_threads');
+if (parentPort !== null) {
+    parentPort.postMessage({ swisslife: workerData });
+}
 
 exports.readPdfSLADE = async (file) => {
     let infos = { executionTime: 0, infos: [] };

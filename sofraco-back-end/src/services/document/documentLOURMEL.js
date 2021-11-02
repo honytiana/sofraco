@@ -7,6 +7,11 @@ const time = require('../utils/time');
 const fileService = require('../utils/files');
 const generals = require('../utils/generals');
 
+const { workerData, parentPort } = require('worker_threads');
+if (parentPort !== null) {
+    parentPort.postMessage({ lourmel: workerData });
+}
+
 exports.readExcelLOURMEL = async (file) => {
     console.log('DEBUT TRAITEMENT LOURMEL');
     const excecutionStartTime = performance.now();

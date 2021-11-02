@@ -7,6 +7,11 @@ const time = require('../utils/time');
 const generals = require('../utils/generals');
 const fileService = require('../utils/files');
 
+const { workerData, parentPort } = require('worker_threads');
+if (parentPort !== null) {
+    parentPort.postMessage({ mma: workerData });
+}
+
 exports.readExcelMMAINCITATION = async (file) => {
     console.log('DEBUT TRAITEMENT MMA INCITATION');
     const excecutionStartTime = performance.now();

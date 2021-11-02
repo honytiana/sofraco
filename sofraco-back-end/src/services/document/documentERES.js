@@ -7,6 +7,10 @@ const time = require('../utils/time');
 const fileService = require('../utils/files');
 const redefinition = require('../utils/redefinition');
 
+const { workerData, parentPort } = require('worker_threads');
+if (parentPort !== null) {
+    parentPort.postMessage({ eres: workerData });
+}
 
 exports.readPdfERES = async (file) => {
     let infos = { executionTime: 0, infos: null };

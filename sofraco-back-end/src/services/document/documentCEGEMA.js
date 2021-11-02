@@ -7,6 +7,11 @@ const time = require('../utils/time');
 const fileService = require('../utils/files');
 const generals = require('../utils/generals');
 
+const { workerData, parentPort } = require('worker_threads');
+if (parentPort !== null) {
+    parentPort.postMessage({ cegema: workerData });
+}
+
 exports.readExcelCEGEMA = async (file) => {
     console.log('DEBUT TRAITEMENT CEGEMA');
     const excecutionStartTime = performance.now();

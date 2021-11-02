@@ -6,6 +6,11 @@ const path = require('path');
 const time = require('../utils/time');
 const fileService = require('../utils/files');
 
+const { workerData, parentPort } = require('worker_threads');
+if (parentPort !== null) {
+    parentPort.postMessage({ hodeva: workerData });
+}
+
 exports.readExcelHODEVA = async (file) => {
     console.log('DEBUT TRAITEMENT HODEVA');
     const excecutionStartTime = performance.now();

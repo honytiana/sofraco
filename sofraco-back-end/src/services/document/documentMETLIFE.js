@@ -10,6 +10,11 @@ const redefinition = require('../utils/redefinition');
 const imageMETLIFE = require('../images/imageMETLIFE');
 const imageManagment = require('../images/imageManagment');
 
+const { workerData, parentPort } = require('worker_threads');
+if (parentPort !== null) {
+    parentPort.postMessage({ metlife: workerData });
+}
+
 const getTextFromImages = (images) => {
     let textFilePaths = [];
     try {

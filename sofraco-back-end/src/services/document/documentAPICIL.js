@@ -6,9 +6,10 @@ const path = require('path');
 const time = require('../utils/time');
 const fileService = require('../utils/files');
 
-// const { WorkerData, parentPort } = require('worker_threads');
-// console.log(WorkerData);
-// parentPort.postMessage({ apicil: WorkerData });
+const { workerData, parentPort } = require('worker_threads');
+if (parentPort !== null) {
+    parentPort.postMessage({ apicil: workerData });
+}
 
 exports.readExcelAPICIL = async (file) => {
     console.log('DEBUT TRAITEMENT APICIL');

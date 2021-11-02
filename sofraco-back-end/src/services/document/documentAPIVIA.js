@@ -8,6 +8,10 @@ const fileService = require('../utils/files');
 const imageAPIVIA = require('../images/imageAPIVIA');
 const imageManagment = require('../images/imageManagment');
 
+const { workerData, parentPort } = require('worker_threads');
+if (parentPort !== null) {
+    parentPort.postMessage({ apivia: workerData });
+}
 
 exports.readPdfAPIVIA = async (file) => {
     let infos = { executionTime: 0, executionTimeMS: 0, infos: null };

@@ -7,6 +7,10 @@ const time = require('../utils/time');
 const fileService = require('../utils/files');
 const generals = require('../utils/generals');
 
+const { workerData, parentPort } = require('worker_threads');
+if (parentPort !== null) {
+    parentPort.postMessage({ pavillon: workerData });
+}
 
 exports.readExcelPAVILLON = async (file) => {}
 

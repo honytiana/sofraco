@@ -7,6 +7,11 @@ const path = require('path');
 const time = require('../utils/time');
 const fileService = require('../utils/files');
 
+const { workerData, parentPort } = require('worker_threads');
+if (parentPort !== null) {
+    parentPort.postMessage({ generali: workerData });
+}
+
 exports.readExcelGENERALI = async (file) => {
     console.log('DEBUT TRAITEMENT GENERALI');
     const excecutionStartTime = performance.now();

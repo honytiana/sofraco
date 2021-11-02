@@ -8,7 +8,7 @@ const workerThreadLoader = require('./src/loaders/workerThreadLoader');
 
 const startServer = async () => {
     const numCPUs = os.cpus().length;
-    // await workerThreadLoader();
+    await workerThreadLoader();
 
     if (cluster.isPrimary) {
         console.log(`Primary ${process.pid} is running`);
