@@ -1,12 +1,14 @@
 const express = require('express');
-const load = require('./src/loaders/loader');
-const config = require('./config.json');
 const cluster = require('cluster');
 const os = require('os');
 const process = require('process');
+const load = require('./src/loaders/loader');
+const config = require('./config.json');
+const workerThreadLoader = require('./src/loaders/workerThreadLoader');
 
 const startServer = async () => {
-    const numCPUs =os.cpus().length;
+    const numCPUs = os.cpus().length;
+    // await workerThreadLoader();
 
     if (cluster.isPrimary) {
         console.log(`Primary ${process.pid} is running`);

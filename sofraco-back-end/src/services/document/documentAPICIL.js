@@ -6,6 +6,10 @@ const path = require('path');
 const time = require('../utils/time');
 const fileService = require('../utils/files');
 
+// const { WorkerData, parentPort } = require('worker_threads');
+// console.log(WorkerData);
+// parentPort.postMessage({ apicil: WorkerData });
+
 exports.readExcelAPICIL = async (file) => {
     console.log('DEBUT TRAITEMENT APICIL');
     const excecutionStartTime = performance.now();
@@ -13,7 +17,7 @@ exports.readExcelAPICIL = async (file) => {
     const fileName = fileService.getFileNameWithoutExtension(filePath);
     const extension = fileService.getFileExtension(filePath);
     if (extension.toUpperCase() === 'XLS') {
-        let originalFile  = XLSX.readFile(filePath);
+        let originalFile = XLSX.readFile(filePath);
         filePath = path.join(__dirname, '..', '..', '..', 'documents', 'uploaded', `${fileName}.xlsx`);
         XLSX.writeFile(originalFile, filePath);
     }
