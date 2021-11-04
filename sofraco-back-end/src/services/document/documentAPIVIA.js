@@ -5,7 +5,6 @@ const { execSync } = require('child_process');
 const pdfService = require('../utils/pdfFile');
 const time = require('../utils/time');
 const fileService = require('../utils/files');
-const imageAPIVIA = require('../images/imageAPIVIA');
 const imageManagment = require('../images/imageManagment');
 
 const { workerData, parentPort } = require('worker_threads');
