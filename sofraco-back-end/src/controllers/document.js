@@ -127,12 +127,20 @@ exports.updateDocuments = async (req, res) => {
         };
         const resultTreatment = await treatmentHandler.createTreatment(treatment);
         const resultDraftDocuments = await documentHandler.getDocumentsByStatus('draft');
+        const resultProcessingDocuments = await documentHandler.getDocumentsByStatus('processing');
         let drafts = [];
         for (let draftDocument of resultDraftDocuments) {
             const uploadDateMonth = new Date(draftDocument.upload_date).getMonth();
             const currentMonth = new Date().getMonth();
             if (uploadDateMonth === currentMonth) {
                 drafts.push(draftDocument._id);
+            }
+        }
+        for (let processingDocument of resultProcessingDocuments) {
+            const uploadDateMonth = new Date(processingDocument.upload_date).getMonth();
+            const currentMonth = new Date().getMonth();
+            if (uploadDateMonth === currentMonth) {
+                drafts.push(processingDocument._id);
             }
         }
         for (let draftId of drafts) {
