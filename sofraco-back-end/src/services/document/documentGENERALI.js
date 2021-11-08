@@ -210,6 +210,7 @@ exports.readExcelGENERALI = async (file) => {
     const day = dateOcr.getDate();
     const month = dateOcr.getMonth() + 1;
     const year = dateOcr.getFullYear();
+    console.log(fileName);
     const fileOCRPath = path.join(__dirname, '..', '..', '..', 'documents', 'ocr', `${fileName}_${day}_${month}_${year}.txt`);
     console.log(fileOCRPath);
     fs.writeFileSync(fileOCRPath, JSON.stringify(ocr));
