@@ -290,6 +290,8 @@ const setOCRDocument = async (companyName, documentId, filePath) => {
         document.ocr = ocr;
         document.status = 'done';
         const doc = await documentHandler.updateDocument(documentId, document);
+        console.log('document--');
+        console.log(doc);
         return { executionTime: ocr.executionTimeMS, company: companyName };
     } catch (err) {
         res.status(500).json({ err });
