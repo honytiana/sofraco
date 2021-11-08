@@ -211,6 +211,7 @@ exports.readExcelGENERALI = async (file) => {
     const month = dateOcr.getMonth() + 1;
     const year = dateOcr.getFullYear();
     const fileOCRPath = path.join(__dirname, '..', '..', '..', 'documents', 'ocr', `${fileName}_${day}_${month}_${year}.txt`);
+    console.log(fileOCRPath);
     fs.writeFileSync(fileOCRPath, JSON.stringify(ocr));
     ocr.allContratsPerCourtier = fileOCRPath;
     console.log('FIN TRAITEMENT GENERALI');
