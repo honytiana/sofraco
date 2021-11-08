@@ -211,7 +211,7 @@ class Upload extends Component {
             case 'CARDIF':
                 this.testExtension(extension, 'XLSX', false, false, files);
                 break;
-            case 'CBP FRANCE':
+            case 'LOURMEL':
                 this.testExtension(extension, 'XLSX', false, false, files);
                 break;
             case 'CEGEMA':
