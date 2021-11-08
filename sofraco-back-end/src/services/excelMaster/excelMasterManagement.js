@@ -54,10 +54,6 @@ const getOCRInfos = async (authorization) => {
     for (let document of documents) {
         const company = document.companyName;
         const ocr = document.ocr;
-        if (company.toUpperCase() === 'GENERALI') {
-            console.log('excel master ---- ocr doc---');
-            console.log(document);
-        }
         switch (company.toUpperCase()) {
             case 'APICIL':
                 infos.push(excelMasterAPICIL.getOCRAPICIL(ocr));
