@@ -147,6 +147,8 @@ exports.updateDocuments = async (req, res) => {
             const indexOfDoc = drafts.indexOf(draftId);
             const document = await documentHandler.getDocument(draftId);
             const rs = await setOCRDocument(document.companyName, document._id, document.path_original_file);
+            console.log('documenct ocr');
+            console.log(rs.doc);
             const result = { data: rs.company, executionTime: rs.executionTime };
             const progress = ((indexOfDoc + 1) * 100) / drafts.length;
             const treatment = await treatmentHandler.updateTreatment(resultTreatment._id, { progress: progress });
@@ -292,7 +294,7 @@ const setOCRDocument = async (companyName, documentId, filePath) => {
         const doc = await documentHandler.updateDocument(documentId, document);
         console.log('document--');
         console.log(doc);
-        return { executionTime: ocr.executionTimeMS, company: companyName };
+        return { executionTime: ocr.executionTimeMS, company: companyName, doc };
     } catch (err) {
         res.status(500).json({ err });
     }
