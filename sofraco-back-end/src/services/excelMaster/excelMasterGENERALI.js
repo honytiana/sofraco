@@ -4,6 +4,8 @@ const excelFile = require('../utils/excelFile');
 exports.getOCRGENERALI = (ocr) => {
     const headers = ocr.headers;
     const allContratsPerCourtier = JSON.parse(fs.readFileSync(ocr.allContratsPerCourtier)).allContratsPerCourtier;
+    console.log('allContratsPerCourtier--');
+    console.log(ocr.allContratsPerCourtier);
     let infosOCR = [];
     allContratsPerCourtier.forEach((contrat, index) => {
         if (contrat.courtier.code) {
