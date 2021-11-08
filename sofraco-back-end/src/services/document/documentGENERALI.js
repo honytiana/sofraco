@@ -216,6 +216,8 @@ exports.readExcelGENERALI = async (file) => {
     console.log(fileOCRPath);
     fs.writeFileSync(fileOCRPath, JSON.stringify(ocr));
     ocr.allContratsPerCourtier = fileOCRPath;
+    console.log('ocr');
+    console.log(ocr);
     console.log('FIN TRAITEMENT GENERALI');
     return ocr;
 };
