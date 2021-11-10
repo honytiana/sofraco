@@ -120,55 +120,23 @@ class CompanyFolder extends Component {
     }
 
     fetchDocumentsCompanyByYearAndMonth() {
-        const months = [
-            { month: 'Janvier', index: 1 },
-            { month: 'Février', index: 2 },
-            { month: 'Mars', index: 3 },
-            { month: 'Avril', index: 4 },
-            { month: 'Mai', index: 5 },
-            { month: 'Juin', index: 6 },
-            { month: 'Juillet', index: 7 },
-            { month: 'Août', index: 8 },
-            { month: 'Septembre', index: 9 },
-            { month: 'Octobre', index: 10 },
-            { month: 'Novembre', index: 11 },
-            { month: 'Décembre', index: 12 }
-        ];
-        let years = [];
-        const currentYear = new Date().getFullYear();
-        for (let i = 2020; i <= currentYear; i++) {
-            years.push(i);
-        }
-        let archived = [];
-        for (let year of years) {
-            let documentsPerMonth = [];
-            let promises = [];
-            for (let month of months) {
-                promises.push(
-                    axios.get(`${config.nodeUrl}/api/document/company/${this.props.company._id}/year/${year}/month/${month.index}`, {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${this.state.token.value}`
-                        }
-                    })
-                        .then((result) => {
-                            documentsPerMonth.push({ month: month, documents: result.data });
-                        })
-                        .catch((err) => {
-                            this.setState({
-                                toast: true,
-                                messageToast: { header: 'ERROR', color: 'danger', message: err }
-                            })
-                        })
-                );
-            };
-            Promise.all(promises).then(() => {
-                archived.push({ year: year, documents: documentsPerMonth });
+        axios.get(`${config.nodeUrl}/api/document/company/${this.props.company._id}/year/month`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.state.token.value}`
+            }
+        })
+            .then((result) => {
+                this.setState({
+                    archived: result.data
+                });
             })
-        }
-        this.setState({
-            archived
-        });
+            .catch((err) => {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'ERROR', color: 'danger', message: err }
+                })
+            });
     }
 
     render() {
@@ -201,7 +169,7 @@ class CompanyFolder extends Component {
                                         key=""
                                         company={this.props.company}
                                         companyName={this.props.companyName}
-                                        />
+                                    />
                                 </CTabPane>
                                 <CTabPane data-tab="historique">
                                     <Archived

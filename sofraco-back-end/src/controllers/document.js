@@ -361,6 +361,44 @@ exports.getDocumentsCompanyByYearMonth = async (req, res) => {
     }
 }
 
+exports.getDocumentsCompanyByAllYearMonth = async (req, res) => {
+    console.log('get all documents of company by all year and month');
+    try {
+        const company = req.params.company;
+        let archived = [];
+        const months = [
+            { month: 'Janvier', index: 1 },
+            { month: 'Février', index: 2 },
+            { month: 'Mars', index: 3 },
+            { month: 'Avril', index: 4 },
+            { month: 'Mai', index: 5 },
+            { month: 'Juin', index: 6 },
+            { month: 'Juillet', index: 7 },
+            { month: 'Août', index: 8 },
+            { month: 'Septembre', index: 9 },
+            { month: 'Octobre', index: 10 },
+            { month: 'Novembre', index: 11 },
+            { month: 'Décembre', index: 12 }
+        ];
+        let years = [];
+        const currentYear = new Date().getFullYear();
+        for (let i = 2020; i <= currentYear; i++) {
+            years.push(i);
+        }
+        for (let year of years) {
+            let documentsPerMonth = [];
+            for (let month of months) {
+                const docs = await documentHandler.getDocumentsByYearMonth(company, year, month.index);
+                documentsPerMonth.push({ month: month, documents: docs });
+            }
+            archived.push({ year: year, documents: documentsPerMonth });
+        }
+        res.status(200).json(archived);
+    } catch (err) {
+        res.status(400).json({ err });
+    }
+}
+
 exports.getDocumentsCompany = async (req, res) => {
     console.log('get documents of company');
     try {

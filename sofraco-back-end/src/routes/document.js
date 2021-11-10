@@ -29,6 +29,7 @@ router.route('/').get(accessControl, documentController.getDocuments);
 router.route('/:id').get(accessControl, documentController.getDocument);
 router.route('/date/:date').get(accessControl, documentController.getDocumentsByDate);
 router.route('/year/:year/month/:month').get(accessControl, documentController.getDocumentsByYearMonth);
+router.route('/company/:company/year/month').get(accessControl, documentController.getDocumentsCompanyByAllYearMonth);
 router.route('/company/:company/year/:year/month/:month').get(accessControl, documentController.getDocumentsCompanyByYearMonth);
 router.route('/company/:company').get(accessControl, documentController.getDocumentsCompany);
 router.route('/').delete(accessControl, documentController.deleteAllDocuments);
