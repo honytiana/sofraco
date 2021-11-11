@@ -31,23 +31,12 @@ class Courtier extends Component {
     }
 
     componentDidMount() {
-        const user = JSON.parse(localStorage.getItem('user'));
-        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((res) => {
-                this.setState({
-                    token: res.data,
-                    courtier: this.props.courtier,
-                    toast: false,
-                    messageToast: {}
-                });
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        this.setState({
+            token: this.props.token,
+            courtier: this.props.courtier,
+            toast: false,
+            messageToast: {}
+        });
     }
 
     onSubmitHandler(event) {
@@ -70,7 +59,7 @@ class Courtier extends Component {
             axios.put(`${config.nodeUrl}/api/courtier/${this.props.courtier._id}`, options, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.state.token.value}`
+                    'Authorization': `Bearer ${this.props.token.value}`
                 }
             }).then((res) => {
                 this.setState({

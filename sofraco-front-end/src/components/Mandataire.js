@@ -44,73 +44,62 @@ class Mandataire extends Component {
     }
 
     componentDidMount() {
-        const user = JSON.parse(localStorage.getItem('user'));
-        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((res) => {
-                this.setState({
-                    fields: [
-                        {
-                            key: 'cabinet',
-                            label: 'Cabinet',
-                            _style: { width: '20%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'firstName',
-                            label: 'Nom',
-                            _style: { width: '15%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'lastName',
-                            label: 'Prénom',
-                            _style: { width: '15%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'email',
-                            label: 'Email',
-                            _style: { width: '20%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'phone',
-                            label: 'Telephone',
-                            _style: { width: '10%' },
-                            _classes: ['text-center']
-                        },
-                        // {
-                        //     key: 'status',
-                        //     label: 'Status',
-                        //     _style: { width: '10%' },
-                        //     _classes: ['text-center']
-                        // },
-                        {
-                            key: 'edit',
-                            label: '',
-                            _style: { width: '5%' },
-                            _classes: ['text-center']
-                        },
-                        // {
-                        //     key: 'delete',
-                        //     label: '',
-                        //     _style: { width: '5%' },
-                        //     _classes: ['text-center']
-                        // }
-                    ],
-                    toast: false,
-                    messageToast: [],
-                    token: res.data,
-                });
-                this.fetchMandataires();
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        this.setState({
+            fields: [
+                {
+                    key: 'cabinet',
+                    label: 'Cabinet',
+                    _style: { width: '20%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'firstName',
+                    label: 'Nom',
+                    _style: { width: '15%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'lastName',
+                    label: 'Prénom',
+                    _style: { width: '15%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'email',
+                    label: 'Email',
+                    _style: { width: '20%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'phone',
+                    label: 'Telephone',
+                    _style: { width: '10%' },
+                    _classes: ['text-center']
+                },
+                // {
+                //     key: 'status',
+                //     label: 'Status',
+                //     _style: { width: '10%' },
+                //     _classes: ['text-center']
+                // },
+                {
+                    key: 'edit',
+                    label: '',
+                    _style: { width: '5%' },
+                    _classes: ['text-center']
+                },
+                // {
+                //     key: 'delete',
+                //     label: '',
+                //     _style: { width: '5%' },
+                //     _classes: ['text-center']
+                // }
+            ],
+            toast: false,
+            messageToast: [],
+            token: this.props.token,
+        });
+        this.fetchMandataires();
     }
 
     fetchMandataires() {
@@ -118,7 +107,7 @@ class Mandataire extends Component {
         axios.get(`${config.nodeUrl}/api/courtier/mandataires/${courtier._id}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${this.props.token.value}`
             }
         })
             .then((res) => {
@@ -150,11 +139,11 @@ class Mandataire extends Component {
     }
 
     getBadge(status) {
-        switch (status) {
+        switch(status) {
             case true: return 'success'
             case false: return 'danger'
             default: return 'primary'
-        }
+    }
     }
 
     onSubmitHandler(event, mandataire) {
@@ -177,7 +166,7 @@ class Mandataire extends Component {
             axios.put(`${config.nodeUrl}/api/courtier/${mandataire._id}`, options, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.state.token.value}`
+                    'Authorization': `Bearer ${this.props.token.value}`
                 }
             }).then((res) => {
                 let mandataires = this.state.mandataires;
@@ -215,7 +204,7 @@ class Mandataire extends Component {
         axios.delete(`${config.nodeUrl}/api/courtier/${mandataire._id}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${this.props.token.value}`
             }
         })
             .then((res) => {
@@ -290,7 +279,7 @@ class Mandataire extends Component {
             axios.post(`${config.nodeUrl}/api/courtier/`, options, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.state.token.value}`
+                    'Authorization': `Bearer ${this.props.token.value}`
                 }
             }).then((res) => {
                 let mandataires = this.state.mandataires;

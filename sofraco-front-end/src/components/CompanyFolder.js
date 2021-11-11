@@ -47,25 +47,14 @@ class CompanyFolder extends Component {
     }
 
     componentDidMount() {
-        const user = JSON.parse(localStorage.getItem('user'));
-        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((res) => {
-                this.setState({
-                    toast: false,
-                    messageToast: {},
-                    token: res.data
-                });
-                this.fetchCompany();
-                this.fetchDocumentsCompany();
-                this.fetchDocumentsCompanyByYearAndMonth();
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        this.setState({
+            toast: false,
+            messageToast: {},
+            token: this.props.token
+        });
+        this.fetchCompany();
+        this.fetchDocumentsCompany();
+        this.fetchDocumentsCompanyByYearAndMonth();
     }
 
     componentDidUpdate() {
@@ -82,7 +71,7 @@ class CompanyFolder extends Component {
             axios.get(`${config.nodeUrl}/api/company/name/${companySurco}`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.state.token.value}`
+                    'Authorization': `Bearer ${this.props.token.value}`
                 }
             })
                 .then((res) => {
@@ -103,7 +92,7 @@ class CompanyFolder extends Component {
         axios.get(`${config.nodeUrl}/api/document/company/${this.props.company._id}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${this.props.token.value}`
             }
         })
             .then((result) => {
@@ -123,7 +112,7 @@ class CompanyFolder extends Component {
         axios.get(`${config.nodeUrl}/api/document/company/${this.props.company._id}/year/month`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${this.props.token.value}`
             }
         })
             .then((result) => {
@@ -169,6 +158,7 @@ class CompanyFolder extends Component {
                                         key=""
                                         company={this.props.company}
                                         companyName={this.props.companyName}
+                                        token={this.props.token}
                                     />
                                 </CTabPane>
                                 <CTabPane data-tab="historique">
@@ -176,7 +166,9 @@ class CompanyFolder extends Component {
                                         key=""
                                         company={this.props.company}
                                         documents={this.state.documents}
-                                        archived={this.state.archived} />
+                                        archived={this.state.archived}
+                                        token={this.props.token}
+                                    />
                                 </CTabPane>
                             </CTabContent>
                         </CTabs>

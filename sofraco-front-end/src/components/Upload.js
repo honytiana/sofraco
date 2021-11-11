@@ -44,65 +44,53 @@ class Upload extends Component {
     }
 
     componentDidMount() {
-        const user = JSON.parse(localStorage.getItem('user'));
-        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((res) => {
-                const company = this.props.company;
-                this.setState({
-                    token: res.data,
-                    toast: false,
-                    messageToast: {},
-                    company: company
-                });
-                if (company.surco) {
-                    const companySurco = company.companySurco;
-                    axios.get(`${config.nodeUrl}/api/company/name/${companySurco}`, {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${this.state.token.value}`
-                        }
-                    })
-                        .then((res) => {
-                            const companySurco = res.data;
-                            this.setState({
-                                companySurco
-                            });
-                            if (companySurco.surco) {
-                                axios.get(`${config.nodeUrl}/api/company/name/${companySurco.companySurco}`, {
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                        'Authorization': `Bearer ${this.state.token.value}`
-                                    }
-                                })
-                                    .then((res) => {
-                                        this.setState({
-                                            companySurco2: res.data
-                                        });
-                                    })
-                                    .catch((err) => {
-                                        this.setState({
-                                            toast: true,
-                                            messageToast: { header: 'ERROR', color: 'danger', message: err }
-                                        })
-                                    })
+        const company = this.props.company;
+        this.setState({
+            token: this.props.token,
+            toast: false,
+            messageToast: {},
+            company: company
+        });
+        if (company.surco) {
+            const companySurco = company.companySurco;
+            axios.get(`${config.nodeUrl}/api/company/name/${companySurco}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.props.token.value}`
+                }
+            })
+                .then((res) => {
+                    const companySurco = res.data;
+                    this.setState({
+                        companySurco
+                    });
+                    if (companySurco.surco) {
+                        axios.get(`${config.nodeUrl}/api/company/name/${companySurco.companySurco}`, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${this.props.token.value}`
                             }
                         })
-                        .catch((err) => {
-                            this.setState({
-                                toast: true,
-                                messageToast: { header: 'ERROR', color: 'danger', message: err }
+                            .then((res) => {
+                                this.setState({
+                                    companySurco2: res.data
+                                });
                             })
-                        })
-                }
-
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+                            .catch((err) => {
+                                this.setState({
+                                    toast: true,
+                                    messageToast: { header: 'ERROR', color: 'danger', message: err }
+                                })
+                            })
+                    }
+                })
+                .catch((err) => {
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'ERROR', color: 'danger', message: err }
+                    })
+                })
+        }
     }
 
     onSubmitHandler(event) {
@@ -162,7 +150,7 @@ class Upload extends Component {
         axios.post(`${config.nodeUrl}/api/document/`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${this.props.token.value}`
             }
         }).then((res) => {
             this.setState({
@@ -304,7 +292,7 @@ class Upload extends Component {
             this.setState({
                 files: file
             });
-        } 
+        }
         if (surco && !surco2) {
             this.setState({
                 filesSurco: file

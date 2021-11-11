@@ -43,97 +43,86 @@ class Treatments extends Component {
     }
 
     componentDidMount() {
-        const user = JSON.parse(localStorage.getItem('user'));
-        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
+        this.setState({
+            fields: [
+                {
+                    key: 'check',
+                    label: <input type="checkbox" onChange={(e) => this.onCheckAllHandler(e)} />,
+                    _style: { width: '10%' },
+                    _classes: ['text-center'],
+                    sorter: false,
+                    filter: false
+                },
+                {
+                    key: 'cabinet',
+                    label: 'Cabinet',
+                    _style: { width: '30%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'firstName',
+                    label: 'Prénom',
+                    _style: { width: '15%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'lastName',
+                    label: 'Nom',
+                    _style: { width: '15%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'email',
+                    label: 'Email',
+                    _style: { width: '20%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'status',
+                    label: 'Status',
+                    _style: { width: '10%' },
+                    _classes: ['text-center']
+                },
+                // {
+                //     key: 'show_details',
+                //     label: '',
+                //     _style: { width: '10%' },
+                //     _classes: ['text-center'],
+                //     sorter: false,
+                //     filter: false
+                // }
+            ],
+            toast: false,
+            messageToast: [],
+            token: this.props.token,
+        });
+        axios.get(`${config.nodeUrl}/api/courtier`, {
             headers: {
-                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.props.token.value}`
             }
         })
-            .then((res) => {
-                this.setState({
-                    fields: [
-                        {
-                            key: 'check',
-                            label: <input type="checkbox" onChange={(e) => this.onCheckAllHandler(e)} />,
-                            _style: { width: '10%' },
-                            _classes: ['text-center'],
-                            sorter: false,
-                            filter: false
-                        },
-                        {
-                            key: 'cabinet',
-                            label: 'Cabinet',
-                            _style: { width: '30%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'firstName',
-                            label: 'Prénom',
-                            _style: { width: '15%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'lastName',
-                            label: 'Nom',
-                            _style: { width: '15%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'email',
-                            label: 'Email',
-                            _style: { width: '20%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'status',
-                            label: 'Status',
-                            _style: { width: '10%' },
-                            _classes: ['text-center']
-                        },
-                        // {
-                        //     key: 'show_details',
-                        //     label: '',
-                        //     _style: { width: '10%' },
-                        //     _classes: ['text-center'],
-                        //     sorter: false,
-                        //     filter: false
-                        // }
-                    ],
-                    toast: false,
-                    messageToast: [],
-                    token: res.data,
+            .then((data) => {
+                return data.data
+            })
+            .then((data) => {
+                const checked = data.map(element => {
+                    return {
+                        courtier: element._id,
+                        cabinet: element.cabinet,
+                        email: element.email,
+                        firstName: element.firstName,
+                        lastName: element.lastName,
+                        checked: false
+                    };
                 });
-                axios.get(`${config.nodeUrl}/api/courtier`, {
-                    headers: {
-                        'Authorization': `Bearer ${this.state.token.value}`
-                    }
-                })
-                    .then((data) => {
-                        return data.data
-                    })
-                    .then((data) => {
-                        const checked = data.map(element => {
-                            return {
-                                courtier: element._id,
-                                cabinet: element.cabinet,
-                                email: element.email,
-                                firstName: element.firstName,
-                                lastName: element.lastName,
-                                checked: false
-                            };
-                        });
-                        const courtiers = data;
-                        this.setState({
-                            checked,
-                            courtiers
-                        });
-                    })
-                    .catch((err) => {
-                        console.log(err)
-                    });
+                const courtiers = data;
+                this.setState({
+                    checked,
+                    courtiers
+                });
             })
             .catch((err) => {
-                console.log(err);
+                console.log(err)
             });
     }
 
@@ -212,7 +201,7 @@ class Treatments extends Component {
                     mailPromises.push(
                         axios.post(`${config.nodeUrl}/api/mailer/`, options, {
                             headers: {
-                                'Authorization': `Bearer ${this.state.token.value}`
+                                'Authorization': `Bearer ${this.props.token.value}`
                             }
                         })
                             .then((data) => {
@@ -297,7 +286,7 @@ class Treatments extends Component {
                         label="Année"
                         className="sofraco-select-filtre"
                         onChange={(e) => this.onChangeSelectFilterYearHandler(e)}
-                        style={{display: "inline-block"}}
+                        style={{ display: "inline-block" }}
                     >
                         <option>Selectionnez une année</option>
                         {years.map((year, index) => {
@@ -310,7 +299,7 @@ class Treatments extends Component {
                         label="Mois"
                         className="sofraco-select-filtre"
                         onChange={(e) => this.onChangeSelectFilterMonthHandler(e)}
-                        style={{display: "inline-block"}}
+                        style={{ display: "inline-block" }}
                     >
                         <option>Selectionnez le mois</option>
                         {months.map((month, index) => {

@@ -56,75 +56,64 @@ class Administration extends Component {
     }
 
     componentDidMount() {
-        const user = JSON.parse(localStorage.getItem('user'));
-        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((res) => {
-                this.setState({
-                    fields: [
-                        {
-                            key: 'cabinet',
-                            label: 'Cabinet',
-                            _style: { width: '30%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'firstName',
-                            label: 'Prénom',
-                            _style: { width: '15%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'lastName',
-                            label: 'Nom',
-                            _style: { width: '15%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'email',
-                            label: 'Email',
-                            _style: { width: '20%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'phone',
-                            label: 'Telephone',
-                            _style: { width: '10%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'status',
-                            label: 'Status',
-                            _style: { width: '10%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'show_details',
-                            label: '',
-                            _style: { width: '10%' },
-                            _classes: ['text-center'],
-                            sorter: false,
-                            filter: false
-                        }
-                    ],
-                    toast: false,
-                    messageToast: [],
-                    token: res.data
-                });
-                this.fetchCourtiers();
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        this.setState({
+            fields: [
+                {
+                    key: 'cabinet',
+                    label: 'Cabinet',
+                    _style: { width: '30%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'firstName',
+                    label: 'Prénom',
+                    _style: { width: '15%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'lastName',
+                    label: 'Nom',
+                    _style: { width: '15%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'email',
+                    label: 'Email',
+                    _style: { width: '20%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'phone',
+                    label: 'Telephone',
+                    _style: { width: '10%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'status',
+                    label: 'Status',
+                    _style: { width: '10%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'show_details',
+                    label: '',
+                    _style: { width: '10%' },
+                    _classes: ['text-center'],
+                    sorter: false,
+                    filter: false
+                }
+            ],
+            toast: false,
+            messageToast: [],
+            token: this.props.token
+        });
+        this.fetchCourtiers();
     }
 
     fetchCourtiers() {
         axios.get(`${config.nodeUrl}/api/courtier/role/courtier`, {
             headers: {
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${this.props.token.value}`
             }
         })
             .then((data) => {
@@ -198,7 +187,7 @@ class Administration extends Component {
             axios.post(`${config.nodeUrl}/api/courtier/`, options, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.state.token.value}`
+                    'Authorization': `Bearer ${this.props.token.value}`
                 }
             }).then((res) => {
                 let courtiers = this.state.courtiers;
@@ -376,13 +365,13 @@ class Administration extends Component {
                                                 </CNav>
                                                 <CTabContent>
                                                     <CTabPane data-tab="courtier">
-                                                        <Courtier courtier={item} key={`courtier${this.state.num}${item._id}`} />
+                                                        <Courtier courtier={item} key={`courtier${this.state.num}${item._id}`} token={this.props.token} />
                                                     </CTabPane>
                                                     <CTabPane data-tab="mandataires">
-                                                        <Mandataire courtier={item} key={`mandataire${this.state.num}${item._id}`} sIndex={index} />
+                                                        <Mandataire courtier={item} key={`mandataire${this.state.num}${item._id}`} sIndex={index} token={this.props.token} />
                                                     </CTabPane>
                                                     <CTabPane data-tab="code">
-                                                        <Correspondance courtier={item} key={`correspondance${this.state.num}${item._id}`} sIndex={index} />
+                                                        <Correspondance courtier={item} key={`correspondance${this.state.num}${item._id}`} sIndex={index} token={this.props.token} />
                                                     </CTabPane>
                                                 </CTabContent>
                                             </CTabs>

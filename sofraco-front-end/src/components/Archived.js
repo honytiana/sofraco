@@ -42,22 +42,10 @@ class Archived extends Component {
     }
 
     componentDidMount() {
-
-        const user = JSON.parse(localStorage.getItem('user'));
-        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then((res) => {
-            this.setState({
-                toast: false,
-                messageToast: {},
-                token: res.data
-            });
-        })
-        .catch((err) => {
-            console.log(err);
+        this.setState({
+            toast: false,
+            messageToast: {},
+            token: this.props.token
         });
     }
 

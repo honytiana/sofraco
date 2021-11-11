@@ -103,7 +103,7 @@ class App extends Component {
             <div>
               <Navbar />
               <div className="sofraco-root" style={{ minHeight: window.innerHeight - 50 }}>
-                <RouteComponent />
+                <RouteComponent token={this.state.token}/>
               </div>
               <Footer />
             </div>
