@@ -1,3 +1,25 @@
+const fs = require('fs');
+const path = require('path');
+const ExcelJS = require('exceljs');
+const XLSX = require('xlsx');
+const fileService = require('./files');
+
+exports.checkExcelFileAndGetWorksheets = async (file) => {
+    let filePath = file;
+    const fileName = fileService.getFileNameWithoutExtension(filePath);
+    const extension = fileService.getFileExtension(filePath);
+    if (extension.toUpperCase() === 'XLS') {
+        let originalFile = XLSX.readFile(filePath);
+        filePath = path.join(__dirname, '..', '..', '..', 'documents', 'uploaded', `${fileName}.xlsx`);
+        XLSX.writeFile(originalFile, filePath);
+    }
+    const workbook = new ExcelJS.Workbook();
+    const finalFile = fs.readFileSync(filePath);
+    await workbook.xlsx.load(finalFile);
+    const worksheets = workbook.worksheets;
+    return worksheets;
+};
+
 exports.borderType = {
     top: { style: 'thin' },
     left: { style: 'thin' },

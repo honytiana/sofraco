@@ -1,5 +1,3 @@
-const ExcelJS = require('exceljs');
-const XLSX = require('xlsx');
 const { performance } = require('perf_hooks');
 const { execSync } = require('child_process');
 const fs = require('fs');
@@ -9,6 +7,7 @@ const fileService = require('../utils/files');
 const pdfService = require('../utils/pdfFile');
 const redefinition = require('../utils/redefinition');
 const generals = require('../utils/generals');
+const excelFile = require('../utils/excelFile');
 
 const { workerData, parentPort } = require('worker_threads');
 if (parentPort !== null) {
@@ -351,18 +350,7 @@ const readBordereauSLADE = (textFilePaths) => {
 exports.readExcelSWISSLIFESURCO = async (file) => {
     console.log('DEBUT TRAITEMENT SWISSLIFE SURCO');
     const excecutionStartTime = performance.now();
-    let filePath = file;
-    const fileName = fileService.getFileNameWithoutExtension(filePath);
-    const extension = fileService.getFileExtension(filePath);
-    if (extension.toUpperCase() === 'XLS') {
-        let originalFile = XLSX.readFile(filePath);
-        filePath = path.join(__dirname, '..', '..', '..', 'documents', 'uploaded', `${fileName}.xlsx`);
-        XLSX.writeFile(originalFile, filePath);
-    }
-    const workbook = new ExcelJS.Workbook();
-    const swisslifefile = fs.readFileSync(filePath);
-    await workbook.xlsx.load(swisslifefile);
-    const worksheets = workbook.worksheets;
+    const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     let headers = [];
     let allContrats = [];
     let ocr = { headers: null, allContratsPerCourtier: [], executionTime: 0 };

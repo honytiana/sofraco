@@ -1,11 +1,9 @@
 'use strict'
-const ExcelJS = require('exceljs');
-const XLSX = require('xlsx');
 const { performance } = require('perf_hooks');
 const fs = require('fs');
 const path = require('path');
 const time = require('../utils/time');
-const fileService = require('../utils/files');
+const excelFile = require('../utils/excelFile');
 
 const { workerData, parentPort } = require('worker_threads');
 if (parentPort !== null) {
@@ -15,18 +13,7 @@ if (parentPort !== null) {
 exports.readExcelGENERALI = async (file) => {
     console.log('DEBUT TRAITEMENT GENERALI');
     const excecutionStartTime = performance.now();
-    let filePath = file;
-    const fileName = fileService.getFileNameWithoutExtension(filePath);
-    const extension = fileService.getFileExtension(filePath);
-    if (extension.toUpperCase() === 'XLS') {
-        let originalFile = XLSX.readFile(filePath);
-        filePath = path.join(__dirname, '..', '..', '..', 'documents', 'uploaded', `${fileName}.xlsx`);
-        XLSX.writeFile(originalFile, filePath);
-    }
-    const workbook = new ExcelJS.Workbook();
-    const generalifile = fs.readFileSync(filePath);
-    await workbook.xlsx.load(generalifile);
-    const worksheets = workbook.worksheets;
+    const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     let headers = [];
     let allContrats = [];
     let ocr = { headers: null, allContratsPerCourtier: [], executionTime: 0 };

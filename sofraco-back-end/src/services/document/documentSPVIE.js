@@ -1,11 +1,6 @@
-const ExcelJS = require('exceljs');
-const XLSX = require('xlsx');
 const { performance } = require('perf_hooks');
-const fs = require('fs');
-const path = require('path');
 const time = require('../utils/time');
-const fileService = require('../utils/files');
-const generals = require('../utils/generals');
+const excelFile = require('../utils/excelFile');
 
 const { workerData, parentPort } = require('worker_threads');
 if (parentPort !== null) {
@@ -15,18 +10,7 @@ if (parentPort !== null) {
 exports.readExcelSPVIE = async (file) => {
     console.log('DEBUT TRAITEMENT SPVIE');
     const excecutionStartTime = performance.now();
-    let filePath = file;
-    const fileName = fileService.getFileNameWithoutExtension(filePath);
-    const extension = fileService.getFileExtension(filePath);
-    if (extension.toUpperCase() === 'XLS') {
-        let originalFile = XLSX.readFile(filePath);
-        filePath = path.join(__dirname, '..', '..', '..', 'documents', 'uploaded', `${fileName}.xlsx`);
-        XLSX.writeFile(originalFile, filePath);
-    }
-    const workbook = new ExcelJS.Workbook();
-    const spviefile = fs.readFileSync(filePath);
-    await workbook.xlsx.load(spviefile);
-    const worksheets = workbook.worksheets;
+    const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     let firstHeaders = [];
     let secondHeaders = [];
     let headers = { firstHeaders, secondHeaders };
