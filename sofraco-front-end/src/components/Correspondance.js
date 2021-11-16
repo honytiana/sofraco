@@ -89,7 +89,13 @@ class Correspondance extends Component {
         });
         this.fetchCorrespondances();
         this.getCompanies();
+    }
 
+    checkProps() {
+        if (this.props.token !== null) {
+            this.fetchCorrespondances();
+            this.getCompanies();
+        }
     }
 
     fetchCorrespondances() {

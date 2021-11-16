@@ -39,6 +39,7 @@ class Treatments extends Component {
         this.onSendMailHandler = this.onSendMailHandler.bind(this);
         this.onChangeSelectFilterYearHandler = this.onChangeSelectFilterYearHandler.bind(this);
         this.onChangeSelectFilterMonthHandler = this.onChangeSelectFilterMonthHandler.bind(this);
+        this.fetchCourtiers = this.fetchCourtiers.bind(this);
 
     }
 
@@ -96,6 +97,16 @@ class Treatments extends Component {
             messageToast: [],
             token: this.props.token,
         });
+        this.fetchCourtiers();
+    }
+
+    checkProps() {
+        if (this.props.token !== null) {
+            this.fetchCourtiers();
+        }
+    }
+
+    fetchCourtiers() {
         axios.get(`${config.nodeUrl}/api/courtier`, {
             headers: {
                 'Authorization': `Bearer ${this.props.token.value}`

@@ -102,6 +102,16 @@ class Mandataire extends Component {
         this.fetchMandataires();
     }
 
+    checkProps() {
+        if (this.props.token !== null) {
+            this.fetchMandataires();
+        }
+    }
+    
+    componentDidUpdate() {
+        this.render();
+    }
+
     fetchMandataires() {
         const courtier = this.props.courtier;
         axios.get(`${config.nodeUrl}/api/courtier/mandataires/${courtier._id}`, {
@@ -132,10 +142,6 @@ class Mandataire extends Component {
                     });
                 }, 6000);
             });
-    }
-
-    componentDidUpdate() {
-        this.render();
     }
 
     getBadge(status) {

@@ -57,8 +57,12 @@ class CompanyFolder extends Component {
         this.fetchDocumentsCompanyByYearAndMonth();
     }
 
-    componentDidUpdate() {
-
+    checkProps() {
+        if (this.props.token !== null) {
+            this.fetchCompany();
+            this.fetchDocumentsCompany();
+            this.fetchDocumentsCompanyByYearAndMonth();
+        }
     }
 
     fetchCompany() {

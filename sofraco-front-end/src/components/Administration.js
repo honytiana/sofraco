@@ -110,6 +110,12 @@ class Administration extends Component {
         this.fetchCourtiers();
     }
 
+    checkProps() {
+        if (this.props.token !== null) {
+            this.fetchCourtiers();
+        }
+    }
+
     fetchCourtiers() {
         axios.get(`${config.nodeUrl}/api/courtier/role/courtier`, {
             headers: {

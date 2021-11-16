@@ -41,6 +41,7 @@ class Upload extends Component {
         this.testExtension = this.testExtension.bind(this);
         this.generateDropzone = this.generateDropzone.bind(this);
         this.setStateFile = this.setStateFile.bind(this);
+        this.getCompanySurco = this.getCompanySurco.bind(this);
     }
 
     componentDidMount() {
@@ -51,6 +52,17 @@ class Upload extends Component {
             messageToast: {},
             company: company
         });
+        this.getCompanySurco();
+    }
+
+    checkProps() {
+        if (this.props.token !== null) {
+            this.getCompanySurco();
+        }
+    }
+
+    getCompanySurco() {
+        const company = this.props.company;
         if (company.surco) {
             const companySurco = company.companySurco;
             axios.get(`${config.nodeUrl}/api/company/name/${companySurco}`, {

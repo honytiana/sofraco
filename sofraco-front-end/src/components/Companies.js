@@ -91,6 +91,13 @@ class Companies extends Component {
         }
     }
 
+    checkProps() {
+        if (this.props.token !== null) {
+            this.getCompanies();
+            this.getDraftDocument();
+        }
+    }
+
     getDraftDocument() {
         axios.get(`${config.nodeUrl}/api/document`, {
             headers: {
@@ -284,9 +291,6 @@ class Companies extends Component {
             executionTime: ''
         });
         try {
-            // const documents = this.state.drafts.map((draft) => {
-            //     return draft._id
-            // });
             const options = {
                 user: JSON.parse(localStorage.getItem('user'))
             }
@@ -517,7 +521,7 @@ class Companies extends Component {
                                                                 }
                                                             }
                                                         }
-                                                        // return (<span key={`${company._id}_Spanf${index}`}></span>);
+                                                        return 0;
                                                     })}
                                                 </CCardFooter>
                                             </CCard>
