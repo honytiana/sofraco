@@ -17,10 +17,8 @@ import {
 
 import CIcon from '@coreui/icons-react';
 import { freeSet } from '@coreui/icons';
-import axios from 'axios';
 
 import '../styles/Archived.css';
-import config from '../config.json';
 import closedFolder from '../assets/closed_folder.png';
 
 class Archived extends Component {
@@ -35,7 +33,7 @@ class Archived extends Component {
             collapseMonth: false,
             detailsYear: [],
             detailsMonth: [],
-            token: null
+            token: props.token
         }
         this.toggleYear = this.toggleYear.bind(this);
         this.toggleMonth = this.toggleMonth.bind(this);
@@ -44,8 +42,7 @@ class Archived extends Component {
     componentDidMount() {
         this.setState({
             toast: false,
-            messageToast: {},
-            token: this.props.token
+            messageToast: {}
         });
     }
 

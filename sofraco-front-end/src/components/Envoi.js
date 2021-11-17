@@ -30,7 +30,7 @@ class Envoi extends Component {
             messageToast: null,
             month: null,
             year: null,
-            token: null
+            token: props.token
         }
         this.getBadge = this.getBadge.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
@@ -94,8 +94,7 @@ class Envoi extends Component {
                 // }
             ],
             toast: false,
-            messageToast: [],
-            token: this.props.token,
+            messageToast: []
         });
         this.fetchCourtiers();
     }
@@ -109,7 +108,7 @@ class Envoi extends Component {
     fetchCourtiers() {
         axios.get(`${config.nodeUrl}/api/courtier`, {
             headers: {
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((data) => {
@@ -212,7 +211,7 @@ class Envoi extends Component {
                     mailPromises.push(
                         axios.post(`${config.nodeUrl}/api/mailer/`, options, {
                             headers: {
-                                'Authorization': `Bearer ${this.props.token.value}`
+                                'Authorization': `Bearer ${this.state.token.value}`
                             }
                         })
                             .then((data) => {

@@ -2,7 +2,6 @@ import { Component } from 'react';
 import '@coreui/coreui/dist/css/coreui.min.css';
 import {
     CDataTable,
-    CBadge,
     CButton,
     CToaster,
     CToast,
@@ -38,7 +37,7 @@ class Treatments extends Component {
             messageToast: null,
             month: null,
             year: null,
-            token: null
+            token: props.token
         }
         this.toggleDetails = this.toggleDetails.bind(this);
         this.fetchCourtiers = this.fetchCourtiers.bind(this);
@@ -82,8 +81,7 @@ class Treatments extends Component {
                 }
             ],
             toast: false,
-            messageToast: [],
-            token: this.props.token,
+            messageToast: []
         });
         this.fetchCourtiers();
     }
@@ -97,7 +95,7 @@ class Treatments extends Component {
     fetchCourtiers() {
         axios.get(`${config.nodeUrl}/api/courtier`, {
             headers: {
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((data) => {
@@ -186,10 +184,10 @@ class Treatments extends Component {
                                                 </CNav>
                                                 <CTabContent>
                                                     <CTabPane data-tab="mandataires">
-                                                        <ExcelMaster courtier={item} key={`excelMaster${this.state.num}${item._id}`} sIndex={index} token={this.props.token} />
+                                                        <ExcelMaster courtier={item} key={`excelMaster${this.state.num}${item._id}`} sIndex={index} token={this.state.token} />
                                                     </CTabPane>
                                                     <CTabPane data-tab="code">
-                                                        <Correspondance courtier={item} key={`correspondance${this.state.num}${item._id}`} sIndex={index} token={this.props.token} add={false} />
+                                                        <Correspondance courtier={item} key={`correspondance${this.state.num}${item._id}`} sIndex={index} token={this.state.token} add={false} />
                                                     </CTabPane>
                                                 </CTabContent>
                                             </CTabs>

@@ -1,18 +1,3 @@
-.sofraco-send-mail-button {
-    margin: auto;
-    text-align: center;
-}
-
-.sofraco-send-mail-button button {
-    color: #fff;
-    background-color: #ed7102;
-}
-
-.sofraco-send-mail-button button:hover, .sofraco-send-mail-button button:active {
-    color: #fff;
-    background-color: #F39200;
-}
-
 .sofraco-pagination, .sofraco-pagination ul, .sofraco-pagination li, .sofraco-pagination a {
     color: #ed7102 !important;
 }
@@ -22,11 +7,3 @@
     background-color: #ed7102 !important;
     border-color: #ed7102 !important;
 }
-
-.sofraco-select-filtre {
-    width: 200px;
-}
-
-/* .sofraco-content-filtre {
-    display: inline-block;
-} */

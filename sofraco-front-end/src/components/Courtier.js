@@ -21,19 +21,17 @@ class Courtier extends Component {
         super(props);
         this.state = {
             loader: false,
-            courtier: null,
+            courtier: props.courtier,
             toast: false,
             messageToast: {},
             newP: this.props.newP,
-            token: null
+            token: props.token
         }
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
     }
 
     componentDidMount() {
         this.setState({
-            token: this.props.token,
-            courtier: this.props.courtier,
             toast: false,
             messageToast: {}
         });
@@ -59,7 +57,7 @@ class Courtier extends Component {
             axios.put(`${config.nodeUrl}/api/courtier/${this.props.courtier._id}`, options, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.props.token.value}`
+                    'Authorization': `Bearer ${this.state.token.value}`
                 }
             }).then((res) => {
                 this.setState({

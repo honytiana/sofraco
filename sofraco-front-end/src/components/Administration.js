@@ -43,7 +43,7 @@ class Administration extends Component {
             messageToast: [],
             activePage: 1,
             num: 0,
-            token: null,
+            token: props.token,
             ajoutCourtier: false
         }
         this.getBadge = this.getBadge.bind(this);
@@ -104,8 +104,7 @@ class Administration extends Component {
                 }
             ],
             toast: false,
-            messageToast: [],
-            token: this.props.token
+            messageToast: []
         });
         this.fetchCourtiers();
     }
@@ -119,7 +118,7 @@ class Administration extends Component {
     fetchCourtiers() {
         axios.get(`${config.nodeUrl}/api/courtier/role/courtier`, {
             headers: {
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((data) => {

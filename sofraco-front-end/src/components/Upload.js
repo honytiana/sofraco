@@ -34,7 +34,7 @@ class Upload extends Component {
             loader: false,
             toast: false,
             messageToast: {},
-            token: null
+            token: props.token
         }
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -47,7 +47,6 @@ class Upload extends Component {
     componentDidMount() {
         const company = this.props.company;
         this.setState({
-            token: this.props.token,
             toast: false,
             messageToast: {},
             company: company
@@ -68,7 +67,7 @@ class Upload extends Component {
             axios.get(`${config.nodeUrl}/api/company/name/${companySurco}`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.props.token.value}`
+                    'Authorization': `Bearer ${this.state.token.value}`
                 }
             })
                 .then((res) => {
@@ -80,7 +79,7 @@ class Upload extends Component {
                         axios.get(`${config.nodeUrl}/api/company/name/${companySurco.companySurco}`, {
                             headers: {
                                 'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${this.props.token.value}`
+                                'Authorization': `Bearer ${this.state.token.value}`
                             }
                         })
                             .then((res) => {
@@ -162,7 +161,7 @@ class Upload extends Component {
         axios.post(`${config.nodeUrl}/api/document/`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         }).then((res) => {
             this.setState({

@@ -18,27 +18,11 @@ class App extends Component {
     this.state = {
       token: null
     }
+    this.getToken = this.getToken.bind(this);
 
   }
 
   componentDidMount() {
-
-    // const socket = io(config.nodeUrl, {
-    //   path: '/api/api-status'
-    // });
-    // console.log(socket)
-    // socket.on('connect', () => {
-    //   console.log('connected');
-    // });
-    // socket.on('error', (err) => {
-    //   console.log(err);
-    // });
-    // socket.on('connection', () => {
-    //   console.log('connected');
-    // });
-    // socket.on('connect_error', (err) => {
-    //   console.log(err);
-    // })
 
     window.addEventListener('close', (e) => {
       localStorage.clear();
@@ -48,8 +32,9 @@ class App extends Component {
       localStorage.clear();
     });
 
-    // window.caches.delete();
+  }
 
+  getToken() {
     const user = JSON.parse(localStorage.getItem('user'));
     axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
       headers: {
@@ -61,7 +46,7 @@ class App extends Component {
           this.setState({
             token: res.data
           });
-          axios.get(`${config.nodeUrl}/api/token/user/${user}/token/${this.state.token.value}`, {
+          axios.get(`${config.nodeUrl}/api/token/user/${user}/token/${res.data.value}`, {
             headers: {
               'Content-Type': 'application/json',
             }
@@ -95,15 +80,18 @@ class App extends Component {
 
   render() {
     document.title = 'Sofraco';
+    if (this.state.token === null) {
+      this.getToken();
+    }
     return (
       <CContainer className="sofraco-container" fluid >
         {
           (localStorage.getItem('user') === null) ?
             <Access /> :
             <div>
-              <Navbar />
+              <Navbar token={this.state.token} />
               <div className="sofraco-root" style={{ minHeight: window.innerHeight - 50 }}>
-                <RouteComponent token={this.state.token}/>
+                <RouteComponent token={this.state.token} />
               </div>
               <Footer />
             </div>

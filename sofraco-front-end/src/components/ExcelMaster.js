@@ -7,7 +7,6 @@ import {
     CToaster,
     CButton,
     CDataTable,
-    CBadge,
     CModal,
     CModalHeader,
     CModalBody,
@@ -35,7 +34,7 @@ class ExcelMaster extends Component {
             toast: false,
             messageToast: {},
             fields: [],
-            token: null
+            token: props.token
         }
         this.toggleDetails = this.toggleDetails.bind(this);
         this.fetchExcelMasters = this.fetchExcelMasters.bind(this);
@@ -60,8 +59,7 @@ class ExcelMaster extends Component {
                 }
             ],
             toast: false,
-            messageToast: [],
-            token: this.props.token
+            messageToast: []
         });
         this.fetchExcelMasters();
     }
@@ -78,7 +76,7 @@ class ExcelMaster extends Component {
         axios.get(`${config.nodeUrl}/api/excelMaster/courtier/${courtier._id}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((res) => {
@@ -118,7 +116,7 @@ class ExcelMaster extends Component {
         axios.delete(`${config.nodeUrl}/api/correspondance/code/courtier/${this.props.courtier._id}/code/${correspondance.code}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((res) => {
@@ -172,7 +170,7 @@ class ExcelMaster extends Component {
         axios.put(`${config.nodeUrl}/api/correspondance/code/courtier/${this.props.courtier._id}`, options, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         }).then((res) => {
             this.setState({

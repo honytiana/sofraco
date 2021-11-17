@@ -35,7 +35,7 @@ class Mandataire extends Component {
             fields: [],
             ajoutMandataire: false,
             newP: this.props.newP,
-            token: null
+            token: props.token
         }
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
@@ -96,8 +96,7 @@ class Mandataire extends Component {
                 // }
             ],
             toast: false,
-            messageToast: [],
-            token: this.props.token,
+            messageToast: []
         });
         this.fetchMandataires();
     }
@@ -117,7 +116,7 @@ class Mandataire extends Component {
         axios.get(`${config.nodeUrl}/api/courtier/mandataires/${courtier._id}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((res) => {
@@ -172,7 +171,7 @@ class Mandataire extends Component {
             axios.put(`${config.nodeUrl}/api/courtier/${mandataire._id}`, options, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.props.token.value}`
+                    'Authorization': `Bearer ${this.state.token.value}`
                 }
             }).then((res) => {
                 let mandataires = this.state.mandataires;
@@ -210,7 +209,7 @@ class Mandataire extends Component {
         axios.delete(`${config.nodeUrl}/api/courtier/${mandataire._id}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((res) => {
@@ -285,7 +284,7 @@ class Mandataire extends Component {
             axios.post(`${config.nodeUrl}/api/courtier/`, options, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.props.token.value}`
+                    'Authorization': `Bearer ${this.state.token.value}`
                 }
             }).then((res) => {
                 let mandataires = this.state.mandataires;

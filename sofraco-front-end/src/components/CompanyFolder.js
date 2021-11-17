@@ -39,7 +39,7 @@ class CompanyFolder extends Component {
             loader: false,
             toast: false,
             messageToast: {},
-            token: null
+            token: props.token
         }
         this.fetchDocumentsCompanyByYearAndMonth = this.fetchDocumentsCompanyByYearAndMonth.bind(this);
         this.fetchDocumentsCompany = this.fetchDocumentsCompany.bind(this);
@@ -49,8 +49,7 @@ class CompanyFolder extends Component {
     componentDidMount() {
         this.setState({
             toast: false,
-            messageToast: {},
-            token: this.props.token
+            messageToast: {}
         });
         this.fetchCompany();
         this.fetchDocumentsCompany();
@@ -75,7 +74,7 @@ class CompanyFolder extends Component {
             axios.get(`${config.nodeUrl}/api/company/name/${companySurco}`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.props.token.value}`
+                    'Authorization': `Bearer ${this.state.token.value}`
                 }
             })
                 .then((res) => {
@@ -96,7 +95,7 @@ class CompanyFolder extends Component {
         axios.get(`${config.nodeUrl}/api/document/company/${this.props.company._id}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((result) => {
@@ -116,7 +115,7 @@ class CompanyFolder extends Component {
         axios.get(`${config.nodeUrl}/api/document/company/${this.props.company._id}/year/month`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((result) => {
@@ -162,7 +161,7 @@ class CompanyFolder extends Component {
                                         key=""
                                         company={this.props.company}
                                         companyName={this.props.companyName}
-                                        token={this.props.token}
+                                        token={this.state.token}
                                     />
                                 </CTabPane>
                                 <CTabPane data-tab="historique">
@@ -171,7 +170,7 @@ class CompanyFolder extends Component {
                                         company={this.props.company}
                                         documents={this.state.documents}
                                         archived={this.state.archived}
-                                        token={this.props.token}
+                                        token={this.state.token}
                                     />
                                 </CTabPane>
                             </CTabContent>
