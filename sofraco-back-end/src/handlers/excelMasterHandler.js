@@ -34,7 +34,7 @@ class ExcelMasterHandler {
     }
 
     getExcelMastersByCourtier(courtier) {
-        return ExcelMaster.find({ courtier: courtier });
+        return ExcelMaster.find({ courtier: courtier, type: 'excel' });
     }
 
     getExcelMastersByYearMonth(year, month) {

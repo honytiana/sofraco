@@ -377,7 +377,7 @@ class Administration extends Component {
                                                         <Mandataire courtier={item} key={`mandataire${this.state.num}${item._id}`} sIndex={index} token={this.props.token} />
                                                     </CTabPane>
                                                     <CTabPane data-tab="code">
-                                                        <Correspondance courtier={item} key={`correspondance${this.state.num}${item._id}`} sIndex={index} token={this.props.token} />
+                                                        <Correspondance courtier={item} key={`correspondance${this.state.num}${item._id}`} sIndex={index} token={this.props.token} add={true} />
                                                     </CTabPane>
                                                 </CTabContent>
                                             </CTabs>

@@ -72,6 +72,7 @@ class Navbar extends Component {
                     <CNavbarNav>
                         <CNavLink href='/home' >Home</CNavLink>
                         <CNavLink href='/companies'>Compagnies d'assurance</CNavLink>
+                        <CNavLink href='/envoi'>Envoi</CNavLink>
                         <CNavLink href='/treatments'>Traitements</CNavLink>
                     </CNavbarNav>
                     <CNavbarNav className="ml-auto">

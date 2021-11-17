@@ -12,6 +12,7 @@ class RouteComponent extends Component {
         this.Home = React.lazy(() => import('./Home'));
         this.Companies = React.lazy(() => import('./Companies'));
         // this.Upload = React.lazy(() => import('./Upload'));
+        this.Envoi = React.lazy(() => import('./Envoi'));
         this.Treatments = React.lazy(() => import('./Treatments'));
         this.Administration = React.lazy(() => import('./Administration'));
     }
@@ -30,6 +31,9 @@ class RouteComponent extends Component {
                         </Route>
                         <Route path="/companies" component={this.Companies} >
                             <this.Companies token={this.props.token} />
+                        </Route>
+                        <Route path="/envoi" component={this.Envoi} >
+                            <this.Envoi token={this.props.token} />
                         </Route>
                         <Route path="/treatments" component={this.Treatments} >
                             <this.Treatments token={this.props.token} />

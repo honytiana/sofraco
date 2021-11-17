@@ -62,12 +62,6 @@ class Correspondance extends Component {
                     _style: { width: '20%' },
                     _classes: ['text-center']
                 },
-                // {
-                //     key: 'status',
-                //     label: 'Status',
-                //     _style: { width: '10%' },
-                //     _classes: ['text-center']
-                // },
                 {
                     key: 'edit',
                     label: '',
@@ -302,7 +296,9 @@ class Correspondance extends Component {
     render() {
         return (
             <div>
-                <CButton className="sofraco-button" onClick={this.activerAjoutCorrespondance}>Ajouter un nouveau code</CButton>
+                {this.props.add && (
+                    <CButton className="sofraco-button" onClick={this.activerAjoutCorrespondance}>Ajouter un nouveau code</CButton>
+                )}
                 <CModal
                     show={this.state.ajoutCorrespondance}
                     onClose={() => { this.activerAjoutCorrespondance() }}
