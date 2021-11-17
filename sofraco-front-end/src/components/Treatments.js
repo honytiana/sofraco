@@ -35,8 +35,6 @@ class Treatments extends Component {
             fields: [],
             toast: false,
             messageToast: null,
-            month: null,
-            year: null,
             token: props.token
         }
         this.toggleDetails = this.toggleDetails.bind(this);
@@ -48,9 +46,15 @@ class Treatments extends Component {
         this.setState({
             fields: [
                 {
+                    key: 'code',
+                    label: 'Code',
+                    _style: { width: '15%' },
+                    _classes: ['text-center']
+                },
+                {
                     key: 'cabinet',
                     label: 'Cabinet',
-                    _style: { width: '30%' },
+                    _style: { width: '25%' },
                     _classes: ['text-center']
                 },
                 {
@@ -200,7 +204,13 @@ class Treatments extends Component {
                                         </CModalFooter>
                                     </CModal>
                                 )
-                            }
+                            },
+                            'code':
+                                (item, index) => {
+                                    return (
+                                        <span>Code {item.firstName}</span>
+                                    )
+                                }
                     }
                     }
                 />
