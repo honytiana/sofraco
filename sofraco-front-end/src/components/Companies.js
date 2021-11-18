@@ -33,7 +33,7 @@ class Companies extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            local: true,
+            local: false,
             details: [],
             companies: [],
             collapsed: [],
@@ -518,7 +518,6 @@ class Companies extends Component {
                                                                 }
                                                             }
                                                         }
-                                                        return 0;
                                                     })}
                                                 </CCardFooter>
                                             </CCard>
@@ -536,7 +535,7 @@ class Companies extends Component {
                                 return (<span key={`${company._id}_Span`}></span>);
                             })}
                         </CRow>
-                        {(this.state.local) && (
+                        {(true) && (
                             <div className="sofraco-container-button-traitement">
                                 <CButton className="sofraco-button" onClick={(e) => { this.launchTreatments(e) }} disabled={this.state.load}>Traiter les fichiers</CButton>
                             </div>
