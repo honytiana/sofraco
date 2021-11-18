@@ -22,6 +22,16 @@ exports.getTreatment = async (req, res) => {
     }
 }
 
+exports.getTreatments = async (req, res) => {
+    console.log('get treatments');
+    try {
+        const c = await treatmentHandler.getTreatments();
+        res.status(200).json(c);
+    } catch (error) {
+        res.status(400).json({ error });
+    }
+}
+
 exports.getTreatmentByUser = async (req, res) => {
     console.log('get treatment by user');
     try {

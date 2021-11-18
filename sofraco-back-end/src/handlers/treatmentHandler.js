@@ -15,6 +15,10 @@ class TreatmentHandler {
         return treatment;
     }
 
+    getTreatments() {
+        return Treatment.find();
+    }
+
     getTreatment(id) {
         return Treatment.findById(id);
     }
