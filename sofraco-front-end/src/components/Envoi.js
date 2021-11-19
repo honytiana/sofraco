@@ -349,34 +349,6 @@ class Envoi extends Component {
                                     </CBadge>
                                 </td>
                             ),
-                        // 'show_details':
-                        //     (item, index) => {
-                        //         return (
-                        //             <td className="py-2">
-                        //                 <CButton
-                        //                     color="warning"
-                        //                     variant="outline"
-                        //                     shape="square"
-                        //                     size="sm"
-                        //                     onClick={() => { this.toggleDetails(index) }}
-                        //                 >
-                        //                     {this.state.details.includes(index) ? 'Cacher' : 'Afficher'}
-                        //                 </CButton>
-                        //             </td>
-                        //         )
-                        //     },
-                        // 'details':
-                        //     (item, index) => {
-                        //         return (
-                        //             <CCollapse show={this.state.details.includes(index)}>
-                        //                 <CCardBody>
-                        //                     <h4>
-                        //                         {item.firstName}
-                        //                     </h4>
-                        //                 </CCardBody>
-                        //             </CCollapse>
-                        //         )
-                        //     }
                     }
                     }
                 />

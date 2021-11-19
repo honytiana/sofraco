@@ -66,8 +66,45 @@ exports.getExcelMastersByYearMonth = async (req, res) => {
     }
 }
 
+exports.getExcelMastersByYearMonthV2 = async (req, res) => {
+    console.log('get excelMaster by year and month V2');
+    try {
+        let excelMaster = [];
+        const months = [
+            { month: 'Janvier', index: 1 },
+            { month: 'Février', index: 2 },
+            { month: 'Mars', index: 3 },
+            { month: 'Avril', index: 4 },
+            { month: 'Mai', index: 5 },
+            { month: 'Juin', index: 6 },
+            { month: 'Juillet', index: 7 },
+            { month: 'Août', index: 8 },
+            { month: 'Septembre', index: 9 },
+            { month: 'Octobre', index: 10 },
+            { month: 'Novembre', index: 11 },
+            { month: 'Décembre', index: 12 }
+        ];
+        let years = [];
+        const currentYear = new Date().getFullYear();
+        for (let i = 2020; i <= currentYear; i++) {
+            years.push(i);
+        }
+        for (let year of years) {
+            let excelMasterPerMonth = [];
+            for (let month of months) {
+                const excelMaster = await excelMasterHandler.getExcelMastersCourtierByYearMonth(req.params.courtier, year, month.index, req.params.type);
+                excelMasterPerMonth.push({ month: month, excelMaster: excelMaster });
+            }
+            excelMaster.push({ year: year, excelMaster: excelMasterPerMonth });
+        }
+        res.status(200).json(excelMaster);
+    } catch (err) {
+        res.status(400).json({ err });
+    }
+}
+
 exports.getExcelMastersCourtierByYearMonth = async (req, res) => {
-    console.log('get excelMaster of company by year and month');
+    console.log('get excelMaster of courtier by year and month');
     try {
         const courtier = req.params.courtier;
         const year = req.params.year;

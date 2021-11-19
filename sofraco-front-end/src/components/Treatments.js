@@ -20,7 +20,7 @@ import {
 } from '@coreui/react';
 import axios from 'axios';
 
-import ExcelMaster from './ExcelMaster';
+import ListExcelMaster from './ListExcelMaster';
 import Correspondance from './Correspondance';
 import '../styles/Treatments.css';
 import config from '../config.json';
@@ -35,7 +35,8 @@ class Treatments extends Component {
             fields: [],
             toast: false,
             messageToast: null,
-            token: props.token
+            token: props.token,
+            num: 0
         }
         this.toggleDetails = this.toggleDetails.bind(this);
         this.fetchCourtiers = this.fetchCourtiers.bind(this);
@@ -125,7 +126,8 @@ class Treatments extends Component {
             newDetails = [...this.state.details, index]
         }
         this.setState({
-            details: newDetails
+            details: newDetails,
+            num: index
         })
     }
 
@@ -142,9 +144,7 @@ class Treatments extends Component {
                     hover
                     sorter
                     size={'sm'}
-                    pagination={{
-                        className: 'sofraco-pagination'
-                    }}
+                    pagination={{ className: 'sofraco-pagination' }}
                     scopedSlots={{
                         'show_details':
                             (item, index) => {
@@ -188,7 +188,7 @@ class Treatments extends Component {
                                                 </CNav>
                                                 <CTabContent>
                                                     <CTabPane data-tab="mandataires">
-                                                        <ExcelMaster courtier={item} key={`excelMaster${this.state.num}${item._id}`} sIndex={index} token={this.state.token} />
+                                                        <ListExcelMaster courtier={item} key={`excelMaster${this.state.num}${item._id}`} sIndex={index} token={this.state.token} />
                                                     </CTabPane>
                                                     <CTabPane data-tab="code">
                                                         <Correspondance courtier={item} key={`correspondance${this.state.num}${item._id}`} sIndex={index} token={this.state.token} add={false} />
