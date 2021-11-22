@@ -35,7 +35,7 @@ class Archived extends Component {
             collapseMonth: false,
             detailsYear: [],
             detailsMonth: [],
-            token: props.token
+            token: null
         }
         this.toggleYear = this.toggleYear.bind(this);
         this.toggleMonth = this.toggleMonth.bind(this);
