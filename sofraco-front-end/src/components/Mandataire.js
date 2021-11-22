@@ -116,7 +116,7 @@ class Mandataire extends Component {
         axios.get(`${config.nodeUrl}/api/courtier/mandataires/${courtier._id}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
             }
         })
             .then((res) => {
@@ -171,7 +171,7 @@ class Mandataire extends Component {
             axios.put(`${config.nodeUrl}/api/courtier/${mandataire._id}`, options, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.state.token.value}`
+                    'Authorization': `Bearer ${this.props.token.value}`
                 }
             }).then((res) => {
                 let mandataires = this.state.mandataires;
@@ -209,7 +209,7 @@ class Mandataire extends Component {
         axios.delete(`${config.nodeUrl}/api/courtier/${mandataire._id}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${this.props.token.value}`
             }
         })
             .then((res) => {

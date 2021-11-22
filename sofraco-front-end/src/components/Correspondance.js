@@ -96,7 +96,7 @@ class Correspondance extends Component {
         axios.get(`${config.nodeUrl}/api/correspondance/courtier/${courtier._id}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
             }
         })
             .then((res) => {
@@ -126,7 +126,7 @@ class Correspondance extends Component {
     getCompanies() {
         axios.get(`${config.nodeUrl}/api/company`, {
             headers: {
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
             }
         })
             .then((res) => {

@@ -76,7 +76,6 @@ class ListExcelMaster extends Component {
     checkProps() {
         if (this.props.token !== null) {
             this.fetchListExcelMasters();
-            this.getCompanies();
         }
     }
 
@@ -85,7 +84,7 @@ class ListExcelMaster extends Component {
         axios.get(`${config.nodeUrl}/api/excelMaster/courtier/${courtier._id}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
             }
         })
             .then((res) => {
@@ -117,7 +116,7 @@ class ListExcelMaster extends Component {
         axios.get(`${config.nodeUrl}/api/excelMaster/courtier/${courtier._id}/year/month/type/excel`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
             }
         })
             .then((result) => {

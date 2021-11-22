@@ -31,6 +31,9 @@ class App extends Component {
     window.onclose = ((e) => {
       localStorage.clear();
     });
+    if (this.state.token === null) {
+      this.getToken();
+    }
 
   }
 

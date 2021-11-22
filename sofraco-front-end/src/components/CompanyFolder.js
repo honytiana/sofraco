@@ -74,7 +74,7 @@ class CompanyFolder extends Component {
             axios.get(`${config.nodeUrl}/api/company/name/${companySurco}`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.state.token.value}`
+                    'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
                 }
             })
                 .then((res) => {
@@ -95,7 +95,7 @@ class CompanyFolder extends Component {
         axios.get(`${config.nodeUrl}/api/document/company/${this.props.company._id}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
             }
         })
             .then((result) => {
@@ -115,7 +115,7 @@ class CompanyFolder extends Component {
         axios.get(`${config.nodeUrl}/api/document/company/${this.props.company._id}/year/month`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
             }
         })
             .then((result) => {

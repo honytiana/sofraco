@@ -98,7 +98,7 @@ class Companies extends Component {
     getDraftDocument() {
         axios.get(`${config.nodeUrl}/api/document`, {
             headers: {
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
             }
         })
             .then((data) => {
@@ -215,7 +215,7 @@ class Companies extends Component {
     getCompanies() {
         axios.get(`${config.nodeUrl}/api/company`, {
             headers: {
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
             }
         })
             .then((data) => {

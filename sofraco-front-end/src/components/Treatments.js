@@ -100,7 +100,7 @@ class Treatments extends Component {
     fetchCourtiers() {
         axios.get(`${config.nodeUrl}/api/courtier`, {
             headers: {
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
             }
         })
             .then((data) => {

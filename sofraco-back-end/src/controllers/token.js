@@ -1,7 +1,7 @@
 const tokenHandler = require("../handlers/tokenHandler");
 
 exports.getTokenByUser = async (req, res) => {
-    console.log('Get token');
+    console.log('Get token by user');
     try {
         const token = await tokenHandler.getTokenByUser(req.params.userId);
         res.status(200).json(token);

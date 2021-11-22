@@ -67,7 +67,6 @@ class ExcelMaster extends Component {
     checkProps() {
         if (this.props.token !== null) {
             this.fetchExcelMasters();
-            this.getCompanies();
         }
     }
 
@@ -76,7 +75,7 @@ class ExcelMaster extends Component {
         axios.get(`${config.nodeUrl}/api/excelMaster/courtier/${courtier._id}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
             }
         })
             .then((res) => {

@@ -67,7 +67,7 @@ class Upload extends Component {
             axios.get(`${config.nodeUrl}/api/company/name/${companySurco}`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.state.token.value}`
+                    'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
                 }
             })
                 .then((res) => {
@@ -79,7 +79,7 @@ class Upload extends Component {
                         axios.get(`${config.nodeUrl}/api/company/name/${companySurco.companySurco}`, {
                             headers: {
                                 'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${this.state.token.value}`
+                                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
                             }
                         })
                             .then((res) => {
@@ -161,7 +161,7 @@ class Upload extends Component {
         axios.post(`${config.nodeUrl}/api/document/`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${this.props.token.value}`
             }
         }).then((res) => {
             this.setState({
