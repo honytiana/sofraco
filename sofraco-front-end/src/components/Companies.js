@@ -49,7 +49,7 @@ class Companies extends Component {
             executionTime: '',
             message: '',
             progress: 1,
-            token: props.token,
+            token: null,
             treatmentTimeMS: 0,
             treatmentTimeStr: null
         }
@@ -67,25 +67,39 @@ class Companies extends Component {
     }
 
     componentDidMount() {
-        this.getCompanies();
-        this.getDraftDocument();
-        // this.loadingHandler();
-        if (this.state.local) {
-            this.getTreatmentTime();
-            setInterval(() => {
-                if (this.state.load) {
-                    let treatmentTimeMS = this.state.treatmentTimeMS + 1000;
-                    let treatmentTimeStr = millisecondToTime(treatmentTimeMS);
-                    this.setState({
-                        treatmentTimeMS,
-                        treatmentTimeStr
-                    });
+        const user = JSON.parse(localStorage.getItem('user'));
+        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((res) => {
+                this.setState({
+                    token: res.data
+                });
+                this.getCompanies();
+                this.getDraftDocument();
+                // this.loadingHandler();
+                if (this.state.local) {
+                    this.getTreatmentTime();
+                    setInterval(() => {
+                        if (this.state.load) {
+                            let treatmentTimeMS = this.state.treatmentTimeMS + 1000;
+                            let treatmentTimeStr = millisecondToTime(treatmentTimeMS);
+                            this.setState({
+                                treatmentTimeMS,
+                                treatmentTimeStr
+                            });
+                        }
+                    }, 1000);
+                    setInterval(() => {
+                        this.getTreatment();
+                    }, 2000);
                 }
-            }, 1000);
-            setInterval(() => {
-                this.getTreatment();
-            }, 2000);
-        }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     checkProps() {
@@ -98,7 +112,7 @@ class Companies extends Component {
     getDraftDocument() {
         axios.get(`${config.nodeUrl}/api/document`, {
             headers: {
-                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((data) => {
@@ -215,7 +229,7 @@ class Companies extends Component {
     getCompanies() {
         axios.get(`${config.nodeUrl}/api/company`, {
             headers: {
-                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((data) => {

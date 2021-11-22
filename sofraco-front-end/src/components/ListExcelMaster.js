@@ -39,7 +39,7 @@ class ListExcelMaster extends Component {
             fields: [],
             detailsYear: [],
             detailsMonth: [],
-            token: props.token
+            token: null
         }
         this.toggleDetails = this.toggleDetails.bind(this);
         this.fetchListExcelMasters = this.fetchListExcelMasters.bind(this);
@@ -84,7 +84,7 @@ class ListExcelMaster extends Component {
         axios.get(`${config.nodeUrl}/api/excelMaster/courtier/${courtier._id}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
+                'Authorization': `Bearer ${this.props.token.value}`
             }
         })
             .then((res) => {
@@ -116,7 +116,7 @@ class ListExcelMaster extends Component {
         axios.get(`${config.nodeUrl}/api/excelMaster/courtier/${courtier._id}/year/month/type/excel`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
+                'Authorization': `Bearer ${this.props.token.value}`
             }
         })
             .then((result) => {
@@ -145,7 +145,7 @@ class ListExcelMaster extends Component {
         axios.delete(`${config.nodeUrl}/api/correspondance/code/courtier/${this.props.courtier._id}/code/${correspondance.code}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${this.props.token.value}`
             }
         })
             .then((res) => {

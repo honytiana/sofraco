@@ -39,7 +39,7 @@ class CompanyFolder extends Component {
             loader: false,
             toast: false,
             messageToast: {},
-            token: props.token
+            token: null
         }
         this.fetchDocumentsCompanyByYearAndMonth = this.fetchDocumentsCompanyByYearAndMonth.bind(this);
         this.fetchDocumentsCompany = this.fetchDocumentsCompany.bind(this);
@@ -74,7 +74,7 @@ class CompanyFolder extends Component {
             axios.get(`${config.nodeUrl}/api/company/name/${companySurco}`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
+                    'Authorization': `Bearer ${this.props.token.value}`
                 }
             })
                 .then((res) => {
@@ -95,7 +95,7 @@ class CompanyFolder extends Component {
         axios.get(`${config.nodeUrl}/api/document/company/${this.props.company._id}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
+                'Authorization': `Bearer ${this.props.token.value}`
             }
         })
             .then((result) => {
@@ -115,7 +115,7 @@ class CompanyFolder extends Component {
         axios.get(`${config.nodeUrl}/api/document/company/${this.props.company._id}/year/month`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
+                'Authorization': `Bearer ${this.props.token.value}`
             }
         })
             .then((result) => {

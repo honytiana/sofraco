@@ -30,7 +30,7 @@ class Envoi extends Component {
             messageToast: null,
             month: null,
             year: null,
-            token: props.token
+            token: null
         }
         this.getBadge = this.getBadge.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
@@ -44,59 +44,71 @@ class Envoi extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            fields: [
-                {
-                    key: 'check',
-                    label: <input type="checkbox" onChange={(e) => this.onCheckAllHandler(e)} />,
-                    _style: { width: '10%' },
-                    _classes: ['text-center'],
-                    sorter: false,
-                    filter: false
-                },
-                {
-                    key: 'cabinet',
-                    label: 'Cabinet',
-                    _style: { width: '30%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'firstName',
-                    label: 'Prénom',
-                    _style: { width: '15%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'lastName',
-                    label: 'Nom',
-                    _style: { width: '15%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'email',
-                    label: 'Email',
-                    _style: { width: '20%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'status',
-                    label: 'Status',
-                    _style: { width: '10%' },
-                    _classes: ['text-center']
-                },
-                // {
-                //     key: 'show_details',
-                //     label: '',
-                //     _style: { width: '10%' },
-                //     _classes: ['text-center'],
-                //     sorter: false,
-                //     filter: false
-                // }
-            ],
-            toast: false,
-            messageToast: []
-        });
-        this.fetchCourtiers();
+        const user = JSON.parse(localStorage.getItem('user'));
+        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((res) => {
+                this.setState({
+                    fields: [
+                        {
+                            key: 'check',
+                            label: <input type="checkbox" onChange={(e) => this.onCheckAllHandler(e)} />,
+                            _style: { width: '10%' },
+                            _classes: ['text-center'],
+                            sorter: false,
+                            filter: false
+                        },
+                        {
+                            key: 'cabinet',
+                            label: 'Cabinet',
+                            _style: { width: '30%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'firstName',
+                            label: 'Prénom',
+                            _style: { width: '15%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'lastName',
+                            label: 'Nom',
+                            _style: { width: '15%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'email',
+                            label: 'Email',
+                            _style: { width: '20%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'status',
+                            label: 'Status',
+                            _style: { width: '10%' },
+                            _classes: ['text-center']
+                        },
+                        // {
+                        //     key: 'show_details',
+                        //     label: '',
+                        //     _style: { width: '10%' },
+                        //     _classes: ['text-center'],
+                        //     sorter: false,
+                        //     filter: false
+                        // }
+                    ],
+                    toast: false,
+                    messageToast: [],
+                    token: res.data
+                });
+                this.fetchCourtiers();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     checkProps() {
@@ -108,7 +120,7 @@ class Envoi extends Component {
     fetchCourtiers() {
         axios.get(`${config.nodeUrl}/api/courtier`, {
             headers: {
-                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((data) => {

@@ -35,7 +35,7 @@ class Mandataire extends Component {
             fields: [],
             ajoutMandataire: false,
             newP: this.props.newP,
-            token: props.token
+            token: null
         }
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
@@ -106,7 +106,7 @@ class Mandataire extends Component {
             this.fetchMandataires();
         }
     }
-    
+
     componentDidUpdate() {
         this.render();
     }
@@ -116,7 +116,7 @@ class Mandataire extends Component {
         axios.get(`${config.nodeUrl}/api/courtier/mandataires/${courtier._id}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
+                'Authorization': `Bearer ${this.props.token.value}`
             }
         })
             .then((res) => {
@@ -144,11 +144,11 @@ class Mandataire extends Component {
     }
 
     getBadge(status) {
-        switch(status) {
+        switch (status) {
             case true: return 'success'
             case false: return 'danger'
             default: return 'primary'
-    }
+        }
     }
 
     onSubmitHandler(event, mandataire) {
@@ -284,7 +284,7 @@ class Mandataire extends Component {
             axios.post(`${config.nodeUrl}/api/courtier/`, options, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.state.token.value}`
+                    'Authorization': `Bearer ${this.props.token.value}`
                 }
             }).then((res) => {
                 let mandataires = this.state.mandataires;

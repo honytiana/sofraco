@@ -34,34 +34,46 @@ class ExcelMaster extends Component {
             toast: false,
             messageToast: {},
             fields: [],
-            token: props.token
+            token: null
         }
         this.toggleDetails = this.toggleDetails.bind(this);
         this.fetchExcelMasters = this.fetchExcelMasters.bind(this);
     }
 
     componentDidMount() {
-        this.setState({
-            fields: [
-                {
-                    key: 'path',
-                    label: 'Fichier',
-                    _style: { width: '20%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'edit',
-                    label: '',
-                    _style: { width: '20%' },
-                    _classes: ['text-center'],
-                    sorter: false,
-                    filter: false
-                }
-            ],
-            toast: false,
-            messageToast: []
-        });
-        this.fetchExcelMasters();
+        const user = JSON.parse(localStorage.getItem('user'));
+        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((res) => {
+                this.setState({
+                    fields: [
+                        {
+                            key: 'path',
+                            label: 'Fichier',
+                            _style: { width: '20%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'edit',
+                            label: '',
+                            _style: { width: '20%' },
+                            _classes: ['text-center'],
+                            sorter: false,
+                            filter: false
+                        }
+                    ],
+                    toast: false,
+                    messageToast: [],
+                    token: res.data
+                });
+                this.fetchExcelMasters();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     checkProps() {
@@ -75,7 +87,7 @@ class ExcelMaster extends Component {
         axios.get(`${config.nodeUrl}/api/excelMaster/courtier/${courtier._id}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((res) => {

@@ -17,8 +17,10 @@ import {
 
 import CIcon from '@coreui/icons-react';
 import { freeSet } from '@coreui/icons';
+import axios from 'axios';
 
 import '../styles/Archived.css';
+import config from '../config.json';
 import closedFolder from '../assets/closed_folder.png';
 
 class Archived extends Component {
@@ -40,9 +42,21 @@ class Archived extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            toast: false,
-            messageToast: {}
+        const user = JSON.parse(localStorage.getItem('user'));
+        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then((res) => {
+            this.setState({
+                toast: false,
+                messageToast: {},
+                token: res.data
+            });
+        })
+        .catch((err) => {
+            console.log(err);
         });
     }
 

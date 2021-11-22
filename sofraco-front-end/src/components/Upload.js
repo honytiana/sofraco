@@ -34,7 +34,7 @@ class Upload extends Component {
             loader: false,
             toast: false,
             messageToast: {},
-            token: props.token
+            token: null
         }
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -45,13 +45,25 @@ class Upload extends Component {
     }
 
     componentDidMount() {
-        const company = this.props.company;
-        this.setState({
-            toast: false,
-            messageToast: {},
-            company: company
-        });
-        this.getCompanySurco();
+        const user = JSON.parse(localStorage.getItem('user'));
+        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((res) => {
+                const company = this.props.company;
+                this.setState({
+                    toast: false,
+                    messageToast: {},
+                    company: company,
+                    token: res.data
+                });
+                this.getCompanySurco();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     checkProps() {
@@ -67,7 +79,7 @@ class Upload extends Component {
             axios.get(`${config.nodeUrl}/api/company/name/${companySurco}`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
+                    'Authorization': `Bearer ${this.state.token.value}`
                 }
             })
                 .then((res) => {
@@ -161,7 +173,7 @@ class Upload extends Component {
         axios.post(`${config.nodeUrl}/api/document/`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         }).then((res) => {
             this.setState({

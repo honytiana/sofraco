@@ -35,7 +35,7 @@ class Treatments extends Component {
             fields: [],
             toast: false,
             messageToast: null,
-            token: props.token,
+            token: null,
             num: 0
         }
         this.toggleDetails = this.toggleDetails.bind(this);
@@ -44,51 +44,63 @@ class Treatments extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            fields: [
-                {
-                    key: 'code',
-                    label: 'Code',
-                    _style: { width: '15%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'cabinet',
-                    label: 'Cabinet',
-                    _style: { width: '25%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'firstName',
-                    label: 'Prénom',
-                    _style: { width: '15%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'lastName',
-                    label: 'Nom',
-                    _style: { width: '15%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'email',
-                    label: 'Email',
-                    _style: { width: '20%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'show_details',
-                    label: '',
-                    _style: { width: '10%' },
-                    _classes: ['text-center'],
-                    sorter: false,
-                    filter: false
-                }
-            ],
-            toast: false,
-            messageToast: []
-        });
-        this.fetchCourtiers();
+        const user = JSON.parse(localStorage.getItem('user'));
+        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((res) => {
+                this.setState({
+                    fields: [
+                        {
+                            key: 'code',
+                            label: 'Code',
+                            _style: { width: '15%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'cabinet',
+                            label: 'Cabinet',
+                            _style: { width: '25%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'firstName',
+                            label: 'Prénom',
+                            _style: { width: '15%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'lastName',
+                            label: 'Nom',
+                            _style: { width: '15%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'email',
+                            label: 'Email',
+                            _style: { width: '20%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'show_details',
+                            label: '',
+                            _style: { width: '10%' },
+                            _classes: ['text-center'],
+                            sorter: false,
+                            filter: false
+                        }
+                    ],
+                    toast: false,
+                    messageToast: [],
+                    token: res.data
+                });
+                this.fetchCourtiers();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     checkProps() {
@@ -100,7 +112,7 @@ class Treatments extends Component {
     fetchCourtiers() {
         axios.get(`${config.nodeUrl}/api/courtier`, {
             headers: {
-                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((data) => {
@@ -131,7 +143,7 @@ class Treatments extends Component {
         })
     }
 
-    render() {  
+    render() {
         return (
             <div>
                 <CDataTable
@@ -205,12 +217,12 @@ class Treatments extends Component {
                                     </CModal>
                                 )
                             },
-                            'code':
-                                (item, index) => {
-                                    return (
-                                        <span>Code {item.firstName}</span>
-                                    )
-                                }
+                        'code':
+                            (item, index) => {
+                                return (
+                                    <span>Code {item.firstName}</span>
+                                )
+                            }
                     }
                     }
                 />

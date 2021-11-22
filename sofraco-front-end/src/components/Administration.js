@@ -43,7 +43,7 @@ class Administration extends Component {
             messageToast: [],
             activePage: 1,
             num: 0,
-            token: props.token,
+            token: null,
             ajoutCourtier: false
         }
         this.getBadge = this.getBadge.bind(this);
@@ -52,73 +52,78 @@ class Administration extends Component {
         this.fetchCourtiers = this.fetchCourtiers.bind(this);
         this.activerAjoutCourtier = this.activerAjoutCourtier.bind(this);
         this.ajouterCourtier = this.ajouterCourtier.bind(this);
-
     }
 
     componentDidMount() {
-        this.setState({
-            fields: [
-                {
-                    key: 'cabinet',
-                    label: 'Cabinet',
-                    _style: { width: '30%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'firstName',
-                    label: 'Prénom',
-                    _style: { width: '15%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'lastName',
-                    label: 'Nom',
-                    _style: { width: '15%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'email',
-                    label: 'Email',
-                    _style: { width: '20%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'phone',
-                    label: 'Telephone',
-                    _style: { width: '10%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'status',
-                    label: 'Status',
-                    _style: { width: '10%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'show_details',
-                    label: '',
-                    _style: { width: '10%' },
-                    _classes: ['text-center'],
-                    sorter: false,
-                    filter: false
-                }
-            ],
-            toast: false,
-            messageToast: []
-        });
-        this.fetchCourtiers();
-    }
-
-    checkProps() {
-        if (this.props.token !== null) {
-            this.fetchCourtiers();
-        }
+        const user = JSON.parse(localStorage.getItem('user'));
+        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((res) => {
+                this.setState({
+                    fields: [
+                        {
+                            key: 'cabinet',
+                            label: 'Cabinet',
+                            _style: { width: '30%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'firstName',
+                            label: 'Prénom',
+                            _style: { width: '15%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'lastName',
+                            label: 'Nom',
+                            _style: { width: '15%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'email',
+                            label: 'Email',
+                            _style: { width: '20%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'phone',
+                            label: 'Telephone',
+                            _style: { width: '10%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'status',
+                            label: 'Status',
+                            _style: { width: '10%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'show_details',
+                            label: '',
+                            _style: { width: '10%' },
+                            _classes: ['text-center'],
+                            sorter: false,
+                            filter: false
+                        }
+                    ],
+                    toast: false,
+                    messageToast: [],
+                    token: res.data
+                });
+                this.fetchCourtiers();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     fetchCourtiers() {
         axios.get(`${config.nodeUrl}/api/courtier/role/courtier`, {
             headers: {
-                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
+                'Authorization': `Bearer ${this.state.token.value}`
             }
         })
             .then((data) => {
@@ -192,7 +197,7 @@ class Administration extends Component {
             axios.post(`${config.nodeUrl}/api/courtier/`, options, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.props.token.value}`
+                    'Authorization': `Bearer ${this.state.token.value}`
                 }
             }).then((res) => {
                 let courtiers = this.state.courtiers;
@@ -222,7 +227,6 @@ class Administration extends Component {
     }
 
     render() {
-
         return (
             <div>
                 <CModal
@@ -370,13 +374,13 @@ class Administration extends Component {
                                                 </CNav>
                                                 <CTabContent>
                                                     <CTabPane data-tab="courtier">
-                                                        <Courtier courtier={item} key={`courtier${this.state.num}${item._id}`} token={this.props.token} />
+                                                        <Courtier courtier={item} key={`courtier${this.state.num}${item._id}`} token={this.state.token} />
                                                     </CTabPane>
                                                     <CTabPane data-tab="mandataires">
-                                                        <Mandataire courtier={item} key={`mandataire${this.state.num}${item._id}`} sIndex={index} token={this.props.token} />
+                                                        <Mandataire courtier={item} key={`mandataire${this.state.num}${item._id}`} sIndex={index} token={this.state.token} />
                                                     </CTabPane>
                                                     <CTabPane data-tab="code">
-                                                        <Correspondance courtier={item} key={`correspondance${this.state.num}${item._id}`} sIndex={index} token={this.props.token} add={true} />
+                                                        <Correspondance courtier={item} key={`correspondance${this.state.num}${item._id}`} sIndex={index} token={this.state.token} add={true} />
                                                     </CTabPane>
                                                 </CTabContent>
                                             </CTabs>
