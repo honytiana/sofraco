@@ -297,7 +297,7 @@ class Companies extends Component {
     async launchTreatments(e) {
         e.preventDefault();
         this.setState({
-            load: true,
+            load: this.state.local ? true : false,
             elementCover: this.state.local ? true : false,
             executionTime: ''
         });

@@ -161,7 +161,7 @@ class CompanyFolder extends Component {
                                         key=""
                                         company={this.props.company}
                                         companyName={this.props.companyName}
-                                        token={this.state.token}
+                                        token={this.props.token}
                                     />
                                 </CTabPane>
                                 <CTabPane data-tab="historique">
@@ -170,7 +170,7 @@ class CompanyFolder extends Component {
                                         company={this.props.company}
                                         documents={this.state.documents}
                                         archived={this.state.archived}
-                                        token={this.state.token}
+                                        token={this.props.token}
                                     />
                                 </CTabPane>
                             </CTabContent>

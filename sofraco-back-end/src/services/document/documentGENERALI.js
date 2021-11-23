@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const time = require('../utils/time');
 const excelFile = require('../utils/excelFile');
+const files = require('../utils/files');
 
 const { workerData, parentPort } = require('worker_threads');
 if (parentPort !== null) {
@@ -14,11 +15,12 @@ exports.readExcelGENERALI = async (file) => {
     console.log('DEBUT TRAITEMENT GENERALI');
     const excecutionStartTime = performance.now();
     const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
+    const fileName = files.getFileNameWithoutExtension(file);
     let headers = [];
     let allContrats = [];
     let ocr = { headers: null, allContratsPerCourtier: [], executionTime: 0 };
-    for (let worksheet of worksheets) {
-        if (worksheet.name === 'Commission_VIE_bordereau_de_com') {
+    worksheets.forEach((worksheet, index) => {
+        if (index === 0) {
             worksheet.eachRow((row, rowNumber) => {
                 if (rowNumber === 1) {
                     row.eachCell((cell, colNumber) => {
@@ -160,9 +162,9 @@ exports.readExcelGENERALI = async (file) => {
                     };
                     allContrats.push(contrat);
                 }
-            })
+            });
         }
-    }
+    });
 
     let allContratsPerCourtier = [];
     let courtiers = [];
