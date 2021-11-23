@@ -152,7 +152,7 @@ class Treatments extends Component {
                     columnFilter
                     tableFilter={{ label: 'Recherche', placeholder: '...' }}
                     itemsPerPageSelect={{ label: 'Nombre de courtiers par page' }}
-                    itemsPerPage={10}
+                    itemsPerPage={20}
                     hover
                     sorter
                     size={'sm'}
@@ -161,7 +161,7 @@ class Treatments extends Component {
                         'show_details':
                             (item, index) => {
                                 return (
-                                    <td className="py-2">
+                                    <td>
                                         <CButton
                                             color="warning"
                                             variant="outline"
@@ -185,10 +185,10 @@ class Treatments extends Component {
                                     >
                                         <CModalHeader closeButton>{item.cabinet}</CModalHeader>
                                         <CModalBody>
-                                            <CTabs activeTab="courtier">
+                                            <CTabs activeTab="excelMaster">
                                                 <CNav variant="tabs">
                                                     <CNavItem>
-                                                        <CNavLink data-tab="mandataires">
+                                                        <CNavLink data-tab="excelMaster">
                                                             Excel Master
                                                         </CNavLink>
                                                     </CNavItem>
@@ -199,7 +199,7 @@ class Treatments extends Component {
                                                     </CNavItem>
                                                 </CNav>
                                                 <CTabContent>
-                                                    <CTabPane data-tab="mandataires">
+                                                    <CTabPane data-tab="excelMaster">
                                                         <ListExcelMaster courtier={item} key={`excelMaster${this.state.num}${item._id}`} sIndex={index} token={this.state.token} />
                                                     </CTabPane>
                                                     <CTabPane data-tab="code">
@@ -220,7 +220,9 @@ class Treatments extends Component {
                         'code':
                             (item, index) => {
                                 return (
-                                    <span>Code {item.firstName}</span>
+                                    <td>
+                                        <span>Code {item.firstName}</span>
+                                    </td>
                                 )
                             }
                     }
