@@ -48,38 +48,54 @@ class Correspondance extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            fields: [
-                {
-                    key: 'company',
-                    label: 'Compagnies',
-                    _style: { width: '20%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'code',
-                    label: 'Code',
-                    _style: { width: '20%' },
-                    _classes: ['text-center']
-                },
-                {
-                    key: 'edit',
-                    label: '',
-                    _style: { width: '20%' },
-                    _classes: ['text-center'],
-                    sorter: false,
-                    filter: false
-                },
-                // {
-                //     key: 'delete',
-                //     label: '',
-                //     _style: { width: '5%' },
-                //     _classes: ['text-center']
-                // }
-            ],
-            toast: false,
-            messageToast: []
-        });
+        if (!this.props.add) {
+            this.setState({
+                fields: [
+                    {
+                        key: 'company',
+                        label: 'Compagnies',
+                        _style: { width: '20%' },
+                        _classes: ['text-center']
+                    },
+                    {
+                        key: 'code',
+                        label: 'Code',
+                        _style: { width: '20%' },
+                        _classes: ['text-center']
+                    }
+                ],
+                toast: false,
+                messageToast: []
+            });
+        } else {
+            this.setState({
+                fields: [
+                    {
+                        key: 'company',
+                        label: 'Compagnies',
+                        _style: { width: '20%' },
+                        _classes: ['text-center']
+                    },
+                    {
+                        key: 'code',
+                        label: 'Code',
+                        _style: { width: '20%' },
+                        _classes: ['text-center']
+                    },
+                    {
+                        key: 'edit',
+                        label: '',
+                        _style: { width: '20%' },
+                        _classes: ['text-center'],
+                        sorter: false,
+                        filter: false
+                    }
+                ],
+                toast: false,
+                messageToast: []
+            });
+        }
+
         this.fetchCorrespondances();
         this.getCompanies();
     }
