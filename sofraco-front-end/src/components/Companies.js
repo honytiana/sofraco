@@ -298,7 +298,7 @@ class Companies extends Component {
         e.preventDefault();
         this.setState({
             load: true,
-            elementCover: true,
+            elementCover: this.state.local ? true : false,
             executionTime: ''
         });
         try {
