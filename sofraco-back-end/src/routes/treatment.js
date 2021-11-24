@@ -4,7 +4,7 @@ const router = express.Router();
 const accessControl = require('../middlewares/accessControl');
 const treatmentController =  require('../controllers/treatment');
 
-router.route('/').get(accessControl, treatmentController.getTreatment);
+router.route('/').get(accessControl, treatmentController.getTreatments);
 router.route('/:id').get(accessControl, treatmentController.getTreatment);
 router.route('/user/:user').get(accessControl, treatmentController.getTreatmentByUser);
 router.route('/user/:user/status/processing').get(accessControl, treatmentController.getProcessingTreatmentByUser);

@@ -60,16 +60,6 @@ exports.getProcessingTreatmentByUser = async (req, res) => {
     }
 }
 
-exports.getTreatments = async (req, res) => {
-    console.log('get treatments');
-    try {
-        const treatments = await treatmentHandler.getCompanies();
-        res.status(200).json(treatments);
-    } catch (error) {
-        res.status(400).json({ error });
-    }
-}
-
 exports.updateTreatment = async (req, res) => {
     console.log('update treatment');
     const data = req.body;

@@ -8,7 +8,7 @@ const correspondanceService = require('../services/correspondances/correspondanc
 exports.createCorrespondance = async (req, res) => {
     const data = req.body;
     const authorization = req.headers.authorization;
-    const correspondances = await correspondanceService.readExcelTableauCorrespondance(authorization, req.params.role);
+    const correspondances = await correspondanceService.readExcelTableauCorrespondance(req.params.role);
     try {
         for (let correspondance of correspondances) {
             const c = await correspondanceHandler.createCorrespondance(correspondance);

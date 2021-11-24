@@ -9,7 +9,7 @@ const config = require('../../../config.json');
 const companyHandler = require('../../handlers/companyHandler');
 const courtierHandler = require('../../handlers/courtierHandler');
 
-exports.readExcelTableauCorrespondance = async (authorization, role) => {
+exports.readExcelTableauCorrespondance = async (role) => {
     const file = path.join(__dirname, '..', '..', '..', 'documents', `${role}.xlsx`);
     console.log('DEBUT LECTURE DU TABLEAU DE CORRESPONDANCE');
     const excecutionStartTime = performance.now();
