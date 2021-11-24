@@ -80,3 +80,13 @@ exports.deleteTreatment = async (req, res) => {
         res.status(500).json({ error });
     }
 }
+
+exports.deleteAllTreatment = async (req, res) => {
+    console.log('Delete all Treatment');
+    try {
+        await treatmentHandler.deleteAllTreatment();
+        res.status(200).end('Treatments deleted');
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+}

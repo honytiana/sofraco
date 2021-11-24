@@ -39,6 +39,10 @@ class TreatmentHandler {
         return Treatment.deleteOne({ _id: id });
     }
 
+    deleteAllTreatment() {
+        return Treatment.deleteMany({});
+    }
+
 }
 
 module.exports = new TreatmentHandler();
