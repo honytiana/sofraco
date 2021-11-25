@@ -294,7 +294,8 @@ class Upload extends Component {
     }
 
     onChangeHandler(event, companyName) {
-        // event.cancelBubble = true;
+        console.log(event);
+        console.log(event.target);
         event.stopPropagation();
         const files = event.target.files;
         const file = event.target.files[0];
