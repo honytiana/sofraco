@@ -178,7 +178,7 @@ class Upload extends Component {
         }).then((res) => {
             this.setState({
                 toast: true,
-                messageToast: { header: 'SUCCESS', color: 'success', message: 'Le document à été envoyé vers le serveur' }
+                messageToast: { header: 'SUCCESS', color: 'success', message: 'Le document a été envoyé vers le serveur' }
             });
         }).catch((err) => {
             this.setState({
