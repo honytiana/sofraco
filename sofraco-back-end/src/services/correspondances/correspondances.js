@@ -47,25 +47,29 @@ exports.readExcelTableauCorrespondance = async (role) => {
                             let companies = [];
                             for (let i = 4; i <= 72; i++) {
                                 for (let c of comp) {
-                                    if (worksheet.getRow(1).getCell(i).value !== null) {
-                                        if (worksheet.getRow(1).getCell(i).value.toUpperCase().match(c.name)) {
+                                    const companyNameSheet = worksheet.getRow(1).getCell(i).value;
+                                    if (companyNameSheet !== null) {
+                                        if (companyNameSheet.toUpperCase().match(c.globalName)) {
                                             let idCompany;
                                             let company;
                                             let particular;
                                             let code;
-                                            if (worksheet.getRow(1).getCell(i).value.toUpperCase() === c.name) {
-                                                if (row.getCell(i).value !== null) {
+                                            const codeCourtier = row.getCell(i).value;
+                                            if (companyNameSheet.toUpperCase() === c.globalName) {
+                                                if (codeCourtier !== null) {
                                                     idCompany = c._id;
-                                                    company = c.name;
+                                                    company = c.globalName;
                                                     particular = '';
-                                                    code = row.getCell(i).value;
+                                                    code = codeCourtier;
                                                 }
                                             } else {
-                                                if (row.getCell(i).value !== null) {
-                                                    idCompany = c._id;
-                                                    company = c.name;
-                                                    particular = worksheet.getRow(1).getCell(i).value.trim().replace(/\n/g, ' ');
-                                                    code = row.getCell(i).value;
+                                                if (companyNameSheet.toUpperCase() !== 'MIEL MUTUELLE') {
+                                                    if (codeCourtier !== null) {
+                                                        idCompany = c._id;
+                                                        company = c.globalName;
+                                                        particular = companyNameSheet.trim().replace(/\n/g, ' ');
+                                                        code = codeCourtier;
+                                                    }
                                                 }
                                             }
                                             if (idCompany && code) {

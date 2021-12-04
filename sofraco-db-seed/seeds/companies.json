@@ -728,5 +728,53 @@
         "surco": false,
         "companySurco": "",
         "type": "simple"
+    },
+    {
+        "address": "France",
+        "zip": "",
+        "city": "France",
+        "country": "France",
+        "phone": "+3300390000",
+        "website": "alptis.com",
+        "is_enabled": true,
+        "name": "ALPTIS",
+        "globalName": "ALPTIS",
+        "logo": "/backend/documents/logos/company.png",
+        "creation_date": "2010-12-02T00:00:00.000Z",
+        "surco": false,
+        "companySurco": "",
+        "type": "simple"
+    },
+    {
+        "address": "France",
+        "zip": "",
+        "city": "France",
+        "country": "France",
+        "phone": "+3300400000",
+        "website": "april.com",
+        "is_enabled": true,
+        "name": "APRIL",
+        "globalName": "APRIL",
+        "logo": "/backend/documents/logos/company.png",
+        "creation_date": "2010-12-02T00:00:00.000Z",
+        "surco": false,
+        "companySurco": "",
+        "type": "simple"
+    },
+    {
+        "address": "France",
+        "zip": "",
+        "city": "France",
+        "country": "France",
+        "phone": "+3300410000",
+        "website": "masantesolidaire.com",
+        "is_enabled": true,
+        "name": "MA SANTE SOLIDAIRE - HENNER",
+        "globalName": "MA SANTE SOLIDAIRE - HENNER",
+        "logo": "/backend/documents/logos/company.png",
+        "creation_date": "2010-12-02T00:00:00.000Z",
+        "surco": false,
+        "companySurco": "",
+        "type": "simple"
     }
 ]

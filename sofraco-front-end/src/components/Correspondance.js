@@ -58,6 +58,12 @@ class Correspondance extends Component {
                         _classes: ['text-center']
                     },
                     {
+                        key: 'particular',
+                        label: 'Indication',
+                        _style: { width: '20%' },
+                        _classes: ['text-center']
+                    },
+                    {
                         key: 'code',
                         label: 'Code',
                         _style: { width: '20%' },
@@ -77,6 +83,12 @@ class Correspondance extends Component {
                         _classes: ['text-center']
                     },
                     {
+                        key: 'particular',
+                        label: 'Indication',
+                        _style: { width: '20%' },
+                        _classes: ['text-center']
+                    },
+                    {
                         key: 'code',
                         label: 'Code',
                         _style: { width: '20%' },
@@ -85,7 +97,7 @@ class Correspondance extends Component {
                     {
                         key: 'edit',
                         label: '',
-                        _style: { width: '20%' },
+                        _style: { width: '10%' },
                         _classes: ['text-center'],
                         sorter: false,
                         filter: false
