@@ -21,6 +21,7 @@ services:
             MONGO_URL: mongodb://mongodb-sofraco:27017/sofraco
         volumes:
             - ./sofraco-back-end/documents:/backend/documents
+            - ./sofraco-back-end/logs:/backend/logs
         networks:
             - sofraco-network
 
