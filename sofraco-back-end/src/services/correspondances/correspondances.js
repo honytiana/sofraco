@@ -35,13 +35,16 @@ exports.readExcelTableauCorrespondance = async (role) => {
             worksheet.eachRow((row, rowNumber) => {
                 if (rowNumber > 1) {
                     for (let cr of courtiers) {
-                        if (row.getCell('C').value !== null &&
-                            (row.getCell('A').value.trim() === cr.lastName &&
-                                row.getCell('B').value.trim() === cr.firstName &&
-                                row.getCell('C').value.trim() === cr.cabinet) ||
-                            row.getCell('C').value === null &&
-                            (row.getCell('A').value.trim() === cr.lastName &&
-                                row.getCell('B').value.trim() === cr.firstName)) {
+                        const courtierLastNameSheet = row.getCell('A').value;
+                        const courtierFirstNameSheet = row.getCell('B').value;
+                        const courtierCabinetSheet = row.getCell('C').value;
+                        if (courtierCabinetSheet !== null &&
+                            (courtierLastNameSheet.trim() === cr.lastName &&
+                                courtierFirstNameSheet.trim() === cr.firstName &&
+                                courtierCabinetSheet.trim() === cr.cabinet) ||
+                            courtierCabinetSheet === null &&
+                            (courtierLastNameSheet.trim() === cr.lastName &&
+                                courtierFirstNameSheet.trim() === cr.firstName)) {
                             courtier = cr._id;
                             role_courtier = cr.role;
                             let companies = [];
@@ -49,16 +52,16 @@ exports.readExcelTableauCorrespondance = async (role) => {
                                 for (let c of comp) {
                                     const companyNameSheet = worksheet.getRow(1).getCell(i).value;
                                     if (companyNameSheet !== null) {
-                                        if (companyNameSheet.toUpperCase().match(c.globalName)) {
+                                        if (companyNameSheet.toUpperCase().match(c.name)) {
                                             let idCompany;
                                             let company;
                                             let particular;
                                             let code;
                                             const codeCourtier = row.getCell(i).value;
-                                            if (companyNameSheet.toUpperCase() === c.globalName) {
+                                            if (companyNameSheet.toUpperCase() === c.name) {
                                                 if (codeCourtier !== null) {
                                                     idCompany = c._id;
-                                                    company = c.globalName;
+                                                    company = c.name;
                                                     particular = '';
                                                     code = codeCourtier;
                                                 }
@@ -66,7 +69,7 @@ exports.readExcelTableauCorrespondance = async (role) => {
                                                 if (companyNameSheet.toUpperCase() !== 'MIEL MUTUELLE') {
                                                     if (codeCourtier !== null) {
                                                         idCompany = c._id;
-                                                        company = c.globalName;
+                                                        company = c.name;
                                                         particular = companyNameSheet.trim().replace(/\n/g, ' ');
                                                         code = codeCourtier;
                                                     }

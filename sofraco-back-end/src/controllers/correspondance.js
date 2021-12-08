@@ -11,7 +11,14 @@ exports.createCorrespondance = async (req, res) => {
     const correspondances = await correspondanceService.readExcelTableauCorrespondance(req.params.role);
     try {
         for (let correspondance of correspondances) {
-            const c = await correspondanceHandler.createCorrespondance(correspondance);
+            const corr = await correspondanceHandler.getCorrespondanceByCourtier(correspondance.courtier);
+            if (corr) {
+                for (let company of correspondance.companies) {
+                    await correspondanceHandler.addCodeCourtier(correspondance.courtier, company.idCompany, company.company, company.particular, company.code);
+                }
+            } else {
+                const c = await correspondanceHandler.createCorrespondance(correspondance);
+            }
         }
         res.status(200).end('Correspondances added');
     } catch (error) {
