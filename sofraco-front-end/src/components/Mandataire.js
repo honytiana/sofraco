@@ -14,11 +14,18 @@ import {
     CForm,
     CFormGroup,
     CLabel,
-    CInput
+    CInput,
+    CTabs,
+    CNav,
+    CNavItem,
+    CNavLink,
+    CTabContent,
+    CTabPane
 } from '@coreui/react';
 
 import axios from 'axios';
 
+import Correspondance from './Correspondance';
 import '../styles/Mandataire.css';
 import config from '../config.json';
 
@@ -420,7 +427,7 @@ class Mandataire extends Component {
                                             size="sm"
                                             onClick={() => { this.toggleDetails(index) }}
                                         >
-                                            Edit
+                                            Afficher
                                         </CButton>
                                     </td>
                                 )
@@ -436,76 +443,97 @@ class Mandataire extends Component {
                                     >
                                         <CModalHeader closeButton>{item.cabinet}</CModalHeader>
                                         <CModalBody>
-                                            <CForm action="" method="post" onSubmit={(e) => this.onSubmitHandler(e, item)}>
-                                                <CFormGroup row>
-                                                    <CLabel className="col-sm-2" htmlFor={`sofraco-cabinet-mandataire_${item._id}`}>Cabinet</CLabel>
-                                                    <CInput
-                                                        type="text"
-                                                        id={`sofraco-cabinet-mandataire_${item._id}`}
-                                                        name={`sofraco-cabinet`}
-                                                        placeholder={item.cabinet}
-                                                        defaultValue={item.cabinet}
-                                                        autoComplete="cabinet"
-                                                        className="sofraco-input"
-                                                    />
-                                                </CFormGroup>
-                                                <CFormGroup row>
-                                                    <CLabel className="col-sm-2" htmlFor={`sofraco-nom-mandataire_${item._id}`}>Nom</CLabel>
-                                                    <CInput
-                                                        type="text"
-                                                        id={`sofraco-nom-mandataire_${item._id}`}
-                                                        name={`sofraco-nom`}
-                                                        placeholder={item.lastName}
-                                                        defaultValue={item.lastName}
-                                                        autoComplete="nom"
-                                                        className="sofraco-input"
-                                                    />
-                                                </CFormGroup>
-                                                <CFormGroup row>
-                                                    <CLabel className="col-sm-2" htmlFor={`sofraco-prenom-mandataire_${item._id}`}>Prénoms</CLabel>
-                                                    <CInput
-                                                        type="text"
-                                                        id={`sofraco-prenom-mandataire_${item._id}`}
-                                                        name={`sofraco-prenom`}
-                                                        placeholder={item.firstName}
-                                                        defaultValue={item.firstName}
-                                                        autoComplete="prenom"
-                                                        className="sofraco-input"
-                                                    />
-                                                </CFormGroup>
-                                                <CFormGroup row>
-                                                    <CLabel className="col-sm-2" htmlFor={`sofraco-email-mandataire_${item._id}`}>Email</CLabel>
-                                                    <CInput
-                                                        type="text"
-                                                        id={`sofraco-email-mandataire_${item._id}`}
-                                                        name={`sofraco-email`}
-                                                        placeholder={item.email}
-                                                        defaultValue={item.email}
-                                                        autoComplete="email"
-                                                        className="sofraco-input"
-                                                    />
-                                                </CFormGroup>
-                                                <CFormGroup row>
-                                                    <CLabel className="col-sm-2" htmlFor={`sofraco-phone-mandataire_${item._id}`}>Téléphone</CLabel>
-                                                    <CInput
-                                                        type="text"
-                                                        id={`sofraco-phone-mandataire_${item._id}`}
-                                                        name={`sofraco-phone`}
-                                                        placeholder={item.phone}
-                                                        defaultValue={item.phone}
-                                                        autoComplete="phone"
-                                                        className="sofraco-input"
-                                                    />
-                                                </CFormGroup>
-                                                <CFormGroup>
-                                                    <CInput
-                                                        type="submit"
-                                                        name="sofraco-submit"
-                                                        value="Sauvegarder"
-                                                        className="sofraco-button"
-                                                    />
-                                                </CFormGroup>
-                                            </CForm>
+                                            <CTabs activeTab="mandataire">
+                                                <CNav variant="tabs">
+                                                    <CNavItem>
+                                                        <CNavLink data-tab="mandataire">
+                                                            Mandataire
+                                                        </CNavLink>
+                                                    </CNavItem>
+                                                    <CNavItem>
+                                                        <CNavLink data-tab="codeMandataire">
+                                                            Code Mandataire
+                                                        </CNavLink>
+                                                    </CNavItem>
+                                                </CNav>
+                                                <CTabContent>
+                                                    <CTabPane data-tab="mandataire">
+                                                        <CForm action="" method="post" onSubmit={(e) => this.onSubmitHandler(e, item)}>
+                                                            <CFormGroup row>
+                                                                <CLabel className="col-sm-2" htmlFor={`sofraco-cabinet-mandataire_${item._id}`}>Cabinet</CLabel>
+                                                                <CInput
+                                                                    type="text"
+                                                                    id={`sofraco-cabinet-mandataire_${item._id}`}
+                                                                    name={`sofraco-cabinet`}
+                                                                    placeholder={item.cabinet}
+                                                                    defaultValue={item.cabinet}
+                                                                    autoComplete="cabinet"
+                                                                    className="sofraco-input"
+                                                                />
+                                                            </CFormGroup>
+                                                            <CFormGroup row>
+                                                                <CLabel className="col-sm-2" htmlFor={`sofraco-nom-mandataire_${item._id}`}>Nom</CLabel>
+                                                                <CInput
+                                                                    type="text"
+                                                                    id={`sofraco-nom-mandataire_${item._id}`}
+                                                                    name={`sofraco-nom`}
+                                                                    placeholder={item.lastName}
+                                                                    defaultValue={item.lastName}
+                                                                    autoComplete="nom"
+                                                                    className="sofraco-input"
+                                                                />
+                                                            </CFormGroup>
+                                                            <CFormGroup row>
+                                                                <CLabel className="col-sm-2" htmlFor={`sofraco-prenom-mandataire_${item._id}`}>Prénoms</CLabel>
+                                                                <CInput
+                                                                    type="text"
+                                                                    id={`sofraco-prenom-mandataire_${item._id}`}
+                                                                    name={`sofraco-prenom`}
+                                                                    placeholder={item.firstName}
+                                                                    defaultValue={item.firstName}
+                                                                    autoComplete="prenom"
+                                                                    className="sofraco-input"
+                                                                />
+                                                            </CFormGroup>
+                                                            <CFormGroup row>
+                                                                <CLabel className="col-sm-2" htmlFor={`sofraco-email-mandataire_${item._id}`}>Email</CLabel>
+                                                                <CInput
+                                                                    type="text"
+                                                                    id={`sofraco-email-mandataire_${item._id}`}
+                                                                    name={`sofraco-email`}
+                                                                    placeholder={item.email}
+                                                                    defaultValue={item.email}
+                                                                    autoComplete="email"
+                                                                    className="sofraco-input"
+                                                                />
+                                                            </CFormGroup>
+                                                            <CFormGroup row>
+                                                                <CLabel className="col-sm-2" htmlFor={`sofraco-phone-mandataire_${item._id}`}>Téléphone</CLabel>
+                                                                <CInput
+                                                                    type="text"
+                                                                    id={`sofraco-phone-mandataire_${item._id}`}
+                                                                    name={`sofraco-phone`}
+                                                                    placeholder={item.phone}
+                                                                    defaultValue={item.phone}
+                                                                    autoComplete="phone"
+                                                                    className="sofraco-input"
+                                                                />
+                                                            </CFormGroup>
+                                                            <CFormGroup>
+                                                                <CInput
+                                                                    type="submit"
+                                                                    name="sofraco-submit"
+                                                                    value="Sauvegarder"
+                                                                    className="sofraco-button"
+                                                                />
+                                                            </CFormGroup>
+                                                        </CForm>
+                                                    </CTabPane>
+                                                    <CTabPane data-tab="codeMandataire">
+                                                        <Correspondance courtier={item} key={`correspondanceMandataire${item._id}`} sIndex={index} token={this.props.token} add={true} />
+                                                    </CTabPane>
+                                                </CTabContent>
+                                            </CTabs>
                                         </CModalBody>
                                         <CModalFooter>
                                             <CButton
