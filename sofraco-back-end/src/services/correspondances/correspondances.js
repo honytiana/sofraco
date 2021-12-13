@@ -63,9 +63,6 @@ exports.readExcelTableauCorrespondance = async (role) => {
                                             let code;
                                             const codeCourtier = row.getCell(i).value;
                                             if (companyNameSheet.toUpperCase() === c.globalName) {
-                                                if (c.globalName === 'MMA') {
-                                                    const a = 2;
-                                                }
                                                 if (codeCourtier !== null) {
                                                     idCompany = c._id;
                                                     company = c.name;

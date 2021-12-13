@@ -27,7 +27,7 @@ class CorrespondanceHandler {
         return Correspondance.find();
     }
 
-    addCodeCourtier(courtier, idCompany, company, particular, code) {
+    addCodeCourtier(courtier, idCompany, company, companyGlobalName, particular, code) {
         return Correspondance.findOneAndUpdate(
             {
                 courtier: courtier
@@ -37,6 +37,7 @@ class CorrespondanceHandler {
                     companies: {
                         idCompany: idCompany,
                         company: company,
+                        companyGlobalName: companyGlobalName,
                         particular: particular,
                         code: code,
                         is_enabled: true

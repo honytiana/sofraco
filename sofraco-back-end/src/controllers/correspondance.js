@@ -14,7 +14,7 @@ exports.createCorrespondance = async (req, res) => {
             const corr = await correspondanceHandler.getCorrespondanceByCourtier(correspondance.courtier);
             if (corr) {
                 for (let company of correspondance.companies) {
-                    await correspondanceHandler.addCodeCourtier(correspondance.courtier, company.idCompany, company.company, company.particular, company.code);
+                    await correspondanceHandler.addCodeCourtier(correspondance.courtier, company.idCompany, company.company, company.companyGlobalName, company.particular, company.code);
                 }
             } else {
                 const c = await correspondanceHandler.createCorrespondance(correspondance);
@@ -35,7 +35,7 @@ exports.addCodeCourtier = async (req, res) => {
     const code = req.body.code;
     try {
         const company = await companyHandler.getCompany(idCompany);
-        const correspondances = await correspondanceHandler.addCodeCourtier(courtier, idCompany, company.name, particular, code);
+        const correspondances = await correspondanceHandler.addCodeCourtier(courtier, idCompany, company.name, company.companyGlobalName, particular, code);
         res.status(200).end('Code added');
     } catch (error) {
         res.status(400).json({ error })
