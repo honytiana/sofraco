@@ -51,17 +51,25 @@ exports.readExcelTableauCorrespondance = async (role) => {
                             for (let i = 4; i <= 72; i++) {
                                 for (let c of comp) {
                                     const companyNameSheet = worksheet.getRow(1).getCell(i).value;
+                                    if (c.type !== 'simple') {
+                                        continue;
+                                    }
                                     if (companyNameSheet !== null) {
-                                        if (companyNameSheet.toUpperCase().match(c.name)) {
+                                        if (companyNameSheet.toUpperCase().match(c.globalName)) {
                                             let idCompany;
                                             let company;
+                                            let companyGlobalName;
                                             let particular;
                                             let code;
                                             const codeCourtier = row.getCell(i).value;
-                                            if (companyNameSheet.toUpperCase() === c.name) {
+                                            if (companyNameSheet.toUpperCase() === c.globalName) {
+                                                if (c.globalName === 'MMA') {
+                                                    const a = 2;
+                                                }
                                                 if (codeCourtier !== null) {
                                                     idCompany = c._id;
                                                     company = c.name;
+                                                    companyGlobalName = c.globalName;
                                                     particular = '';
                                                     code = codeCourtier;
                                                 }
@@ -70,6 +78,7 @@ exports.readExcelTableauCorrespondance = async (role) => {
                                                     if (codeCourtier !== null) {
                                                         idCompany = c._id;
                                                         company = c.name;
+                                                        companyGlobalName = c.globalName;
                                                         particular = companyNameSheet.trim().replace(/\n/g, ' ');
                                                         code = codeCourtier;
                                                     }
@@ -78,6 +87,7 @@ exports.readExcelTableauCorrespondance = async (role) => {
                                             if (idCompany && code) {
                                                 companies.push({
                                                     idCompany,
+                                                    companyGlobalName,
                                                     company,
                                                     particular,
                                                     code,

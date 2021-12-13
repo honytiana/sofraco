@@ -109,6 +109,7 @@ const saveDocument = (company, filePath, extension) => {
     const fileName = fileService.getFileName(filePath);
     document.name = fileName;
     document.company = company._id;
+    document.companyGlobalName = company.globalName;
     document.companyName = company.name;
     document.path_original_file = filePath;
     document.type = extension;

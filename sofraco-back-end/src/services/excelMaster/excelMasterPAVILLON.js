@@ -18,7 +18,7 @@ exports.getOCRPAVILLONMCMS = (ocr) => {
                 datas: contrat.contrats,
                 pavVersion: ocr.pavVersion
             };
-            infosOCR.push({ company: `PAVILLON`, infosOCR: dataCourtierOCR });
+            infosOCR.push({ companyGlobalName: 'PAVILLON PREVOYANCE', companyName: `PAVILLON MCMS`, infosOCR: dataCourtierOCR });
         }
     });
     return infosOCR;
@@ -27,7 +27,7 @@ exports.getOCRPAVILLONMCMS = (ocr) => {
 exports.createWorkSheetPAVILLONMCMS = (workSheet, dataCourtierOCR) => {
     const font1 = { bold: true, name: 'Arial', size: 10 };
     let pavActio, pavV1, pavV2, pavV3, pavV4, pavV5, pavV6, pavV7, pavV8 = false;
-    switch (dataCourtierOCR.pavVersion) {
+    switch (dataCourtierOCR.infosOCR.pavVersion) {
         case 'pavActio':
             pavActio = true;
             break;
@@ -66,44 +66,44 @@ exports.createWorkSheetPAVILLONMCMS = (workSheet, dataCourtierOCR) => {
 
     let debut = rowNumber;
     if (pavActio) {
-        createPavetPAVILLONACTIO(dataCourtierOCR, workSheet, rowNumber);
+        rowNumber = createPavetPAVILLONACTIO(dataCourtierOCR, workSheet, rowNumber);
     }
     if (pavV1) {
-        createPavetPAVILLONV1(dataCourtierOCR, workSheet, rowNumber);
+        rowNumber = createPavetPAVILLONV1(dataCourtierOCR, workSheet, rowNumber);
     }
     if (pavV2) {
-        createPavetPAVILLONV2(dataCourtierOCR, workSheet, rowNumber);
+        rowNumber = createPavetPAVILLONV2(dataCourtierOCR, workSheet, rowNumber);
     }
     if (pavV3) {
-        createPavetPAVILLONV3(dataCourtierOCR, workSheet, rowNumber);
+        rowNumber = createPavetPAVILLONV3(dataCourtierOCR, workSheet, rowNumber);
     }
     if (pavV4) {
-        createPavetPAVILLONV4(dataCourtierOCR, workSheet, rowNumber);
+        rowNumber = createPavetPAVILLONV4(dataCourtierOCR, workSheet, rowNumber);
     }
     if (pavV5) {
-        createPavetPAVILLONV5(dataCourtierOCR, workSheet, rowNumber);
+        rowNumber = createPavetPAVILLONV5(dataCourtierOCR, workSheet, rowNumber);
     }
     if (pavV6) {
-        createPavetPAVILLONV6(dataCourtierOCR, workSheet, rowNumber);
+        rowNumber = createPavetPAVILLONV6(dataCourtierOCR, workSheet, rowNumber);
     }
     if (pavV7) {
-        createPavetPAVILLONV7(dataCourtierOCR, workSheet, rowNumber);
+        rowNumber = createPavetPAVILLONV7(dataCourtierOCR, workSheet, rowNumber);
     }
     if (pavV8) {
-        createPavetPAVILLONV8(dataCourtierOCR, workSheet, rowNumber);
+        rowNumber = createPavetPAVILLONV8(dataCourtierOCR, workSheet, rowNumber);
     }
     rowNumber++;
 
-    excelFile.setSimpleCell(workSheet, rowNumber, 'T', 'TOTAL', font1);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'R', 'TOTAL', font1);
     let result = 0;
     for (let i = debut; i <= rowNumber - 2; i++) {
-        result += workSheet.getRow(i).getCell('H').value;
+        result += workSheet.getRow(i).getCell('S').value;
     }
     const value =  {
-        formula: `SUM(U${debut}:U${rowNumber - 2})`,
+        formula: `SUM(S${debut}:S${rowNumber - 2})`,
         result: result
     };
-    excelFile.setStylizedCell(workSheet, rowNumber, 'U', value, false, {}, font1, '#,##0.00"€";\-#,##0.00"€"');
+    excelFile.setStylizedCell(workSheet, rowNumber, 'S', value, false, {}, font1, '#,##0.00"€";\-#,##0.00"€"');
 }
 
 const createPavetPAVILLONACTIO = (dataCourtierOCR, workSheet, rowNumber) => {
@@ -143,6 +143,7 @@ const createPavetPAVILLONACTIO = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('U').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
     }
+    return rowNumber;
 };
 
 const createPavetPAVILLONV1 = (dataCourtierOCR, workSheet, rowNumber) => {
@@ -182,6 +183,7 @@ const createPavetPAVILLONV1 = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('U').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
     }
+    return rowNumber;
 
 };
 
@@ -226,6 +228,7 @@ const createPavetPAVILLONV2 = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('W').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
     }
+    return rowNumber;
 
 };
 
@@ -266,6 +269,7 @@ const createPavetPAVILLONV3 = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('U').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
     }
+    return rowNumber;
 
 };
 
@@ -314,6 +318,7 @@ const createPavetPAVILLONV4 = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('Y').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
     }
+    return rowNumber;
 
 };
 
@@ -360,6 +365,7 @@ const createPavetPAVILLONV5 = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('X').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
     }
+    return rowNumber;
 
 };
 
@@ -402,6 +408,7 @@ const createPavetPAVILLONV6 = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('V').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
     }
+    return rowNumber;
 
 };
 
@@ -450,6 +457,7 @@ const createPavetPAVILLONV7 = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('Y').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
     }
+    return rowNumber;
 
 };
 
@@ -496,6 +504,7 @@ const createPavetPAVILLONV8 = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('X').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
     }
+    return rowNumber;
 
 };
 

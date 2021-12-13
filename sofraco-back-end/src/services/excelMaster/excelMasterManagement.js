@@ -47,11 +47,19 @@ exports.create = async (authorization) => {
 
 const getOCRInfos = async (authorization) => {
     let documents = await documentHandler.getDocuments();
-    documents = documents.filter((doc, index) => {
+    const docs = documents.filter((doc, index) => {
         return doc.status === 'done';
     });
+    let allDocs = [];
+    for (let doc of docs) {
+        const uploadDateMonth = new Date(doc.upload_date).getMonth();
+        const currentMonth = new Date().getMonth();
+        if (uploadDateMonth === currentMonth) {
+            allDocs.push(doc);
+        }
+    }
     let infos = [];
-    for (let document of documents) {
+    for (let document of allDocs) {
         const company = document.companyName;
         const ocr = document.ocr;
         switch (company.toUpperCase()) {
@@ -164,7 +172,7 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
             for (let company of correspondance.companies) {
                 for (let ocr of ocrInfos) {
                     for (let dataCourtierOCR of ocr) {
-                        if (dataCourtierOCR.company === company.company &&
+                        if ((dataCourtierOCR.companyName === company.company || dataCourtierOCR.companyGlobalName === company.companyGlobalName) &&
                             dataCourtierOCR.infosOCR.code.code === company.code) {
                             if (company.particular !== '') {
                                 dataCourtierOCR.particular = company.particular;
@@ -212,6 +220,7 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
             //     }
             // } else {
             cr = await courtierHandler.getCourtierById(ocrPerCourtier.courtier);
+            console.log(`DEBUT GENERATION EXCEL MASTER : ${cr.cabinet}`);
             excelMaster = {
                 courtier: ocrPerCourtier.courtier,
                 cabinet: cr !== null ? cr.cabinet : '',
@@ -240,20 +249,25 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
             workbook = new ExcelJS.Workbook();
             recapWorkSheet = workbook.addWorksheet('RECAP');
             let month = new Date().getMonth();
-            month = (month + 1 < 10) ? `0${month + 1}` : `${month}`;
+            month = (month + 1 < 10) ? `0${month + 1}` : `${month + 1}`;
             date = `${month}${new Date().getFullYear()}`;
             if (ocrPerCourtier.company === 'METLIFE') {
-                let workSheet = workbook.addWorksheet(ocrPerCourtier.company);
+                let workSheet = workbook.addWorksheet(ocrPerCourtier.companyGlobalName);
                 workSheet.properties.defaultColWidth = 20;
                 excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, ocrPerCourtier);
             }
             else {
                 for (let ocr of ocrPerCourtier.infos) {
-                    if (ocr.company !== null) {
-                        if (!workbook.worksheets.some(worksheet => worksheet.name === ocr.company)) {
-                            let workSheet = workbook.addWorksheet(ocr.company);
+                    if (ocr.companyName && ocr.companyName !== null) {
+                        if (!workbook.worksheets.some(worksheet => worksheet.name === ocr.companyGlobalName)) {
+                            let workSheet;
+                            if (ocr.companyGlobalName === 'MMA') {
+                                workSheet = workbook.addWorksheet(ocr.companyName);
+                            } else {
+                                workSheet = workbook.addWorksheet(ocr.companyGlobalName);
+                            }
                             workSheet.properties.defaultColWidth = 20;
-                            switch (ocr.company.toUpperCase()) {
+                            switch (ocr.companyName.toUpperCase()) {
                                 case 'APICIL':
                                     excelMasterAPICIL.createWorkSheetAPICIL(workSheet, ocr);
                                     break;
@@ -354,6 +368,7 @@ const generateExcelMaster = async (ocrInfos, authorization) => {
             excelMasterRecap.createWorkSheetRECAP(recapWorkSheet, sheets);
             excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(courtier) ? courtier : ''}.xlsx`);
             await workbook.xlsx.writeFile(excelPath);
+            console.log(`FIN GENERATION EXCEL MASTER : ${cr.cabinet}`);
             excelMaster.path = excelPath;
             excelMasters.push(excelMaster);
         }
@@ -405,7 +420,7 @@ const generateZipFilesEM = async (excelMastersPerCourtier) => {
 
 const generateSingleZipForAllZippedEM = async (excelsMastersZipped) => {
     let month = new Date().getMonth();
-    month = (month + 1 < 10) ? `0${month + 1}` : `${month}`;
+    month = (month + 1 < 10) ? `0${month + 1}` : `${month + 1}`;
     const date = `${month}${new Date().getFullYear()}`;
     const singleZip = await generateZip(`all_files_${date}`, excelsMastersZipped);
     const singleZipEM = {

@@ -14,7 +14,7 @@ exports.getOCRUAFLIFE = (ocr) => {
                 detailsBordereau: ocr.detailsBordereau,
                 datas: contrat.contrats
             };
-            infosOCR.push({ company: 'UAF LIFE PATRIMOINE', infosOCR: dataCourtierOCR });
+            infosOCR.push({ companyGlobalName: 'UAF LIFE PATRIMOINE', companyName: 'UAF LIFE PATRIMOINE', infosOCR: dataCourtierOCR });
         }
     });
     return infosOCR;

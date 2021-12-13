@@ -18,7 +18,7 @@ exports.getOCRMIEMCMS = (ocr) => {
                 datas: contrat.contrats,
                 mieVersion: ocr.mieVersion
             };
-            infosOCR.push({ company: `MIE`, infosOCR: dataCourtierOCR });
+            infosOCR.push({ companyGlobalName: 'MIE', companyName: `MIE MCMS`, infosOCR: dataCourtierOCR });
         }
     });
     return infosOCR;
@@ -26,7 +26,7 @@ exports.getOCRMIEMCMS = (ocr) => {
 
 exports.createWorkSheetMIEMCMS = (workSheet, dataCourtierOCR) => {
     let mieAxiom, mieV1 = false;
-    switch (dataCourtierOCR.mieVersion) {
+    switch (dataCourtierOCR.infosOCR.mieVersion) {
         case 'mieAxiom':
             mieAxiom = true;
             break;
@@ -44,22 +44,22 @@ exports.createWorkSheetMIEMCMS = (workSheet, dataCourtierOCR) => {
 
     let debut = rowNumber;
     if (mieAxiom) {
-        createPavetMIEAXIOM();
+        rowNumber = createPavetMIEAXIOM(dataCourtierOCR, workSheet, rowNumber);
     }
     if (mieV1) {
-        createPavetMIEV1();
+        rowNumber = createPavetMIEV1(dataCourtierOCR, workSheet, rowNumber);
     }
     rowNumber++;
-    excelFile.setSimpleCell(workSheet, rowNumber, 'T', 'TOTAL', { bold: true, name: 'Arial', size: 10 });
+    excelFile.setSimpleCell(workSheet, rowNumber, 'N', 'TOTAL', { bold: true, name: 'Arial', size: 10 });
     let result = 0;
     for (let i = debut; i <= rowNumber - 2; i++) {
-        result += workSheet.getRow(i).getCell('U').value;
+        result += workSheet.getRow(i).getCell('O').value;
     }
     const value =  {
-        formula: `SUM(U${debut}:U${rowNumber - 2})`,
+        formula: `SUM(O${debut}:O${rowNumber - 2})`,
         result: result
     };
-    excelFile.setStylizedCell(workSheet, rowNumber, 'U', value, false, {}, { bold: true, name: 'Arial', size: 10 }, '#,##0.00"€";\-#,##0.00"€"');
+    excelFile.setStylizedCell(workSheet, rowNumber, 'O', value, false, {}, { bold: true, name: 'Arial', size: 10 }, '#,##0.00"€";\-#,##0.00"€"');
 }
 
 const createPavetMIEAXIOM = (dataCourtierOCR, workSheet, rowNumber) => {
@@ -110,6 +110,7 @@ const createPavetMIEAXIOM = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('AA').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
     }
+    return rowNumber;
 };
 
 const createPavetMIEV1 = (dataCourtierOCR, workSheet, rowNumber) => {
@@ -160,6 +161,7 @@ const createPavetMIEV1 = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('AA').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
     }
+    return rowNumber;
 
 };
 

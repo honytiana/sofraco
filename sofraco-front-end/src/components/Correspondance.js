@@ -52,7 +52,7 @@ class Correspondance extends Component {
             this.setState({
                 fields: [
                     {
-                        key: 'company',
+                        key: 'companyGlobalName',
                         label: 'Compagnies',
                         _style: { width: '20%' },
                         _classes: ['text-center']
@@ -77,7 +77,7 @@ class Correspondance extends Component {
             this.setState({
                 fields: [
                     {
-                        key: 'company',
+                        key: 'companyGlobalName',
                         label: 'Compagnies',
                         _style: { width: '20%' },
                         _classes: ['text-center']

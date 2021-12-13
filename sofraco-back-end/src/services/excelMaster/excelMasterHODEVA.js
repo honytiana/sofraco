@@ -14,7 +14,7 @@ exports.getOCRHODEVA = (ocr) => {
                 datas: contrat.contrats,
                 totalMontant: contrat.totalMontant.result
             };
-            infosOCR.push({ company: 'HODEVA', infosOCR: dataCourtierOCR });
+            infosOCR.push({ companyGlobalName: 'HODEVA', companyName: 'HODEVA', infosOCR: dataCourtierOCR });
         }
     });
     return infosOCR;

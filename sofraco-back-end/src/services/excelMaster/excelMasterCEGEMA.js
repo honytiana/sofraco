@@ -13,7 +13,7 @@ exports.getOCRCEGEMA = (ocr) => {
                 headers,
                 datas: contrat.contrats
             };
-            infosOCR.push({ company: 'CEGEMA', infosOCR: dataCourtierOCR });
+            infosOCR.push({ companyGlobalName: 'CEGEMA', companyName: 'CEGEMA', infosOCR: dataCourtierOCR });
         }
     });
     return infosOCR;
@@ -52,7 +52,7 @@ exports.createWorkSheetCEGEMA = (workSheet, dataCourtierOCR) => {
     for (let i = debut; i <= rowNumber - 1; i++) {
         result += workSheet.getRow(i).getCell('H').value;
     }
-    const value = { 
+    const value = {
         formula: `SUM(H${debut}:H${rowNumber - 1})`,
         result: result
     };

@@ -14,7 +14,7 @@ exports.getOCRMILTIS = (ocr) => {
                 detailsBordereau: ocr.detailsBordereau,
                 datas: contrat.contrats
             };
-            infosOCR.push({ company: 'MILTIS', infosOCR: dataCourtierOCR });
+            infosOCR.push({ companyGlobalName: 'MILTIS', companyName: 'MILTIS', infosOCR: dataCourtierOCR });
         }
     });
     return infosOCR;

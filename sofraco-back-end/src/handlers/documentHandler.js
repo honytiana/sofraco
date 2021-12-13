@@ -9,6 +9,7 @@ class DocumentHandler {
         let document = new Document();
         document.name = data.name;
         document.company = data.company;
+        document.companyGlobalName = data.globalName;
         document.companyName = data.companyName;
         document.upload_date = Date.now();
         document.path_original_file = data.path_original_file;

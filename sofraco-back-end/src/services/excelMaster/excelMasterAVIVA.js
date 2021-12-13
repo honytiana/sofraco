@@ -12,7 +12,7 @@ exports.getOCRAVIVASURCO = (ocr) => {
             headers,
             datas: contrat.contrats
         };
-        infosOCR.push({ company: 'AVIVA SURCO', infosOCR: dataCourtierOCR });
+        infosOCR.push({ companyGlobalName: 'AVIVA', companyName: 'AVIVA SURCO', infosOCR: dataCourtierOCR });
     });
     return infosOCR;
 }

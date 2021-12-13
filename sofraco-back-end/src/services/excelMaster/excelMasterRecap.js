@@ -39,10 +39,12 @@ exports.createWorkSheetRECAP = (workSheetRecap, workSheets) => {
         } else {
             worksheet.eachRow((row, rowNumber) => {
                 row.eachCell((cell, colNumber) => {
-                    if (cell.value === 'TOTAL') {
-                        total = (row.getCell(colNumber + 1).value.result ?
-                            row.getCell(colNumber + 1).value.result :
-                            row.getCell(colNumber + 1).value);
+                    if (rowNumber > 1) {
+                        if (cell.value === 'TOTAL') {
+                            total = (row.getCell(colNumber + 1).value.result ?
+                                row.getCell(colNumber + 1).value.result :
+                                row.getCell(colNumber + 1).value);
+                        }
                     }
                 });
             });

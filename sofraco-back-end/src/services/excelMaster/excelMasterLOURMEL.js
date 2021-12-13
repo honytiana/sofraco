@@ -13,7 +13,7 @@ exports.getOCRLOURMEL = (ocr) => {
                 headers,
                 datas: contrat.contrats
             };
-            infosOCR.push({ company: 'LOURMEL', infosOCR: dataCourtierOCR });
+            infosOCR.push({ companyGlobalName: 'LOURMEL', companyName: 'LOURMEL', infosOCR: dataCourtierOCR });
         }
     });
     return infosOCR;
@@ -71,7 +71,7 @@ exports.createWorkSheetLOURMEL = (workSheet, dataCourtierOCR) => {
     for (let i = debut; i <= rowNumber - 2; i++) {
         result += workSheet.getRow(i).getCell('Q').value;
     }
-    const value = { 
+    const value = {
         formula: `SUM(Q${debut}:Q${rowNumber - 1})`,
         result: result
     };

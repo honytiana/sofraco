@@ -15,7 +15,7 @@ exports.getOCRGENERALI = (ocr) => {
                 headers,
                 datas: contrat.contrats
             };
-            infosOCR.push({ company: 'GENERALI', infosOCR: dataCourtierOCR });
+            infosOCR.push({ companyGlobalName: 'GENERALI', companyName: 'GENERALI', infosOCR: dataCourtierOCR });
         }
     });
     return infosOCR;
@@ -91,12 +91,12 @@ exports.createWorkSheetGENERALI = (workSheet, dataCourtierOCR) => {
     for (let i = debut; i <= rowNumber - 2; i++) {
         result += workSheet.getRow(i).getCell('AK').value;
     }
-    const value = { 
+    const value = {
         formula: `SUM(AK${debut}:AK${rowNumber - 2})`,
         result: result
     };
     excelFile.setStylizedCell(workSheet, rowNumber, 'AK', value, false, {}, font1, '#,##0.00"€";[Red]\-#,##0.00"€"');
-    for(let i = 1; i <= dataCourtierOCR.infosOCR.headers.length; i++) {
+    for (let i = 1; i <= dataCourtierOCR.infosOCR.headers.length; i++) {
         workSheet.getRow(rowNumber).getCell(i).fill = {
             type: 'pattern',
             pattern: 'solid',

@@ -20,7 +20,7 @@ exports.getOCRERES = (ocr) => {
                 headers,
                 datas: contrat.contrats
             };
-            infosOCR.push({ company: 'ERES', infosOCR: dataCourtierOCR });
+            infosOCR.push({ companyGlobalName: 'ERES', companyName: 'ERES', infosOCR: dataCourtierOCR });
         }
     });
     return infosOCR;
@@ -54,19 +54,19 @@ exports.createWorkSheetERES = (workSheet, dataCourtierOCR) => {
     const font1 = { bold: true, name: 'Arial', size: 11, color: { argb: 'FFFFFF' } };
     const font2 = { bold: true, name: 'Arial', size: 10 };
     workSheet.getRow(rowNumber).font = font1;
-    excelFile.setStylizedCell(workSheet, rowNumber, 'A',  '', false, {}, font1, '', 'ed7d31');
-    excelFile.setStylizedCell(workSheet, rowNumber, 'B',  '', false, {}, font1, '', 'ed7d31');
-    excelFile.setStylizedCell(workSheet, rowNumber, 'C',  '', false, {}, font1, '', 'ed7d31');
-    excelFile.setStylizedCell(workSheet, rowNumber, 'D',  '', false, {}, font1, '', 'ed7d31');
-    excelFile.setStylizedCell(workSheet, rowNumber, 'E',  'TOTAL', false, {}, font2, '', 'ed7d31');
+    excelFile.setStylizedCell(workSheet, rowNumber, 'A', '', false, {}, font1, '', 'ed7d31');
+    excelFile.setStylizedCell(workSheet, rowNumber, 'B', '', false, {}, font1, '', 'ed7d31');
+    excelFile.setStylizedCell(workSheet, rowNumber, 'C', '', false, {}, font1, '', 'ed7d31');
+    excelFile.setStylizedCell(workSheet, rowNumber, 'D', '', false, {}, font1, '', 'ed7d31');
+    excelFile.setStylizedCell(workSheet, rowNumber, 'E', 'TOTAL', false, {}, font2, '', 'ed7d31');
     let result = 0;
     for (let i = debut; i <= rowNumber - 2; i++) {
         result += workSheet.getRow(i).getCell('F').value;
     }
-    const value = { 
+    const value = {
         formula: `SUM(F${debut}:F${rowNumber - 2})`,
         result: result
     };
-    excelFile.setStylizedCell(workSheet, rowNumber, 'F',  value, false, {}, font2, '#,##0.00"€";\-#,##0.00"€"', 'ed7d31');
+    excelFile.setStylizedCell(workSheet, rowNumber, 'F', value, false, {}, font2, '#,##0.00"€";\-#,##0.00"€"', 'ed7d31');
 }
 

@@ -13,7 +13,7 @@ exports.getOCRAPIVIA = (ocr) => {
                 headers,
                 datas: contrat.contrats
             };
-            infosOCR.push({ company: 'APIVIA', infosOCR: dataCourtierOCR });
+            infosOCR.push({ companyGlobalName: 'APIVIA', companyName: 'APIVIA', infosOCR: dataCourtierOCR });
         }
     });
     return infosOCR;

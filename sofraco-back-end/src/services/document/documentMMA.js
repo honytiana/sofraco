@@ -131,7 +131,7 @@ exports.readExcelMMAACQUISITION = async (file) => {
                             row.getCell('B').value,
                         dateEffet: (typeof row.getCell('C').value === 'string') ?
                             row.getCell('C').value.trim() :
-                            (row.getCell('C').value !== null) ? new Date(0, 0, row.getCell('C').value, 0, 0, 0) : '',
+                            row.getCell('C').value,
                         dateEcheance: (typeof row.getCell('D').value === 'string') ?
                             row.getCell('D').value.trim() :
                             (row.getCell('D').value !== null) ? new Date(0, 0, row.getCell('D').value, 0, 0, 0) : '',

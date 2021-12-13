@@ -37,7 +37,7 @@ exports.getOCRSMATISMCMS = (ocr) => {
                 datas: contrat.contrats,
                 smatisVersion: ocr.smatisVersion
             };
-            infosOCR.push({ company: `SMATIS`, infosOCR: dataCourtierOCR });
+            infosOCR.push({ companyGlobalName: 'SMATIS', companyName: `SMATIS MCMS`, infosOCR: dataCourtierOCR });
         }
     });
     return infosOCR;
@@ -50,8 +50,12 @@ exports.createWorkSheetSMATISMCMS = (workSheet, dataCourtierOCR) => {
     //         smatisAxiom = true;
     //         break;
     // }
-    excelFile.setSimpleCell(workSheet, 1, 'D', header.firstHeader[0], { bold: true, name: 'Arial', size: 10 });
-    excelFile.setSimpleCell(workSheet, 2, 'M', header.firstHeader[1], { bold: true, name: 'Arial', size: 10 });
+    const font1 = { bold: true, name: 'Arial', size: 10 };
+    let rowNumber = 1;
+    excelFile.setSimpleCell(workSheet, rowNumber, 'D', dataCourtierOCR.infosOCR.headers.firstHeader[0], { bold: true, name: 'Arial', size: 10 });
+    rowNumber++;
+    excelFile.setSimpleCell(workSheet, rowNumber, 'M', dataCourtierOCR.infosOCR.headers.firstHeader[1], { bold: true, name: 'Arial', size: 10 });
+    rowNumber++;
     
     let cellNumber = 1;
     dataCourtierOCR.infosOCR.headers.secondHeader.forEach((secondHeader, index) => {
@@ -62,19 +66,19 @@ exports.createWorkSheetSMATISMCMS = (workSheet, dataCourtierOCR) => {
 
     let debut = rowNumber;
     // if (smatisAxiom) {
-    createPavetSMATISMCMS();
+        rowNumber = createPavetSMATISMCMS(dataCourtierOCR, workSheet, rowNumber);
     // }
     rowNumber++;
-    excelFile.setSimpleCell(workSheet, rowNumber, 'T', 'TOTAL', font1);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'R', 'TOTAL', font1);
     let result = 0;
     for (let i = debut; i <= rowNumber - 2; i++) {
-        result += workSheet.getRow(i).getCell('H').value;
+        result += workSheet.getRow(i).getCell('S').value;
     }
     const value =  {
-        formula: `SUM(U${debut}:U${rowNumber - 2})`,
+        formula: `SUM(S${debut}:S${rowNumber - 2})`,
         result: result
     };
-    excelFile.setStylizedCell(workSheet, rowNumber, 'U', value, false, {}, font1, '#,##0.00"€";\-#,##0.00"€"');
+    excelFile.setStylizedCell(workSheet, rowNumber, 'S', value, false, {}, font1, '#,##0.00"€";\-#,##0.00"€"');
 }
 
 const createPavetSMATISMCMS = (dataCourtierOCR, workSheet, rowNumber) => {
@@ -116,5 +120,6 @@ const createPavetSMATISMCMS = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('W').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
     }
+    return rowNumber;
 };
 

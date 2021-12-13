@@ -14,7 +14,7 @@ exports.getOCRMMAINCITATION = (ocr) => {
                 detailsBordereau: ocr.detailsBordereau,
                 datas: contrat.contrats
             };
-            infosOCR.push({ company: 'MMA INCITATION', infosOCR: dataCourtierOCR });
+            infosOCR.push({ companyGlobalName: 'MMA', companyName: 'MMA INCITATION', infosOCR: dataCourtierOCR });
         }
     });
     return infosOCR;
@@ -33,7 +33,7 @@ exports.getOCRMMAACQUISITION = (ocr) => {
                 headers,
                 datas: contrat.contrats
             };
-            infosOCR.push({ company: 'MMA ACQUISITION', infosOCR: dataCourtierOCR });
+            infosOCR.push({ companyGlobalName: 'MMA', companyName: 'MMA ACQUISITION', infosOCR: dataCourtierOCR });
         }
     });
     return infosOCR;
@@ -53,7 +53,7 @@ exports.getOCRMMAENCOURS = (ocr) => {
                 detailsBordereau: ocr.detailsBordereau,
                 datas: contrat.contrats
             };
-            infosOCR.push({ company: 'MMA ENCOURS', infosOCR: dataCourtierOCR });
+            infosOCR.push({ companyGlobalName: 'MMA', companyName: 'MMA ENCOURS', infosOCR: dataCourtierOCR });
         }
     });
     return infosOCR;
@@ -149,8 +149,8 @@ exports.createWorkSheetMMAACQUISITION = (workSheet, dataCourtierOCR) => {
     for (let datas of dataCourtierOCR.infosOCR.datas) {
         excelFile.setStylizedCell(workSheet, rowNumber, 'A', datas.numCourtier, true, border, font2);
         excelFile.setStylizedCell(workSheet, rowNumber, 'B', datas.souscripteur, true, border, font2);
-        excelFile.setStylizedCell(workSheet, rowNumber, 'C', datas.dateEffet ? new Date(datas.dateEffet) : '', true, border, font2, 'dd/mm/yyyy');
-        excelFile.setStylizedCell(workSheet, rowNumber, 'D', datas.dateEcheance ? new Date(datas.dateEcheance) : '', true, border, font2, 'dd/mm/yyyy');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'C', datas.dateEffet, true, border, font2, 'dd/mm/yyyy');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'D', datas.dateEcheance, true, border, font2, 'dd/mm/yyyy');
         excelFile.setStylizedCell(workSheet, rowNumber, 'E', datas.produit, true, border, font2);
         excelFile.setStylizedCell(workSheet, rowNumber, 'F', datas.numContrat, true, border, font2);
         excelFile.setStylizedCell(workSheet, rowNumber, 'G', datas.montant, true, border, font2, '#,##0.00"€";\-#,##0.00"€"');

@@ -18,7 +18,7 @@ exports.getOCRMIELMCMS = (ocr) => {
                 datas: contrat.contrats,
                 mielVersion: ocr.mielVersion
             };
-            infosOCR.push({ company: `MIEL`, infosOCR: dataCourtierOCR });
+            infosOCR.push({ companyGlobalName: 'MIEL MUTUELLE', companyName: `MIEL MCMS`, infosOCR: dataCourtierOCR });
         }
     });
     return infosOCR;
@@ -26,7 +26,7 @@ exports.getOCRMIELMCMS = (ocr) => {
 
 exports.createWorkSheetMIELMCMS = (workSheet, dataCourtierOCR) => {
     let mielCreasio, mielV1, mielV2, mielV3, mielV4 = false;
-    switch (dataCourtierOCR.mielVersion) {
+    switch (dataCourtierOCR.infosOCR.mielVersion) {
         case 'mielCreasio':
             mielCreasio = true;
             break;
@@ -53,19 +53,19 @@ exports.createWorkSheetMIELMCMS = (workSheet, dataCourtierOCR) => {
 
     let debut = rowNumber;
     if (mielCreasio) {
-        createPavetMIELCREASIO();
+        rowNumber = createPavetMIELCREASIO(dataCourtierOCR, workSheet, rowNumber);
     }
     if (mielV1) {
-        createPavetMIELV1();
+        rowNumber = createPavetMIELV1(dataCourtierOCR, workSheet, rowNumber);
     }
     if (mielV2) {
-        createPavetMIELV2();
+        rowNumber = createPavetMIELV2(dataCourtierOCR, workSheet, rowNumber);
     }
     if (mielV3) {
-        createPavetMIELV3();
+        rowNumber = createPavetMIELV3(dataCourtierOCR, workSheet, rowNumber);
     }
     if (mielV4) {
-        createPavetMIELV4();
+        rowNumber = createPavetMIELV4(dataCourtierOCR, workSheet, rowNumber);
     }
     rowNumber++;
     excelFile.setSimpleCell(workSheet, rowNumber, 'T', 'TOTAL', { bold: true, name: 'Arial', size: 10 });
@@ -113,6 +113,7 @@ const createPavetMIELCREASIO = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('V').value = datas.bordereauPaiementCommissionsInitiales;
         rowNumber++;
     }
+    return rowNumber;
 };
 
 const createPavetMIELV1 = (dataCourtierOCR, workSheet, rowNumber) => {
@@ -152,6 +153,7 @@ const createPavetMIELV1 = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('X').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
     }
+    return rowNumber;
 
 };
 
@@ -196,6 +198,7 @@ const createPavetMIELV2 = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('Z').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
     }
+    return rowNumber;
 
 };
 
@@ -234,6 +237,7 @@ const createPavetMIELV3 = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('W').value = datas.bordereauPaiementCommissionsInitiales;
         rowNumber++;
     }
+    return rowNumber;
 
 };
 
@@ -280,6 +284,7 @@ const createPavetMIELV4 = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('AA').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
     }
+    return rowNumber;
 
 };
 

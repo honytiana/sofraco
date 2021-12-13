@@ -6,7 +6,8 @@ exports.getOCRSLADE = (ocr) => {
         const syntheseDesCommissions = info.syntheseDesCommissions;
         const detailDesPolices = info.detailDesPolices;
         infosOCR.push({
-            company: 'SLADE', infosOCR: {
+            companyGlobalName: 'SWISSLIFE', companyName: 'SLADE',
+            infosOCR: {
                 code: {
                     cabinet: syntheseDesCommissions.codeApporteur,
                     code: syntheseDesCommissions.codeApporteur
@@ -133,7 +134,7 @@ exports.getOCRSWISSLIFESURCO = (ocr) => {
             headers,
             datas: contrat.contrats
         };
-        infosOCR.push({ company: 'SWISSLIFE SURCO', infosOCR: dataCourtierOCR });
+        infosOCR.push({ companyGlobalName: 'SWISSLIFE', companyName: 'SWISSLIFE SURCO', infosOCR: dataCourtierOCR });
     });
     return infosOCR;
 }

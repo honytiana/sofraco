@@ -22,7 +22,7 @@ exports.getOCRAPREP = (ocr) => {
         datas: ocr.infos.contrats,
         infosBordereau: ocr.infos.infosBordereau
     };
-    infosOCR.push({ company: 'APREP', infosOCR: dataCourtierOCR });
+    infosOCR.push({ companyGlobalName: 'APREP', companyName: 'APREP', infosOCR: dataCourtierOCR });
     return infosOCR;
 }
 
@@ -97,7 +97,7 @@ exports.getOCRAPREPENCOURS = (ocr) => {
             datas: contrat,
             infosBordereau: ocr.infos.infosBordereau
         };
-        infosOCR.push({ company: 'APREP ENCOURS', infosOCR: dataCourtierOCR });
+        infosOCR.push({ companyGlobalName: 'APREP', companyName: 'APREP ENCOURS', infosOCR: dataCourtierOCR });
     }
     return infosOCR;
 }

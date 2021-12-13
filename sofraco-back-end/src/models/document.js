@@ -5,6 +5,7 @@ const documentSchema = new Schema({
     name: { type: String, default: '' },
     user: { type: String, default: undefined },
     company: { type: Schema.Types.ObjectId, ref: 'Company', default: undefined },
+    companyGlobalName: { type: String, default: '' },
     companyName: { type: String, default: '' },
     upload_date: { type: Date, default: Date.now() },
     treatment_date: { type: Date, default: null},

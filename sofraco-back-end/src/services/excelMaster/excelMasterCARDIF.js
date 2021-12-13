@@ -13,7 +13,7 @@ exports.getOCRCARDIF = (ocr) => {
                 headers,
                 datas: contrat.contrats
             };
-            infosOCR.push({ company: 'CARDIF', infosOCR: dataCourtierOCR });
+            infosOCR.push({ companyGlobalName: 'CARDIF', companyName: 'CARDIF', infosOCR: dataCourtierOCR });
         }
     });
     return infosOCR;

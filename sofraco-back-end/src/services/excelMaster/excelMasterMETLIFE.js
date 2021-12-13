@@ -6,7 +6,8 @@ exports.getOCRMETLIFE = (ocr) => {
         const syntheseDesCommissions = info.infos.syntheseDesCommissions;
         const detailDesPolices = info.infos.detailDesPolices;
         infosOCR.push({
-            company: 'METLIFE', infosOCR: {
+            companyGlobalName: 'METLIFE', companyName: 'METLIFE',
+            infosOCR: {
                 code: {
                     cabinet: syntheseDesCommissions.codeApporteurEmetteur,
                     code: syntheseDesCommissions.codeApporteurEmetteur

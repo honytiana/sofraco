@@ -13,7 +13,7 @@ exports.getOCRSPVIE = (ocr) => {
                 headers,
                 datas: contrat.contrats
             };
-            infosOCR.push({ company: 'SPVIE', infosOCR: dataCourtierOCR });
+            infosOCR.push({ companyGlobalName: 'SPVIE', companyName: 'SPVIE', infosOCR: dataCourtierOCR });
         }
     });
     return infosOCR;

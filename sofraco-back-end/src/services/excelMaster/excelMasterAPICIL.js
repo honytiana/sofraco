@@ -109,7 +109,7 @@ exports.getOCRAPICIL = (ocr) => {
                 dataCourtierOCR.datas.push(data);
             }
         }
-        infosOCR.push({ company: 'APICIL', infosOCR: dataCourtierOCR });
+        infosOCR.push({ companyGlobalName: 'APICIL', companyName: 'APICIL', infosOCR: dataCourtierOCR });
     }
     return infosOCR;
 
