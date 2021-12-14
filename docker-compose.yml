@@ -26,17 +26,21 @@ services:
             - sofraco-network
 
     mongodb-sofraco:
-        image: mongo
+        image: mongo:5.0.3
         restart: always
         container_name: mongodb
         volumes:
             - ./data-node:/data/db
-#         ports:
-#             - 27017:27017
         command: mongod --noauth
         networks:
-            - sofraco-network
+            sofraco-network:
+               ipv4_address: 172.20.0.2
 
 networks:
     sofraco-network:
         driver: bridge
+        ipam:
+          config:
+             - subnet: 172.20.0.0/16
+           
+
