@@ -42,7 +42,9 @@ class Mandataire extends Component {
             fields: [],
             ajoutMandataire: false,
             newP: this.props.newP,
-            token: null
+            token: null,
+            visibleAlert: false,
+            mandataireToDel: null
         }
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
@@ -95,12 +97,12 @@ class Mandataire extends Component {
                     _style: { width: '5%' },
                     _classes: ['text-center']
                 },
-                // {
-                //     key: 'delete',
-                //     label: '',
-                //     _style: { width: '5%' },
-                //     _classes: ['text-center']
-                // }
+                {
+                    key: 'delete',
+                    label: '',
+                    _style: { width: '5%' },
+                    _classes: ['text-center']
+                }
             ],
             toast: false,
             messageToast: []
@@ -211,26 +213,21 @@ class Mandataire extends Component {
         }
     }
 
-    deleteMandataire(e, mandataire) {
+    deleteMandataire(e) {
         e.preventDefault();
-        axios.delete(`${config.nodeUrl}/api/courtier/${mandataire._id}`, {
+        this.setState({ visibleAlert: false });
+        axios.delete(`${config.nodeUrl}/api/courtier/${this.state.mandataireToDel._id}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.props.token.value}`
             }
         })
             .then((res) => {
-                let mandataires = this.state.mandataires;
-                for (let m of mandataires) {
-                    if (m._id === res.data._id) {
-                        mandataires.splice(mandataires.indexOf(m), 1, res.data);
-                    }
-                }
                 this.setState({
-                    mandataires: mandataires,
                     toast: true,
-                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le mandataire ${res.data.cabinet} à été désactivé` }
+                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le mandataire ${res.data.cabinet} à été supprimé` }
                 });
+                this.fetchMandataires();
             }).catch((err) => {
                 this.setState({
                     toast: true,
@@ -251,16 +248,30 @@ class Mandataire extends Component {
     }
 
     toggleDetails(index) {
-        const position = this.state.details.indexOf(index)
-        let newDetails = this.state.details.slice()
+        const position = this.state.details.indexOf(index);
+        let newDetails = this.state.details.slice();
         if (position !== -1) {
-            newDetails.splice(position, 1)
+            newDetails.splice(position, 1);
         } else {
-            newDetails = [...this.state.details, index]
+            newDetails = [...this.state.details, index];
         }
         this.setState({
             details: newDetails
-        })
+        });
+    }
+
+    openDeletePopup(e, mandataire) {
+        this.setState({
+            mandataireToDel: mandataire,
+            visibleAlert: true
+        });
+    }
+
+    closeDeletePopup(e) {
+        this.setState({
+            visibleAlert: false,
+            mandataireToDel: null
+        });
     }
 
     activerAjoutMandataire() {
@@ -544,25 +555,50 @@ class Mandataire extends Component {
                                     </CModal>
                                 )
                             },
-                        // 'delete':
-                        //     (item, index) => {
-                        //         return (
-                        //             <td className="py-2">
-                        //                 <CButton
-                        //                     color="danger"
-                        //                     variant="outline"
-                        //                     shape="square"
-                        //                     size="sm"
-                        //                     onClick={(e) => { this.deleteMandataire(e, item) }}
-                        //                 >
-                        //                     Delete
-                        //                 </CButton>
-                        //             </td>
-                        //         )
-                        //     },
+                        'delete':
+                            (item, index) => {
+                                return (
+                                    <td className="py-2">
+                                        <CButton
+                                            color="danger"
+                                            variant="outline"
+                                            shape="square"
+                                            size="sm"
+                                            onClick={(e) => this.openDeletePopup(e, item)}
+                                        >
+                                            Supprimer
+                                        </CButton>
+                                    </td>
+                                )
+                            }
                     }
                     }
                 />
+                <CModal
+                    show={this.state.visibleAlert}
+                    className="sofraco-modal-ask"
+                    id="sofraco-modal-ask"
+                    onClose={(e) => { this.closeDeletePopup() }}
+                >
+                    <CModalHeader closeButton></CModalHeader>
+                    <CModalBody>
+                        Voulez vous vraiment supprimer le courtier {this.state.mandataireToDel ? this.state.mandataireToDel.cabinet : ''}?
+                    </CModalBody>
+                    <CModalFooter>
+                        <CButton
+                            color="danger"
+                            onClick={(e) => { this.deleteMandataire(e) }}
+                            size="sm">
+                            Supprimer
+                        </CButton>
+                        <CButton
+                            color="secondary"
+                            onClick={(e) => this.closeDeletePopup()}
+                            size="sm">
+                            Annuler
+                        </CButton>
+                    </CModalFooter>
+                </CModal>
                 {
                     (this.state.toast === true &&
                         this.state.messageToast &&

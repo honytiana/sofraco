@@ -4,6 +4,11 @@
     width: 250px;
 }
 
+#sofraco-modal-ask {
+    width: 500px;
+    max-height: 200px !important;
+}
+
 .sofraco-button:hover {
     color: #fff;
     background-color: #F39200;

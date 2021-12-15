@@ -44,7 +44,9 @@ class Administration extends Component {
             activePage: 1,
             num: 0,
             token: null,
-            ajoutCourtier: false
+            ajoutCourtier: false,
+            courtierToDel: null,
+            visibleAlert: false
         }
         this.getBadge = this.getBadge.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
@@ -67,7 +69,7 @@ class Administration extends Component {
                         {
                             key: 'cabinet',
                             label: 'Cabinet',
-                            _style: { width: '30%' },
+                            _style: { width: '25%' },
                             _classes: ['text-center']
                         },
                         {
@@ -97,13 +99,21 @@ class Administration extends Component {
                         {
                             key: 'status',
                             label: 'Status',
-                            _style: { width: '10%' },
+                            _style: { width: '5%' },
                             _classes: ['text-center']
                         },
                         {
                             key: 'show_details',
                             label: '',
-                            _style: { width: '10%' },
+                            _style: { width: '5%' },
+                            _classes: ['text-center'],
+                            sorter: false,
+                            filter: false
+                        },
+                        {
+                            key: 'delete',
+                            label: '',
+                            _style: { width: '5%' },
                             _classes: ['text-center'],
                             sorter: false,
                             filter: false
@@ -224,6 +234,50 @@ class Administration extends Component {
                 }, 6000);
             });
         }
+    }
+
+    deleteCourtier(e, courtier) {
+        e.preventDefault();
+        this.setState({ visibleAlert: false });
+        axios.delete(`${config.nodeUrl}/api/courtier/${this.state.courtierToDel._id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.state.token.value}`
+            }
+        })
+            .then((res) => {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le courtier ${courtier.cabinet} à été supprimé` }
+                });
+                this.fetchCourtiers();
+            }).catch((err) => {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'ERROR', color: 'danger', message: err }
+                })
+            }).finally(() => {
+                setTimeout(() => {
+                    this.setState({
+                        toast: false,
+                        messageToast: {}
+                    });
+                }, 6000);
+            });
+    }
+
+    openDeletePopup(e, courtier) {
+        this.setState({
+            courtierToDel: courtier,
+            visibleAlert: true
+        });
+    }
+
+    closeDeletePopup(e) {
+        this.setState({
+            visibleAlert: false,
+            courtierToDel: null
+        });
     }
 
     render() {
@@ -393,11 +447,52 @@ class Administration extends Component {
                                         </CModalFooter>
                                     </CModal>
                                 )
+                            },
+                        'delete':
+                            (item, index) => {
+                                return (
+                                    <td className="py-2">
+                                        <CButton
+                                            color="danger"
+                                            variant="outline"
+                                            shape="square"
+                                            size="sm"
+                                            onClick={(e) => this.openDeletePopup(e, item)}
+                                        >
+                                            Supprimer
+                                        </CButton>
+                                    </td>
+                                )
                             }
                     }
                     }
                 />
                 <CButton className="sofraco-button" onClick={this.activerAjoutCourtier}>Ajouter un courtier</CButton>
+                <CModal
+                    show={this.state.visibleAlert}
+                    className="sofraco-modal-ask"
+                    id="sofraco-modal-ask"
+                    onClose={(e) => { this.closeDeletePopup() }}
+                >
+                    <CModalHeader closeButton></CModalHeader>
+                    <CModalBody>
+                        Voulez vous vraiment supprimer le courtier {this.state.courtierToDel ? this.state.courtierToDel.cabinet : ''}?
+                    </CModalBody>
+                    <CModalFooter>
+                        <CButton
+                            color="danger"
+                            onClick={(e) => { this.deleteCourtier(e) }}
+                            size="sm">
+                            Supprimer
+                        </CButton>
+                        <CButton
+                            color="secondary"
+                            onClick={(e) => this.closeDeletePopup()}
+                            size="sm">
+                            Annuler
+                        </CButton>
+                    </CModalFooter>
+                </CModal>
                 {
                     (this.state.toast === true &&
                         this.state.messageToast.length > 0) && (

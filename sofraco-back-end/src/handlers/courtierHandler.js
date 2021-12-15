@@ -28,7 +28,7 @@ class CourtierHandler {
     }
 
     getCourtiersByRole(role, limit=0, skip=0) {
-        return Courtier.find({ role: role }).skip(skip).limit(limit);
+        return Courtier.find({ role: role, is_enabled: true }).skip(skip).limit(limit);
     }
 
     async getMandatairesOfCourtier(courtier) {
@@ -58,6 +58,10 @@ class CourtierHandler {
     deleteCourtier(id) {
         return Courtier.findByIdAndUpdate(id, { active: 'Inactive', is_enabled: false });
     }
+
+    // deleteCourtier(id) {
+    //     return Courtier.findByIdAndUpdate(id, { active: 'Inactive', is_enabled: false });
+    // }
 
 }
 
