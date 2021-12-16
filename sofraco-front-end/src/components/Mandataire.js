@@ -156,111 +156,6 @@ class Mandataire extends Component {
         }
     }
 
-    onSubmitHandler(event, mandataire) {
-        event.preventDefault();
-        const options = {
-            cabinet: event.target['sofraco-cabinet'].value,
-            lastName: event.target['sofraco-nom'].value,
-            firstName: event.target['sofraco-prenom'].value,
-            email: event.target['sofraco-email'].value,
-            phone: event.target['sofraco-phone'].value
-        };
-        if (options.cabinet !== '' ||
-            options.lastName !== '' ||
-            options.firstName !== '' ||
-            options.email !== '' ||
-            options.phone !== '') {
-            axios.put(`${config.nodeUrl}/api/courtier/${mandataire._id}`, options, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.props.token.value}`
-                }
-            }).then((res) => {
-                let mandataires = this.state.mandataires;
-                for (let m of mandataires) {
-                    if (m._id === res.data._id) {
-                        mandataires.splice(mandataires.indexOf(m), 1, res.data);
-                    }
-                }
-                this.setState({
-                    mandataires: mandataires,
-                    toast: true,
-                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le mandataire ${mandataire.cabinet} à été modifié` }
-                });
-            }).catch((err) => {
-                this.setState({
-                    toast: true,
-                    messageToast: { header: 'ERROR', color: 'danger', message: err }
-                })
-            }).finally(() => {
-                setTimeout(() => {
-                    this.setState({
-                        toast: false,
-                        messageToast: {}
-                    });
-                }, 6000);
-            });
-        }
-    }
-
-    deleteMandataire(e) {
-        e.preventDefault();
-        this.setState({ visibleAlert: false });
-        axios.delete(`${config.nodeUrl}/api/courtier/${this.state.mandataireToDel._id}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.token.value}`
-            }
-        })
-            .then((res) => {
-                this.setState({
-                    toast: true,
-                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le mandataire ${res.data.cabinet} à été supprimé` }
-                });
-                this.fetchMandataires();
-            }).catch((err) => {
-                this.setState({
-                    toast: true,
-                    messageToast: { header: 'ERROR', color: 'danger', message: err }
-                })
-            }).finally(() => {
-                setTimeout(() => {
-                    this.setState({
-                        toast: false,
-                        messageToast: {}
-                    });
-                }, 6000);
-            })
-
-    }
-
-    toggleDetails(index) {
-        const position = this.state.details.indexOf(index);
-        let newDetails = this.state.details.slice();
-        if (position !== -1) {
-            newDetails.splice(position, 1);
-        } else {
-            newDetails = [...this.state.details, index];
-        }
-        this.setState({
-            details: newDetails
-        });
-    }
-
-    openDeletePopup(e, mandataire) {
-        this.setState({
-            mandataireToDel: mandataire,
-            visibleAlert: true
-        });
-    }
-
-    closeDeletePopup(e) {
-        this.setState({
-            visibleAlert: false,
-            mandataireToDel: null
-        });
-    }
-
     activerAjoutMandataire() {
         let activer = this.state.ajoutMandataire;
         this.setState({
@@ -315,6 +210,111 @@ class Mandataire extends Component {
                 }, 6000);
             });
         }
+    }
+
+    onSubmitHandler(event, mandataire) {
+        event.preventDefault();
+        const options = {
+            cabinet: event.target['sofraco-cabinet'].value,
+            lastName: event.target['sofraco-nom'].value,
+            firstName: event.target['sofraco-prenom'].value,
+            email: event.target['sofraco-email'].value,
+            phone: event.target['sofraco-phone'].value
+        };
+        if (options.cabinet !== '' ||
+            options.lastName !== '' ||
+            options.firstName !== '' ||
+            options.email !== '' ||
+            options.phone !== '') {
+            axios.put(`${config.nodeUrl}/api/courtier/${mandataire._id}`, options, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.props.token.value}`
+                }
+            }).then((res) => {
+                let mandataires = this.state.mandataires;
+                for (let m of mandataires) {
+                    if (m._id === res.data._id) {
+                        mandataires.splice(mandataires.indexOf(m), 1, res.data);
+                    }
+                }
+                this.setState({
+                    mandataires: mandataires,
+                    toast: true,
+                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le mandataire ${mandataire.cabinet} à été modifié` }
+                });
+            }).catch((err) => {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'ERROR', color: 'danger', message: err }
+                })
+            }).finally(() => {
+                setTimeout(() => {
+                    this.setState({
+                        toast: false,
+                        messageToast: {}
+                    });
+                }, 6000);
+            });
+        }
+    }
+
+    toggleDetails(index) {
+        const position = this.state.details.indexOf(index);
+        let newDetails = this.state.details.slice();
+        if (position !== -1) {
+            newDetails.splice(position, 1);
+        } else {
+            newDetails = [...this.state.details, index];
+        }
+        this.setState({
+            details: newDetails
+        });
+    }
+
+    openDeletePopup(e, mandataire) {
+        this.setState({
+            mandataireToDel: mandataire,
+            visibleAlert: true
+        });
+    }
+
+    deleteMandataire(e) {
+        e.preventDefault();
+        this.setState({ visibleAlert: false });
+        axios.delete(`${config.nodeUrl}/api/courtier/${this.state.mandataireToDel._id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.props.token.value}`
+            }
+        })
+            .then((res) => {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le mandataire ${res.data.cabinet} à été supprimé` }
+                });
+                this.fetchMandataires();
+            }).catch((err) => {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'ERROR', color: 'danger', message: err }
+                })
+            }).finally(() => {
+                setTimeout(() => {
+                    this.setState({
+                        toast: false,
+                        messageToast: {}
+                    });
+                }, 6000);
+            })
+
+    }
+
+    closeDeletePopup(e) {
+        this.setState({
+            visibleAlert: false,
+            mandataireToDel: null
+        });
     }
 
     render() {

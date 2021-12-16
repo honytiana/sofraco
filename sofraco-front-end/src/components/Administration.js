@@ -236,6 +236,13 @@ class Administration extends Component {
         }
     }
 
+    openDeletePopup(e, courtier) {
+        this.setState({
+            courtierToDel: courtier,
+            visibleAlert: true
+        });
+    }
+
     deleteCourtier(e) {
         e.preventDefault();
         this.setState({ visibleAlert: false });
@@ -267,13 +274,6 @@ class Administration extends Component {
                     });
                 }, 6000);
             });
-    }
-
-    openDeletePopup(e, courtier) {
-        this.setState({
-            courtierToDel: courtier,
-            visibleAlert: true
-        });
     }
 
     closeDeletePopup(e) {
