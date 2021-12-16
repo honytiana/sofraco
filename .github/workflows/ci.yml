@@ -15,13 +15,13 @@ jobs:
     - name: Executing remote command
       uses: appleboy/ssh-action@master
       with:
-        HOST: ${{ secrets.HOST }}
+        HOST: ${{ secrets.HOST2 }}
         USERNAME: ${{ secrets.USER }}
-        PORT: ${{ secrets.PORT }}
-        KEY: ${{ secrets.KEY }}
+        PORT: ${{ secrets.PORT2 }}
+        KEY: ${{ secrets.KEY2 }}
         command_timeout: 30m
         script: |
-          cd /home/data/Sofraco
+          cd Sofraco/
           git pull
           docker-compose build --no-cache
           docker-compose up -d
