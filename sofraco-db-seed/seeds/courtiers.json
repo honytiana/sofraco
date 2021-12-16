@@ -7,7 +7,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "AMMI",
@@ -17,7 +17,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ARCARO",
@@ -27,7 +27,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ANGELIER",
@@ -37,7 +37,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ALBIE",
@@ -47,7 +47,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ARFAOUI",
@@ -57,7 +57,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "AUGARD",
@@ -67,7 +67,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "AY",
@@ -77,7 +77,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BAILLEUL",
@@ -87,7 +87,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BAINES",
@@ -97,7 +97,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ALBIE",
@@ -107,7 +107,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "AGNOLON",
@@ -117,7 +117,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BARADELLO",
@@ -127,7 +127,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ABDELKADER",
@@ -137,7 +137,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ABSALON",
@@ -147,7 +147,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BARAGNON",
@@ -157,7 +157,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BARAGNON",
@@ -167,7 +167,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BARBERY",
@@ -177,7 +177,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "AKRICH",
@@ -187,7 +187,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BAREILLE",
@@ -197,7 +197,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BAREILLE",
@@ -207,7 +207,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BARNET",
@@ -217,7 +217,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BARRE",
@@ -227,7 +227,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BARTA",
@@ -237,7 +237,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BARRE",
@@ -247,7 +247,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BENEYTON",
@@ -257,7 +257,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BEREZOWSKI",
@@ -267,7 +267,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BEREZOWSKI",
@@ -277,7 +277,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BEREZOWSKI",
@@ -287,7 +287,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BERNADET",
@@ -297,7 +297,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BERNARD",
@@ -307,7 +307,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BERNARDET-LERAY",
@@ -317,7 +317,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BENEYTON",
@@ -327,7 +327,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BERNARDET-LERAY",
@@ -337,7 +337,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BAUME",
@@ -347,7 +347,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BERTHET",
@@ -357,7 +357,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BERNIER",
@@ -367,7 +367,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BERTHOUMIEUX",
@@ -377,7 +377,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BERTIER",
@@ -387,7 +387,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BERTIER",
@@ -397,7 +397,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BAUME",
@@ -407,7 +407,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BESSON",
@@ -417,7 +417,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BENEYTON",
@@ -427,7 +427,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BENEL",
@@ -437,7 +437,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BAUME",
@@ -447,7 +447,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BENEYTON",
@@ -457,7 +457,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BEYER-THUOT",
@@ -467,7 +467,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BIOSCA",
@@ -477,7 +477,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BOISSEAU",
@@ -487,7 +487,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BONNET",
@@ -497,7 +497,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BOUCHENOT",
@@ -507,7 +507,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BLANC",
@@ -517,7 +517,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BONNET",
@@ -527,7 +527,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BOURGEOIS",
@@ -537,7 +537,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BOURNET",
@@ -547,7 +547,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BOUSMAHA",
@@ -557,7 +557,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BRATIGNY",
@@ -567,7 +567,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BIZET",
@@ -577,7 +577,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BONNEFOUX",
@@ -587,7 +587,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BRICHORY",
@@ -597,7 +597,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BOISSARD",
@@ -607,7 +607,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BRISSE",
@@ -617,7 +617,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BORNE",
@@ -627,7 +627,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BRISSE-SAUMET",
@@ -637,7 +637,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BRISSE-SAGNOL",
@@ -647,7 +647,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BROCA",
@@ -657,7 +657,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BURLOT",
@@ -667,7 +667,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BURATI",
@@ -677,7 +677,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BURLOT",
@@ -687,7 +687,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BRODIN",
@@ -697,7 +697,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BRODIN",
@@ -707,7 +707,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BURLOT",
@@ -717,7 +717,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BURET",
@@ -727,7 +727,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CALDUBEHERE",
@@ -737,7 +737,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CALLIER",
@@ -747,7 +747,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CALDUBEHERE",
@@ -757,7 +757,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CALLIER / CALDUBEHERE",
@@ -767,7 +767,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CALMELS",
@@ -777,7 +777,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CALVEZ",
@@ -787,7 +787,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CALVEZ",
@@ -797,7 +797,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CAMPOS",
@@ -807,7 +807,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CASSAGNE",
@@ -817,7 +817,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CARILLON",
@@ -827,7 +827,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CASSIUS",
@@ -837,7 +837,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CERTAIN",
@@ -847,7 +847,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CHAFFRON",
@@ -857,7 +857,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CHALAYE / GIGLIO",
@@ -867,7 +867,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CHALAYE",
@@ -877,7 +877,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CHALAYE-GIGLIO",
@@ -887,7 +887,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CHAMARET",
@@ -897,7 +897,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CHEVRIER",
@@ -907,7 +907,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CHEKLER",
@@ -917,7 +917,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "COLLAS",
@@ -927,7 +927,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "COLONNA",
@@ -937,7 +937,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "COMTE",
@@ -947,7 +947,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CONTE",
@@ -957,7 +957,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CHAUVEROCHE",
@@ -967,7 +967,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CORDONNIER",
@@ -977,7 +977,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "COHEN",
@@ -987,7 +987,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CLOUTET",
@@ -997,7 +997,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CORPAS",
@@ -1007,7 +1007,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CORPAS",
@@ -1017,7 +1017,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "COLLAS",
@@ -1027,7 +1027,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CHERGUI",
@@ -1037,7 +1037,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CORRIHONS",
@@ -1047,7 +1047,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "COLLAS",
@@ -1057,7 +1057,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CORREIA",
@@ -1067,7 +1067,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CORTES",
@@ -1077,7 +1077,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CORTES",
@@ -1087,7 +1087,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "COTTENDIN",
@@ -1097,7 +1097,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "COURTE",
@@ -1107,7 +1107,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "COSSOUL",
@@ -1117,7 +1117,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "COTTENDIN",
@@ -1127,7 +1127,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "COURTY",
@@ -1137,7 +1137,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CRAMBERT",
@@ -1147,7 +1147,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CRASSO",
@@ -1157,7 +1157,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CROCCO",
@@ -1167,7 +1167,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CROISE",
@@ -1177,7 +1177,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CZERNIAK",
@@ -1187,7 +1187,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CREMONT",
@@ -1197,7 +1197,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "D'AUZAC DE LAMARTINIE",
@@ -1207,7 +1207,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DA SILVA",
@@ -1217,7 +1217,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CORTESE",
@@ -1227,7 +1227,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CROCCO",
@@ -1237,7 +1237,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "COTTENDIN",
@@ -1247,7 +1247,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "COSSOUL-CLERC",
@@ -1257,7 +1257,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DABADIE-SAUJOT",
@@ -1267,7 +1267,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "COURMARCEL",
@@ -1277,7 +1277,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DASSE",
@@ -1287,7 +1287,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DASSE-BARRA",
@@ -1297,7 +1297,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DAVIN",
@@ -1307,7 +1307,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DAVIN / RUBIANO",
@@ -1317,7 +1317,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DE BOISSIEU du TIRET / BENEL",
@@ -1327,7 +1327,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DE BUEGER",
@@ -1337,7 +1337,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DE COURTILLES",
@@ -1347,7 +1347,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DECOTTE",
@@ -1357,7 +1357,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DE BOISSIEU du TIRET",
@@ -1367,7 +1367,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DELAGNES",
@@ -1377,7 +1377,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DELAGNES",
@@ -1387,7 +1387,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DELAGNES",
@@ -1397,7 +1397,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DELAUDIER",
@@ -1407,7 +1407,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DELVOYE",
@@ -1417,7 +1417,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DENIBAUD",
@@ -1427,7 +1427,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DENIBAUD",
@@ -1437,7 +1437,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DERUEL",
@@ -1447,7 +1447,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DERUEL",
@@ -1457,7 +1457,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DESBOIS-LUMINEAU",
@@ -1467,7 +1467,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DESBOIS-LUMINEAU",
@@ -1477,7 +1477,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DERVIEUX",
@@ -1487,7 +1487,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DESCLAUX",
@@ -1497,7 +1497,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DESK",
@@ -1507,7 +1507,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DUBOUCARRE",
@@ -1517,7 +1517,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DOUMENG",
@@ -1527,7 +1527,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DUCROCQ",
@@ -1537,7 +1537,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DUFFAU",
@@ -1547,7 +1547,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DUPONT",
@@ -1557,7 +1557,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DESVARIEUX",
@@ -1567,7 +1567,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DUBOUCARRE",
@@ -1577,7 +1577,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DEVERITE",
@@ -1587,7 +1587,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DUCHAMPS",
@@ -1597,7 +1597,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DUPUY",
@@ -1607,7 +1607,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DI COSTANZO",
@@ -1617,7 +1617,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DUPUY",
@@ -1627,7 +1627,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DURAND CHEVALIER",
@@ -1637,7 +1637,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DUCROCQ",
@@ -1647,7 +1647,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DURET",
@@ -1657,7 +1657,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DUVAL",
@@ -1667,7 +1667,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DURET",
@@ -1677,7 +1677,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DUVIGNEAU-LOBRE",
@@ -1687,7 +1687,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ERRECART",
@@ -1697,7 +1697,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ESPINASSE",
@@ -1707,7 +1707,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FALCOU",
@@ -1717,7 +1717,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FAUCONNET",
@@ -1727,7 +1727,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FEVRIER",
@@ -1737,7 +1737,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FEVRIER",
@@ -1747,7 +1747,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ESSLAOUI",
@@ -1757,7 +1757,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ESSLAOUI",
@@ -1767,7 +1767,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ELICHABE",
@@ -1777,7 +1777,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ECHELLE",
@@ -1787,7 +1787,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FABRE",
@@ -1797,7 +1797,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ERRECART",
@@ -1807,7 +1807,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FEVRIER",
@@ -1817,7 +1817,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FOUCAUD",
@@ -1827,7 +1827,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FOUCAUD",
@@ -1837,7 +1837,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FOFANA-TISON",
@@ -1847,7 +1847,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FOUCAUD",
@@ -1857,7 +1857,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FOURNET",
@@ -1867,7 +1867,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FOUCAUD",
@@ -1877,7 +1877,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FOURETS",
@@ -1887,7 +1887,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FOURCAUD",
@@ -1897,7 +1897,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FRAYSSE",
@@ -1907,7 +1907,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GABIN",
@@ -1917,7 +1917,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GABIN",
@@ -1927,7 +1927,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FRAYSSE",
@@ -1937,7 +1937,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GAMARRA",
@@ -1947,7 +1947,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GAMARRA",
@@ -1957,7 +1957,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GABIN / ESPAGNO",
@@ -1967,7 +1967,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FEVRIER",
@@ -1977,7 +1977,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FOUCAUD",
@@ -1987,7 +1987,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FOUCAUD",
@@ -1997,7 +1997,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FOUCAUD",
@@ -2007,7 +2007,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GAULT",
@@ -2017,7 +2017,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GIACANI",
@@ -2027,7 +2027,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GARCIA",
@@ -2037,7 +2037,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GIRARD-MARTIRE",
@@ -2047,7 +2047,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GIRARD-MARTIRE-LAFFAY",
@@ -2057,7 +2057,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GIRARD",
@@ -2067,7 +2067,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GIRARD",
@@ -2077,7 +2077,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GIVELET",
@@ -2087,7 +2087,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GIRARD/MARTIRE",
@@ -2097,7 +2097,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GONON",
@@ -2107,7 +2107,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GRANET",
@@ -2117,7 +2117,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GENDRIER",
@@ -2127,7 +2127,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GRANET",
@@ -2137,7 +2137,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GRANGEON",
@@ -2147,7 +2147,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GRANIER",
@@ -2157,7 +2157,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GARDET",
@@ -2167,7 +2167,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GANTIER",
@@ -2177,7 +2177,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GUATEL",
@@ -2187,7 +2187,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GUERIN",
@@ -2197,7 +2197,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GUATEL",
@@ -2207,7 +2207,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "HAU",
@@ -2217,7 +2217,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "HANCHARD / GUERIN",
@@ -2227,7 +2227,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "HAU",
@@ -2237,7 +2237,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "HAU",
@@ -2247,7 +2247,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "HEMERY",
@@ -2257,7 +2257,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "HEINTZ",
@@ -2267,7 +2267,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "HOURIEZ",
@@ -2277,7 +2277,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "HOURS",
@@ -2287,7 +2287,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "HAMELIN",
@@ -2297,7 +2297,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "HOURIEZ",
@@ -2307,7 +2307,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "HULIN",
@@ -2317,7 +2317,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "HUBERT",
@@ -2327,7 +2327,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "IMBERT",
@@ -2337,7 +2337,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "HANCHARD",
@@ -2347,7 +2347,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GUICHARD",
@@ -2357,7 +2357,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GUILHEM / DUBOUILH",
@@ -2367,7 +2367,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GUINEE",
@@ -2377,7 +2377,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "INGELS",
@@ -2387,7 +2387,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "INGELS",
@@ -2397,7 +2397,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "JORIGNE",
@@ -2407,7 +2407,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "JAUNATRE / COULARDEAU",
@@ -2417,7 +2417,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "JORIGNE",
@@ -2427,7 +2427,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "JOUANNEAU",
@@ -2437,7 +2437,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "JUILLAT",
@@ -2447,7 +2447,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "JUILLAT",
@@ -2457,7 +2457,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "JUILLAT",
@@ -2467,7 +2467,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "JOURDE",
@@ -2477,7 +2477,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "JUILLAT / JOSSE",
@@ -2487,7 +2487,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "KREUZ",
@@ -2497,7 +2497,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "JOURDE",
@@ -2507,7 +2507,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "JUHEL",
@@ -2517,7 +2517,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "JOSSE",
@@ -2527,7 +2527,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "JUHEL",
@@ -2537,7 +2537,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "JUILLAT",
@@ -2547,7 +2547,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "JOSSE",
@@ -2557,7 +2557,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LABBE",
@@ -2567,7 +2567,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LABOUBEE",
@@ -2577,7 +2577,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LACOUDANNE",
@@ -2587,7 +2587,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LAFON",
@@ -2597,7 +2597,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LAFARGUE",
@@ -2607,7 +2607,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LAHNECHE",
@@ -2617,7 +2617,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LAFON-MAUFRAS",
@@ -2627,7 +2627,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LACABARATS",
@@ -2637,7 +2637,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LACOMBE",
@@ -2647,7 +2647,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LACORNE",
@@ -2657,7 +2657,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LAMOURE",
@@ -2667,7 +2667,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LAGNAU-LEROUX-ZIMMERMAN",
@@ -2677,7 +2677,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LAMOUREUX",
@@ -2687,7 +2687,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LASSALLE",
@@ -2697,7 +2697,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LASSALLE",
@@ -2707,7 +2707,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LAURENDON",
@@ -2717,7 +2717,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LAZARINI",
@@ -2727,7 +2727,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LAURIAC",
@@ -2737,7 +2737,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LANGLOIS",
@@ -2747,7 +2747,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LASSALLE",
@@ -2757,7 +2757,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LAURIAC",
@@ -2767,7 +2767,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LAUNAY",
@@ -2777,7 +2777,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LE GUILLOU",
@@ -2787,7 +2787,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LE LOARER",
@@ -2797,7 +2797,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LECLERCQ",
@@ -2807,7 +2807,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LECOULS",
@@ -2817,7 +2817,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LEBLOND",
@@ -2827,7 +2827,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LE LOARER",
@@ -2837,7 +2837,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LEDRUX",
@@ -2847,7 +2847,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LEON",
@@ -2857,7 +2857,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LEROY",
@@ -2867,7 +2867,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LEPAGE",
@@ -2877,7 +2877,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LEROUX",
@@ -2887,7 +2887,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LEVY VOCANSON",
@@ -2897,7 +2897,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LEVY VOCANSON",
@@ -2907,7 +2907,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LHOSPICE",
@@ -2917,7 +2917,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LHOSPICE",
@@ -2927,7 +2927,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LHUISSIER",
@@ -2937,7 +2937,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LETENDRE",
@@ -2947,7 +2947,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LHUISSIER",
@@ -2957,7 +2957,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LEON",
@@ -2967,7 +2967,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LEDUC",
@@ -2977,7 +2977,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LEDUC",
@@ -2987,7 +2987,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LEGUAY",
@@ -2997,7 +2997,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LHUISSIER",
@@ -3007,7 +3007,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LIEVIN",
@@ -3017,7 +3017,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MALAVELLE",
@@ -3027,7 +3027,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MALGARINI",
@@ -3037,7 +3037,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MAHIER",
@@ -3047,7 +3047,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MALGUID",
@@ -3057,7 +3057,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LUISES",
@@ -3067,7 +3067,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LUQUIAU",
@@ -3077,7 +3077,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MALAVELLE",
@@ -3087,7 +3087,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LINCE",
@@ -3097,7 +3097,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LOUIBA",
@@ -3107,7 +3107,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MALTEZEANU",
@@ -3117,7 +3117,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MARTIN",
@@ -3127,7 +3127,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MARTIRE",
@@ -3137,7 +3137,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MARZIAC",
@@ -3147,7 +3147,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MARJOLLET",
@@ -3157,7 +3157,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MARZIAC",
@@ -3167,7 +3167,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MARTIRE-GIRARD",
@@ -3177,7 +3177,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MARJOLLET",
@@ -3187,7 +3187,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MAURICE",
@@ -3197,7 +3197,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MATTEI",
@@ -3207,7 +3207,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MAYS",
@@ -3217,7 +3217,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MASCLET BESSY",
@@ -3227,7 +3227,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MELY",
@@ -3237,7 +3237,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MELY",
@@ -3247,7 +3247,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MENDY",
@@ -3257,7 +3257,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MEZERETTE",
@@ -3267,7 +3267,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MASCLET BESSY",
@@ -3277,7 +3277,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MAURICE-LE LOARER",
@@ -3287,7 +3287,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MASDIEU",
@@ -3297,7 +3297,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MAUFRAS",
@@ -3307,7 +3307,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MAYOT",
@@ -3317,7 +3317,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MICHEL",
@@ -3327,7 +3327,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MOBAILLY",
@@ -3337,7 +3337,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MIALHE",
@@ -3347,7 +3347,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MONTICELLI",
@@ -3357,7 +3357,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MOREL",
@@ -3367,7 +3367,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MOREL",
@@ -3377,7 +3377,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MORIN",
@@ -3387,7 +3387,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MOREL",
@@ -3397,7 +3397,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MORIN",
@@ -3407,7 +3407,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MORIN",
@@ -3417,7 +3417,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MORTEAU",
@@ -3427,7 +3427,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MOTARD",
@@ -3437,7 +3437,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MOUGENEL",
@@ -3447,7 +3447,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MOUSSAY",
@@ -3457,7 +3457,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "OTHAX",
@@ -3467,7 +3467,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "OTHAX",
@@ -3477,7 +3477,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "NORMAND",
@@ -3487,7 +3487,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "NEAU",
@@ -3497,7 +3497,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "OTHAX",
@@ -3507,7 +3507,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ORLHIAC",
@@ -3517,7 +3517,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "NANCHE",
@@ -3527,7 +3527,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "NICOL",
@@ -3537,7 +3537,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "NOYE",
@@ -3547,7 +3547,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ORLHIAC",
@@ -3557,7 +3557,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PEREZ",
@@ -3567,7 +3567,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PEDRONO",
@@ -3577,7 +3577,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PAGNIER",
@@ -3587,7 +3587,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PAGENOT",
@@ -3597,7 +3597,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PETIT",
@@ -3607,7 +3607,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PERICHAUD",
@@ -3617,7 +3617,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PETITCOLIN",
@@ -3627,7 +3627,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PEYRICHOUX",
@@ -3637,7 +3637,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PEYRICHOUX",
@@ -3647,7 +3647,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PETITCOLIN",
@@ -3657,7 +3657,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PIERRON",
@@ -3667,7 +3667,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PIERRON",
@@ -3677,7 +3677,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PAYEN",
@@ -3687,7 +3687,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PEREZ",
@@ -3697,7 +3697,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PRORIOL",
@@ -3707,7 +3707,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PERICHAUD",
@@ -3717,7 +3717,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PROUGET",
@@ -3727,7 +3727,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PUMEDA GARCIA",
@@ -3737,7 +3737,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "RADICE",
@@ -3747,7 +3747,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "REIX",
@@ -3757,7 +3757,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PUXEDDU",
@@ -3767,7 +3767,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "RAISON-HERAULT",
@@ -3777,7 +3777,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "REIGNOUX",
@@ -3787,7 +3787,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "RATTE",
@@ -3797,7 +3797,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "REBOUL",
@@ -3807,7 +3807,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "RENARD",
@@ -3817,7 +3817,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "RAVOT",
@@ -3827,7 +3827,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "RICHARD",
@@ -3837,7 +3837,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "RIGOT",
@@ -3847,7 +3847,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "RIGAUDEAU",
@@ -3857,7 +3857,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ROBY",
@@ -3867,7 +3867,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ROBBE",
@@ -3877,7 +3877,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ROMAN",
@@ -3887,7 +3887,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ROLLAND",
@@ -3897,7 +3897,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ROUX",
@@ -3907,7 +3907,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ROUX",
@@ -3917,7 +3917,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ROUX",
@@ -3927,7 +3927,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ROY",
@@ -3937,7 +3937,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "RUBIRA",
@@ -3947,7 +3947,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ROY",
@@ -3957,7 +3957,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SAGNOL",
@@ -3967,7 +3967,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SABATIER",
@@ -3977,7 +3977,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SABATIER",
@@ -3987,7 +3987,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ROQUE",
@@ -3997,7 +3997,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "RODIER",
@@ -4007,7 +4007,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ROLLES",
@@ -4017,7 +4017,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ROUX",
@@ -4027,7 +4027,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SALLIO",
@@ -4037,7 +4037,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SAUMET",
@@ -4047,7 +4047,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SANCHEZ",
@@ -4057,7 +4057,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SALLIO",
@@ -4067,7 +4067,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SCIANDRONE",
@@ -4077,7 +4077,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SILVENTE",
@@ -4087,7 +4087,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SILVENTE",
@@ -4097,7 +4097,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SIMON",
@@ -4107,7 +4107,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SICARD",
@@ -4117,7 +4117,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SCHRÖTER",
@@ -4127,7 +4127,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SCHAETZEL",
@@ -4137,7 +4137,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SEGALL",
@@ -4147,7 +4147,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SICARD",
@@ -4157,7 +4157,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "STRAINOVIC",
@@ -4167,7 +4167,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "THUOT",
@@ -4177,7 +4177,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "TISON",
@@ -4187,7 +4187,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "TRABAUD",
@@ -4197,7 +4197,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "TRINIAC DE PARADE",
@@ -4207,7 +4207,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SOURBE",
@@ -4217,7 +4217,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VANDEWOORDE",
@@ -4227,7 +4227,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "TANGUY",
@@ -4237,7 +4237,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VARIS",
@@ -4247,7 +4247,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VELLA",
@@ -4257,7 +4257,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VELLUTINI",
@@ -4267,7 +4267,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VERDIER",
@@ -4277,7 +4277,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VALLIENNE",
@@ -4287,7 +4287,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SOURBE",
@@ -4297,7 +4297,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "STRAINOVIC",
@@ -4307,7 +4307,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "STRAINOVIC",
@@ -4317,7 +4317,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "TEMPEL",
@@ -4327,7 +4327,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "THIVILLIER",
@@ -4337,7 +4337,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VERGNE",
@@ -4347,7 +4347,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VINCENOT",
@@ -4357,7 +4357,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VINCENOT",
@@ -4367,7 +4367,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VERGNE",
@@ -4377,7 +4377,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VINCENOT",
@@ -4387,7 +4387,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VINCENT",
@@ -4397,7 +4397,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VETTER",
@@ -4407,7 +4407,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VIVIER",
@@ -4417,7 +4417,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VINCENOT",
@@ -4427,7 +4427,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VIVIER",
@@ -4437,7 +4437,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VIVIER",
@@ -4447,7 +4447,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VIVIER",
@@ -4457,7 +4457,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VIVIER",
@@ -4467,7 +4467,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VIVIER",
@@ -4477,7 +4477,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VIVIER",
@@ -4487,7 +4487,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VIVIER",
@@ -4497,7 +4497,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VIVIER",
@@ -4507,7 +4507,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VIVIER",
@@ -4517,7 +4517,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VIVIER",
@@ -4527,7 +4527,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VIVIER",
@@ -4537,7 +4537,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VIVIER",
@@ -4547,7 +4547,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VONESCH",
@@ -4557,7 +4557,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "WAGNER",
@@ -4567,7 +4567,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "WATHIER",
@@ -4577,7 +4577,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VONESCH",
@@ -4587,7 +4587,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "WALLET",
@@ -4597,7 +4597,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ZANINETTI",
@@ -4607,7 +4607,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "WERQUIN",
@@ -4617,7 +4617,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VIVIER",
@@ -4627,7 +4627,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VIVIER",
@@ -4637,7 +4637,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VIVIER",
@@ -4647,7 +4647,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VONESCH",
@@ -4657,7 +4657,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ZWERENZ",
@@ -4667,7 +4667,7 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ALLOUACHE",
@@ -4677,7 +4677,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BARADELLO",
@@ -4687,7 +4687,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "AFTE",
@@ -4697,7 +4697,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "AOURIDI",
@@ -4707,7 +4707,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BARGALLO",
@@ -4717,7 +4717,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BARON",
@@ -4727,7 +4727,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BIANCHI",
@@ -4737,7 +4737,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BOISROUX",
@@ -4747,7 +4747,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BONNOT",
@@ -4757,7 +4757,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BORGETTO",
@@ -4767,7 +4767,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BORRELLI",
@@ -4777,7 +4777,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BOSSE",
@@ -4787,7 +4787,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BORY",
@@ -4797,7 +4797,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BOSSE",
@@ -4807,7 +4807,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BOURBON",
@@ -4817,7 +4817,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "AMMI",
@@ -4827,7 +4827,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BRANDILY",
@@ -4837,7 +4837,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BOURBON-CLAVERIE",
@@ -4847,7 +4847,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BOYER",
@@ -4857,7 +4857,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BRIAND",
@@ -4867,7 +4867,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BRIAT",
@@ -4877,7 +4877,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BROUILLARD",
@@ -4887,7 +4887,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BRUNET",
@@ -4897,7 +4897,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CALLIER",
@@ -4907,7 +4907,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CARRIERE",
@@ -4917,7 +4917,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CASADEMONT",
@@ -4927,7 +4927,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CASSAGNE",
@@ -4937,7 +4937,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CANDONI",
@@ -4947,7 +4947,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CHARON",
@@ -4957,7 +4957,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "AY",
@@ -4967,7 +4967,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CHAUSSEPIED",
@@ -4977,7 +4977,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BARBERY",
@@ -4987,7 +4987,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "AUGER",
@@ -4997,7 +4997,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "BARBIER",
@@ -5007,7 +5007,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ALLOUACHE",
@@ -5017,7 +5017,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CAZAJUS",
@@ -5027,7 +5027,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CIVIDINO",
@@ -5037,7 +5037,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CLAVERIE",
@@ -5047,7 +5047,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "COLLE",
@@ -5057,7 +5057,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "D'AGARO",
@@ -5067,7 +5067,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DENIS",
@@ -5077,7 +5077,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DALBAVIE",
@@ -5087,7 +5087,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DESFORGES",
@@ -5097,7 +5097,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CORDIER",
@@ -5107,7 +5107,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "CHAUVEROCHE",
@@ -5117,7 +5117,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DREVET",
@@ -5127,7 +5127,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DOUBRERE",
@@ -5137,7 +5137,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ENVAIN",
@@ -5147,7 +5147,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ERRECART",
@@ -5157,7 +5157,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DUVIGNEAU-LOBRE",
@@ -5167,7 +5167,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ETAVE",
@@ -5177,7 +5177,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FAUTHOUX",
@@ -5187,7 +5187,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FELIX",
@@ -5197,7 +5197,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FELLOUS",
@@ -5207,7 +5207,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "DIEUX",
@@ -5217,7 +5217,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FOATELLI",
@@ -5227,7 +5227,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FERLIN",
@@ -5237,7 +5237,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FOURCADE",
@@ -5247,7 +5247,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FOUCHER",
@@ -5257,7 +5257,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FRACH",
@@ -5267,7 +5267,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FUCHS",
@@ -5277,7 +5277,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "FRANCOIS",
@@ -5287,7 +5287,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GALLIX",
@@ -5297,7 +5297,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GARCIA",
@@ -5307,7 +5307,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GARDET",
@@ -5317,7 +5317,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GENDEK",
@@ -5327,7 +5327,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GAUTHIER",
@@ -5337,7 +5337,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GENOT",
@@ -5347,7 +5347,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GUYOT",
@@ -5357,7 +5357,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "JOLION",
@@ -5367,7 +5367,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "HELMSTETTER",
@@ -5377,7 +5377,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "JOLION",
@@ -5387,7 +5387,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "JORGE",
@@ -5397,7 +5397,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "JOUTEAU",
@@ -5407,7 +5407,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "JUSSIERE",
@@ -5417,7 +5417,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "KUPPER",
@@ -5427,7 +5427,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LABBE",
@@ -5437,7 +5437,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LAFFAY",
@@ -5447,7 +5447,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LACOMBRADE",
@@ -5457,7 +5457,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "HEMIMED",
@@ -5467,7 +5467,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LAFFAY",
@@ -5477,7 +5477,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LAM",
@@ -5487,7 +5487,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LANDON",
@@ -5497,7 +5497,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LAURENDON",
@@ -5507,7 +5507,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GOMES",
@@ -5517,7 +5517,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GIHR",
@@ -5527,7 +5527,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LANDON",
@@ -5537,7 +5537,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LE PORS",
@@ -5547,7 +5547,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "GROIZIER",
@@ -5557,7 +5557,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "JACOB",
@@ -5567,7 +5567,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LE PORS",
@@ -5577,7 +5577,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LEBAILLIF",
@@ -5587,7 +5587,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LESCHER",
@@ -5597,7 +5597,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LESNE",
@@ -5607,7 +5607,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LEBRUN",
@@ -5617,7 +5617,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "LEYDIER",
@@ -5627,7 +5627,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MACHET",
@@ -5637,7 +5637,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "HAU",
@@ -5647,7 +5647,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MANIC",
@@ -5657,7 +5657,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MAMIN",
@@ -5667,7 +5667,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MADEC",
@@ -5677,7 +5677,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MASSIMELLI",
@@ -5687,7 +5687,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MBALOULA",
@@ -5697,7 +5697,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MICHAUD",
@@ -5707,7 +5707,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MICHELAND",
@@ -5717,7 +5717,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MARZYNSKI",
@@ -5727,7 +5727,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MEPHON",
@@ -5737,7 +5737,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MOUSSET",
@@ -5747,7 +5747,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MILONET",
@@ -5757,7 +5757,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MOUNIER",
@@ -5767,7 +5767,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "MOUTIER",
@@ -5777,7 +5777,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "NEIL",
@@ -5787,7 +5787,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PETIT",
@@ -5797,7 +5797,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "NOYON",
@@ -5807,7 +5807,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "OUZOUNIAN",
@@ -5817,7 +5817,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PELETER",
@@ -5827,7 +5827,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PIOT",
@@ -5837,7 +5837,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PENON",
@@ -5847,7 +5847,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "OLLER",
@@ -5857,7 +5857,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PRORIOL",
@@ -5867,7 +5867,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "REINHART",
@@ -5877,7 +5877,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PIULATS-RAMI",
@@ -5887,7 +5887,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "RELAIX",
@@ -5897,7 +5897,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "RENARD",
@@ -5907,7 +5907,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "RIPOCHE",
@@ -5917,7 +5917,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "POUNDALL",
@@ -5927,7 +5927,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "RIZZATO",
@@ -5937,7 +5937,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "PELABON",
@@ -5947,7 +5947,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "NICOT",
@@ -5957,7 +5957,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "RUAT",
@@ -5967,7 +5967,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ROLLAND",
@@ -5977,7 +5977,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SALEMBIER",
@@ -5987,7 +5987,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ROLLAND",
@@ -5997,7 +5997,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SALOMEZ",
@@ -6007,7 +6007,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SARRAZIN",
@@ -6017,7 +6017,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ROLLAND",
@@ -6027,7 +6027,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ROBY",
@@ -6037,7 +6037,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ROSA",
@@ -6047,7 +6047,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "RUAT",
@@ -6057,7 +6057,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "RUIZ",
@@ -6067,7 +6067,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "THIVILLIER",
@@ -6077,7 +6077,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SOL",
@@ -6087,7 +6087,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VEYSSIERE",
@@ -6097,7 +6097,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VIAL-PAILLER",
@@ -6107,7 +6107,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VINCENT",
@@ -6117,7 +6117,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "YVORA",
@@ -6127,7 +6127,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "STEINMETZ",
@@ -6137,7 +6137,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ZANINETTI",
@@ -6147,7 +6147,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "TOUBOUL",
@@ -6157,7 +6157,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "TROCME",
@@ -6167,7 +6167,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "TORRAS",
@@ -6177,7 +6177,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "SIDA",
@@ -6187,7 +6187,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "ZENOUDA",
@@ -6197,7 +6197,7 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     },
     {
         "lastName": "VERGIER",
@@ -6207,6 +6207,6 @@
         "phone": "",
         "status": "Active",
         "role": "mandataire",
-        "is_enabled": "TRUE"
+        "is_enabled": true
     }
 ]
