@@ -11,6 +11,7 @@ router.route('/mandataires/:courtier').get(accessControl, courtierController.get
 router.route('/courtier/:mandataire').get(accessControl, courtierController.getCourtierOfMandataire);
 router.route('/').post(accessControl, courtierController.createCourtier);
 router.route('/:id').put(courtierController.updateCourtier);
+router.route('/').put(courtierController.updateAllCourtier);
 router.route('/:id').delete(accessControl, courtierController.deleteCourtier);
 // router.route('/').delete(accessControl, courtierController.deleteAllCourtier);
 

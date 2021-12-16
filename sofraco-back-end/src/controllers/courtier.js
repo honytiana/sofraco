@@ -88,6 +88,16 @@ exports.updateCourtier = async (req, res) => {
     }
 };
 
+exports.updateAllCourtier = async (req, res) => {
+    console.log('Update All courtier');
+    try {
+        const courtiers = await courtierHandler.updateAllCourtier();
+        res.status(200).json(courtiers);
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+};
+
 exports.deleteCourtier = async (req, res) => {
     console.log('Delete courtier');
     try {

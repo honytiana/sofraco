@@ -36,7 +36,6 @@ class Mandataire extends Component {
             mandataires: [],
             details: [],
             courtier: null,
-            loader: false,
             toast: false,
             messageToast: {},
             fields: [],
@@ -140,9 +139,6 @@ class Mandataire extends Component {
                 })
             })
             .finally(() => {
-                this.setState({
-                    loader: false
-                });
                 setTimeout(() => {
                     this.setState({
                         toast: false,
@@ -162,9 +158,6 @@ class Mandataire extends Component {
 
     onSubmitHandler(event, mandataire) {
         event.preventDefault();
-        this.setState({
-            loader: true
-        });
         const options = {
             cabinet: event.target['sofraco-cabinet'].value,
             lastName: event.target['sofraco-nom'].value,
@@ -200,9 +193,6 @@ class Mandataire extends Component {
                     messageToast: { header: 'ERROR', color: 'danger', message: err }
                 })
             }).finally(() => {
-                this.setState({
-                    loader: false
-                });
                 setTimeout(() => {
                     this.setState({
                         toast: false,
@@ -234,9 +224,6 @@ class Mandataire extends Component {
                     messageToast: { header: 'ERROR', color: 'danger', message: err }
                 })
             }).finally(() => {
-                this.setState({
-                    loader: false
-                });
                 setTimeout(() => {
                     this.setState({
                         toast: false,
@@ -283,9 +270,6 @@ class Mandataire extends Component {
 
     ajouterMandataire(event) {
         event.preventDefault();
-        this.setState({
-            loader: true
-        });
         const options = {
             cabinet: this.props.courtier.cabinet,
             lastName: event.target['sofraco-nom'].value,
@@ -312,15 +296,17 @@ class Mandataire extends Component {
                     toast: true,
                     messageToast: { header: 'SUCCESS', color: 'success', message: `Le mandataire ${res.data.cabinet} à été ajouté` }
                 });
+                this.activerAjoutMandataire();
+                event.target['sofraco-nom'].value = '';
+                event.target['sofraco-prenom'].value = '';
+                event.target['sofraco-email'].value = '';
+                event.target['sofraco-phone'].value = '';
             }).catch((err) => {
                 this.setState({
                     toast: true,
                     messageToast: { header: 'ERROR', color: 'danger', message: err }
                 })
             }).finally(() => {
-                this.setState({
-                    loader: false
-                });
                 setTimeout(() => {
                     this.setState({
                         toast: false,

@@ -27,7 +27,7 @@ class CourtierHandler {
         return Courtier.find({});
     }
 
-    getCourtiersByRole(role, limit=0, skip=0) {
+    getCourtiersByRole(role, limit = 0, skip = 0) {
         return Courtier.find({ role: role, is_enabled: true }).skip(skip).limit(limit);
     }
 
@@ -55,8 +55,12 @@ class CourtierHandler {
         return Courtier.findByIdAndUpdate(id, data);
     }
 
+    updateAllCourtier() {
+        return Courtier.updateMany({ is_enabled: 'TRUE' }, { $set: { is_enabled: true } });
+    }
+
     deleteCourtier(id) {
-        return Courtier.findByIdAndUpdate(id, { active: 'Inactive', is_enabled: false });
+        return Courtier.findByIdAndDelete(id);
     }
 
     // deleteCourtier(id) {

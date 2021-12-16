@@ -40,7 +40,7 @@ class Administration extends Component {
             courtiers: [],
             fields: [],
             toast: false,
-            messageToast: [],
+            messageToast: null,
             activePage: 1,
             num: 0,
             token: null,
@@ -188,9 +188,6 @@ class Administration extends Component {
 
     ajouterCourtier(event) {
         event.preventDefault();
-        this.setState({
-            loader: true
-        });
         const options = {
             cabinet: event.target['sofraco-cabinet'].value,
             lastName: event.target['sofraco-nom'].value,
@@ -217,15 +214,18 @@ class Administration extends Component {
                     toast: true,
                     messageToast: { header: 'SUCCESS', color: 'success', message: `Le courtier ${res.data.cabinet} à été ajouté` }
                 });
+                this.activerAjoutCourtier();
+                event.target['sofraco-cabinet'].value = '';
+                event.target['sofraco-nom'].value = '';
+                event.target['sofraco-prenom'].value = '';
+                event.target['sofraco-email'].value = '';
+                event.target['sofraco-phone'].value = '';
             }).catch((err) => {
                 this.setState({
                     toast: true,
                     messageToast: { header: 'ERROR', color: 'danger', message: err }
                 })
             }).finally(() => {
-                this.setState({
-                    loader: false
-                });
                 setTimeout(() => {
                     this.setState({
                         toast: false,
@@ -236,7 +236,7 @@ class Administration extends Component {
         }
     }
 
-    deleteCourtier(e, courtier) {
+    deleteCourtier(e) {
         e.preventDefault();
         this.setState({ visibleAlert: false });
         axios.delete(`${config.nodeUrl}/api/courtier/${this.state.courtierToDel._id}`, {
@@ -248,7 +248,7 @@ class Administration extends Component {
             .then((res) => {
                 this.setState({
                     toast: true,
-                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le courtier ${courtier.cabinet} à été supprimé` }
+                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le courtier ${this.state.courtierToDel.cabinet} à été supprimé` }
                 });
                 this.fetchCourtiers();
             }).catch((err) => {
@@ -257,6 +257,9 @@ class Administration extends Component {
                     messageToast: { header: 'ERROR', color: 'danger', message: err }
                 })
             }).finally(() => {
+                this.setState({
+                    courtierToDel: null
+                });
                 setTimeout(() => {
                     this.setState({
                         toast: false,
@@ -495,28 +498,22 @@ class Administration extends Component {
                 </CModal>
                 {
                     (this.state.toast === true &&
-                        this.state.messageToast.length > 0) && (
-                        this.state.messageToast.map((toast, index) => {
-                            return (
-                                <CToaster position="bottom-right" key={index}>
-                                    <CToast
-                                        show={true}
-                                        fade={true}
-                                        autohide={5000}
-                                        color={toast.color}
-                                    >
-                                        <CToastHeader closeButton>
-                                            {toast.header}
-                                        </CToastHeader>
-                                        <CToastBody>
-                                            {`${toast.message}`}
-                                        </CToastBody>
-                                    </CToast>
-                                </CToaster>
-                            )
-                        })
-
-                    )
+                        this.state.messageToast !== null) &&
+                    <CToaster position="bottom-right" >
+                        <CToast
+                            show={true}
+                            fade={true}
+                            autohide={5000}
+                            color={this.state.messageToast.color}
+                        >
+                            <CToastHeader closeButton>
+                                {this.state.messageToast.header}
+                            </CToastHeader>
+                            <CToastBody>
+                                {`${this.state.messageToast.message}`}
+                            </CToastBody>
+                        </CToast>
+                    </CToaster>
                 }
             </div>
         );
