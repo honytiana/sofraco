@@ -18,7 +18,7 @@ jobs:
         HOST: ${{ secrets.HOST2 }}
         USERNAME: ${{ secrets.USER }}
         PORT: ${{ secrets.PORT2 }}
-        KEY: ${{ secrets.KEY2 }}
+        KEY: ${{ secrets.KEY }}
         command_timeout: 30m
         script: |
           cd Sofraco/
