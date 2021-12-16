@@ -243,7 +243,7 @@ class Mandataire extends Component {
                         messageToast: {}
                     });
                 }, 6000);
-            });
+            })
 
     }
 
