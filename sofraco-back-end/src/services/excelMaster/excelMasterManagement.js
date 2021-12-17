@@ -33,16 +33,20 @@ const courtierHandler = require('../../handlers/courtierHandler');
 
 
 exports.create = async (authorization) => {
-    console.log('DEBUT GENERATION EXCEL MASTER');
-    const ocrInfos = await getOCRInfos(authorization);
-    const excelMasters = await generateExcelMaster(ocrInfos, authorization);
-    console.log('FIN GENERATION EXCEL MASTER');
-    console.log('DEBUT GENERATION ZIP');
-    const excelMastersPerCourtier = groupExcelsByCourtier(excelMasters);
-    const excelsMastersZipped = await generateZipFilesEM(excelMastersPerCourtier);
-    const singleZip = await generateSingleZipForAllZippedEM(excelsMastersZipped);
-    console.log('FIN GENERATION ZIP');
-    return { excelMasters, excelsMastersZipped, singleZip, message: 'Excel Master générés' };
+    try {
+        console.log('DEBUT GENERATION EXCEL MASTER');
+        const ocrInfos = await getOCRInfos(authorization);
+        const excelMasters = await generateExcelMaster(ocrInfos, authorization);
+        console.log('FIN GENERATION EXCEL MASTER');
+        console.log('DEBUT GENERATION ZIP');
+        const excelMastersPerCourtier = groupExcelsByCourtier(excelMasters);
+        const excelsMastersZipped = await generateZipFilesEM(excelMastersPerCourtier);
+        const singleZip = await generateSingleZipForAllZippedEM(excelsMastersZipped);
+        console.log('FIN GENERATION ZIP');
+        return { excelMasters, excelsMastersZipped, singleZip, message: 'Excel Master générés' };
+    } catch (err) {
+        console.log(err);
+    }
 };
 
 const getOCRInfos = async (authorization) => {
