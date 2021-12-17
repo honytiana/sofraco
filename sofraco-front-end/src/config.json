@@ -1,7 +1,0 @@
-{
-    "nodeUrl": "http://92.182.25.197:9000",
-    "nodePort": 9000,
-    "reactUrl": "http://92.182.25.197:3000",
-    "reactPort": 3000,
-    "database": "mongodb://mongodb-sofraco:27017/sofraco"
-}

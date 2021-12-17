@@ -2,7 +2,6 @@ import { Component } from 'react';
 import '@coreui/coreui/dist/css/coreui.min.css';
 import {
     CDataTable,
-    CBadge,
     CButton,
     CInputCheckbox,
     CToaster,
@@ -70,13 +69,13 @@ class Envoi extends Component {
                         {
                             key: 'firstName',
                             label: 'Prénom',
-                            _style: { width: '15%' },
+                            _style: { width: '20%' },
                             _classes: ['text-center']
                         },
                         {
                             key: 'lastName',
                             label: 'Nom',
-                            _style: { width: '15%' },
+                            _style: { width: '20%' },
                             _classes: ['text-center']
                         },
                         {
@@ -84,21 +83,7 @@ class Envoi extends Component {
                             label: 'Email',
                             _style: { width: '20%' },
                             _classes: ['text-center']
-                        },
-                        {
-                            key: 'status',
-                            label: 'Status',
-                            _style: { width: '10%' },
-                            _classes: ['text-center']
-                        },
-                        // {
-                        //     key: 'show_details',
-                        //     label: '',
-                        //     _style: { width: '10%' },
-                        //     _classes: ['text-center'],
-                        //     sorter: false,
-                        //     filter: false
-                        // }
+                        }
                     ],
                     toast: false,
                     messageToast: [],
@@ -352,15 +337,7 @@ class Envoi extends Component {
                                         }} />
                                     </td>
                                 )
-                            },
-                        'status':
-                            (item) => (
-                                <td className="text-center" >
-                                    <CBadge color={this.getBadge(item.status)}>
-                                        {item.status}
-                                    </CBadge>
-                                </td>
-                            ),
+                            }
                     }
                     }
                 />
