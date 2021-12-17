@@ -36,7 +36,6 @@ exports.create = async (authorization) => {
     try {
         console.log('DEBUT GENERATION EXCEL MASTER');
         const ocrInfos = await getOCRInfos();
-        console.log(ocrInfos);
         const excelMasters = await generateExcelMaster(ocrInfos);
         console.log('FIN GENERATION EXCEL MASTER');
         console.log('DEBUT GENERATION ZIP');
@@ -63,6 +62,7 @@ const getOCRInfos = async () => {
             allDocs.push(doc);
         }
     }
+    console.log(allDocs)
     let infos = [];
     for (let document of allDocs) {
         const company = document.companyName;
