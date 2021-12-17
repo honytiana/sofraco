@@ -6,6 +6,7 @@ const courtierHandler = require('../handlers/courtierHandler');
 
 
 exports.createCourtier = async (req, res) => {
+    console.log('Create courtier');
     const data = req.body;
     let courtier = {
         lastName: data.lastName,
