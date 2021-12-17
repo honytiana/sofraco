@@ -62,7 +62,6 @@ const getOCRInfos = async () => {
             allDocs.push(doc);
         }
     }
-    console.log(allDocs)
     let infos = [];
     for (let document of allDocs) {
         const company = document.companyName;
@@ -162,6 +161,7 @@ const getOCRInfos = async () => {
                 console.log('Pas de compagnie correspondante');
         }
     }
+    console.log(infos)
     return infos;
 
 }
