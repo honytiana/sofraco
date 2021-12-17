@@ -35,8 +35,8 @@ const courtierHandler = require('../../handlers/courtierHandler');
 exports.create = async (authorization) => {
     try {
         console.log('DEBUT GENERATION EXCEL MASTER');
-        const ocrInfos = await getOCRInfos(authorization);
-        const excelMasters = await generateExcelMaster(ocrInfos, authorization);
+        const ocrInfos = await getOCRInfos();
+        const excelMasters = await generateExcelMaster(ocrInfos);
         console.log('FIN GENERATION EXCEL MASTER');
         console.log('DEBUT GENERATION ZIP');
         const excelMastersPerCourtier = groupExcelsByCourtier(excelMasters);
@@ -49,7 +49,7 @@ exports.create = async (authorization) => {
     }
 };
 
-const getOCRInfos = async (authorization) => {
+const getOCRInfos = async () => {
     let documents = await documentHandler.getDocuments();
     const docs = documents.filter((doc, index) => {
         return doc.status === 'done';
@@ -165,7 +165,7 @@ const getOCRInfos = async (authorization) => {
 
 }
 
-const generateExcelMaster = async (ocrInfos, authorization) => {
+const generateExcelMaster = async (ocrInfos) => {
     let excelMasters = [];
     let allOCRPerCourtiers = [];
     try {
