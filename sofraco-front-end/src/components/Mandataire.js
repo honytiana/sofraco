@@ -196,6 +196,7 @@ class Mandataire extends Component {
                 event.target['sofraco-prenom'].value = '';
                 event.target['sofraco-email'].value = '';
                 event.target['sofraco-phone'].value = '';
+                this.fetchMandataires();
             }).catch((err) => {
                 this.setState({
                     toast: true,

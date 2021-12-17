@@ -63,9 +63,9 @@ class CourtierHandler {
         return Courtier.findByIdAndDelete(id);
     }
 
-    // deleteCourtier(id) {
-    //     return Courtier.findByIdAndUpdate(id, { active: 'Inactive', is_enabled: false });
-    // }
+    desactivateCourtier(id) {
+        return Courtier.findByIdAndUpdate(id, { active: 'Inactive', is_enabled: false });
+    }
 
 }
 
