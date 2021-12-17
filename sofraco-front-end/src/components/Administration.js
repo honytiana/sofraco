@@ -159,12 +159,12 @@ class Administration extends Component {
     }
 
     toggleDetails(index) {
-        const position = this.state.details.indexOf(index)
-        let newDetails = this.state.details.slice()
+        const position = this.state.details.indexOf(index);
+        let newDetails = this.state.details.slice();
         if (position !== -1) {
-            newDetails.splice(position, 1)
+            newDetails.splice(position, 1);
         } else {
-            newDetails = [...this.state.details, index]
+            newDetails = [...this.state.details, index];
         }
         this.setState({
             details: newDetails,
