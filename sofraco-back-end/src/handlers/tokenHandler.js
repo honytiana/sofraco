@@ -7,7 +7,7 @@ class TokensHandler {
 
     constructor() { }
 
-    createTokens(userId) {
+    createTokens(userId, navigator) {
         try {
             const token = jwt.sign(
                 { userId },
@@ -17,6 +17,7 @@ class TokensHandler {
             let tokens = new Tokens();
             tokens.value = token;
             tokens.userId = userId;
+            tokens.navigator = navigator;
             tokens.expiresIn = + new Date() + 10 * 3600 * 1000;
             tokens.save();
             return tokens;

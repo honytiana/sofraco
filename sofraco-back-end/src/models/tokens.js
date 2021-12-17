@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const tokenSchema = new Schema({
     value: { type: String, unique: true, required: true },
     userId: { type: String, required: true },
+    navigator: { type: String, required: true },
     issuedAt: { type: Date, default: Date.now },
     expiresIn: { type: Date, default: function () { return + new Date() + 1000 * 60 * 60 * 4; } } // 1000ms by sec, 60 sec by min, 60 min by hour, 4h by day.
 });
