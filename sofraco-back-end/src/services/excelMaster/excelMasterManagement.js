@@ -161,7 +161,6 @@ const getOCRInfos = async () => {
                 console.log('Pas de compagnie correspondante');
         }
     }
-    console.log(infos)
     return infos;
 
 }
@@ -196,6 +195,7 @@ const generateExcelMaster = async (ocrInfos) => {
             }
         }
         for (let ocrPerCourtier of allOCRPerCourtiers) {
+            console.log(ocrPerCourtier);
             let excelMaster;
             let cr;
             let courtier;
@@ -263,6 +263,7 @@ const generateExcelMaster = async (ocrInfos) => {
             }
             else {
                 for (let ocr of ocrPerCourtier.infos) {
+                    console.log(ocr);
                     if (ocr.companyName && ocr.companyName !== null) {
                         if (!workbook.worksheets.some(worksheet => worksheet.name === ocr.companyGlobalName)) {
                             let workSheet;
