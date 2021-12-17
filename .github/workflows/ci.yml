@@ -9,7 +9,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 70
 
     steps:
     - name: Executing remote command
@@ -19,10 +19,10 @@ jobs:
         USERNAME: ${{ secrets.USER }}
         PORT: ${{ secrets.PORT2 }}
         KEY: ${{ secrets.KEY }}
-        command_timeout: 30m
+        command_timeout: 60m
         script: |
           cd Sofraco/
-          git pull
-          docker-compose build --no-cache
+          git fetch -a && git pull
+          docker-compose build
           docker-compose up -d
           docker image prune -f
