@@ -261,7 +261,6 @@ const generateExcelMaster = async (ocrInfos) => {
                 excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, ocrPerCourtier);
             }
             else {
-                console.log(ocrPerCourtier.infos);
                 for (let ocr of ocrPerCourtier.infos) {
                     if (ocr.companyName && ocr.companyName !== null) {
                         if (!workbook.worksheets.some(worksheet => worksheet.name === ocr.companyGlobalName)) {
