@@ -28,22 +28,22 @@ class TokensHandler {
 
     async checkToken(userId, value) {
         const tokens = await Tokens.find({ userId: userId });
-        for (let tk of tokens) {
-            if (!tk) {
-                console.error('Token not found');
-                continue;
-            }
-            const isValid = (value === tk.value) ? true : false;
-            if (!isValid) {
-                console.error('value doesn\'t match');
-                continue;
-            }
-            if (tk.expiresIn < Date.now()) {
-                console.error('token is expired');
-                continue;
-            }
-            return tk;
+        // for (let tk of tokens) {
+        if (!tk) {
+            console.error('Token not found');
+            // continue;
         }
+        const isValid = (value === tk.value) ? true : false;
+        if (!isValid) {
+            console.error('value doesn\'t match');
+            // continue;
+        }
+        if (tk.expiresIn < Date.now()) {
+            console.error('token is expired');
+            // continue;
+        }
+        return tk;
+        // }
     }
 
     getTokenByUser(userId) {
