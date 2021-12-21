@@ -158,7 +158,7 @@ class Envoi extends Component {
 
     onCheckHandler(e, item) {
         this.state.checked.forEach((element, index) => {
-            if (element.firstName === item.firstName && element.lastName === item.lastName && element.cabinet === item.cabinet) {
+            if (element.firstName === item.firstName && element.lastName === item.lastName) {
                 let newChecked = this.state.checked.slice();
                 newChecked[index].checked = !this.state.checked[index].checked;
                 this.setState({
