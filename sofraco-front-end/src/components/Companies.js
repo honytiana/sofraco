@@ -448,7 +448,7 @@ class Companies extends Component {
         })
             .then((res) => {
                 let month = new Date().getMonth();
-                month = (month + 1 < 10) ? `0${month + 1}` : `${month}`;
+                month = (month + 1 < 10) ? `0${month + 1}` : `${month + 1}`;
                 const sofdate = `${month}${new Date().getFullYear()}`;
                 const url = window.URL.createObjectURL(new Blob([res.data]));
                 const link = document.createElement('a');
