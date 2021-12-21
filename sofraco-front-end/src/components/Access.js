@@ -36,7 +36,6 @@ class Access extends Component {
         const options = {
             login: e.target['sofraco-login'].value,
             password: e.target['sofraco-password'].value,
-            navigator: window.navigator.userAgent
         };
         axios.post(`${config.nodeUrl}/api/user/login`, options, {
             headers: {

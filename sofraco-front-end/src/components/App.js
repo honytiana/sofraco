@@ -55,11 +55,7 @@ class App extends Component {
             }
           })
             .then((res) => {
-              // if (window.navigator.userAgent !== res.data.navigator) {
-              //   console.log('Déconnexion');
-              //   localStorage.clear();
-              //   window.location.reload();
-              // }
+
             })
             .catch((err) => {
               axios.delete(`${config.nodeUrl}/api/token/user/${user}`, {
