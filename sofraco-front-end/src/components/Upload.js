@@ -270,6 +270,9 @@ class Upload extends Component {
             case 'PAVILLON MCMS': // MCMS
                 this.testExtension(extension, 'XLSX', true, false, files);
                 break;
+            case 'SLADE':
+                this.testExtension(extension, 'PDF', false, false, files);
+                break;
             case 'SMATIS':
                 this.testExtension(extension, 'XLSX', false, false, files);
                 break;
@@ -278,9 +281,6 @@ class Upload extends Component {
                 break;
             case 'SPVIE':
                 this.testExtension(extension, 'XLSX', false, false, files);
-                break;
-            case 'SWISSLIFE':
-                this.testExtension(extension, 'PDF', false, false, files);
                 break;
             case 'SWISSLIFE SURCO':
                 this.testExtension(extension, 'XLSX', true, false, files);
