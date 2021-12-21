@@ -26,7 +26,7 @@ exports.deleteFilesinDirectory = (directory) => {
         if (err) throw err;
 
         for (const file of files) {
-            if (file.includes('.')) {
+            if (file.includes('.') && file !== '.gitkeep') {
                 fs.unlink(path.join(directory, file), err => {
                     if (err) throw err;
                 });
