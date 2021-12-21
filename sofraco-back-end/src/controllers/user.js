@@ -40,7 +40,7 @@ exports.login = async (req, res) => {
             if (!valid) {
                 return res.status(401).json({ error: 'Mot de passe incorrect !' });
             }
-            const token = await tokenHandler.createTokens(user._id);
+            const token = await tokenHandler.createTokens(user._id, req.body.navigator);
             res.status(200).json({
                 userId: user._id,
                 token,

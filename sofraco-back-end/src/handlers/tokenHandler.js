@@ -7,7 +7,7 @@ class TokensHandler {
 
     constructor() { }
 
-    createTokens(userId) {
+    createTokens(userId, navigator) {
         try {
             const token = jwt.sign(
                 { userId },
@@ -17,6 +17,7 @@ class TokensHandler {
             let tokens = new Tokens();
             tokens.value = token;
             tokens.userId = userId;
+            tokens.navigator = navigator;
             tokens.expiresIn = + new Date() + 10 * 3600 * 1000;
             tokens.save();
             return tokens;
@@ -26,20 +27,23 @@ class TokensHandler {
     }
 
     async checkToken(userId, value) {
-        const tk = await Tokens.findOne({ userId: userId });
+        const tokens = await Tokens.find({ userId: userId });
+        // for (let tk of tokens) {
         if (!tk) {
-            throw 'Token not found';
+            console.error('Token not found');
+            // continue;
         }
-
         const isValid = (value === tk.value) ? true : false;
         if (!isValid) {
-            throw "value doesn't match";
+            console.error('value doesn\'t match');
+            // continue;
         }
-
         if (tk.expiresIn < Date.now()) {
-            throw 'token is expired';
+            console.error('token is expired');
+            // continue;
         }
         return tk;
+        // }
     }
 
     getTokenByUser(userId) {
