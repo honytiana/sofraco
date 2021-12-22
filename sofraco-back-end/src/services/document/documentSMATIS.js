@@ -15,7 +15,7 @@ if (parentPort !== null) {
 exports.readExcelSMATIS = async (file) => { };
 
 exports.readExcelSMATISMCMS = async (file) => {
-    console.log('DEBUT TRAITEMENT SMATIS MCMS');
+    console.log(`${new Date()} DEBUT TRAITEMENT SMATIS MCMS`);
     const excecutionStartTime = performance.now();
     let filePath = file;
     const fileName = fileService.getFileNameWithoutExtension(filePath);
@@ -89,7 +89,7 @@ exports.readExcelSMATISMCMS = async (file) => {
     console.log('Total Execution time : ', executionTime);
     ocr.executionTime = executionTime;
     ocr.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT SMATIS MCMS');
+    console.log(`${new Date()} FIN TRAITEMENT SMATIS MCMS`);
     return ocr;
 };
 

@@ -9,7 +9,7 @@ if (parentPort !== null) {
 }
 
 exports.readExcelCEGEMA = async (file) => {
-    console.log('DEBUT TRAITEMENT CEGEMA');
+    console.log(`${new Date()} DEBUT TRAITEMENT CEGEMA`);
     const excecutionStartTime = performance.now();
     const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     let headers = [];
@@ -68,7 +68,7 @@ exports.readExcelCEGEMA = async (file) => {
     console.log('Total Execution time : ', executionTime);
     ocr.executionTime = executionTime;
     ocr.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT CEGEMA');
+    console.log(`${new Date()} FIN TRAITEMENT CEGEMA`);
     return ocr;
 };
 

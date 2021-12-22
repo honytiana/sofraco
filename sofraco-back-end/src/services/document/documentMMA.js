@@ -9,7 +9,7 @@ if (parentPort !== null) {
 }
 
 exports.readExcelMMAINCITATION = async (file) => {
-    console.log('DEBUT TRAITEMENT MMA INCITATION');
+    console.log(`${new Date()} DEBUT TRAITEMENT MMA INCITATION`);
     const excecutionStartTime = performance.now();
     const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     let headers = [];
@@ -97,12 +97,12 @@ exports.readExcelMMAINCITATION = async (file) => {
     console.log('Total Execution time : ', executionTime);
     ocr.executionTime = executionTime;
     ocr.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT MMA INCITATION');
+    console.log(`${new Date()} FIN TRAITEMENT MMA INCITATION`);
     return ocr;
 };
 
 exports.readExcelMMAACQUISITION = async (file) => {
-    console.log('DEBUT TRAITEMENT MMA ACQUISITION');
+    console.log(`${new Date()} DEBUT TRAITEMENT MMA ACQUISITION`);
     const excecutionStartTime = performance.now();
     const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     let headers = [];
@@ -178,12 +178,12 @@ exports.readExcelMMAACQUISITION = async (file) => {
     console.log('Total Execution time : ', executionTime);
     ocr.executionTime = executionTime;
     ocr.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT MMA ACQUISITION');
+    console.log(`${new Date()} FIN TRAITEMENT MMA ACQUISITION`);
     return ocr;
 };
 
 exports.readExcelMMAENCOURS = async (file) => {
-    console.log('DEBUT TRAITEMENT MMA ENCOURS');
+    console.log(`${new Date()} DEBUT TRAITEMENT MMA ENCOURS`);
     const excecutionStartTime = performance.now();
     const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     let headers = [];
@@ -269,6 +269,6 @@ exports.readExcelMMAENCOURS = async (file) => {
     console.log('Total Execution time : ', executionTime);
     ocr.executionTime = executionTime;
     ocr.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT MMA EN COURS');
+    console.log(`${new Date()} FIN TRAITEMENT MMA EN COURS`);
     return ocr;
 };

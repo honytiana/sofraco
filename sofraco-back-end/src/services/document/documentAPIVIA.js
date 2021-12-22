@@ -14,23 +14,23 @@ if (parentPort !== null) {
 
 exports.readPdfAPIVIA = async (file) => {
     let infos = { executionTime: 0, executionTimeMS: 0, infos: null };
-    console.log('DEBUT TRAITEMENT APIVIA');
+    console.log(`${new Date()} DEBUT TRAITEMENT APIVIA`);
     const excecutionStartTime = performance.now();
     let useFiles = false;
     let allTextFiles = [];
     if (useFiles) {
         // let allFiles = fs.readFileSync(path.join(__dirname, 'apiviaimg.json'), { encoding: 'utf-8' });
         // allFiles = JSON.parse(allFiles);
-        console.log('DEBUT IMPORTER LINES APIVIA');
+        console.log(`${new Date()} DEBUT IMPORTER LINES APIVIA`);
         allTextFiles = fs.readFileSync(path.join(__dirname, 'apiviatxtfile.json'), { encoding: 'utf-8' });
         allTextFiles = JSON.parse(allTextFiles);
-        console.log('FIN IMPORTER LINES APIVIA');
+        console.log(`${new Date()} FIN IMPORTER LINES APIVIA`);
     } else {
         const images = await pdfService.convertPDFToImg(file);
-        console.log('DEBUT TRAITEMENT IMAGES APIVIA');
+        console.log(`${new Date()} DEBUT TRAITEMENT IMAGES APIVIA`);
         const allFiles = await imageManagment.loadOpenCV(images, 'APIVIA');
-        console.log('FIN TRAITEMENT IMAGES APIVIA');
-        console.log('DEBUT IMPORTER LINES APIVIA');
+        console.log(`${new Date()} FIN TRAITEMENT IMAGES APIVIA`);
+        console.log(`${new Date()} DEBUT IMPORTER LINES APIVIA`);
         for (let files of allFiles) {
             let contratTextsFiles = [];
             for (let lines of files) {
@@ -39,7 +39,7 @@ exports.readPdfAPIVIA = async (file) => {
             }
             allTextFiles.push(contratTextsFiles);
         }
-        console.log('FIN IMPORTER LINES APIVIA');
+        console.log(`${new Date()} FIN IMPORTER LINES APIVIA`);
     }
     const infoBordereau = readBordereauAPIVIA(allTextFiles);
     infos.infos = infoBordereau;
@@ -48,7 +48,7 @@ exports.readPdfAPIVIA = async (file) => {
     infos.executionTime = time.millisecondToTime(executionTimeMS);
     infos.executionTimeMS = executionTimeMS;
     console.log('Total Execution time : ', infos.executionTime);
-    console.log('FIN TRAITEMENT APIVIA');
+    console.log(`${new Date()} FIN TRAITEMENT APIVIA`);
     const directoryTemp = path.join(__dirname, '..', '..', '..', 'documents', 'temp');
     const directoryTexte = path.join(__dirname, '..', '..', '..', 'documents', 'texte');
     const directorySplitedPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF');

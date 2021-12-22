@@ -14,7 +14,7 @@ if (parentPort !== null) {
 
 exports.readPdfERES = async (file) => {
     let infos = { executionTime: 0, infos: null };
-    console.log('DEBUT TRAITEMENT ERES');
+    console.log(`${new Date()} DEBUT TRAITEMENT ERES`);
     const excecutionStartTime = performance.now();
     const images = await pdfService.convertPDFToImg(file);
     const textFilePaths = getTextFromImages(images);
@@ -27,7 +27,7 @@ exports.readPdfERES = async (file) => {
     console.log('Total Execution time : ', executionTime);
     infos.executionTime = executionTime;
     infos.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT ERES');
+    console.log(`${new Date()} FIN TRAITEMENT ERES`);
     const directoryTemp = path.join(__dirname, '..', '..', '..', 'documents', 'temp');
     const directoryTexte = path.join(__dirname, '..', '..', '..', 'documents', 'texte');
     const directorySplitedPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF');

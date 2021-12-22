@@ -15,7 +15,7 @@ if (parentPort !== null) {
 exports.readExcelMIE = async (file) => {};
 
 exports.readExcelMIEMCMS = async (file) => {
-    console.log('DEBUT TRAITEMENT MIE MCMS');
+    console.log(`${new Date()} DEBUT TRAITEMENT MIE MCMS`);
     const excecutionStartTime = performance.now();
     let filePath = file;
     const fileName = fileService.getFileNameWithoutExtension(filePath);
@@ -86,7 +86,7 @@ exports.readExcelMIEMCMS = async (file) => {
     console.log('Total Execution time : ', executionTime);
     ocr.executionTime = executionTime;
     ocr.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT MIE MCMS');
+    console.log(`${new Date()} FIN TRAITEMENT MIE MCMS`);
     return ocr;
 };
 

@@ -9,7 +9,7 @@ if (parentPort !== null) {
 }
 
 exports.readExcelMILTIS = async (file) => {
-    console.log('DEBUT TRAITEMENT MILTIS');
+    console.log(`${new Date()} DEBUT TRAITEMENT MILTIS`);
     const excecutionStartTime = performance.now();
     const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     let headers = [];
@@ -112,7 +112,7 @@ exports.readExcelMILTIS = async (file) => {
     console.log('Total Execution time : ', executionTime);
     ocr.executionTime = executionTime;
     ocr.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT MILTIS');
+    console.log(`${new Date()} FIN TRAITEMENT MILTIS`);
     return ocr;
 };
 

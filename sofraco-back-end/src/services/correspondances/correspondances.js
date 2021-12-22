@@ -11,7 +11,7 @@ const courtierHandler = require('../../handlers/courtierHandler');
 
 exports.readExcelTableauCorrespondance = async (role) => {
     const file = path.join(__dirname, '..', '..', '..', 'documents', `${role}.xlsx`);
-    console.log('DEBUT LECTURE DU TABLEAU DE CORRESPONDANCE');
+    console.log(`${new Date()} DEBUT LECTURE DU TABLEAU DE CORRESPONDANCE`);
     const excecutionStartTime = performance.now();
     let filePath = file;
     const fileName = fileService.getFileNameWithoutExtension(filePath);
@@ -106,7 +106,7 @@ exports.readExcelTableauCorrespondance = async (role) => {
                 }
             });
         }
-        console.log('FIN LECTURE DU TABLEAU DE CORRESPONDANCE');
+        console.log(`${new Date()} FIN LECTURE DU TABLEAU DE CORRESPONDANCE`);
         return correspondance;
 
     } catch (err) {

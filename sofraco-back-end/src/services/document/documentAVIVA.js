@@ -9,7 +9,7 @@ if (parentPort !== null) {
 }
 
 exports.readExcelAVIVASURCO = async (file) => {
-    console.log('DEBUT TRAITEMENT AVIVA SURCO');
+    console.log(`${new Date()} DEBUT TRAITEMENT AVIVA SURCO`);
     const excecutionStartTime = performance.now();
     const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     let headers = [];
@@ -101,7 +101,7 @@ exports.readExcelAVIVASURCO = async (file) => {
     console.log('Total Execution time : ', executionTime);
     ocr.executionTime = executionTime;
     ocr.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT AVIVA SURCO');
+    console.log(`${new Date()} FIN TRAITEMENT AVIVA SURCO`);
     return ocr;
 };
 

@@ -15,7 +15,7 @@ if (parentPort !== null) {
 exports.readExcelPAVILLON = async (file) => {}
 
 exports.readExcelPAVILLONMCMS = async (file) => {
-    console.log('DEBUT TRAITEMENT PAVILLON MCMS');
+    console.log(`${new Date()} DEBUT TRAITEMENT PAVILLON MCMS`);
     const excecutionStartTime = performance.now();
     let filePath = file;
     const fileName = fileService.getFileNameWithoutExtension(filePath);
@@ -147,7 +147,7 @@ exports.readExcelPAVILLONMCMS = async (file) => {
     console.log('Total Execution time : ', executionTime);
     ocr.executionTime = executionTime;
     ocr.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT PAVILLON MCMS');
+    console.log(`${new Date()} FIN TRAITEMENT PAVILLON MCMS`);
     return ocr;
 };
 

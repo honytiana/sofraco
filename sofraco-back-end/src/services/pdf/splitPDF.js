@@ -65,7 +65,7 @@ const getTextFromImages = (image) => {
 }
 
 exports.splitPDFToSinglePagePDF = async (file) => {
-    console.log('DEBUT SEPARATION PDF');
+    console.log(`${new Date()} DEBUT SEPARATION PDF`);
     const excecutionStartTime = performance.now();
     const fileName = fileService.getFileNameWithoutExtension(file);
     try {
@@ -86,7 +86,7 @@ exports.splitPDFToSinglePagePDF = async (file) => {
         const excecutionStopTime = performance.now();
         let executionTime = excecutionStopTime - excecutionStartTime;
         console.log('Split pdf time : ', time.millisecondToTime(executionTime));
-        console.log('FIN SEPARATION PDF');
+        console.log(`${new Date()} FIN SEPARATION PDF`);
         return pathToPdf;
     } catch (err) {
         console.log(err);

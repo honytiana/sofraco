@@ -12,7 +12,7 @@ if (parentPort !== null) {
 }
 
 exports.readExcelGENERALI = async (file) => {
-    console.log('DEBUT TRAITEMENT GENERALI');
+    console.log(`${new Date()} DEBUT TRAITEMENT GENERALI`);
     const excecutionStartTime = performance.now();
     const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     const fileName = files.getFileNameWithoutExtension(file);
@@ -201,7 +201,7 @@ exports.readExcelGENERALI = async (file) => {
     const fileOCRPath = path.join(__dirname, '..', '..', '..', 'documents', 'ocr', `${fileName}_${day}_${month}_${year}.txt`);
     fs.writeFileSync(fileOCRPath, JSON.stringify(ocr));
     ocr.allContratsPerCourtier = fileOCRPath;
-    console.log('FIN TRAITEMENT GENERALI');
+    console.log(`${new Date()} FIN TRAITEMENT GENERALI`);
     return ocr;
 };
 

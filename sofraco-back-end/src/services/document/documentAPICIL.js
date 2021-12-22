@@ -9,7 +9,7 @@ if (parentPort !== null) {
 }
 
 exports.readExcelAPICIL = async (file) => {
-    console.log('DEBUT TRAITEMENT APICIL');
+    console.log(`${new Date()} DEBUT TRAITEMENT APICIL`);
     const excecutionStartTime = performance.now();
     const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     let allRows = [];
@@ -125,7 +125,7 @@ exports.readExcelAPICIL = async (file) => {
     console.log('Total Execution time : ', executionTime);
     infos.executionTime = executionTime;
     infos.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT APICIL');
+    console.log(`${new Date()} FIN TRAITEMENT APICIL`);
     return infos;
 };
 

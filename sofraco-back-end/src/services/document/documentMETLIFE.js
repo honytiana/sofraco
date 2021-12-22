@@ -63,10 +63,10 @@ exports.readPdfMETLIFE = async (file) => {
         let useFiles = false;
         let allTextFiles = [];
         if (useFiles) {
-            console.log('DEBUT IMPORTER LINES METLIFE');
+            console.log(`${new Date()} DEBUT IMPORTER LINES METLIFE`);
             allTextFiles = fs.readFileSync(path.join(__dirname, 'apiviatxtfile.json'), { encoding: 'utf-8' });
             allTextFiles = JSON.parse(allTextFiles);
-            console.log('FIN IMPORTER LINES METLIFE');
+            console.log(`${new Date()} FIN IMPORTER LINES METLIFE`);
         } else {
             console.log(`${new Date()} DEBUT TRAITEMENT IMAGES METLIFE`);
             let imagesOpenCV = [];

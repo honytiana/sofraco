@@ -8,7 +8,7 @@ if (parentPort !== null) {
 }
 
 exports.readExcelSPVIE = async (file) => {
-    console.log('DEBUT TRAITEMENT SPVIE');
+    console.log(`${new Date()} DEBUT TRAITEMENT SPVIE`);
     const excecutionStartTime = performance.now();
     const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     let firstHeaders = [];
@@ -199,7 +199,7 @@ exports.readExcelSPVIE = async (file) => {
     console.log('Total Execution time : ', executionTime);
     ocr.executionTime = executionTime;
     ocr.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT SPVIE');
+    console.log(`${new Date()} FIN TRAITEMENT SPVIE`);
     return ocr;
 };
 

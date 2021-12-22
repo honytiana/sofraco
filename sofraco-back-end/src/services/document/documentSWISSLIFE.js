@@ -16,7 +16,7 @@ if (parentPort !== null) {
 
 exports.readPdfSLADE = async (file) => {
     let infos = { executionTime: 0, infos: [] };
-    console.log('DEBUT TRAITEMENT SLADE');
+    console.log(`${new Date()} DEBUT TRAITEMENT SLADE`);
     const excecutionStartTime = performance.now();
     const images = await pdfService.convertPDFToImg(file);
     // const textFilePaths = fs.readdirSync(path.join(__dirname, '..', '..', '..', 'documents', 'texte'));
@@ -29,7 +29,7 @@ exports.readPdfSLADE = async (file) => {
     console.log('Total Execution time : ', executionTime);
     infos.executionTime = executionTime;
     infos.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT SLADE');
+    console.log(`${new Date()} FIN TRAITEMENT SLADE`);
     const directoryTemp = path.join(__dirname, '..', '..', '..', 'documents', 'temp');
     const directoryTexte = path.join(__dirname, '..', '..', '..', 'documents', 'texte');
     const directorySplitedPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF');
@@ -348,7 +348,7 @@ const readBordereauSLADE = (textFilePaths) => {
 }
 
 exports.readExcelSWISSLIFESURCO = async (file) => {
-    console.log('DEBUT TRAITEMENT SWISSLIFE SURCO');
+    console.log(`${new Date()} DEBUT TRAITEMENT SWISSLIFE SURCO`);
     const excecutionStartTime = performance.now();
     const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     let headers = [];
@@ -451,7 +451,7 @@ exports.readExcelSWISSLIFESURCO = async (file) => {
     console.log('Total Execution time : ', executionTime);
     ocr.executionTime = executionTime;
     ocr.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT SWISSLIFE SURCO');
+    console.log(`${new Date()} FIN TRAITEMENT SWISSLIFE SURCO`);
     return ocr;
 };
 

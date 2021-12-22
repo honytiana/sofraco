@@ -9,7 +9,7 @@ if (parentPort !== null) {
 }
 
 exports.readExcelUAFLIFE = async (file) => {
-    console.log('DEBUT TRAITEMENT UAF LIFE');
+    console.log(`${new Date()} DEBUT TRAITEMENT UAF LIFE`);
     const excecutionStartTime = performance.now();
     const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     let headers = [];
@@ -143,7 +143,7 @@ exports.readExcelUAFLIFE = async (file) => {
     console.log('Total Execution time : ', executionTime);
     ocr.executionTime = executionTime;
     ocr.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT UAF LIFE');
+    console.log(`${new Date()} FIN TRAITEMENT UAF LIFE`);
     return ocr;
 };
 

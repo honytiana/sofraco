@@ -8,7 +8,7 @@ if (parentPort !== null) {
 }
 
 exports.readExcelHODEVA = async (file) => {
-    console.log('DEBUT TRAITEMENT HODEVA');
+    console.log(`${new Date()} DEBUT TRAITEMENT HODEVA`);
     const excecutionStartTime = performance.now();
     const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     let headers = [];
@@ -78,7 +78,7 @@ exports.readExcelHODEVA = async (file) => {
     console.log('Total Execution time : ', executionTime);
     ocr.executionTime = executionTime;
     ocr.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT HODEVA');
+    console.log(`${new Date()} FIN TRAITEMENT HODEVA`);
     return ocr;
 };
 

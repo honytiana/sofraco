@@ -9,7 +9,7 @@ if (parentPort !== null) {
 }
 
 exports.readExcelLOURMEL = async (file) => {
-    console.log('DEBUT TRAITEMENT LOURMEL');
+    console.log(`${new Date()} DEBUT TRAITEMENT LOURMEL`);
     const excecutionStartTime = performance.now();
     const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     let headers = [];
@@ -108,7 +108,7 @@ exports.readExcelLOURMEL = async (file) => {
     console.log('Total Execution time : ', executionTime);
     ocr.executionTime = executionTime;
     ocr.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT LOURMEL');
+    console.log(`${new Date()} FIN TRAITEMENT LOURMEL`);
     return ocr;
 };
 

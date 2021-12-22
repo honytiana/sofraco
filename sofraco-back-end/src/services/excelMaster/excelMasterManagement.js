@@ -34,15 +34,15 @@ const courtierHandler = require('../../handlers/courtierHandler');
 
 exports.create = async (authorization) => {
     try {
-        console.log('DEBUT GENERATION EXCEL MASTER');
+        console.log(`${new Date()} DEBUT GENERATION EXCEL MASTER`);
         const ocrInfos = await getOCRInfos();
         const excelMasters = await generateExcelMaster(ocrInfos);
-        console.log('FIN GENERATION EXCEL MASTER');
-        console.log('DEBUT GENERATION ZIP');
+        console.log(`${new Date()} FIN GENERATION EXCEL MASTER`);
+        console.log(`${new Date()} DEBUT GENERATION ZIP`);
         const excelMastersPerCourtier = groupExcelsByCourtier(excelMasters);
         const excelsMastersZipped = await generateZipFilesEM(excelMastersPerCourtier);
         const singleZip = await generateSingleZipForAllZippedEM(excelsMastersZipped);
-        console.log('FIN GENERATION ZIP');
+        console.log(`${new Date()} FIN GENERATION ZIP`);
         return { excelMasters, excelsMastersZipped, singleZip, message: 'Excel Master générés' };
     } catch (err) {
         console.log(err);

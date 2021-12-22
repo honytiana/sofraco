@@ -10,7 +10,7 @@ if (parentPort !== null) {
 }
 
 exports.readExcelCARDIF = async (file) => {
-    console.log('DEBUT TRAITEMENT CARDIF');
+    console.log(`${new Date()} DEBUT TRAITEMENT CARDIF`);
     const excecutionStartTime = performance.now();
     const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     let firstHeaders = [];
@@ -139,7 +139,7 @@ exports.readExcelCARDIF = async (file) => {
     console.log('Total Execution time : ', executionTime);
     ocr.executionTime = executionTime;
     ocr.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT CARDIF');
+    console.log(`${new Date()} FIN TRAITEMENT CARDIF`);
     return ocr;
 };
 

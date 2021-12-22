@@ -14,7 +14,7 @@ if (parentPort !== null) {
 
 exports.readPdfAPREP = async (file) => {
     let infos = { executionTime: 0, infos: null };
-    console.log('DEBUT TRAITEMENT APREP');
+    console.log(`${new Date()} DEBUT TRAITEMENT APREP`);
     const excecutionStartTime = performance.now();
     const images = await pdfService.convertPDFToImg(file);
     const textFilePaths = getTextFromImages(images);
@@ -27,7 +27,7 @@ exports.readPdfAPREP = async (file) => {
     console.log('Total Execution time : ', executionTime);
     infos.executionTime = executionTime;
     infos.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT APREP');
+    console.log(`${new Date()} FIN TRAITEMENT APREP`);
     const directoryTemp = path.join(__dirname, '..', '..', '..', 'documents', 'temp');
     const directoryTexte = path.join(__dirname, '..', '..', '..', 'documents', 'texte');
     const directorySplitedPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF');
@@ -43,7 +43,7 @@ exports.readPdfAPREP = async (file) => {
 
 exports.readPdfAPREPENCOURS = async (file) => {
     let infos = { executionTime: 0, infos: null };
-    console.log('DEBUT TRAITEMENT APREP-ENCOURS');
+    console.log(`${new Date()} DEBUT TRAITEMENT APREP-ENCOURS`);
     const excecutionStartTime = performance.now();
     const images = await pdfService.convertPDFToImg(file);
     const textFilePaths = getTextFromImages(images);
@@ -56,7 +56,7 @@ exports.readPdfAPREPENCOURS = async (file) => {
     console.log('Total Execution time : ', executionTime);
     infos.executionTime = executionTime;
     infos.executionTimeMS = executionTimeMS;
-    console.log('FIN TRAITEMENT APREP-ENCOURS');
+    console.log(`${new Date()} FIN TRAITEMENT APREP-ENCOURS`);
     const directoryTemp = path.join(__dirname, '..', '..', '..', 'documents', 'temp');
     const directoryTexte = path.join(__dirname, '..', '..', '..', 'documents', 'texte');
     const directorySplitedPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF');
