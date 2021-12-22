@@ -3,6 +3,7 @@ const imageMETLIFE = require('./imageMETLIFE');
 const imageAPIVIA = require('./imageAPIVIA');
 
 exports.loadOpenCV = (images, company) => {
+    require('events').EventEmitter.prototype._maxListeners = 100;
     delete require.cache[require.resolve('../../../opencv.js')];
     delete require.cache[require.resolve('./imageMETLIFE')];
     delete require.cache[require.resolve('./imageAPIVIA')];

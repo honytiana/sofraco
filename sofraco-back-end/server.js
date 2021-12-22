@@ -20,7 +20,7 @@ const startServer = async () => {
         // }
 
         cluster.on('exit', (worker, code, signal) => {
-            console.log(`worker ${worker.process.pid} died`);
+            console.log(`code : ${code} - worker ${worker.process.pid} died - ${signal}`);
         });
     } else {
         // Workers can share any TCP connection

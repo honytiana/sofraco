@@ -2,12 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const { performance } = require('perf_hooks');
 const { execSync } = require('child_process');
-const pdfService = require('../utils/pdfFile');
 const splitPdfService = require('../pdf/splitPDF');
 const time = require('../utils/time');
 const fileService = require('../utils/files');
 const redefinition = require('../utils/redefinition');
-const imageMETLIFE = require('../images/imageMETLIFE');
 const imageManagment = require('../images/imageManagment');
 
 const { workerData, parentPort } = require('worker_threads');
@@ -79,6 +77,8 @@ exports.readPdfMETLIFE = async (file) => {
                     imagesOpenCV.push(images[i]);
                 }
             }
+            delete require.cache[require.resolve('../pdf/splitPDF')];
+            delete require.cache[require.resolve('../images/imageManagment')];
             const allFilesFromOpenCV = await imageManagment.loadOpenCV(imagesOpenCV, 'METLIFE');
             console.log(`${new Date()} FIN TRAITEMENT IMAGES METLIFE`);
             const allFilesFromFirstPage = getTextFromImages([imageFirstPage]);
