@@ -12,6 +12,7 @@ const startServer = async () => {
     // await workerThreadLoader();
 
     if (cluster.isPrimary || cluster.isMaster) {
+        require('events').EventEmitter.prototype._maxListeners = 100;
         console.log(`Primary ${process.pid} is running`);
 
         // Fork workers.
