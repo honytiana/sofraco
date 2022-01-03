@@ -1,11 +1,16 @@
 const axios = require('axios');
 const config = require('../../config.json');
+const tokenHandler = require('../handlers/tokenHandler');
+const userHandler = require('../handlers/userHandler');
 
-exports.launchTreatments = () => {
+exports.launchTreatments = async () => {
     console.log(`${new Date()} DEBUT DU TRAITEMENT DES FICHIERS UPLOADES`);
+    const user = await userHandler.getOneUser('Sofraco');
+    const token = await tokenHandler.createTokens(user._id);
     axios.put(`${config.nodeUrl}/api/document`, {
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token.value}`
         }
     }).then((res) => {
         let executionTime = res.data.executionTime;
