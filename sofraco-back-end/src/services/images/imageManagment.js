@@ -16,6 +16,9 @@ exports.loadOpenCV = (images, company) => {
                     for (let image_name of images) {
                         let file_names;
                         let cw;
+                        delete require.cache[require.resolve('../../../opencv.js')];
+                        delete require.cache[require.resolve('./imageMETLIFE')];
+                        delete require.cache[require.resolve('./imageAPIVIA')];
                         switch (company) {
                             case 'APIVIA':
                                 cw = [190, 180, 160, 100, 260, 200, 220, 80, 190, 190, 172, 172, 172];

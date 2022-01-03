@@ -56,6 +56,48 @@ exports.readPdfMETLIFE = async (file) => {
     } else {
         imagesPDF = await splitPdfService.splitPDFMETLIFE(file);
     }
+    console.log(`${new Date()} IMAGES LENGTH ${imagesPDF.length}`);
+    let nImgPdf = [];
+    if (imagesPDF.length > 25) {
+        let imgPdf = [];
+        for (let i = 0; i < imagesPDF.length; i++) {
+            if (imgPdf.length < 25) {
+                imgPdf.push(imagesPDF[i]);
+                if (i === imagesPDF.length - 1) {
+                    nImgPdf.push(imgPdf);
+                    imgPdf = [];
+                }
+            } else {
+                nImgPdf.push(imgPdf);
+                imgPdf = [];
+                imgPdf.push(imagesPDF[i]);
+            }
+        }
+    }
+    for (let img of nImgPdf) {
+        await treatmentImagesMetlife(img, infos);
+    }
+
+    const excecutionStopTime = performance.now();
+    let executionTimeMS = excecutionStopTime - excecutionStartTime;
+    infos.executionTime = time.millisecondToTime(executionTimeMS);
+    infos.executionTimeMS = executionTimeMS;
+    console.log('Total Execution time : ', infos.executionTime);
+    console.log(`${new Date()} FIN TRAITEMENT METLIFE`);
+    const directoryTemp = path.join(__dirname, '..', '..', '..', 'documents', 'temp');
+    const directoryTexte = path.join(__dirname, '..', '..', '..', 'documents', 'texte');
+    const directorySplitedPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF');
+    try {
+        fileService.deleteFilesinDirectory(directoryTemp);
+        fileService.deleteFilesinDirectory(directoryTexte);
+        fileService.deleteFilesinDirectory(directorySplitedPDF);
+    } catch (err) {
+        console.log(err);
+    }
+    return infos;
+};
+
+const treatmentImagesMetlife = async (imagesPDF, infos) => {
     for (let images of imagesPDF) {
         // pathToPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF', pathToPDF);
         let useFiles = false;
@@ -113,25 +155,7 @@ exports.readPdfMETLIFE = async (file) => {
         const infoBordereau = readBordereauMETLIFE(allTextFiles);
         infos.infos.push(infoBordereau);
     }
-
-    const excecutionStopTime = performance.now();
-    let executionTimeMS = excecutionStopTime - excecutionStartTime;
-    infos.executionTime = time.millisecondToTime(executionTimeMS);
-    infos.executionTimeMS = executionTimeMS;
-    console.log('Total Execution time : ', infos.executionTime);
-    console.log(`${new Date()} FIN TRAITEMENT METLIFE`);
-    const directoryTemp = path.join(__dirname, '..', '..', '..', 'documents', 'temp');
-    const directoryTexte = path.join(__dirname, '..', '..', '..', 'documents', 'texte');
-    const directorySplitedPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF');
-    try {
-        fileService.deleteFilesinDirectory(directoryTemp);
-        fileService.deleteFilesinDirectory(directoryTexte);
-        fileService.deleteFilesinDirectory(directorySplitedPDF);
-    } catch (err) {
-        console.log(err);
-    }
-    return infos;
-};
+}
 
 const readBordereauMETLIFE = (textFilePath) => {
     const readBordereauMETLIFEStartTime = performance.now();
