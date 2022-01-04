@@ -144,14 +144,23 @@ exports.updateDocuments = async (req, res) => {
                 drafts.push(processingDocument._id);
             }
         }
+        let numberFiles = 1;
         for (let draftId of drafts) {
-            const indexOfDoc = drafts.indexOf(draftId);
-            const document = await documentHandler.getDocument(draftId);
-            const rs = await setOCRDocument(document.companyName, document._id, document.path_original_file);
-            const result = { data: rs.company, executionTime: rs.executionTime };
-            const progress = ((indexOfDoc + 1) * 100) / drafts.length;
-            const treatment = await treatmentHandler.updateTreatment(resultTreatment._id, { progress: progress });
-            executionTimes.push(result.executionTime);
+            try {
+                console.log(`------ Fichier numero : ${numberFiles} ------`);
+                const indexOfDoc = drafts.indexOf(draftId);
+                const document = await documentHandler.getDocument(draftId);
+                const rs = await setOCRDocument(document.companyName, document._id, document.path_original_file);
+                const result = { data: rs.company, executionTime: rs.executionTime };
+                const progress = ((indexOfDoc + 1) * 100) / drafts.length;
+                const treatment = await treatmentHandler.updateTreatment(resultTreatment._id, { progress: progress });
+                executionTimes.push(result.executionTime);
+                numberFiles++;
+            } catch (err) {
+                console.log(err);
+            } finally {
+                continue;
+            }
         }
         await treatmentHandler.updateTreatment(resultTreatment._id, { status: 'done', end_treatment: Date.now() });
         let executionTime = Date.now() - treatment.begin_treatment;

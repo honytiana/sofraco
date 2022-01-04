@@ -13,6 +13,7 @@ exports.loadOpenCV = (images, company) => {
                 onRuntimeInitialized: async () => {
                     const dirPath = path.join(__dirname, '..', '..', '..', 'documents', 'temp');
                     let allFiles = []
+                    let numImage = 1;
                     for (let image_name of images) {
                         let file_names;
                         let cw;
@@ -35,6 +36,7 @@ exports.loadOpenCV = (images, company) => {
                                 );
                                 break;
                             case 'METLIFE':
+                                console.log(`------ Image numero : ${numImage} ------`);
                                 cw = [170, 230, 199, 270, 175, 202, 198, 200, 200, 200, 199];
                                 file_names = await imageMETLIFE.getCellFromImageMETLIFE(
                                     cv,
@@ -60,13 +62,14 @@ exports.loadOpenCV = (images, company) => {
                                 break;
                         }
                         allFiles.push(file_names);
+                        numImage++;
                     }
                     resolve(allFiles);
                 }
             };
             global.cv = require('../../../opencv.js');
         } catch (err) {
-            console.log(err);
+            throw err;
         }
 
     });
