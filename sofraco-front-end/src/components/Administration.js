@@ -46,7 +46,8 @@ class Administration extends Component {
             token: null,
             ajoutCourtier: false,
             courtierToDel: null,
-            visibleAlert: false
+            visibleAlert: false,
+            interne: false
         }
         this.getBadge = this.getBadge.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
@@ -58,80 +59,91 @@ class Administration extends Component {
 
     componentDidMount() {
         const user = JSON.parse(localStorage.getItem('user'));
-        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((res) => {
-                this.setState({
-                    fields: [
-                        {
-                            key: 'cabinet',
-                            label: 'Cabinet',
-                            _style: { width: '25%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'firstName',
-                            label: 'Prénom',
-                            _style: { width: '15%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'lastName',
-                            label: 'Nom',
-                            _style: { width: '15%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'email',
-                            label: 'Email',
-                            _style: { width: '20%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'phone',
-                            label: 'Telephone',
-                            _style: { width: '10%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'status',
-                            label: 'Status',
-                            _style: { width: '5%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'show_details',
-                            label: '',
-                            _style: { width: '5%' },
-                            _classes: ['text-center'],
-                            sorter: false,
-                            filter: false
-                        },
-                        {
-                            key: 'delete',
-                            label: '',
-                            _style: { width: '5%' },
-                            _classes: ['text-center'],
-                            sorter: false,
-                            filter: false
-                        }
-                    ],
-                    toast: false,
-                    messageToast: [],
-                    token: res.data
-                });
-                this.fetchCourtiers();
+        axios.get('https://www.cloudflare.com/cdn-cgi/trace').then((res) => {
+            let ipRegex = /[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/;
+            let ip = res.data.match(ipRegex)[0];
+            const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
+            this.setState({
+                interne: ip.match(regInterne) ? true : false
+            });
+            axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
             })
+                .then((res) => {
+                    this.setState({
+                        fields: [
+                            {
+                                key: 'cabinet',
+                                label: 'Cabinet',
+                                _style: { width: '25%' },
+                                _classes: ['text-center']
+                            },
+                            {
+                                key: 'firstName',
+                                label: 'Prénom',
+                                _style: { width: '15%' },
+                                _classes: ['text-center']
+                            },
+                            {
+                                key: 'lastName',
+                                label: 'Nom',
+                                _style: { width: '15%' },
+                                _classes: ['text-center']
+                            },
+                            {
+                                key: 'email',
+                                label: 'Email',
+                                _style: { width: '20%' },
+                                _classes: ['text-center']
+                            },
+                            {
+                                key: 'phone',
+                                label: 'Telephone',
+                                _style: { width: '10%' },
+                                _classes: ['text-center']
+                            },
+                            {
+                                key: 'status',
+                                label: 'Status',
+                                _style: { width: '5%' },
+                                _classes: ['text-center']
+                            },
+                            {
+                                key: 'show_details',
+                                label: '',
+                                _style: { width: '5%' },
+                                _classes: ['text-center'],
+                                sorter: false,
+                                filter: false
+                            },
+                            {
+                                key: 'delete',
+                                label: '',
+                                _style: { width: '5%' },
+                                _classes: ['text-center'],
+                                sorter: false,
+                                filter: false
+                            }
+                        ],
+                        toast: false,
+                        messageToast: [],
+                        token: res.data
+                    });
+                    this.fetchCourtiers();
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        })
             .catch((err) => {
                 console.log(err);
             });
     }
 
     fetchCourtiers() {
-        axios.get(`${config.nodeUrl}/api/courtier/role/courtier`, {
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/role/courtier`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token.value}`
             }
@@ -201,7 +213,7 @@ class Administration extends Component {
             options.firstName !== '' ||
             options.email !== '' ||
             options.phone !== '') {
-            axios.post(`${config.nodeUrl}/api/courtier/`, options, {
+            axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/`, options, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.state.token.value}`
@@ -247,7 +259,7 @@ class Administration extends Component {
     deleteCourtier(e) {
         e.preventDefault();
         this.setState({ visibleAlert: false });
-        axios.delete(`${config.nodeUrl}/api/courtier/${this.state.courtierToDel._id}`, {
+        axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/${this.state.courtierToDel._id}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.state.token.value}`

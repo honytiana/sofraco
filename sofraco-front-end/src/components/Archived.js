@@ -35,7 +35,8 @@ class Archived extends Component {
             collapseMonth: false,
             detailsYear: [],
             detailsMonth: [],
-            token: null
+            token: null,
+            interne: false
         }
         this.toggleYear = this.toggleYear.bind(this);
         this.toggleMonth = this.toggleMonth.bind(this);
@@ -43,21 +44,32 @@ class Archived extends Component {
 
     componentDidMount() {
         const user = JSON.parse(localStorage.getItem('user'));
-        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then((res) => {
+        axios.get('https://www.cloudflare.com/cdn-cgi/trace').then((res) => {
+            let ipRegex = /[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/;
+            let ip = res.data.match(ipRegex)[0];
+            const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
             this.setState({
-                toast: false,
-                messageToast: {},
-                token: res.data
+                interne: ip.match(regInterne) ? true : false
             });
+            axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+                .then((res) => {
+                    this.setState({
+                        toast: false,
+                        messageToast: {},
+                        token: res.data
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         })
-        .catch((err) => {
-            console.log(err);
-        });
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     componentDidUpdate() {

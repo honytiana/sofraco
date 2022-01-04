@@ -29,22 +29,37 @@ class Navbar extends Component {
 
     componentDidMount() {
         const userId = JSON.parse(localStorage.getItem('user'));
-        axios.get(`${config.nodeUrl}/api/user/${userId}`, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((res) => {
-                const user = res.data;
-                this.setState({
-                    user
-                });
+
+        axios.get('https://www.cloudflare.com/cdn-cgi/trace').then((res) => {
+            let ipRegex = /[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/;
+            let ip = res.data.match(ipRegex)[0];
+            const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
+            this.setState({
+                interne: ip.match(regInterne) ? true : false
+            });
+            axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/user/${userId}`, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             })
+                .then((res) => {
+                    const user = res.data;
+                    this.setState({
+                        user
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     deconnexion() {
         const user = JSON.parse(localStorage.getItem('user'));
-        axios.delete(`${config.nodeUrl}/api/token/user/${user}`, {
+        axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
             headers: {
                 'Content-Type': 'application/json'
             }

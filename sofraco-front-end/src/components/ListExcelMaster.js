@@ -39,7 +39,8 @@ class ListExcelMaster extends Component {
             fields: [],
             detailsYear: [],
             detailsMonth: [],
-            token: null
+            token: null,
+            interne: false
         }
         this.toggleDetails = this.toggleDetails.bind(this);
         this.fetchListExcelMasters = this.fetchListExcelMasters.bind(this);
@@ -69,8 +70,20 @@ class ListExcelMaster extends Component {
             toast: false,
             messageToast: []
         });
-        this.fetchListExcelMasters();
-        this.fetchListExcelMasterByYearAndMonth();
+
+        axios.get('https://www.cloudflare.com/cdn-cgi/trace').then((res) => {
+            let ipRegex = /[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/;
+            let ip = res.data.match(ipRegex)[0];
+            const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
+            this.setState({
+                interne: ip.match(regInterne) ? true : false
+            });
+            this.fetchListExcelMasters();
+            this.fetchListExcelMasterByYearAndMonth();
+        })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     checkProps() {
@@ -81,7 +94,7 @@ class ListExcelMaster extends Component {
 
     fetchListExcelMasters() {
         const courtier = this.props.courtier;
-        axios.get(`${config.nodeUrl}/api/excelMaster/courtier/${courtier._id}`, {
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/excelMaster/courtier/${courtier._id}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${this.props.token.value}`
@@ -113,7 +126,7 @@ class ListExcelMaster extends Component {
 
     fetchListExcelMasterByYearAndMonth() {
         const courtier = this.props.courtier;
-        axios.get(`${config.nodeUrl}/api/excelMaster/courtier/${courtier._id}/year/month/type/excel`, {
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/excelMaster/courtier/${courtier._id}/year/month/type/excel`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.props.token.value}`
@@ -142,7 +155,7 @@ class ListExcelMaster extends Component {
 
     deleteListExcelMaster(e, correspondance) {
         e.preventDefault();
-        axios.delete(`${config.nodeUrl}/api/correspondance/code/courtier/${this.props.courtier._id}/code/${correspondance.code}`, {
+        axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/correspondance/code/courtier/${this.props.courtier._id}/code/${correspondance.code}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.props.token.value}`

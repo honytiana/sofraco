@@ -51,7 +51,8 @@ class Companies extends Component {
             progress: 1,
             token: null,
             treatmentTimeMS: 0,
-            treatmentTimeStr: null
+            treatmentTimeStr: null,
+            interne: false
         }
         this.getCompanies = this.getCompanies.bind(this);
         this.getDraftDocument = this.getDraftDocument.bind(this);
@@ -68,35 +69,46 @@ class Companies extends Component {
 
     componentDidMount() {
         const user = JSON.parse(localStorage.getItem('user'));
-        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((res) => {
-                this.setState({
-                    token: res.data
-                });
-                this.getCompanies();
-                this.getDraftDocument();
-                // this.loadingHandler();
-                if (this.state.local) {
-                    this.getTreatmentTime();
-                    setInterval(() => {
-                        if (this.state.load) {
-                            let treatmentTimeMS = this.state.treatmentTimeMS + 1000;
-                            let treatmentTimeStr = millisecondToTime(treatmentTimeMS);
-                            this.setState({
-                                treatmentTimeMS,
-                                treatmentTimeStr
-                            });
-                        }
-                    }, 1000);
-                    setInterval(() => {
-                        this.getTreatment();
-                    }, 2000);
+        axios.get('https://www.cloudflare.com/cdn-cgi/trace').then((res) => {
+            let ipRegex = /[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/;
+            let ip = res.data.match(ipRegex)[0];
+            const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
+            this.setState({
+                interne: ip.match(regInterne) ? true : false
+            });
+            axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
+                headers: {
+                    'Content-Type': 'application/json',
                 }
             })
+                .then((res) => {
+                    this.setState({
+                        token: res.data
+                    });
+                    this.getCompanies();
+                    this.getDraftDocument();
+                    // this.loadingHandler();
+                    if (this.state.local) {
+                        this.getTreatmentTime();
+                        setInterval(() => {
+                            if (this.state.load) {
+                                let treatmentTimeMS = this.state.treatmentTimeMS + 1000;
+                                let treatmentTimeStr = millisecondToTime(treatmentTimeMS);
+                                this.setState({
+                                    treatmentTimeMS,
+                                    treatmentTimeStr
+                                });
+                            }
+                        }, 1000);
+                        setInterval(() => {
+                            this.getTreatment();
+                        }, 2000);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        })
             .catch((err) => {
                 console.log(err);
             });
@@ -110,7 +122,7 @@ class Companies extends Component {
     }
 
     getDraftDocument() {
-        axios.get(`${config.nodeUrl}/api/document`, {
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/document`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token.value}`
             }
@@ -144,7 +156,7 @@ class Companies extends Component {
         let infoDrafts = [];
         for (let draft of drafts) {
             try {
-                const result = await axios.get(`${config.nodeUrl}/api/company/${draft.company}`, {
+                const result = await axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company/${draft.company}`, {
                     headers: {
                         'Authorization': `Bearer ${this.state.token.value}`
                     }
@@ -152,7 +164,7 @@ class Companies extends Component {
                 const company = result.data;
                 if (company.type === 'surco') {
                     try {
-                        const result = await axios.get(`${config.nodeUrl}/api/company/companySurco/${company.name}`, {
+                        const result = await axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company/companySurco/${company.name}`, {
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': `Bearer ${this.state.token.value}`
@@ -172,7 +184,7 @@ class Companies extends Component {
                 if (company.surco) {
                     const companySurco = company.companySurco;
                     try {
-                        const result = await axios.get(`${config.nodeUrl}/api/company/name/${companySurco}`, {
+                        const result = await axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company/name/${companySurco}`, {
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': `Bearer ${this.state.token.value}`
@@ -201,7 +213,7 @@ class Companies extends Component {
     }
 
     loadingHandler() {
-        axios.get(`${config.nodeUrl}/api/document`, {
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/document`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token.value}`
             }
@@ -227,7 +239,7 @@ class Companies extends Component {
     }
 
     getCompanies() {
-        axios.get(`${config.nodeUrl}/api/company`, {
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token.value}`
             }
@@ -251,7 +263,7 @@ class Companies extends Component {
     }
 
     getTreatment() {
-        axios.get(`${config.nodeUrl}/api/treatment/user/${this.user}/status/processing`, {
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/treatment/user/${this.user}/status/processing`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token.value}`
             }
@@ -275,7 +287,7 @@ class Companies extends Component {
     }
 
     getTreatmentTime() {
-        axios.get(`${config.nodeUrl}/api/treatment/user/${this.user}/status/processing`, {
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/treatment/user/${this.user}/status/processing`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token.value}`
             }
@@ -305,7 +317,7 @@ class Companies extends Component {
             const options = {
                 user: JSON.parse(localStorage.getItem('user'))
             }
-            const res = await axios.put(`${config.nodeUrl}/api/document`, options, {
+            const res = await axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/document`, options, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.state.token.value}`
@@ -405,7 +417,7 @@ class Companies extends Component {
         const options = {
             userId: JSON.parse(localStorage.getItem('user'))
         }
-        axios.post(`${config.nodeUrl}/api/excelMaster`, options, {
+        axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/excelMaster`, options, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.state.token.value}`
@@ -439,7 +451,7 @@ class Companies extends Component {
     }
 
     onDownloadExcelMasters() {
-        axios.get(`${config.nodeUrl}/api/excelMaster/zip/excels`, {
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/excelMaster/zip/excels`, {
             headers: {
                 'Content-Type': 'application/zip',
                 'Authorization': `Bearer ${this.state.token.value}`

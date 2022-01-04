@@ -39,7 +39,8 @@ class CompanyFolder extends Component {
             loader: false,
             toast: false,
             messageToast: {},
-            token: null
+            token: null,
+            interne: false
         }
         this.fetchDocumentsCompanyByYearAndMonth = this.fetchDocumentsCompanyByYearAndMonth.bind(this);
         this.fetchDocumentsCompany = this.fetchDocumentsCompany.bind(this);
@@ -51,9 +52,20 @@ class CompanyFolder extends Component {
             toast: false,
             messageToast: {}
         });
-        this.fetchCompany();
-        this.fetchDocumentsCompany();
-        this.fetchDocumentsCompanyByYearAndMonth();
+        axios.get('https://www.cloudflare.com/cdn-cgi/trace').then((res) => {
+            let ipRegex = /[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/;
+            let ip = res.data.match(ipRegex)[0];
+            const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
+            this.setState({
+                interne: ip.match(regInterne) ? true : false
+            });
+            this.fetchCompany();
+            this.fetchDocumentsCompany();
+            this.fetchDocumentsCompanyByYearAndMonth();
+        })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     checkProps() {
@@ -71,7 +83,7 @@ class CompanyFolder extends Component {
         })
         if (company.surco) {
             const companySurco = company.companySurco;
-            axios.get(`${config.nodeUrl}/api/company/name/${companySurco}`, {
+            axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company/name/${companySurco}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.props.token.value}`
@@ -92,7 +104,7 @@ class CompanyFolder extends Component {
     }
 
     fetchDocumentsCompany() {
-        axios.get(`${config.nodeUrl}/api/document/company/${this.props.company._id}`, {
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/document/company/${this.props.company._id}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.props.token.value}`
@@ -112,7 +124,7 @@ class CompanyFolder extends Component {
     }
 
     fetchDocumentsCompanyByYearAndMonth() {
-        axios.get(`${config.nodeUrl}/api/document/company/${this.props.company._id}/year/month`, {
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/document/company/${this.props.company._id}/year/month`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.props.token.value}`

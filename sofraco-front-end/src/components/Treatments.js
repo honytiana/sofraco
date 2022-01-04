@@ -36,7 +36,8 @@ class Treatments extends Component {
             toast: false,
             messageToast: null,
             token: null,
-            num: 0
+            num: 0,
+            interne: false
         }
         this.toggleDetails = this.toggleDetails.bind(this);
         this.fetchCourtiers = this.fetchCourtiers.bind(this);
@@ -45,59 +46,70 @@ class Treatments extends Component {
 
     componentDidMount() {
         const user = JSON.parse(localStorage.getItem('user'));
-        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((res) => {
-                this.setState({
-                    fields: [
-                        {
-                            key: 'code',
-                            label: 'Code',
-                            _style: { width: '15%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'cabinet',
-                            label: 'Cabinet',
-                            _style: { width: '25%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'firstName',
-                            label: 'Prénom',
-                            _style: { width: '15%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'lastName',
-                            label: 'Nom',
-                            _style: { width: '15%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'email',
-                            label: 'Email',
-                            _style: { width: '20%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'show_details',
-                            label: '',
-                            _style: { width: '10%' },
-                            _classes: ['text-center'],
-                            sorter: false,
-                            filter: false
-                        }
-                    ],
-                    toast: false,
-                    messageToast: [],
-                    token: res.data
-                });
-                this.fetchCourtiers();
+        axios.get('https://www.cloudflare.com/cdn-cgi/trace').then((res) => {
+            let ipRegex = /[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/;
+            let ip = res.data.match(ipRegex)[0];
+            const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
+            this.setState({
+                interne: ip.match(regInterne) ? true : false
+            });
+            axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
             })
+                .then((res) => {
+                    this.setState({
+                        fields: [
+                            {
+                                key: 'code',
+                                label: 'Code',
+                                _style: { width: '15%' },
+                                _classes: ['text-center']
+                            },
+                            {
+                                key: 'cabinet',
+                                label: 'Cabinet',
+                                _style: { width: '25%' },
+                                _classes: ['text-center']
+                            },
+                            {
+                                key: 'firstName',
+                                label: 'Prénom',
+                                _style: { width: '15%' },
+                                _classes: ['text-center']
+                            },
+                            {
+                                key: 'lastName',
+                                label: 'Nom',
+                                _style: { width: '15%' },
+                                _classes: ['text-center']
+                            },
+                            {
+                                key: 'email',
+                                label: 'Email',
+                                _style: { width: '20%' },
+                                _classes: ['text-center']
+                            },
+                            {
+                                key: 'show_details',
+                                label: '',
+                                _style: { width: '10%' },
+                                _classes: ['text-center'],
+                                sorter: false,
+                                filter: false
+                            }
+                        ],
+                        toast: false,
+                        messageToast: [],
+                        token: res.data
+                    });
+                    this.fetchCourtiers();
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        })
             .catch((err) => {
                 console.log(err);
             });
@@ -110,7 +122,7 @@ class Treatments extends Component {
     }
 
     fetchCourtiers() {
-        axios.get(`${config.nodeUrl}/api/courtier`, {
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token.value}`
             }

@@ -25,9 +25,25 @@ class Access extends Component {
         super(props);
         this.state = {
             toast: false,
-            messageToast: ''
+            messageToast: '',
+            interne: false
         }
         this.onConnexion = this.onConnexion.bind(this);
+
+    }
+
+    componentDidMount() {
+        axios.get('https://www.cloudflare.com/cdn-cgi/trace').then((res) => {
+            let ipRegex = /[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/;
+            let ip = res.data.match(ipRegex)[0];
+            const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
+            this.setState({
+                interne: ip.match(regInterne) ? true : false
+            });
+            this.getToken();
+        }).catch ((err) => {
+            console.log(err);
+        });
 
     }
 
@@ -37,7 +53,7 @@ class Access extends Component {
             login: e.target['sofraco-login'].value,
             password: e.target['sofraco-password'].value,
         };
-        axios.post(`${config.nodeUrl}/api/user/login`, options, {
+        axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/user/login`, options, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -51,7 +67,7 @@ class Access extends Component {
             localStorage.setItem('user', JSON.stringify(data.userId));
 
             setTimeout(() => {
-                axios.delete(`${config.nodeUrl}/api/token/${data.userId}`, {
+                axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/${data.userId}`, {
                     headers: {
                         'Content-Type': 'application/json'
                     }

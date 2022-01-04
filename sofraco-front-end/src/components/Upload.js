@@ -34,7 +34,8 @@ class Upload extends Component {
             loader: false,
             toast: false,
             messageToast: {},
-            token: null
+            token: null,
+            interne: false
         }
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -46,21 +47,32 @@ class Upload extends Component {
 
     componentDidMount() {
         const user = JSON.parse(localStorage.getItem('user'));
-        axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((res) => {
-                const company = this.props.company;
-                this.setState({
-                    toast: false,
-                    messageToast: {},
-                    company: company,
-                    token: res.data
-                });
-                this.getCompanySurco();
+        axios.get('https://www.cloudflare.com/cdn-cgi/trace').then((res) => {
+            let ipRegex = /[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/;
+            let ip = res.data.match(ipRegex)[0];
+            const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
+            this.setState({
+                interne: ip.match(regInterne) ? true : false
+            });
+            axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
             })
+                .then((res) => {
+                    const company = this.props.company;
+                    this.setState({
+                        toast: false,
+                        messageToast: {},
+                        company: company,
+                        token: res.data
+                    });
+                    this.getCompanySurco();
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        })
             .catch((err) => {
                 console.log(err);
             });
@@ -76,7 +88,7 @@ class Upload extends Component {
         const company = this.props.company;
         if (company.surco) {
             const companySurco = company.companySurco;
-            axios.get(`${config.nodeUrl}/api/company/name/${companySurco}`, {
+            axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company/name/${companySurco}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.state.token.value}`
@@ -88,7 +100,7 @@ class Upload extends Component {
                         companySurco
                     });
                     if (companySurco.surco) {
-                        axios.get(`${config.nodeUrl}/api/company/name/${companySurco.companySurco}`, {
+                        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company/name/${companySurco.companySurco}`, {
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token.value : this.props.token}`
@@ -170,7 +182,7 @@ class Upload extends Component {
         formData.append('company', JSON.stringify(company));
         formData.append('companySurco', JSON.stringify(companySurco));
         formData.append('companySurco2', JSON.stringify(companySurco2));
-        axios.post(`${config.nodeUrl}/api/document/`, formData, {
+        axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/document/`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${this.state.token.value}`

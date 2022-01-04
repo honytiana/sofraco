@@ -38,7 +38,8 @@ class Correspondance extends Component {
             fields: [],
             ajoutCorrespondance: false,
             newP: this.props.newP,
-            token: null
+            token: null,
+            interne: false
         }
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
@@ -108,8 +109,19 @@ class Correspondance extends Component {
             });
         }
 
-        this.fetchCorrespondances();
-        this.getCompanies();
+        axios.get('https://www.cloudflare.com/cdn-cgi/trace').then((res) => {
+            let ipRegex = /[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/;
+            let ip = res.data.match(ipRegex)[0];
+            const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
+            this.setState({
+                interne: ip.match(regInterne) ? true : false
+            });
+            this.fetchCorrespondances();
+            this.getCompanies();
+        })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     checkProps() {
@@ -121,7 +133,7 @@ class Correspondance extends Component {
 
     fetchCorrespondances() {
         const courtier = this.props.courtier;
-        axios.get(`${config.nodeUrl}/api/correspondance/courtier/${courtier._id}`, {
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/correspondance/courtier/${courtier._id}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${this.props.token.value}`
@@ -152,7 +164,7 @@ class Correspondance extends Component {
     }
 
     getCompanies() {
-        axios.get(`${config.nodeUrl}/api/company`, {
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company`, {
             headers: {
                 'Authorization': `Bearer ${this.props.token.value}`
             }
@@ -199,7 +211,7 @@ class Correspondance extends Component {
             particular: '',
             code: event.target['sofraco-code'].value,
         };
-        axios.put(`${config.nodeUrl}/api/correspondance/code/courtier/edit/${this.props.courtier._id}`, options, {
+        axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/correspondance/code/courtier/edit/${this.props.courtier._id}`, options, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.props.token.value}`
@@ -230,7 +242,7 @@ class Correspondance extends Component {
 
     deleteCorrespondance(e, correspondance) {
         e.preventDefault();
-        axios.delete(`${config.nodeUrl}/api/correspondance/code/courtier/${this.props.courtier._id}/code/${correspondance.code}`, {
+        axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/correspondance/code/courtier/${this.props.courtier._id}/code/${correspondance.code}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.props.token.value}`
@@ -291,7 +303,7 @@ class Correspondance extends Component {
             particular: '',
             code: event.target['sofraco-code'].value,
         };
-        axios.put(`${config.nodeUrl}/api/correspondance/code/courtier/${this.props.courtier._id}`, options, {
+        axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/correspondance/code/courtier/${this.props.courtier._id}`, options, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.props.token.value}`

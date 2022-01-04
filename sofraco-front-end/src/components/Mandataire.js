@@ -43,7 +43,8 @@ class Mandataire extends Component {
             newP: this.props.newP,
             token: null,
             visibleAlert: false,
-            mandataireToDel: null
+            mandataireToDel: null,
+            interne: false
         }
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
@@ -106,7 +107,19 @@ class Mandataire extends Component {
             toast: false,
             messageToast: []
         });
-        this.fetchMandataires();
+
+        axios.get('https://www.cloudflare.com/cdn-cgi/trace').then((res) => {
+            let ipRegex = /[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/;
+            let ip = res.data.match(ipRegex)[0];
+            const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
+            this.setState({
+                interne: ip.match(regInterne) ? true : false
+            });
+            this.fetchMandataires();
+        })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     checkProps() {
@@ -121,7 +134,7 @@ class Mandataire extends Component {
 
     fetchMandataires() {
         const courtier = this.props.courtier;
-        axios.get(`${config.nodeUrl}/api/courtier/mandataires/${courtier._id}`, {
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/mandataires/${courtier._id}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${this.props.token.value}`
@@ -178,7 +191,7 @@ class Mandataire extends Component {
             options.firstName !== '' ||
             options.email !== '' ||
             options.phone !== '') {
-            axios.post(`${config.nodeUrl}/api/courtier/`, options, {
+            axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/`, options, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.props.token.value}`
@@ -227,7 +240,7 @@ class Mandataire extends Component {
             options.firstName !== '' ||
             options.email !== '' ||
             options.phone !== '') {
-            axios.put(`${config.nodeUrl}/api/courtier/${mandataire._id}`, options, {
+            axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/${mandataire._id}`, options, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.props.token.value}`
@@ -283,7 +296,7 @@ class Mandataire extends Component {
     deleteMandataire(e) {
         e.preventDefault();
         this.setState({ visibleAlert: false });
-        axios.delete(`${config.nodeUrl}/api/courtier/${this.state.mandataireToDel._id}`, {
+        axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/${this.state.mandataireToDel._id}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.props.token.value}`
