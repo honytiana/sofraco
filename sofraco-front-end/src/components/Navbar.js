@@ -25,6 +25,7 @@ class Navbar extends Component {
             user: null,
             interne: false
         }
+        this.deconnexion = this.deconnexion.bind(this);
 
     }
 
