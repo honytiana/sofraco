@@ -22,7 +22,8 @@ class Navbar extends Component {
         super(props);
         this.state = {
             isOpen: false,
-            user: null
+            user: null,
+            interne: false
         }
 
     }
