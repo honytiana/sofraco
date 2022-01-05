@@ -21,7 +21,7 @@ const upload = multer({
 });
 
 router.route('/').post(accessControl, upload.array('files'), documentController.createDocument);
-router.route('/').put(documentController.updateDocuments);
+router.route('/').put(accessControl, documentController.updateDocuments);
 router.route('/status/:status').get(accessControl, documentController.getDocumentsByStatus);
 router.route('/status/:status').put(accessControl, documentController.setStatusDocument);
 router.route('/:id').put(accessControl, documentController.updateDocument);

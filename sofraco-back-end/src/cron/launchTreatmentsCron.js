@@ -7,7 +7,7 @@ exports.launchTreatments = async () => {
     console.log(`${new Date()} DEBUT DU TRAITEMENT DES FICHIERS UPLOADES`);
     const user = await userHandler.getOneUser('Sofraco');
     const token = await tokenHandler.createTokens(user._id);
-    axios.put(`${config.nodeUrl}/api/document`, {
+    axios.default.put(`${config.nodeUrlInterne}/api/document`, {}, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token.value}`
