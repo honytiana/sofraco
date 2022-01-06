@@ -59,84 +59,77 @@ class Administration extends Component {
 
     componentDidMount() {
         const user = JSON.parse(localStorage.getItem('user'));
-        axios.get('https://www.cloudflare.com/cdn-cgi/trace').then((res) => {
-            let ipRegex = /[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/;
-            let ip = res.data.match(ipRegex)[0];
-            const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
-            this.setState({
-                interne: ip.match(regInterne) ? true : false
-            });
-            axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-                .then((res) => {
-                    this.setState({
-                        fields: [
-                            {
-                                key: 'cabinet',
-                                label: 'Cabinet',
-                                _style: { width: '25%' },
-                                _classes: ['text-center']
-                            },
-                            {
-                                key: 'firstName',
-                                label: 'Prénom',
-                                _style: { width: '15%' },
-                                _classes: ['text-center']
-                            },
-                            {
-                                key: 'lastName',
-                                label: 'Nom',
-                                _style: { width: '15%' },
-                                _classes: ['text-center']
-                            },
-                            {
-                                key: 'email',
-                                label: 'Email',
-                                _style: { width: '20%' },
-                                _classes: ['text-center']
-                            },
-                            {
-                                key: 'phone',
-                                label: 'Telephone',
-                                _style: { width: '10%' },
-                                _classes: ['text-center']
-                            },
-                            {
-                                key: 'status',
-                                label: 'Status',
-                                _style: { width: '5%' },
-                                _classes: ['text-center']
-                            },
-                            {
-                                key: 'show_details',
-                                label: '',
-                                _style: { width: '5%' },
-                                _classes: ['text-center'],
-                                sorter: false,
-                                filter: false
-                            },
-                            {
-                                key: 'delete',
-                                label: '',
-                                _style: { width: '5%' },
-                                _classes: ['text-center'],
-                                sorter: false,
-                                filter: false
-                            }
-                        ],
-                        toast: false,
-                        messageToast: [],
-                        token: res.data
-                    });
-                    this.fetchCourtiers();
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
+        const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
+        this.setState({
+            interne: window.location.hostname.match(regInterne) ? false : true
+        });
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
         })
+            .then((res) => {
+                this.setState({
+                    fields: [
+                        {
+                            key: 'cabinet',
+                            label: 'Cabinet',
+                            _style: { width: '25%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'firstName',
+                            label: 'Prénom',
+                            _style: { width: '15%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'lastName',
+                            label: 'Nom',
+                            _style: { width: '15%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'email',
+                            label: 'Email',
+                            _style: { width: '20%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'phone',
+                            label: 'Telephone',
+                            _style: { width: '10%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'status',
+                            label: 'Status',
+                            _style: { width: '5%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'show_details',
+                            label: '',
+                            _style: { width: '5%' },
+                            _classes: ['text-center'],
+                            sorter: false,
+                            filter: false
+                        },
+                        {
+                            key: 'delete',
+                            label: '',
+                            _style: { width: '5%' },
+                            _classes: ['text-center'],
+                            sorter: false,
+                            filter: false
+                        }
+                    ],
+                    toast: false,
+                    messageToast: [],
+                    token: res.data
+                });
+                this.fetchCourtiers();
+            })
             .catch((err) => {
                 console.log(err);
             });

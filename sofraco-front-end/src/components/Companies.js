@@ -69,46 +69,39 @@ class Companies extends Component {
 
     componentDidMount() {
         const user = JSON.parse(localStorage.getItem('user'));
-        axios.get('https://www.cloudflare.com/cdn-cgi/trace').then((res) => {
-            let ipRegex = /[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/;
-            let ip = res.data.match(ipRegex)[0];
-            const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
-            this.setState({
-                interne: ip.match(regInterne) ? true : false
-            });
-            axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
-                headers: {
-                    'Content-Type': 'application/json',
+        const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
+        this.setState({
+            interne: window.location.hostname.match(regInterne) ? false : true
+        });
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((res) => {
+                this.setState({
+                    token: res.data
+                });
+                this.getCompanies();
+                this.getDraftDocument();
+                // this.loadingHandler();
+                if (this.state.local) {
+                    this.getTreatmentTime();
+                    setInterval(() => {
+                        if (this.state.load) {
+                            let treatmentTimeMS = this.state.treatmentTimeMS + 1000;
+                            let treatmentTimeStr = millisecondToTime(treatmentTimeMS);
+                            this.setState({
+                                treatmentTimeMS,
+                                treatmentTimeStr
+                            });
+                        }
+                    }, 1000);
+                    setInterval(() => {
+                        this.getTreatment();
+                    }, 2000);
                 }
             })
-                .then((res) => {
-                    this.setState({
-                        token: res.data
-                    });
-                    this.getCompanies();
-                    this.getDraftDocument();
-                    // this.loadingHandler();
-                    if (this.state.local) {
-                        this.getTreatmentTime();
-                        setInterval(() => {
-                            if (this.state.load) {
-                                let treatmentTimeMS = this.state.treatmentTimeMS + 1000;
-                                let treatmentTimeStr = millisecondToTime(treatmentTimeMS);
-                                this.setState({
-                                    treatmentTimeMS,
-                                    treatmentTimeStr
-                                });
-                            }
-                        }, 1000);
-                        setInterval(() => {
-                            this.getTreatment();
-                        }, 2000);
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        })
             .catch((err) => {
                 console.log(err);
             });

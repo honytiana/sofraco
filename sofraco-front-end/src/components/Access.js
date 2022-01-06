@@ -33,18 +33,10 @@ class Access extends Component {
     }
 
     componentDidMount() {
-        axios.get('https://www.cloudflare.com/cdn-cgi/trace').then((res) => {
-            let ipRegex = /[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/;
-            let ip = res.data.match(ipRegex)[0];
-            const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
-            this.setState({
-                interne: ip.match(regInterne) ? true : false
-            });
-            this.getToken();
-        }).catch ((err) => {
-            console.log(err);
+        const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
+        this.setState({
+            interne: window.location.hostname.match(regInterne) ? false : true
         });
-
     }
 
     onConnexion(e) {

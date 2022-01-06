@@ -44,29 +44,22 @@ class Archived extends Component {
 
     componentDidMount() {
         const user = JSON.parse(localStorage.getItem('user'));
-        axios.get('https://www.cloudflare.com/cdn-cgi/trace').then((res) => {
-            let ipRegex = /[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/;
-            let ip = res.data.match(ipRegex)[0];
-            const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
-            this.setState({
-                interne: ip.match(regInterne) ? true : false
-            });
-            axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-                .then((res) => {
-                    this.setState({
-                        toast: false,
-                        messageToast: {},
-                        token: res.data
-                    });
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
+        const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
+        this.setState({
+            interne: window.location.hostname.match(regInterne) ? false : true
+        });
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
         })
+            .then((res) => {
+                this.setState({
+                    toast: false,
+                    messageToast: {},
+                    token: res.data
+                });
+            })
             .catch((err) => {
                 console.log(err);
             });
