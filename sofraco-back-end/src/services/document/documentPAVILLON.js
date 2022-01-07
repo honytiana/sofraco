@@ -20,7 +20,6 @@ exports.readExcelPAVILLONMCMS = async (file) => {
     let filePath = file;
     const fileName = fileService.getFileNameWithoutExtension(filePath);
     const version = fileName.replace(/.+(V\d+)/, '$1');
-    const versionActio = fileName.replace(/(ACTIO)/, '$1');
     const extension = fileService.getFileExtension(filePath);
     if (extension.toUpperCase() === 'XLS') {
         let originalFile = XLSX.readFile(filePath);

@@ -19,7 +19,7 @@ exports.readExcelMIELMCMS = async (file) => {
     const excecutionStartTime = performance.now();
     let filePath = file;
     const fileName = fileService.getFileNameWithoutExtension(filePath);
-    const version = fileName.replace(/(\d+).+/, '$1');
+    const version = fileName.replace(/.+(V\d+).*/, '$1');
     const extension = fileService.getFileExtension(filePath);
     if (extension.toUpperCase() === 'XLS') {
         let originalFile = XLSX.readFile(filePath);
@@ -34,20 +34,20 @@ exports.readExcelMIELMCMS = async (file) => {
     let allContrats = [];
     let ocr = { headers: [], allContratsPerCourtier: [], mielVersion: null, executionTime: 0 };
     let mielCreasio, mielV1, mielV2, mielV3, mielV4 = false;
+    if (fileName.match('CREASIO')) {
+        mielCreasio = true;
+    }
     switch (version) {
-        case '0':
-            mielCreasio = true;
-            break;
-        case '01':
+        case 'V1':
             mielV1 = true;
             break;
-        case '02':
+        case 'V2':
             mielV2 = true;
             break;
-        case '03':
+        case 'V3':
             mielV3 = true;
             break;
-        case '04':
+        case 'V4':
             mielV4 = true;
             break;
     }

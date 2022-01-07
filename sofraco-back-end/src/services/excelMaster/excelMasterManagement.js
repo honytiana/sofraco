@@ -423,6 +423,7 @@ const generateZipFilesEM = async (excelMastersPerCourtier) => {
 };
 
 const generateSingleZipForAllZippedEM = async (excelsMastersZipped) => {
+    console.log('Generate single zip');
     let month = new Date().getMonth();
     month = (month + 1 < 10) ? `0${month + 1}` : `${month + 1}`;
     const date = `${month}${new Date().getFullYear()}`;
@@ -437,6 +438,7 @@ const generateSingleZipForAllZippedEM = async (excelsMastersZipped) => {
         type: 'zip of zip',
         is_enabled: true
     };
+    console.log('Single zip DONE');
     return singleZipEM;
 }
 
@@ -450,7 +452,7 @@ const generateZip = async (zipName, files) => {
         // console.log(archive.pointer() + ' total bytes');
     });
     output.on('end', () => {
-        // console.log('Data has been drained');
+        console.log('Zip of file generated');
     });
     output.on('error', (err) => {
         console.log(err);
