@@ -19,7 +19,8 @@ exports.readExcelPAVILLONMCMS = async (file) => {
     const excecutionStartTime = performance.now();
     let filePath = file;
     const fileName = fileService.getFileNameWithoutExtension(filePath);
-    const version = fileName.replace(/(\d+).+/, '$1');
+    const version = fileName.replace(/.+(V\d+)/, '$1');
+    const versionActio = fileName.replace(/(ACTIO)/, '$1');
     const extension = fileService.getFileExtension(filePath);
     if (extension.toUpperCase() === 'XLS') {
         let originalFile = XLSX.readFile(filePath);
@@ -34,33 +35,33 @@ exports.readExcelPAVILLONMCMS = async (file) => {
     let allContrats = [];
     let ocr = { headers: [], allContratsPerCourtier: [], pavVersion: null, executionTime: 0 };
     let pavActio, pavV1, pavV2, pavV3, pavV4, pavV5, pavV6, pavV7, pavV8 = false;
+    if (fileName.match('ACTIO')) {
+        pavActio = true;
+    }
+    if (fileName.match('MEDOC')) {
+        pavV6 = true;
+    }
+    if (fileName.match('22,5')) {
+        pavV7 = true;
+    }
+    if (fileName.match('17,2')) {
+        pavV8 = true;
+    }
     switch (version) {
-        case '0':
-            pavActio = true;
-            break;
-        case '01':
+        case 'V1':
             pavV1 = true;
             break;
-        case '02':
+        case 'V2':
             pavV2 = true;
             break;
-        case '03':
+        case 'V3':
             pavV3 = true;
             break;
-        case '04':
+        case 'V4':
             pavV4 = true;
             break;
-        case '05':
+        case 'V5':
             pavV5 = true;
-            break;
-        case '06':
-            pavV6 = true;
-            break;
-        case '07':
-            pavV7 = true;
-            break;
-        case '08':
-            pavV8 = true;
             break;
     }
     worksheets.forEach((worksheet, index) => {
