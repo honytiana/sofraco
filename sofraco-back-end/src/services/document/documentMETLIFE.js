@@ -57,30 +57,11 @@ exports.readPdfMETLIFE = async (file) => {
         imagesPDF = await splitPdfService.splitPDFMETLIFE(file);
     }
     console.log(`${new Date()} IMAGES LENGTH ${imagesPDF.length}`);
-    // let nImgPdf = [];
-    // if (imagesPDF.length > 25) {
-    //     let imgPdf = [];
-    //     for (let i = 0; i < imagesPDF.length; i++) {
-    //         if (imgPdf.length < 25) {
-    //             imgPdf.push(imagesPDF[i]);
-    //             if (i === imagesPDF.length - 1) {
-    //                 nImgPdf.push(imgPdf);
-    //                 imgPdf = [];
-    //             }
-    //         } else {
-    //             nImgPdf.push(imgPdf);
-    //             imgPdf = [];
-    //             imgPdf.push(imagesPDF[i]);
-    //         }
-    //     }
-    // }
-    // for (let img of imagesPDF) {
     try {
         await treatmentImagesMetlife(imagesPDF, infos);
     } catch (err) {
         throw err;
     }
-    // }
 
     const excecutionStopTime = performance.now();
     let executionTimeMS = excecutionStopTime - excecutionStartTime;

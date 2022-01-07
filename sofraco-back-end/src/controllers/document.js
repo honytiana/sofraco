@@ -3,6 +3,7 @@ const fs = require('fs');
 const axios = require('axios');
 const config = require('../../config.json');
 const fileService = require('../services/utils/files');
+const splitPDF = require('../services/pdf/splitPDF');
 const time = require('../services/utils/time');
 const documentHandler = require('../handlers/documentHandler');
 const documentAPICIL = require('../services/document/documentAPICIL');
@@ -27,7 +28,30 @@ const documentSWISSLIFE = require('../services/document/documentSWISSLIFE');
 const documentUAFLIFE = require('../services/document/documentUAFLIFE');
 const treatmentHandler = require('../handlers/treatmentHandler');
 
-exports.createDocument = (req, res) => {  // create document
+const deleteCacheRequire = () => {
+    delete require.cache[require.resolve('../services/document/documentAPICIL')];
+    delete require.cache[require.resolve('../services/document/documentAPIVIA')];
+    delete require.cache[require.resolve('../services/document/documentAPREP')];
+    delete require.cache[require.resolve('../services/document/documentAVIVA')];
+    delete require.cache[require.resolve('../services/document/documentCARDIF')];
+    delete require.cache[require.resolve('../services/document/documentCEGEMA')];
+    delete require.cache[require.resolve('../services/document/documentERES')];
+    delete require.cache[require.resolve('../services/document/documentGENERALI')];
+    delete require.cache[require.resolve('../services/document/documentHODEVA')];
+    delete require.cache[require.resolve('../services/document/documentLOURMEL')];
+    delete require.cache[require.resolve('../services/document/documentMETLIFE')];
+    delete require.cache[require.resolve('../services/document/documentMIE')];
+    delete require.cache[require.resolve('../services/document/documentMIEL')];
+    delete require.cache[require.resolve('../services/document/documentMILTIS')];
+    delete require.cache[require.resolve('../services/document/documentMMA')];
+    delete require.cache[require.resolve('../services/document/documentPAVILLON')];
+    delete require.cache[require.resolve('../services/document/documentSMATIS')];
+    delete require.cache[require.resolve('../services/document/documentSPVIE')];
+    delete require.cache[require.resolve('../services/document/documentSWISSLIFE')];
+    delete require.cache[require.resolve('../services/document/documentUAFLIFE')];
+};
+
+exports.createDocument = async (req, res) => {  // create document
     console.log('Create document');
     try {
         const company = JSON.parse(req.body.company);
@@ -53,51 +77,52 @@ exports.createDocument = (req, res) => {  // create document
         }
 
         if (simple && surco && surco2 && !mcms) {  // company and surco ans surco2
-            saveDocument(company, req.files[0].path, req.body.extension);
-            saveDocument(companySurco, req.files[1].path, req.body.extension);
-            saveDocument(companySurco2, req.files[2].path, req.body.extension);
+            await saveDocumentUploaded(company, req.files[0].path, req.body.extension);
+            await saveDocumentUploaded(companySurco, req.files[1].path, req.body.extension);
+            await saveDocumentUploaded(companySurco2, req.files[2].path, req.body.extension);
         }
 
         if (simple && surco && !surco2 && !mcms) {  // company and surco
-            saveDocument(company, req.files[0].path, req.body.extension);
-            saveDocument(companySurco, req.files[1].path, req.body.extension);
+            await saveDocumentUploaded(company, req.files[0].path, req.body.extension);
+            await saveDocumentUploaded(companySurco, req.files[1].path, req.body.extension);
         }
 
         if (!simple && surco && surco2 && !mcms) { // surco and surco2
-            saveDocument(companySurco, req.files[0].path, req.body.extension);
-            saveDocument(companySurco2, req.files[1].path, req.body.extension);
+            await saveDocumentUploaded(companySurco, req.files[0].path, req.body.extension);
+            await saveDocumentUploaded(companySurco2, req.files[1].path, req.body.extension);
         }
 
         if (simple && !surco && surco2 && !mcms) { // company and surco2
-            saveDocument(company, req.files[0].path, req.body.extension);
-            saveDocument(companySurco2, req.files[1].path, req.body.extension);
+            await saveDocumentUploaded(company, req.files[0].path, req.body.extension);
+            await saveDocumentUploaded(companySurco2, req.files[1].path, req.body.extension);
         }
 
         if (simple && !surco && !surco2 && !mcms) {     // company
-            saveDocument(company, req.files[0].path, req.body.extension);
+            await saveDocumentUploaded(company, req.files[0].path, req.body.extension);
         }
 
         if (!simple && surco && !surco2 && !mcms) { // surco
-            saveDocument(companySurco, req.files[0].path, req.body.extension);
+            await saveDocumentUploaded(companySurco, req.files[0].path, req.body.extension);
         }
 
         if (!simple && !surco && surco2 && !mcms) { // surco2
-            saveDocument(companySurco2, req.files[0].path, req.body.extension);
+            await saveDocumentUploaded(companySurco2, req.files[0].path, req.body.extension);
         }
 
         if (!simple && surco && !surco2 && mcms && surcoLength > 0 && fileLength === 0) { // MCMS 
             for (let file of req.files) {
-                saveDocument(companySurco, file.path, req.body.extension);
+                await saveDocumentUploaded(companySurco, file.path, req.body.extension);
             }
         }
         if (simple && surco && !surco2 && mcms && surcoLength > 0 && fileLength > 0) { // company & MCMS 
-            saveDocument(company, req.files[0].path, req.body.extension);
+            await saveDocumentUploaded(company, req.files[0].path, req.body.extension);
             const doc = documentHandler.createDocument(document);
             const files = req.files.splice(1, req.files.length - 1);
             for (let file of files) {
-                saveDocument(companySurco, file.path, req.body.extension);
+                await saveDocumentUploaded(companySurco, file.path, req.body.extension);
             }
         }
+        console.log('Document created');
         res.status(200).end('Sent to Server');
     } catch (err) {
         res.status(500).json({ err });
@@ -114,6 +139,17 @@ const saveDocument = (company, filePath, extension) => {
     document.path_original_file = filePath;
     document.type = extension;
     const doc = documentHandler.createDocument(document);
+};
+
+const saveDocumentUploaded = async (company, filePath, extension) => {
+    if (company.name === 'METLIFE') {
+        const pdfPaths = await splitPDF.split100pagesMax(filePath);
+        for (let pdf of pdfPaths) {
+            saveDocument(company, pdf, extension);
+        }
+    } else {
+        saveDocument(company, filePath, extension);
+    }
 };
 
 exports.updateDocuments = async (req, res) => {
@@ -146,6 +182,7 @@ exports.updateDocuments = async (req, res) => {
         }
         let numberFiles = 1;
         for (let draftId of drafts) {
+            deleteCacheRequire();
             try {
                 console.log(`------ Fichier numero : ${numberFiles} ------`);
                 const indexOfDoc = drafts.indexOf(draftId);
