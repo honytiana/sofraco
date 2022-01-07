@@ -35,7 +35,7 @@ class Access extends Component {
     componentDidMount() {
         const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
         this.setState({
-            interne: window.location.hostname.match(regInterne) ? false : true
+            interne: window.location.hostname.match(regInterne) ? true : false
         });
     }
 
@@ -45,8 +45,7 @@ class Access extends Component {
             login: e.target['sofraco-login'].value,
             password: e.target['sofraco-password'].value,
         };
-        const hostname = (this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne;
-        axios.post(`${hostname}/api/user/login`, options, {
+        axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/user/login`, options, {
             headers: {
                 'Content-Type': 'application/json'
             }

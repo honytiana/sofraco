@@ -34,7 +34,7 @@ class Navbar extends Component {
 
         const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
         this.setState({
-            interne: window.location.hostname.match(regInterne) ? false : true
+            interne: window.location.hostname.match(regInterne) ? true : false
         });
         axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/user/${userId}`, {
             headers: {

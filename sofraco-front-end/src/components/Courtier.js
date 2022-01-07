@@ -38,7 +38,7 @@ class Courtier extends Component {
         });
         const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
         this.setState({
-            interne: window.location.hostname.match(regInterne) ? false : true
+            interne: window.location.hostname.match(regInterne) ? true : false
         });
     }
 
