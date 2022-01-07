@@ -9,6 +9,8 @@ exports.loadOpenCV = (images, company) => {
     delete require.cache[require.resolve('./imageAPIVIA')];
     return new Promise((resolve, reject) => {
         try {
+            delete require.cache[require.resolve('../../../opencv.js')];
+            console.log(`----- WebAssembly memory lenght = ${WebAssembly.Memory.length} -----------------`);
             global.Module = {
                 onRuntimeInitialized: async () => {
                     const dirPath = path.join(__dirname, '..', '..', '..', 'documents', 'temp');
@@ -17,9 +19,6 @@ exports.loadOpenCV = (images, company) => {
                     for (let image_name of images) {
                         let file_names;
                         let cw;
-                        delete require.cache[require.resolve('../../../opencv.js')];
-                        delete require.cache[require.resolve('./imageMETLIFE')];
-                        delete require.cache[require.resolve('./imageAPIVIA')];
                         switch (company) {
                             case 'APIVIA':
                                 cw = [190, 180, 160, 100, 260, 200, 220, 80, 190, 190, 172, 172, 172];

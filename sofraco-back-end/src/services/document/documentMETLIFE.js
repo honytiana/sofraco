@@ -112,6 +112,7 @@ const treatmentImagesMetlife = async (imagesPDF, infos) => {
                 const allFilesFromOpenCV = await imageManagment.loadOpenCV(imagesOpenCV, 'METLIFE');
                 console.log(`${new Date()} FIN TRAITEMENT IMAGES METLIFE`);
                 const allFilesFromFirstPage = getTextFromImages([imageFirstPage]);
+                fileService.deleteFile(imageFirstPage);
                 allTextFiles.push(allFilesFromFirstPage[0]);
                 console.log(`${new Date()} DEBUT IMPORTER LINES METLIFE`);
                 for (let files of allFilesFromOpenCV) {
@@ -120,6 +121,7 @@ const treatmentImagesMetlife = async (imagesPDF, infos) => {
                     for (let file of files) {
                         if (i > 1) {
                             const textFilePaths = getTextFromImages(file);
+                            fileService.deleteFile(file);
                             if (contratTextsFiles.length > 0) {
                                 if (contratTextsFiles[contratTextsFiles.length - 1].length === 11) {
                                     contratTextsFiles.push(textFilePaths);

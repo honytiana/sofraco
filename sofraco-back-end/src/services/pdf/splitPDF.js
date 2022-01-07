@@ -36,6 +36,7 @@ exports.splitPDFMETLIFE = async (file) => {
                     for (let i = 0; i < numero; i++) {
                         const image = await pdfService.convertPDFToImg(pathsToPDF[i]);
                         img.push(image[0]);
+                        fileService.deleteFile(pathsToPDF[i]);
                     }
                     images.push(img);
                     pathsToPDF.splice(0, numero);

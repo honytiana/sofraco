@@ -184,7 +184,9 @@ exports.updateDocuments = async (req, res) => {
         for (let draftId of drafts) {
             deleteCacheRequire();
             try {
+                console.log('**********************************************');
                 console.log(`------ Fichier numero : ${numberFiles} ------`);
+                console.log('**********************************************');
                 const indexOfDoc = drafts.indexOf(draftId);
                 const document = await documentHandler.getDocument(draftId);
                 const rs = await setOCRDocument(document.companyName, document._id, document.path_original_file);
@@ -339,7 +341,7 @@ const setOCRDocument = async (companyName, documentId, filePath) => {
         const doc = await documentHandler.updateDocument(documentId, document);
         return { executionTime: ocr.executionTimeMS, company: companyName, doc };
     } catch (err) {
-        res.status(500).json({ err });
+        throw err;
     }
 }
 
