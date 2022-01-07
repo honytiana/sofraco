@@ -41,12 +41,12 @@ class Access extends Component {
 
     onConnexion(e) {
         e.preventDefault();
-        const a = config;
         const options = {
             login: e.target['sofraco-login'].value,
             password: e.target['sofraco-password'].value,
         };
-        axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/user/login`, options, {
+        const hostname = (this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne;
+        axios.post(`${hostname}/api/user/login`, options, {
             headers: {
                 'Content-Type': 'application/json'
             }
