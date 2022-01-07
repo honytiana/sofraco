@@ -41,6 +41,7 @@ class Access extends Component {
 
     onConnexion(e) {
         e.preventDefault();
+        const a = config;
         const options = {
             login: e.target['sofraco-login'].value,
             password: e.target['sofraco-password'].value,
