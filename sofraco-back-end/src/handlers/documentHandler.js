@@ -14,6 +14,7 @@ class DocumentHandler {
         document.upload_date = Date.now();
         document.path_original_file = data.path_original_file;
         document.type = data.type;
+        document.status = data.status;
         document.is_enabled = true;
         document.ocr = null;
         document.save();

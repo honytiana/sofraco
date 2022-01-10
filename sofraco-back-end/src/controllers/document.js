@@ -77,78 +77,94 @@ exports.createDocument = async (req, res) => {  // create document
         }
 
         if (simple && surco && surco2 && !mcms) {  // company and surco ans surco2
-            await saveDocumentUploaded(company, req.files[0].path, req.body.extension);
-            await saveDocumentUploaded(companySurco, req.files[1].path, req.body.extension);
-            await saveDocumentUploaded(companySurco2, req.files[2].path, req.body.extension);
+            const docCompany = saveDocumentUploaded(company, req.files[0].path, req.body.extension);
+            const docSurco = saveDocumentUploaded(companySurco, req.files[1].path, req.body.extension);
+            const docMCMS = saveDocumentUploaded(companySurco2, req.files[2].path, req.body.extension);
         }
 
         if (simple && surco && !surco2 && !mcms) {  // company and surco
-            await saveDocumentUploaded(company, req.files[0].path, req.body.extension);
-            await saveDocumentUploaded(companySurco, req.files[1].path, req.body.extension);
+            const docCompany = saveDocumentUploaded(company, req.files[0].path, req.body.extension);
+            const docSurco = saveDocumentUploaded(companySurco, req.files[1].path, req.body.extension);
         }
 
         if (!simple && surco && surco2 && !mcms) { // surco and surco2
-            await saveDocumentUploaded(companySurco, req.files[0].path, req.body.extension);
-            await saveDocumentUploaded(companySurco2, req.files[1].path, req.body.extension);
+            const docSurco = saveDocumentUploaded(companySurco, req.files[0].path, req.body.extension);
+            const docSurco2 = saveDocumentUploaded(companySurco2, req.files[1].path, req.body.extension);
         }
 
         if (simple && !surco && surco2 && !mcms) { // company and surco2
-            await saveDocumentUploaded(company, req.files[0].path, req.body.extension);
-            await saveDocumentUploaded(companySurco2, req.files[1].path, req.body.extension);
+            const docCompany = saveDocumentUploaded(company, req.files[0].path, req.body.extension);
+            const docSurco2 = saveDocumentUploaded(companySurco2, req.files[1].path, req.body.extension);
         }
 
         if (simple && !surco && !surco2 && !mcms) {     // company
-            await saveDocumentUploaded(company, req.files[0].path, req.body.extension);
+            const docCompany = saveDocumentUploaded(company, req.files[0].path, req.body.extension);
         }
 
         if (!simple && surco && !surco2 && !mcms) { // surco
-            await saveDocumentUploaded(companySurco, req.files[0].path, req.body.extension);
+            const docSurco = saveDocumentUploaded(companySurco, req.files[0].path, req.body.extension);
         }
 
         if (!simple && !surco && surco2 && !mcms) { // surco2
-            await saveDocumentUploaded(companySurco2, req.files[0].path, req.body.extension);
+            const docSurco2 = saveDocumentUploaded(companySurco2, req.files[0].path, req.body.extension);
         }
 
         if (!simple && surco && !surco2 && mcms && surcoLength > 0 && fileLength === 0) { // MCMS 
             for (let file of req.files) {
-                await saveDocumentUploaded(companySurco, file.path, req.body.extension);
+                saveDocumentUploaded(companySurco, file.path, req.body.extension);
             }
         }
         if (simple && surco && !surco2 && mcms && surcoLength > 0 && fileLength > 0) { // company & MCMS 
-            await saveDocumentUploaded(company, req.files[0].path, req.body.extension);
+            const docCompany = saveDocumentUploaded(company, req.files[0].path, req.body.extension);
             const doc = documentHandler.createDocument(document);
             const files = req.files.splice(1, req.files.length - 1);
             for (let file of files) {
-                await saveDocumentUploaded(companySurco, file.path, req.body.extension);
+                const docMCMS = saveDocumentUploaded(companySurco, file.path, req.body.extension);
             }
         }
         console.log('Document created');
         res.status(200).end('Sent to Server');
+        if (company.name === 'METLIFE') {
+            const pdfPaths = await splitPDF.splitPDFMETLIFEByBordereaux(req.files[0].path);
+            for (let pdf of pdfPaths) {
+                const singleDoc = saveDocument(company, pdf, req.body.extension);
+            }
+        }
+
     } catch (err) {
         res.status(500).json({ err });
     }
 }
 
-const saveDocument = (company, filePath, extension) => {
-    let document = {};
-    const fileName = fileService.getFileName(filePath);
-    document.name = fileName;
-    document.company = company._id;
-    document.companyGlobalName = company.globalName;
-    document.companyName = company.name;
-    document.path_original_file = filePath;
-    document.type = extension;
-    const doc = documentHandler.createDocument(document);
+const saveDocument = (company, filePath, extension, status = 'draft') => {
+    try {
+        let document = {};
+        const fileName = fileService.getFileName(filePath);
+        document.name = fileName;
+        document.company = company._id;
+        document.companyGlobalName = company.globalName;
+        document.companyName = company.name;
+        document.path_original_file = filePath;
+        document.type = extension;
+        document.status = status;
+        const doc = documentHandler.createDocument(document);
+        return doc;
+    } catch (err) {
+        throw err;
+    }
 };
 
-const saveDocumentUploaded = async (company, filePath, extension) => {
-    if (company.name === 'METLIFE') {
-        const pdfPaths = await splitPDF.split100pagesMax(filePath);
-        for (let pdf of pdfPaths) {
-            saveDocument(company, pdf, extension);
+const saveDocumentUploaded = (company, filePath, extension) => {
+    try {
+        let doc;
+        if (company.name === 'METLIFE') {
+            doc = saveDocument(company, filePath, extension, 'cancel');
+        } else {
+            doc = saveDocument(company, filePath, extension);
         }
-    } else {
-        saveDocument(company, filePath, extension);
+        return doc;
+    } catch (err) {
+        throw err;
     }
 };
 
@@ -200,6 +216,16 @@ exports.updateDocuments = async (req, res) => {
             } finally {
                 continue;
             }
+        }
+        const directoryTemp = path.join(__dirname, '..', '..', 'documents', 'temp');
+        const directoryTexte = path.join(__dirname, '..', '..', 'documents', 'texte');
+        const directorySplitedPDF = path.join(__dirname, '..', '..', 'documents', 'splited_PDF');
+        try {
+            fileService.deleteFilesinDirectory(directoryTemp);
+            fileService.deleteFilesinDirectory(directoryTexte);
+            fileService.deleteFilesinDirectory(directorySplitedPDF);
+        } catch (err) {
+            console.log(err);
         }
         await treatmentHandler.updateTreatment(resultTreatment._id, { status: 'done', end_treatment: Date.now() });
         let executionTime = Date.now() - treatment.begin_treatment;

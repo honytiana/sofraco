@@ -12,9 +12,6 @@ exports.splitPDFMETLIFE = async (file) => {
     console.log(`${new Date()} DEBUT SEPARATION PDF METLIFE`);
     const pathsToPDF = await this.splitPDFToSinglePagePDF(file);
     console.log(`${new Date()} FIN SEPARATION PDF METLIFE`);
-    // if (pathsToPDF.length > 100) {
-    //     split100pagesMax(file);
-    // }
     let images = [];
     let iteration = 0;
     console.log(`${new Date()} DEBUT REGROUPEMENT PAR BORDEREAU METLIFE`);
@@ -113,6 +110,49 @@ exports.split100pagesMax = async (file) => {
         }
         console.log(`${new Date()} FIN SEPARATION par 100 pages`);
         return pdfPaths;
+    }
+};
+
+exports.splitPDFMETLIFEByBordereaux = async (file) => {
+    try {
+        console.log(`${new Date()} DEBUT SEPARATION PDF METLIFE`);
+        const pathsToPDF = await this.splitPDFToSinglePagePDF(file);
+        const fileName = fileService.getFileNameWithoutExtension(file);
+        console.log(`${new Date()} FIN SEPARATION PDF METLIFE`);
+        console.log(`${new Date()} DEBUT REGROUPEMENT PAR BORDEREAU PDF METLIFE`);
+        let currentPDFBytes = fs.readFileSync(file);
+        const currentPDFDoc = await PDFDocument.load(currentPDFBytes);
+        let pdfPaths = [];
+        let pdfNumero = 1;
+        while (pathsToPDF.length > 0) {
+            const image = await pdfService.convertPDFToImg(pathsToPDF[0]);
+            const allFilesFromOpenCV = await imageManagment.loadOpenCV(image, 'METLIFE2');
+            const textFilePath = getTextFromImages(allFilesFromOpenCV);
+            const content = fs.readFileSync(textFilePath, { encoding: 'utf-8' });
+            let data = content.split('\n');
+            for (let d of data) {
+                if (d.match(/Page 1[/]\d/i)) {
+                    const dArray = d.split('/');
+                    const numero = parseInt(dArray[dArray.length - 1]);
+                    const newPDF = await PDFDocument.create();
+                    for (let i = 0; i < numero; i++) {
+                        const [pageToAdd] = await newPDF.copyPages(currentPDFDoc, [i]);
+                        newPDF.addPage(pageToAdd);
+                    }
+                    const pdfBytes = await newPDF.save();
+                    const pathPdf = path.join(__dirname, '..', '..', '..', 'documents', 'uploaded', `${fileName}_${pdfNumero}.pdf`);
+                    fs.writeFileSync(pathPdf, pdfBytes);
+                    pathsToPDF.splice(0, numero);
+                    pdfPaths.push(pathPdf);
+                    console.log(`${new Date()} FIN SEPARATION par bordereaux`);
+                    break;
+                }
+            }
+            pdfNumero++;
+        }
+        return pdfPaths;
+    } catch (err) {
+        throw err;
     }
 };
 

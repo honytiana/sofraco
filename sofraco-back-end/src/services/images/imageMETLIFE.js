@@ -89,9 +89,6 @@ exports.getCellFromImageMETLIFE = async (cv, file_name, input_path, output_path,
         for (let i = 0; i < lines.rows; i += 4) {
             lines_tab.push({ coord: [lines.data32S[i], lines.data32S[i + 1], lines.data32S[i + 2], lines.data32S[i + 3]], height: 2 });
         }
-        gray.delete();
-        edges.delete();
-        lines.delete();
 
         const sort_line = (e1, e2) => {
             return e1.coord[1] - e2.coord[1];
@@ -190,6 +187,9 @@ exports.getCellFromImageMETLIFE = async (cv, file_name, input_path, output_path,
                     .write(outputPathTracage);
             }
             img.delete();
+            gray.delete();
+            edges.delete();
+            lines.delete();
             const jimp_img_out = await Jimp.read(input);
         }
 
@@ -219,8 +219,6 @@ exports.getImageBottom = async (cv, file_name, input_path, output_path, show_tra
         let rectangleColor = new cv.Scalar(255, 0, 0);
         let point1 = new cv.Point(2050, 3400);
         let point2 = new cv.Point(2350, 3500);
-        // console.log("x_cell: " + x_cell + " y2_cell: " + y2_cell + " width_rect: " + width_rect + " h: " + height_rect)
-        // if (is_valid_ord(y2_cell, img) && is_valid_abcisse(x2_cell, img)) {
         if (show_tracage) {
             try {
                 cv.rectangle(img, point1, point2, rectangleColor, 2, cv.LINE_AA, 0);
@@ -231,7 +229,6 @@ exports.getImageBottom = async (cv, file_name, input_path, output_path, show_tra
         }
         if (crop_cell) {
             try {
-                // const cropped_cell = await Jimp.read(input);
                 const cropped_cell = new Jimp(jimp_img);
                 cropped_cell.crop(2050, 3400, 300, 100);
                 name_cell = output.replace('.', '_l_' + '_c_' + '.');
@@ -243,7 +240,6 @@ exports.getImageBottom = async (cv, file_name, input_path, output_path, show_tra
         }
 
         if (show_tracage) {
-            // cv.imwrite(output, img)
             new Jimp({
                 width: img.cols,
                 height: img.rows,
@@ -252,6 +248,8 @@ exports.getImageBottom = async (cv, file_name, input_path, output_path, show_tra
                 .write(outputPathTracage);
         }
         img.delete();
+        gray.delete();
+        edges.delete();
         const jimp_img_out = await Jimp.read(input);
         return name_cell;
     } catch (err) {

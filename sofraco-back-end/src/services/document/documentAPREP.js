@@ -28,16 +28,6 @@ exports.readPdfAPREP = async (file) => {
     infos.executionTime = executionTime;
     infos.executionTimeMS = executionTimeMS;
     console.log(`${new Date()} FIN TRAITEMENT APREP`);
-    const directoryTemp = path.join(__dirname, '..', '..', '..', 'documents', 'temp');
-    const directoryTexte = path.join(__dirname, '..', '..', '..', 'documents', 'texte');
-    const directorySplitedPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF');
-    try {
-        fileService.deleteFilesinDirectory(directoryTemp);
-        fileService.deleteFilesinDirectory(directoryTexte);
-        fileService.deleteFilesinDirectory(directorySplitedPDF);
-    } catch (err) {
-        console.log(err);
-    }
     return infos;
 };
 
@@ -57,16 +47,6 @@ exports.readPdfAPREPENCOURS = async (file) => {
     infos.executionTime = executionTime;
     infos.executionTimeMS = executionTimeMS;
     console.log(`${new Date()} FIN TRAITEMENT APREP-ENCOURS`);
-    const directoryTemp = path.join(__dirname, '..', '..', '..', 'documents', 'temp');
-    const directoryTexte = path.join(__dirname, '..', '..', '..', 'documents', 'texte');
-    const directorySplitedPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF');
-    try {
-        fileService.deleteFilesinDirectory(directoryTemp);
-        fileService.deleteFilesinDirectory(directoryTexte);
-        fileService.deleteFilesinDirectory(directorySplitedPDF);
-    } catch (err) {
-        console.log(err);
-    }
     return infos;
 };
 
@@ -250,16 +230,6 @@ const readBordereauAPREP = (textFilePaths) => {
     const executionTimeMS = readBordereauAPREPStopTime - readBordereauAPREPStartTime;
     const executionTime = time.millisecondToTime(executionTimeMS);
     console.log('Read bordereau APREP time : ', executionTime);
-    const directoryTemp = path.join(__dirname, '..', '..', '..', 'documents', 'temp');
-    const directoryTexte = path.join(__dirname, '..', '..', '..', 'documents', 'texte');
-    const directorySplitedPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF');
-    try {
-        fileService.deleteFilesinDirectory(directoryTemp);
-        fileService.deleteFilesinDirectory(directoryTexte);
-        fileService.deleteFilesinDirectory(directorySplitedPDF);
-    } catch (err) {
-        console.log(err);
-    }
     return infos;
 }
 

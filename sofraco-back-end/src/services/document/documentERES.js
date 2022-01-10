@@ -28,16 +28,6 @@ exports.readPdfERES = async (file) => {
     infos.executionTime = executionTime;
     infos.executionTimeMS = executionTimeMS;
     console.log(`${new Date()} FIN TRAITEMENT ERES`);
-    const directoryTemp = path.join(__dirname, '..', '..', '..', 'documents', 'temp');
-    const directoryTexte = path.join(__dirname, '..', '..', '..', 'documents', 'texte');
-    const directorySplitedPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF');
-    try {
-        fileService.deleteFilesinDirectory(directoryTemp);
-        fileService.deleteFilesinDirectory(directoryTexte);
-        fileService.deleteFilesinDirectory(directorySplitedPDF);
-    } catch (err) {
-        console.log(err);
-    }
     return infos;
 };
 
