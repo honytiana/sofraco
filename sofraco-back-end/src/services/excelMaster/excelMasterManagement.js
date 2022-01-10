@@ -50,118 +50,122 @@ exports.create = async (authorization) => {
 };
 
 const getOCRInfos = async () => {
-    let documents = await documentHandler.getDocuments();
-    const docs = documents.filter((doc, index) => {
-        return doc.status === 'done';
-    });
-    let allDocs = [];
-    for (let doc of docs) {
-        const uploadDateMonth = new Date(doc.upload_date).getMonth();
-        const currentMonth = new Date().getMonth();
-        if (uploadDateMonth === currentMonth) {
-            allDocs.push(doc);
+    try {
+        let documents = await documentHandler.getDocuments();
+        const docs = documents.filter((doc, index) => {
+            return doc.status === 'done';
+        });
+        let allDocs = [];
+        for (let doc of docs) {
+            const uploadDateMonth = new Date(doc.upload_date).getMonth();
+            const currentMonth = new Date().getMonth();
+            if (uploadDateMonth === currentMonth) {
+                allDocs.push(doc);
+            }
         }
-    }
-    let infos = [];
-    for (let document of allDocs) {
-        const company = document.companyName;
-        const ocr = document.ocr;
-        switch (company.toUpperCase()) {
-            case 'APICIL':
-                infos.push(excelMasterAPICIL.getOCRAPICIL(ocr));
-                break;
-            case 'APIVIA':
-                infos.push(excelMasterAPIVIA.getOCRAPIVIA(ocr));
-                break;
-            case 'APREP':
-                infos.push(excelMasterAPREP.getOCRAPREP(ocr));
-                break;
-            case 'APREP ENCOURS':
-                infos.push(excelMasterAPREP.getOCRAPREPENCOURS(ocr));
-                break;
-            // case 'AVIVA':
-            //     infos = await getOCRAPICIL(file);
-            //     break;
-            case 'AVIVA SURCO':
-                infos.push(excelMasterAVIVA.getOCRAVIVASURCO(ocr));
-                break;
-            case 'CARDIF':
-                infos.push(excelMasterCARDIF.getOCRCARDIF(ocr));
-                break;
-            case 'CBP FRANCE': //LOURMEL
-                infos.push(excelMasterLOURMEL.getOCRLOURMEL(ocr));
-                break;
-            case 'LOURMEL': //LOURMEL
-                infos.push(excelMasterLOURMEL.getOCRLOURMEL(ocr));
-                break;
-            case 'CEGEMA':
-                infos.push(excelMasterCEGEMA.getOCRCEGEMA(ocr));
-                break;
-            case 'ERES':
-                infos.push(excelMasterERES.getOCRERES(ocr));
-                break;
-            case 'GENERALI':
-                infos.push(excelMasterGENERALI.getOCRGENERALI(ocr));
-                break;
-            case 'HODEVA':
-                infos.push(excelMasterHODEVA.getOCRHODEVA(ocr));
-                break;
-            case 'METLIFE':
-                infos.push(excelMasterMETLIFE.getOCRMETLIFE(ocr));
-                break;
-            case 'MIE':
-                infos.push(excelMasterMIE.getOCRMIE(ocr));
-                break;
-            case 'MIE MCMS':
-                infos.push(excelMasterMIE.getOCRMIEMCMS(ocr));
-                break;
-            case 'MIEL MUTUELLE':
-                infos.push(excelMasterMIEL.getOCRMIEL(ocr));
-                break;
-            case 'MIEL MCMS':
-                infos.push(excelMasterMIEL.getOCRMIELMCMS(ocr));
-                break;
-            case 'MILTIS':
-                infos.push(excelMasterMILTIS.getOCRMILTIS(ocr));
-                break;
-            case 'MMA INCITATION':
-                infos.push(excelMasterMMA.getOCRMMAINCITATION(ocr));
-                break;
-            case 'MMA ACQUISITION':
-                infos.push(excelMasterMMA.getOCRMMAACQUISITION(ocr));
-                break;
-            case 'MMA ENCOURS':
-                infos.push(excelMasterMMA.getOCRMMAENCOURS(ocr));
-                break;
-            case 'PAVILLON PREVOYANCE':
-                infos.push(excelMasterPAVILLON.getOCRPAVILLON(ocr));
-                break;
-            case 'PAVILLON MCMS':
-                infos.push(excelMasterPAVILLON.getOCRPAVILLONMCMS(ocr));
-                break;
-            case 'SLADE':   // swisslife
-                infos.push(excelMasterSWISSLIFE.getOCRSLADE(ocr));
-                break;
-            case 'SPVIE':
-                infos.push(excelMasterSPVIE.getOCRSPVIE(ocr));
-                break;
-            case 'SMATIS':
-                infos.push(excelMasterSMATIS.getOCRSMATIS(ocr));
-                break;
-            case 'SMATIS MCMS':
-                infos.push(excelMasterSMATIS.getOCRSMATISMCMS(ocr));
-                break;
-            case 'SWISSLIFE SURCO':
-                infos.push(excelMasterSWISSLIFE.getOCRSWISSLIFESURCO(ocr));
-                break;
-            case 'UAF LIFE PATRIMOINE':
-                infos.push(excelMasterUAFLIFE.getOCRUAFLIFE(ocr));
-                break;
-            default:
-                console.log('Pas de compagnie correspondante');
+        let infos = [];
+        for (let document of allDocs) {
+            const company = document.companyName;
+            const ocr = document.ocr;
+            switch (company.toUpperCase()) {
+                case 'APICIL':
+                    infos.push(excelMasterAPICIL.getOCRAPICIL(ocr));
+                    break;
+                case 'APIVIA':
+                    infos.push(excelMasterAPIVIA.getOCRAPIVIA(ocr));
+                    break;
+                case 'APREP':
+                    infos.push(excelMasterAPREP.getOCRAPREP(ocr));
+                    break;
+                case 'APREP ENCOURS':
+                    infos.push(excelMasterAPREP.getOCRAPREPENCOURS(ocr));
+                    break;
+                // case 'AVIVA':
+                //     infos = await getOCRAPICIL(file);
+                //     break;
+                case 'AVIVA SURCO':
+                    infos.push(excelMasterAVIVA.getOCRAVIVASURCO(ocr));
+                    break;
+                case 'CARDIF':
+                    infos.push(excelMasterCARDIF.getOCRCARDIF(ocr));
+                    break;
+                case 'CBP FRANCE': //LOURMEL
+                    infos.push(excelMasterLOURMEL.getOCRLOURMEL(ocr));
+                    break;
+                case 'LOURMEL': //LOURMEL
+                    infos.push(excelMasterLOURMEL.getOCRLOURMEL(ocr));
+                    break;
+                case 'CEGEMA':
+                    infos.push(excelMasterCEGEMA.getOCRCEGEMA(ocr));
+                    break;
+                case 'ERES':
+                    infos.push(excelMasterERES.getOCRERES(ocr));
+                    break;
+                case 'GENERALI':
+                    infos.push(excelMasterGENERALI.getOCRGENERALI(ocr));
+                    break;
+                case 'HODEVA':
+                    infos.push(excelMasterHODEVA.getOCRHODEVA(ocr));
+                    break;
+                case 'METLIFE':
+                    infos.push(excelMasterMETLIFE.getOCRMETLIFE(ocr));
+                    break;
+                case 'MIE':
+                    infos.push(excelMasterMIE.getOCRMIE(ocr));
+                    break;
+                case 'MIE MCMS':
+                    infos.push(excelMasterMIE.getOCRMIEMCMS(ocr));
+                    break;
+                case 'MIEL MUTUELLE':
+                    infos.push(excelMasterMIEL.getOCRMIEL(ocr));
+                    break;
+                case 'MIEL MCMS':
+                    infos.push(excelMasterMIEL.getOCRMIELMCMS(ocr));
+                    break;
+                case 'MILTIS':
+                    infos.push(excelMasterMILTIS.getOCRMILTIS(ocr));
+                    break;
+                case 'MMA INCITATION':
+                    infos.push(excelMasterMMA.getOCRMMAINCITATION(ocr));
+                    break;
+                case 'MMA ACQUISITION':
+                    infos.push(excelMasterMMA.getOCRMMAACQUISITION(ocr));
+                    break;
+                case 'MMA ENCOURS':
+                    infos.push(excelMasterMMA.getOCRMMAENCOURS(ocr));
+                    break;
+                case 'PAVILLON PREVOYANCE':
+                    infos.push(excelMasterPAVILLON.getOCRPAVILLON(ocr));
+                    break;
+                case 'PAVILLON MCMS':
+                    infos.push(excelMasterPAVILLON.getOCRPAVILLONMCMS(ocr));
+                    break;
+                case 'SLADE':   // swisslife
+                    infos.push(excelMasterSWISSLIFE.getOCRSLADE(ocr));
+                    break;
+                case 'SPVIE':
+                    infos.push(excelMasterSPVIE.getOCRSPVIE(ocr));
+                    break;
+                case 'SMATIS':
+                    infos.push(excelMasterSMATIS.getOCRSMATIS(ocr));
+                    break;
+                case 'SMATIS MCMS':
+                    infos.push(excelMasterSMATIS.getOCRSMATISMCMS(ocr));
+                    break;
+                case 'SWISSLIFE SURCO':
+                    infos.push(excelMasterSWISSLIFE.getOCRSWISSLIFESURCO(ocr));
+                    break;
+                case 'UAF LIFE PATRIMOINE':
+                    infos.push(excelMasterUAFLIFE.getOCRUAFLIFE(ocr));
+                    break;
+                default:
+                    console.log('Pas de compagnie correspondante');
+            }
         }
+        return infos;
+    } catch (err) {
+        throw err;
     }
-    return infos;
 
 }
 
@@ -237,8 +241,8 @@ const generateExcelMaster = async (ocrInfos) => {
             excelMaster.code_courtier = courtier;
             let datas = { company: null, ocr: [] };
             for (let ocr of ocrPerCourtier.infos) {
-                if (ocr.company === 'CARDIF' && ocr.particular) {
-                    datas.company = 'CARDIF';
+                if (ocr.companyGlobalName === 'CARDIF' && ocr.particular) {
+                    datas.companyGlobalName = 'CARDIF';
                     datas.ocr.push(ocr);
                 }
             }
@@ -379,7 +383,7 @@ const generateExcelMaster = async (ocrInfos) => {
         return excelMasters;
 
     } catch (err) {
-        return err;
+        throw err;
     }
 };
 
