@@ -231,7 +231,7 @@ exports.getImageBottom = async (cv, file_name, input_path, output_path, show_tra
             try {
                 const cropped_cell = new Jimp(jimp_img);
                 cropped_cell.crop(2050, 3400, 300, 100);
-                name_cell = output.replace('.', '_l_' + '_c_' + '.');
+                name_cell = output;
                 cropped_cell.write(name_cell);
             } catch (err) {
                 console.log("error crop");
