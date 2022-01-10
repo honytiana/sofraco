@@ -127,7 +127,9 @@ exports.getExcelMastersZip = async (req, res) => {
         const excelMastersGlobalZip = await excelMasterHandler.getZipGlobalContainer();
         const fileName = fileService.getFileName(excelMastersGlobalZip.path);
         res.contentType('application/zip');
-        res.download(excelMastersGlobalZip.path, fileName);
+        res.download(excelMastersGlobalZip.path, fileName, (err) => {
+            console.log(`Error downloading file : ${err}`);
+        });
         res.status(200);
     } catch (err) {
         res.status(400).json({ err });
