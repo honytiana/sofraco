@@ -10,7 +10,8 @@ exports.loadOpenCV = (images, company) => {
     return new Promise((resolve, reject) => {
         try {
             delete require.cache[require.resolve('../../../opencv.js')];
-            console.log(`----- WebAssembly memory lenght = ${WebAssembly.Memory.length} -----------------`);
+            delete global.Module;
+            delete global.cv;
             global.Module = {
                 onRuntimeInitialized: async () => {
                     const dirPath = path.join(__dirname, '..', '..', '..', 'documents', 'temp');

@@ -144,12 +144,12 @@ exports.splitPDFMETLIFEByBordereaux = async (file) => {
                     fs.writeFileSync(pathPdf, pdfBytes);
                     pathsToPDF.splice(0, numero);
                     pdfPaths.push(pathPdf);
-                    console.log(`${new Date()} FIN SEPARATION par bordereaux`);
                     break;
                 }
             }
             pdfNumero++;
         }
+        console.log(`${new Date()} FIN SEPARATION par bordereaux`);
         return pdfPaths;
     } catch (err) {
         throw err;
