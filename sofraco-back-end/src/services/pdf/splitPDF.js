@@ -115,10 +115,9 @@ exports.split100pagesMax = async (file) => {
 
 exports.splitPDFMETLIFEByBordereaux = async (file) => {
     try {
-        console.log(`${new Date()} DEBUT SEPARATION PDF METLIFE`);
+        console.log(`${new Date()} DEBUT SEPARATION par bordereaux`);
         const pathsToPDF = await this.splitPDFToSinglePagePDF(file);
         const fileName = fileService.getFileNameWithoutExtension(file);
-        console.log(`${new Date()} FIN SEPARATION PDF METLIFE`);
         console.log(`${new Date()} DEBUT REGROUPEMENT PAR BORDEREAU PDF METLIFE`);
         let currentPDFBytes = fs.readFileSync(file);
         const currentPDFDoc = await PDFDocument.load(currentPDFBytes);
@@ -149,6 +148,7 @@ exports.splitPDFMETLIFEByBordereaux = async (file) => {
             }
             pdfNumero++;
         }
+        console.log(`${new Date()} FIN REGROUPEMENT PAR BORDEREAU PDF METLIFE`);
         console.log(`${new Date()} FIN SEPARATION par bordereaux`);
         return pdfPaths;
     } catch (err) {
