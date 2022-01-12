@@ -3,6 +3,7 @@ const path = require('path');
 const config = require('../../config.json');
 const companyHandler = require('../handlers/companyHandler');
 const correspondanceHandler = require('../handlers/correspondanceHandler');
+const courtierHandler = require('../handlers/courtierHandler');
 const correspondanceService = require('../services/correspondances/correspondances');
 
 exports.createCorrespondance = async (req, res) => {
@@ -20,6 +21,29 @@ exports.createCorrespondance = async (req, res) => {
                 const c = await correspondanceHandler.createCorrespondance(correspondance);
             }
         }
+        const corr = await correspondanceHandler.getCorrespondances();
+        for (let c of corr) {
+            let e = false;
+            let h = false;
+            const courtier = await courtierHandler.getCourtierById(c.courtier);
+            const eres = await companyHandler.getCompanyByName('ERES');
+            const hodeva = await companyHandler.getCompanyByName('HODEVA');
+            for (let comp of c.companies) {
+                if (comp.company === 'ERES') {
+                    e = true;
+                }
+                if (comp.company === 'HODEVA') {
+                    h = true;
+                }
+            }
+            if (!e) {
+                await correspondanceHandler.addCodeCourtier(c.courtier, eres._id, eres.name, eres.globalName, '', `${courtier.lastName} ${courtier.firstName}`);
+            }
+            if (!h) {
+                await correspondanceHandler.addCodeCourtier(c.courtier, hodeva._id, hodeva.name, hodeva.globalName, '', courtier.cabinet);
+            }
+        }
+
         res.status(200).end('Correspondances added');
     } catch (error) {
         res.status(400).json({ error })
