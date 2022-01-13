@@ -136,7 +136,7 @@ class Administration extends Component {
     }
 
     fetchCourtiers() {
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/role/courtier`, {
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/role/courtier?limit=0&skip=0`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token.value}`
             }

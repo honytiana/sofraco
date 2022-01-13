@@ -108,3 +108,13 @@ exports.deleteCourtier = async (req, res) => {
         res.status(500).json({ error });
     }
 };
+
+exports.deleteAllCourtiers = async (req, res) => {
+    console.log('Delete all courtiers');
+    try {
+        const courtiers = await courtierHandler.deleteAllCourtier();
+        res.status(200).end('Courtiers deleted');
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+};
