@@ -177,12 +177,7 @@ const getAllOCRInfosPerCourtiers = (ocrInfos, correspondances) => {
         for (let company of correspondance.companies) {
             for (let ocr of ocrInfos) {
                 for (let dataCourtierOCR of ocr) {
-                    console.log('-------------');
-                    console.log(dataCourtierOCR.infosOCR.code.code);
-                    console.log('-------------');
-                    console.log(dataCourtierOCR.infosOCR.code.code.toUpperCase());
-                    console.log('-------------');
-                    if (dataCourtierOCR.companyName === 'HODEVA') {
+                    if (dataCourtierOCR.companyName === 'ERES' || dataCourtierOCR.companyName === 'HODEVA') {
                         if ((dataCourtierOCR.companyName === company.company || dataCourtierOCR.companyGlobalName === company.companyGlobalName) &&
                             dataCourtierOCR.infosOCR.code.code.toUpperCase().match(company.code.toUpperCase())) {
                             if (company.particular !== '') {
@@ -193,7 +188,7 @@ const getAllOCRInfosPerCourtiers = (ocrInfos, correspondances) => {
                         }
                     } else {
                         if ((dataCourtierOCR.companyName === company.company || dataCourtierOCR.companyGlobalName === company.companyGlobalName) &&
-                            dataCourtierOCR.infosOCR.code.code.toUpperCase() === company.code.toUpperCase()) {
+                            dataCourtierOCR.infosOCR.code.code === company.code) {
                             if (company.particular !== '') {
                                 dataCourtierOCR.particular = company.particular;
                             }
