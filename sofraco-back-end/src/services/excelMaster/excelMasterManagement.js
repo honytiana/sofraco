@@ -178,6 +178,11 @@ const getAllOCRInfosPerCourtiers = (ocrInfos, correspondances) => {
             for (let ocr of ocrInfos) {
                 for (let dataCourtierOCR of ocr) {
                     if (dataCourtierOCR.companyName === 'HODEVA') {
+                        console.log('-------------');
+                        console.log(dataCourtierOCR.infosOCR.code.code);
+                        console.log('-------------');
+                        console.log(dataCourtierOCR.infosOCR.code.code.toUpperCase());
+                        console.log('-------------');
                         if ((dataCourtierOCR.companyName === company.company || dataCourtierOCR.companyGlobalName === company.companyGlobalName) &&
                             dataCourtierOCR.infosOCR.code.code.toUpperCase().match(company.code.toUpperCase())) {
                             if (company.particular !== '') {
