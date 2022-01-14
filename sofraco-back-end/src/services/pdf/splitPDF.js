@@ -7,6 +7,7 @@ const time = require('../utils/time');
 const fileService = require('../utils/files');
 const pdfService = require('../utils/pdfFile');
 const imageManagment = require('../images/imageManagment');
+const documentController = require('../../controllers/document');
 
 exports.splitPDFMETLIFE = async (file) => {
     console.log(`${new Date()} DEBUT SEPARATION PDF METLIFE`);
@@ -113,7 +114,7 @@ exports.split100pagesMax = async (file) => {
     }
 };
 
-exports.splitPDFMETLIFEByBordereaux = async (file) => {
+exports.splitPDFMETLIFEByBordereaux = async (file, company) => {
     try {
         console.log(`${new Date()} DEBUT SEPARATION par bordereaux`);
         const pathsToPDF = await this.splitPDFToSinglePagePDF(file);
@@ -142,6 +143,7 @@ exports.splitPDFMETLIFEByBordereaux = async (file) => {
                     const pathPdf = path.join(__dirname, '..', '..', '..', 'documents', 'uploaded', `${fileName}_${pdfNumero}.pdf`);
                     fs.writeFileSync(pathPdf, pdfBytes);
                     pathsToPDF.splice(0, numero);
+                    documentController.saveDocument(company, pathPdf, 'pdf', 'draft');
                     pdfPaths.push(pathPdf);
                     break;
                 }

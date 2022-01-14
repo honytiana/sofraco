@@ -125,10 +125,10 @@ exports.createDocument = async (req, res) => {  // create document
         console.log('Document created');
         res.status(200).end('Sent to Server');
         if (company.name === 'METLIFE') {
-            const pdfPaths = await splitPDF.splitPDFMETLIFEByBordereaux(req.files[0].path);
-            for (let pdf of pdfPaths) {
-                const singleDoc = saveDocument(company, pdf, req.body.extension);
-            }
+            const pdfPaths = await splitPDF.splitPDFMETLIFEByBordereaux(req.files[0].path, company);
+            // for (let pdf of pdfPaths) {
+            //     const singleDoc = saveDocument(company, pdf, req.body.extension);
+            // }
         }
 
     } catch (err) {
@@ -136,7 +136,7 @@ exports.createDocument = async (req, res) => {  // create document
     }
 }
 
-const saveDocument = (company, filePath, extension, status = 'draft') => {
+exports.saveDocument = (company, filePath, extension, status = 'draft') => {
     try {
         let document = {};
         const fileName = fileService.getFileName(filePath);
@@ -158,9 +158,9 @@ const saveDocumentUploaded = (company, filePath, extension) => {
     try {
         let doc;
         if (company.name === 'METLIFE') {
-            doc = saveDocument(company, filePath, extension, 'cancel');
+            doc = this.saveDocument(company, filePath, extension, 'cancel');
         } else {
-            doc = saveDocument(company, filePath, extension);
+            doc = this.saveDocument(company, filePath, extension);
         }
         return doc;
     } catch (err) {
