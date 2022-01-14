@@ -136,6 +136,10 @@ class CompanyFolder extends Component {
             });
     }
 
+    handleCompanyFolderCallback = (uploadData) =>{
+        this.props.companyCallback(uploadData);
+    }
+
     render() {
         return (
             <div>
@@ -167,6 +171,7 @@ class CompanyFolder extends Component {
                                         company={this.props.company}
                                         companyName={this.props.companyName}
                                         token={this.props.token}
+                                        companyFolderCallback = {this.handleCompanyFolderCallback}
                                     />
                                 </CTabPane>
                                 <CTabPane data-tab="historique">

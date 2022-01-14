@@ -185,6 +185,7 @@ class Upload extends Component {
                 toast: true,
                 messageToast: { header: 'SUCCESS', color: 'success', message: 'Le document a été envoyé vers le serveur' }
             });
+            this.props.companyFolderCallback(false);
         }).catch((err) => {
             this.setState({
                 toast: true,

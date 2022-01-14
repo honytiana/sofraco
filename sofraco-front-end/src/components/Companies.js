@@ -476,6 +476,16 @@ class Companies extends Component {
             });
     }
 
+    handleCompanyCallback = (index, companyFolderData) => {
+        if (companyFolderData !== null && !companyFolderData) {
+            this.toggleDetails(index);
+            this.setState({
+                toast: true,
+                messageToast: { header: 'SUCCESS', color: 'success', message: 'Le document a été envoyé vers le serveur' }
+            });
+        }
+    }
+
     render() {
         let companies = [];
         let occurences = [];
@@ -545,6 +555,7 @@ class Companies extends Component {
                                                 company={company}
                                                 companyName={company.globalName}
                                                 showModal={this.state.details.includes(index)}
+                                                companyCallback={(companyFolderData) => { this.handleCompanyCallback(index, companyFolderData) }}
                                                 onCloseModal={() => { this.toggleDetails(index) }}
                                                 token={this.state.token}
                                             />
