@@ -44,7 +44,7 @@ class App extends Component {
   getIPClient() {
     const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
     this.setState({
-        interne: window.location.hostname.match(regInterne) ? true : false
+      interne: window.location.hostname.match(regInterne) ? true : false
     });
   }
 
@@ -61,6 +61,7 @@ class App extends Component {
             token: res.data
           });
           axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}/token/${res.data.value}`, {
+            withCredentials: true,
             headers: {
               'Content-Type': 'application/json',
             }
@@ -77,6 +78,7 @@ class App extends Component {
                 .then((res) => {
                   console.log('Déconnexion');
                   localStorage.clear();
+                  document.cookie = "sofraco=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
                   window.location.reload();
                 }).catch((err) => {
                   console.log('Erreur');

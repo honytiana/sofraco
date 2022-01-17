@@ -45,6 +45,15 @@ class Access extends Component {
             login: e.target['sofraco-login'].value,
             password: e.target['sofraco-password'].value,
         };
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/api-status`, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((res) => {
+                const data = res.data;
+            });
         axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/user/login`, options, {
             headers: {
                 'Content-Type': 'application/json'
@@ -92,9 +101,10 @@ class Access extends Component {
             console.log(`${(this.state.interne) ? config.reactUrlInterne : config.reactUrlExterne}/home`);
             window.location.replace(`${(this.state.interne) ? config.reactUrlInterne : config.reactUrlExterne}/home`);
         }).catch((err) => {
+            document.cookie = "sofraco=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
             this.setState({
                 toast: true,
-                messageToast: { header: 'ERROR', color: 'danger', message: err.response.data.error }
+                messageToast: { header: 'ERROR', color: 'danger', message: err }
             })
         }).finally(() => {
             this.setState({

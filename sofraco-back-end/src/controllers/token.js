@@ -23,7 +23,7 @@ exports.getTokens = async (req, res) => {
 exports.checkToken = async (req, res) => {
     console.log('Check token');
     try {
-        const token = await tokenHandler.checkToken(req.params.userId, req.params.token);
+        const token = await tokenHandler.checkToken(req.params.userId, req.params.token, req.cookies);
         res.status(200).json(token);
     } catch (err) {
         res.status(400).json({ err });

@@ -25,9 +25,13 @@ class TokensHandler {
         }
     }
 
-    async checkToken(userId, value) {
+    async checkToken(userId, value, cookies) {
+        const token = cookies.sofraco;
         const tk = await Tokens.findOne({ userId: userId });
         if (!tk) {
+            throw 'Token not found';
+        }
+        if (!token) {
             throw 'Token not found';
         }
 
