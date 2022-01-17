@@ -57,6 +57,7 @@ class Access extends Component {
             });
             // localStorage.setItem('token', JSON.stringify(data));
             localStorage.setItem('user', JSON.stringify(data.userId));
+            console.log(`expires in : ${data.expiresIn}`);
 
             setTimeout(() => {
                 axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/${data.userId}`, {
@@ -88,7 +89,7 @@ class Access extends Component {
                 localStorage.clear();
             }, data.expiresIn * 3600 * 1000);
 
-            window.location.replace(`${config.reactUrl}/home`);
+            window.location.replace(`${(this.state.interne) ? config.reactUrlInterne : config.reactUrlExterne}/home`);
         }).catch((err) => {
             this.setState({
                 toast: true,
