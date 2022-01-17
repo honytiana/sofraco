@@ -4,8 +4,8 @@
     "nodeUrlInterne": "http://localhost:9000",
     "nodePort": 9000,
     "reactUrl": "http://localhost:3000",
-    "reactUrlExterne": "http://localhost:9000",
-    "reactUrlInterne": "http://localhost:9000",
+    "reactUrlExterne": "http://localhost:3000",
+    "reactUrlInterne": "http://localhost:3000",
     "reactPort": 3000,
     "database": "mongodb://localhost:27017/sofraco"
 }
