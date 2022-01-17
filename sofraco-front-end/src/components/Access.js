@@ -89,6 +89,7 @@ class Access extends Component {
                 localStorage.clear();
             }, data.expiresIn * 3600 * 1000);
 
+            console.log(`${(this.state.interne) ? config.reactUrlInterne : config.reactUrlExterne}/home`);
             window.location.replace(`${(this.state.interne) ? config.reactUrlInterne : config.reactUrlExterne}/home`);
         }).catch((err) => {
             this.setState({
