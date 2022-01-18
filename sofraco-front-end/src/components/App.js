@@ -76,10 +76,10 @@ class App extends Component {
                 }
               })
                 .then((res) => {
+                  window.location.reload();
                   console.log('Déconnexion');
                   localStorage.clear();
                   document.cookie = "sofraco=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-                  window.location.reload();
                 }).catch((err) => {
                   console.log('Erreur');
                 }).finally(() => {

@@ -50,7 +50,7 @@ class TokensHandler {
         return Tokens.findOne({ userId: userId });
     }
 
-    getTokens(userId) {
+    getTokens() {
         return Tokens.find({});
     }
 
@@ -59,7 +59,7 @@ class TokensHandler {
     }
 
     removeTokenByUser(userId) {
-        return Tokens.deleteMany({ userId: userId });
+        return Tokens.deleteOne({ userId: userId });
     };
 
 }
