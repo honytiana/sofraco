@@ -486,6 +486,22 @@ class Companies extends Component {
         }
     }
 
+    getCheckBadge(occurences, company) {
+        for (let occ of occurences) {
+            if (occ.company._id === company._id) {
+                if (!company.surco) {
+                    return (<CBadge key={`${company._id}_CardBodydraft${occurences.indexOf(occ)}`} ><CImg className="sofraco-img-check" size="sm" src={check}></CImg></CBadge>)
+                } else {
+                    if (occ.count === 1) {
+                        return (<CBadge key={`${company._id}_badge${occurences.indexOf(occ)}`} color="warning">1/2</CBadge>)
+                    } else {
+                        return (<CBadge key={`${company._id}_CardBodydraft${occurences.indexOf(occ)}`} ><CImg className="sofraco-img-check" size="sm" src={check}></CImg></CBadge>)
+                    }
+                }
+            }
+        }
+    }
+
     render() {
         let companies = [];
         let occurences = [];
@@ -535,19 +551,7 @@ class Companies extends Component {
                                                 </CCardBody>
                                                 <CCardFooter className="d-flex justify-content-between" key={`${company._id}_CardFooter`}>
                                                     <div key={`${company._id}_CardFooterdiv`} >{company.globalName}</div>
-                                                    {occurences.map((occ, index) => {
-                                                        if (occ.company._id === company._id) {
-                                                            if (!company.surco) {
-                                                                return (<CBadge key={`${company._id}_CardBodydraft${index}`} ><CImg className="sofraco-img-check" size="sm" src={check}></CImg></CBadge>)
-                                                            } else {
-                                                                if (occ.count === 1) {
-                                                                    return (<CBadge key={`${company._id}_badge${index}`} color="warning">1/2</CBadge>)
-                                                                } else {
-                                                                    return (<CBadge key={`${company._id}_CardBodydraft${index}`} ><CImg className="sofraco-img-check" size="sm" src={check}></CImg></CBadge>)
-                                                                }
-                                                            }
-                                                        }
-                                                    })}
+                                                    {this.getCheckBadge(occurences, company)}
                                                 </CCardFooter>
                                             </CCard>
                                             <CompanyFolder

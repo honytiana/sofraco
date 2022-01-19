@@ -52,7 +52,7 @@ class Access extends Component {
             }
         })
             .then((res) => {
-                const data = res.data;
+                
             });
         axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/user/login`, options, {
             headers: {

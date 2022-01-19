@@ -5,7 +5,7 @@ const process = require('process');
 const load = require('./src/loaders/loader');
 const config = require('./config.json');
 const workerThreadLoader = require('./src/loaders/workerThreadLoader');
-const { GPU } = require('gpu.js');
+// const { GPU } = require('gpu.js');
 
 const startServer = async () => {
     const numCPUs = os.cpus().length;

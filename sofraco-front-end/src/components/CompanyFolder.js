@@ -42,12 +42,14 @@ class CompanyFolder extends Component {
             token: null,
             interne: false
         }
+        this._isMounted = false;
         this.fetchDocumentsCompanyByYearAndMonth = this.fetchDocumentsCompanyByYearAndMonth.bind(this);
         this.fetchDocumentsCompany = this.fetchDocumentsCompany.bind(this);
         this.fetchCompany = this.fetchCompany.bind(this);
     }
 
     componentDidMount() {
+        this._isMounted = true;
         this.setState({
             toast: false,
             messageToast: {}
@@ -56,16 +58,20 @@ class CompanyFolder extends Component {
         this.setState({
             interne: window.location.hostname.match(regInterne) ? true : false
         });
-        this.fetchCompany();
-        this.fetchDocumentsCompany();
-        this.fetchDocumentsCompanyByYearAndMonth();
+        this._isMounted && this.fetchCompany();
+        this._isMounted && this.fetchDocumentsCompany();
+        this._isMounted && this.fetchDocumentsCompanyByYearAndMonth();
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     checkProps() {
         if (this.props.token !== null) {
-            this.fetchCompany();
-            this.fetchDocumentsCompany();
-            this.fetchDocumentsCompanyByYearAndMonth();
+            this._isMounted && this.fetchCompany();
+            this._isMounted && this.fetchDocumentsCompany();
+            this._isMounted && this.fetchDocumentsCompanyByYearAndMonth();
         }
     }
 

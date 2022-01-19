@@ -46,6 +46,7 @@ class Mandataire extends Component {
             mandataireToDel: null,
             interne: false
         }
+        this._isMounted = false;
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
         this.activerAjoutMandataire = this.activerAjoutMandataire.bind(this);
@@ -53,6 +54,7 @@ class Mandataire extends Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
         this.setState({
             fields: [
                 {
@@ -112,12 +114,12 @@ class Mandataire extends Component {
         this.setState({
             interne: window.location.hostname.match(regInterne) ? true : false
         });
-        this.fetchMandataires();
+        this._isMounted && this.fetchMandataires();
     }
 
     checkProps() {
         if (this.props.token !== null) {
-            this.fetchMandataires();
+            this._isMounted && this.fetchMandataires();
         }
     }
 
@@ -202,7 +204,7 @@ class Mandataire extends Component {
                 event.target['sofraco-prenom'].value = '';
                 event.target['sofraco-email'].value = '';
                 event.target['sofraco-phone'].value = '';
-                this.fetchMandataires();
+                this._isMounted && this.fetchMandataires();
             }).catch((err) => {
                 this.setState({
                     toast: true,

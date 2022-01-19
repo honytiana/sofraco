@@ -49,6 +49,7 @@ class Administration extends Component {
             visibleAlert: false,
             interne: false
         }
+        this._isMounted = false;
         this.getBadge = this.getBadge.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
         this.changeActivePage = this.changeActivePage.bind(this);
@@ -58,6 +59,7 @@ class Administration extends Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
         const user = JSON.parse(localStorage.getItem('user'));
         const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
         this.setState({
@@ -69,7 +71,7 @@ class Administration extends Component {
             }
         })
             .then((res) => {
-                this.setState({
+                this._isMounted && this.setState({
                     fields: [
                         {
                             key: 'cabinet',
@@ -128,11 +130,15 @@ class Administration extends Component {
                     messageToast: [],
                     token: res.data
                 });
-                this.fetchCourtiers();
+                this._isMounted && this.fetchCourtiers();
             })
             .catch((err) => {
                 console.log(err);
             });
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     fetchCourtiers() {
@@ -175,7 +181,7 @@ class Administration extends Component {
             details: newDetails,
             num: index
         });
-        this.fetchCourtiers();
+        this._isMounted && this.fetchCourtiers();
     }
 
     changeActivePage(page) {
@@ -263,7 +269,7 @@ class Administration extends Component {
                     toast: true,
                     messageToast: { header: 'SUCCESS', color: 'success', message: `Le courtier ${this.state.courtierToDel.cabinet} à été supprimé` }
                 });
-                this.fetchCourtiers();
+                this._isMounted && this.fetchCourtiers();
             }).catch((err) => {
                 this.setState({
                     toast: true,

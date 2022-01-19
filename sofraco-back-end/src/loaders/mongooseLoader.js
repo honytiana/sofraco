@@ -5,10 +5,6 @@ const config = require('../../config.json');
 module.exports = async () => {
     const facteurMilli = 100000;
     mongoose.connect(config.database, {
-        useUnifiedTopology: true,
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useFindAndModify: false,
         socketTimeoutMS: 60 * facteurMilli,
         connectTimeoutMS: 60 * facteurMilli
     })
