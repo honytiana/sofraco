@@ -53,7 +53,7 @@ class Companies extends Component {
             treatmentTimeMS: 0,
             treatmentTimeStr: null,
             interne: false
-        }
+        };
         this.getCompanies = this.getCompanies.bind(this);
         this.getDraftDocument = this.getDraftDocument.bind(this);
         this.getTreatment = this.getTreatment.bind(this);
