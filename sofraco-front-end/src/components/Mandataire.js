@@ -117,6 +117,10 @@ class Mandataire extends Component {
         this._isMounted && this.fetchMandataires();
     }
 
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     checkProps() {
         if (this.props.token !== null) {
             this._isMounted && this.fetchMandataires();
