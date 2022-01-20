@@ -122,14 +122,14 @@ exports.createDocument = async (req, res) => {  // create document
                 const docMCMS = saveDocumentUploaded(companySurco, file.path, req.body.extension);
             }
         }
-        console.log('Document created');
-        res.status(200).end('Sent to Server');
         if (company.name === 'METLIFE') {
             const pdfPaths = await splitPDF.splitPDFMETLIFEByBordereaux(req.files[0].path, company);
             // for (let pdf of pdfPaths) {
             //     const singleDoc = saveDocument(company, pdf, req.body.extension);
             // }
         }
+        console.log('Document created');
+        res.status(200).end('Sent to Server');
 
     } catch (err) {
         res.status(500).json({ err });
