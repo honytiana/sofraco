@@ -67,7 +67,7 @@ class App extends Component {
             }
           })
             .then((res) => {
-
+              const data = res;
             })
             .catch((err) => {
               axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {

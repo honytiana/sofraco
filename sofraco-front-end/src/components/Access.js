@@ -64,9 +64,7 @@ class Access extends Component {
                 toast: true,
                 messageToast: { header: 'SUCCESS', color: 'success', message: 'Vous êtes connecté' }
             });
-            // localStorage.setItem('token', JSON.stringify(data));
             localStorage.setItem('user', JSON.stringify(data.userId));
-            console.log(`expires in : ${data.expiresIn}`);
 
             setTimeout(() => {
                 axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/${data.userId}`, {
@@ -98,7 +96,6 @@ class Access extends Component {
                 localStorage.clear();
             }, data.expiresIn * 3600 * 1000);
 
-            console.log(`${(this.state.interne) ? config.reactUrlInterne : config.reactUrlExterne}/home`);
             window.location.replace(`${(this.state.interne) ? config.reactUrlInterne : config.reactUrlExterne}/home`);
         }).catch((err) => {
             document.cookie = "sofraco=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
