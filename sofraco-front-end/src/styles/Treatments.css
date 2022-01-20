@@ -7,3 +7,7 @@
     background-color: #ed7102 !important;
     border-color: #ed7102 !important;
 }
+
+.sofraco-modal-treatment .modal-dialog .modal-dialog-centered .modal-content{
+    max-width: 800 !important;
+}

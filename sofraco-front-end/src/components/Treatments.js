@@ -192,7 +192,7 @@ class Treatments extends Component {
                                         show={this.state.details.includes(index)}
                                         onClose={() => { this.toggleDetails(index) }}
                                         centered={true}
-                                        className="sofraco-modal"
+                                        className="sofraco-modal-treatment"
                                     >
                                         <CModalHeader closeButton>{item.cabinet}</CModalHeader>
                                         <CModalBody>
