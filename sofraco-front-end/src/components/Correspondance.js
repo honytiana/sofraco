@@ -353,7 +353,6 @@ class Correspondance extends Component {
                                     className="sofraco-select-filtre"
                                     name={`sofraco-company`}
                                     required={true}
-                                // onChange={(e) => this.onChangeSelectFilterYearHandler(e)}
                                 >
                                     <option>Selectionnez une compagnie</option>
                                     {this.state.companies.map((company, index) => {
