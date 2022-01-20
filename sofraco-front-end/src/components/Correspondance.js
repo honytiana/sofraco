@@ -420,7 +420,7 @@ class Correspondance extends Component {
                                                 size="sm"
                                                 onClick={() => { this.toggleDetails(index) }}
                                             >
-                                                Edit
+                                                Modifier
                                             </CButton>
                                         </td>
                                     )
