@@ -41,6 +41,7 @@ class Correspondance extends Component {
             token: null,
             interne: false
         }
+        this._isMounted = false;
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
         this.activerAjoutCorrespondance = this.activerAjoutCorrespondance.bind(this);
@@ -49,6 +50,7 @@ class Correspondance extends Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
         if (!this.props.add) {
             this.setState({
                 fields: [
@@ -113,8 +115,12 @@ class Correspondance extends Component {
         this.setState({
             interne: window.location.hostname.match(regInterne) ? true : false
         });
-        this.fetchCorrespondances();
-        this.getCompanies();
+        this._isMounted && this.fetchCorrespondances();
+        this._isMounted && this.getCompanies();
+    }
+    
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     checkProps() {
@@ -214,7 +220,7 @@ class Correspondance extends Component {
                 toast: true,
                 messageToast: { header: 'SUCCESS', color: 'success', message: `Le code du courtier ${this.props.courtier.cabinet} à été modifié` }
             });
-            this.fetchCorrespondances();
+            this._isMounted && this.fetchCorrespondances();
         }).catch((err) => {
             this.setState({
                 toast: true,
@@ -246,7 +252,7 @@ class Correspondance extends Component {
                     toast: true,
                     messageToast: { header: 'SUCCESS', color: 'success', message: `Le code ${correspondance.code} à été désactivé` }
                 });
-                this.fetchCorrespondances();
+                this._isMounted && this.fetchCorrespondances();
             }).catch((err) => {
                 this.setState({
                     toast: true,
@@ -306,7 +312,7 @@ class Correspondance extends Component {
                 toast: true,
                 messageToast: { header: 'SUCCESS', color: 'success', message: `Un code du courtier ${this.props.courtier.cabinet} à été ajouté` }
             });
-            this.fetchCorrespondances();
+            this._isMounted && this.fetchCorrespondances();
         }).catch((err) => {
             this.setState({
                 toast: true,

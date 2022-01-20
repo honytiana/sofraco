@@ -42,6 +42,7 @@ class ListExcelMaster extends Component {
             token: null,
             interne: false
         }
+        this._isMounted = false;
         this.toggleDetails = this.toggleDetails.bind(this);
         this.fetchListExcelMasters = this.fetchListExcelMasters.bind(this);
         this.fetchListExcelMasterByYearAndMonth = this.fetchListExcelMasterByYearAndMonth.bind(this);
@@ -50,6 +51,7 @@ class ListExcelMaster extends Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
         this.setState({
             fields: [
                 {
@@ -75,13 +77,17 @@ class ListExcelMaster extends Component {
         this.setState({
             interne: window.location.hostname.match(regInterne) ? true : false
         });
-        this.fetchListExcelMasters();
-        this.fetchListExcelMasterByYearAndMonth();
+        this._isMounted && this.fetchListExcelMasters();
+        this._isMounted && this.fetchListExcelMasterByYearAndMonth();
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     checkProps() {
         if (this.props.token !== null) {
-            this.fetchListExcelMasters();
+            this._isMounted && this.fetchListExcelMasters();
         }
     }
 
@@ -159,7 +165,7 @@ class ListExcelMaster extends Component {
                     toast: true,
                     messageToast: { header: 'SUCCESS', color: 'success', message: `Le code ${correspondance.code} à été désactivé` }
                 });
-                this.fetchListExcelMasters();
+                this._isMounted && this.fetchListExcelMasters();
             }).catch((err) => {
                 this.setState({
                     toast: true,

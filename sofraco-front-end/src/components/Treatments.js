@@ -39,18 +39,20 @@ class Treatments extends Component {
             num: 0,
             interne: false
         }
+        this._isMounted = false;
         this.toggleDetails = this.toggleDetails.bind(this);
         this.fetchCourtiers = this.fetchCourtiers.bind(this);
 
     }
 
     componentDidMount() {
+        this._isMounted = true;
         const user = JSON.parse(localStorage.getItem('user'));
         const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
         this.setState({
             interne: window.location.hostname.match(regInterne) ? true : false
         });
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
+        this._isMounted && axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -101,11 +103,15 @@ class Treatments extends Component {
                     messageToast: [],
                     token: res.data
                 });
-                this.fetchCourtiers();
+                this._isMounted && this.fetchCourtiers();
             })
             .catch((err) => {
                 console.log(err);
             });
+    }
+    
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     checkProps() {
