@@ -33,7 +33,7 @@ module.exports = async function ({ app }) {
     });
 
     app.get('/api/api-status', async (req, res) => {
-        res.cookie('sofraco', `${await bcrypt.hash('SOFRACO!2022#', 10)}`);
+        res.cookie('sofraco', `${await bcrypt.hash('SOFRACO!2022#', 10)}`, { maxAge: 10 * 60 * 60 * 1000 });
         res.status(200).json({
             'status': 'Sofraco api is OK'
         });
