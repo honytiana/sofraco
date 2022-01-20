@@ -136,6 +136,21 @@ exports.getExcelMastersZip = async (req, res) => {
     }
 }
 
+exports.getExcelMasterXlsx = async (req, res) => {
+    console.log('get excel master excel');
+    try {
+        const excelMaster = await excelMasterHandler.getExcelMaster(req.params.excel);
+        const fileName = fileService.getFileName(excelMaster.path);
+        res.contentType('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        res.download(excelMaster.path, fileName, (err) => {
+            console.log(`Error downloading file : ${err}`);
+        });
+        res.status(200);
+    } catch (err) {
+        res.status(400).json({ err });
+    }
+}
+
 exports.getExcelMasterZip = async (req, res) => {
     console.log('get excel master zip');
     try {

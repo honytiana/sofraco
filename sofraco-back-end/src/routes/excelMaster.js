@@ -22,6 +22,7 @@ router.route('/:id').get(accessControl, excelMasterController.getExcelMaster);
 router.route('/').get(accessControl, excelMasterController.getExcelMasters);
 router.route('/courtier/:courtier').get(accessControl, excelMasterController.getExcelMastersByCourtier);
 router.route('/zip/excels').get(accessControl, excelMasterController.getExcelMastersZip);
+router.route('/xlsx/:excel').get(accessControl, excelMasterController.getExcelMasterXlsx);
 router.route('/').post(accessControl, excelMasterController.createExcelMaster);
 router.route('/:id').put(accessControl, excelMasterController.updateExcelMaster);
 router.route('/year/:year/month/:month').get(accessControl, excelMasterController.getExcelMastersByYearMonth);

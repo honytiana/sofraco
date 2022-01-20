@@ -10,3 +10,9 @@
     padding: 0;
     padding-left: 10px;
 }
+
+.sofraco-button-download-excel {
+    width: 40px;
+    background-color: #ed7102;
+    text-align: center;
+}

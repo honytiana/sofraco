@@ -48,6 +48,7 @@ class ListExcelMaster extends Component {
         this.fetchListExcelMasterByYearAndMonth = this.fetchListExcelMasterByYearAndMonth.bind(this);
         this.toggleYear = this.toggleYear.bind(this);
         this.toggleMonth = this.toggleMonth.bind(this);
+        this.onDownloadExcelMaster = this.onDownloadExcelMaster.bind(this);
     }
 
     componentDidMount() {
@@ -226,6 +227,38 @@ class ListExcelMaster extends Component {
         });
     }
 
+    onDownloadExcelMaster(excel) {
+        const id = excel._id;
+        const fileName = filesUtil.getFileName(excel.path);
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/excelMaster/xlsx/${id}`, {
+            headers: {
+                'Application': 'vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Authorization': `Bearer ${this.props.token.value}`
+            },
+            responseType: 'blob'
+        })
+            .then((res) => {
+                const url = window.URL.createObjectURL(new Blob([res.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', `${fileName}.xlsx`);
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                setTimeout(() => {
+                    this.setState({
+                        toast: false,
+                        messageToast: {}
+                    });
+                }, 6000);
+            });
+    }
+
     render() {
         return (
             <div>
@@ -271,7 +304,12 @@ class ListExcelMaster extends Component {
                                                                     <CListGroup key={`${i}_listgroupdoc`}>
                                                                         {ex.excelMaster.map((e, j) => {
                                                                             return (
-                                                                                <CListGroupItem key={`${j}_listgroupitemdoc`}>{filesUtil.getFileName(e.path)}</CListGroupItem>
+                                                                                <div key={`${j}_devcontentdoc`}>
+                                                                                    <CListGroupItem key={`${j}_listgroupitemdoc`}>{filesUtil.getFileName(e.path)} <CButton key={`${j}_btdoc`} className="sofraco-button-download-excel" onClick={() => { this.onDownloadExcelMaster(e); }}>
+                                                                                        <CIcon content={freeSet.cilCloudDownload} />
+                                                                                    </CButton></CListGroupItem>
+
+                                                                                </div>
                                                                             )
                                                                         })}
                                                                     </CListGroup>
