@@ -45,31 +45,81 @@ const getTextFromImages = (images) => {
 }
 
 exports.readPdfMETLIFE = async (file) => {
-    let infos = { executionTime: 0, executionTimeMS: 0, infos: [] };
-    console.log(`${new Date()} DEBUT TRAITEMENT METLIFE`);
-    const excecutionStartTime = performance.now();
-    let imagesPDF;
-    const useFile = false;
-    if (useFile) {
-        imagesPDF = fs.readFileSync(path.join(__dirname, 'imagesMetlife.json'), { encoding: 'utf-8' });
-        imagesPDF = JSON.parse(imagesPDF);
-    } else {
-        imagesPDF = await splitPdfService.splitPDFMETLIFE(file);
-    }
-    console.log(`${new Date()} IMAGES LENGTH ${imagesPDF.length}`);
     try {
-        await treatmentImagesMetlife(imagesPDF, infos);
+        let infos = { executionTime: 0, executionTimeMS: 0, infos: [] };
+        console.log(`${new Date()} DEBUT TRAITEMENT METLIFE`);
+        const excecutionStartTime = performance.now();
+        let imagesPDF;
+        const useFile = false;
+        if (useFile) {
+            imagesPDF = fs.readFileSync(path.join(__dirname, 'imagesMetlife.json'), { encoding: 'utf-8' });
+            imagesPDF = JSON.parse(imagesPDF);
+        } else {
+            imagesPDF = await splitPdfService.splitPDFMETLIFE(file);
+        }
+        console.log(`${new Date()} IMAGES LENGTH ${imagesPDF.length}`);
+        try {
+            await treatmentImagesMetlife(imagesPDF, infos);
+        } catch (err) {
+            throw err;
+        }
+        const excecutionStopTime = performance.now();
+        let executionTimeMS = excecutionStopTime - excecutionStartTime;
+        infos.executionTime = time.millisecondToTime(executionTimeMS);
+        infos.executionTimeMS = executionTimeMS;
+        console.log('Total Execution time : ', infos.executionTime);
+        console.log(`${new Date()} FIN TRAITEMENT METLIFE`);
+        return infos;
     } catch (err) {
         throw err;
     }
+};
 
-    const excecutionStopTime = performance.now();
-    let executionTimeMS = excecutionStopTime - excecutionStartTime;
-    infos.executionTime = time.millisecondToTime(executionTimeMS);
-    infos.executionTimeMS = executionTimeMS;
-    console.log('Total Execution time : ', infos.executionTime);
-    console.log(`${new Date()} FIN TRAITEMENT METLIFE`);
-    return infos;
+const openCVTreatmentMetlife = async (images) => {
+    let imagesOpenCV = [];
+    let imageFirstPage;
+    for (let i = 0; i < images.length; i++) {
+        if (i === 0) {
+            imageFirstPage = images[i];
+        }
+        if (i > 1) {
+            imagesOpenCV.push(images[i]);
+        }
+    }
+    delete require.cache[require.resolve('../pdf/splitPDF')];
+    delete require.cache[require.resolve('../images/imageManagment')];
+    const allFilesFromOpenCV = await imageManagment.loadOpenCV(imagesOpenCV, 'METLIFE');
+    return { allFilesFromOpenCV, imageFirstPage };
+};
+
+const getAllTextFiles = (allFilesFromOpenCV, allTextFiles) => {
+    for (let files of allFilesFromOpenCV) {
+        let i = 0;
+        let contratTextsFiles = [];
+        for (let file of files) {
+            if (i > 1) {
+                const textFilePaths = getTextFromImages(file);
+                fileService.deleteFile(file);
+                if (contratTextsFiles.length > 0) {
+                    if (contratTextsFiles[contratTextsFiles.length - 1].length === 11) {
+                        contratTextsFiles.push(textFilePaths);
+                    } else {
+                        allTextFiles.push(contratTextsFiles);
+                        contratTextsFiles = [];
+                        contratTextsFiles.push(textFilePaths);
+                    }
+                    if (files.length - 1 === i) {
+                        allTextFiles.push(contratTextsFiles);
+                    }
+                } else {
+                    contratTextsFiles.push(textFilePaths);
+                }
+            }
+            i++;
+        }
+    }
+    const allTxtFiles = allTextFiles;
+    return allTxtFiles;
 };
 
 const treatmentImagesMetlife = async (imagesPDF, infos) => {
@@ -79,6 +129,7 @@ const treatmentImagesMetlife = async (imagesPDF, infos) => {
             // pathToPDF = path.join(__dirname, '..', '..', '..', 'documents', 'splited_PDF', pathToPDF);
             let useFiles = false;
             let allTextFiles = [];
+            let allTxtFiles = [];
             if (useFiles) {
                 console.log(`${new Date()} DEBUT IMPORTER LINES METLIFE`);
                 allTextFiles = fs.readFileSync(path.join(__dirname, 'apiviatxtfile.json'), { encoding: 'utf-8' });
@@ -87,52 +138,16 @@ const treatmentImagesMetlife = async (imagesPDF, infos) => {
             } else {
                 console.log(`${new Date()} DEBUT TRAITEMENT IMAGES METLIFE`);
                 console.log(`------ Bordereau numero : ${numBordereau} ------`);
-                let imagesOpenCV = [];
-                let imageFirstPage;
-                for (let i = 0; i < images.length; i++) {
-                    if (i === 0) {
-                        imageFirstPage = images[i];
-                    }
-                    if (i > 1) {
-                        imagesOpenCV.push(images[i]);
-                    }
-                }
-                delete require.cache[require.resolve('../pdf/splitPDF')];
-                delete require.cache[require.resolve('../images/imageManagment')];
-                const allFilesFromOpenCV = await imageManagment.loadOpenCV(imagesOpenCV, 'METLIFE');
+                const { allFilesFromOpenCV, imageFirstPage } = await openCVTreatmentMetlife(images)
                 console.log(`${new Date()} FIN TRAITEMENT IMAGES METLIFE`);
                 const allFilesFromFirstPage = getTextFromImages([imageFirstPage]);
                 fileService.deleteFile(imageFirstPage);
                 allTextFiles.push(allFilesFromFirstPage[0]);
-                console.log(`${new Date()} DEBUT IMPORTER LINES METLIFE`);
-                for (let files of allFilesFromOpenCV) {
-                    let i = 0;
-                    let contratTextsFiles = [];
-                    for (let file of files) {
-                        if (i > 1) {
-                            const textFilePaths = getTextFromImages(file);
-                            fileService.deleteFile(file);
-                            if (contratTextsFiles.length > 0) {
-                                if (contratTextsFiles[contratTextsFiles.length - 1].length === 11) {
-                                    contratTextsFiles.push(textFilePaths);
-                                } else {
-                                    allTextFiles.push(contratTextsFiles);
-                                    contratTextsFiles = [];
-                                    contratTextsFiles.push(textFilePaths);
-                                }
-                                if (files.length - 1 === i) {
-                                    allTextFiles.push(contratTextsFiles);
-                                }
-                            } else {
-                                contratTextsFiles.push(textFilePaths);
-                            }
-                        }
-                        i++;
-                    }
-                }
-                console.log(`${new Date()} FIN IMPORTER LINES METLIFE`);
+                console.log(`${new Date()} DEBUT RECUPERATION TEXTE METLIFE`);
+                allTxtFiles = getAllTextFiles(allFilesFromOpenCV, allTextFiles);
+                console.log(`${new Date()} FIN RECUPERATION TEXTE METLIFE`);
             }
-            const infoBordereau = readBordereauMETLIFE(allTextFiles);
+            const infoBordereau = readBordereauMETLIFE(allTxtFiles);
             infos.infos.push(infoBordereau);
             numBordereau++;
         }
