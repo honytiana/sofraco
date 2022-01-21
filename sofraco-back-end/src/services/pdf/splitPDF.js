@@ -121,10 +121,11 @@ exports.splitPDFMETLIFEByBordereaux = async (file, company) => {
         const fileName = fileService.getFileNameWithoutExtension(file);
         console.log(`${new Date()} DEBUT REGROUPEMENT PAR BORDEREAU PDF METLIFE`);
         let currentPDFBytes = fs.readFileSync(file);
-        const currentPDFDoc = await PDFDocument.load(currentPDFBytes);
+        let currentPDFDoc = await PDFDocument.load(currentPDFBytes);
         let pdfPaths = [];
         let pdfNumero = 1;
         while (pathsToPDF.length > 0) {
+            const pageCount = currentPDFDoc.getPageCount();
             const image = await pdfService.convertPDFToImg(pathsToPDF[0]);
             const allFilesFromOpenCV = await imageManagment.loadOpenCV(image, 'METLIFE2');
             const textFilePath = getTextFromImages(allFilesFromOpenCV);
@@ -145,6 +146,14 @@ exports.splitPDFMETLIFEByBordereaux = async (file, company) => {
                     pathsToPDF.splice(0, numero);
                     documentController.saveDocument(company, pathPdf, 'pdf', 'draft');
                     pdfPaths.push(pathPdf);
+
+                    const newCurrentPDFDoc = await PDFDocument.create();
+                    for (let i = numero; i < pageCount; i++) {
+                        const [pageToAdd] = await newCurrentPDFDoc.copyPages(currentPDFDoc, [i]);
+                        newCurrentPDFDoc.addPage(pageToAdd);
+                    }
+                    const newPdfBytes = await newCurrentPDFDoc.save();
+                    currentPDFDoc = await PDFDocument.load(newPdfBytes);
                     break;
                 }
             }
