@@ -196,6 +196,7 @@ exports.updateDocuments = async (req, res) => {
                 drafts.push(processingDocument._id);
             }
         }
+        let errors = [];
         let numberFiles = 1;
         for (let draftId of drafts) {
             deleteCacheRequire();
@@ -210,6 +211,7 @@ exports.updateDocuments = async (req, res) => {
                 const progress = ((indexOfDoc + 1) * 100) / drafts.length;
                 const treatment = await treatmentHandler.updateTreatment(resultTreatment._id, { progress: progress });
                 executionTimes.push(result.executionTime);
+                errors.push(rs.errors);
                 numberFiles++;
             } catch (err) {
                 console.log(err);
@@ -231,7 +233,7 @@ exports.updateDocuments = async (req, res) => {
         let executionTime = Date.now() - treatment.begin_treatment;
         executionTime = time.millisecondToTime(executionTime);
         console.log(`${new Date()} FIN TRAITEMENT DES FICHIERS`);
-        res.status(202).json({ executionTime });
+        res.status(202).json({ executionTime, errors });
     } catch (err) {
         res.status(500).json({ err });
     }
@@ -365,7 +367,7 @@ const setOCRDocument = async (companyName, documentId, filePath) => {
         document.ocr = ocr;
         document.status = 'done';
         const doc = await documentHandler.updateDocument(documentId, document);
-        return { executionTime: ocr.executionTimeMS, company: companyName, doc };
+        return { executionTime: ocr.executionTimeMS, company: companyName, doc, errors: ocr.errors };
     } catch (err) {
         throw err;
     }

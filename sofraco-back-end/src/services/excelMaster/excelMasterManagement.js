@@ -169,6 +169,84 @@ const getOCRInfos = async () => {
 
 };
 
+const generateExcelMaster = async (ocrInfos) => {
+    let excelMasters = [];
+    try {
+        const correspondances = await correspondanceHandler.getCorrespondances();
+        const allOCRPerCourtiers = getAllOCRInfosPerCourtiers(ocrInfos, correspondances);
+        for (let ocrPerCourtier of allOCRPerCourtiers) {
+            let excelMaster;
+            let workbook;
+            let recapWorkSheet;
+            const cr = await courtierHandler.getCourtierById(ocrPerCourtier.courtier);
+            console.log(`DEBUT GENERATION EXCEL MASTER : ${cr.cabinet}`);
+            excelMaster = {
+                courtier: ocrPerCourtier.courtier,
+                cabinet: cr !== null ? cr.cabinet : '',
+                create_date: new Date(),
+                path: null,
+                type: 'excel',
+                is_enabled: true
+            }
+            const courtier = cr !== null ? cr.cabinet.replace(/[/]/g, '_') : `cabMet${Date.now()}`;
+            excelMaster.code_courtier = courtier;
+            let datas = { company: null, ocr: [] };
+            for (let ocr of ocrPerCourtier.infos) {
+                if (ocr.companyGlobalName === 'CARDIF' && ocr.particular) {
+                    datas.companyGlobalName = 'CARDIF';
+                    datas.ocr.push(ocr);
+                }
+            }
+            for (let d of datas.ocr) {
+                for (let ocr of ocrPerCourtier.infos) {
+                    if (d === ocr) {
+                        ocrPerCourtier.infos.splice(ocrPerCourtier.infos.indexOf(ocr), 1);
+                    }
+                }
+            }
+            ocrPerCourtier.infos = [...ocrPerCourtier.infos, datas];
+            workbook = new ExcelJS.Workbook();
+            recapWorkSheet = workbook.addWorksheet('RECAP');
+            let month = new Date().getMonth();
+            month = (month + 1 < 10) ? `0${month + 1}` : `${month + 1}`;
+            const date = `${month}${new Date().getFullYear()}`;
+            if (ocrPerCourtier.company === 'METLIFE') {
+                let workSheet = workbook.addWorksheet(ocrPerCourtier.companyGlobalName);
+                workSheet.properties.defaultColWidth = 20;
+                excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, ocrPerCourtier);
+            }
+            else {
+                for (let ocr of ocrPerCourtier.infos) {
+                    if (ocr.companyName && ocr.companyName !== null) {
+                        if (!workbook.worksheets.some(worksheet => worksheet.name === ocr.companyGlobalName)) {
+                            let workSheet;
+                            if (ocr.companyGlobalName === 'MMA') {
+                                workSheet = workbook.addWorksheet(ocr.companyName);
+                            } else {
+                                workSheet = workbook.addWorksheet(ocr.companyGlobalName);
+                            }
+                            workSheet.properties.defaultColWidth = 20;
+                            createWorkSheetCompany(ocr, workSheet, ocrPerCourtier);
+                        }
+                    }
+                }
+            }
+
+            const sheets = excelMasterRecap.getWorkSheets(workbook);
+            excelMasterRecap.createWorkSheetRECAP(recapWorkSheet, sheets);
+            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(courtier) ? courtier : ''}.xlsx`);
+            await workbook.xlsx.writeFile(excelPath);
+            console.log(`FIN GENERATION EXCEL MASTER : ${cr.cabinet}`);
+            excelMaster.path = excelPath;
+            excelMasters.push(excelMaster);
+        }
+        return excelMasters;
+
+    } catch (err) {
+        throw err;
+    }
+};
+
 const getAllOCRInfosPerCourtiers = (ocrInfos, correspondances) => {
     let allOCRPerCourtiers = [];
     for (let correspondance of correspondances) {
@@ -300,84 +378,6 @@ const createWorkSheetCompany = (ocr, workSheet, ocrPerCourtier) => {
             break;
         default:
             console.log('Pas de compagnie correspondante');
-    }
-};
-
-const generateExcelMaster = async (ocrInfos) => {
-    let excelMasters = [];
-    try {
-        const correspondances = await correspondanceHandler.getCorrespondances();
-        const allOCRPerCourtiers = getAllOCRInfosPerCourtiers(ocrInfos, correspondances);
-        for (let ocrPerCourtier of allOCRPerCourtiers) {
-            let excelMaster;
-            let workbook;
-            let recapWorkSheet;
-            const cr = await courtierHandler.getCourtierById(ocrPerCourtier.courtier);
-            console.log(`DEBUT GENERATION EXCEL MASTER : ${cr.cabinet}`);
-            excelMaster = {
-                courtier: ocrPerCourtier.courtier,
-                cabinet: cr !== null ? cr.cabinet : '',
-                create_date: new Date(),
-                path: null,
-                type: 'excel',
-                is_enabled: true
-            }
-            const courtier = cr !== null ? cr.cabinet.replace(/[/]/g, '_') : `cabMet${Date.now()}`;
-            excelMaster.code_courtier = courtier;
-            let datas = { company: null, ocr: [] };
-            for (let ocr of ocrPerCourtier.infos) {
-                if (ocr.companyGlobalName === 'CARDIF' && ocr.particular) {
-                    datas.companyGlobalName = 'CARDIF';
-                    datas.ocr.push(ocr);
-                }
-            }
-            for (let d of datas.ocr) {
-                for (let ocr of ocrPerCourtier.infos) {
-                    if (d === ocr) {
-                        ocrPerCourtier.infos.splice(ocrPerCourtier.infos.indexOf(ocr), 1);
-                    }
-                }
-            }
-            ocrPerCourtier.infos = [...ocrPerCourtier.infos, datas];
-            workbook = new ExcelJS.Workbook();
-            recapWorkSheet = workbook.addWorksheet('RECAP');
-            let month = new Date().getMonth();
-            month = (month + 1 < 10) ? `0${month + 1}` : `${month + 1}`;
-            const date = `${month}${new Date().getFullYear()}`;
-            if (ocrPerCourtier.company === 'METLIFE') {
-                let workSheet = workbook.addWorksheet(ocrPerCourtier.companyGlobalName);
-                workSheet.properties.defaultColWidth = 20;
-                excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, ocrPerCourtier);
-            }
-            else {
-                for (let ocr of ocrPerCourtier.infos) {
-                    if (ocr.companyName && ocr.companyName !== null) {
-                        if (!workbook.worksheets.some(worksheet => worksheet.name === ocr.companyGlobalName)) {
-                            let workSheet;
-                            if (ocr.companyGlobalName === 'MMA') {
-                                workSheet = workbook.addWorksheet(ocr.companyName);
-                            } else {
-                                workSheet = workbook.addWorksheet(ocr.companyGlobalName);
-                            }
-                            workSheet.properties.defaultColWidth = 20;
-                            createWorkSheetCompany(ocr, workSheet, ocrPerCourtier);
-                        }
-                    }
-                }
-            }
-
-            const sheets = excelMasterRecap.getWorkSheets(workbook);
-            excelMasterRecap.createWorkSheetRECAP(recapWorkSheet, sheets);
-            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(courtier) ? courtier : ''}.xlsx`);
-            await workbook.xlsx.writeFile(excelPath);
-            console.log(`FIN GENERATION EXCEL MASTER : ${cr.cabinet}`);
-            excelMaster.path = excelPath;
-            excelMasters.push(excelMaster);
-        }
-        return excelMasters;
-
-    } catch (err) {
-        throw err;
     }
 };
 

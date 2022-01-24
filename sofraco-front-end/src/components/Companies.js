@@ -15,7 +15,12 @@ import {
     CToastHeader,
     CToastBody,
     CBadge,
-    CProgress
+    CProgress,
+    CModal,
+    CModalHeader,
+    CModalBody,
+    CListGroup,
+    CListGroupItem
 } from '@coreui/react';
 
 import axios from 'axios';
@@ -34,6 +39,7 @@ class Companies extends Component {
         super(props);
         this.state = {
             local: false,
+            letGenerateEM: false,
             details: [],
             companies: [],
             collapsed: [],
@@ -52,7 +58,10 @@ class Companies extends Component {
             token: null,
             treatmentTimeMS: 0,
             treatmentTimeStr: null,
-            interne: false
+            interne: false,
+            showErrors: false,
+            treatmentErrors: []
+
         };
         this.getCompanies = this.getCompanies.bind(this);
         this.getDraftDocument = this.getDraftDocument.bind(this);
@@ -63,6 +72,7 @@ class Companies extends Component {
         this.onValiderHandler = this.onValiderHandler.bind(this);
         this.onGenererExcelsMasters = this.onGenererExcelsMasters.bind(this);
         this.onDownloadExcelMasters = this.onDownloadExcelMasters.bind(this);
+        this.closeErrorsModal = this.closeErrorsModal.bind(this);
         this.user = JSON.parse(localStorage.getItem('user'));
 
     }
@@ -302,6 +312,9 @@ class Companies extends Component {
     async launchTreatments(e) {
         e.preventDefault();
         this.setState({
+            toast: false,
+            messageToast: {},
+            letGenerateEM: true,
             load: this.state.local ? true : false,
             elementCover: this.state.local ? true : false,
             executionTime: ''
@@ -325,6 +338,7 @@ class Companies extends Component {
                         color: 'success',
                         message: `Traitements terminés`
                     },
+                    letGenerateEM: false,
                     progress: 0
                 });
             } else {
@@ -336,6 +350,12 @@ class Companies extends Component {
                         message: 'Tous les fichiers sont traités'
                     },
                     progress: 0
+                });
+            }
+            if (res.data.errors.length > 0) {
+                this.setState({
+                    showErrors: true,
+                    treatmentErrors: res.data.errors
                 });
             }
             this.getDraftDocument();
@@ -502,6 +522,12 @@ class Companies extends Component {
         }
     }
 
+    closeErrorsModal() {
+        this.setState({
+            showErrors: false
+        });
+    }
+
     render() {
         let companies = [];
         let occurences = [];
@@ -574,7 +600,7 @@ class Companies extends Component {
                                 <CButton className="sofraco-button" onClick={(e) => { this.launchTreatments(e) }} disabled={this.state.load}>Traiter les fichiers</CButton>
                             </div>
                         )}
-                        <CButton className="sofraco-button" onClick={this.onGenererExcelsMasters} disabled={this.state.load}>
+                        <CButton className="sofraco-button" onClick={this.onGenererExcelsMasters} disabled={this.state.letGenerateEM}>
                             {
                                 (!this.state.loadGenerateExcelMaster) ? (
                                     <span>Générer les Excels Masters</span>
@@ -624,6 +650,23 @@ class Companies extends Component {
                         )}
                     </CCard>
                 )}
+                <CModal
+                    show={this.state.showErrors}
+                    onClose={() => { this.closeErrorsModal() }}
+                    centered={true}
+                    className="sofraco-modal"
+                >
+                    <CModalHeader closeButton>Erreurs</CModalHeader>
+                    <CModalBody>
+                        <CListGroup>
+                            {this.state.treatmentErrors.map((err, i) => {
+                                return (
+                                    <CListGroupItem key={`${i}_listgroupitemerr`}> {err} </CListGroupItem>
+                                )
+                            })}
+                        </CListGroup>
+                    </CModalBody>
+                </CModal>
                 {(this.state.toast === true) && (
                     <CToaster position="bottom-right" >
                         <CToast
