@@ -62,7 +62,7 @@ exports.getCompanyByCompanySurco = async (req, res) => {
 }
 
 exports.getCompanies = async (req, res) => {
-    console.log('get company');
+    console.log('get companies');
     try {
         const companies = await companyHandler.getCompanies();
         const newCompanies = [];

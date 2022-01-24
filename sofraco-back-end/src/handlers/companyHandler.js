@@ -33,11 +33,11 @@ class CompanyHandler {
     }
 
     getCompanyByCompanySurco(companySurco) {
-        return Company.findOne({ companySurco : companySurco });
+        return Company.findOne({ companySurco: companySurco });
     }
 
     getCompanies() {
-        return Company.find();
+        return Company.find().sort({ globalName: 1 });
     }
 
     updateCompany(id, data) {
