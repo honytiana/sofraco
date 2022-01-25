@@ -265,13 +265,27 @@ const getAllOCRInfosPerCourtiers = (ocrInfos, correspondances) => {
                             break;
                         }
                     } else {
-                        if ((dataCourtierOCR.companyName === company.company || dataCourtierOCR.companyGlobalName === company.companyGlobalName) &&
-                            dataCourtierOCR.infosOCR.code.code === company.code) {
-                            if (company.particular !== '') {
-                                dataCourtierOCR.particular = company.particular;
+                        let corrCode = company.code.toString();
+                        let dataCode = dataCourtierOCR.infosOCR.code.code.toString();
+                        const regChiffres = /^\d+$/;
+                        if (corrCode.match(regChiffres) && dataCode.match(regChiffres)) {
+                            if ((dataCourtierOCR.companyName === company.company || dataCourtierOCR.companyGlobalName === company.companyGlobalName) &&
+                                dataCode.match(corrCode)) {
+                                if (company.particular !== '') {
+                                    dataCourtierOCR.particular = company.particular;
+                                }
+                                infos.push(dataCourtierOCR);
+                                break;
                             }
-                            infos.push(dataCourtierOCR);
-                            break;
+                        } else {
+                            if ((dataCourtierOCR.companyName === company.company || dataCourtierOCR.companyGlobalName === company.companyGlobalName) &&
+                                dataCode === corrCode) {
+                                if (company.particular !== '') {
+                                    dataCourtierOCR.particular = company.particular;
+                                }
+                                infos.push(dataCourtierOCR);
+                                break;
+                            }
                         }
                     }
                 }

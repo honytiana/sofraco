@@ -41,7 +41,7 @@ exports.createWorkSheetAVIVASURCO = (workSheet, dataCourtierOCR) => {
     let debut = 2;
     let sousTotal = [];
     for (let datas of dataCourtierOCR.infosOCR.datas) {
-        for (let data of datas) {
+        for (let data of datas.contrats) {
             excelFile.setStylizedCell(workSheet, rowNumber, 'A', data.reseau, true, border, font2);
             excelFile.setStylizedCell(workSheet, rowNumber, 'B', data.region, true, border, font2);
             excelFile.setStylizedCell(workSheet, rowNumber, 'C', data.inspecteur, true, border, font2);
