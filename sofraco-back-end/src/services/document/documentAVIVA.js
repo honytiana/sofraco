@@ -17,23 +17,6 @@ exports.readExcelAVIVASURCO = async (file) => {
     let errors = [];
     let allContrats = [];
     let ocr = { headers: [], allContratsPerCourtier: [], executionTime: 0 };
-    const regReseau = /reseau/i;
-    const regRegion = /region/i;
-    const regInspecteur = /inspecteur/i;
-    const regCodeInter = /code inter/i;
-    const regNomApporteur = /nom de l'apporteur/i;
-    const regNumeroContrat = /n° de contrat/i;
-    const regNumeroCouverture = /n° de couverture/i;
-    const regNomAssure = /nom de l'assure/i;
-    const regNomContrat = /nom contrat/i;
-    const regNomGarantie = /nom garantie/i;
-    const regFamilleContrat = /famille contrat/i;
-    const regTypeMVT = /type mvt/i;
-    const regDateEffetMVT = /date effet mvt/i;
-    const regMoisEffetMVT = /mois effet mvt/i;
-    const regProdBrute = /prod brute/i;
-    const regProdObjectifAE = /prod pour objectif ae/i;
-    const regProdCalculAE = /prod pour calcul ae/i;
     for (let worksheet of worksheets) {
         let cabinetCourtier = { apporteur: '', contrats: [] };
         const indexesHeader = {
@@ -59,57 +42,7 @@ exports.readExcelAVIVASURCO = async (file) => {
             if (rowNumber === 1) {
                 row.eachCell((cell, colNumber) => {
                     headers.push((typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value);
-                    if (cell.value.match(regReseau)) {
-                        indexesHeader.ireseau = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
-                    }
-                    if (cell.value.match(regRegion)) {
-                        indexesHeader.iregion = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
-                    }
-                    if (cell.value.match(regInspecteur)) {
-                        indexesHeader.iinspecteur = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
-                    }
-                    if (cell.value.match(regCodeInter)) {
-                        indexesHeader.icodeInter = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
-                    }
-                    if (cell.value.match(regNomApporteur)) {
-                        indexesHeader.inomApporteur = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
-                    }
-                    if (cell.value.match(regNumeroContrat)) {
-                        indexesHeader.inumeroContrat = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
-                    }
-                    if (cell.value.match(regNumeroCouverture)) {
-                        indexesHeader.inumeroCouverture = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
-                    }
-                    if (cell.value.match(regNomAssure)) {
-                        indexesHeader.inomAssure = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
-                    }
-                    if (cell.value.match(regNomContrat)) {
-                        indexesHeader.inomContrat = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
-                    }
-                    if (cell.value.match(regNomGarantie)) {
-                        indexesHeader.inomGarantie = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
-                    }
-                    if (cell.value.match(regFamilleContrat)) {
-                        indexesHeader.ifamilleContrat = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
-                    }
-                    if (cell.value.match(regTypeMVT)) {
-                        indexesHeader.itypeMVT = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
-                    }
-                    if (cell.value.match(regDateEffetMVT)) {
-                        indexesHeader.idateEffetMVT = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
-                    }
-                    if (cell.value.match(regMoisEffetMVT)) {
-                        indexesHeader.imoisEffetMVT = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
-                    }
-                    if (cell.value.match(regProdBrute)) {
-                        indexesHeader.iprodBrute = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
-                    }
-                    if (cell.value.match(regProdObjectifAE)) {
-                        indexesHeader.iprodObjectifAE = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
-                    }
-                    if (cell.value.match(regProdCalculAE)) {
-                        indexesHeader.iprodCalculAE = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
-                    }
+                    setIndexHeaders(cell, indexesHeader);
                 });
                 for (let index in indexesHeader) {
                     if (indexesHeader[index] === null) {
@@ -197,3 +130,73 @@ exports.readExcelAVIVASURCO = async (file) => {
     return ocr;
 };
 
+const setIndexHeaders = (cell, indexesHeader) => {
+    const regReseau = /reseau/i;
+    const regRegion = /region/i;
+    const regInspecteur = /inspecteur/i;
+    const regCodeInter = /code inter/i;
+    const regNomApporteur = /nom de l'apporteur/i;
+    const regNumeroContrat = /n° de contrat/i;
+    const regNumeroCouverture = /n° de couverture/i;
+    const regNomAssure = /nom de l'assure/i;
+    const regNomContrat = /nom contrat/i;
+    const regNomGarantie = /nom garantie/i;
+    const regFamilleContrat = /famille contrat/i;
+    const regTypeMVT = /type mvt/i;
+    const regDateEffetMVT = /date effet mvt/i;
+    const regMoisEffetMVT = /mois effet mvt/i;
+    const regProdBrute = /prod brute/i;
+    const regProdObjectifAE = /prod pour objectif ae/i;
+    const regProdCalculAE = /prod pour calcul ae/i;
+    if (cell.value.match(regReseau)) {
+        indexesHeader.ireseau = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
+    }
+    if (cell.value.match(regRegion)) {
+        indexesHeader.iregion = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
+    }
+    if (cell.value.match(regInspecteur)) {
+        indexesHeader.iinspecteur = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
+    }
+    if (cell.value.match(regCodeInter)) {
+        indexesHeader.icodeInter = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
+    }
+    if (cell.value.match(regNomApporteur)) {
+        indexesHeader.inomApporteur = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
+    }
+    if (cell.value.match(regNumeroContrat)) {
+        indexesHeader.inumeroContrat = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
+    }
+    if (cell.value.match(regNumeroCouverture)) {
+        indexesHeader.inumeroCouverture = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
+    }
+    if (cell.value.match(regNomAssure)) {
+        indexesHeader.inomAssure = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
+    }
+    if (cell.value.match(regNomContrat)) {
+        indexesHeader.inomContrat = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
+    }
+    if (cell.value.match(regNomGarantie)) {
+        indexesHeader.inomGarantie = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
+    }
+    if (cell.value.match(regFamilleContrat)) {
+        indexesHeader.ifamilleContrat = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
+    }
+    if (cell.value.match(regTypeMVT)) {
+        indexesHeader.itypeMVT = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
+    }
+    if (cell.value.match(regDateEffetMVT)) {
+        indexesHeader.idateEffetMVT = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
+    }
+    if (cell.value.match(regMoisEffetMVT)) {
+        indexesHeader.imoisEffetMVT = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
+    }
+    if (cell.value.match(regProdBrute)) {
+        indexesHeader.iprodBrute = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
+    }
+    if (cell.value.match(regProdObjectifAE)) {
+        indexesHeader.iprodObjectifAE = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
+    }
+    if (cell.value.match(regProdCalculAE)) {
+        indexesHeader.iprodCalculAE = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
+    }
+};
