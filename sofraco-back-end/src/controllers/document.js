@@ -211,7 +211,9 @@ exports.updateDocuments = async (req, res) => {
                 const progress = ((indexOfDoc + 1) * 100) / drafts.length;
                 const treatment = await treatmentHandler.updateTreatment(resultTreatment._id, { progress: progress });
                 executionTimes.push(result.executionTime);
-                errors.push(rs.errors);
+                if (rs.errors && rs.errors !== null) {
+                    errors.push(rs.errors);
+                }
                 numberFiles++;
             } catch (err) {
                 console.log(err);
@@ -367,7 +369,7 @@ const setOCRDocument = async (companyName, documentId, filePath) => {
         document.ocr = ocr;
         document.status = 'done';
         const doc = await documentHandler.updateDocument(documentId, document);
-        return { executionTime: ocr.executionTimeMS, company: companyName, doc, errors: ocr.errors };
+        return { executionTime: ocr.executionTimeMS, company: companyName, doc, errors: (ocr.errors && ocr.errors.length > 0) ? ocr.errors : null };
     } catch (err) {
         throw err;
     }

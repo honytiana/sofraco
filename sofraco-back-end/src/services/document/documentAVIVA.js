@@ -42,7 +42,7 @@ exports.readExcelAVIVASURCO = async (file) => {
             if (rowNumber === 1) {
                 row.eachCell((cell, colNumber) => {
                     headers.push((typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value);
-                    setIndexHeaders(cell, indexesHeader);
+                    setIndexHeaders(cell, colNumber, indexesHeader);
                 });
                 for (let index in indexesHeader) {
                     if (indexesHeader[index] === null) {
@@ -130,7 +130,7 @@ exports.readExcelAVIVASURCO = async (file) => {
     return ocr;
 };
 
-const setIndexHeaders = (cell, indexesHeader) => {
+const setIndexHeaders = (cell, colNumber, indexesHeader) => {
     const regReseau = /reseau/i;
     const regRegion = /region/i;
     const regInspecteur = /inspecteur/i;
