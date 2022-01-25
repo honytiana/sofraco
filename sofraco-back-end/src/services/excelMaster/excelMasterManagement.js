@@ -226,19 +226,27 @@ const generateExcelMaster = async (ocrInfos) => {
                                 workSheet = workbook.addWorksheet(ocr.companyGlobalName);
                             }
                             workSheet.properties.defaultColWidth = 20;
-                            createWorkSheetCompany(ocr, workSheet, ocrPerCourtier);
+                            try {
+                                createWorkSheetCompany(ocr, workSheet, ocrPerCourtier);
+                            } catch (err) {
+                                throw err;
+                            }
                         }
                     }
                 }
             }
 
-            const sheets = excelMasterRecap.getWorkSheets(workbook);
-            excelMasterRecap.createWorkSheetRECAP(recapWorkSheet, sheets);
-            excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(courtier) ? courtier : ''}.xlsx`);
-            await workbook.xlsx.writeFile(excelPath);
-            console.log(`FIN GENERATION EXCEL MASTER : ${cr.cabinet}`);
-            excelMaster.path = excelPath;
-            excelMasters.push(excelMaster);
+            try {
+                const sheets = excelMasterRecap.getWorkSheets(workbook);
+                excelMasterRecap.createWorkSheetRECAP(recapWorkSheet, sheets);
+                excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(courtier) ? courtier : ''}.xlsx`);
+                await workbook.xlsx.writeFile(excelPath);
+                console.log(`FIN GENERATION EXCEL MASTER : ${cr.cabinet}`);
+                excelMaster.path = excelPath;
+                excelMasters.push(excelMaster);
+            } catch (err) {
+                throw err;
+            }
         }
         return excelMasters;
 

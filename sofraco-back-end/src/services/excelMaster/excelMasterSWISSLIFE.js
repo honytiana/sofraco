@@ -186,17 +186,21 @@ exports.createWorkSheetSWISSLIFESURCO = (workSheet, dataCourtierOCR) => {
         excelFile.setStylizedCell(workSheet, rowNumber, 'I', datas.montantPU, true, border, font3, '#,##0.00;\-#,##0.00');
         excelFile.setStylizedCell(workSheet, rowNumber, 'J', datas.dontParUCsurPU, true, border, font3, '#,##0.00;\-#,##0.00');
         excelFile.setStylizedCell(workSheet, rowNumber, 'K', datas.tauxChargement, true, border, font3, '');
-        excelFile.setStylizedCell(workSheet, rowNumber, 'L', datas.avanceSurco, true, border, font3, '#,##0.00;\-#,##0.00');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'L', datas.avanceSurco.result, true, border, font3, '#,##0.00;\-#,##0.00');
         excelFile.setStylizedCell(workSheet, rowNumber, 'M', datas.incompressible, true, border, font3, '#,##0.00;\-#,##0.00');
-        excelFile.setStylizedCell(workSheet, rowNumber, 'N', datas.avanceComprisRepriseIncompressible, true, border, font3, '#,##0.00;\-#,##0.00');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'N', datas.avanceComprisRepriseIncompressible.result, true, border, font3, '#,##0.00;\-#,##0.00');
         rowNumber++;
     }
     rowNumber++;
 
     excelFile.setSimpleCell(workSheet, rowNumber, 'M', 'TOTAL', font2);
     let result = 0;
-    for (let i = debut; i <= rowNumber - 2; i++) {
-        result += workSheet.getRow(i).getCell('N').value;
+    if(debut === rowNumber - 2) {
+        result += workSheet.getRow(debut).getCell('N').value.result;
+    } else {
+        for (let i = debut; i <= rowNumber - 2; i++) {
+            result += (workSheet.getRow(debut).getCell('N').value !== null) ? workSheet.getRow(debut).getCell('N').value.result : 0;
+        }
     }
     const value = {
         formula: `SUM(N${debut}:N${rowNumber - 2})`,
