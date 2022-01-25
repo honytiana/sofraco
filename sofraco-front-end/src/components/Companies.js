@@ -338,7 +338,6 @@ class Companies extends Component {
                         color: 'success',
                         message: `Traitements terminés`
                     },
-                    letGenerateEM: false,
                     progress: 0
                 });
             } else {
@@ -376,8 +375,12 @@ class Companies extends Component {
             });
             console.log(err);
         } finally {
+            this.setState({
+                letGenerateEM: false,
+            });
             setTimeout(() => {
                 this.setState({
+                    letGenerateEM: false,
                     drafts: [],
                     toast: false,
                     messageToast: {}
