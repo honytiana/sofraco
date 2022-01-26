@@ -190,10 +190,11 @@ const generateExcelMaster = async (ocrInfos) => {
             }
             const courtier = cr !== null ? cr.cabinet.replace(/[/]/g, '_') : `cabMet${Date.now()}`;
             excelMaster.code_courtier = courtier;
-            let datas = { company: null, ocr: [] };
+            let datas = { companyName: null, ocr: [] };
             for (let ocr of ocrPerCourtier.infos) {
                 if (ocr.companyGlobalName === 'CARDIF' && ocr.particular) {
                     datas.companyGlobalName = 'CARDIF';
+                    datas.companyName = 'CARDIF';
                     datas.ocr.push(ocr);
                 }
             }

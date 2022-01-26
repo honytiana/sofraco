@@ -66,10 +66,10 @@ exports.createWorkSheetCARDIF = (workSheet, dataCourtierOCR) => {
             workSheet.getRow(rowNumber).getCell('F').numFmt = 'dd/mm/yyyy';
             workSheet.getRow(rowNumber).getCell('G').value = (datas.commission.dateEffet) ? new Date(datas.commission.dateEffet) : '';
             workSheet.getRow(rowNumber).getCell('G').numFmt = 'dd/mm/yyyy';
-            workSheet.getRow(rowNumber).getCell('H').value = datas.client.numero;
+            workSheet.getRow(rowNumber).getCell('H').value = datas.client.numeroClient;
             workSheet.getRow(rowNumber).getCell('I').value = datas.client.nom;
             workSheet.getRow(rowNumber).getCell('J').value = datas.client.prenom;
-            workSheet.getRow(rowNumber).getCell('K').value = datas.contrat.numero;
+            workSheet.getRow(rowNumber).getCell('K').value = datas.contrat.numeroContrat;
             workSheet.getRow(rowNumber).getCell('L').value = datas.contrat.produit;
             workSheet.getRow(rowNumber).getCell('M').value = datas.supportFinancier.codeISIN;
             workSheet.getRow(rowNumber).getCell('N').value = datas.supportFinancier.libelleSupportFinancier;

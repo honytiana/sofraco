@@ -1,17 +1,42 @@
 exports.setIndexHeaders = (cell, colNumber, arrReg, indexesHeader) => {
     for (let reg in arrReg) {
         if (cell.value.match(arrReg[reg])) {
-            indexesHeader[reg] = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
+            const values = Object.values(indexesHeader);
+            const test = values.some(ih => {
+                return ih === [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value]
+            });
+            if (!test && indexesHeader[reg] === null) {
+                indexesHeader[reg] = [colNumber, (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value];
+            }
+            delete arrReg[reg];
+            break;
         }
     }
 };
 
-exports.createContrat = (row, indexesHeader) => {
+exports.createContratSimpleHeader = (row, indexesHeader) => {
     let contrat = {};
     for (let ih in indexesHeader) {
         contrat[ih] = (indexesHeader[ih] !== null) && ((typeof row.getCell(indexesHeader[ih][0]).value === 'string') ?
-        row.getCell(indexesHeader[ih][0]).value.trim() :
-        row.getCell(indexesHeader[ih][0]).value);
+            row.getCell(indexesHeader[ih][0]).value.trim() :
+            row.getCell(indexesHeader[ih][0]).value);
+    }
+    return contrat;
+}
+
+exports.createContratDoubleHeader = (row, indexesFirstHeader, indexesSecondHeader, indexesHeader) => {
+    let contrat = {};
+    for (let iF in indexesFirstHeader) {
+        contrat[iF] = {};
+    }
+    for (let i in contrat) {
+        for (let s in indexesSecondHeader) {
+            if (s in indexesHeader[i]) {
+                contrat[i][s] = (indexesSecondHeader[s] !== null) && ((typeof row.getCell(indexesSecondHeader[s][0]).value === 'string') ?
+                    row.getCell(indexesSecondHeader[s][0]).value.trim() :
+                    row.getCell(indexesSecondHeader[s][0]).value);
+            }
+        }
     }
     return contrat;
 }

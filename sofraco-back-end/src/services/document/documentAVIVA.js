@@ -18,27 +18,27 @@ exports.readExcelAVIVASURCO = async (file) => {
     let allContrats = [];
     let ocr = { headers: [], allContratsPerCourtier: [], executionTime: 0 };
     const arrReg = {
-        reseau: /reseau/i,
-        region: /region/i,
-        inspecteur: /inspecteur/i,
-        codeInter: /code inter/i,
-        nomApporteur: /nom de l'apporteur/i,
-        numeroContrat: /n° de contrat/i,
-        numeroCouverture: /n° de couverture/i,
-        nomAssure: /nom de l'assure/i,
-        nomContrat: /nom contrat/i,
-        nomGarantie: /nom garantie/i,
-        familleContrat: /famille contrat/i,
-        typeMVT: /type mvt/i,
-        dateEffetMVT: /date effet mvt/i,
-        moisEffetMVT: /mois effet mvt/i,
-        prodBrute: /prod brute/i,
-        prodObjectifAE: /prod pour objectif ae/i,
-        prodCalculAE: /prod pour calcul ae/i
+        reseau: /^reseau$/i,
+        region: /^region$/i,
+        inspecteur: /^inspecteur$/i,
+        codeInter: /^code inter$/i,
+        nomApporteur: /^nom de l'apporteur$/i,
+        numeroContrat: /^n° de contrat$/i,
+        numeroCouverture: /^n° de couverture$/i,
+        nomAssure: /^nom de l'assure$/i,
+        nomContrat: /^nom contrat$/i,
+        nomGarantie: /^nom garantie$/i,
+        familleContrat: /^famille contrat$/i,
+        typeMVT: /^type mvt$/i,
+        dateEffetMVT: /^date effet mvt$/i,
+        moisEffetMVT: /^mois effet mvt$/i,
+        prodBrute: /^prod brute$/i,
+        prodObjectifAE: /^prod pour objectif ae$/i,
+        prodCalculAE: /^prod pour calcul ae$/i
     };
     for (let worksheet of worksheets) {
         let cabinetCourtier = { apporteur: '', contrats: [] };
-        const indexesHeader = {
+        let indexesHeader = {
             reseau: null,
             region: null,
             inspecteur: null,
@@ -70,7 +70,7 @@ exports.readExcelAVIVASURCO = async (file) => {
                 }
             }
             if (rowNumber > 1) {
-                const contrat = generals.createContrat(row, indexesHeader);
+                const contrat = generals.createContratSimpleHeader(row, indexesHeader);
                 if (contrat.codeInter && contrat.codeInter.match(/Total.+/i)) {
                     cabinetCourtier.contrats.push(contrat);
                     allContrats.push(cabinetCourtier);

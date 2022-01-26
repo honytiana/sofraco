@@ -2,9 +2,9 @@ const { performance } = require('perf_hooks');
 const time = require('../utils/time');
 const generals = require('../utils/generals');
 const excelFile = require('../utils/excelFile');
-
-
 const { workerData, parentPort } = require('worker_threads');
+const errorHandler = require('../utils/errorHandler');
+
 if (parentPort !== null) {
     parentPort.postMessage({ cardif: workerData });
 }
@@ -15,96 +15,130 @@ exports.readExcelCARDIF = async (file) => {
     const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     let firstHeaders = [];
     let secondHeaders = [];
-    let headers = {firstHeaders, secondHeaders};
+    let headers = { firstHeaders, secondHeaders };
     let allContrats = [];
+    let errors = [];
     let ocr = { headers: null, allContratsPerCourtier: [], executionTime: 0 };
+    const arrRegFirstHeader = {
+        courtier: /^courtier$/i,
+        commission: /^commission$/i,
+        client: /^client$/i,
+        contrat: /^contrat$/i,
+        supportFinancier: /^Support Financier$/i,
+        montantsCommission: /^Montants de commission$/i
+    };
+    const arrRegSecondHeader = {
+        code: /^code$/i,
+        libelle: /^libellé$/i,
+        reference: /^Référence$/i,
+        type: /^Type$/i,
+        sousType: /^Sous-type$/i,
+        datePriseEnCompte: /^Date de prise en compte$/i,
+        dateEffet: /^Date effet$/i,
+        numeroClient: /^N°$/i,
+        nom: /^Nom$/i,
+        prenom: /^Prénom$/i,
+        numeroContrat: /^N°$/i,
+        produit: /^Produit$/i,
+        codeISIN: /^Code ISIN$/i,
+        libelleSupportFinancier: /^Libellé$/i,
+        classification: /^Classification$/i,
+        assiette: /^Assiette$/i,
+        taux: /^Taux/i,
+        montant: /^Montant$/i
+    };
     for (let worksheet of worksheets) {
         if (worksheet.name === 'CommissionsDetaillees') {
+            let indexesFirstHeader = {
+                courtier: null,
+                commission: null,
+                client: null,
+                contrat: null,
+                supportFinancier: null,
+                montantsCommission: null
+            };
+            let indexesSecondHeader = {
+                code: null,
+                libelle: null,
+                reference: null,
+                type: null,
+                sousType: null,
+                datePriseEnCompte: null,
+                dateEffet: null,
+                numeroClient: null,
+                nom: null,
+                prenom: null,
+                numeroContrat: null,
+                produit: null,
+                codeISIN: null,
+                libelleSupportFinancier: null,
+                classification: null,
+                assiette: null,
+                taux: null,
+                montant: null
+            };
+            let indexesHeader = {
+                courtier: {
+                    code: null,
+                    libelle: null
+                },
+                commission: {
+                    reference: null,
+                    type: null,
+                    sousType: null,
+                    datePriseEnCompte: null,
+                    dateEffet: null,
+                },
+                client: {
+                    numeroClient: null,
+                    nom: null,
+                    prenom: null,
+                },
+                contrat: {
+                    numeroContrat: null,
+                    produit: null,
+                },
+                supportFinancier: {
+                    codeISIN: null,
+                    libelleSupportFinancier: null,
+                    classification: null,
+                },
+                montantsCommission: {
+                    assiette: null,
+                    taux: null,
+                    montant: null
+                }
+            };
             worksheet.eachRow((row, rowNumber) => {
                 if (rowNumber === 1) {
                     row.eachCell((cell, colNumber) => {
                         const currentCellValue = (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value;
                         if (firstHeaders.indexOf(currentCellValue) < 0) {
                             firstHeaders.push(currentCellValue);
+                            generals.setIndexHeaders(cell, colNumber, arrRegFirstHeader, indexesFirstHeader);
                         }
                     });
+                    for (let index in indexesFirstHeader) {
+                        if (indexesFirstHeader[index] === null) {
+                            errors.push(errorHandler.errorReadExcelCARDIFFH(index));
+                        }
+                    }
                     headers.firstHeaders = firstHeaders;
                 }
                 if (rowNumber === 2) {
                     row.eachCell((cell, colNumber) => {
                         secondHeaders.push((typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value);
+                        generals.setIndexHeaders(cell, colNumber, arrRegSecondHeader, indexesSecondHeader);
                     });
+                    for (let index in indexesSecondHeader) {
+                        if (indexesSecondHeader[index] === null) {
+                            errors.push(errorHandler.errorReadExcelCARDIFSH(index));
+                        }
+                    }
                     headers.secondHeaders = secondHeaders;
                 }
                 if (rowNumber > 2) {
-                    const contrat = {
-                        courtier: {
-                            code: (typeof row.getCell('A').value === 'string') ?
-                                row.getCell('A').value.trim() :
-                                row.getCell('A').value,
-                            libelle: (typeof row.getCell('B').value === 'string') ?
-                                row.getCell('B').value.trim() :
-                                row.getCell('B').value,
-                        },
-                        commission: {
-                            reference: (typeof row.getCell('C').value === 'string') ?
-                                row.getCell('C').value.trim() :
-                                row.getCell('C').value,
-                            type: (typeof row.getCell('D').value === 'string') ?
-                                row.getCell('D').value.trim() :
-                                row.getCell('D').value,
-                            sousType: (typeof row.getCell('E').value === 'string') ?
-                                row.getCell('E').value.trim() :
-                                row.getCell('E').value,
-                            datePriseEnCompte: (typeof row.getCell('F').value === 'string') ?
-                                row.getCell('F').value.trim() :
-                                row.getCell('F').value,
-                            dateEffet: (typeof row.getCell('G').value === 'string') ?
-                                row.getCell('G').value.trim() :
-                                row.getCell('G').value,
-                        },
-                        client: {
-                            numero: (typeof row.getCell('H').value === 'string') ?
-                                row.getCell('H').value.trim() :
-                                row.getCell('H').value,
-                            nom: (typeof row.getCell('I').value === 'string') ?
-                                row.getCell('I').value.trim() :
-                                row.getCell('I').value,
-                            prenom: (typeof row.getCell('J').value === 'string') ?
-                                row.getCell('J').value.trim() :
-                                row.getCell('J').value,
-                        },
-                        contrat: {
-                            numero: (typeof row.getCell('K').value === 'string') ?
-                                row.getCell('K').value.trim() :
-                                row.getCell('K').value,
-                            produit: (typeof row.getCell('L').value === 'string') ?
-                                row.getCell('L').value.trim() :
-                                row.getCell('L').value,
-                        },
-                        supportFinancier: {
-                            codeISIN: (typeof row.getCell('M').value === 'string') ?
-                                row.getCell('M').value.trim() :
-                                row.getCell('M').value,
-                            libelleSupportFinancier: (typeof row.getCell('N').value === 'string') ?
-                                row.getCell('N').value.trim() :
-                                row.getCell('N').value,
-                            classification: (typeof row.getCell('O').value === 'string') ?
-                                row.getCell('O').value.trim() :
-                                row.getCell('O').value,
-                        },
-                        montantsCommission: {
-                            assiette: (typeof row.getCell('P').value === 'string') ?
-                                row.getCell('P').value.trim() :
-                                row.getCell('P').value,
-                            taux: (typeof row.getCell('Q').value === 'string') ?
-                                row.getCell('Q').value.trim() :
-                                row.getCell('Q').value,
-                            montant: (typeof row.getCell('R').value === 'string') ?
-                                row.getCell('R').value.trim() :
-                                row.getCell('R').value,
-                        }
-                    };
+                    const contrat = generals.createContratDoubleHeader(row, indexesFirstHeader, indexesSecondHeader, indexesHeader);
                     allContrats.push(contrat);
                 }
             })
@@ -114,8 +148,8 @@ exports.readExcelCARDIF = async (file) => {
     let allContratsPerCourtier = [];
     let courtiers = [];
     allContrats.forEach((element, index) => {
-        const courtier = {code: element.courtier.code, libelle: element.courtier.libelle};
-        if (!courtiers.some(c => { return c.code === courtier.code})) {
+        const courtier = { code: element.courtier.code, libelle: element.courtier.libelle };
+        if (!courtiers.some(c => { return c.code === courtier.code })) {
             courtiers.push(courtier);
         }
     })
@@ -132,7 +166,7 @@ exports.readExcelCARDIF = async (file) => {
         allContratsPerCourtier.push(contratCourtier);
     }
 
-    ocr = { headers, allContratsPerCourtier, executionTime: 0, executionTimeMS: 0 };
+    ocr = { headers, allContratsPerCourtier, errors, executionTime: 0, executionTimeMS: 0 };
     const excecutionStopTime = performance.now();
     const executionTimeMS = excecutionStopTime - excecutionStartTime;
     const executionTime = time.millisecondToTime(executionTimeMS);

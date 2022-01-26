@@ -212,7 +212,7 @@ exports.updateDocuments = async (req, res) => {
                 const treatment = await treatmentHandler.updateTreatment(resultTreatment._id, { progress: progress });
                 executionTimes.push(result.executionTime);
                 if (rs.errors && rs.errors !== null) {
-                    errors.push(rs.errors);
+                    errors = [...errors, ...rs.errors];
                 }
                 numberFiles++;
             } catch (err) {
