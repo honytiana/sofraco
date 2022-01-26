@@ -8,6 +8,7 @@ const pdfService = require('../utils/pdfFile');
 const redefinition = require('../utils/redefinition');
 const generals = require('../utils/generals');
 const excelFile = require('../utils/excelFile');
+const errorHandler = require('../utils/errorHandler');
 
 const { workerData, parentPort } = require('worker_threads');
 if (parentPort !== null) {
@@ -96,7 +97,7 @@ const readBordereauSLADE = (textFilePaths) => {
             data.splice(data.indexOf(infos.syntheseDesCommissions.periodeConcernee), 1);
             data.splice(data.indexOf(infos.syntheseDesCommissions.codeApporteur), 1);
             data.splice(data.indexOf(infos.syntheseDesCommissions.referenceBordereau), 1);
-            if(infos.syntheseDesCommissions.nombrePrimeSurLaPeriode !== '') {
+            if (infos.syntheseDesCommissions.nombrePrimeSurLaPeriode !== '') {
                 data.splice(data.indexOf(infos.syntheseDesCommissions.nombrePrimeSurLaPeriode), 1);
             }
             data.splice(data.indexOf(infos.syntheseDesCommissions.totalPrimesEncaisseesSurLaPeriode), 1);
@@ -343,13 +344,47 @@ exports.readExcelSWISSLIFESURCO = async (file) => {
     const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     let headers = [];
     let allContrats = [];
+    let errors = [];
     let ocr = { headers: null, allContratsPerCourtier: [], executionTime: 0 };
+    const arrReg = {
+        apporteurVente: /^Apporteur\s*de\s*la\s*vente$/i,
+        dateComptabVente: /^Date\s*comptab.\s*de\s*la\s*vente$/i,
+        numeroPolice: /^N°\s*de\s*police$/i,
+        codeProduit: /^Code\s*produit$/i,
+        nomClient: /^Nom\s*du\s*Client$/i,
+        cotisationPonderee: /^Cotisation\s*pondérée$/i,
+        montantPP: /^Montant\s*PP$/i,
+        dontParUCsurPP: /^Dont\s*part\s*UC\s*sur\s*PP$/i,
+        montantPU: /^Montant\s*PU$/i,
+        dontParUCsurPU: /^Dont\s*part\s*UC\s*sur\s*PU$/i,
+        tauxChargement: /^Taux\s*de\s*chargement$/i,
+        avanceSurco: /^Avance\s*surco\s*20%$/i,
+        incompressible: /^incompressible$/i,
+        avanceComprisRepriseIncompressible: /^avance\s*y\s*compris\s*reprise\s*incompressbile$/i,
+    };	
+
     for (let worksheet of worksheets) {
         if (worksheet.name === worksheets[0].name ||
             worksheet.name === worksheets[1].name ||
             worksheet.name === worksheets[2].name ||
             worksheet.name === worksheets[4].name) {
             let rowNumberHeader;
+            let indexesHeader = {
+                apporteurVente: null,
+                dateComptabVente: null,
+                numeroPolice: null,
+                codeProduit: null,
+                nomClient: null,
+                cotisationPonderee: null,
+                montantPP: null,
+                dontParUCsurPP: null,
+                montantPU: null,
+                dontParUCsurPU: null,
+                tauxChargement: null,
+                avanceSurco: null,
+                incompressible: null,
+                avanceComprisRepriseIncompressible: null
+            }
             worksheet.eachRow((row, rowNumber) => {
                 if (typeof row.getCell('A').value === 'string' && row.getCell('A').value.match(/Apporteur/i)) {
                     rowNumberHeader = rowNumber;
@@ -357,54 +392,20 @@ exports.readExcelSWISSLIFESURCO = async (file) => {
                         const currentCellValue = (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim().replace(/\n/g, ' ') : cell.value.replace(/\n/g, ' ');
                         if (headers.indexOf(currentCellValue) < 0) {
                             headers.push(currentCellValue);
+                            generals.setIndexHeaders(cell, colNumber, arrReg, indexesHeader);
                         }
                     });
+                    for (let index in indexesHeader) {
+                        if (indexesHeader[index] === null) {
+                            errors.push(errorHandler.errorReadExcelSWISSLIFESURCO(index));
+                        }
+                    }
                 }
                 if (rowNumber > rowNumberHeader) {
-                    const contrat = {
-                        apporteurVente: (typeof row.getCell('A').value === 'string') ?
-                            row.getCell('A').value.trim() :
-                            row.getCell('A').value,
-                        dateComptabVente: (typeof row.getCell('B').value === 'string') ?
-                            row.getCell('B').value.trim() :
-                            row.getCell('B').value,
-                        numeroPolice: (typeof row.getCell('C').value === 'string') ?
-                            row.getCell('C').value.trim() :
-                            row.getCell('C').value,
-                        codeProduit: (typeof row.getCell('D').value === 'string') ?
-                            row.getCell('D').value.trim() :
-                            row.getCell('D').value,
-                        nomClient: (typeof row.getCell('E').value === 'string') ?
-                            row.getCell('E').value.trim() :
-                            row.getCell('E').value,
-                        cotisationPonderee: (typeof row.getCell('F').value === 'string') ?
-                            row.getCell('F').value.trim() :
-                            row.getCell('F').value,
-                        montantPP: (typeof row.getCell('G').value === 'string') ?
-                            row.getCell('G').value.trim() :
-                            row.getCell('G').value,
-                        dontParUCsurPP: (typeof row.getCell('H').value === 'string') ?
-                            row.getCell('H').value.trim() :
-                            row.getCell('H').value,
-                        montantPU: (typeof row.getCell('I').value === 'string') ?
-                            row.getCell('I').value.trim() :
-                            row.getCell('I').value,
-                        dontParUCsurPU: (typeof row.getCell('J').value === 'string') ?
-                            row.getCell('J').value.trim() :
-                            row.getCell('J').value,
-                        tauxChargement: (typeof row.getCell('K').value === 'string') ?
-                            row.getCell('K').value.trim() :
-                            row.getCell('K').value,
-                        avanceSurco: (typeof row.getCell('L').value === 'string') ?
-                            row.getCell('L').value.trim() :
-                            row.getCell('L').value,
-                        incompressible: (typeof row.getCell('M').value === 'string') ?
-                            row.getCell('M').value.trim() :
-                            row.getCell('M').value,
-                        avanceComprisRepriseIncompressible: (typeof row.getCell('N').value === 'string') ?
-                            row.getCell('N').value.trim() :
-                            row.getCell('N').value
-                    };
+                    const {contrat, error} = generals.createContratSimpleHeader(row, indexesHeader);
+                    for (let err of error) {
+                        errors.push(errorHandler.errorEmptyCell('SWISSLIFE SURCO', err));
+                    }
                     allContrats.push(contrat);
                 }
             })
@@ -434,7 +435,7 @@ exports.readExcelSWISSLIFESURCO = async (file) => {
         allContratsPerCourtier.push(contratCourtier);
     }
 
-    ocr = { headers, allContratsPerCourtier, executionTime: 0, executionTimeMS: 0 };
+    ocr = { headers, allContratsPerCourtier, errors, executionTime: 0, executionTimeMS: 0 };
     const excecutionStopTime = performance.now();
     const executionTimeMS = excecutionStopTime - excecutionStartTime;
     const executionTime = time.millisecondToTime(executionTimeMS);

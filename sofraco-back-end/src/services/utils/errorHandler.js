@@ -3,7 +3,7 @@ exports.errorEmptyCell = (company, address) => {
     return error;
 };
 
-exports.errorReadExcelAVIVA = (index) => {
+exports.errorReadExcelAVIVASURCO = (index) => {
     const indexesHeader = {
         reseau: 'RESEAU',
         region: 'REGION',
@@ -66,4 +66,28 @@ exports.errorReadExcelCARDIFSH = (index) => {
 
     const errorCardif = `CARDIF : La colonne ${indexesHeader[index]} n'est pas présente (Seconde ligne)`;
     return errorCardif;
+};
+
+exports.errorReadExcelSWISSLIFESURCO = (index) => {
+    const indexesHeader = {
+        apporteurVente: 'Apporteur de la vente',
+        dateComptabVente: 'Date comptab. de la vente',
+        numeroPolice: 'N° de police',
+        codeProduit: 'Code produit',
+        nomClient: 'Nom du Client',
+        cotisationPonderee: 'Cotisation pondérée',
+        montantPP: 'Montant PP',
+        dontParUCsurPP: 'Dont part UC sur PP',
+        montantPU: 'Montant PU',
+        dontParUCsurPU: 'Dont part UC sur PU',
+        tauxChargement: 'Taux de chargement',
+        avanceSurco: 'Avance surco 20%',
+        incompressible: 'incompressible',
+        avanceComprisRepriseIncompressible: 'avance y compris reprise incompressbile'
+    };
+    		
+
+
+    const errorAviva = `SWISSLIFE SURCO : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorAviva;
 };

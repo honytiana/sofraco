@@ -24,8 +24,8 @@ exports.readExcelCARDIF = async (file) => {
         commission: /^commission$/i,
         client: /^client$/i,
         contrat: /^contrat$/i,
-        supportFinancier: /^Support Financier$/i,
-        montantsCommission: /^Montants de commission$/i
+        supportFinancier: /^Support\s*Financier$/i,
+        montantsCommission: /^Montants\s*de\s*commission$/i
     };
     const arrRegSecondHeader = {
         code: /^code$/i,
@@ -33,14 +33,14 @@ exports.readExcelCARDIF = async (file) => {
         reference: /^Référence$/i,
         type: /^Type$/i,
         sousType: /^Sous-type$/i,
-        datePriseEnCompte: /^Date de prise en compte$/i,
-        dateEffet: /^Date effet$/i,
+        datePriseEnCompte: /^Date\s*de\s*prise\s*en\s*compte$/i,
+        dateEffet: /^Date\s*effet$/i,
         numeroClient: /^N°$/i,
         nom: /^Nom$/i,
         prenom: /^Prénom$/i,
         numeroContrat: /^N°$/i,
         produit: /^Produit$/i,
-        codeISIN: /^Code ISIN$/i,
+        codeISIN: /^Code\s*ISIN$/i,
         libelleSupportFinancier: /^Libellé$/i,
         classification: /^Classification$/i,
         assiette: /^Assiette$/i,

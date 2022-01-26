@@ -21,20 +21,20 @@ exports.readExcelAVIVASURCO = async (file) => {
         reseau: /^reseau$/i,
         region: /^region$/i,
         inspecteur: /^inspecteur$/i,
-        codeInter: /^code inter$/i,
-        nomApporteur: /^nom de l'apporteur$/i,
-        numeroContrat: /^n° de contrat$/i,
-        numeroCouverture: /^n° de couverture$/i,
-        nomAssure: /^nom de l'assure$/i,
-        nomContrat: /^nom contrat$/i,
-        nomGarantie: /^nom garantie$/i,
-        familleContrat: /^famille contrat$/i,
-        typeMVT: /^type mvt$/i,
-        dateEffetMVT: /^date effet mvt$/i,
-        moisEffetMVT: /^mois effet mvt$/i,
-        prodBrute: /^prod brute$/i,
-        prodObjectifAE: /^prod pour objectif ae$/i,
-        prodCalculAE: /^prod pour calcul ae$/i
+        codeInter: /^code\s*inter$/i,
+        nomApporteur: /^nom\s*de\s*l'apporteur$/i,
+        numeroContrat: /^n°\s*de\s*contrat$/i,
+        numeroCouverture: /^n°\s*de\s*couverture$/i,
+        nomAssure: /^nom\s*de\s*l'assure$/i,
+        nomContrat: /^nom\s*contrat$/i,
+        nomGarantie: /^nom\s*garantie$/i,
+        familleContrat: /^famille\s*contrat$/i,
+        typeMVT: /^type\s*mvt$/i,
+        dateEffetMVT: /^date\s*effet\s*mvt$/i,
+        moisEffetMVT: /^mois\s*effet\s*mvt$/i,
+        prodBrute: /^prod\s*brute$/i,
+        prodObjectifAE: /^prod\s*pour\s*objectif\s*ae$/i,
+        prodCalculAE: /^prod\s*pour\s*calcul\s*ae$/i
     };
     for (let worksheet of worksheets) {
         let cabinetCourtier = { apporteur: '', contrats: [] };
@@ -65,7 +65,7 @@ exports.readExcelAVIVASURCO = async (file) => {
                 });
                 for (let index in indexesHeader) {
                     if (indexesHeader[index] === null) {
-                        errors.push(errorHandler.errorReadExcelAVIVA(index));
+                        errors.push(errorHandler.errorReadExcelAVIVASURCO(index));
                     }
                 }
             }
