@@ -70,7 +70,11 @@ exports.readExcelAVIVASURCO = async (file) => {
                 }
             }
             if (rowNumber > 1) {
-                const contrat = generals.createContratSimpleHeader(row, indexesHeader);
+                const {contrat, error} = generals.createContratSimpleHeader(row, indexesHeader);
+                for (let err of error) {
+                    errors.push(errorHandler.errorEmptyCell('AVIVA SURCO', err));
+                }
+
                 if (contrat.codeInter && contrat.codeInter.match(/Total.+/i)) {
                     cabinetCourtier.contrats.push(contrat);
                     allContrats.push(cabinetCourtier);

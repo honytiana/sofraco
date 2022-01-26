@@ -1,3 +1,8 @@
+exports.errorEmptyCell = (company, address) => {
+    const error = `${company} : la cellule ${address} est vide`;
+    return error;
+};
+
 exports.errorReadExcelAVIVA = (index) => {
     const indexesHeader = {
         reseau: 'RESEAU',

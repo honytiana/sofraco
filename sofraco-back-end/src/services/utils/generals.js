@@ -16,16 +16,23 @@ exports.setIndexHeaders = (cell, colNumber, arrReg, indexesHeader) => {
 
 exports.createContratSimpleHeader = (row, indexesHeader) => {
     let contrat = {};
+    let error = [];
     for (let ih in indexesHeader) {
         contrat[ih] = (indexesHeader[ih] !== null) && ((typeof row.getCell(indexesHeader[ih][0]).value === 'string') ?
             row.getCell(indexesHeader[ih][0]).value.trim() :
             row.getCell(indexesHeader[ih][0]).value);
+            if (indexesHeader[ih] !== null) {
+                if (row.getCell(indexesHeader[ih][0]).value === null || row.getCell(indexesHeader[ih][0]).value === '') {
+                    error.push(row.getCell(indexesHeader[ih][0]).address);
+                }
+            }
     }
-    return contrat;
+    return { contrat, error };
 }
 
 exports.createContratDoubleHeader = (row, indexesFirstHeader, indexesSecondHeader, indexesHeader) => {
     let contrat = {};
+    let error = [];
     for (let iF in indexesFirstHeader) {
         contrat[iF] = {};
     }
@@ -35,10 +42,15 @@ exports.createContratDoubleHeader = (row, indexesFirstHeader, indexesSecondHeade
                 contrat[i][s] = (indexesSecondHeader[s] !== null) && ((typeof row.getCell(indexesSecondHeader[s][0]).value === 'string') ?
                     row.getCell(indexesSecondHeader[s][0]).value.trim() :
                     row.getCell(indexesSecondHeader[s][0]).value);
+                    if (indexesSecondHeader[s] !== null) {
+                        if (row.getCell(indexesSecondHeader[s][0]).value === null || row.getCell(indexesSecondHeader[s][0]).value === '') {
+                            error.push(row.getCell(indexesSecondHeader[s][0]).address);
+                        }
+                    }
             }
         }
     }
-    return contrat;
+    return { contrat, error };
 }
 
 exports.regroupContratByCourtier = (allContrats, codeCourtier) => {

@@ -138,7 +138,10 @@ exports.readExcelCARDIF = async (file) => {
                     headers.secondHeaders = secondHeaders;
                 }
                 if (rowNumber > 2) {
-                    const contrat = generals.createContratDoubleHeader(row, indexesFirstHeader, indexesSecondHeader, indexesHeader);
+                    const {contrat, error} = generals.createContratDoubleHeader(row, indexesFirstHeader, indexesSecondHeader, indexesHeader);
+                    for (let err of error) {
+                        errors.push(errorHandler.errorEmptyCell('CARDIF', err));
+                    }
                     allContrats.push(contrat);
                 }
             })
