@@ -5,6 +5,8 @@ const path = require('path');
 const time = require('../utils/time');
 const excelFile = require('../utils/excelFile');
 const files = require('../utils/files');
+const generals = require('../utils/generals');
+const errorHandler = require('../utils/errorHandler');
 
 const { workerData, parentPort } = require('worker_threads');
 if (parentPort !== null) {
@@ -18,148 +20,119 @@ exports.readExcelGENERALI = async (file) => {
     const fileName = files.getFileNameWithoutExtension(file);
     let headers = [];
     let allContrats = [];
+    let errors = [];
     let ocr = { headers: null, allContratsPerCourtier: [], executionTime: 0 };
+    				
+    const arrReg = {
+        reference: /^Référence\s*du\s*relevé\s*de\s*commission$/i,
+        numeroReleve: /^Numéro\s*de\s*relevé$/i,
+        dateReleve: /^Date\s*du\s*relevé$/i,
+        codeRegroupementIntermediaire: /^Code\s*regroupement\s*intermédiaire$/i,
+        codeIntermediaire: /^Code\s*intermédiaire$/i,
+        codePortefeuille: /^Code\s*portefeuille$/i,
+        libellePortefeuille: /^Libellé\s*portefeuille$/i,
+        codePortefeuilleExterne: /^Code\s*portefeuille\s*externe$/i,
+        libelleFamilleCommerciale: /^Libellé\s*famille\s*commerciale$/i,
+        codeProduit: /^Code\s*produit$/i,
+        libelleProduit: /^Libellé\s*du\s*produit$/i,
+        natureOperation: /^Nature\s*de\s*l\s*opération$/i,
+        libelleTypePrime: /^Libellé\s*type\s*de\s*prime$/i,
+        numeroContratOunumeroConvention: /^Numéro\s*de\s*contrat\s*ou\s*numéro\s*de\s*convention$/i,
+        raisonSociale: /^Raison\s*sociale$/i,
+        numeroContratAffilie: /^Numéro\s*de\s*contrat\s*affilié$/i,
+        referenceExterne: /^Référence\s*externe$/i,
+        numeroContractant: /^Numéro\s*de\s*contractant$/i,
+        nomContractant: /^Nom\s*du\s*contractant$/i,
+        prenomContractant: /^Prénom\s*du\s*contractant$/i,
+        numeroAssure: /^Numéro\s*assuré$/i,
+        nomAssure: /^Nom\s*de\s*l\s*assuré$/i,
+        prenomAssure: /^Prénom\s*de\s*l\s*assuré$/i,
+        dateOperation: /^Date\s*de\s*l\s*opération$/i,
+        dateDebutPeriode: /^Date\s*de\s*début\s*de\s*période$/i,
+        dateFinPeriode: /^Date\s*de\s*fin\s*de\s*période$/i,
+        libelleGarantie: /^Libellé\s*garantie$/i,
+        natureSupport: /^Nature\s*du\s*support$/i,
+        codeISIN: /^Code\s*ISIN$/i,
+        libelleSupport: /^Libellé\s*du\s*support$/i,
+        montantCotisationTTC: /^Montant\s*de\s*la\s*cotisation\s*TTC$/i,
+        montantCotisationHTOuNetInvestiEnEpargne: /^Montant\s*cotisation\s*HT\s*ou\s*net\s*investi\s*en\s*épargne$/i,
+        assietteCasCommission: /^Assiette\s*du\s*cas\s*de\s*commission$/i,
+        tauxCommission: /^Taux\s*de\s*commission$/i,
+        typeMontant: /^Type\s*de\s*montant$/i,
+        natureCommission: /^Nature\s*de\s*commission$/i,
+        montantCommission: /^Montant\s*de\s*commission$/i,
+        deviseMontant: /^Devise\s*du\s*montant$/i,
+        qualificationCommission: /^Qualification\s*de\s*la\s*commission$/i,
+        conformiteAdministrative: /^Conformité\s*administrative$/i,
+        transfertPortefeuille: /^Transfert\s*de\s*portefeuille$/i,
+        codeOption: /^Code\s*option$/i,
+        complementInformations: /^Complément\s*d\s*informations$/i,
+    };
     worksheets.forEach((worksheet, index) => {
         if (index === 0) {
+            let indexesHeader = {
+                reference: null,
+                numeroReleve: null,
+                dateReleve: null,
+                codeRegroupementIntermediaire: null,
+                codeIntermediaire: null,
+                codePortefeuille: null,
+                libellePortefeuille: null,
+                codePortefeuilleExterne: null,
+                libelleFamilleCommerciale: null,
+                codeProduit: null,
+                libelleProduit: null,
+                natureOperation: null,
+                libelleTypePrime: null,
+                numeroContratOunumeroConvention: null,
+                raisonSociale: null,
+                numeroContratAffilie: null,
+                referenceExterne: null,
+                numeroContractant: null,
+                nomContractant: null,
+                prenomContractant: null,
+                numeroAssure: null,
+                nomAssure: null,
+                prenomAssure: null,
+                dateOperation: null,
+                dateDebutPeriode: null,
+                dateFinPeriode: null,
+                libelleGarantie: null,
+                natureSupport: null,
+                codeISIN: null,
+                libelleSupport: null,
+                montantCotisationTTC: null,
+                montantCotisationHTOuNetInvestiEnEpargne: null,
+                assietteCasCommission: null,
+                tauxCommission: null,
+                typeMontant: null,
+                natureCommission: null,
+                montantCommission: null,
+                deviseMontant: null,
+                qualificationCommission: null,
+                conformiteAdministrative: null,
+                transfertPortefeuille: null,
+                codeOption: null,
+                complementInformations: null
+            };
             worksheet.eachRow((row, rowNumber) => {
                 if (rowNumber === 1) {
                     row.eachCell((cell, colNumber) => {
                         const currentCellValue = (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value;
                         headers.push(currentCellValue);
+                        generals.setIndexHeaders(cell, colNumber, arrReg, indexesHeader);
                     });
+                    for (let index in indexesHeader) {
+                        if (indexesHeader[index] === null) {
+                            errors.push(errorHandler.errorReadExcelGENERALI(index));
+                        }
+                    }
                 }
                 if (rowNumber > 1) {
-                    const contrat = {
-                        reference: (typeof row.getCell('A').value === 'string') ?
-                            row.getCell('A').value.trim() :
-                            row.getCell('A').value,
-                        numeroReleve: (typeof row.getCell('B').value === 'string') ?
-                            row.getCell('B').value.trim() :
-                            row.getCell('B').value,
-                        dateReleve: (typeof row.getCell('C').value === 'string') ?
-                            row.getCell('C').value.trim() :
-                            row.getCell('C').value,
-                        codeRegroupementIntermediaire: (typeof row.getCell('D').value === 'string') ?
-                            row.getCell('D').value.trim() :
-                            row.getCell('D').value,
-                        codeIntermediaire: (typeof row.getCell('E').value === 'string') ?
-                            row.getCell('E').value.trim() :
-                            row.getCell('E').value,
-                        codePortefeuille: (typeof row.getCell('F').value === 'string') ?
-                            row.getCell('F').value.trim() :
-                            row.getCell('F').value,
-                        libellePortefeuille: (typeof row.getCell('G').value === 'string') ?
-                            row.getCell('G').value.trim() :
-                            row.getCell('G').value,
-                        codePortefeuilleExterne: (typeof row.getCell('H').value === 'string') ?
-                            row.getCell('H').value.trim() :
-                            row.getCell('H').value,
-                        libelleFamilleCommerciale: (typeof row.getCell('I').value === 'string') ?
-                            row.getCell('I').value.trim() :
-                            row.getCell('I').value,
-                        codeProduit: (typeof row.getCell('J').value === 'string') ?
-                            row.getCell('J').value.trim() :
-                            row.getCell('J').value,
-                        libelleProduit: (typeof row.getCell('K').value === 'string') ?
-                            row.getCell('K').value.trim() :
-                            row.getCell('K').value,
-                        natureOperation: (typeof row.getCell('L').value === 'string') ?
-                            row.getCell('L').value.trim() :
-                            row.getCell('L').value,
-                        libelleTypePrime: (typeof row.getCell('M').value === 'string') ?
-                            row.getCell('M').value.trim() :
-                            row.getCell('M').value,
-                        numeroContratOunumeroConvention: (typeof row.getCell('N').value === 'string') ?
-                            row.getCell('N').value.trim() :
-                            row.getCell('N').value,
-                        raisonSociale: (typeof row.getCell('O').value === 'string') ?
-                            row.getCell('O').value.trim() :
-                            row.getCell('O').value,
-                        numeroContratAffilie: (typeof row.getCell('P').value === 'string') ?
-                            row.getCell('P').value.trim() :
-                            row.getCell('P').value,
-                        referenceExterne: (typeof row.getCell('Q').value === 'string') ?
-                            row.getCell('Q').value.trim() :
-                            row.getCell('Q').value,
-                        numeroContractant: (typeof row.getCell('R').value === 'string') ?
-                            row.getCell('R').value.trim() :
-                            row.getCell('R').value,
-                        nomContractant: (typeof row.getCell('S').value === 'string') ?
-                            row.getCell('S').value.trim() :
-                            row.getCell('S').value,
-                        prenomContractant: (typeof row.getCell('T').value === 'string') ?
-                            row.getCell('T').value.trim() :
-                            row.getCell('T').value,
-                        numeroAssure: (typeof row.getCell('U').value === 'string') ?
-                            row.getCell('U').value.trim() :
-                            row.getCell('U').value,
-                        nomAssure: (typeof row.getCell('V').value === 'string') ?
-                            row.getCell('V').value.trim() :
-                            row.getCell('V').value,
-                        prenomAssure: (typeof row.getCell('W').value === 'string') ?
-                            row.getCell('W').value.trim() :
-                            row.getCell('W').value,
-                        dateOperation: (typeof row.getCell('X').value === 'string') ?
-                            row.getCell('X').value.trim() :
-                            row.getCell('X').value,
-                        dateDebutPeriode: (typeof row.getCell('Y').value === 'string') ?
-                            row.getCell('Y').value.trim() :
-                            row.getCell('Y').value,
-                        dateFinPeriode: (typeof row.getCell('Z').value === 'string') ?
-                            row.getCell('Z').value.trim() :
-                            row.getCell('Z').value,
-                        libelleGarantie: (typeof row.getCell('AA').value === 'string') ?
-                            row.getCell('AA').value.trim() :
-                            row.getCell('AA').value,
-                        natureSupport: (typeof row.getCell('AB').value === 'string') ?
-                            row.getCell('AB').value.trim() :
-                            row.getCell('AB').value,
-                        codeISIN: (typeof row.getCell('AC').value === 'string') ?
-                            row.getCell('AC').value.trim() :
-                            row.getCell('AC').value,
-                        libelleSupport: (typeof row.getCell('AD').value === 'string') ?
-                            row.getCell('AD').value.trim() :
-                            row.getCell('AD').value,
-                        montantCotisationTTC: (typeof row.getCell('AE').value === 'string') ?
-                            row.getCell('AE').value.trim() :
-                            row.getCell('AE').value,
-                        montantCotisationHTOuNetInvestiEnEpargne: (typeof row.getCell('AF').value === 'string') ?
-                            row.getCell('AF').value.trim() :
-                            row.getCell('AF').value,
-                        assietteCasCommission: (typeof row.getCell('AG').value === 'string') ?
-                            row.getCell('AG').value.trim() :
-                            row.getCell('AG').value,
-                        tauxCommission: (typeof row.getCell('AH').value === 'string') ?
-                            row.getCell('AH').value.trim() :
-                            row.getCell('AH').value,
-                        typeMontant: (typeof row.getCell('AI').value === 'string') ?
-                            row.getCell('AI').value.trim() :
-                            row.getCell('AI').value,
-                        natureCommission: (typeof row.getCell('AJ').value === 'string') ?
-                            row.getCell('AJ').value.trim() :
-                            row.getCell('AJ').value,
-                        montantCommission: (typeof row.getCell('AK').value === 'string') ?
-                            row.getCell('AK').value.trim() :
-                            row.getCell('AK').value,
-                        deviseMontant: (typeof row.getCell('AL').value === 'string') ?
-                            row.getCell('AL').value.trim() :
-                            row.getCell('AL').value,
-                        qualificationCommission: (typeof row.getCell('AM').value === 'string') ?
-                            row.getCell('AM').value.trim() :
-                            row.getCell('AM').value,
-                        conformiteAdministrative: (typeof row.getCell('AN').value === 'string') ?
-                            row.getCell('AN').value.trim() :
-                            row.getCell('AN').value,
-                        transfertPortefeuille: (typeof row.getCell('AO').value === 'string') ?
-                            row.getCell('AO').value.trim() :
-                            row.getCell('AO').value,
-                        codeOption: (typeof row.getCell('AP').value === 'string') ?
-                            row.getCell('AP').value.trim() :
-                            row.getCell('AP').value,
-                        complementInformations: (typeof row.getCell('AQ').value === 'string') ?
-                            row.getCell('AQ').value.trim() :
-                            row.getCell('AQ').value,
-                    };
+                    const {contrat, error} = generals.createContratSimpleHeader(row, indexesHeader);
+                    for (let err of error) {
+                        errors.push(errorHandler.errorEmptyCell('GENERALI', err));
+                    }
                     allContrats.push(contrat);
                 }
             });
@@ -169,7 +142,8 @@ exports.readExcelGENERALI = async (file) => {
     let allContratsPerCourtier = [];
     let courtiers = [];
     allContrats.forEach((element, index) => {
-        const courtier = { code: element.codePortefeuille.result };
+        const c = element.codePortefeuille.result ? element.codePortefeuille.result : element.codePortefeuille;
+        const courtier = { code: c };
         if (!courtiers.some(c => { return c.code === courtier.code })) {
             courtiers.push(courtier);
         }
@@ -180,14 +154,15 @@ exports.readExcelGENERALI = async (file) => {
             contrats: []
         };
         allContrats.forEach((element, index) => {
-            if (element.codePortefeuille.result === contratCourtier.courtier.code) {
+            const c = element.codePortefeuille.result ? element.codePortefeuille.result : element.codePortefeuille;
+            if (c === contratCourtier.courtier.code) {
                 contratCourtier.contrats.push(element);
             }
         });
         allContratsPerCourtier.push(contratCourtier);
     }
 
-    ocr = { headers, allContratsPerCourtier, executionTime: 0, executionTimeMS: 0 };
+    ocr = { headers, allContratsPerCourtier, errors, executionTime: 0, executionTimeMS: 0 };
     const excecutionStopTime = performance.now();
     const executionTimeMS = excecutionStopTime - excecutionStartTime;
     const executionTime = time.millisecondToTime(executionTimeMS);

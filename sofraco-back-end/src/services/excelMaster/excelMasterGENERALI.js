@@ -27,7 +27,7 @@ exports.createWorkSheetGENERALI = (workSheet, dataCourtierOCR) => {
     row1.font = font1;
     let cellNumber = 1;
     dataCourtierOCR.infosOCR.headers.forEach((header, index) => {
-        excelFile.setSimpleCell(workSheet, rowNumber, cellNumber, header, font1);
+        excelFile.setSimpleCell(workSheet, 1, cellNumber, header, font1);
         cellNumber++;
     });
 

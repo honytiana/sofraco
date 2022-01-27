@@ -353,10 +353,10 @@ class Upload extends Component {
             }
         }
         if (type === 'XLSX') {
-            if (extension.toUpperCase() !== 'XLSX' && extension.toUpperCase() !== 'XLS') {
+            if (extension.toUpperCase() !== 'XLSX' && extension.toUpperCase() !== 'XLS' && extension.toUpperCase() !== 'CSV') {
                 this.setState({
                     toast: true,
-                    messageToast: { header: 'WARNING', color: 'warning', message: 'Vous devez donner un fichier Excel' }
+                    messageToast: { header: 'WARNING', color: 'warning', message: 'Vous devez donner un fichier Excel ou CSV' }
                 });
                 setTimeout(() => {
                     this.setState({

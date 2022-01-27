@@ -86,8 +86,57 @@ exports.errorReadExcelSWISSLIFESURCO = (index) => {
         avanceComprisRepriseIncompressible: 'avance y compris reprise incompressbile'
     };
     		
+    const errorSwisslifeSurco = `SWISSLIFE SURCO : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorSwisslifeSurco;
+};
 
-
-    const errorAviva = `SWISSLIFE SURCO : La colonne ${indexesHeader[index]} n'est pas présente`;
-    return errorAviva;
+exports.errorReadExcelGENERALI = (index) => {
+    const indexesHeader = {
+        reference: 'Référence du relevé de commission',
+        numeroReleve: 'Numéro de relevé',
+        dateReleve: 'Date du relevé',
+        codeRegroupementIntermediaire: 'Code regroupement intermédiaire',
+        codeIntermediaire: 'Code intermédiaire',
+        codePortefeuille: 'Code portefeuille',
+        libellePortefeuille: 'Libellé portefeuille',
+        codePortefeuilleExterne: 'Code portefeuille externe',
+        libelleFamilleCommerciale: 'Libellé famille commerciale',
+        codeProduit: 'Code produit',
+        libelleProduit: 'Libellé du produit',
+        natureOperation: 'Nature de l opération',
+        libelleTypePrime: 'Libellé type de prime',
+        numeroContratOunumeroConvention: 'Numéro de contrat ou numéro de convention',
+        raisonSociale: 'Raison sociale',
+        numeroContratAffilie: 'Numéro de contrat affilié',
+        referenceExterne: 'Référence externe',
+        numeroContractant: 'Numéro de contractant',
+        nomContractant: 'Nom du contractant',
+        prenomContractant: 'Prénom du contractant',
+        numeroAssure: 'Numéro assuré',
+        nomAssure: 'Nom de l assuré',
+        prenomAssure: 'Prénom de l assuré',
+        dateOperation: 'Date de l opération',
+        dateDebutPeriode: 'Date de début de période',
+        dateFinPeriode: 'Date de fin de période',
+        libelleGarantie: 'Libellé garantie',
+        natureSupport: 'Nature du support',
+        codeISIN: 'Code ISIN',
+        libelleSupport: 'Libellé du support',
+        montantCotisationTTC: 'Montant de la cotisation TTC',
+        montantCotisationHTOuNetInvestiEnEpargne: 'Montant cotisation HT ou net investi en épargne',
+        assietteCasCommission: 'Assiette du cas de commission',
+        tauxCommission: 'Taux de commission',
+        typeMontant: 'Type de montant',
+        natureCommission: 'Nature de commission',
+        montantCommission: 'Montant de commission',
+        deviseMontant: 'Devise du montant',
+        qualificationCommission: 'Qualification de la commission',
+        conformiteAdministrative: 'Conformité administrative',
+        transfertPortefeuille: 'Transfert de portefeuille',
+        codeOption: 'Code option',
+        complementInformations: 'Complément d informations',
+    };
+    		
+    const errorGenerali = `GENERALI : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorGenerali;
 };

@@ -5,19 +5,23 @@ const XLSX = require('xlsx');
 const fileService = require('./files');
 
 exports.checkExcelFileAndGetWorksheets = async (file) => {
-    let filePath = file;
-    const fileName = fileService.getFileNameWithoutExtension(filePath);
-    const extension = fileService.getFileExtension(filePath);
-    if (extension.toUpperCase() === 'XLS') {
-        let originalFile = XLSX.readFile(filePath);
-        filePath = path.join(__dirname, '..', '..', '..', 'documents', 'uploaded', `${fileName}.xlsx`);
-        XLSX.writeFile(originalFile, filePath);
+    try {
+        let filePath = file;
+        const fileName = fileService.getFileNameWithoutExtension(filePath);
+        const extension = fileService.getFileExtension(filePath);
+        if (extension.toUpperCase() === 'XLS' || extension.toUpperCase() === 'CSV') {
+            let originalFile = XLSX.readFile(filePath);
+            filePath = path.join(__dirname, '..', '..', '..', 'documents', 'uploaded', `${fileName}.xlsx`);
+            XLSX.writeFile(originalFile, filePath);
+        }
+        const workbook = new ExcelJS.Workbook();
+        const finalFile = fs.readFileSync(filePath);
+        await workbook.xlsx.load(finalFile);
+        const worksheets = workbook.worksheets;
+        return worksheets;
+    } catch (err) {
+        throw err;
     }
-    const workbook = new ExcelJS.Workbook();
-    const finalFile = fs.readFileSync(filePath);
-    await workbook.xlsx.load(finalFile);
-    const worksheets = workbook.worksheets;
-    return worksheets;
 };
 
 exports.borderType = {
@@ -40,7 +44,7 @@ exports.setStylizedCell = (workSheet, rowNumber, cell, value, border, borderType
     row.getCell(cell).font = font;
     row.getCell(cell).value = value;
     row.getCell(cell).numFmt = numFmt;
-    row.getCell(cell).alignment = { horizontal: alignmentHorizontal, vertical: alignmentVertical, wrapText : wrapText };
+    row.getCell(cell).alignment = { horizontal: alignmentHorizontal, vertical: alignmentVertical, wrapText: wrapText };
     if (border) {
         row.getCell(cell).border = borderType;
     }
