@@ -1,6 +1,8 @@
 const { performance } = require('perf_hooks');
 const time = require('../utils/time');
 const excelFile = require('../utils/excelFile');
+const generals = require('../utils/generals');
+const errorHandler = require('../utils/errorHandler');
 
 const { workerData, parentPort } = require('worker_threads');
 if (parentPort !== null) {
@@ -13,37 +15,54 @@ exports.readExcelHODEVA = async (file) => {
     const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     let headers = [];
     let allContrats = [];
+    let errors = [];
     let ocr = { headers: [], allContratsPerCourtier: [], executionTime: 0 };
+    const arrReg = {
+        adhesion: /^Adhé-sion$/i,
+        nom: /^NOM$/i,
+        prenom: /^PRENOM$/i,
+        dateEffet: /^Date\s*d'effet$/i,
+        montantPrimeHT: /^Montant\s*Prime\s*HT$/i,
+        tauxCommissionnement: /^Taux\s*de\s*commissionnement$/i,
+        montantCommissionnement: /^Montant\s*du\s*commissionnement$/i,
+    };
     worksheets.forEach((worksheet, index) => {
         if (worksheet.name === 'Feuille 1' || index === 0) {
+            let indexesHeader = {
+                adhesion: null,
+                nom: null,
+                prenom: null,
+                dateEffet: null,
+                montantPrimeHT: null,
+                tauxCommissionnement: null,
+                montantCommissionnement: null,
+            };
+
+            worksheet.eachRow((row, rowNumber) => {
+                if (headers.length === 0) {
+                    if (typeof row.getCell('A').value === 'string' && row.getCell('A').value.match(/^Adhé-sion$/i)) {
+                        row.eachCell((cell, colNumber) => {
+                            const currentCellValue = (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value;
+                            headers.push(currentCellValue);
+                            generals.setIndexHeaders(cell, colNumber, arrReg, indexesHeader);
+                        });
+                        for (let index in indexesHeader) {
+                            if (indexesHeader[index] === null) {
+                                errors.push(errorHandler.errorReadExcelHODEVA(index));
+                            }
+                        }
+                    }
+                }
+            });
             worksheet.eachRow((row, rowNumber) => {
                 if (rowNumber > 9) {
-                    const contrat = {
-                        adhesion: (typeof row.getCell('A').value === 'string') ?
-                            row.getCell('A').value.trim() :
-                            row.getCell('A').value,
-                        nom: (typeof row.getCell('B').value === 'string') ?
-                            row.getCell('B').value.trim() :
-                            row.getCell('B').value,
-                        prenom: (typeof row.getCell('C').value === 'string') ?
-                            row.getCell('C').value.trim() :
-                            row.getCell('C').value,
-                        dateEffet: (typeof row.getCell('D').value === 'string') ?
-                            row.getCell('D').value.trim() :
-                            row.getCell('D').value,
-                        montantPrimeHT: (typeof row.getCell('E').value === 'string') ?
-                            row.getCell('E').value.trim() :
-                            row.getCell('E').value,
-                        tauxCommissionnement: (typeof row.getCell('F').value === 'string') ?
-                            row.getCell('F').value.trim() :
-                            row.getCell('F').value,
-                        montantCommissionnement: (typeof row.getCell('G').value === 'string') ?
-                            row.getCell('G').value.trim() :
-                            row.getCell('G').value
-                    };
+                    const { contrat, error } = generals.createContratSimpleHeader(row, indexesHeader);
+                    for (let err of error) {
+                        errors.push(errorHandler.errorEmptyCell('HODEVA', err));
+                    }
                     allContrats.push(contrat);
                 }
-            })
+            });
         }
     })
 
@@ -71,7 +90,7 @@ exports.readExcelHODEVA = async (file) => {
         }
     })
 
-    ocr = { headers, allContratsPerCourtier, executionTime: 0, executionTimeMS: 0 };
+    ocr = { headers, allContratsPerCourtier, errors, executionTime: 0, executionTimeMS: 0 };
     const excecutionStopTime = performance.now();
     const executionTimeMS = excecutionStopTime - excecutionStartTime;
     const executionTime = time.millisecondToTime(executionTimeMS);

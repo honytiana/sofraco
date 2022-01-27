@@ -80,7 +80,7 @@ exports.errorReadExcelCEGEMA = (index) => {
         commission: 'Commission',
         modeMotif: 'Mode *[/] *Motif',
     };
-    		
+
     const errorCegema = `CEGEMA : La colonne ${indexesHeader[index]} n'est pas présente`;
     return errorCegema;
 };
@@ -131,9 +131,24 @@ exports.errorReadExcelGENERALI = (index) => {
         codeOption: 'Code option',
         complementInformations: 'Complément d informations',
     };
-    		
+
     const errorGenerali = `GENERALI : La colonne ${indexesHeader[index]} n'est pas présente`;
     return errorGenerali;
+};
+
+exports.errorReadExcelHODEVA = (index) => {
+    const indexesHeader = {
+        adhesion: 'Adhé-sion',
+        nom: 'NOM',
+        prenom: 'PRENOM',
+        dateEffet: 'Date d\'effet',
+        montantPrimeHT: 'Montant Prime HT',
+        tauxCommissionnement: 'Taux de commissionnement',
+        montantCommissionnement: 'Montant du commissionnement',
+    };
+
+    const errorHodeva = `HODEVA : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorHodeva;
 };
 
 exports.errorReadExcelSWISSLIFESURCO = (index) => {
@@ -153,7 +168,7 @@ exports.errorReadExcelSWISSLIFESURCO = (index) => {
         incompressible: 'incompressible',
         avanceComprisRepriseIncompressible: 'avance y compris reprise incompressbile'
     };
-    		
+
     const errorSwisslifeSurco = `SWISSLIFE SURCO : La colonne ${indexesHeader[index]} n'est pas présente`;
     return errorSwisslifeSurco;
 };

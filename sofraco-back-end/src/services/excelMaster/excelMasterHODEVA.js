@@ -50,19 +50,20 @@ exports.createWorkSheetHODEVA = (workSheet, dataCourtierOCR) => {
         excelFile.setStylizedCell(workSheet, rowNumber, 'C', datas.prenom, true, border, font3);
         excelFile.setStylizedCell(workSheet, rowNumber, 'D', (datas.dateEffet) ? new Date(datas.dateEffet) : '', true, border, font3, 'dd/mm/yyyy');
         excelFile.setStylizedCell(workSheet, rowNumber, 'E', datas.montantPrimeHT, true, border, font3, '#,##0.00"€";\-#,##0.00"€"');
-        excelFile.setStylizedCell(workSheet, rowNumber, 'F', datas.tauxCommissionnement, true, border, font3, '#,##0.00"€";\-#,##0.00"€"');
-        excelFile.setStylizedCell(workSheet, rowNumber, 'G', datas.montantCommissionnement.result, true, border, font3, '');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'F', datas.tauxCommissionnement, true, border, font3, '');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'G', datas.montantCommissionnement.result, true, border, font3, '#,##0.00"€";\-#,##0.00"€"');
         rowNumber++;
     }
-    excelFile.setStylizedCell(workSheet, rowNumber, 'G', dataCourtierOCR.infosOCR.totalMontant, false, {}, font2, '#,##0.00"€";\-#,##0.00"€"');
-
-    for (let i = 1; i < 1; i++) {
-        workSheet.getRow(rowNumber).getCell(i).fill = {
-            type: 'pattern',
-            pattern: 'solid',
-            fgColor: { argb: 'cc0000' }
-        };
+    excelFile.setSimpleCell(workSheet, rowNumber, 'F', 'TOTAL', font2);
+    let result = 0;
+    for (let i = debut; i <= rowNumber - 1; i++) {
+        result += workSheet.getRow(i).getCell('G').value;
     }
+    const value = {
+        formula: `SUM(G${debut}:G${rowNumber - 1})`,
+        result: result
+    };
+    excelFile.setStylizedCell(workSheet, rowNumber, 'G', value, false, {}, font2, '#,##0.00"€";\-#,##0.00"€"', 'cc0000');
 }
 
 
