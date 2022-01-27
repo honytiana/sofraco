@@ -68,26 +68,21 @@ exports.errorReadExcelCARDIFSH = (index) => {
     return errorCardif;
 };
 
-exports.errorReadExcelSWISSLIFESURCO = (index) => {
+exports.errorReadExcelCEGEMA = (index) => {
     const indexesHeader = {
-        apporteurVente: 'Apporteur de la vente',
-        dateComptabVente: 'Date comptab. de la vente',
-        numeroPolice: 'N° de police',
-        codeProduit: 'Code produit',
-        nomClient: 'Nom du Client',
-        cotisationPonderee: 'Cotisation pondérée',
-        montantPP: 'Montant PP',
-        dontParUCsurPP: 'Dont part UC sur PP',
-        montantPU: 'Montant PU',
-        dontParUCsurPU: 'Dont part UC sur PU',
-        tauxChargement: 'Taux de chargement',
-        avanceSurco: 'Avance surco 20%',
-        incompressible: 'incompressible',
-        avanceComprisRepriseIncompressible: 'avance y compris reprise incompressbile'
+        courtier: 'Courtier',
+        nomAdherent: 'Nom *adhérent',
+        numAdhesion: 'N° *adhésion',
+        garantie: 'Garantie',
+        effetAu: 'Effet *au',
+        cotisHT: 'Cotis. *HT',
+        taux: 'Taux',
+        commission: 'Commission',
+        modeMotif: 'Mode *[/] *Motif',
     };
     		
-    const errorSwisslifeSurco = `SWISSLIFE SURCO : La colonne ${indexesHeader[index]} n'est pas présente`;
-    return errorSwisslifeSurco;
+    const errorCegema = `CEGEMA : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorCegema;
 };
 
 exports.errorReadExcelGENERALI = (index) => {
@@ -139,4 +134,26 @@ exports.errorReadExcelGENERALI = (index) => {
     		
     const errorGenerali = `GENERALI : La colonne ${indexesHeader[index]} n'est pas présente`;
     return errorGenerali;
+};
+
+exports.errorReadExcelSWISSLIFESURCO = (index) => {
+    const indexesHeader = {
+        apporteurVente: 'Apporteur de la vente',
+        dateComptabVente: 'Date comptab. de la vente',
+        numeroPolice: 'N° de police',
+        codeProduit: 'Code produit',
+        nomClient: 'Nom du Client',
+        cotisationPonderee: 'Cotisation pondérée',
+        montantPP: 'Montant PP',
+        dontParUCsurPP: 'Dont part UC sur PP',
+        montantPU: 'Montant PU',
+        dontParUCsurPU: 'Dont part UC sur PU',
+        tauxChargement: 'Taux de chargement',
+        avanceSurco: 'Avance surco 20%',
+        incompressible: 'incompressible',
+        avanceComprisRepriseIncompressible: 'avance y compris reprise incompressbile'
+    };
+    		
+    const errorSwisslifeSurco = `SWISSLIFE SURCO : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorSwisslifeSurco;
 };
