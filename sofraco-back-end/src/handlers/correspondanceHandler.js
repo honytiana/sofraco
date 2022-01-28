@@ -5,13 +5,13 @@ class CorrespondanceHandler {
 
     constructor() { }
 
-    createCorrespondance(data) {
+    async createCorrespondance(data) {
         let correspondance = new Correspondance();
         correspondance.courtier = data.courtier;
         correspondance.companies = data.companies;
         correspondance.role_courtier = data.role_courtier;
         correspondance.is_enabled = true;
-        correspondance.save();
+        await correspondance.save();
         return correspondance;
     }
 

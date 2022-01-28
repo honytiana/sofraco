@@ -7,10 +7,9 @@ const courtierHandler = require('../handlers/courtierHandler');
 const correspondanceService = require('../services/correspondances/correspondances');
 
 exports.createCorrespondance = async (req, res) => {
-    const data = req.body;
-    const authorization = req.headers.authorization;
-    const correspondances = await correspondanceService.readExcelTableauCorrespondance(req.params.role);
     try {
+        const correspondances = await correspondanceService.readExcelTableauCorrespondance(req.params.role);
+        let i = 0;
         for (let correspondance of correspondances) {
             const corr = await correspondanceHandler.getCorrespondanceByCourtier(correspondance.courtier);
             if (corr) {
@@ -20,6 +19,7 @@ exports.createCorrespondance = async (req, res) => {
             } else {
                 const c = await correspondanceHandler.createCorrespondance(correspondance);
             }
+            i++;
         }
         const corr = await correspondanceHandler.getCorrespondances();
         for (let c of corr) {

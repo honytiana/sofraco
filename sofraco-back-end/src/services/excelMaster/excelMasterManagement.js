@@ -197,6 +197,11 @@ const generateExcelMaster = async (ocrInfos) => {
                     datas.companyName = 'CARDIF';
                     datas.ocr.push(ocr);
                 }
+                if (ocr.companyGlobalName === 'CEGEMA') {
+                    datas.companyGlobalName = 'CEGEMA';
+                    datas.companyName = 'CEGEMA';
+                    datas.ocr.push(ocr);
+                }
             }
             for (let d of datas.ocr) {
                 for (let ocr of ocrPerCourtier.infos) {
