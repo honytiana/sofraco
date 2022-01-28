@@ -190,27 +190,14 @@ const generateExcelMaster = async (ocrInfos) => {
             }
             const courtier = cr !== null ? cr.cabinet.replace(/[/]/g, '_') : `cabMet${Date.now()}`;
             excelMaster.code_courtier = courtier;
-            let datas = { companyName: null, ocr: [] };
+            let datas = [];
             for (let ocr of ocrPerCourtier.infos) {
-                if (ocr.companyGlobalName === 'CARDIF' && ocr.particular) {
-                    datas.companyGlobalName = 'CARDIF';
-                    datas.companyName = 'CARDIF';
-                    datas.ocr.push(ocr);
-                }
-                if (ocr.companyGlobalName === 'CEGEMA') {
-                    datas.companyGlobalName = 'CEGEMA';
-                    datas.companyName = 'CEGEMA';
-                    datas.ocr.push(ocr);
-                }
+                let d = { companyName: null, companyName: null, ocr: [] };
+                editDataOCR(ocr, datas, d, 'CARDIF');
+                editDataOCR(ocr, datas, d, 'CEGEMA');
             }
-            for (let d of datas.ocr) {
-                for (let ocr of ocrPerCourtier.infos) {
-                    if (d === ocr) {
-                        ocrPerCourtier.infos.splice(ocrPerCourtier.infos.indexOf(ocr), 1);
-                    }
-                }
-            }
-            ocrPerCourtier.infos = [...ocrPerCourtier.infos, datas];
+            removeDoublonsOcr(datas, ocrPerCourtier);
+            ocrPerCourtier.infos = [...ocrPerCourtier.infos, ...datas];
             workbook = new ExcelJS.Workbook();
             recapWorkSheet = workbook.addWorksheet('RECAP');
             let month = new Date().getMonth();
@@ -258,6 +245,43 @@ const generateExcelMaster = async (ocrInfos) => {
 
     } catch (err) {
         throw err;
+    }
+};
+
+const editDataOCR = (ocr, datas, d, companyName) => {
+    if (ocr.companyGlobalName === companyName) {
+        if (datas.length > 0) {
+            for (let data of datas) {
+                if (data.companyName === companyName) {
+                    data.ocr.push(ocr);
+                    break;
+                } else {
+                    d.companyGlobalName = companyName;
+                    d.companyName = companyName;
+                    d.ocr.push(ocr);
+                    datas.push(d);
+                    break;
+                }
+            }
+        } else {
+            d.companyGlobalName = companyName;
+            d.companyName = companyName;
+            d.ocr.push(ocr);
+            datas.push(d);
+        }
+    }
+
+};
+
+const removeDoublonsOcr = (datas, ocrPerCourtier) => {
+    for (let data of datas) {
+        for (let d of data.ocr) {
+            for (let ocr of ocrPerCourtier.infos) {
+                if (d === ocr) {
+                    ocrPerCourtier.infos.splice(ocrPerCourtier.infos.indexOf(ocr), 1);
+                }
+            }
+        }
     }
 };
 
