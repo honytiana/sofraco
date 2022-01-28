@@ -59,9 +59,9 @@ exports.readExcelCEGEMA = async (file) => {
                 }
                 if (rowNumber > rowNumberHeader) {
                     const {contrat, error} = generals.createContratSimpleHeader(row, indexesHeader);
-                    for (let err of error) {
-                        errors.push(errorHandler.errorEmptyCell('CEGEMA', err));
-                    }
+                    // for (let err of error) {
+                    //     errors.push(errorHandler.errorEmptyCell('CEGEMA', err));
+                    // }
                     allContrats.push(contrat);
                 }
             })

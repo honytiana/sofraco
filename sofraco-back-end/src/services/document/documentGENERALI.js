@@ -130,9 +130,9 @@ exports.readExcelGENERALI = async (file) => {
                 }
                 if (rowNumber > 1) {
                     const {contrat, error} = generals.createContratSimpleHeader(row, indexesHeader);
-                    for (let err of error) {
-                        errors.push(errorHandler.errorEmptyCell('GENERALI', err));
-                    }
+                    // for (let err of error) {
+                    //     errors.push(errorHandler.errorEmptyCell('GENERALI', err));
+                    // }
                     allContrats.push(contrat);
                 }
             });

@@ -57,9 +57,9 @@ exports.readExcelHODEVA = async (file) => {
             worksheet.eachRow((row, rowNumber) => {
                 if (rowNumber > 9) {
                     const { contrat, error } = generals.createContratSimpleHeader(row, indexesHeader);
-                    for (let err of error) {
-                        errors.push(errorHandler.errorEmptyCell('HODEVA', err));
-                    }
+                    // for (let err of error) {
+                    //     errors.push(errorHandler.errorEmptyCell('HODEVA', err));
+                    // }
                     allContrats.push(contrat);
                 }
             });
