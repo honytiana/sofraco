@@ -53,7 +53,7 @@ exports.readExcelCEGEMA = async (file) => {
                     });
                     for (let index in indexesHeader) {
                         if (indexesHeader[index] === null) {
-                            errors.push(errorHandler.errorReadExcelC(index));
+                            errors.push(errorHandler.errorReadExcelCEGEMA(index));
                         }
                     }
                 }
