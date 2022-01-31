@@ -151,6 +151,31 @@ exports.errorReadExcelHODEVA = (index) => {
     return errorHodeva;
 };
 
+exports.errorReadExcelLOURMEL = (index) => {
+    const indexesHeader = {
+        courtier: 'A CODE COURTIER',
+        b: 'B',
+        c: 'C',
+        d: 'D',
+        genre: 'E GENRE',
+        nom: 'F NOM',
+        prenom: 'G PRENOM',
+        nomDeNaissance: 'H NOM DE NAISSANCE',
+        codePostal: 'I CODE POSTALE',
+        ville: 'J VILLE',
+        dateEffet: 'K DATE EFFET',
+        montantCotisation: 'L MONTANT DE LA COTISATION',
+        m: 'M',
+        dateDebut: 'N DATE DEBUT',
+        dateFin: 'O DATE FIN',
+        tauxCommission: 'P TAUX DE COMMISSION',
+        montantCommission: 'Q MONTANT DE LA COMMISSION',
+    };
+
+    const errorHodeva = `LOURMEL : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorHodeva;
+};
+
 exports.errorReadExcelSWISSLIFESURCO = (index) => {
     const indexesHeader = {
         apporteurVente: 'Apporteur de la vente',
