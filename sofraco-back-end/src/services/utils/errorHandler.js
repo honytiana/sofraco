@@ -176,6 +176,76 @@ exports.errorReadExcelLOURMEL = (index) => {
     return errorHodeva;
 };
 
+exports.errorReadExcelMIEAXIOM = (index) => {
+    const indexesHeader = {
+        dateComptable: 'DATE_COMPTABLE',
+        numAdherent: 'NUM_ADHERENT',
+        codeCourtier: 'CODE_COURTIER',
+        raisonSocialeApporteur: 'RAISON_SOCIALE_APPORTEUR',
+        nom: 'NOM',
+        prenom: 'PRENOM',
+        tel: 'TEL',
+        mail: 'MAIL',
+        codePostal: 'CODE_POSTAL',
+        ville: 'VILLE',
+        dateEffetContrat: 'DATE_EFFET_CONTRAT',
+        dateFinContrat: 'DATE_FIN_CONTRAT',
+        codeProduit: 'CODE_PRODUIT',
+        libelleProduit: 'LIBELLE_PRODUIT',
+        mtCommission: 'MT_COMMISSION',
+        totalEncaisse: 'TOTAL_ENCAISSE',
+        assieteSanteHTEncaisse: 'ASSIETTE_SANTE_HT_ENCAISSE',
+        taxesEncaisses: 'TAXES_ENCAISSÉS',
+        obsActionMutac: 'OBS ACTIOM MUTAC',
+        spheria: 'SPHERIA',
+        cotisationARepartir: 'Cotisation à répartir',
+        courtier: 'COURTIER',
+        fondateur: 'FONDATEUR',
+        pavillon: 'PAVILLON',
+        sofraco: 'SOFRACO',
+        sofracoExpertises: 'SOFRACO EXPERTISES',
+        resteAVerser: 'Reste à verser',
+    };
+
+    const errorHodeva = `MIEAXIOM : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorHodeva;
+};
+
+
+exports.errorReadExcelMIEAV1 = (index) => {
+    const indexesHeader = {
+        dateComptable: 'DATE_COMPTABLE',
+        codeCourtier: 'CODE_COURTIER',
+        raisonSocialeApporteur: 'RAISON_SOCIALE_APPORTEUR',
+        numAdherent: 'NUM_ADHERENT',
+        nom: 'NOM',
+        prenom: 'PRENOM',
+        tel: 'TEL',
+        mail: 'MAIL',
+        codePostal: 'CODE_POSTAL',
+        ville: 'VILLE',
+        dateEffetContrat: 'DATE_EFFET_CONTRAT',
+        dateFinContrat: 'DATE_FIN_CONTRAT',
+        codeProduit: 'CODE_PRODUIT',
+        libelleProduit: 'LIBELLE_PRODUIT',
+        mtCommission: 'MT_COMMISSION',
+        totalEncaisse: 'TOTAL_ENCAISSE',
+        assieteSanteHTEncaisse: 'ASSIETTE_SANTE_HT_ENCAISSE',
+        trfObs: 'TRF_OBS',
+        trfMat: 'TRF_MAT',
+        taxesEncaisses: 'TAXES_ENCAISSÉS',
+        courtier: 'COURTIER',
+        fondateur: 'FONDATEUR',
+        pavillon: 'PAVILLON',
+        sofraco: 'SOFRACO',
+        sofracoExpertises: 'SOFRACO EXPERTISES',
+        budget: 'BUDGET',
+    };
+
+    const errorHodeva = `MIEV1 : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorHodeva;
+};
+
 exports.errorReadExcelSWISSLIFESURCO = (index) => {
     const indexesHeader = {
         apporteurVente: 'Apporteur de la vente',
