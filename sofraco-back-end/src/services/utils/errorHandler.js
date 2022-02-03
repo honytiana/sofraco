@@ -211,7 +211,6 @@ exports.errorReadExcelMIEAXIOM = (index) => {
     return errorHodeva;
 };
 
-
 exports.errorReadExcelMIEAV1 = (index) => {
     const indexesHeader = {
         dateComptable: 'DATE_COMPTABLE',
