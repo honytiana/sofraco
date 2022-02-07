@@ -8,7 +8,9 @@ import {
     CToast,
     CToastHeader,
     CToastBody,
-    CSelect
+    CSelect,
+    CListGroup,
+    CListGroupItem
 } from '@coreui/react';
 import axios from 'axios';
 
@@ -69,24 +71,30 @@ class Envoi extends Component {
                         {
                             key: 'cabinet',
                             label: 'Cabinet',
-                            _style: { width: '30%' },
+                            _style: { width: '20%' },
                             _classes: ['text-center']
                         },
                         {
                             key: 'firstName',
                             label: 'Prénom',
-                            _style: { width: '20%' },
+                            _style: { width: '15%' },
                             _classes: ['text-center']
                         },
                         {
                             key: 'lastName',
                             label: 'Nom',
-                            _style: { width: '20%' },
+                            _style: { width: '15%' },
                             _classes: ['text-center']
                         },
                         {
                             key: 'email',
                             label: 'Email',
+                            _style: { width: '20%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'emailCopie',
+                            label: 'Autres destinataires',
                             _style: { width: '20%' },
                             _classes: ['text-center']
                         }
@@ -123,6 +131,7 @@ class Envoi extends Component {
                         courtier: element._id,
                         cabinet: element.cabinet,
                         email: element.email,
+                        emailCopie: element.emailCopie,
                         firstName: element.firstName,
                         lastName: element.lastName,
                         checked: false
@@ -206,6 +215,7 @@ class Envoi extends Component {
                     const options = {
                         courtier: courtier.courtier,
                         email: courtier.email,
+                        emailCopie: courtier.emailCopie,
                         firstName: courtier.firstName,
                         lastName: courtier.lastName,
                         month: this.state.month,
@@ -341,6 +351,18 @@ class Envoi extends Component {
                                         <CInputCheckbox type="checkbox" checked={item.checked} id={`courtier${index}`} key="" className="sofraco-checkbox" onChange={(e) => {
                                             this.onCheckHandler(e, item, index)
                                         }} />
+                                    </td>
+                                )
+                            },
+                        'emailCopie':
+                            (item, index) => {
+                                return (
+                                    <td className="text-center" >
+                                        <CListGroup>
+                                            {item.emailCopie.map(ec => {
+                                                return <CListGroupItem href="#" key={`${ec}-${index}`}>{ec}</CListGroupItem>
+                                            })}
+                                        </CListGroup>
                                     </td>
                                 )
                             }

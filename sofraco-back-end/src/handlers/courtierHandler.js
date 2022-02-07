@@ -11,6 +11,7 @@ class CourtierHandler {
         courtier.firstName = data.firstName;
         courtier.cabinet = data.cabinet;
         courtier.email = data.email;
+        courtier.emailCopie = data.emailCopie;
         courtier.phone = data.phone;
         courtier.status = data.status;
         courtier.role = data.role;
@@ -57,6 +58,19 @@ class CourtierHandler {
 
     updateAllCourtier() {
         return Courtier.updateMany({ is_enabled: 'TRUE' }, { $set: { is_enabled: true } });
+    }
+
+    addEmailCopieCourtier(courtier, email) {
+        return Courtier.findOneAndUpdate(
+            {
+                _id: courtier
+            },
+            {
+                $push: {
+                    emailCopie: email
+                }
+            }
+        )
     }
 
     deleteCourtier(id) {

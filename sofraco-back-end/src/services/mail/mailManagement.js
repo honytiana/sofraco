@@ -22,11 +22,11 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-exports.sendMail = async (emailDestination, data, courtier, year, month) => {
+exports.sendMail = async (emailDestination, emailCopiesDestination, data, courtier, year, month) => {
     try {
         if (emailDestination !== '') {
             const excelMasters = await excelMasterHandler.getExcelMastersCourtierByYearMonth(courtier, year, month, 'zip');
-            if (excelMasters.length > 0) {
+            // if (excelMasters.length > 0) {
                 ejs.renderFile(path.join(__dirname, '..', '..', 'views', 'mail.ejs'), { data: data }, async (err, str) => {
                     if (err) {
                         console.log(err);
@@ -43,6 +43,7 @@ exports.sendMail = async (emailDestination, data, courtier, year, month) => {
                         const mailOptions = {
                             from: config.mailSenderInfomaniak,
                             to: emailDestination,
+                            cc: emailCopiesDestination,
                             subject: `VOS COMMISSIONS DU MOIS`,
                             html: str,
                             bcc: config.mailSenderInfomaniak,
@@ -60,7 +61,7 @@ exports.sendMail = async (emailDestination, data, courtier, year, month) => {
                         });
                     }
                 });
-            }
+            // }
         }
     } catch (err) {
         throw err;

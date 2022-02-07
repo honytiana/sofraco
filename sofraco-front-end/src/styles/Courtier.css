@@ -22,3 +22,12 @@
 .sofraco-input {
     width: 400px !important;
 }
+
+.sofraco-content-courtier {
+    display: flex;
+}
+
+.sofraco-form-courtier, .sofraco-email-copie {
+    display: inline-block;
+    width: 50%;
+}

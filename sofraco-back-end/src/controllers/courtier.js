@@ -99,6 +99,16 @@ exports.updateAllCourtier = async (req, res) => {
     }
 };
 
+exports.addEmailCopieCourtier = async (req, res) => {
+    console.log('Add email copie courtier');
+    try {
+        const courtier = await courtierHandler.addEmailCopieCourtier(req.params.courtier, req.body.emailCopie);
+        res.status(200).json(courtier);
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+};
+
 exports.deleteCourtier = async (req, res) => {
     console.log('Delete courtier');
     try {

@@ -12,11 +12,12 @@ exports.sendMail = async (req, res) => {
     console.log('Send email');
     try {
         const emailDestination = req.body.email;
+        const emailCopiesDestination = req.body.emailCopie;
         const data = {
             firstName: req.body.firstName,
             lastName: req.body.lastName
         }
-        const info = await mailManagement.sendMail(emailDestination, data, req.body.courtier, req.body.year, req.body.month);
+        const info = await mailManagement.sendMail(emailDestination, emailCopiesDestination, data, req.body.courtier, req.body.year, req.body.month);
         res.status(200).send();
     } catch (err) {
         throw err;
