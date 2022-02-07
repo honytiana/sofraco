@@ -245,6 +245,36 @@ exports.errorReadExcelMIEAV1 = (index) => {
     return errorHodeva;
 };
 
+exports.errorReadExcelMILTIS = (index) => {
+    const indexesHeader = {
+        codeAdherent: 'Code adhérent',
+        nomAdherent: 'Nom adhérent',
+        typeAdherent: 'Type adhérent',
+        garantie: 'Garantie',
+        periodeDebut: 'Période début',
+        periodeFin: 'Période fin',
+        periodicite: 'Périodicité',
+        typeCommission: 'Type commission',
+        primeHT: 'Prime HT',
+        taux: 'Taux',
+        commission: 'Commission',
+        dateDeCalcul: 'Date de calcul',
+        codePostal: 'Code postal',
+        ville: 'Ville',
+        raisonSociale: 'Raison sociale',
+        codeMiltis: 'Code Miltis',
+        courtier: 'COURTIER',
+        fondateur: 'FONDATEUR',
+        pavillon: 'PAVILLON',
+        sofraco: 'SOFRACO',
+        sofracoExpertises: 'SOFRACO EXPERTISES',
+        budget: 'BUDGET'
+    };
+
+    const errorSwisslifeSurco = `MILTIS : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorSwisslifeSurco;
+};
+
 exports.errorReadExcelSWISSLIFESURCO = (index) => {
     const indexesHeader = {
         apporteurVente: 'Apporteur de la vente',

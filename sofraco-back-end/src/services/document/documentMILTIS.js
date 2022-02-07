@@ -2,6 +2,7 @@ const { performance } = require('perf_hooks');
 const time = require('../utils/time');
 const generals = require('../utils/generals');
 const excelFile = require('../utils/excelFile');
+const errorHandler = require('../utils/errorHandler');
 
 const { workerData, parentPort } = require('worker_threads');
 if (parentPort !== null) {
@@ -14,89 +15,81 @@ exports.readExcelMILTIS = async (file) => {
     const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     let headers = [];
     let allContrats = [];
+    let errors = [];
     let ocr = { headers: [], allContratsPerCourtier: [], executionTime: 0 };
+    const arrReg = {
+        codeAdherent: /^Code\s*adhérent$/i,
+        nomAdherent: /^Nom\s*adhérent$/i,
+        typeAdherent: /^Type\s*adhérent$/i,
+        garantie: /^Garantie$/i,
+        periodeDebut: /^Période\s*début$/i,
+        periodeFin: /^Période\s*fin$/i,
+        periodicite: /^Périodicité$/i,
+        typeCommission: /^Type\s*commission$/i,
+        primeHT: /^Prime\s*HT$/i,
+        taux: /^Taux$/i,
+        commission: /^Commission$/i,
+        dateDeCalcul: /^Date\s*de\s*calcul$/i,
+        codePostal: /^Code\s*postal$/i,
+        ville: /^Ville$/i,
+        raisonSociale: /^Raison\s*sociale$/i,
+        codeMiltis: /^Code\s*Miltis$/i,
+        courtier: /^COURTIER$/i,
+        fondateur: /^FONDATEUR$/i,
+        pavillon: /^PAVILLON$/i,
+        sofraco: /^SOFRACO$/i,
+        sofracoExpertises: /^SOFRACO\s*EXPERTISES$/i,
+        budget: /^BUDGET$/i
+    };
+    																					
     worksheets.forEach((worksheet, index) => {
-        if (index === 0) {
+        if (worksheet.name.toUpperCase() === 'MILTIS') {
             let rowNumberHeader;
+            let indexesHeader = {
+                codeAdherent: null,
+                nomAdherent: null,
+                typeAdherent: null,
+                garantie: null,
+                periodeDebut: null,
+                periodeFin: null,
+                periodicite: null,
+                typeCommission: null,
+                primeHT: null,
+                taux: null,
+                commission: null,
+                dateDeCalcul: null,
+                codePostal: null,
+                ville: null,
+                raisonSociale: null,
+                codeMiltis: null,
+                courtier: null,
+                fondateur: null,
+                pavillon: null,
+                sofraco: null,
+                sofracoExpertises: null,
+                budget: null
+            };
             worksheet.eachRow((row, rowNumber) => {
                 if (rowNumber === 1) {
                     rowNumberHeader = rowNumber;
                     row.eachCell((cell, colNumber) => {
-                        const currentCellValue = (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim().replace(/\n/g, ' ') : cell.value.replace(/\n/g, ' ');
+                        const currentCellValue = (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value;
                         if (headers.indexOf(currentCellValue) < 0) {
                             headers.push(currentCellValue);
                         }
+                        generals.setIndexHeaders(cell, colNumber, arrReg, indexesHeader);
                     });
+                    for (let index in indexesHeader) {
+                        if (indexesHeader[index] === null) {
+                            errors.push(errorHandler.errorReadExcelMILTIS(index));
+                        }
+                    }
                 }
                 if (rowNumber > rowNumberHeader) {
-                    const contrat = {
-                        codeAdherent: (typeof row.getCell('A').value === 'string') ?
-                            row.getCell('A').value.trim() :
-                            row.getCell('A').value,
-                        nomAdherent: (typeof row.getCell('B').value === 'string') ?
-                            row.getCell('B').value.trim() :
-                            row.getCell('B').value,
-                        typeAdherent: (typeof row.getCell('C').value === 'string') ?
-                            row.getCell('C').value.trim() :
-                            row.getCell('C').value,
-                        garantie: (typeof row.getCell('D').value === 'string') ?
-                            row.getCell('D').value.trim() :
-                            row.getCell('D').value,
-                        periodeDebut: (typeof row.getCell('E').value === 'string') ?
-                            row.getCell('E').value.trim() :
-                            (row.getCell('E').value !== null) ? new Date(0, 0, row.getCell('E').value, 0, 0, 0) : '',
-                        periodeFin: (typeof row.getCell('F').value === 'string') ?
-                            row.getCell('F').value.trim() :
-                            (row.getCell('F').value !== null) ? new Date(0, 0, row.getCell('F').value, 0, 0, 0) : '',
-                        periodicite: (typeof row.getCell('G').value === 'string') ?
-                            row.getCell('G').value.trim() :
-                            row.getCell('G').value,
-                        typeCommission: (typeof row.getCell('H').value === 'string') ?
-                            row.getCell('H').value.trim() :
-                            row.getCell('H').value,
-                        primeHT: (typeof row.getCell('I').value === 'string') ?
-                            row.getCell('I').value.trim() :
-                            row.getCell('I').value,
-                        taux: (typeof row.getCell('J').value === 'string') ?
-                            row.getCell('J').value.trim() :
-                            row.getCell('J').value,
-                        Commission: (typeof row.getCell('K').value === 'string') ?
-                            row.getCell('K').value.trim() :
-                            row.getCell('K').value,
-                        dateDeCalcul: (typeof row.getCell('L').value === 'string') ?
-                            row.getCell('L').value.trim() :
-                            (row.getCell('L').value !== null) ? new Date(0, 0, row.getCell('L').value, 0, 0, 0) : '',
-                        codePostal: (typeof row.getCell('M').value === 'string') ?
-                            row.getCell('M').value.trim() :
-                            row.getCell('M').value,
-                        ville: (typeof row.getCell('N').value === 'string') ?
-                            row.getCell('N').value.trim() :
-                            row.getCell('N').value,
-                        raisonSociale: (typeof row.getCell('O').value === 'string') ?
-                            row.getCell('O').value.trim() :
-                            row.getCell('O').value,
-                        codeMiltis: (typeof row.getCell('P').value === 'string') ?
-                            row.getCell('P').value.trim() :
-                            row.getCell('P').value,
-                        courtier: (typeof row.getCell('Q').value === 'string') ?
-                            row.getCell('Q').value.trim() :
-                            row.getCell('Q').value,
-                        fondateur: (typeof row.getCell('R').value === 'string') ?
-                            row.getCell('R').value.trim() :
-                            row.getCell('R').value !== null,
-                        pavillon: (typeof row.getCell('S').value === 'string') ?
-                            row.getCell('S').value.trim() :
-                            row.getCell('S').value !== null,
-                        sofraco: (typeof row.getCell('T').value === 'string') ?
-                            row.getCell('T').value.trim() :
-                            row.getCell('T').value,
-                        sofracoExpertises: (typeof row.getCell('U').value === 'string') ?
-                            row.getCell('U').value.trim() :
-                            row.getCell('U').value,
-                        budget: (typeof row.getCell('V').value === 'string') ?
-                            row.getCell('V').value.trim() :
-                            row.getCell('V').value,
-                    };
+                    const {contrat, error} = generals.createContratSimpleHeader(row, indexesHeader);
+                    // for (let err of error) {
+                    //     errors.push(errorHandler.errorEmptyCell('MILTIS', err));
+                    // }
                     allContrats.push(contrat);
                 }
             })
@@ -105,7 +98,7 @@ exports.readExcelMILTIS = async (file) => {
 
     const allContratsPerCourtier = generals.regroupContratByCourtier(allContrats, 'codeMiltis');
 
-    ocr = { headers, allContratsPerCourtier, executionTime: 0, executionTimeMS: 0 };
+    ocr = { headers, allContratsPerCourtier, errors, executionTime: 0, executionTimeMS: 0 };
     const excecutionStopTime = performance.now();
     const executionTimeMS = excecutionStopTime - excecutionStartTime;
     const executionTime = time.millisecondToTime(executionTimeMS);
