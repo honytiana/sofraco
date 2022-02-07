@@ -358,11 +358,9 @@ class Envoi extends Component {
                             (item, index) => {
                                 return (
                                     <td className="text-center" >
-                                        <CListGroup>
-                                            {item.emailCopie.map(ec => {
-                                                return <CListGroupItem href="#" key={`${ec}-${index}`}>{ec}</CListGroupItem>
-                                            })}
-                                        </CListGroup>
+                                        {item.emailCopie.map(ec => {
+                                            return <span href="#" key={`${ec}-${index}`}>{ec}, </span>
+                                        })}
                                     </td>
                                 )
                             }
