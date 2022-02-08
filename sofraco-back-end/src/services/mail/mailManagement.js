@@ -26,7 +26,7 @@ exports.sendMail = async (emailDestination, emailCopiesDestination, data, courti
     try {
         if (emailDestination !== '') {
             const excelMasters = await excelMasterHandler.getExcelMastersCourtierByYearMonth(courtier, year, month, 'zip');
-            // if (excelMasters.length > 0) {
+            if (excelMasters.length > 0) {
                 ejs.renderFile(path.join(__dirname, '..', '..', 'views', 'mail.ejs'), { data: data }, async (err, str) => {
                     if (err) {
                         console.log(err);
@@ -61,7 +61,7 @@ exports.sendMail = async (emailDestination, emailCopiesDestination, data, courti
                         });
                     }
                 });
-            // }
+            }
         }
     } catch (err) {
         throw err;
