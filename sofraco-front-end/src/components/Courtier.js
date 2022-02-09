@@ -300,7 +300,6 @@ class Courtier extends Component {
                         this.props.courtier.emailCopie.map((ec, index) => {
                             return (
                                 <CBadge
-                                    id={`badge_${ec}_${index}`}
                                     key={`badge_${this.props.courtier._id}_${ec}`}
                                     onClick={(e) => { this.activateEditEmailCopie(e, ec) }}>{ec}<CButton
                                         key={`btn_${this.props.courtier._id}_${ec}`}

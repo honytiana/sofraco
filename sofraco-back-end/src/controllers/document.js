@@ -179,23 +179,7 @@ exports.updateDocuments = async (req, res) => {
             progress: 0,
         };
         const resultTreatment = await treatmentHandler.createTreatment(treatment);
-        const resultDraftDocuments = await documentHandler.getDocumentsByStatus('draft');
-        const resultProcessingDocuments = await documentHandler.getDocumentsByStatus('processing');
-        let drafts = [];
-        for (let draftDocument of resultDraftDocuments) {
-            const uploadDateMonth = new Date(draftDocument.upload_date).getMonth();
-            const currentMonth = new Date().getMonth();
-            if (uploadDateMonth === currentMonth) {
-                drafts.push(draftDocument._id);
-            }
-        }
-        for (let processingDocument of resultProcessingDocuments) {
-            const uploadDateMonth = new Date(processingDocument.upload_date).getMonth();
-            const currentMonth = new Date().getMonth();
-            if (uploadDateMonth === currentMonth) {
-                drafts.push(processingDocument._id);
-            }
-        }
+        let drafts = await getDraftsDocuments();
         let errors = [];
         let numberFiles = 1;
         for (let draftId of drafts) {
@@ -221,6 +205,13 @@ exports.updateDocuments = async (req, res) => {
                 continue;
             }
         }
+
+        drafts = await getDraftsDocuments();
+        if (drafts.length > 0) {
+            for (let draft of drafts) {
+                errors.push(`Le fichier ${fileService.getFileName(draft.path)} n'a pas été traité, veuillez relancer le traitement`);
+            }
+        }
         const directoryTemp = path.join(__dirname, '..', '..', 'documents', 'temp');
         const directoryTexte = path.join(__dirname, '..', '..', 'documents', 'texte');
         const directorySplitedPDF = path.join(__dirname, '..', '..', 'documents', 'splited_PDF');
@@ -240,6 +231,27 @@ exports.updateDocuments = async (req, res) => {
         res.status(500).json({ err });
     }
 };
+
+const getDraftsDocuments = async () => {
+    let drafts = [];
+    const resultDraftDocuments = await documentHandler.getDocumentsByStatus('draft');
+    const resultProcessingDocuments = await documentHandler.getDocumentsByStatus('processing');
+    const currentMonth = new Date().getMonth();
+    for (let draftDocument of resultDraftDocuments) {
+        const uploadDateMonth = new Date(draftDocument.upload_date).getMonth();
+        if (uploadDateMonth === currentMonth) {
+            drafts.push(draftDocument._id);
+        }
+    }
+    for (let processingDocument of resultProcessingDocuments) {
+        const uploadDateMonth = new Date(processingDocument.upload_date).getMonth();
+        if (uploadDateMonth === currentMonth) {
+            drafts.push(processingDocument._id);
+        }
+    }
+    return drafts;
+}
+
 
 exports.setStatusDocument = async (req, res) => {
     console.log('set status document');
