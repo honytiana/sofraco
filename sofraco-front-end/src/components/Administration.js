@@ -56,6 +56,7 @@ class Administration extends Component {
         this.fetchCourtiers = this.fetchCourtiers.bind(this);
         this.activerAjoutCourtier = this.activerAjoutCourtier.bind(this);
         this.ajouterCourtier = this.ajouterCourtier.bind(this);
+        this.handleAdministrationCallback = this.handleAdministrationCallback.bind(this);
     }
 
     componentDidMount() {
@@ -295,6 +296,10 @@ class Administration extends Component {
         });
     }
 
+    handleAdministrationCallback = () => {
+        this._isMounted && this.fetchCourtiers();
+    }
+
     render() {
         return (
             <div>
@@ -443,7 +448,12 @@ class Administration extends Component {
                                                 </CNav>
                                                 <CTabContent>
                                                     <CTabPane data-tab="courtier">
-                                                        <Courtier courtier={item} key={`courtier${this.state.num}${item._id}`} token={this.state.token} />
+                                                        <Courtier
+                                                            courtier={item}
+                                                            key={`courtier${this.state.num}${item._id}`}
+                                                            token={this.state.token}
+                                                            administrationCallback={() => { this.handleAdministrationCallback() }}
+                                                        />
                                                     </CTabPane>
                                                     <CTabPane data-tab="mandataires">
                                                         <Mandataire courtier={item} key={`mandataire${this.state.num}${item._id}`} sIndex={index} token={this.state.token} />

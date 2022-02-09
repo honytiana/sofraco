@@ -9,10 +9,12 @@ import {
     CFormGroup,
     CLabel,
     CInput,
-    CListGroup,
-    CListGroupItem
+    CButton,
+    CBadge
 } from '@coreui/react';
 
+import CIcon from '@coreui/icons-react';
+import { freeSet } from '@coreui/icons';
 import axios from 'axios';
 
 import '../styles/Courtier.css';
@@ -30,6 +32,9 @@ class Courtier extends Component {
             interne: false
         }
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
+        this.onAddEmailCopie = this.onAddEmailCopie.bind(this);
+        this.onEditEmailCopie = this.onEditEmailCopie.bind(this);
+        this.onDeleteEmailCopie = this.onDeleteEmailCopie.bind(this);
     }
 
     componentDidMount() {
@@ -86,8 +91,9 @@ class Courtier extends Component {
 
     onAddEmailCopie(event) {
         event.preventDefault();
+        const input = event.target.previousElementSibling;
         const options = {
-            emailCopie: event.target['sofraco-email-copie'].value
+            emailCopie: input.value
         };
         if (options.emailCopie !== '') {
             axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/courtier/${this.props.courtier._id}/emailCopie`, options, {
@@ -101,6 +107,90 @@ class Courtier extends Component {
                     toast: true,
                     messageToast: { header: 'SUCCESS', color: 'success', message: `${options.emailCopie} à été ajouté au courtier ${res.data.cabinet}` }
                 });
+                this.props.administrationCallback();
+            }).catch((err) => {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'ERROR', color: 'danger', message: err }
+                })
+            }).finally(() => {
+                setTimeout(() => {
+                    this.setState({
+                        toast: false,
+                        messageToast: {}
+                    });
+                }, 6000);
+            });
+        }
+    }
+
+    activateEditEmailCopie(event, emailCopie) {
+        event.preventDefault();
+        event.target.style.display = 'none';
+        const input = document.createElement('input');
+        input.value = emailCopie;
+        input.onblur = (e) => { this.onEditEmailCopie(e, emailCopie, input.value, event.target.id) };
+        input.style = { display: 'inline' };
+        event.target.parentNode.append(input);
+    }
+
+    onEditEmailCopie(event, oldEmailCopie, emailCopie, id) {
+        event.preventDefault();
+        const options = {
+            emailCopie,
+            oldEmailCopie
+        };
+        if (options.emailCopie !== '') {
+            axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/courtier/${this.props.courtier._id}/emailCopie/edit`, options, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.props.token.value}`
+                }
+            }).then((res) => {
+                this.setState({
+                    courtier: res.data,
+                    toast: true,
+                    messageToast: { header: 'SUCCESS', color: 'success', message: `${options.emailCopie} à été modifié` }
+                });
+                this.props.administrationCallback();
+            }).catch((err) => {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'ERROR', color: 'danger', message: err }
+                })
+            }).finally(() => {
+                event.preventDefault();
+                event.target.style.display = 'none';
+                event.target.remove();
+                document.getElementById(id).style.display = 'inline';
+                setTimeout(() => {
+                    this.setState({
+                        toast: false,
+                        messageToast: {}
+                    });
+                }, 6000);
+            });
+        }
+    }
+
+    onDeleteEmailCopie(event, emailCopie) {
+        event.preventDefault();
+        const options = {
+            emailCopie
+        };
+        if (options.emailCopie !== '') {
+            axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/courtier/${this.props.courtier._id}/emailCopie/delete`, options, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.props.token.value}`
+                }
+            }).then((res) => {
+                this.setState({
+                    courtier: res.data,
+                    toast: true,
+                    messageToast: { header: 'SUCCESS', color: 'success', message: `${options.emailCopie} à été supprimé` }
+                });
+                this.props.administrationCallback();
             }).catch((err) => {
                 this.setState({
                     toast: true,
@@ -167,6 +257,15 @@ class Courtier extends Component {
                             />
                         </CFormGroup>
                         <CFormGroup row>
+                            <CLabel className="col-sm-2" htmlFor={`sofraco-email-copie_${this.props.courtier._id}`}>Email en copie</CLabel>
+                            <CInput
+                                type="text"
+                                id={`sofraco-email-copie_${this.props.courtier._id}`}
+                                name={`sofraco-email-copie`}
+                                className="sofraco-input"
+                            /><CButton className="sofraco-button-add" onClick={(e) => this.onAddEmailCopie(e)}>+</CButton>
+                        </CFormGroup>
+                        <CFormGroup row>
                             <CLabel className="col-sm-2" htmlFor={`sofraco-phone_${this.props.courtier._id}`}>Téléphone</CLabel>
                             <CInput
                                 type="text"
@@ -188,32 +287,21 @@ class Courtier extends Component {
                     </CForm>
                 </div>
                 <div className="sofraco-email-copie">
-                    <CListGroup>
-                        {
-                            this.props.courtier.emailCopie.map((ec) => {
-                                return (
-                                    <CListGroupItem key={`${this.props.courtier._id}_${ec}`}>{ec}</CListGroupItem>
-                                )
-                            })
-                        }
-                    </CListGroup>
-                    <CForm action="" method="post" onSubmit={(e) => this.onAddEmailCopie(e)}>
-                        <CFormGroup row>
-                            <CLabel className="col-sm-2" htmlFor={`sofraco-email-copie_${this.props.courtier._id}`}>Email en copie</CLabel>
-                            <CInput
-                                type="text"
-                                id={`sofraco-email-copie_${this.props.courtier._id}`}
-                                name={`sofraco-email-copie`}
-                                className="sofraco-input"
-                            />
-                            <CInput
-                                type="submit"
-                                name="sofraco-submit"
-                                value="Ajouter"
-                                className="sofraco-button"
-                            />
-                        </CFormGroup>
-                    </CForm>
+                    {
+                        this.props.courtier.emailCopie.map((ec, index) => {
+                            return (
+                                <CBadge
+                                    id={`badge_${ec}_${index}`}
+                                    key={`badge_${this.props.courtier._id}_${ec}`}
+                                    onClick={(e) => { this.activateEditEmailCopie(e, ec) }}>{ec} <CButton
+                                        key={`btn_${this.props.courtier._id}_${ec}`}
+                                        size='sm'
+                                        onFocus={(e) => { this.onDeleteEmailCopie(e, ec) }}><CIcon
+                                            key={`icn_${this.props.courtier._id}_${ec}`}
+                                            content={freeSet.cilDelete} /></CButton></CBadge>
+                            )
+                        })
+                    }
                 </div>
                 {
                     (this.state.toast === true &&

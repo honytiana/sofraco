@@ -73,6 +73,26 @@ class CourtierHandler {
         )
     }
 
+    editEmailCopieCourtier(courtier, oldEmailCopie, emailCopie) {
+        return Courtier.findOneAndUpdate(
+            {
+                _id: courtier,
+                'emailCopie': oldEmailCopie
+            },
+            { $set: { 'emailCopie.$': emailCopie } }
+        )
+    }
+
+    deleteEmailCopieCourtier(courtier, emailCopie) {
+        return Courtier.findOneAndUpdate(
+            {
+                _id: courtier,
+                'emailCopie': emailCopie
+            },
+            { $pull: { 'emailCopie': emailCopie } }
+        )
+    }
+
     deleteCourtier(id) {
         return Courtier.findByIdAndDelete(id);
     }

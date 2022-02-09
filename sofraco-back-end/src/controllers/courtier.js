@@ -109,6 +109,26 @@ exports.addEmailCopieCourtier = async (req, res) => {
     }
 };
 
+exports.editEmailCopieCourtier = async (req, res) => {
+    console.log('Edit email copie courtier');
+    try {
+        const courtier = await courtierHandler.editEmailCopieCourtier(req.params.courtier, req.body.oldEmailCopie, req.body.emailCopie);
+        res.status(200).json(courtier);
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+};
+
+exports.deleteEmailCopieCourtier = async (req, res) => {
+    console.log('Delete email copie courtier');
+    try {
+        const courtier = await courtierHandler.deleteEmailCopieCourtier(req.params.courtier, req.body.emailCopie);
+        res.status(200).json(courtier);
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+};
+
 exports.deleteCourtier = async (req, res) => {
     console.log('Delete courtier');
     try {

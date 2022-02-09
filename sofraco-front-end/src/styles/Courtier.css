@@ -9,6 +9,12 @@
     width: 150px;
 }
 
+.sofraco-button-add {
+    color: #fff;
+    background-color: #ed7102;
+    width: 50px;
+}
+
 .sofraco-button:not(:hover) {
     color: #fff;
     background-color: #ed7102;
@@ -27,7 +33,12 @@
     display: flex;
 }
 
-.sofraco-form-courtier, .sofraco-email-copie {
+.sofraco-form-courtier {
     display: inline-block;
-    width: 50%;
+    width: 60%;
+}
+
+.sofraco-email-copie {
+    display: inline-block;
+    width: 40%;
 }

@@ -306,7 +306,7 @@ class Mandataire extends Component {
                     toast: true,
                     messageToast: { header: 'SUCCESS', color: 'success', message: `Le mandataire ${res.data.cabinet} à été supprimé` }
                 });
-                this.fetchMandataires();
+                this._isMounted && this.fetchMandataires();
             }).catch((err) => {
                 this.setState({
                     toast: true,

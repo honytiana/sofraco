@@ -123,13 +123,6 @@ class Correspondance extends Component {
         this._isMounted = false;
     }
 
-    checkProps() {
-        if (this.props.token !== null) {
-            this.fetchCorrespondances();
-            this.getCompanies();
-        }
-    }
-
     fetchCorrespondances() {
         const courtier = this.props.courtier;
         axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/correspondance/courtier/${courtier._id}`, {

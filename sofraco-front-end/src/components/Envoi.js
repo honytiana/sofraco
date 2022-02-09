@@ -8,9 +8,7 @@ import {
     CToast,
     CToastHeader,
     CToastBody,
-    CSelect,
-    CListGroup,
-    CListGroupItem
+    CSelect
 } from '@coreui/react';
 import axios from 'axios';
 
