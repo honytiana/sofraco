@@ -130,8 +130,17 @@ class Courtier extends Component {
         const input = document.createElement('input');
         input.value = emailCopie;
         input.onblur = (e) => { this.onEditEmailCopie(e, emailCopie, input.value, event.target.id) };
-        input.style = { display: 'inline' };
+        input.onfocus = (e) => { this.onFocusEmailCopie(e) };
+        input.style.display = 'inline';
+        input.style.border = 'none'; 
+        input.style.borderBottom = '1px solid black';
         event.target.parentNode.append(input);
+        input.focus();
+    }
+
+    onFocusEmailCopie(event) {
+        event.target.style.border = 'none'; 
+        event.target.style.borderBottom = '1px solid #ed7102';
     }
 
     onEditEmailCopie(event, oldEmailCopie, emailCopie, id) {
@@ -293,7 +302,7 @@ class Courtier extends Component {
                                 <CBadge
                                     id={`badge_${ec}_${index}`}
                                     key={`badge_${this.props.courtier._id}_${ec}`}
-                                    onClick={(e) => { this.activateEditEmailCopie(e, ec) }}>{ec} <CButton
+                                    onClick={(e) => { this.activateEditEmailCopie(e, ec) }}>{ec}<CButton
                                         key={`btn_${this.props.courtier._id}_${ec}`}
                                         size='sm'
                                         onFocus={(e) => { this.onDeleteEmailCopie(e, ec) }}><CIcon
