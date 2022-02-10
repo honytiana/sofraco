@@ -189,7 +189,6 @@ const getContratMIELV1 = (worksheets, headers, allContrats, errors) => {
         courtier: /^COURTIER$/i,
         fondateur: /^FONDATEUR$/i
     };
-
     worksheets.forEach((worksheet, index) => {
         if (index === 1) {
             let indexesHeader = {
@@ -273,7 +272,6 @@ const getContratMIELV2 = (worksheets, headers, allContrats, errors) => {
         sogeas: /^SOGEAS$/i,
         procedure: /^PROCEDURE$/i
     };
-    //new Date(0, 0, row.getCell('M').value, 0, 0, 0)
     worksheets.forEach((worksheet, index) => {
         if (index === 1) {
             let indexesHeader = {
@@ -355,7 +353,6 @@ const getContratMIELV3 = (worksheets, headers, allContrats, errors) => {
         montantCommissions: /^Montant\s*commissions$/i,
         bordereauPaiementCommissionsInitiales: /^Bordereau\s*du\s*paiement\s*des\s*commissions\s*initiales$/i
     };
-    //new Date(0, 0, row.getCell('M').value, 0, 0, 0)
     worksheets.forEach((worksheet, index) => {
         if (index === 1) {
             let indexesHeader = {
@@ -438,7 +435,6 @@ const getContratMIELV4 = (worksheets, headers, allContrats, errors) => {
         sofracoExpertises: /^SOFRACO\s*EXPERTISES$/i,
         budget: /^BUDGET$/i
     };
-    //new Date(0, 0, row.getCell('M').value, 0, 0, 0)
     worksheets.forEach((worksheet, index) => {
         if (index === 1) {
             let indexesHeader = {
