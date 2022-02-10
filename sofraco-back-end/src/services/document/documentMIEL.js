@@ -1,37 +1,26 @@
-const ExcelJS = require('exceljs');
-const XLSX = require('xlsx');
 const { performance } = require('perf_hooks');
-const fs = require('fs');
-const path = require('path');
 const time = require('../utils/time');
 const fileService = require('../utils/files');
+const excelFile = require('../utils/excelFile');
 const generals = require('../utils/generals');
+const errorHandler = require('../utils/errorHandler');
 
 const { workerData, parentPort } = require('worker_threads');
 if (parentPort !== null) {
     parentPort.postMessage({ miel: workerData });
 }
 
-exports.readExcelMIEL = async (file) => {};
+exports.readExcelMIEL = async (file) => { };
 
 exports.readExcelMIELMCMS = async (file) => {
     console.log(`${new Date()} DEBUT TRAITEMENT MIEL MCMS`);
     const excecutionStartTime = performance.now();
-    let filePath = file;
-    const fileName = fileService.getFileNameWithoutExtension(filePath);
+    const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
+    const fileName = fileService.getFileNameWithoutExtension(file);
     const version = fileName.replace(/.+(V\d+).*/, '$1');
-    const extension = fileService.getFileExtension(filePath);
-    if (extension.toUpperCase() === 'XLS') {
-        let originalFile = XLSX.readFile(filePath);
-        filePath = path.join(__dirname, '..', '..', '..', 'documents', 'uploaded', `${fileName}.xlsx`);
-        XLSX.writeFile(originalFile, filePath);
-    }
-    const workbook = new ExcelJS.Workbook();
-    const mielfile = fs.readFileSync(filePath);
-    await workbook.xlsx.load(mielfile);
-    const worksheets = workbook.worksheets;
     let headers = [];
     let allContrats = [];
+    let errors = [];
     let ocr = { headers: [], allContratsPerCourtier: [], mielVersion: null, executionTime: 0 };
     let mielCreasio, mielV1, mielV2, mielV3, mielV4 = false;
     if (fileName.match('CREASIO')) {
@@ -51,42 +40,21 @@ exports.readExcelMIELMCMS = async (file) => {
             mielV4 = true;
             break;
     }
-    worksheets.forEach((worksheet, index) => {
-        if (index === 1) {
-            let rowNumberHeader;
-            worksheet.eachRow((row, rowNumber) => {
-                if (rowNumber === 1) {
-                    rowNumberHeader = rowNumber;
-                    row.eachCell((cell, colNumber) => {
-                        const currentCellValue = (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim().replace(/\n/g, ' ') : cell.value.replace(/\n/g, ' ');
-                        if (headers.indexOf(currentCellValue) < 0) {
-                            headers.push(currentCellValue);
-                        }
-                    });
-                }
-                if (rowNumber > rowNumberHeader && !row.hidden) {
-                    let contrat;
-                    if (mielCreasio) {
-                        contrat = getContratMIELCREASIO(row);
-                    }
-                    if (mielV1) {
-                        contrat = getContratMIELV1(row);
-                    }
-                    if (mielV2) {
-                        contrat = getContratMIELV2(row);
-                    }
-                    if (mielV3) {
-                        contrat = getContratMIELV3(row);
-                    }
-                    if (mielV4) {
-                        contrat = getContratMIELV4(row);
-                    }
-
-                    allContrats.push(contrat);
-                }
-            })
-        }
-    });
+    if (mielCreasio) {
+        getContratMIELCREASIO(worksheets, headers, allContrats, errors);
+    }
+    if (mielV1) {
+        getContratMIELV1(worksheets, headers, allContrats, errors);
+    }
+    if (mielV2) {
+        getContratMIELV2(worksheets, headers, allContrats, errors);
+    }
+    if (mielV3) {
+        getContratMIELV3(worksheets, headers, allContrats, errors);
+    }
+    if (mielV4) {
+        getContratMIELV4(worksheets, headers, allContrats, errors);
+    }
 
     const allContratsPerCourtier = generals.regroupContratByCourtier(allContrats, 'codeApporteurAffaire');
 
@@ -116,398 +84,414 @@ exports.readExcelMIELMCMS = async (file) => {
     return ocr;
 };
 
-const getContratMIELCREASIO = (row) => {
-    const contrat = {
-        codeApporteurCommissionne: (typeof row.getCell('A').value === 'string') ?
-            row.getCell('A').value.trim() :
-            row.getCell('A').value,
-        codeApporteurAffaire: (typeof row.getCell('B').value === 'string') ?
-            row.getCell('B').value.trim() :
-            row.getCell('B').value,
-        nomApporteurAffaire: (typeof row.getCell('C').value === 'string') ?
-            row.getCell('C').value.trim() :
-            row.getCell('C').value,
-        numAdherent: (typeof row.getCell('D').value === 'string') ?
-            row.getCell('D').value.trim() :
-            row.getCell('D').value,
-        nom: (typeof row.getCell('E').value === 'string') ?
-            row.getCell('E').value.trim() :
-            row.getCell('E').value,
-        prenom: (typeof row.getCell('F').value === 'string') ?
-            row.getCell('F').value.trim() :
-            row.getCell('F').value,
-        codePostal: (typeof row.getCell('G').value === 'string') ?
-            row.getCell('G').value.trim() :
-            row.getCell('G').value,
-        ville: (typeof row.getCell('H').value === 'string') ?
-            row.getCell('H').value.trim() :
-            row.getCell('H').value,
-        codeProduit: (typeof row.getCell('I').value === 'string') ?
-            row.getCell('I').value.trim() :
-            row.getCell('I').value,
-        nomProduit: (typeof row.getCell('J').value === 'string') ?
-            row.getCell('J').value.trim() :
-            row.getCell('J').value,
-        codeContrat: (typeof row.getCell('K').value === 'string') ?
-            row.getCell('K').value.trim() :
-            row.getCell('K').value,
-        nomContrat: (typeof row.getCell('L').value === 'string') ?
-            row.getCell('L').value.trim() :
-            row.getCell('L').value,
-        dateDebutEcheance: (typeof row.getCell('M').value === 'string') ?
-            row.getCell('M').value.trim() :
-            (row.getCell('M').value !== null) ? new Date(0, 0, row.getCell('M').value, 0, 0, 0) : '',
-        dateFinEcheance: (typeof row.getCell('N').value === 'string') ?
-            row.getCell('N').value.trim() :
-            (row.getCell('N').value !== null) ? new Date(0, 0, row.getCell('N').value, 0, 0, 0) : '',
-        montantTTCEcheance: (typeof row.getCell('O').value === 'string') ?
-            row.getCell('O').value.trim() :
-            row.getCell('O').value,
-        montantHTEcheance: (typeof row.getCell('P').value === 'string') ?
-            row.getCell('P').value.trim() :
-            row.getCell('P').value,
-        codeGarantieTechnique: (typeof row.getCell('Q').value === 'string') ?
-            row.getCell('Q').value.trim() :
-            row.getCell('Q').value,
-        nomGarantieTechnique: (typeof row.getCell('R').value === 'string') ?
-            row.getCell('R').value.trim() :
-            row.getCell('R').value !== null,
-        baseCommisionnement: (typeof row.getCell('S').value === 'string') ?
-            row.getCell('S').value.trim() :
-            row.getCell('S').value,
-        tauxCommission: (typeof row.getCell('T').value === 'string') ?
-            row.getCell('T').value.trim() :
-            row.getCell('T').value,
-        montantCommissions: (typeof row.getCell('U').value === 'string') ?
-            row.getCell('U').value.trim() :
-            row.getCell('U').value,
-        bordereauPaiementCommissionsInitiales: (typeof row.getCell('V').value === 'string') ?
-            row.getCell('V').value.trim() :
-            row.getCell('V').value
+const getContratMIELCREASIO = (worksheets, headers, allContrats, errors) => {
+    const arrReg = {
+        codeApporteurCommissionne: /^Code\s*Apporteur\s*commissionné$/i,
+        codeApporteurAffaire: /^Code\s*Apporteur\s*d'Affaire$/i,
+        nomApporteurAffaire: /^Nom\s*Apporteur\s*d'Affaire$/i,
+        numAdherent: /^N°\s*Adhérent$/i,
+        nom: /^Nom$/i,
+        prenom: /^Prénom$/i,
+        codePostal: /^Code\s*postal$/i,
+        ville: /^Ville$/i,
+        codeProduit: /^Code\s*Poduit$/i,
+        nomProduit: /^Nom\s*Produit$/i,
+        codeContrat: /^Code\s*Contrat$/i,
+        nomContrat: /^Nom\s*Contrat$/i,
+        dateDebutEcheance: /^Date\s*début\s*échéance$/i,
+        dateFinEcheance: /^Date\s*fin\s*échéance$/i,
+        montantTTCEcheance: /^Montant\s*TTC\s*échéance$/i,
+        montantHTEcheance: /^Montant\s*HT\s*échéance$/i,
+        codeGarantieTechnique: /^Code\s*de\s*la\s*Garantie\s*Technique$/i,
+        nomGarantieTechnique: /^Nom\s*de\s*la\s*Garantie\s*Technique$/i,
+        baseCommisionnement: /^Base\s*de\s*commisionnement$/i,
+        tauxCommission: /^Taux\s*de\s*commission$/i,
+        montantCommissions: /^Montant\s*commissions$/i,
+        bordereauPaiementCommissionsInitiales: /^Bordereau\s*du\s*paiement\s*des\s*commissions\s*initiales$/i
     };
-    return contrat;
+
+    worksheets.forEach((worksheet, index) => {
+        if (index === 1) {
+            let indexesHeader = {
+                codeApporteurCommissionne: null,
+                codeApporteurAffaire: null,
+                nomApporteurAffaire: null,
+                numAdherent: null,
+                nom: null,
+                prenom: null,
+                codePostal: null,
+                ville: null,
+                codeProduit: null,
+                nomProduit: null,
+                codeContrat: null,
+                nomContrat: null,
+                dateDebutEcheance: null,
+                dateFinEcheance: null,
+                montantTTCEcheance: null,
+                montantHTEcheance: null,
+                codeGarantieTechnique: null,
+                nomGarantieTechnique: null,
+                baseCommisionnement: null,
+                tauxCommission: null,
+                montantCommissions: null,
+                bordereauPaiementCommissionsInitiales: null
+            };
+            let rowNumberHeader;
+            worksheet.eachRow((row, rowNumber) => {
+                if (rowNumber === 1) {
+                    rowNumberHeader = rowNumber;
+                    row.eachCell((cell, colNumber) => {
+                        const currentCellValue = (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim().replace(/\n/g, ' ') : cell.value.replace(/\n/g, ' ');
+                        if (headers.indexOf(currentCellValue) < 0) {
+                            headers.push(currentCellValue);
+                            generals.setIndexHeaders(cell, colNumber, arrReg, indexesHeader);
+                        }
+                        for (let index in indexesHeader) {
+                            if (indexesHeader[index] === null) {
+                                errors.push(errorHandler.errorReadExcelMIELCREASIO(index));
+                            }
+                        }
+                    });
+                }
+                if (rowNumber > rowNumberHeader && !row.hidden) {
+                    const { contrat, error } = generals.createContratSimpleHeader(row, indexesHeader);
+                    allContrats.push(contrat);
+                }
+            })
+        }
+    });
 };
 
-const getContratMIELV1 = (row) => {
-    const contrat = {
-        codeApporteurCommissionne: (typeof row.getCell('A').value === 'string') ?
-            row.getCell('A').value.trim() :
-            row.getCell('A').value,
-        codeApporteurAffaire: (typeof row.getCell('B').value === 'string') ?
-            row.getCell('B').value.trim() :
-            row.getCell('B').value,
-        nomApporteurAffaire: (typeof row.getCell('C').value === 'string') ?
-            row.getCell('C').value.trim() :
-            row.getCell('C').value,
-        numAdherent: (typeof row.getCell('D').value === 'string') ?
-            row.getCell('D').value.trim() :
-            row.getCell('D').value,
-        nom: (typeof row.getCell('E').value === 'string') ?
-            row.getCell('E').value.trim() :
-            row.getCell('E').value,
-        prenom: (typeof row.getCell('F').value === 'string') ?
-            row.getCell('F').value.trim() :
-            row.getCell('F').value,
-        codePostal: (typeof row.getCell('G').value === 'string') ?
-            row.getCell('G').value.trim() :
-            row.getCell('G').value,
-        ville: (typeof row.getCell('H').value === 'string') ?
-            row.getCell('H').value.trim() :
-            row.getCell('H').value,
-        codeProduit: (typeof row.getCell('I').value === 'string') ?
-            row.getCell('I').value.trim() :
-            row.getCell('I').value,
-        nomProduit: (typeof row.getCell('J').value === 'string') ?
-            row.getCell('J').value.trim() :
-            row.getCell('J').value,
-        codeContrat: (typeof row.getCell('K').value === 'string') ?
-            row.getCell('K').value.trim() :
-            row.getCell('K').value,
-        nomContrat: (typeof row.getCell('L').value === 'string') ?
-            row.getCell('L').value.trim() :
-            row.getCell('L').value,
-        dateDebutEcheance: (typeof row.getCell('M').value === 'string') ?
-            row.getCell('M').value.trim() :
-            (row.getCell('M').value !== null) ? new Date(0, 0, row.getCell('M').value, 0, 0, 0) : '',
-        dateFinEcheance: (typeof row.getCell('N').value === 'string') ?
-            row.getCell('N').value.trim() :
-            (row.getCell('N').value !== null) ? new Date(0, 0, row.getCell('N').value, 0, 0, 0) : '',
-        montantTTCEcheance: (typeof row.getCell('O').value === 'string') ?
-            row.getCell('O').value.trim() :
-            row.getCell('O').value,
-        montantHTEcheance: (typeof row.getCell('P').value === 'string') ?
-            row.getCell('P').value.trim() :
-            row.getCell('P').value,
-        codeGarantieTechnique: (typeof row.getCell('Q').value === 'string') ?
-            row.getCell('Q').value.trim() :
-            row.getCell('Q').value,
-        nomGarantieTechnique: (typeof row.getCell('R').value === 'string') ?
-            row.getCell('R').value.trim() :
-            row.getCell('R').value !== null,
-        baseCommisionnement: (typeof row.getCell('S').value === 'string') ?
-            row.getCell('S').value.trim() :
-            row.getCell('S').value,
-        tauxCommission: (typeof row.getCell('T').value === 'string') ?
-            row.getCell('T').value.trim() :
-            row.getCell('T').value,
-        montantCommissions: (typeof row.getCell('U').value === 'string') ?
-            row.getCell('U').value.trim() :
-            row.getCell('U').value,
-        bordereauPaiementCommissionsInitiales: (typeof row.getCell('V').value === 'string') ?
-            row.getCell('V').value.trim() :
-            row.getCell('V').value,
-        courtier: (typeof row.getCell('W').value === 'string') ?
-            row.getCell('W').value.trim() :
-            row.getCell('W').value,
-        fondateur: (typeof row.getCell('X').value === 'string') ?
-            row.getCell('X').value.trim() :
-            row.getCell('X').value
+const getContratMIELV1 = (worksheets, headers, allContrats, errors) => {
+    const arrReg = {
+        codeApporteurCommissionne: /^Code\s*Apporteur\s*commissionné$/i,
+        codeApporteurAffaire: /^Code\s*Apporteur\s*d'Affaire$/i,
+        nomApporteurAffaire: /^Nom\s*Apporteur\s*d'Affaire$/i,
+        numAdherent: /^N°\s*Adhérent$/i,
+        nom: /^Nom$/i,
+        prenom: /^Prénom$/i,
+        codePostal: /^Code\s*postal$/i,
+        ville: /^Ville$/i,
+        codeProduit: /^Code\s*Poduit$/i,
+        nomProduit: /^Nom\s*Produit$/i,
+        codeContrat: /^Code\s*Contrat$/i,
+        nomContrat: /^Nom\s*Contrat$/i,
+        dateDebutEcheance: /^Date\s*début\s*échéance$/i,
+        dateFinEcheance: /^Date\s*fin\s*échéance$/i,
+        montantTTCEcheance: /^Montant\s*TTC\s*échéance$/i,
+        montantHTEcheance: /^Montant\s*HT\s*échéance$/i,
+        codeGarantieTechnique: /^Code\s*de\s*la\s*Garantie\s*Technique$/i,
+        nomGarantieTechnique: /^Nom\s*de\s*la\s*Garantie\s*Technique$/i,
+        baseCommisionnement: /^Base\s*de\s*commisionnement$/i,
+        tauxCommission: /^Taux\s*de\s*commission$/i,
+        montantCommissions: /^Montant\s*commissions$/i,
+        bordereauPaiementCommissionsInitiales: /^Bordereau\s*du\s*paiement\s*des\s*commissions\s*initiales$/i,
+        courtier: /^COURTIER$/i,
+        fondateur: /^FONDATEUR$/i
     };
-    return contrat;
+
+    worksheets.forEach((worksheet, index) => {
+        if (index === 1) {
+            let indexesHeader = {
+                codeApporteurCommissionne: null,
+                codeApporteurAffaire: null,
+                nomApporteurAffaire: null,
+                numAdherent: null,
+                nom: null,
+                prenom: null,
+                codePostal: null,
+                ville: null,
+                codeProduit: null,
+                nomProduit: null,
+                codeContrat: null,
+                nomContrat: null,
+                dateDebutEcheance: null,
+                dateFinEcheance: null,
+                montantTTCEcheance: null,
+                montantHTEcheance: null,
+                codeGarantieTechnique: null,
+                nomGarantieTechnique: null,
+                baseCommisionnement: null,
+                tauxCommission: null,
+                montantCommissions: null,
+                bordereauPaiementCommissionsInitiales: null,
+                courtier: null,
+                fondateur: null
+            };
+            let rowNumberHeader;
+            worksheet.eachRow((row, rowNumber) => {
+                if (rowNumber === 1) {
+                    rowNumberHeader = rowNumber;
+                    row.eachCell((cell, colNumber) => {
+                        const currentCellValue = (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim().replace(/\n/g, ' ') : cell.value.replace(/\n/g, ' ');
+                        if (headers.indexOf(currentCellValue) < 0) {
+                            headers.push(currentCellValue);
+                            generals.setIndexHeaders(cell, colNumber, arrReg, indexesHeader);
+                        }
+                        for (let index in indexesHeader) {
+                            if (indexesHeader[index] === null) {
+                                errors.push(errorHandler.errorReadExcelMIELV1(index));
+                            }
+                        }
+                    });
+                }
+                if (rowNumber > rowNumberHeader && !row.hidden) {
+                    const { contrat, error } = generals.createContratSimpleHeader(row, indexesHeader);
+                    allContrats.push(contrat);
+                }
+            })
+        }
+    });
 };
 
-const getContratMIELV2 = (row) => {
-    const contrat = {
-        codeApporteurCommissionne: (typeof row.getCell('A').value === 'string') ?
-            row.getCell('A').value.trim() :
-            row.getCell('A').value,
-        codeApporteurAffaire: (typeof row.getCell('B').value === 'string') ?
-            row.getCell('B').value.trim() :
-            row.getCell('B').value,
-        nomApporteurAffaire: (typeof row.getCell('C').value === 'string') ?
-            row.getCell('C').value.trim() :
-            row.getCell('C').value,
-        numAdherent: (typeof row.getCell('D').value === 'string') ?
-            row.getCell('D').value.trim() :
-            row.getCell('D').value,
-        nom: (typeof row.getCell('E').value === 'string') ?
-            row.getCell('E').value.trim() :
-            row.getCell('E').value,
-        prenom: (typeof row.getCell('F').value === 'string') ?
-            row.getCell('F').value.trim() :
-            row.getCell('F').value,
-        codePostal: (typeof row.getCell('G').value === 'string') ?
-            row.getCell('G').value.trim() :
-            row.getCell('G').value,
-        ville: (typeof row.getCell('H').value === 'string') ?
-            row.getCell('H').value.trim() :
-            row.getCell('H').value,
-        codeProduit: (typeof row.getCell('I').value === 'string') ?
-            row.getCell('I').value.trim() :
-            row.getCell('I').value,
-        nomProduit: (typeof row.getCell('J').value === 'string') ?
-            row.getCell('J').value.trim() :
-            row.getCell('J').value,
-        codeContrat: (typeof row.getCell('K').value === 'string') ?
-            row.getCell('K').value.trim() :
-            row.getCell('K').value,
-        nomContrat: (typeof row.getCell('L').value === 'string') ?
-            row.getCell('L').value.trim() :
-            row.getCell('L').value,
-        dateDebutEcheance: (typeof row.getCell('M').value === 'string') ?
-            row.getCell('M').value.trim() :
-            (row.getCell('M').value !== null) ? new Date(0, 0, row.getCell('M').value, 0, 0, 0) : '',
-        dateFinEcheance: (typeof row.getCell('N').value === 'string') ?
-            row.getCell('N').value.trim() :
-            (row.getCell('N').value !== null) ? new Date(0, 0, row.getCell('N').value, 0, 0, 0) : '',
-        montantTTCEcheance: (typeof row.getCell('O').value === 'string') ?
-            row.getCell('O').value.trim() :
-            row.getCell('O').value,
-        montantHTEcheance: (typeof row.getCell('P').value === 'string') ?
-            row.getCell('P').value.trim() :
-            row.getCell('P').value,
-        codeGarantieTechnique: (typeof row.getCell('Q').value === 'string') ?
-            row.getCell('Q').value.trim() :
-            row.getCell('Q').value,
-        nomGarantieTechnique: (typeof row.getCell('R').value === 'string') ?
-            row.getCell('R').value.trim() :
-            row.getCell('R').value !== null,
-        baseCommisionnement: (typeof row.getCell('S').value === 'string') ?
-            row.getCell('S').value.trim() :
-            row.getCell('S').value,
-        tauxCommission: (typeof row.getCell('T').value === 'string') ?
-            row.getCell('T').value.trim() :
-            row.getCell('T').value,
-        montantCommissions: (typeof row.getCell('U').value === 'string') ?
-            row.getCell('U').value.trim() :
-            row.getCell('U').value,
-        bordereauPaiementCommissionsInitiales: (typeof row.getCell('V').value === 'string') ?
-            row.getCell('V').value.trim() :
-            row.getCell('V').value,
-        courtier: (typeof row.getCell('W').value === 'string') ?
-            row.getCell('W').value.trim() :
-            row.getCell('W').value,
-        fondateur: (typeof row.getCell('X').value === 'string') ?
-            row.getCell('X').value.trim() :
-            row.getCell('X').value,
-        sogeas: (typeof row.getCell('Y').value === 'string') ?
-            row.getCell('Y').value.trim() :
-            row.getCell('Y').value,
-        procedure: (typeof row.getCell('Z').value === 'string') ?
-            row.getCell('Z').value.trim() :
-            row.getCell('Z').value
+const getContratMIELV2 = (worksheets, headers, allContrats, errors) => {
+    const arrReg = {
+        codeApporteurCommissionne: /^Code\s*Apporteur\s*commissionné$/i,
+        codeApporteurAffaire: /^Code\s*Apporteur\s*d'Affaire$/i,
+        nomApporteurAffaire: /^Nom\s*Apporteur\s*d'Affaire$/i,
+        numAdherent: /^N°\s*Adhérent$/i,
+        nom: /^Nom$/i,
+        prenom: /^Prénom$/i,
+        codePostal: /^Code\s*postal$/i,
+        ville: /^Ville$/i,
+        codeProduit: /^Code\s*Poduit$/i,
+        nomProduit: /^Nom\s*Produit$/i,
+        codeContrat: /^Code\s*Contrat$/i,
+        nomContrat: /^Nom\s*Contrat$/i,
+        dateDebutEcheance: /^Date\s*début\s*échéance$/i,
+        dateFinEcheance: /^Date\s*fin\s*échéance$/i,
+        montantTTCEcheance: /^Montant\s*TTC\s*échéance$/i,
+        montantHTEcheance: /^Montant\s*HT\s*échéance$/i,
+        codeGarantieTechnique: /^Code\s*de\s*la\s*Garantie\s*Technique$/i,
+        nomGarantieTechnique: /^Nom\s*de\s*la\s*Garantie\s*Technique$/i,
+        baseCommisionnement: /^Base\s*de\s*commisionnement$/i,
+        tauxCommission: /^Taux\s*de\s*commission$/i,
+        montantCommissions: /^Montant\s*commissions$/i,
+        bordereauPaiementCommissionsInitiales: /^Bordereau\s*du\s*paiement\s*des\s*commissions\s*initiales$/i,
+        courtier: /^COURTIER$/i,
+        fondateur: /^FONDATEUR$/i,
+        sogeas: /^SOGEAS$/i,
+        procedure: /^PROCEDURE$/i
     };
-    return contrat;
+    //new Date(0, 0, row.getCell('M').value, 0, 0, 0)
+    worksheets.forEach((worksheet, index) => {
+        if (index === 1) {
+            let indexesHeader = {
+                codeApporteurCommissionne: null,
+                codeApporteurAffaire: null,
+                nomApporteurAffaire: null,
+                numAdherent: null,
+                nom: null,
+                prenom: null,
+                codePostal: null,
+                ville: null,
+                codeProduit: null,
+                nomProduit: null,
+                codeContrat: null,
+                nomContrat: null,
+                dateDebutEcheance: null,
+                dateFinEcheance: null,
+                montantTTCEcheance: null,
+                montantHTEcheance: null,
+                codeGarantieTechnique: null,
+                nomGarantieTechnique: null,
+                baseCommisionnement: null,
+                tauxCommission: null,
+                montantCommissions: null,
+                bordereauPaiementCommissionsInitiales: null,
+                courtier: null,
+                fondateur: null,
+                sogeas: null,
+                procedure: null
+            };
+            let rowNumberHeader;
+            worksheet.eachRow((row, rowNumber) => {
+                if (rowNumber === 1) {
+                    rowNumberHeader = rowNumber;
+                    row.eachCell((cell, colNumber) => {
+                        const currentCellValue = (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim().replace(/\n/g, ' ') : cell.value.replace(/\n/g, ' ');
+                        if (headers.indexOf(currentCellValue) < 0) {
+                            headers.push(currentCellValue);
+                            generals.setIndexHeaders(cell, colNumber, arrReg, indexesHeader);
+                        }
+                        for (let index in indexesHeader) {
+                            if (indexesHeader[index] === null) {
+                                errors.push(errorHandler.errorReadExcelMIELV2(index));
+                            }
+                        }
+                    });
+                }
+                if (rowNumber > rowNumberHeader && !row.hidden) {
+                    const { contrat, error } = generals.createContratSimpleHeader(row, indexesHeader);
+                    allContrats.push(contrat);
+                }
+            })
+        }
+    });
 };
 
-const getContratMIELV3 = (row) => {
-    const contrat = {
-        codeApporteurCommissionne: (typeof row.getCell('A').value === 'string') ?
-            row.getCell('A').value.trim() :
-            row.getCell('A').value,
-        codeApporteurAffaire: (typeof row.getCell('B').value === 'string') ?
-            row.getCell('B').value.trim() :
-            row.getCell('B').value,
-        nomApporteurAffaire: (typeof row.getCell('C').value === 'string') ?
-            row.getCell('C').value.trim() :
-            row.getCell('C').value,
-        numAdherent: (typeof row.getCell('D').value === 'string') ?
-            row.getCell('D').value.trim() :
-            row.getCell('D').value,
-        dateDebutContrat: (typeof row.getCell('E').value === 'string') ?
-            row.getCell('E').value.trim() :
-            (row.getCell('E').value !== null) ? new Date(0, 0, row.getCell('E').value, 0, 0, 0) : '',
-        nom: (typeof row.getCell('F').value === 'string') ?
-            row.getCell('F').value.trim() :
-            row.getCell('F').value,
-        prenom: (typeof row.getCell('G').value === 'string') ?
-            row.getCell('G').value.trim() :
-            row.getCell('G').value,
-        codePostal: (typeof row.getCell('H').value === 'string') ?
-            row.getCell('H').value.trim() :
-            row.getCell('H').value,
-        ville: (typeof row.getCell('I').value === 'string') ?
-            row.getCell('I').value.trim() :
-            row.getCell('I').value,
-        codeProduit: (typeof row.getCell('J').value === 'string') ?
-            row.getCell('J').value.trim() :
-            row.getCell('J').value,
-        nomProduit: (typeof row.getCell('K').value === 'string') ?
-            row.getCell('K').value.trim() :
-            row.getCell('K').value,
-        codeContrat: (typeof row.getCell('L').value === 'string') ?
-            row.getCell('L').value.trim() :
-            row.getCell('L').value,
-        nomContrat: (typeof row.getCell('M').value === 'string') ?
-            row.getCell('M').value.trim() :
-            row.getCell('M').value,
-        dateDebutEcheance: (typeof row.getCell('N').value === 'string') ?
-            row.getCell('N').value.trim() :
-            (row.getCell('N').value !== null) ? new Date(0, 0, row.getCell('N').value, 0, 0, 0) : '',
-        dateFinEcheance: (typeof row.getCell('O').value === 'string') ?
-            row.getCell('O').value.trim() :
-            (row.getCell('O').value !== null) ? new Date(0, 0, row.getCell('O').value, 0, 0, 0) : '',
-        montantTTCEcheance: (typeof row.getCell('P').value === 'string') ?
-            row.getCell('P').value.trim() :
-            row.getCell('P').value,
-        montantHTEcheance: (typeof row.getCell('Q').value === 'string') ?
-            row.getCell('Q').value.trim() :
-            row.getCell('Q').value,
-        codeGarantieTechnique: (typeof row.getCell('R').value === 'string') ?
-            row.getCell('R').value.trim() :
-            row.getCell('R').value,
-        nomGarantieTechnique: (typeof row.getCell('S').value === 'string') ?
-            row.getCell('S').value.trim() :
-            row.getCell('S').value !== null,
-        baseCommisionnement: (typeof row.getCell('T').value === 'string') ?
-            row.getCell('T').value.trim() :
-            row.getCell('T').value,
-        tauxCommission: (typeof row.getCell('U').value === 'string') ?
-            row.getCell('U').value.trim() :
-            row.getCell('U').value,
-        montantCommissions: (typeof row.getCell('V').value === 'string') ?
-            row.getCell('V').value.trim() :
-            row.getCell('V').value,
-        bordereauPaiementCommissionsInitiales: (typeof row.getCell('W').value === 'string') ?
-            row.getCell('W').value.trim() :
-            row.getCell('W').value
+const getContratMIELV3 = (worksheets, headers, allContrats, errors) => {
+    const arrReg = {
+        codeApporteurCommissionne: /^Code\s*Apporteur\s*commissionné$/i,
+        codeApporteurAffaire: /^Code\s*Apporteur\s*d'Affaire$/i,
+        nomApporteurAffaire: /^Nom\s*Apporteur\s*d'Affaire$/i,
+        numAdherent: /^N°\s*Adhérent$/i,
+        nom: /^Nom$/i,
+        prenom: /^Prénom$/i,
+        codePostal: /^Code\s*postal$/i,
+        ville: /^Ville$/i,
+        codeProduit: /^Code\s*Poduit$/i,
+        nomProduit: /^Nom\s*Produit$/i,
+        codeContrat: /^Code\s*Contrat$/i,
+        nomContrat: /^Nom\s*Contrat$/i,
+        dateDebutEcheance: /^Date\s*début\s*échéance$/i,
+        dateFinEcheance: /^Date\s*fin\s*échéance$/i,
+        montantTTCEcheance: /^Montant\s*TTC\s*échéance$/i,
+        montantHTEcheance: /^Montant\s*HT\s*échéance$/i,
+        codeGarantieTechnique: /^Code\s*de\s*la\s*Garantie\s*Technique$/i,
+        nomGarantieTechnique: /^Nom\s*de\s*la\s*Garantie\s*Technique$/i,
+        baseCommisionnement: /^Base\s*de\s*commisionnement$/i,
+        tauxCommission: /^Taux\s*de\s*commission$/i,
+        montantCommissions: /^Montant\s*commissions$/i,
+        bordereauPaiementCommissionsInitiales: /^Bordereau\s*du\s*paiement\s*des\s*commissions\s*initiales$/i
     };
-    return contrat;
+    //new Date(0, 0, row.getCell('M').value, 0, 0, 0)
+    worksheets.forEach((worksheet, index) => {
+        if (index === 1) {
+            let indexesHeader = {
+                codeApporteurCommissionne: null,
+                codeApporteurAffaire: null,
+                nomApporteurAffaire: null,
+                numAdherent: null,
+                nom: null,
+                prenom: null,
+                codePostal: null,
+                ville: null,
+                codeProduit: null,
+                nomProduit: null,
+                codeContrat: null,
+                nomContrat: null,
+                dateDebutEcheance: null,
+                dateFinEcheance: null,
+                montantTTCEcheance: null,
+                montantHTEcheance: null,
+                codeGarantieTechnique: null,
+                nomGarantieTechnique: null,
+                baseCommisionnement: null,
+                tauxCommission: null,
+                montantCommissions: null,
+                bordereauPaiementCommissionsInitiales: null
+            };
+            let rowNumberHeader;
+            worksheet.eachRow((row, rowNumber) => {
+                if (rowNumber === 1) {
+                    rowNumberHeader = rowNumber;
+                    row.eachCell((cell, colNumber) => {
+                        const currentCellValue = (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim().replace(/\n/g, ' ') : cell.value.replace(/\n/g, ' ');
+                        if (headers.indexOf(currentCellValue) < 0) {
+                            headers.push(currentCellValue);
+                            generals.setIndexHeaders(cell, colNumber, arrReg, indexesHeader);
+                        }
+                        for (let index in indexesHeader) {
+                            if (indexesHeader[index] === null) {
+                                errors.push(errorHandler.errorReadExcelMIELV3(index));
+                            }
+                        }
+                    });
+                }
+                if (rowNumber > rowNumberHeader && !row.hidden) {
+                    const { contrat, error } = generals.createContratSimpleHeader(row, indexesHeader);
+                    allContrats.push(contrat);
+                }
+            })
+        }
+    });
 };
 
-const getContratMIELV4 = (row) => {
-    const contrat = {
-        codeApporteurCommissionne: (typeof row.getCell('A').value === 'string') ?
-            row.getCell('A').value.trim() :
-            row.getCell('A').value,
-        codeApporteurAffaire: (typeof row.getCell('B').value === 'string') ?
-            row.getCell('B').value.trim() :
-            row.getCell('B').value,
-        nomApporteurAffaire: (typeof row.getCell('C').value === 'string') ?
-            row.getCell('C').value.trim() :
-            row.getCell('C').value,
-        numAdherent: (typeof row.getCell('D').value === 'string') ?
-            row.getCell('D').value.trim() :
-            row.getCell('D').value,
-        nom: (typeof row.getCell('E').value === 'string') ?
-            row.getCell('E').value.trim() :
-            row.getCell('E').value,
-        prenom: (typeof row.getCell('F').value === 'string') ?
-            row.getCell('F').value.trim() :
-            row.getCell('F').value,
-        codePostal: (typeof row.getCell('G').value === 'string') ?
-            row.getCell('G').value.trim() :
-            row.getCell('G').value,
-        ville: (typeof row.getCell('H').value === 'string') ?
-            row.getCell('H').value.trim() :
-            row.getCell('H').value,
-        codeProduit: (typeof row.getCell('I').value === 'string') ?
-            row.getCell('I').value.trim() :
-            row.getCell('I').value,
-        nomProduit: (typeof row.getCell('J').value === 'string') ?
-            row.getCell('J').value.trim() :
-            row.getCell('J').value,
-        codeContrat: (typeof row.getCell('K').value === 'string') ?
-            row.getCell('K').value.trim() :
-            row.getCell('K').value,
-        nomContrat: (typeof row.getCell('L').value === 'string') ?
-            row.getCell('L').value.trim() :
-            row.getCell('L').value,
-        dateDebutEcheance: (typeof row.getCell('M').value === 'string') ?
-            row.getCell('M').value.trim() :
-            (row.getCell('M').value !== null) ? new Date(0, 0, row.getCell('M').value, 0, 0, 0) : '',
-        dateFinEcheance: (typeof row.getCell('N').value === 'string') ?
-            row.getCell('N').value.trim() :
-            (row.getCell('N').value !== null) ? new Date(0, 0, row.getCell('N').value, 0, 0, 0) : '',
-        montantTTCEcheance: (typeof row.getCell('O').value === 'string') ?
-            row.getCell('O').value.trim() :
-            row.getCell('O').value,
-        montantHTEcheance: (typeof row.getCell('P').value === 'string') ?
-            row.getCell('P').value.trim() :
-            row.getCell('P').value,
-        codeGarantieTechnique: (typeof row.getCell('Q').value === 'string') ?
-            row.getCell('Q').value.trim() :
-            row.getCell('Q').value,
-        nomGarantieTechnique: (typeof row.getCell('R').value === 'string') ?
-            row.getCell('R').value.trim() :
-            row.getCell('R').value !== null,
-        baseCommisionnement: (typeof row.getCell('S').value === 'string') ?
-            row.getCell('S').value.trim() :
-            row.getCell('S').value,
-        tauxCommission: (typeof row.getCell('T').value === 'string') ?
-            row.getCell('T').value.trim() :
-            row.getCell('T').value,
-        montantCommissions: (typeof row.getCell('U').value === 'string') ?
-            row.getCell('U').value.trim() :
-            row.getCell('U').value,
-        bordereauPaiementCommissionsInitiales: (typeof row.getCell('V').value === 'string') ?
-            row.getCell('V').value.trim() :
-            row.getCell('V').value,
-        courtier: (typeof row.getCell('W').value === 'string') ?
-            row.getCell('W').value.trim() :
-            row.getCell('W').value,
-        fondateur: (typeof row.getCell('X').value === 'string') ?
-            row.getCell('X').value.trim() :
-            row.getCell('X').value,
-        mielillon: (typeof row.getCell('Y').value === 'string') ?
-            row.getCell('Y').value.trim() :
-            row.getCell('Y').value,
-        sofracoExpertises: (typeof row.getCell('Z').value === 'string') ?
-            row.getCell('Z').value.trim() :
-            row.getCell('Z').value,
-        budget: (typeof row.getCell('AA').value === 'string') ?
-            row.getCell('AA').value.trim() :
-            row.getCell('AA').value,
+const getContratMIELV4 = (worksheets, headers, allContrats, errors) => {
+    const arrReg = {
+        codeApporteurCommissionne: /^Code\s*Apporteur\s*commissionné$/i,
+        codeApporteurAffaire: /^Code\s*Apporteur\s*d'Affaire$/i,
+        nomApporteurAffaire: /^Nom\s*Apporteur\s*d'Affaire$/i,
+        numAdherent: /^N°\s*Adhérent$/i,
+        nom: /^Nom$/i,
+        prenom: /^Prénom$/i,
+        codePostal: /^Code\s*postal$/i,
+        ville: /^Ville$/i,
+        codeProduit: /^Code\s*Poduit$/i,
+        nomProduit: /^Nom\s*Produit$/i,
+        codeContrat: /^Code\s*Contrat$/i,
+        nomContrat: /^Nom\s*Contrat$/i,
+        dateDebutEcheance: /^Date\s*début\s*échéance$/i,
+        dateFinEcheance: /^Date\s*fin\s*échéance$/i,
+        montantTTCEcheance: /^Montant\s*TTC\s*échéance$/i,
+        montantHTEcheance: /^Montant\s*HT\s*échéance$/i,
+        codeGarantieTechnique: /^Code\s*de\s*la\s*Garantie\s*Technique$/i,
+        nomGarantieTechnique: /^Nom\s*de\s*la\s*Garantie\s*Technique$/i,
+        baseCommisionnement: /^Base\s*de\s*commisionnement$/i,
+        tauxCommission: /^Taux\s*de\s*commission$/i,
+        montantCommissions: /^Montant\s*commissions$/i,
+        bordereauPaiementCommissionsInitiales: /^Bordereau\s*du\s*paiement\s*des\s*commissions\s*initiales$/i,
+        courtier: /^COURTIER$/i,
+        fondateur: /^FONDATEUR$/i,
+        pavillon: /^PAVILLON$/i,
+        sofracoExpertises: /^SOFRACO\s*EXPERTISES$/i,
+        budget: /^BUDGET$/i
     };
-    return contrat;
+    //new Date(0, 0, row.getCell('M').value, 0, 0, 0)
+    worksheets.forEach((worksheet, index) => {
+        if (index === 1) {
+            let indexesHeader = {
+                codeApporteurCommissionne: null,
+                codeApporteurAffaire: null,
+                nomApporteurAffaire: null,
+                numAdherent: null,
+                nom: null,
+                prenom: null,
+                codePostal: null,
+                ville: null,
+                codeProduit: null,
+                nomProduit: null,
+                codeContrat: null,
+                nomContrat: null,
+                dateDebutEcheance: null,
+                dateFinEcheance: null,
+                montantTTCEcheance: null,
+                montantHTEcheance: null,
+                codeGarantieTechnique: null,
+                nomGarantieTechnique: null,
+                baseCommisionnement: null,
+                tauxCommission: null,
+                montantCommissions: null,
+                bordereauPaiementCommissionsInitiales: null,
+                courtier: null,
+                fondateur: null,
+                pavillon: null,
+                sofracoExpertises: null,
+                budget: null
+            };
+            let rowNumberHeader;
+            worksheet.eachRow((row, rowNumber) => {
+                if (rowNumber === 1) {
+                    rowNumberHeader = rowNumber;
+                    row.eachCell((cell, colNumber) => {
+                        const currentCellValue = (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim().replace(/\n/g, ' ') : cell.value.replace(/\n/g, ' ');
+                        if (headers.indexOf(currentCellValue) < 0) {
+                            headers.push(currentCellValue);
+                            generals.setIndexHeaders(cell, colNumber, arrReg, indexesHeader);
+                        }
+                        for (let index in indexesHeader) {
+                            if (indexesHeader[index] === null) {
+                                errors.push(errorHandler.errorReadExcelMIELV4(index));
+                            }
+                        }
+                    });
+                }
+                if (rowNumber > rowNumberHeader && !row.hidden) {
+                    const { contrat, error } = generals.createContratSimpleHeader(row, indexesHeader);
+                    allContrats.push(contrat);
+                }
+            })
+        }
+    });
 };

@@ -245,6 +245,197 @@ exports.errorReadExcelMIEAV1 = (index) => {
     return errorHodeva;
 };
 
+exports.errorReadExcelMIELCREASIO = (index) => {
+    const indexesHeader = {
+        codeApporteurCommissionne: "Code Apporteur commissionné",
+        codeApporteurAffaire: "Code Apporteur d'Affaire",
+        nomApporteurAffaire: "Nom Apporteur d'Affaire",
+        numAdherent: "N° Adhérent",
+        nom: "Nom",
+        prenom: "Prénom",
+        codePostal: "Code postal",
+        ville: "Ville",
+        codeProduit: "Code Poduit",
+        nomProduit: "Nom Produit",
+        codeContrat: "Code Contrat",
+        nomContrat: "Nom Contrat",
+        dateDebutEcheance: "Date début échéance",
+        dateFinEcheance: "Date fin échéance",
+        montantTTCEcheance: "Montant TTC échéance",
+        montantHTEcheance: "Montant HT échéance",
+        codeGarantieTechnique: "Code de la Garantie Technique",
+        nomGarantieTechnique: "Nom de la Garantie Technique",
+        baseCommisionnement: "Base de commisionnement",
+        tauxCommission: "Taux de commission",
+        montantCommissions: "Montant commissions",
+        bordereauPaiementCommissionsInitiales: "Bordereau du paiement des commissions initiales"
+    };
+
+    const errorMielCreasio = `MIEL CREASIO : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorMielCreasio;
+};
+
+exports.errorReadExcelMIELCREASIO = (index) => {
+    const indexesHeader = {
+        codeApporteurCommissionne: "Code Apporteur commissionné",
+        codeApporteurAffaire: "Code Apporteur d'Affaire",
+        nomApporteurAffaire: "Nom Apporteur d'Affaire",
+        numAdherent: "N° Adhérent",
+        nom: "Nom",
+        prenom: "Prénom",
+        codePostal: "Code postal",
+        ville: "Ville",
+        codeProduit: "Code Poduit",
+        nomProduit: "Nom Produit",
+        codeContrat: "Code Contrat",
+        nomContrat: "Nom Contrat",
+        dateDebutEcheance: "Date début échéance",
+        dateFinEcheance: "Date fin échéance",
+        montantTTCEcheance: "Montant TTC échéance",
+        montantHTEcheance: "Montant HT échéance",
+        codeGarantieTechnique: "Code de la Garantie Technique",
+        nomGarantieTechnique: "Nom de la Garantie Technique",
+        baseCommisionnement: "Base de commisionnement",
+        tauxCommission: "Taux de commission",
+        montantCommissions: "Montant commissions",
+        bordereauPaiementCommissionsInitiales: "Bordereau du paiement des commissions initiales"
+    };
+
+    const errorMielCreasio = `MIEL CREASIO : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorMielCreasio;
+};
+
+exports.errorReadExcelMIELV1 = (index) => {
+    const indexesHeader = {
+        codeApporteurCommissionne: "Code Apporteur commissionné",
+        codeApporteurAffaire: "Code Apporteur d'Affaire",
+        nomApporteurAffaire: "Nom Apporteur d'Affaire",
+        numAdherent: "N° Adhérent",
+        nom: "Nom",
+        prenom: "Prénom",
+        codePostal: "Code postal",
+        ville: "Ville",
+        codeProduit: "Code Poduit",
+        nomProduit: "Nom Produit",
+        codeContrat: "Code Contrat",
+        nomContrat: "Nom Contrat",
+        dateDebutEcheance: "Date début échéance",
+        dateFinEcheance: "Date fin échéance",
+        montantTTCEcheance: "Montant TTC échéance",
+        montantHTEcheance: "Montant HT échéance",
+        codeGarantieTechnique: "Code de la Garantie Technique",
+        nomGarantieTechnique: "Nom de la Garantie Technique",
+        baseCommisionnement: "Base de commisionnement",
+        tauxCommission: "Taux de commission",
+        montantCommissions: "Montant commissions",
+        bordereauPaiementCommissionsInitiales: "Bordereau du paiement des commissions initiales",
+        courtier: "COURTIER",
+        fondateur: "FONDATEUR"
+    };
+
+    const errorMielV1 = `MIEL V1 : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorMielV1;
+};
+
+exports.errorReadExcelMIELV2 = (index) => {
+    const indexesHeader = {
+        codeApporteurCommissionne: "Code Apporteur commissionné",
+        codeApporteurAffaire: "Code Apporteur d'Affaire",
+        nomApporteurAffaire: "Nom Apporteur d'Affaire",
+        numAdherent: "N° Adhérent",
+        nom: "Nom",
+        prenom: "Prénom",
+        codePostal: "Code postal",
+        ville: "Ville",
+        codeProduit: "Code Poduit",
+        nomProduit: "Nom Produit",
+        codeContrat: "Code Contrat",
+        nomContrat: "Nom Contrat",
+        dateDebutEcheance: "Date début échéance",
+        dateFinEcheance: "Date fin échéance",
+        montantTTCEcheance: "Montant TTC échéance",
+        montantHTEcheance: "Montant HT échéance",
+        codeGarantieTechnique: "Code de la Garantie Technique",
+        nomGarantieTechnique: "Nom de la Garantie Technique",
+        baseCommisionnement: "Base de commisionnement",
+        tauxCommission: "Taux de commission",
+        montantCommissions: "Montant commissions",
+        bordereauPaiementCommissionsInitiales: "Bordereau du paiement des commissions initiales",
+        courtier: "COURTIER",
+        fondateur: "FONDATEUR",
+        sogeas: 'SOGEAS',
+        procedure: 'PROCEDURE'
+    };
+
+    const errorMielV2 = `MIEL V2 : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorMielV2;
+};
+
+exports.errorReadExcelMIELV3 = (index) => {
+    const indexesHeader = {
+        codeApporteurCommissionne: "Code Apporteur commissionné",
+        codeApporteurAffaire: "Code Apporteur d'Affaire",
+        nomApporteurAffaire: "Nom Apporteur d'Affaire",
+        numAdherent: "N° Adhérent",
+        nom: "Nom",
+        prenom: "Prénom",
+        codePostal: "Code postal",
+        ville: "Ville",
+        codeProduit: "Code Poduit",
+        nomProduit: "Nom Produit",
+        codeContrat: "Code Contrat",
+        nomContrat: "Nom Contrat",
+        dateDebutEcheance: "Date début échéance",
+        dateFinEcheance: "Date fin échéance",
+        montantTTCEcheance: "Montant TTC échéance",
+        montantHTEcheance: "Montant HT échéance",
+        codeGarantieTechnique: "Code de la Garantie Technique",
+        nomGarantieTechnique: "Nom de la Garantie Technique",
+        baseCommisionnement: "Base de commisionnement",
+        tauxCommission: "Taux de commission",
+        montantCommissions: "Montant commissions",
+        bordereauPaiementCommissionsInitiales: "Bordereau du paiement des commissions initiales"
+    };
+
+    const errorMielV3 = `MIEL V3 : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorMielV3;
+};
+
+exports.errorReadExcelMIELV4 = (index) => {
+    const indexesHeader = {
+        codeApporteurCommissionne: "Code Apporteur commissionné",
+        codeApporteurAffaire: "Code Apporteur d'Affaire",
+        nomApporteurAffaire: "Nom Apporteur d'Affaire",
+        numAdherent: "N° Adhérent",
+        nom: "Nom",
+        prenom: "Prénom",
+        codePostal: "Code postal",
+        ville: "Ville",
+        codeProduit: "Code Poduit",
+        nomProduit: "Nom Produit",
+        codeContrat: "Code Contrat",
+        nomContrat: "Nom Contrat",
+        dateDebutEcheance: "Date début échéance",
+        dateFinEcheance: "Date fin échéance",
+        montantTTCEcheance: "Montant TTC échéance",
+        montantHTEcheance: "Montant HT échéance",
+        codeGarantieTechnique: "Code de la Garantie Technique",
+        nomGarantieTechnique: "Nom de la Garantie Technique",
+        baseCommisionnement: "Base de commisionnement",
+        tauxCommission: "Taux de commission",
+        montantCommissions: "Montant commissions",
+        bordereauPaiementCommissionsInitiales: "Bordereau du paiement des commissions initiales",
+        courtier: "COURTIER",
+        fondateur: "FONDATEUR",
+        pavillon: 'PAVILLON',
+        sofracoExpertises: 'SOFRACO EXPERTISES',
+        budget: 'BUDGET'
+    };
+
+    const errorMielV4 = `MIEL V4 : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorMielV4;
+};
+
 exports.errorReadExcelMILTIS = (index) => {
     const indexesHeader = {
         codeAdherent: 'Code adhérent',

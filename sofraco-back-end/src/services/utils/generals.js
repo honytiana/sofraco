@@ -18,14 +18,23 @@ exports.createContratSimpleHeader = (row, indexesHeader) => {
     let contrat = {};
     let error = [];
     for (let ih in indexesHeader) {
-        contrat[ih] = (indexesHeader[ih] !== null) && ((typeof row.getCell(indexesHeader[ih][0]).value === 'string') ?
-            row.getCell(indexesHeader[ih][0]).value.trim() :
-            row.getCell(indexesHeader[ih][0]).value);
-            if (indexesHeader[ih] !== null) {
-                if (row.getCell(indexesHeader[ih][0]).value === null || row.getCell(indexesHeader[ih][0]).value === '') {
-                    error.push(row.getCell(indexesHeader[ih][0]).address);
-                }
+        const value = row.getCell(indexesHeader[ih][0]).value;
+        if (indexesHeader[ih] !== null && ih.match(/date/i)) {
+            if (value !== null && !isNaN(value)) {
+                contrat[ih] = new Date(0, 0, value, 0, 0, 0);
+            } else {
+                contrat[ih] = (indexesHeader[ih] !== null) && ((typeof value === 'string') ?
+                    value.trim() : value);
             }
+        } else {
+            contrat[ih] = (indexesHeader[ih] !== null) && ((typeof value === 'string') ?
+                value.trim() : value);
+        }
+        if (indexesHeader[ih] !== null) {
+            if (value === null || value === '') {
+                error.push(row.getCell(indexesHeader[ih][0]).address);
+            }
+        }
     }
     return { contrat, error };
 }
@@ -38,15 +47,15 @@ exports.createContratDoubleHeader = (row, indexesFirstHeader, indexesSecondHeade
     }
     for (let i in contrat) {
         for (let s in indexesSecondHeader) {
+            const value = row.getCell(indexesSecondHeader[s][0]).value;
             if (s in indexesHeader[i]) {
-                contrat[i][s] = (indexesSecondHeader[s] !== null) && ((typeof row.getCell(indexesSecondHeader[s][0]).value === 'string') ?
-                    row.getCell(indexesSecondHeader[s][0]).value.trim() :
-                    row.getCell(indexesSecondHeader[s][0]).value);
-                    if (indexesSecondHeader[s] !== null) {
-                        if (row.getCell(indexesSecondHeader[s][0]).value === null || row.getCell(indexesSecondHeader[s][0]).value === '') {
-                            error.push(row.getCell(indexesSecondHeader[s][0]).address);
-                        }
+                contrat[i][s] = (indexesSecondHeader[s] !== null) && ((typeof value === 'string') ?
+                    value.trim() : value);
+                if (indexesSecondHeader[s] !== null) {
+                    if (value === null || value === '') {
+                        error.push(row.getCell(indexesSecondHeader[s][0]).address);
                     }
+                }
             }
         }
     }
