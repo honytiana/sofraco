@@ -20,7 +20,7 @@ exports.createContratSimpleHeader = (row, indexesHeader) => {
     for (let ih in indexesHeader) {
         const value = row.getCell(indexesHeader[ih][0]).value;
         if (indexesHeader[ih] !== null && ih.match(/date/i)) {
-            if (value !== null && !isNaN(value)) {
+            if (value !== null && typeof value === 'number') {
                 contrat[ih] = new Date(0, 0, value, 0, 0, 0);
             } else {
                 contrat[ih] = (indexesHeader[ih] !== null) && ((typeof value === 'string') ?

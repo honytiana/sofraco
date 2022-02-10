@@ -122,12 +122,12 @@ const getContratMIEAXIOM = (worksheets, headers, allContrats, errors) => {
                             headers.push(currentCellValue);
                             generals.setIndexHeaders(cell, colNumber, arrReg, indexesHeader);
                         }
-                        for (let index in indexesHeader) {
-                            if (indexesHeader[index] === null) {
-                                errors.push(errorHandler.errorReadExcelMIEAXIOM(index));
-                            }
-                        }
                     });
+                    for (let index in indexesHeader) {
+                        if (indexesHeader[index] === null) {
+                            errors.push(errorHandler.errorReadExcelMIEAXIOM(index));
+                        }
+                    }
                 }
                 if (rowNumber > rowNumberHeader && !row.hidden) {
                     const { contrat, error } = generals.createContratSimpleHeader(row, indexesHeader);
@@ -207,12 +207,12 @@ const getContratMIEV1 = (worksheets, headers, allContrats, errors) => {
                             headers.push(currentCellValue);
                             generals.setIndexHeaders(cell, colNumber, arrReg, indexesHeader);
                         }
-                        for (let index in indexesHeader) {
-                            if (indexesHeader[index] === null) {
-                                errors.push(errorHandler.errorReadExcelMIEAV1(index));
-                            }
-                        }
                     });
+                    for (let index in indexesHeader) {
+                        if (indexesHeader[index] === null) {
+                            errors.push(errorHandler.errorReadExcelMIEAV1(index));
+                        }
+                    }
                 }
                 if (rowNumber > rowNumberHeader && !row.hidden) {
                     const { contrat, error } = generals.createContratSimpleHeader(row, indexesHeader);

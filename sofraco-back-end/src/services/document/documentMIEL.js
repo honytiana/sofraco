@@ -146,12 +146,12 @@ const getContratMIELCREASIO = (worksheets, headers, allContrats, errors) => {
                             headers.push(currentCellValue);
                             generals.setIndexHeaders(cell, colNumber, arrReg, indexesHeader);
                         }
-                        for (let index in indexesHeader) {
-                            if (indexesHeader[index] === null) {
-                                errors.push(errorHandler.errorReadExcelMIELCREASIO(index));
-                            }
-                        }
                     });
+                    for (let index in indexesHeader) {
+                        if (indexesHeader[index] === null) {
+                            errors.push(errorHandler.errorReadExcelMIELCREASIO(index));
+                        }
+                    }
                 }
                 if (rowNumber > rowNumberHeader && !row.hidden) {
                     const { contrat, error } = generals.createContratSimpleHeader(row, indexesHeader);
@@ -227,12 +227,12 @@ const getContratMIELV1 = (worksheets, headers, allContrats, errors) => {
                             headers.push(currentCellValue);
                             generals.setIndexHeaders(cell, colNumber, arrReg, indexesHeader);
                         }
-                        for (let index in indexesHeader) {
-                            if (indexesHeader[index] === null) {
-                                errors.push(errorHandler.errorReadExcelMIELV1(index));
-                            }
-                        }
                     });
+                    for (let index in indexesHeader) {
+                        if (indexesHeader[index] === null) {
+                            errors.push(errorHandler.errorReadExcelMIELV1(index));
+                        }
+                    }
                 }
                 if (rowNumber > rowNumberHeader && !row.hidden) {
                     const { contrat, error } = generals.createContratSimpleHeader(row, indexesHeader);
@@ -312,12 +312,12 @@ const getContratMIELV2 = (worksheets, headers, allContrats, errors) => {
                             headers.push(currentCellValue);
                             generals.setIndexHeaders(cell, colNumber, arrReg, indexesHeader);
                         }
-                        for (let index in indexesHeader) {
-                            if (indexesHeader[index] === null) {
-                                errors.push(errorHandler.errorReadExcelMIELV2(index));
-                            }
-                        }
                     });
+                    for (let index in indexesHeader) {
+                        if (indexesHeader[index] === null) {
+                            errors.push(errorHandler.errorReadExcelMIELV2(index));
+                        }
+                    }
                 }
                 if (rowNumber > rowNumberHeader && !row.hidden) {
                     const { contrat, error } = generals.createContratSimpleHeader(row, indexesHeader);
@@ -389,12 +389,12 @@ const getContratMIELV3 = (worksheets, headers, allContrats, errors) => {
                             headers.push(currentCellValue);
                             generals.setIndexHeaders(cell, colNumber, arrReg, indexesHeader);
                         }
-                        for (let index in indexesHeader) {
-                            if (indexesHeader[index] === null) {
-                                errors.push(errorHandler.errorReadExcelMIELV3(index));
-                            }
-                        }
                     });
+                    for (let index in indexesHeader) {
+                        if (indexesHeader[index] === null) {
+                            errors.push(errorHandler.errorReadExcelMIELV3(index));
+                        }
+                    }
                 }
                 if (rowNumber > rowNumberHeader && !row.hidden) {
                     const { contrat, error } = generals.createContratSimpleHeader(row, indexesHeader);
@@ -476,12 +476,12 @@ const getContratMIELV4 = (worksheets, headers, allContrats, errors) => {
                             headers.push(currentCellValue);
                             generals.setIndexHeaders(cell, colNumber, arrReg, indexesHeader);
                         }
-                        for (let index in indexesHeader) {
-                            if (indexesHeader[index] === null) {
-                                errors.push(errorHandler.errorReadExcelMIELV4(index));
-                            }
-                        }
                     });
+                    for (let index in indexesHeader) {
+                        if (indexesHeader[index] === null) {
+                            errors.push(errorHandler.errorReadExcelMIELV4(index));
+                        }
+                    }
                 }
                 if (rowNumber > rowNumberHeader && !row.hidden) {
                     const { contrat, error } = generals.createContratSimpleHeader(row, indexesHeader);

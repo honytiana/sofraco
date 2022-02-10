@@ -466,6 +466,59 @@ exports.errorReadExcelMILTIS = (index) => {
     return errorSwisslifeSurco;
 };
 
+exports.errorReadExcelMMAACQUISITION = (index) => {
+    const indexesHeader = {
+        numCourtier: 'N° Courtier',
+        souscripteur: 'Souscripteur',
+        dateEffet: 'Date d\'effet',
+        dateEcheance: 'Date d\'échéance',
+        produit: 'Produit',
+        numContrat: 'N° de contrat',
+        montant: 'Montant',
+        fr: 'Fr.',
+        encaissement: 'Encaissement',
+        escomptee: 'Escomptée',
+        annuelle: 'Annuelle',
+        commissionsSurArbitrage: 'Commissions sur arbitrage',
+        total: 'TOTAL'
+    };
+
+    const errorMMAACQUISITION = `MMA ACQUISITION : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorMMAACQUISITION;
+};
+
+exports.errorReadExcelMMAENCOURS = (index) => {
+    const indexesHeader = {
+        codeApporteur: 'Code Apporteur',
+        numContrat: 'N° de contrat',
+        nomSouscripteur: 'Nom souscripteur',
+        produit: 'Produit',
+        libelleSupport: 'Libellé du support',
+        assieteDeRenumeration: 'Assiette de Rémunération en €',
+        taux: 'Taux',
+        commissionSurEncours: 'Commission sur en-cours en €'
+    };
+
+    const errorMMAENCOURS = `MMA ENCOURS : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorMMAENCOURS;
+};
+
+exports.errorReadExcelMMAINCITATION = (index) => {
+    const indexesHeader = {
+        codeApporteur: 'Code Apporteur',
+        nomSouscripteur: 'Nom du souscripteur',
+        numContrat: 'N° de contrat',
+        dateMouvement: 'Date du mouvement',
+        libelleMouvement: 'Libellé du mouvement',
+        montant: 'Montant en €',
+        tauxIncitation: 'Taux d\'incitation',
+        montantIncitation: 'Montant de l\'incitation en €'
+    };
+
+    const errorMMAINCITATION = `MMA INCITATION : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorMMAINCITATION;
+};
+
 exports.errorReadExcelSWISSLIFESURCO = (index) => {
     const indexesHeader = {
         apporteurVente: 'Apporteur de la vente',
