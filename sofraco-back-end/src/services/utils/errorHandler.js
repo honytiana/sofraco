@@ -519,6 +519,288 @@ exports.errorReadExcelMMAINCITATION = (index) => {
     return errorMMAINCITATION;
 };
 
+exports.errorReadExcelPAVILLONACTIO = (index) => {
+    const indexesHeader = {
+        dateGeneration: 'Date génération',
+        codeCompagnie: 'Code compagnie',
+        codeCourtier: 'Code courtier',
+        raisonSocialeApporteur: 'Raison Sociale Apporteur',
+        dateArrete: 'Date arrêté',
+        identifiant: 'Identifiant',
+        codePostal: 'Code Postal',
+        commune: 'Commune',
+        dateEffetContrat: 'Date d\'effet contrat',
+        debutPeriode: 'Début période',
+        finPeriode: 'Fin période',
+        raisonSociale: 'Nom prénom / Raison sociale',
+        codeProduit: 'Code produit',
+        nomProduit: 'Nom produit',
+        emissionTTC: 'Emission TTC',
+        reglementTTC: 'Règlement TTC',
+        reglementHT: 'Règlement HT',
+        taux: 'Taux',
+        montantPaiement: 'Montant paiement',
+        courtier: 'COURTIER',
+        fondateur: 'FONDATEUR'
+    };
+
+    const errorPAVILLONACTIO = `PAVILLON ACTIO : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorPAVILLONACTIO;
+};
+
+exports.errorReadExcelPAVILLONV1 = (index) => {
+    const indexesHeader = {
+        dateGeneration: 'Date génération',
+        codeCompagnie: 'Code compagnie',
+        codeCourtier: 'Code courtier',
+        raisonSocialeApporteur: 'Raison Sociale Apporteur',
+        dateArrete: 'Date arrêté',
+        identifiant: 'Identifiant',
+        codePostal: 'Code Postal',
+        commune: 'Commune',
+        dateEffetContrat: 'Date d\'effet contrat',
+        debutPeriode: 'Début période',
+        finPeriode: 'Fin période',
+        raisonSociale: 'Nom prénom / Raison sociale',
+        codeProduit: 'Code produit',
+        nomProduit: 'Nom produit',
+        emissionTTC: 'Emission TTC',
+        reglementTTC: 'Règlement TTC',
+        reglementHT: 'Règlement HT',
+        taux: 'Taux',
+        montantPaiement: 'Montant paiement',
+        courtier: 'COURTIER',
+        fondateur: 'FONDATEUR'
+    };
+
+    const errorPAVILLONV1 = `PAVILLON V1 : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorPAVILLONV1;
+};
+
+exports.errorReadExcelPAVILLONV2 = (index) => {
+    const indexesHeader = {
+        dateGeneration: 'Date génération',
+        codeCompagnie: 'Code compagnie',
+        codeCourtier: 'Code courtier',
+        raisonSocialeApporteur: 'Raison Sociale Apporteur',
+        dateArrete: 'Date arrêté',
+        identifiant: 'Identifiant',
+        codePostal: 'Code Postal',
+        commune: 'Commune',
+        dateEffetContrat: 'Date d\'effet contrat',
+        debutPeriode: 'Début période',
+        finPeriode: 'Fin période',
+        raisonSociale: 'Nom prénom / Raison sociale',
+        codeProduit: 'Code produit',
+        nomProduit: 'Nom produit',
+        emissionTTC: 'Emission TTC',
+        reglementTTC: 'Règlement TTC',
+        reglementHT: 'Règlement HT',
+        taux: 'Taux',
+        montantPaiement: 'Montant paiement',
+        courtier: 'COURTIER',
+        fondateur: 'FONDATEUR',
+        sogeas: 'SOGEAS',
+        procedure: 'PROCEDURE'
+    };
+
+    const errorPAVILLONV2 = `PAVILLON V2 : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorPAVILLONV2;
+};
+
+exports.errorReadExcelPAVILLONV3 = (index) => {
+    const indexesHeader = {
+        dateGeneration: 'Date génération',
+        codeCompagnie: 'Code compagnie',
+        codeCourtier: 'Code courtier',
+        raisonSocialeApporteur: 'Raison Sociale Apporteur',
+        dateArrete: 'Date arrêté',
+        identifiant: 'Identifiant',
+        codePostal: 'Code Postal',
+        commune: 'Commune',
+        dateEffetContrat: 'Date d\'effet contrat',
+        debutPeriode: 'Début période',
+        finPeriode: 'Fin période',
+        raisonSociale: 'Nom prénom / Raison sociale',
+        codeProduit: 'Code produit',
+        nomProduit: 'Nom produit',
+        emissionTTC: 'Emission TTC',
+        reglementTTC: 'Règlement TTC',
+        reglementHT: 'Règlement HT',
+        taux: 'Taux',
+        montantPaiement: 'Montant paiement',
+        courtier: 'COURTIER',
+        fondateur: 'FONDATEUR'
+    };
+
+    const errorPAVILLONV3 = `PAVILLON V3 : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorPAVILLONV3;
+};
+
+exports.errorReadExcelPAVILLONV4 = (index) => {
+    const indexesHeader = {
+        dateGeneration: 'Date génération',
+        codeCompagnie: 'Code compagnie',
+        codeCourtier: 'Code courtier',
+        raisonSocialeApporteur: 'Raison Sociale Apporteur',
+        dateArrete: 'Date arrêté',
+        identifiant: 'Identifiant',
+        codePostal: 'Code Postal',
+        commune: 'Commune',
+        dateEffetContrat: 'Date d\'effet contrat',
+        debutPeriode: 'Début période',
+        finPeriode: 'Fin période',
+        raisonSociale: 'Nom prénom / Raison sociale',
+        codeProduit: 'Code produit',
+        nomProduit: 'Nom produit',
+        emissionTTC: 'Emission TTC',
+        reglementTTC: 'Règlement TTC',
+        reglementHT: 'Règlement HT',
+        taux: 'Taux',
+        montantPaiement: 'Montant paiement',
+        courtier: 'COURTIER',
+        fondateur: 'FONDATEUR',
+        sogeas: 'SOGEAS',
+        procedure: 'PROCEDURE',
+        pavillon: 'PAVILLON',
+        sofraco: 'SOFRACO',
+        sofracoExpertise: 'SOFRACO EXPERTISES',
+        budget: 'BUDGET'
+    };
+
+    const errorPAVILLONV4 = `PAVILLON V4 : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorPAVILLONV4;
+};
+
+exports.errorReadExcelPAVILLONV5 = (index) => {
+    const indexesHeader = {
+        dateGeneration: 'Date génération',
+        codeCompagnie: 'Code compagnie',
+        codeCourtier: 'Code courtier',
+        raisonSocialeApporteur: 'Raison Sociale Apporteur',
+        dateArrete: 'Date arrêté',
+        identifiant: 'Identifiant',
+        codePostal: 'Code Postal',
+        commune: 'Commune',
+        dateEffetContrat: 'Date d\'effet contrat',
+        debutPeriode: 'Début période',
+        finPeriode: 'Fin période',
+        raisonSociale: 'Nom prénom / Raison sociale',
+        codeProduit: 'Code produit',
+        nomProduit: 'Nom produit',
+        emissionTTC: 'Emission TTC',
+        reglementTTC: 'Règlement TTC',
+        reglementHT: 'Règlement HT',
+        taux: 'Taux',
+        montantPaiement: 'Montant paiement',
+        courtier: 'COURTIER',
+        fondateur: 'FONDATEUR',
+        sogeas: 'SOGEAS',
+        procedure: 'PROCEDURE',
+        pavillon: 'PAVILLON',
+        sofraco: 'SOFRACO',
+        sofracoExpertise: 'SOFRACO EXPERTISES',
+    };
+
+    const errorPAVILLONV5 = `PAVILLON V5 : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorPAVILLONV5;
+};
+
+exports.errorReadExcelPAVILLONV6 = (index) => {
+    const indexesHeader = {
+        dateGeneration: 'Date génération',
+        codeCompagnie: 'Code compagnie',
+        codeCourtier: 'Code courtier',
+        raisonSocialeApporteur: 'Raison Sociale Apporteur',
+        dateArrete: 'Date arrêté',
+        identifiant: 'Identifiant',
+        codePostal: 'Code Postal',
+        commune: 'Commune',
+        dateEffetContrat: 'Date d\'effet contrat',
+        debutPeriode: 'Début période',
+        finPeriode: 'Fin période',
+        raisonSociale: 'Nom prénom / Raison sociale',
+        codeProduit: 'Code produit',
+        nomProduit: 'Nom produit',
+        emissionTTC: 'Emission TTC',
+        reglementTTC: 'Règlement TTC',
+        reglementHT: 'Règlement HT',
+        taux: 'Taux',
+        montantPaiement: 'Montant paiement',
+        courtier: 'COURTIER',
+        fondateur: 'FONDATEUR',
+        sofracoExpertise: 'SOFRACO EXPERTISES',
+    };
+
+    const errorPAVILLONV6 = `PAVILLON V6 : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorPAVILLONV6;
+};
+
+exports.errorReadExcelPAVILLONV7 = (index) => {
+    const indexesHeader = {
+        dateGeneration: 'Date génération',
+        codeCompagnie: 'Code compagnie',
+        codeCourtier: 'Code courtier',
+        raisonSocialeApporteur: 'Raison Sociale Apporteur',
+        dateArrete: 'Date arrêté',
+        identifiant: 'Identifiant',
+        codePostal: 'Code Postal',
+        commune: 'Commune',
+        dateEffetContrat: 'Date d\'effet contrat',
+        debutPeriode: 'Début période',
+        finPeriode: 'Fin période',
+        raisonSociale: 'Nom prénom / Raison sociale',
+        codeProduit: 'Code produit',
+        nomProduit: 'Nom produit',
+        emissionTTC: 'Emission TTC',
+        reglementTTC: 'Règlement TTC',
+        reglementHT: 'Règlement HT',
+        taux: 'Taux',
+        montantPaiement: 'Montant paiement',
+        courtier: 'COURTIER',
+        fondateur: 'FONDATEUR',
+        pavillon: 'PAVILLON',
+        sofraco: 'SOFRACO',
+        sofracoExpertise: 'SOFRACO EXPERTISES',
+        budget: 'BUDGET'
+    };
+
+    const errorPAVILLONV7 = `PAVILLON V7 : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorPAVILLONV7;
+};
+
+exports.errorReadExcelPAVILLONV8 = (index) => {
+    const indexesHeader = {
+        dateGeneration: 'Date génération',
+        codeCompagnie: 'Code compagnie',
+        codeCourtier: 'Code courtier',
+        raisonSocialeApporteur: 'Raison Sociale Apporteur',
+        dateArrete: 'Date arrêté',
+        identifiant: 'Identifiant',
+        codePostal: 'Code Postal',
+        commune: 'Commune',
+        dateEffetContrat: 'Date d\'effet contrat',
+        debutPeriode: 'Début période',
+        finPeriode: 'Fin période',
+        raisonSociale: 'Nom prénom / Raison sociale',
+        codeProduit: 'Code produit',
+        nomProduit: 'Nom produit',
+        emissionTTC: 'Emission TTC',
+        reglementTTC: 'Règlement TTC',
+        reglementHT: 'Règlement HT',
+        taux: 'Taux',
+        montantPaiement: 'Montant paiement',
+        courtier: 'COURTIER',
+        fondateur: 'FONDATEUR',
+        pavillon: 'PAVILLON',
+        sofraco: 'SOFRACO',
+        sofracoExpertise: 'SOFRACO EXPERTISES'
+    };
+
+    const errorPAVILLONV8 = `PAVILLON V8 : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorPAVILLONV8;
+};
+
 exports.errorReadExcelSWISSLIFESURCO = (index) => {
     const indexesHeader = {
         apporteurVente: 'Apporteur de la vente',
