@@ -798,8 +798,69 @@ exports.errorReadExcelSMATIS = (index) => {
         procedure: 'PROCEDURE'
     };
 
-    const errorSmatis = `SMATIS : La colonne ${indexesHeader[index]} n'est pas présente (Seconde ligne)`;
+    const errorSmatis = `SMATIS : La colonne ${indexesHeader[index]} n'est pas présente`;
     return errorSmatis;
+};
+
+exports.errorReadExcelSPVIEFH = (index) => {
+    const indexesHeader = {
+        distribution: 'DISTRIBUTION',
+        produit: 'PRODUIT',
+        adherent: 'ADHERENT',
+        statutDate: 'STATUT ET DATES',
+        cotisation: 'COTISATION',
+        commissionnementReprise: 'COMMISSIONEMENT ET REPRISE',
+    };
+
+    const errorSPIVE = `SPIVE : La colonne ${indexesHeader[index]} n'est pas présente (première ligne)`;
+    return errorSPIVE;
+};
+
+exports.errorReadExcelSPVIESH = (index) => {
+    const indexesHeader = {
+        code: 'CODE',
+        codeVendeur: 'CODE VENDEUR',
+        nomCourtierVendeur: 'NOM COURTIER VENDEUR',
+        groupe: 'GROUPE',
+        entite: 'ENTITE',
+        vendeur: 'VENDEUR',
+        compagnie: 'COMPAGNIE',
+        branche: 'BRANCHE',
+        type: 'TYPE',
+        gamme: 'GAMME',
+        produit: 'PRODUIT',
+        formule: 'FORMULE',
+        numContrat: 'N° DE CONTRAT',
+        nomClient: 'NOM CLIENT',
+        prenomClient: 'PRÉNOM CLIENT',
+        statutContrat: 'STATUT DU CONTRAT',
+        dateSignature: 'DATE DE SIGNATURE',
+        dateValidation: 'DATE DE VALIDATION',
+        dateEffet: 'DATE D\'EFFET',
+        dateResilliation: 'DATE DE RÉSILIATION',
+        debutPeriode: 'DÉBUT DE PÉRIODE',
+        finPeriode: 'FIN DE PÉRIODE',
+        cotisationTTCFrais: 'COTISATION TTC + FRAIS',
+        dontFraisSpvie: 'DONT FRAIS SPVIE',
+        dontAutreFrais: 'DONT AUTRES FRAIS',
+        dontTaxes: 'DONT TAXES',
+        dontPrimesHTHorsFrais: 'DONT PRIME HT (HORS FRAIS)',
+        tauxTaxes: 'TAUX DE TAXES',
+        primeHTAnnuel: 'PRIME HT ANNUELLE',
+        periodiciteCommission: 'PÉRIODICITÉ COMMISSIONS',
+        assietteDeCommissionnement: 'ASSIETTE DE COMMISSIONNEMENT',
+        structureCommissionnementInitiale: 'STRUCTURE COMMISSIONNEMENT INITIALE',
+        commissionAppliquee: 'COMMISSION APPLIQUÉE',
+        fractionAppliquee: 'FRACTION APPLIQUÉE',
+        commission: 'COMMISSION',
+        reprise: 'REPRISE',
+        solde: 'SOLDE',
+        bordereauReference: 'BORDEREAU DE RÉFÉRENCE',
+        libelle: 'LIBELLÉ',
+    };
+
+    const errorSPIVE = `SPIVE : La colonne ${indexesHeader[index]} n'est pas présente (seconde ligne)`;
+    return errorSPIVE;
 };
 
 exports.errorReadExcelSWISSLIFESURCO = (index) => {

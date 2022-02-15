@@ -111,7 +111,7 @@ exports.createWorkSheetSPVIE = (workSheet, dataCourtierOCR) => {
         workSheet.getRow(rowNumber).getCell('AI').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         workSheet.getRow(rowNumber).getCell('AJ').value = datas.commissionnementReprise.reprise;
         workSheet.getRow(rowNumber).getCell('AJ').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('AK').value = datas.commissionnementReprise.solde.result;
+        workSheet.getRow(rowNumber).getCell('AK').value = (datas.commissionnementReprise.solde !== null) ? datas.commissionnementReprise.solde.result : '';
         workSheet.getRow(rowNumber).getCell('AK').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         workSheet.getRow(rowNumber).getCell('AL').value = datas.commissionnementReprise.bordereauReference;
         workSheet.getRow(rowNumber).getCell('AM').value = datas.commissionnementReprise.libelle;

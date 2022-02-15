@@ -1,6 +1,8 @@
 const { performance } = require('perf_hooks');
 const time = require('../utils/time');
 const excelFile = require('../utils/excelFile');
+const generals = require('../utils/generals');
+const errorHandler = require('../utils/errorHandler');
 
 const { workerData, parentPort } = require('worker_threads');
 if (parentPort !== null) {
@@ -15,157 +17,195 @@ exports.readExcelSPVIE = async (file) => {
     let secondHeaders = [];
     let headers = { firstHeaders, secondHeaders };
     let allContrats = [];
+    let errors = [];
     let ocr = { headers: null, allContratsPerCourtier: [], executionTime: 0 };
+    const arrRegFirstHeader = {
+        distribution: /^DISTRIBUTION$/i,
+        produit: /^PRODUIT$/i,
+        adherent: /^ADHERENT$/i,
+        statutDate: /^STATUT\s*ET\s*DATES$/i,
+        cotisation: /^COTISATION$/i,
+        commissionnementReprise: /^COMMISSIONEMENT\s*ET\s*REPRISE$/i,
+    };
+    const arrRegSecondHeader = {
+        code: /^CODE$/i,
+        codeVendeur: /^CODE\s*VENDEUR$/i,
+        nomCourtierVendeur: /^NOM\s*COURTIER\s*VENDEUR$/i,
+        groupe: /^GROUPE$/i,
+        entite: /^ENTITE$/i,
+        vendeur: /^VENDEUR$/i,
+        compagnie: /^COMPAGNIE$/i,
+        branche: /^BRANCHE$/i,
+        type: /^TYPE$/i,
+        gamme: /^GAMME$/i,
+        produit: /^PRODUIT$/i,
+        formule: /^FORMULE$/i,
+        numContrat: /^N°\s*DE\s*CONTRAT$/i,
+        nomClient: /^NOM\s*CLIENT$/i,
+        prenomClient: /^PRÉNOM\s*CLIENT$/i,
+        statutContrat: /^STATUT\s*DU\s*CONTRAT$/i,
+        dateSignature: /^DATE\s*DE\s*SIGNATURE$/i,
+        dateValidation: /^DATE\s*DE\s*VALIDATION$/i,
+        dateEffet: /^DATE\s*D'EFFET$/i,
+        dateResilliation: /^DATE\s*DE\s*RÉSILIATION$/i,
+        debutPeriode: /^DÉBUT\s*DE\s*PÉRIODE$/i,
+        finPeriode: /^FIN\s*DE\s*PÉRIODE$/i,
+        cotisationTTCFrais: /^COTISATION\s*TTC\s*[+]\s*FRAIS$/i,
+        dontFraisSpvie: /^DONT\s*FRAIS\s*SPVIE$/i,
+        dontAutreFrais: /^DONT\s*AUTRES\s*FRAIS$/i,
+        dontTaxes: /^DONT\s*TAXES$/i,
+        dontPrimesHTHorsFrais: /^DONT\s*PRIME\s*HT\s*[(]HORS\s*FRAIS[)]$/i,
+        tauxTaxes: /^TAUX\s*DE\s*TAXES$/i,
+        primeHTAnnuel: /^PRIME\s*HT\s*ANNUELLE$/i,
+        periodiciteCommission: /^PÉRIODICITÉ\s*COMMISSIONS$/i,
+        assietteDeCommissionnement: /^ASSIETTE\s*DE\s*COMMISSIONNEMENT$/i,
+        structureCommissionnementInitiale: /^STRUCTURE\s*COMMISSIONNEMENT\s*INITIALE$/i,
+        commissionAppliquee: /^COMMISSION\s*APPLIQUÉE$/i,
+        fractionAppliquee: /^FRACTION\s*APPLIQUÉE$/i,
+        commission: /^COMMISSION$/i,
+        reprise: /^REPRISE$/i,
+        solde: /^SOLDE$/i,
+        bordereauReference: /^BORDEREAU\s*DE\s*RÉFÉRENCE$/i,
+        libelle: /^LIBELLÉ$/i,
+    };
+
     worksheets.forEach((worksheet, index) => {
         if (index === 1) {
+            let indexesFirstHeader = {
+                distribution: null,
+                produit: null,
+                adherent: null,
+                statutDate: null,
+                cotisation: null,
+                commissionnementReprise: null
+            };
+            let indexesSecondHeader = {
+                code: null,
+                codeVendeur: null,
+                nomCourtierVendeur: null,
+                groupe: null,
+                entite: null,
+                vendeur: null,
+                compagnie: null,
+                branche: null,
+                type: null,
+                gamme: null,
+                produit: null,
+                formule: null,
+                numContrat: null,
+                nomClient: null,
+                prenomClient: null,
+                statutContrat: null,
+                dateSignature: null,
+                dateValidation: null,
+                dateEffet: null,
+                dateResilliation: null,
+                debutPeriode: null,
+                finPeriode: null,
+                cotisationTTCFrais: null,
+                dontFraisSpvie: null,
+                dontAutreFrais: null,
+                dontTaxes: null,
+                dontPrimesHTHorsFrais: null,
+                tauxTaxes: null,
+                primeHTAnnuel: null,
+                periodiciteCommission: null,
+                assietteDeCommissionnement: null,
+                structureCommissionnementInitiale: null,
+                commissionAppliquee: null,
+                fractionAppliquee: null,
+                commission: null,
+                reprise: null,
+                solde: null,
+                bordereauReference: null,
+                libelle: null
+            };
+            let indexesHeader = {
+                distribution: {
+                    code: null,
+                    codeVendeur: null,
+                    nomCourtierVendeur: null,
+                    groupe: null,
+                    entite: null,
+                    vendeur: null,
+                },
+                produit: {
+                    compagnie: null,
+                    branche: null,
+                    type: null,
+                    gamme: null,
+                    produit: null,
+                    formule: null,
+                    numContrat: null,
+                },
+                adherent: {
+                    nomClient: null,
+                    prenomClient: null,
+                },
+                statutDate: {
+                    statutContrat: null,
+                    dateSignature: null,
+                    dateValidation: null,
+                    dateEffet: null,
+                    dateResilliation: null,
+                    debutPeriode: null,
+                    finPeriode: null,
+                },
+                cotisation: {
+                    cotisationTTCFrais: null,
+                    dontFraisSpvie: null,
+                    dontAutreFrais: null,
+                    dontTaxes: null,
+                    dontPrimesHTHorsFrais: null,
+                    tauxTaxes: null,
+                    primeHTAnnuel: null,
+                },
+                commissionnementReprise: {
+                    periodiciteCommission: null,
+                    assietteDeCommissionnement: null,
+                    structureCommissionnementInitiale: null,
+                    commissionAppliquee: null,
+                    fractionAppliquee: null,
+                    commission: null,
+                    reprise: null,
+                    solde: null,
+                    bordereauReference: null,
+                    libelle: null
+                }
+            };
             worksheet.eachRow((row, rowNumber) => {
                 if (rowNumber === 1) {
                     row.eachCell((cell, colNumber) => {
                         const currentCellValue = (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value;
                         if (firstHeaders.indexOf(currentCellValue) < 0) {
                             firstHeaders.push(currentCellValue);
+                            generals.setIndexHeaders(cell, colNumber, arrRegFirstHeader, indexesFirstHeader);
                         }
                     });
+                    for (let index in indexesFirstHeader) {
+                        if (indexesFirstHeader[index] === null) {
+                            errors.push(errorHandler.errorReadExcelSPVIEFH(index));
+                        }
+                    }
                     headers.firstHeaders = firstHeaders;
                 }
                 if (rowNumber === 2) {
                     row.eachCell((cell, colNumber) => {
                         secondHeaders.push((typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value);
+                        generals.setIndexHeaders(cell, colNumber, arrRegSecondHeader, indexesSecondHeader);
                     });
+                    for (let index in indexesSecondHeader) {
+                        if (indexesSecondHeader[index] === null) {
+                            errors.push(errorHandler.errorReadExcelSPVIESH(index));
+                        }
+                    }
                     headers.secondHeaders = secondHeaders;
                 }
                 if (rowNumber > 2) {
-                    const contrat = {
-                        distribution: {
-                            code: (typeof row.getCell('A').value === 'string') ?
-                                row.getCell('A').value.trim() :
-                                row.getCell('A').value,
-                            codeVendeur: (typeof row.getCell('B').value === 'string') ?
-                                row.getCell('B').value.trim() :
-                                row.getCell('B').value,
-                            nomCourtierVendeur: (typeof row.getCell('C').value === 'string') ?
-                                row.getCell('C').value.trim() :
-                                row.getCell('C').value,
-                            groupe: (typeof row.getCell('D').value === 'string') ?
-                                row.getCell('D').value.trim() :
-                                row.getCell('D').value,
-                            entite: (typeof row.getCell('E').value === 'string') ?
-                                row.getCell('E').value.trim() :
-                                row.getCell('E').value,
-                            vendeur: (typeof row.getCell('F').value === 'string') ?
-                                row.getCell('F').value.trim() :
-                                row.getCell('F').value,
-                        },
-                        produit: {
-                            compagnie: (typeof row.getCell('G').value === 'string') ?
-                                row.getCell('G').value.trim() :
-                                row.getCell('G').value,
-                            branche: (typeof row.getCell('H').value === 'string') ?
-                                row.getCell('H').value.trim() :
-                                row.getCell('H').value,
-                            type: (typeof row.getCell('I').value === 'string') ?
-                                row.getCell('I').value.trim() :
-                                row.getCell('I').value,
-                            gamme: (typeof row.getCell('J').value === 'string') ?
-                                row.getCell('J').value.trim() :
-                                row.getCell('J').value,
-                            produit: (typeof row.getCell('K').value === 'string') ?
-                                row.getCell('K').value.trim() :
-                                row.getCell('K').value,
-                            formule: (typeof row.getCell('L').value === 'string') ?
-                                row.getCell('L').value.trim() :
-                                row.getCell('L').value,
-                            numContrat: (typeof row.getCell('M').value === 'string') ?
-                                row.getCell('M').value.trim() :
-                                row.getCell('M').value,
-                        },
-                        adherent: {
-                            nomClient: (typeof row.getCell('N').value === 'string') ?
-                                row.getCell('N').value.trim() :
-                                row.getCell('N').value,
-                            prenomClient: (typeof row.getCell('O').value === 'string') ?
-                                row.getCell('O').value.trim() :
-                                row.getCell('O').value,
-                        },
-                        statutDate: {
-                            statutContrat: (typeof row.getCell('P').value === 'string') ?
-                                row.getCell('P').value.trim() :
-                                row.getCell('P').value,
-                            dateSignature: (typeof row.getCell('Q').value === 'string') ?
-                                row.getCell('Q').value.trim() :
-                                row.getCell('Q').value,
-                            dateValidation: (typeof row.getCell('R').value === 'string') ?
-                                row.getCell('R').value.trim() :
-                                row.getCell('R').value,
-                            dateEffet: (typeof row.getCell('S').value === 'string') ?
-                                row.getCell('S').value.trim() :
-                                row.getCell('S').value,
-                            dateResilliation: (typeof row.getCell('T').value === 'string') ?
-                                row.getCell('T').value.trim() :
-                                row.getCell('T').value,
-                            debutPeriode: (typeof row.getCell('U').value === 'string') ?
-                                row.getCell('U').value.trim() :
-                                row.getCell('U').value,
-                            finPeriode: (typeof row.getCell('V').value === 'string') ?
-                                row.getCell('V').value.trim() :
-                                row.getCell('V').value,
-                        },
-                        cotisation: {
-                            cotisationTTCFrais: (typeof row.getCell('W').value === 'string') ?
-                                row.getCell('W').value.trim() :
-                                row.getCell('W').value,
-                            dontFraisSpvie: (typeof row.getCell('X').value === 'string') ?
-                                row.getCell('X').value.trim() :
-                                row.getCell('X').value,
-                            dontAutreFrais: (typeof row.getCell('Y').value === 'string') ?
-                                row.getCell('Y').value.trim() :
-                                row.getCell('Y').value,
-                            dontTaxes: (typeof row.getCell('Z').value === 'string') ?
-                                row.getCell('Z').value.trim() :
-                                row.getCell('Z').value,
-                            dontPrimesHTHorsFrais: (typeof row.getCell('AA').value === 'string') ?
-                                row.getCell('AA').value.trim() :
-                                row.getCell('AA').value,
-                            tauxTaxes: (typeof row.getCell('AB').value === 'string') ?
-                                row.getCell('AB').value.trim() :
-                                row.getCell('AB').value,
-                            primeHTAnnuel: (typeof row.getCell('AC').value === 'string') ?
-                                row.getCell('AC').value.trim() :
-                                row.getCell('AC').value,
-                        },
-                        commissionnementReprise: {
-                            periodiciteCommission: (typeof row.getCell('AD').value === 'string') ?
-                                row.getCell('AD').value.trim() :
-                                row.getCell('AD').value,
-                            assietteDeCommissionnement: (typeof row.getCell('AE').value === 'string') ?
-                                row.getCell('AE').value.trim() :
-                                row.getCell('AE').value,
-                            structureCommissionnementInitiale: (typeof row.getCell('AF').value === 'string') ?
-                                row.getCell('AF').value.trim() :
-                                row.getCell('AF').value,
-                            commissionAppliquee: (typeof row.getCell('AG').value === 'string') ?
-                                row.getCell('AG').value.trim() :
-                                row.getCell('AG').value,
-                            fractionAppliquee: (typeof row.getCell('AH').value === 'string') ?
-                                row.getCell('AH').value.trim() :
-                                row.getCell('AH').value,
-                            commission: (typeof row.getCell('AI').value === 'string') ?
-                                row.getCell('AI').value.trim() :
-                                row.getCell('AI').value,
-                            reprise: (typeof row.getCell('AJ').value === 'string') ?
-                                row.getCell('AJ').value.trim() :
-                                row.getCell('AJ').value,
-                            solde: (typeof row.getCell('AK').value === 'string') ?
-                                row.getCell('AK').value.trim() :
-                                row.getCell('AK').value,
-                            bordereauReference: (typeof row.getCell('AL').value === 'string') ?
-                                row.getCell('AL').value.trim() :
-                                row.getCell('AL').value,
-                            libelle: (typeof row.getCell('AM').value === 'string') ?
-                                row.getCell('AM').value.trim() :
-                                row.getCell('AM').value
-                        }
-                    };
+                    const { contrat, error } = generals.createContratDoubleHeader(row, indexesFirstHeader, indexesSecondHeader, indexesHeader);
+                    // for (let err of error) {
+                    //     errors.push(errorHandler.errorEmptyCell('SPVIE', err));
+                    // }
                     allContrats.push(contrat);
                 }
             })
@@ -192,7 +232,7 @@ exports.readExcelSPVIE = async (file) => {
         allContratsPerCourtier.push(contratCourtier);
     }
 
-    ocr = { headers, allContratsPerCourtier, executionTime: 0, executionTimeMS: 0 };
+    ocr = { headers, allContratsPerCourtier, errors, executionTime: 0, executionTimeMS: 0 };
     const excecutionStopTime = performance.now();
     const executionTimeMS = excecutionStopTime - excecutionStartTime;
     const executionTime = time.millisecondToTime(executionTimeMS);
