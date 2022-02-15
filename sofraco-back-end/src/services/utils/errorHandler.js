@@ -798,8 +798,8 @@ exports.errorReadExcelSMATIS = (index) => {
         procedure: 'PROCEDURE'
     };
 
-    const errorCardif = `SMATIS : La colonne ${indexesHeader[index]} n'est pas présente (Seconde ligne)`;
-    return errorCardif;
+    const errorSmatis = `SMATIS : La colonne ${indexesHeader[index]} n'est pas présente (Seconde ligne)`;
+    return errorSmatis;
 };
 
 exports.errorReadExcelSWISSLIFESURCO = (index) => {
@@ -822,4 +822,43 @@ exports.errorReadExcelSWISSLIFESURCO = (index) => {
 
     const errorSwisslifeSurco = `SWISSLIFE SURCO : La colonne ${indexesHeader[index]} n'est pas présente`;
     return errorSwisslifeSurco;
+};
+
+exports.errorReadExcelUAFLIFE = (index) => {
+    const indexesHeader = {
+        codeIntermediaireDestinataireReglements: 'Code intermediaire destinataire règlements',
+        nomIntermediaireDestinataireReglements: 'Nom intermediaire destinataire règlements',
+        codeIntermediaireResponsableContrat: 'Code intermédiaire esponsable contrat',
+        nomIntermediaireResponsableContrat: 'Nom intermédiaire responsable contrat',
+        codeProduit: 'Code produit',
+        libelleProduit: 'Libellé produit',
+        numeroContrat: 'Numéro contrat',
+        nomSouscripteur: 'Nom souscripteur',
+        prenomSouscripteur: 'Prénom souscripteur',
+        libelleProfil: 'Libellé profil',
+        codeISIN: 'Code ISIN',
+        libelleSupport: 'Libellé support',
+        natureCommissions: 'Nature commissions',
+        typeCommissions: 'Type commissions',
+        libelleOperation: 'Libellé opération',
+        numeroOperation: 'Numéro opération',
+        dateCreationOperation: 'Date création opération',
+        dateValidationOperation: 'Date validation opération',
+        dateValeurOperation: 'Date valeur opération',
+        montantOperationTousSupports: 'Montant de l\'opération (tous supports) (euros)',
+        montantOperationSurSupport: 'Montant de l\'opération (sur le support)',
+        montantAssietteCommission: 'Montant de l\'assiette de commission',
+        tauxCommissionsIntermediaireTeteReseau: 'Taux commissions intermédiaire tête réseau',
+        montantCommissionIntermediaireTeteReseau: 'Montant commission intermédiaire tête réseau (euros)',
+        tauxCommissionsIntermediaireResponsableContrat: 'Taux commissions intermédiaire responsable contrat',
+        montantCommissionsIntermediaireResponsableContrat: 'Montant commissions intermédiaire responsable contrat (euros)',
+        nbPartsAssietteCommission: 'Nb de parts de l\'assiette de commission',
+        VLUtilisePourCalculFrais: 'VL utilisé pour calcul frais',
+        dateValeurVL: 'Date valeur VL',
+        codeBordereau: 'Code bordereau',
+        dateGenerationBordereau: 'Date génération bordereau',
+    };
+
+    const errorUafLife = `UAF LIFE : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorUafLife;
 };
