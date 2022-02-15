@@ -44,22 +44,20 @@ exports.getOCRSMATISMCMS = (ocr) => {
 }
 
 exports.createWorkSheetSMATISMCMS = (workSheet, dataCourtierOCR) => {
-    // let smatisAxiom = false;
-    // switch (dataCourtierOCR.smatisVersion) {
-    //     case 'smatisAxiom':
-    //         smatisAxiom = true;
-    //         break;
-    // }
     const font1 = { bold: true, name: 'Arial', size: 10 };
+    const cellInfos = [
+        { workSheet: workSheet, value: dataCourtierOCR.infosOCR.headers.firstHeader[0], rowNumber: 1, cell: 'D', mergedCells: 'D1:S1' },
+        { workSheet: workSheet, value: dataCourtierOCR.infosOCR.headers.firstHeader[1], rowNumber: 2, cell: 'N', mergedCells: 'N2:S2' },
+    ];
     let rowNumber = 1;
-    excelFile.setSimpleCell(workSheet, rowNumber, 'D', dataCourtierOCR.infosOCR.headers.firstHeader[0], { bold: true, name: 'Arial', size: 10 });
+    excelFile.setMergedCell(cellInfos[0], false, {}, { bold: true, name: 'Arial', size: 10 });
     rowNumber++;
-    excelFile.setSimpleCell(workSheet, rowNumber, 'M', dataCourtierOCR.infosOCR.headers.firstHeader[1], { bold: true, name: 'Arial', size: 10 });
+    excelFile.setMergedCell(cellInfos[1], false, {}, { bold: true, name: 'Arial', size: 10 }, '', '0000ff');
     rowNumber++;
     
     let cellNumber = 1;
     dataCourtierOCR.infosOCR.headers.secondHeader.forEach((secondHeader, index) => {
-        excelFile.setSimpleCell(workSheet, 3, cellNumber, secondHeader, { bold: true, name: 'Arial', size: 10 });
+        excelFile.setStylizedCell(workSheet, 3, cellNumber, secondHeader, false, {}, { bold: true, name: 'Arial', size: 10 }, '', '99cc00');
         cellNumber++;
     });
     rowNumber++;
@@ -110,13 +108,13 @@ const createPavetSMATISMCMS = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('R').value = datas.typeCommission;
         workSheet.getRow(rowNumber).getCell('S').value = datas.montantCommission;
         workSheet.getRow(rowNumber).getCell('S').numFmt = '#,##0.00"";\-#,##0.00""';
-        workSheet.getRow(rowNumber).getCell('T').value = datas.courtier;
+        workSheet.getRow(rowNumber).getCell('T').value = (datas.courtier !== null) ? datas.courtier.result : '';
         workSheet.getRow(rowNumber).getCell('T').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('U').value = datas.fondateur;
+        workSheet.getRow(rowNumber).getCell('U').value = (datas.fondateur !== null) ? datas.fondateur.result : '';
         workSheet.getRow(rowNumber).getCell('U').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         workSheet.getRow(rowNumber).getCell('V').value = datas.sogeas;
         workSheet.getRow(rowNumber).getCell('V').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('W').value = datas.procedure;
+        workSheet.getRow(rowNumber).getCell('W').value = (datas.procedure !== null) ? datas.procedure.result : '';
         workSheet.getRow(rowNumber).getCell('W').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
     }

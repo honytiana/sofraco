@@ -1,11 +1,9 @@
-const ExcelJS = require('exceljs');
-const XLSX = require('xlsx');
 const { performance } = require('perf_hooks');
-const fs = require('fs');
-const path = require('path');
 const time = require('../utils/time');
 const fileService = require('../utils/files');
+const excelFile = require('../utils/excelFile');
 const generals = require('../utils/generals');
+const errorHandler = require('../utils/errorHandler');
 
 const { workerData, parentPort } = require('worker_threads');
 if (parentPort !== null) {
@@ -17,24 +15,12 @@ exports.readExcelSMATIS = async (file) => { };
 exports.readExcelSMATISMCMS = async (file) => {
     console.log(`${new Date()} DEBUT TRAITEMENT SMATIS MCMS`);
     const excecutionStartTime = performance.now();
-    let filePath = file;
-    const fileName = fileService.getFileNameWithoutExtension(filePath);
+    const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
+    const fileName = fileService.getFileNameWithoutExtension(file);
     // const version = fileName.replace(/(\d+).+/, '$1');
-    const extension = fileService.getFileExtension(filePath);
-    if (extension.toUpperCase() === 'XLS') {
-        let originalFile = XLSX.readFile(filePath);
-        filePath = path.join(__dirname, '..', '..', '..', 'documents', 'uploaded', `${fileName}.xlsx`);
-        XLSX.writeFile(originalFile, filePath);
-    }
-    const workbook = new ExcelJS.Workbook();
-    const smatisfile = fs.readFileSync(filePath);
-    await workbook.xlsx.load(smatisfile);
-    const worksheets = workbook.worksheets;
     let allContrats = [];
-    let headers = {
-        firstHeader: [],
-        secondHeader: []
-    };
+    let headers = { firstHeader: [], secondHeader: [] };
+    let errors = [];
     let ocr = { headers: null, allContratsPerCourtier: [], smatisVersion: null, executionTime: 0 };
     // let smatisAxiom = false;
     // switch (version) {
@@ -42,8 +28,58 @@ exports.readExcelSMATISMCMS = async (file) => {
     //         smatisAxiom = true;
     //         break;
     // }
+    const arrReg = {
+        debutPeriodeCotisation: /^Début\s*de\s*période\s*de\s*cotisation\s*$/i,
+        finDePeriodeCotisation: /^Fin\s*de\s*période\s*de\s*cotisation\s*$/i,
+        nomGarantie: /^Nom\s*de\s*la\s*garantie\s*$/i,
+        souscripteurContratGroupe: /^Souscripteur\s*du\s*contrat\s*groupe\s*$/i,
+        numPayeur: /^N°\s*payeur\s*$/i,
+        nomPayeur: /^Nom\s*payeur\s*$/i,
+        codeCourtier: /^Code\s*courtier\s*$/i,
+        nomCourtier: /^Nom\s*du\s*courtier\s*$/i,
+        numContratGroupe: /^N°\s*de\s*contrat\s*groupe\s*$/i,
+        dateDebutContratAdhesion: /^Date\s*début\s*contrat\s*ou\s*d'adhésion\s*$/i,
+        statusContratAdhesion: /^Statut\s*contrat\s*ou\s*adhésion\s*$/i,
+        dateFinContratAdhesion: /^Date\s*fin\s*contrat\s*ou\s*adhésion\s*$/i,
+        etapeImpaye: /^Etape\s*impayé\s*[/]\s*Motif\s*de\s*résilation\s*$/i,
+        periodiciteCotisation: /^Périodicité\s*cotisation\s*$/i,
+        cotisationPayeePeriodeTTC: /^Cotisation\s*payée\s*Période\s*TTC\s*$/i,
+        cotisationPayeePeriodeHT: /^Cotisation\s*payée\s*Période\s*HT\s*$/i,
+        taux: /^Taux\s*$/i,
+        typeCommission: /^Type\s*de\s*commission\s*$/i,
+        montantCommission: /^Montant\s*commission\s*$/i,
+        courtier: /^COURTIER$/i,
+        fondateur: /^FONDATEUR$/i,
+        sogeas: /^SOGEAS$/i,
+        procedure: /^PROCEDURE$/i
+    };
     worksheets.forEach((worksheet, index) => {
         if (index === 1) {
+            let indexesHeader = {
+                debutPeriodeCotisation: null,
+                finDePeriodeCotisation: null,
+                nomGarantie: null,
+                souscripteurContratGroupe: null,
+                numPayeur: null,
+                nomPayeur: null,
+                codeCourtier: null,
+                nomCourtier: null,
+                numContratGroupe: null,
+                dateDebutContratAdhesion: null,
+                statusContratAdhesion: null,
+                dateFinContratAdhesion: null,
+                etapeImpaye: null,
+                periodiciteCotisation: null,
+                cotisationPayeePeriodeTTC: null,
+                cotisationPayeePeriodeHT: null,
+                taux: null,
+                typeCommission: null,
+                montantCommission: null,
+                courtier: null,
+                fondateur: null,
+                sogeas: null,
+                procedure: null
+            };
             let rowNumberHeader;
             worksheet.eachRow((row, rowNumber) => {
                 if (rowNumber === 1) {
@@ -62,15 +98,18 @@ exports.readExcelSMATISMCMS = async (file) => {
                         const currentCellValue = (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim().replace(/\n/g, ' ') : cell.value.replace(/\n/g, ' ');
                         if (headers.secondHeader.indexOf(currentCellValue) < 0) {
                             headers.secondHeader.push(currentCellValue);
+                            generals.setIndexHeaders(cell, colNumber, arrReg, indexesHeader);
+
                         }
                     });
+                    for (let index in indexesHeader) {
+                        if (indexesHeader[index] === null) {
+                            errors.push(errorHandler.errorReadExcelSMATIS(index));
+                        }
+                    }
                 }
                 if (rowNumber > rowNumberHeader && !row.hidden) {
-                    const contrat = getContratSMATISMCMS(row);
-                    // if (smatisAxiom) {
-                    //     contrat = getContratSMATIS(row);
-                    // }
-
+                    const { contrat, error } = generals.createContratSimpleHeader(row, indexesHeader);
                     allContrats.push(contrat);
                 }
             })
@@ -79,7 +118,7 @@ exports.readExcelSMATISMCMS = async (file) => {
 
     const allContratsPerCourtier = generals.regroupContratByCourtier(allContrats, 'codeCourtier');
 
-    ocr = { headers, allContratsPerCourtier, smatisVersion: null, executionTime: 0, executionTimeMS: 0 };
+    ocr = { headers, allContratsPerCourtier, errors, smatisVersion: null, executionTime: 0, executionTimeMS: 0 };
     // if (smatisAxiom) {
     //     ocr.smatisVersion = 'smatisAxiom';
     // }

@@ -210,7 +210,7 @@ const getContratMIEV1 = (worksheets, headers, allContrats, errors) => {
                     });
                     for (let index in indexesHeader) {
                         if (indexesHeader[index] === null) {
-                            errors.push(errorHandler.errorReadExcelMIEAV1(index));
+                            errors.push(errorHandler.errorReadExcelMIEV1(index));
                         }
                     }
                 }

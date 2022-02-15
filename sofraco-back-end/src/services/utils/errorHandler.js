@@ -211,7 +211,7 @@ exports.errorReadExcelMIEAXIOM = (index) => {
     return errorHodeva;
 };
 
-exports.errorReadExcelMIEAV1 = (index) => {
+exports.errorReadExcelMIEV1 = (index) => {
     const indexesHeader = {
         dateComptable: 'DATE_COMPTABLE',
         codeCourtier: 'CODE_COURTIER',
@@ -243,36 +243,6 @@ exports.errorReadExcelMIEAV1 = (index) => {
 
     const errorHodeva = `MIEV1 : La colonne ${indexesHeader[index]} n'est pas présente`;
     return errorHodeva;
-};
-
-exports.errorReadExcelMIELCREASIO = (index) => {
-    const indexesHeader = {
-        codeApporteurCommissionne: "Code Apporteur commissionné",
-        codeApporteurAffaire: "Code Apporteur d'Affaire",
-        nomApporteurAffaire: "Nom Apporteur d'Affaire",
-        numAdherent: "N° Adhérent",
-        nom: "Nom",
-        prenom: "Prénom",
-        codePostal: "Code postal",
-        ville: "Ville",
-        codeProduit: "Code Poduit",
-        nomProduit: "Nom Produit",
-        codeContrat: "Code Contrat",
-        nomContrat: "Nom Contrat",
-        dateDebutEcheance: "Date début échéance",
-        dateFinEcheance: "Date fin échéance",
-        montantTTCEcheance: "Montant TTC échéance",
-        montantHTEcheance: "Montant HT échéance",
-        codeGarantieTechnique: "Code de la Garantie Technique",
-        nomGarantieTechnique: "Nom de la Garantie Technique",
-        baseCommisionnement: "Base de commisionnement",
-        tauxCommission: "Taux de commission",
-        montantCommissions: "Montant commissions",
-        bordereauPaiementCommissionsInitiales: "Bordereau du paiement des commissions initiales"
-    };
-
-    const errorMielCreasio = `MIEL CREASIO : La colonne ${indexesHeader[index]} n'est pas présente`;
-    return errorMielCreasio;
 };
 
 exports.errorReadExcelMIELCREASIO = (index) => {
@@ -799,6 +769,37 @@ exports.errorReadExcelPAVILLONV8 = (index) => {
 
     const errorPAVILLONV8 = `PAVILLON V8 : La colonne ${indexesHeader[index]} n'est pas présente`;
     return errorPAVILLONV8;
+};
+
+exports.errorReadExcelSMATIS = (index) => {
+    const indexesHeader = {
+        debutPeriodeCotisation: 'Début de période de cotisation',
+        finDePeriodeCotisation: 'Fin de période de cotisation',
+        nomGarantie: 'Nom de la garantie',
+        souscripteurContratGroupe: 'Souscripteur du contrat groupe',
+        numPayeur: 'N° payeur',
+        nomPayeur: 'Nom payeur',
+        codeCourtier: 'Code courtier',
+        nomCourtier: 'Nom du courtier',
+        numContratGroupe: 'N° de contrat groupe',
+        dateDebutContratAdhesion: 'Date début contrat ou d\'adhésion',
+        statusContratAdhesion: 'Statut contrat ou adhésion',
+        dateFinContratAdhesion: 'Date fin contrat  ou adhésion',
+        etapeImpaye: 'Etape impayé [/] Motif de résilation',
+        periodiciteCotisation: 'Périodicité cotisation',
+        cotisationPayeePeriodeTTC: 'Cotisation payée Période TTC',
+        cotisationPayeePeriodeHT: 'Cotisation payée Période HT',
+        taux: 'Taux',
+        typeCommission: 'Type de commission',
+        montantCommission: 'Montant commission',
+        courtier: 'COURTIER',
+        fondateur: 'FONDATEUR',
+        sogeas: 'SOGEAS',
+        procedure: 'PROCEDURE'
+    };
+
+    const errorCardif = `SMATIS : La colonne ${indexesHeader[index]} n'est pas présente (Seconde ligne)`;
+    return errorCardif;
 };
 
 exports.errorReadExcelSWISSLIFESURCO = (index) => {
