@@ -38,6 +38,7 @@ class Courtier extends Component {
         this.onDeleteEmailCopie = this.onDeleteEmailCopie.bind(this);
         this.saveEmailCopie = this.saveEmailCopie.bind(this);
         this.onDeleteStateEmailCopie = this.onDeleteStateEmailCopie.bind(this);
+        this.onEditBeforeSaveEmailCopie = this.onEditBeforeSaveEmailCopie.bind(this);
     }
 
     componentDidMount() {
@@ -156,12 +157,38 @@ class Courtier extends Component {
         input.focus();
     }
 
+    activateEditBeforeSaveEmailCopie(event, emailCopie) {
+        event.preventDefault();
+        event.target.style.display = 'none';
+        const input = document.createElement('input');
+        input.value = emailCopie;
+        input.onblur = (e) => { this.onEditBeforeSaveEmailCopie(e, emailCopie, input.value, event.target) };
+        input.onfocus = (e) => { this.onFocusEmailCopie(e) };
+        input.style.display = 'inline';
+        input.style.border = 'none';
+        input.style.borderBottom = '1px solid black';
+        event.target.parentNode.append(input);
+        input.focus();
+    }
+
     onFocusEmailCopie(event) {
         event.target.style.border = 'none';
         event.target.style.borderBottom = '1px solid #ed7102';
     }
 
-    onEditEmailCopie(event, oldEmailCopie, emailCopie, id) {
+    onEditBeforeSaveEmailCopie(event, oldEmailCopie, emailCopie, badge) {
+        event.preventDefault();
+        let emails = this.state.emailCopie;
+        emails.splice(emails.indexOf(oldEmailCopie), 1, emailCopie);
+        this.setState({
+            emailCopie: emails
+        });
+        event.target.style.display = 'none';
+        event.target.remove();
+        badge.style.display = 'inline';
+    }
+
+    onEditEmailCopie(event, oldEmailCopie, emailCopie, badge) {
         event.preventDefault();
         const options = {
             emailCopie,
@@ -189,7 +216,7 @@ class Courtier extends Component {
                 event.preventDefault();
                 event.target.style.display = 'none';
                 event.target.remove();
-                document.getElementById(id).style.display = 'inline';
+                badge.style.display = 'inline';
                 setTimeout(() => {
                     this.setState({
                         toast: false,
@@ -340,12 +367,14 @@ class Courtier extends Component {
                     {
                         this.state.emailCopie.map((ec, index) => {
                             return (
-                                <CBadge key={`badge_${index}_${ec}`}>{ec}<CButton
-                                    key={`btn_${index}_${ec}`}
-                                    size='sm'
-                                    onClick={(e) => { this.onDeleteStateEmailCopie(e, ec) }}><CIcon
-                                        key={`icn_${index._id}_${ec}`}
-                                        content={freeSet.cilDelete} /></CButton></CBadge>
+                                <CBadge
+                                    key={`badge_${index}_${ec}`}
+                                    onClick={(e) => { this.activateEditBeforeSaveEmailCopie(e, ec) }}>{ec}<CButton
+                                        key={`btn_${index}_${ec}`}
+                                        size='sm'
+                                        onClick={(e) => { this.onDeleteStateEmailCopie(e, ec) }}><CIcon
+                                            key={`icn_${index._id}_${ec}`}
+                                            content={freeSet.cilDelete} /></CButton></CBadge>
                             )
                         })
                     }

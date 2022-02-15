@@ -2,7 +2,6 @@ import { Component } from 'react';
 import '@coreui/coreui/dist/css/coreui.min.css';
 import {
     CDataTable,
-    CBadge,
     CButton,
     CToaster,
     CToast,
@@ -24,6 +23,8 @@ import {
     CInput
 } from '@coreui/react';
 import axios from 'axios';
+import CIcon from '@coreui/icons-react';
+import { freeSet } from '@coreui/icons';
 
 import '../styles/Administration.css';
 import config from '../config.json';
@@ -77,7 +78,7 @@ class Administration extends Component {
                         {
                             key: 'cabinet',
                             label: 'Cabinet',
-                            _style: { width: '25%' },
+                            _style: { width: '20%' },
                             _classes: ['text-center']
                         },
                         {
@@ -95,7 +96,13 @@ class Administration extends Component {
                         {
                             key: 'email',
                             label: 'Email',
-                            _style: { width: '20%' },
+                            _style: { width: '15%' },
+                            _classes: ['text-center']
+                        },
+                        {
+                            key: 'emailCopie',
+                            label: 'Emails en copie',
+                            _style: { width: '15%' },
                             _classes: ['text-center']
                         },
                         {
@@ -104,12 +111,14 @@ class Administration extends Component {
                             _style: { width: '10%' },
                             _classes: ['text-center']
                         },
-                        {
-                            key: 'status',
-                            label: 'Status',
-                            _style: { width: '5%' },
-                            _classes: ['text-center']
-                        },
+                        // {
+                        //     key: 'status',
+                        //     label: 'Status',
+                        //     _style: { width: '5%' },
+                        //     _classes: ['text-center'],
+                        //     sorter: false,
+                        //     filter: false
+                        // },
                         {
                             key: 'show_details',
                             label: '',
@@ -393,14 +402,14 @@ class Administration extends Component {
                         className: 'sofraco-pagination'
                     }}
                     scopedSlots={{
-                        'status':
-                            (item) => (
-                                <td className="text-center" >
-                                    <CBadge color={this.getBadge(item.is_enabled)}>
-                                        {item.is_enabled ? 'Active' : 'Inactive'}
-                                    </CBadge>
-                                </td>
-                            ),
+                        // 'status':
+                        //     (item) => (
+                        //         <td className="text-center" >
+                        //             <CBadge color={this.getBadge(item.is_enabled)}>
+                        //                 {item.is_enabled ? 'Active' : 'Inactive'}
+                        //             </CBadge>
+                        //         </td>
+                        //     ),
                         'show_details':
                             (item, index) => {
                                 return (
@@ -410,9 +419,9 @@ class Administration extends Component {
                                             variant="outline"
                                             shape="square"
                                             size="sm"
-                                            onClick={() => { this.toggleDetails(index) }}
-                                        >
-                                            Afficher
+                                            onClick={() => { this.toggleDetails(index) }}><CIcon
+                                                size="sm"
+                                                content={freeSet.cilPencil} />
                                         </CButton>
                                     </td>
                                 )
@@ -473,6 +482,16 @@ class Administration extends Component {
                                     </CModal>
                                 )
                             },
+                        'emailCopie':
+                            (item, index) => {
+                                return (
+                                    <td className="text-center" >
+                                        {item.emailCopie.map(ec => {
+                                            return <span href="#" key={`${ec}-${index}`}>{ec}, </span>
+                                        })}
+                                    </td>
+                                )
+                            },
                         'delete':
                             (item, index) => {
                                 return (
@@ -482,9 +501,9 @@ class Administration extends Component {
                                             variant="outline"
                                             shape="square"
                                             size="sm"
-                                            onClick={(e) => this.openDeletePopup(e, item)}
-                                        >
-                                            Supprimer
+                                            onClick={(e) => { this.openDeletePopup(e, item) }}><CIcon
+                                                size="sm"
+                                                content={freeSet.cilTrash} />
                                         </CButton>
                                     </td>
                                 )
