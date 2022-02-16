@@ -148,7 +148,7 @@ class Courtier extends Component {
         event.target.style.display = 'none';
         const input = document.createElement('input');
         input.value = emailCopie;
-        input.onblur = (e) => { this.onEditEmailCopie(e, emailCopie, input.value, event.target.id) };
+        input.onblur = (e) => { this.onEditEmailCopie(e, emailCopie, input.value, event.target) };
         input.onfocus = (e) => { this.onFocusEmailCopie(e) };
         input.style.display = 'inline';
         input.style.border = 'none';
