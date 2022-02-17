@@ -141,6 +141,7 @@ class Courtier extends Component {
         this.setState({
             emailCopie: emails
         });
+        input.value = '';
     }
 
     activateEditEmailCopie(event, emailCopie) {
