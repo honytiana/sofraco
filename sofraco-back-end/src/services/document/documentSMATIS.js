@@ -95,7 +95,7 @@ exports.readExcelSMATISMCMS = async (file) => {
                 if (rowNumber === 3) {
                     rowNumberHeader = rowNumber;
                     row.eachCell((cell, colNumber) => {
-                        const currentCellValue = (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim().replace(/\n/g, ' ') : cell.value.replace(/\n/g, ' ');
+                        const currentCellValue = (typeof cell.value === 'string' || cell.value !== '') ? cell.value.replace(/\n/g, ' ').trim() : cell.value;
                         if (headers.secondHeader.indexOf(currentCellValue) < 0) {
                             headers.secondHeader.push(currentCellValue);
                             generals.setIndexHeaders(cell, colNumber, arrReg, indexesHeader);
