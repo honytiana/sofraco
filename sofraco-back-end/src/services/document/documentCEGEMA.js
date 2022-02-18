@@ -18,15 +18,15 @@ exports.readExcelCEGEMA = async (file) => {
     let errors = [];
     let ocr = { headers: [], allContratsPerCourtier: [], executionTime: 0 };
     const arrReg = {
-        courtier: /^Courtier$/i,
-        nomAdherent: /^Nom\s*adhérent$/i,
-        numAdhesion: /^N°\s*adhésion$/i,
-        garantie: /^Garantie$/i,
-        effetAu: /^Effet\s*au$/i,
-        cotisHT: /^Cotis.\s*HT$/i,
-        taux: /^Taux$/i,
-        commission: /^Commission$/i,
-        modeMotif: /^Mode\s*[/]\s*Motif$/i,
+        courtier: /^\s*Courtier\s*$/i,
+        nomAdherent: /^\s*Nom\s*adhérent\s*$/i,
+        numAdhesion: /^\s*N°\s*adhésion\s*$/i,
+        garantie: /^\s*Garantie\s*$/i,
+        effetAu: /^\s*Effet\s*au\s*$/i,
+        cotisHT: /^\s*Cotis.\s*HT\s*$/i,
+        taux: /^\s*Taux\s*$/i,
+        commission: /^\s*Commission\s*$/i,
+        modeMotif: /^\s*Mode\s*[/]\s*Motif\s*$/i,
     };				
 
     for (let worksheet of worksheets) {
@@ -44,7 +44,7 @@ exports.readExcelCEGEMA = async (file) => {
             };
             let rowNumberHeader;
             worksheet.eachRow((row, rowNumber) => {
-                if (typeof row.getCell('A').value === 'string' && row.getCell('A').value.match(/^Courtier$/i)) {
+                if (typeof row.getCell('A').value === 'string' && row.getCell('A').value.match(/^\s*Courtier\s*$/i)) {
                     rowNumberHeader = rowNumber;
                     row.eachCell((cell, colNumber) => {
                         const currentCellValue = (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value;

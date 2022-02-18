@@ -18,19 +18,19 @@ exports.readExcelMMAACQUISITION = async (file) => {
     let ocr = { headers: [], allContratsPerCourtier: [], executionTime: 0 };
     let errors = [];
     const arrReg = {
-        numCourtier: /^N°\s*Courtier$/i,
-        souscripteur: /^Souscripteur$/i,
-        dateEffet: /^Date\s*d'effet$/i,
-        dateEcheance: /^Date\s*d'échéance$/i,
-        produit: /^Produit$/i,
-        numContrat: /^N°\s*de\s*contrat$/i,
-        montant: /^Montant$/i,
-        fr: /^Fr.$/i,
-        encaissement: /^Encaissement$/i,
-        escomptee: /^Escomptée$/i,
-        annuelle: /^Annuelle$/i,
-        commissionsSurArbitrage: /^Commissions\s*sur\s*arbitrage$/i,
-        total: /^TOTAL$/i
+        numCourtier: /^\s*N°\s*Courtier\s*$/i,
+        souscripteur: /^\s*Souscripteur\s*$/i,
+        dateEffet: /^\s*Date\s*d'effet\s*$/i,
+        dateEcheance: /^\s*Date\s*d'échéance\s*$/i,
+        produit: /^\s*Produit\s*$/i,
+        numContrat: /^\s*N°\s*de\s*contrat\s*$/i,
+        montant: /^\s*Montant\s*$/i,
+        fr: /^\s*Fr.\s*$/i,
+        encaissement: /^\s*Encaissement\s*$/i,
+        escomptee: /^\s*Escomptée\s*$/i,
+        annuelle: /^\s*Annuelle\s*$/i,
+        commissionsSurArbitrage: /^\s*Commissions\s*sur\s*arbitrage\s*$/i,
+        total: /^\s*TOTAL\s*$/i
     };
 
     worksheets.forEach((worksheet, index) => {
@@ -98,14 +98,14 @@ exports.readExcelMMAENCOURS = async (file) => {
     let ocr = { headers: [], allContratsPerCourtier: [], executionTime: 0 };
     let errors = [];
     const arrReg = {
-        codeApporteur: /^Code\s*Apporteur$/i,
-        numContrat: /^N°\s*de\s*contrat$/i,
-        nomSouscripteur: /^Nom\s*souscripteur$/i,
-        produit: /^Produit$/i,
-        libelleSupport: /^Libellé\s*du\s*support$/i,
-        assieteDeRenumeration: /^Assiette\s*de\s*Rémunération\s*en\s*€$/i,
-        taux: /^Taux$/i,
-        commissionSurEncours: /^Commission\s*sur\s*en-cours\s*en\s*€$/i
+        codeApporteur: /^\s*Code\s*Apporteur\s*$/i,
+        numContrat: /^\s*N°\s*de\s*contrat\s*$/i,
+        nomSouscripteur: /^\s*Nom\s*souscripteur\s*$/i,
+        produit: /^\s*Produit\s*$/i,
+        libelleSupport: /^\s*Libellé\s*du\s*support\s*$/i,
+        assieteDeRenumeration: /^\s*Assiette\s*de\s*Rémunération\s*en\s*€\s*$/i,
+        taux: /^\s*Taux\s*$/i,
+        commissionSurEncours: /^\s*Commission\s*sur\s*en-cours\s*en\s*€\s*$/i
     };	  		  
 
     worksheets.forEach((worksheet, index) => {
@@ -192,14 +192,14 @@ exports.readExcelMMAINCITATION = async (file) => {
     let ocr = { headers: [], allContratsPerCourtier: [], executionTime: 0 };
     let errors = [];
     const arrReg = {
-        codeApporteur: /^Code\s*Apporteur$/i,
-        nomSouscripteur: /^Nom\s*du\s*souscripteur$/i,
-        numContrat: /^N°\s*de\s*contrat$/i,
-        dateMouvement: /^Date\s*du\s*mouvement$/i,
-        libelleMouvement: /^Libellé\s*du\s*mouvement$/i,
-        montant: /^Montant\s*en\s*€$/i,
-        tauxIncitation: /^Taux\s*d'incitation$/i,
-        montantIncitation: /^Montant\s*de\s*l'incitation\s*en\s*€$/i
+        codeApporteur: /^\s*Code\s*Apporteur\s*$/i,
+        nomSouscripteur: /^\s*Nom\s*du\s*souscripteur\s*$/i,
+        numContrat: /^\s*N°\s*de\s*contrat\s*$/i,
+        dateMouvement: /^\s*Date\s*du\s*mouvement\s*$/i,
+        libelleMouvement: /^\s*Libellé\s*du\s*mouvement\s*$/i,
+        montant: /^\s*Montant\s*en\s*€\s*$/i,
+        tauxIncitation: /^\s*Taux\s*d'incitation\s*$/i,
+        montantIncitation: /^\s*Montant\s*de\s*l'incitation\s*en\s*€\s*$/i
     };
 
     worksheets.forEach((worksheet, index) => {

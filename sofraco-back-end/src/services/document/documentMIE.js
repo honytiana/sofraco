@@ -17,7 +17,7 @@ exports.readExcelMIEMCMS = async (file) => {
     const excecutionStartTime = performance.now();
     const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     const fileName = fileService.getFileNameWithoutExtension(file);
-    const version = fileName.replace(/^(\d+).+/, '$1');
+    const version = fileName.replace(/^\s*(\d+).+/, '$1');
     let headers = [];
     let allContrats = [];
     let errors = [];
@@ -53,33 +53,33 @@ exports.readExcelMIEMCMS = async (file) => {
 
 const getContratMIEAXIOM = (worksheets, headers, allContrats, errors) => {
     const arrReg = {
-        dateComptable: /^DATE_COMPTABLE$/i,
-        numAdherent: /^NUM_ADHERENT$/i,
-        codeCourtier: /^CODE_COURTIER$/i,
-        raisonSocialeApporteur: /^RAISON_SOCIALE_APPORTEUR$/i,
-        nom: /^NOM$/i,
-        prenom: /^PRENOM$/i,
-        tel: /^TEL$/i,
-        mail: /^MAIL$/i,
-        codePostal: /^CODE_POSTAL$/i,
-        ville: /^VILLE$/i,
-        dateEffetContrat: /^DATE_EFFET_CONTRAT$/i,
-        dateFinContrat: /^DATE_FIN_CONTRAT$/i,
-        codeProduit: /^CODE_PRODUIT$/i,
-        libelleProduit: /^LIBELLE_PRODUIT$/i,
-        mtCommission: /^MT_COMMISSION$/i,
-        totalEncaisse: /^TOTAL_ENCAISSE$/i,
-        assieteSanteHTEncaisse: /^ASSIETTE_SANTE_HT_ENCAISSE$/i,
-        taxesEncaisses: /^TAXES_ENCAISSÉS$/i,
-        obsActionMutac: /^OBS ACTIOM MUTAC$/i,
-        spheria: /^SPHERIA$/i,
-        cotisationARepartir: /^Cotisation à répartir$/i,
-        courtier: /^COURTIER$/i,
-        fondateur: /^FONDATEUR$/i,
-        pavillon: /^PAVILLON$/i,
-        sofraco: /^SOFRACO$/i,
-        sofracoExpertises: /^SOFRACO EXPERTISES$/i,
-        resteAVerser: /^Reste à verser$/i,
+        dateComptable: /^\s*DATE_COMPTABLE\s*$/i,
+        numAdherent: /^\s*NUM_ADHERENT\s*$/i,
+        codeCourtier: /^\s*CODE_COURTIER\s*$/i,
+        raisonSocialeApporteur: /^\s*RAISON_SOCIALE_APPORTEUR\s*$/i,
+        nom: /^\s*NOM\s*$/i,
+        prenom: /^\s*PRENOM\s*$/i,
+        tel: /^\s*TEL\s*$/i,
+        mail: /^\s*MAIL\s*$/i,
+        codePostal: /^\s*CODE_POSTAL\s*$/i,
+        ville: /^\s*VILLE\s*$/i,
+        dateEffetContrat: /^\s*DATE_EFFET_CONTRAT\s*$/i,
+        dateFinContrat: /^\s*DATE_FIN_CONTRAT\s*$/i,
+        codeProduit: /^\s*CODE_PRODUIT\s*$/i,
+        libelleProduit: /^\s*LIBELLE_PRODUIT\s*$/i,
+        mtCommission: /^\s*MT_COMMISSION\s*$/i,
+        totalEncaisse: /^\s*TOTAL_ENCAISSE\s*$/i,
+        assieteSanteHTEncaisse: /^\s*ASSIETTE_SANTE_HT_ENCAISSE\s*$/i,
+        taxesEncaisses: /^\s*TAXES_ENCAISSÉS\s*$/i,
+        obsActionMutac: /^\s*OBS ACTIOM MUTAC\s*$/i,
+        spheria: /^\s*SPHERIA\s*$/i,
+        cotisationARepartir: /^\s*Cotisation à répartir\s*$/i,
+        courtier: /^\s*COURTIER\s*$/i,
+        fondateur: /^\s*FONDATEUR\s*$/i,
+        pavillon: /^\s*PAVILLON\s*$/i,
+        sofraco: /^\s*SOFRACO\s*$/i,
+        sofracoExpertises: /^\s*SOFRACO EXPERTISES\s*$/i,
+        resteAVerser: /^\s*Reste à verser\s*$/i,
     };
     worksheets.forEach((worksheet, index) => {
         if (index === 1) {

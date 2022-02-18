@@ -18,13 +18,13 @@ exports.readExcelHODEVA = async (file) => {
     let errors = [];
     let ocr = { headers: [], allContratsPerCourtier: [], executionTime: 0 };
     const arrReg = {
-        adhesion: /^Adhé-sion$/i,
-        nom: /^NOM$/i,
-        prenom: /^PRENOM$/i,
-        dateEffet: /^Date\s*d'effet$/i,
-        montantPrimeHT: /^Montant\s*Prime\s*HT$/i,
-        tauxCommissionnement: /^Taux\s*de\s*commissionnement$/i,
-        montantCommissionnement: /^Montant\s*du\s*commissionnement$/i,
+        adhesion: /^\s*Adhé-sion\s*$/i,
+        nom: /^\s*NOM\s*$/i,
+        prenom: /^\s*PRENOM\s*$/i,
+        dateEffet: /^\s*Date\s*d'effet\s*$/i,
+        montantPrimeHT: /^\s*Montant\s*Prime\s*HT\s*$/i,
+        tauxCommissionnement: /^\s*Taux\s*de\s*commissionnement\s*$/i,
+        montantCommissionnement: /^\s*Montant\s*du\s*commissionnement\s*$/i,
     };
     worksheets.forEach((worksheet, index) => {
         if (worksheet.name === 'Feuille 1' || index === 0) {
@@ -40,7 +40,7 @@ exports.readExcelHODEVA = async (file) => {
 
             worksheet.eachRow((row, rowNumber) => {
                 if (headers.length === 0) {
-                    if (typeof row.getCell('A').value === 'string' && row.getCell('A').value.match(/^Adhé-sion$/i)) {
+                    if (typeof row.getCell('A').value === 'string' && row.getCell('A').value.match(/^\s*Adhé-sion\s*$/i)) {
                         row.eachCell((cell, colNumber) => {
                             const currentCellValue = (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim() : cell.value;
                             headers.push(currentCellValue);

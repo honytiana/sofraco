@@ -18,23 +18,23 @@ exports.readExcelAVIVASURCO = async (file) => {
     let allContrats = [];
     let ocr = { headers: [], allContratsPerCourtier: [], executionTime: 0 };
     const arrReg = {
-        reseau: /^reseau$/i,
-        region: /^region$/i,
-        inspecteur: /^inspecteur$/i,
-        codeInter: /^code\s*inter$/i,
-        nomApporteur: /^nom\s*de\s*l'apporteur$/i,
-        numeroContrat: /^n°\s*de\s*contrat$/i,
-        numeroCouverture: /^n°\s*de\s*couverture$/i,
-        nomAssure: /^nom\s*de\s*l'assure$/i,
-        nomContrat: /^nom\s*contrat$/i,
-        nomGarantie: /^nom\s*garantie$/i,
-        familleContrat: /^famille\s*contrat$/i,
-        typeMVT: /^type\s*mvt$/i,
-        dateEffetMVT: /^date\s*effet\s*mvt$/i,
-        moisEffetMVT: /^mois\s*effet\s*mvt$/i,
-        prodBrute: /^prod\s*brute$/i,
-        prodObjectifAE: /^prod\s*pour\s*objectif\s*ae$/i,
-        prodCalculAE: /^prod\s*pour\s*calcul\s*ae$/i
+        reseau: /^\s*reseau\s*$/i,
+        region: /^\s*region\s*$/i,
+        inspecteur: /^\s*inspecteur\s*$/i,
+        codeInter: /^\s*code\s*inter\s*$/i,
+        nomApporteur: /^\s*nom\s*de\s*l'apporteur\s*$/i,
+        numeroContrat: /^\s*n°\s*de\s*contrat\s*$/i,
+        numeroCouverture: /^\s*n°\s*de\s*couverture\s*$/i,
+        nomAssure: /^\s*nom\s*de\s*l'assure\s*$/i,
+        nomContrat: /^\s*nom\s*contrat\s*$/i,
+        nomGarantie: /^\s*nom\s*garantie\s*$/i,
+        familleContrat: /^\s*famille\s*contrat\s*$/i,
+        typeMVT: /^\s*type\s*mvt\s*$/i,
+        dateEffetMVT: /^\s*date\s*effet\s*mvt\s*$/i,
+        moisEffetMVT: /^\s*mois\s*effet\s*mvt\s*$/i,
+        prodBrute: /^\s*prod\s*brute\s*$/i,
+        prodObjectifAE: /^\s*prod\s*pour\s*objectif\s*ae\s*$/i,
+        prodCalculAE: /^\s*prod\s*pour\s*calcul\s*ae\s*$/i
     };
     for (let worksheet of worksheets) {
         let cabinetCourtier = { apporteur: '', contrats: [] };

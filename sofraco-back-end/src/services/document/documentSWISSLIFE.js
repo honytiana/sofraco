@@ -84,11 +84,11 @@ const readBordereauSLADE = (textFilePaths) => {
         const numero = nameArr[nameArr.length - 1];
         if (numero === '1') {
             infos.syntheseDesCommissions.periodeConcernee = data[redefinition.reIndexOf(data, /Période concernée/) + 1];
-            infos.syntheseDesCommissions.codeApporteur = (data[redefinition.reIndexOf(data, /Code apporteur/) + 1]).match(/^\d+$/) ?
+            infos.syntheseDesCommissions.codeApporteur = (data[redefinition.reIndexOf(data, /Code apporteur/) + 1]).match(/^\s*\d+\s*$/) ?
                 data[redefinition.reIndexOf(data, /Code apporteur/) + 1] :
                 data[redefinition.reIndexOf(data, /Code apporteur/) + 2];
             infos.syntheseDesCommissions.referenceBordereau = data[redefinition.reIndexOf(data, /Référence bordereau/) + 2];
-            infos.syntheseDesCommissions.nombrePrimeSurLaPeriode = (data[redefinition.reIndexOf(data, /Nombre de primes sur la période/) - 1].match(/^\d$/)) ?
+            infos.syntheseDesCommissions.nombrePrimeSurLaPeriode = (data[redefinition.reIndexOf(data, /Nombre de primes sur la période/) - 1].match(/^\s*\d\s*$/)) ?
                 data[redefinition.reIndexOf(data, /Nombre de primes sur la période/) - 1] : '';
             infos.syntheseDesCommissions.totalPrimesEncaisseesSurLaPeriode = data[redefinition.reIndexOf(data, /Total des primes encaissées sur la période/) + 1];
             infos.syntheseDesCommissions.totalCommissionsCalculeesSurLaPeriode = data[redefinition.reIndexOf(data, /Total des commissions calculées sur la période/) + 1];
@@ -106,10 +106,10 @@ const readBordereauSLADE = (textFilePaths) => {
             data.splice(data.indexOf(infos.syntheseDesCommissions.totalCommissionsDues), 1);
         }
         if (numero === '1' || numero === '2') {
-            const indexfirstCode = redefinition.reIndexOf(data, /^\d+$/);
+            const indexfirstCode = redefinition.reIndexOf(data, /^\s*\d+\s*$/);
             let details = [];
-            if (data[indexfirstCode - 1].match(/^(du \d{1,2}[/]\d{1,2}[/]\d{1,4} au)$/) &&
-                data[indexfirstCode - 2].match(/^(du \d{1,2}[/]\d{1,2}[/]\d{1,4} au)$/)) {
+            if (data[indexfirstCode - 1].match(/^\s*(du \d{1,2}[/]\d{1,2}[/]\d{1,4} au)\s*$/) &&
+                data[indexfirstCode - 2].match(/^\s*(du \d{1,2}[/]\d{1,2}[/]\d{1,4} au)\s*$/)) {
                 details = data.slice(indexfirstCode - 2);
             }
             else {
@@ -120,12 +120,12 @@ const readBordereauSLADE = (textFilePaths) => {
             for (let i = 0; i < maxI; i++) {
                 let contrat = [];
                 if (details.length > 0) {
-                    const indexCode = redefinition.reIndexOf(details, /^\d+$/);
+                    const indexCode = redefinition.reIndexOf(details, /^\s*\d+\s*$/);
                     contrat.push(details[indexCode]);
                     details.splice(indexCode, 1);
-                    let lastIndexUtil = redefinition.reIndexOf(details, /^\d+$/);
+                    let lastIndexUtil = redefinition.reIndexOf(details, /^\s*\d+\s*$/);
                     if (lastIndexUtil > 0) {
-                        if (details[lastIndexUtil - 1].match(/^(du \d{1,2}[/]\d{1,2}[/]\d{1,4} au)$/)) {
+                        if (details[lastIndexUtil - 1].match(/^\s*(du \d{1,2}[/]\d{1,2}[/]\d{1,4} au)\s*$/)) {
                             lastIndexUtil = lastIndexUtil - 2;
                         }
                         for (let j = 0; j < lastIndexUtil; j++) {
@@ -166,18 +166,18 @@ const readBordereauSLADE = (textFilePaths) => {
                         montant: null
                     }
                 }
-                const rNomPoliceAssure = /^([^\d]+)([\d]+( [\d]*)*)([^\d]*)$/i;
-                const rAssure = /^(([a-z']+\s*)+)$/i;
-                const rDateEffet = /^(\d{1,2}[/]\d{1,2}[/]\d{1,4})$/;
-                const rPrimePeriode = /^(du \d{1,2}[/]\d{1,2}[/]\d{1,4} au)$/;
-                const rPeriodiciteMensuel = /^(mensuel)$/i;
-                const rPeriodiciteAnnuel = /^(annuel)$/i;
-                const rCommissionLineaire = /^(linéaire)$/i;
-                const rCommissionEscompt = /^(escompté)/i;
-                const rCommissionRembours = /^(rembours)/i;
-                const rContratProduit = /^(slade .+)$/i;
-                const rMontants = /^(\d+,*\d* *€)$/;
-                const rTaux = /^(\d+,*\d* *%)$/;
+                const rNomPoliceAssure = /^\s*([^\d]+)([\d]+( [\d]*)*)([^\d]*)\s*$/i;
+                const rAssure = /^\s*(([a-z']+\s*)+)\s*$/i;
+                const rDateEffet = /^\s*(\d{1,2}[/]\d{1,2}[/]\d{1,4})\s*$/;
+                const rPrimePeriode = /^\s*(du \d{1,2}[/]\d{1,2}[/]\d{1,4} au)\s*$/;
+                const rPeriodiciteMensuel = /^\s*(mensuel)\s*$/i;
+                const rPeriodiciteAnnuel = /^\s*(annuel)\s*$/i;
+                const rCommissionLineaire = /^\s*(linéaire)\s*$/i;
+                const rCommissionEscompt = /^\s*(escompté)/i;
+                const rCommissionRembours = /^\s*(rembours)/i;
+                const rContratProduit = /^\s*(slade .+)\s*$/i;
+                const rMontants = /^\s*(\d+,*\d* *€)\s*$/;
+                const rTaux = /^\s*(\d+,*\d* *%)\s*$/;
                 detailsPolice.agence.code = newDetail[0];
                 newDetail.splice(0, 1);
                 let dates = [];
@@ -347,20 +347,20 @@ exports.readExcelSWISSLIFESURCO = async (file) => {
     let errors = [];
     let ocr = { headers: null, allContratsPerCourtier: [], executionTime: 0 };
     const arrReg = {
-        apporteurVente: /^Apporteur\s*de\s*la\s*vente$/i,
-        dateComptabVente: /^Date\s*comptab.\s*de\s*la\s*vente$/i,
-        numeroPolice: /^N°\s*de\s*police$/i,
-        codeProduit: /^Code\s*produit$/i,
-        nomClient: /^Nom\s*du\s*Client$/i,
-        cotisationPonderee: /^Cotisation\s*pondérée$/i,
-        montantPP: /^Montant\s*PP$/i,
-        dontParUCsurPP: /^Dont\s*part\s*UC\s*sur\s*PP$/i,
-        montantPU: /^Montant\s*PU$/i,
-        dontParUCsurPU: /^Dont\s*part\s*UC\s*sur\s*PU$/i,
-        tauxChargement: /^Taux\s*de\s*chargement$/i,
-        avanceSurco: /^Avance\s*surco\s*20%$/i,
-        incompressible: /^incompressible$/i,
-        avanceComprisRepriseIncompressible: /^avance\s*y\s*compris\s*reprise\s*incompressbile$/i,
+        apporteurVente: /^\s*Apporteur\s*de\s*la\s*vente\s*$/i,
+        dateComptabVente: /^\s*Date\s*comptab.\s*de\s*la\s*vente\s*$/i,
+        numeroPolice: /^\s*N°\s*de\s*police\s*$/i,
+        codeProduit: /^\s*Code\s*produit\s*$/i,
+        nomClient: /^\s*Nom\s*du\s*Client\s*$/i,
+        cotisationPonderee: /^\s*Cotisation\s*pondérée\s*$/i,
+        montantPP: /^\s*Montant\s*PP\s*$/i,
+        dontParUCsurPP: /^\s*Dont\s*part\s*UC\s*sur\s*PP\s*$/i,
+        montantPU: /^\s*Montant\s*PU\s*$/i,
+        dontParUCsurPU: /^\s*Dont\s*part\s*UC\s*sur\s*PU\s*$/i,
+        tauxChargement: /^\s*Taux\s*de\s*chargement\s*$/i,
+        avanceSurco: /^\s*Avance\s*surco\s*20%\s*$/i,
+        incompressible: /^\s*incompressible\s*$/i,
+        avanceComprisRepriseIncompressible: /^\s*avance\s*y\s*compris\s*reprise\s*incompressbile\s*$/i,
     };	
 
     for (let worksheet of worksheets) {

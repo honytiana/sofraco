@@ -20,32 +20,32 @@ exports.readExcelCARDIF = async (file) => {
     let errors = [];
     let ocr = { headers: null, allContratsPerCourtier: [], executionTime: 0 };
     const arrRegFirstHeader = {
-        courtier: /^courtier$/i,
-        commission: /^commission$/i,
-        client: /^client$/i,
-        contrat: /^contrat$/i,
-        supportFinancier: /^Support\s*Financier$/i,
-        montantsCommission: /^Montants\s*de\s*commission$/i
+        courtier: /^\s*courtier\s*$/i,
+        commission: /^\s*commission\s*$/i,
+        client: /^\s*client\s*$/i,
+        contrat: /^\s*contrat\s*$/i,
+        supportFinancier: /^\s*Support\s*Financier\s*$/i,
+        montantsCommission: /^\s*Montants\s*de\s*commission\s*$/i
     };
     const arrRegSecondHeader = {
-        code: /^code$/i,
-        libelle: /^libellé$/i,
-        reference: /^Référence$/i,
-        type: /^Type$/i,
-        sousType: /^Sous-type$/i,
-        datePriseEnCompte: /^Date\s*de\s*prise\s*en\s*compte$/i,
-        dateEffet: /^Date\s*effet$/i,
-        numeroClient: /^N°$/i,
-        nom: /^Nom$/i,
-        prenom: /^Prénom$/i,
-        numeroContrat: /^N°$/i,
-        produit: /^Produit$/i,
-        codeISIN: /^Code\s*ISIN$/i,
-        libelleSupportFinancier: /^Libellé$/i,
-        classification: /^Classification$/i,
-        assiette: /^Assiette$/i,
-        taux: /^Taux/i,
-        montant: /^Montant$/i
+        code: /^\s*code\s*$/i,
+        libelle: /^\s*libellé\s*$/i,
+        reference: /^\s*Référence\s*$/i,
+        type: /^\s*Type\s*$/i,
+        sousType: /^\s*Sous-type\s*$/i,
+        datePriseEnCompte: /^\s*Date\s*de\s*prise\s*en\s*compte\s*$/i,
+        dateEffet: /^\s*Date\s*effet\s*$/i,
+        numeroClient: /^\s*N°\s*$/i,
+        nom: /^\s*Nom\s*$/i,
+        prenom: /^\s*Prénom\s*$/i,
+        numeroContrat: /^\s*N°\s*$/i,
+        produit: /^\s*Produit\s*$/i,
+        codeISIN: /^\s*Code\s*ISIN\s*$/i,
+        libelleSupportFinancier: /^\s*Libellé\s*$/i,
+        classification: /^\s*Classification\s*$/i,
+        assiette: /^\s*Assiette\s*$/i,
+        taux: /^\s*Taux/i,
+        montant: /^\s*Montant\s*$/i
     };
     for (let worksheet of worksheets) {
         if (worksheet.name === 'CommissionsDetaillees') {
