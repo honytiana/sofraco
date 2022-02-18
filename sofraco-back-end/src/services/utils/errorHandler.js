@@ -341,12 +341,13 @@ exports.errorReadExcelMIELV2 = (index) => {
     return errorMielV2;
 };
 
-exports.errorReadExcelMIELV3 = (index) => {
+exports.errorReadExcelMIELV3_1 = (index) => {
     const indexesHeader = {
         codeApporteurCommissionne: "Code Apporteur commissionné",
         codeApporteurAffaire: "Code Apporteur d'Affaire",
         nomApporteurAffaire: "Nom Apporteur d'Affaire",
         numAdherent: "N° Adhérent",
+        dateDebutContrat: 'date début de contrat',
         nom: "Nom",
         prenom: "Prénom",
         codePostal: "Code postal",
@@ -364,7 +365,49 @@ exports.errorReadExcelMIELV3 = (index) => {
         baseCommisionnement: "Base de commisionnement",
         tauxCommission: "Taux de commission",
         montantCommissions: "Montant commissions",
-        bordereauPaiementCommissionsInitiales: "Bordereau du paiement des commissions initiales"
+        bordereauPaiementCommissionsInitiales: "Bordereau du paiement des commissions initiales",
+        courtier: 'COURTIER',
+        fondateur: 'FONDATEUR',
+        sogeas: 'SOGEAS',
+        sofraco: 'SOFRACO',
+        procedure: 'PROCEDURE',
+    };
+
+    const errorMielV3 = `MIEL V3 : La colonne ${indexesHeader[index]} n'est pas présente`;
+    return errorMielV3;
+};
+
+exports.errorReadExcelMIELV3_2 = (index) => {
+    const indexesHeader = {
+        codeApporteurCommissionne: "Code Apporteur commissionné",
+        codeApporteurAffaire: "Code Apporteur d'Affaire",
+        nomApporteurAffaire: "Nom Apporteur d'Affaire",
+        numAdherent: "N° Adhérent",
+        dateDebutContrat: 'date début de contrat',
+        nom: "Nom",
+        prenom: "Prénom",
+        codePostal: "Code postal",
+        ville: "Ville",
+        codeProduit: "Code Poduit",
+        nomProduit: "Nom Produit",
+        codeContrat: "Code Contrat",
+        nomContrat: "Nom Contrat",
+        dateDebutEcheance: "Date début échéance",
+        dateFinEcheance: "Date fin échéance",
+        montantTTCEcheance: "Montant TTC échéance",
+        montantHTEcheance: "Montant HT échéance",
+        codeGarantieTechnique: "Code de la Garantie Technique",
+        nomGarantieTechnique: "Nom de la Garantie Technique",
+        baseCommisionnement: "Base de commisionnement",
+        tauxCommission: "Taux de commission",
+        montantCommissions: "Montant commissions",
+        bordereauPaiementCommissionsInitiales: "Bordereau du paiement des commissions initiales",
+        courtier: 'COURTIER',
+        fondateur: 'FONDATEUR',
+        pavillon: 'PAVILLON',
+        sofraco: 'SOFRACO',
+        sofracoExpertises: 'SOFRACO EXPERTISES',
+        budget: 'BUDGET'
     };
 
     const errorMielV3 = `MIEL V3 : La colonne ${indexesHeader[index]} n'est pas présente`;

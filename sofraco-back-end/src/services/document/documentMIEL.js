@@ -329,11 +329,12 @@ const getContratMIELV2 = (worksheets, headers, allContrats, errors) => {
 };
 
 const getContratMIELV3 = (worksheets, headers, allContrats, errors) => {
-    const arrReg = {
+    const arrReg1 = {
         codeApporteurCommissionne: /^\s*Code\s*Apporteur\s*commissionné\s*$/i,
         codeApporteurAffaire: /^\s*Code\s*Apporteur\s*d'Affaire\s*$/i,
         nomApporteurAffaire: /^\s*Nom\s*Apporteur\s*d'Affaire\s*$/i,
         numAdherent: /^\s*N°\s*Adhérent\s*$/i,
+        dateDebutContrat: /^\s*date\s*début\s*d*e*\s*contrat\s*$/i,
         nom: /^\s*Nom\s*$/i,
         prenom: /^\s*Prénom\s*$/i,
         codePostal: /^\s*Code\s*postal\s*$/i,
@@ -351,15 +352,52 @@ const getContratMIELV3 = (worksheets, headers, allContrats, errors) => {
         baseCommisionnement: /^\s*Base\s*de\s*commisionnement\s*$/i,
         tauxCommission: /^\s*Taux\s*de\s*commission\s*$/i,
         montantCommissions: /^\s*Montant\s*commissions\s*$/i,
-        bordereauPaiementCommissionsInitiales: /^\s*Bordereau\s*du\s*paiement\s*des\s*commissions\s*initiales\s*$/i
+        bordereauPaiementCommissionsInitiales: /^\s*Bordereau\s*du\s*paiement\s*des\s*commissions\s*initiales\s*$/i,
+        courtier: /^\s*COURTIER\s*$/i,
+        fondateur: /^\s*FONDATEURS*\s*$/i,
+        sogeas: /^\s*SOGEAS\s*$/i,
+        sofraco: /^\s*SOFRACO\s*$/i,
+        procedure: /^\s*PROCEDURE\s*$/i,
+    };
+    const arrReg2 = {
+        codeApporteurCommissionne: /^\s*Code\s*Apporteur\s*commissionné\s*$/i,
+        codeApporteurAffaire: /^\s*Code\s*Apporteur\s*d'Affaire\s*$/i,
+        nomApporteurAffaire: /^\s*Nom\s*Apporteur\s*d'Affaire\s*$/i,
+        numAdherent: /^\s*N°\s*Adhérent\s*$/i,
+        dateDebutContrat: /^\s*date\s*début\s*d*e*\s*contrat\s*$/i,
+        nom: /^\s*Nom\s*$/i,
+        prenom: /^\s*Prénom\s*$/i,
+        codePostal: /^\s*Code\s*postal\s*$/i,
+        ville: /^\s*Ville\s*$/i,
+        codeProduit: /^\s*Code\s*Poduit\s*$/i,
+        nomProduit: /^\s*Nom\s*Produit\s*$/i,
+        codeContrat: /^\s*Code\s*Contrat\s*$/i,
+        nomContrat: /^\s*Nom\s*Contrat\s*$/i,
+        dateDebutEcheance: /^\s*Date\s*début\s*échéance\s*$/i,
+        dateFinEcheance: /^\s*Date\s*fin\s*échéance\s*$/i,
+        montantTTCEcheance: /^\s*Montant\s*TTC\s*échéance\s*$/i,
+        montantHTEcheance: /^\s*Montant\s*HT\s*échéance\s*$/i,
+        codeGarantieTechnique: /^\s*Code\s*de\s*la\s*Garantie\s*Technique\s*$/i,
+        nomGarantieTechnique: /^\s*Nom\s*de\s*la\s*Garantie\s*Technique\s*$/i,
+        baseCommisionnement: /^\s*Base\s*de\s*commisionnement\s*$/i,
+        tauxCommission: /^\s*Taux\s*de\s*commission\s*$/i,
+        montantCommissions: /^\s*Montant\s*commissions\s*$/i,
+        bordereauPaiementCommissionsInitiales: /^\s*Bordereau\s*du\s*paiement\s*des\s*commissions\s*initiales\s*$/i,
+        courtier: /^\s*COURTIER\s*$/i,
+        fondateur: /^\s*FONDATEURS*\s*$/i,
+        pavillon: /^\s*PAVILLON\s*$/i,
+        sofraco: /^\s*SOFRACO\s*$/i,
+        sofracoExpertises: /^\s*SOFRACO\s*EXPERTISES\s*$/i,
+        budget: /^\s*BUDGET\s*$/i
     };
     worksheets.forEach((worksheet, index) => {
-        if (index === 1) {
+        if (index === 2) {
             let indexesHeader = {
                 codeApporteurCommissionne: null,
                 codeApporteurAffaire: null,
                 nomApporteurAffaire: null,
                 numAdherent: null,
+                dateDebutContrat: null,
                 nom: null,
                 prenom: null,
                 codePostal: null,
@@ -377,7 +415,12 @@ const getContratMIELV3 = (worksheets, headers, allContrats, errors) => {
                 baseCommisionnement: null,
                 tauxCommission: null,
                 montantCommissions: null,
-                bordereauPaiementCommissionsInitiales: null
+                bordereauPaiementCommissionsInitiales: null,
+                courtier: null,
+                fondateur: null,
+                sogeas: null,
+                sofraco: null,
+                procedure: null,
             };
             let rowNumberHeader;
             worksheet.eachRow((row, rowNumber) => {
@@ -387,12 +430,67 @@ const getContratMIELV3 = (worksheets, headers, allContrats, errors) => {
                         const currentCellValue = (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim().replace(/\n/g, ' ') : cell.value.replace(/\n/g, ' ');
                         if (headers.indexOf(currentCellValue) < 0) {
                             headers.push(currentCellValue);
-                            generals.setIndexHeaders(cell, colNumber, arrReg, indexesHeader);
+                            generals.setIndexHeaders(cell, colNumber, arrReg1, indexesHeader);
                         }
                     });
                     for (let index in indexesHeader) {
                         if (indexesHeader[index] === null) {
-                            errors.push(errorHandler.errorReadExcelMIELV3(index));
+                            errors.push(errorHandler.errorReadExcelMIELV3_1(index));
+                        }
+                    }
+                }
+                if (rowNumber > rowNumberHeader && !row.hidden) {
+                    const { contrat, error } = generals.createContratSimpleHeader(row, indexesHeader);
+                    allContrats.push(contrat);
+                }
+            })
+        }
+        if (index === 3) {
+            let indexesHeader = {
+                codeApporteurCommissionne: null,
+                codeApporteurAffaire: null,
+                nomApporteurAffaire: null,
+                numAdherent: null,
+                dateDebutContrat: null,
+                nom: null,
+                prenom: null,
+                codePostal: null,
+                ville: null,
+                codeProduit: null,
+                nomProduit: null,
+                codeContrat: null,
+                nomContrat: null,
+                dateDebutEcheance: null,
+                dateFinEcheance: null,
+                montantTTCEcheance: null,
+                montantHTEcheance: null,
+                codeGarantieTechnique: null,
+                nomGarantieTechnique: null,
+                baseCommisionnement: null,
+                tauxCommission: null,
+                montantCommissions: null,
+                bordereauPaiementCommissionsInitiales: null,
+                courtier: null,
+                fondateur: null,
+                pavillon: null,
+                sofraco: null,
+                sofracoExpertises: null,
+                budget: null
+            };
+            let rowNumberHeader;
+            worksheet.eachRow((row, rowNumber) => {
+                if (rowNumber === 1) {
+                    rowNumberHeader = rowNumber;
+                    row.eachCell((cell, colNumber) => {
+                        const currentCellValue = (typeof cell.value === 'string' || cell.value !== '') ? cell.value.trim().replace(/\n/g, ' ') : cell.value.replace(/\n/g, ' ');
+                        // if (headers.indexOf(currentCellValue) < 0) {
+                            // headers.push(currentCellValue);
+                            generals.setIndexHeaders(cell, colNumber, arrReg2, indexesHeader);
+                        // }
+                    });
+                    for (let index in indexesHeader) {
+                        if (indexesHeader[index] === null) {
+                            errors.push(errorHandler.errorReadExcelMIELV3_2(index));
                         }
                     }
                 }

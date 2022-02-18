@@ -14,7 +14,31 @@ exports.getOCRMIELMCMS = (ocr) => {
                     cabinet: contrat.courtier,
                     code: contrat.courtier,
                 },
-                headers,
+                headers: [
+                    "Code Apporteur commissionné",
+                    "Code Apporteur d'Affaire",
+                    "Nom Apporteur d'Affaire",
+                    "N° Adhérent",
+                    'date début de contrat',
+                    "Nom",
+                    "Prénom",
+                    "Code postal",
+                    "Ville",
+                    "Code Poduit",
+                    "Nom Produit",
+                    "Code Contrat",
+                    "Nom Contrat",
+                    "Date début échéance",
+                    "Date fin échéance",
+                    "Montant TTC échéance",
+                    "Montant HT échéance",
+                    "Code de la Garantie Technique",
+                    "Nom de la Garantie Technique",
+                    "Base de commisionnement",
+                    "Taux de commission",
+                    "Montant commissions",
+                    "Bordereau du paiement des commissions initiales",
+                    'COURTIER'],
                 datas: contrat.contrats,
                 mielVersion: ocr.mielVersion
             };
@@ -73,7 +97,7 @@ exports.createWorkSheetMIELMCMS = (workSheet, dataCourtierOCR) => {
     for (let i = debut; i <= rowNumber - 2; i++) {
         result += workSheet.getRow(i).getCell('U').value;
     }
-    const value =  {
+    const value = {
         formula: `SUM(U${debut}:U${rowNumber - 2})`,
         result: result
     };
@@ -87,30 +111,30 @@ const createPavetMIELCREASIO = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('B').value = datas.codeApporteurAffaire;
         workSheet.getRow(rowNumber).getCell('C').value = datas.nomApporteurAffaire;
         workSheet.getRow(rowNumber).getCell('D').value = datas.numAdherent;
-        workSheet.getRow(rowNumber).getCell('E').value = datas.nom;
-        workSheet.getRow(rowNumber).getCell('F').value = datas.prenom;
-        workSheet.getRow(rowNumber).getCell('G').value = datas.codePostal;
-        workSheet.getRow(rowNumber).getCell('H').value = datas.ville;
-        workSheet.getRow(rowNumber).getCell('I').value = datas.codeProduit;
-        workSheet.getRow(rowNumber).getCell('J').value = datas.nomProduit;
-        workSheet.getRow(rowNumber).getCell('K').value = datas.codeContrat;
-        workSheet.getRow(rowNumber).getCell('L').value = datas.nomContrat;
-        workSheet.getRow(rowNumber).getCell('M').value = datas.dateDebutEcheance ? new Date(datas.dateDebutEcheance) : '';
-        workSheet.getRow(rowNumber).getCell('M').numFmt = 'dd/mm/yyyy';
-        workSheet.getRow(rowNumber).getCell('N').value = datas.dateFinEcheance ? new Date(datas.dateFinEcheance) : '';
+        workSheet.getRow(rowNumber).getCell('F').value = datas.nom;
+        workSheet.getRow(rowNumber).getCell('G').value = datas.prenom;
+        workSheet.getRow(rowNumber).getCell('H').value = datas.codePostal;
+        workSheet.getRow(rowNumber).getCell('I').value = datas.ville;
+        workSheet.getRow(rowNumber).getCell('J').value = datas.codeProduit;
+        workSheet.getRow(rowNumber).getCell('K').value = datas.nomProduit;
+        workSheet.getRow(rowNumber).getCell('L').value = datas.codeContrat;
+        workSheet.getRow(rowNumber).getCell('M').value = datas.nomContrat;
+        workSheet.getRow(rowNumber).getCell('N').value = datas.dateDebutEcheance ? new Date(datas.dateDebutEcheance) : '';
         workSheet.getRow(rowNumber).getCell('N').numFmt = 'dd/mm/yyyy';
-        workSheet.getRow(rowNumber).getCell('O').value = datas.montantTTCEcheance;
-        workSheet.getRow(rowNumber).getCell('O').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('P').value = datas.montantHTEcheance;
+        workSheet.getRow(rowNumber).getCell('O').value = datas.dateFinEcheance ? new Date(datas.dateFinEcheance) : '';
+        workSheet.getRow(rowNumber).getCell('O').numFmt = 'dd/mm/yyyy';
+        workSheet.getRow(rowNumber).getCell('P').value = datas.montantTTCEcheance;
         workSheet.getRow(rowNumber).getCell('P').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('Q').value = datas.codeGarantieTechnique;
-        workSheet.getRow(rowNumber).getCell('R').value = datas.nomGarantieTechnique;
-        workSheet.getRow(rowNumber).getCell('S').value = datas.baseCommisionnement;
-        workSheet.getRow(rowNumber).getCell('S').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('T').value = datas.tauxCommission;
-        workSheet.getRow(rowNumber).getCell('U').value = datas.montantCommissions;
-        workSheet.getRow(rowNumber).getCell('U').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('V').value = datas.bordereauPaiementCommissionsInitiales;
+        workSheet.getRow(rowNumber).getCell('Q').value = datas.montantHTEcheance;
+        workSheet.getRow(rowNumber).getCell('Q').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+        workSheet.getRow(rowNumber).getCell('R').value = datas.codeGarantieTechnique;
+        workSheet.getRow(rowNumber).getCell('S').value = datas.nomGarantieTechnique;
+        workSheet.getRow(rowNumber).getCell('T').value = datas.baseCommisionnement;
+        workSheet.getRow(rowNumber).getCell('T').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+        workSheet.getRow(rowNumber).getCell('U').value = datas.tauxCommission;
+        workSheet.getRow(rowNumber).getCell('V').value = datas.montantCommissions;
+        workSheet.getRow(rowNumber).getCell('V').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+        workSheet.getRow(rowNumber).getCell('W').value = datas.bordereauPaiementCommissionsInitiales;
         rowNumber++;
     }
     return rowNumber;
@@ -123,34 +147,34 @@ const createPavetMIELV1 = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('B').value = datas.codeApporteurAffaire;
         workSheet.getRow(rowNumber).getCell('C').value = datas.nomApporteurAffaire;
         workSheet.getRow(rowNumber).getCell('D').value = datas.numAdherent;
-        workSheet.getRow(rowNumber).getCell('E').value = datas.nom;
-        workSheet.getRow(rowNumber).getCell('F').value = datas.prenom;
-        workSheet.getRow(rowNumber).getCell('G').value = datas.codePostal;
-        workSheet.getRow(rowNumber).getCell('H').value = datas.ville;
-        workSheet.getRow(rowNumber).getCell('I').value = datas.codeProduit;
-        workSheet.getRow(rowNumber).getCell('J').value = datas.nomProduit;
-        workSheet.getRow(rowNumber).getCell('K').value = datas.codeContrat;
-        workSheet.getRow(rowNumber).getCell('L').value = datas.nomContrat;
-        workSheet.getRow(rowNumber).getCell('M').value = datas.dateDebutEcheance ? new Date(datas.dateDebutEcheance) : '';
-        workSheet.getRow(rowNumber).getCell('M').numFmt = 'dd/mm/yyyy';
-        workSheet.getRow(rowNumber).getCell('N').value = datas.dateFinEcheance ? new Date(datas.dateFinEcheance) : '';
+        workSheet.getRow(rowNumber).getCell('F').value = datas.nom;
+        workSheet.getRow(rowNumber).getCell('G').value = datas.prenom;
+        workSheet.getRow(rowNumber).getCell('H').value = datas.codePostal;
+        workSheet.getRow(rowNumber).getCell('I').value = datas.ville;
+        workSheet.getRow(rowNumber).getCell('J').value = datas.codeProduit;
+        workSheet.getRow(rowNumber).getCell('K').value = datas.nomProduit;
+        workSheet.getRow(rowNumber).getCell('L').value = datas.codeContrat;
+        workSheet.getRow(rowNumber).getCell('M').value = datas.nomContrat;
+        workSheet.getRow(rowNumber).getCell('N').value = datas.dateDebutEcheance ? new Date(datas.dateDebutEcheance) : '';
         workSheet.getRow(rowNumber).getCell('N').numFmt = 'dd/mm/yyyy';
-        workSheet.getRow(rowNumber).getCell('O').value = datas.montantTTCEcheance;
-        workSheet.getRow(rowNumber).getCell('O').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('P').value = datas.montantHTEcheance;
+        workSheet.getRow(rowNumber).getCell('O').value = datas.dateFinEcheance ? new Date(datas.dateFinEcheance) : '';
+        workSheet.getRow(rowNumber).getCell('O').numFmt = 'dd/mm/yyyy';
+        workSheet.getRow(rowNumber).getCell('P').value = datas.montantTTCEcheance;
         workSheet.getRow(rowNumber).getCell('P').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('Q').value = datas.codeGarantieTechnique;
-        workSheet.getRow(rowNumber).getCell('R').value = datas.nomGarantieTechnique;
-        workSheet.getRow(rowNumber).getCell('S').value = datas.baseCommisionnement;
-        workSheet.getRow(rowNumber).getCell('S').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('T').value = datas.tauxCommission;
-        workSheet.getRow(rowNumber).getCell('U').value = datas.montantCommissions;
-        workSheet.getRow(rowNumber).getCell('U').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('V').value = datas.bordereauPaiementCommissionsInitiales;
-        workSheet.getRow(rowNumber).getCell('W').value = datas.courtier;
-        workSheet.getRow(rowNumber).getCell('W').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('X').value = datas.fondateur;
+        workSheet.getRow(rowNumber).getCell('Q').value = datas.montantHTEcheance;
+        workSheet.getRow(rowNumber).getCell('Q').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+        workSheet.getRow(rowNumber).getCell('R').value = datas.codeGarantieTechnique;
+        workSheet.getRow(rowNumber).getCell('S').value = datas.nomGarantieTechnique;
+        workSheet.getRow(rowNumber).getCell('T').value = datas.baseCommisionnement;
+        workSheet.getRow(rowNumber).getCell('T').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+        workSheet.getRow(rowNumber).getCell('U').value = datas.tauxCommission;
+        workSheet.getRow(rowNumber).getCell('V').value = datas.montantCommissions;
+        workSheet.getRow(rowNumber).getCell('V').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+        workSheet.getRow(rowNumber).getCell('W').value = datas.bordereauPaiementCommissionsInitiales;
+        workSheet.getRow(rowNumber).getCell('X').value = datas.courtier;
         workSheet.getRow(rowNumber).getCell('X').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+        // workSheet.getRow(rowNumber).getCell('X').value = datas.fondateur;
+        // workSheet.getRow(rowNumber).getCell('X').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
     }
     return rowNumber;
@@ -164,38 +188,38 @@ const createPavetMIELV2 = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('B').value = datas.codeApporteurAffaire;
         workSheet.getRow(rowNumber).getCell('C').value = datas.nomApporteurAffaire;
         workSheet.getRow(rowNumber).getCell('D').value = datas.numAdherent;
-        workSheet.getRow(rowNumber).getCell('E').value = datas.nom;
-        workSheet.getRow(rowNumber).getCell('F').value = datas.prenom;
-        workSheet.getRow(rowNumber).getCell('G').value = datas.codePostal;
-        workSheet.getRow(rowNumber).getCell('H').value = datas.ville;
-        workSheet.getRow(rowNumber).getCell('I').value = datas.codeProduit;
-        workSheet.getRow(rowNumber).getCell('J').value = datas.nomProduit;
-        workSheet.getRow(rowNumber).getCell('K').value = datas.codeContrat;
-        workSheet.getRow(rowNumber).getCell('L').value = datas.nomContrat;
-        workSheet.getRow(rowNumber).getCell('M').value = datas.dateDebutEcheance ? new Date(datas.dateDebutEcheance) : '';
-        workSheet.getRow(rowNumber).getCell('M').numFmt = 'dd/mm/yyyy';
-        workSheet.getRow(rowNumber).getCell('N').value = datas.dateFinEcheance ? new Date(datas.dateFinEcheance) : '';
+        workSheet.getRow(rowNumber).getCell('F').value = datas.nom;
+        workSheet.getRow(rowNumber).getCell('G').value = datas.prenom;
+        workSheet.getRow(rowNumber).getCell('H').value = datas.codePostal;
+        workSheet.getRow(rowNumber).getCell('I').value = datas.ville;
+        workSheet.getRow(rowNumber).getCell('J').value = datas.codeProduit;
+        workSheet.getRow(rowNumber).getCell('K').value = datas.nomProduit;
+        workSheet.getRow(rowNumber).getCell('L').value = datas.codeContrat;
+        workSheet.getRow(rowNumber).getCell('M').value = datas.nomContrat;
+        workSheet.getRow(rowNumber).getCell('N').value = datas.dateDebutEcheance ? new Date(datas.dateDebutEcheance) : '';
         workSheet.getRow(rowNumber).getCell('N').numFmt = 'dd/mm/yyyy';
-        workSheet.getRow(rowNumber).getCell('O').value = datas.montantTTCEcheance;
-        workSheet.getRow(rowNumber).getCell('O').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('P').value = datas.montantHTEcheance;
+        workSheet.getRow(rowNumber).getCell('O').value = datas.dateFinEcheance ? new Date(datas.dateFinEcheance) : '';
+        workSheet.getRow(rowNumber).getCell('O').numFmt = 'dd/mm/yyyy';
+        workSheet.getRow(rowNumber).getCell('P').value = datas.montantTTCEcheance;
         workSheet.getRow(rowNumber).getCell('P').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('Q').value = datas.codeGarantieTechnique;
-        workSheet.getRow(rowNumber).getCell('R').value = datas.nomGarantieTechnique;
-        workSheet.getRow(rowNumber).getCell('S').value = datas.baseCommisionnement;
-        workSheet.getRow(rowNumber).getCell('S').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('T').value = datas.tauxCommission;
-        workSheet.getRow(rowNumber).getCell('U').value = datas.montantCommissions;
-        workSheet.getRow(rowNumber).getCell('U').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('V').value = datas.bordereauPaiementCommissionsInitiales;
-        workSheet.getRow(rowNumber).getCell('W').value = datas.courtier;
-        workSheet.getRow(rowNumber).getCell('W').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('X').value = datas.fondateur;
+        workSheet.getRow(rowNumber).getCell('Q').value = datas.montantHTEcheance;
+        workSheet.getRow(rowNumber).getCell('Q').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+        workSheet.getRow(rowNumber).getCell('R').value = datas.codeGarantieTechnique;
+        workSheet.getRow(rowNumber).getCell('S').value = datas.nomGarantieTechnique;
+        workSheet.getRow(rowNumber).getCell('T').value = datas.baseCommisionnement;
+        workSheet.getRow(rowNumber).getCell('T').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+        workSheet.getRow(rowNumber).getCell('U').value = datas.tauxCommission;
+        workSheet.getRow(rowNumber).getCell('V').value = datas.montantCommissions;
+        workSheet.getRow(rowNumber).getCell('V').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+        workSheet.getRow(rowNumber).getCell('W').value = datas.bordereauPaiementCommissionsInitiales;
+        workSheet.getRow(rowNumber).getCell('X').value = datas.courtier;
         workSheet.getRow(rowNumber).getCell('X').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('Y').value = datas.sogeas;
-        workSheet.getRow(rowNumber).getCell('Y').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('Z').value = datas.procedure;
-        workSheet.getRow(rowNumber).getCell('Z').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+        // workSheet.getRow(rowNumber).getCell('X').value = datas.fondateur;
+        // workSheet.getRow(rowNumber).getCell('X').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+        // workSheet.getRow(rowNumber).getCell('Y').value = datas.sogeas;
+        // workSheet.getRow(rowNumber).getCell('Y').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+        // workSheet.getRow(rowNumber).getCell('Z').value = datas.procedure;
+        // workSheet.getRow(rowNumber).getCell('Z').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
     }
     return rowNumber;
@@ -235,6 +259,8 @@ const createPavetMIELV3 = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('V').value = datas.montantCommissions;
         workSheet.getRow(rowNumber).getCell('V').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         workSheet.getRow(rowNumber).getCell('W').value = datas.bordereauPaiementCommissionsInitiales;
+        workSheet.getRow(rowNumber).getCell('X').value = datas.courtier;
+        workSheet.getRow(rowNumber).getCell('X').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
     }
     return rowNumber;
@@ -248,40 +274,40 @@ const createPavetMIELV4 = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('B').value = datas.codeApporteurAffaire;
         workSheet.getRow(rowNumber).getCell('C').value = datas.nomApporteurAffaire;
         workSheet.getRow(rowNumber).getCell('D').value = datas.numAdherent;
-        workSheet.getRow(rowNumber).getCell('E').value = datas.nom;
-        workSheet.getRow(rowNumber).getCell('F').value = datas.prenom;
-        workSheet.getRow(rowNumber).getCell('G').value = datas.codePostal;
-        workSheet.getRow(rowNumber).getCell('H').value = datas.ville;
-        workSheet.getRow(rowNumber).getCell('I').value = datas.codeProduit;
-        workSheet.getRow(rowNumber).getCell('J').value = datas.nomProduit;
-        workSheet.getRow(rowNumber).getCell('K').value = datas.codeContrat;
-        workSheet.getRow(rowNumber).getCell('L').value = datas.nomContrat;
-        workSheet.getRow(rowNumber).getCell('M').value = datas.dateDebutEcheance ? new Date(datas.dateDebutEcheance) : '';
-        workSheet.getRow(rowNumber).getCell('M').numFmt = 'dd/mm/yyyy';
-        workSheet.getRow(rowNumber).getCell('N').value = datas.dateFinEcheance ? new Date(datas.dateFinEcheance) : '';
+        workSheet.getRow(rowNumber).getCell('F').value = datas.nom;
+        workSheet.getRow(rowNumber).getCell('G').value = datas.prenom;
+        workSheet.getRow(rowNumber).getCell('H').value = datas.codePostal;
+        workSheet.getRow(rowNumber).getCell('I').value = datas.ville;
+        workSheet.getRow(rowNumber).getCell('J').value = datas.codeProduit;
+        workSheet.getRow(rowNumber).getCell('K').value = datas.nomProduit;
+        workSheet.getRow(rowNumber).getCell('L').value = datas.codeContrat;
+        workSheet.getRow(rowNumber).getCell('M').value = datas.nomContrat;
+        workSheet.getRow(rowNumber).getCell('N').value = datas.dateDebutEcheance ? new Date(datas.dateDebutEcheance) : '';
         workSheet.getRow(rowNumber).getCell('N').numFmt = 'dd/mm/yyyy';
-        workSheet.getRow(rowNumber).getCell('O').value = datas.montantTTCEcheance;
-        workSheet.getRow(rowNumber).getCell('O').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('P').value = datas.montantHTEcheance;
+        workSheet.getRow(rowNumber).getCell('O').value = datas.dateFinEcheance ? new Date(datas.dateFinEcheance) : '';
+        workSheet.getRow(rowNumber).getCell('O').numFmt = 'dd/mm/yyyy';
+        workSheet.getRow(rowNumber).getCell('P').value = datas.montantTTCEcheance;
         workSheet.getRow(rowNumber).getCell('P').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('Q').value = datas.codeGarantieTechnique;
-        workSheet.getRow(rowNumber).getCell('R').value = datas.nomGarantieTechnique;
-        workSheet.getRow(rowNumber).getCell('S').value = datas.baseCommisionnement;
-        workSheet.getRow(rowNumber).getCell('S').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('T').value = datas.tauxCommission;
-        workSheet.getRow(rowNumber).getCell('U').value = datas.montantCommissions;
-        workSheet.getRow(rowNumber).getCell('U').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('V').value = datas.bordereauPaiementCommissionsInitiales;
-        workSheet.getRow(rowNumber).getCell('W').value = datas.courtier;
-        workSheet.getRow(rowNumber).getCell('W').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('X').value = datas.fondateur;
+        workSheet.getRow(rowNumber).getCell('Q').value = datas.montantHTEcheance;
+        workSheet.getRow(rowNumber).getCell('Q').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+        workSheet.getRow(rowNumber).getCell('R').value = datas.codeGarantieTechnique;
+        workSheet.getRow(rowNumber).getCell('S').value = datas.nomGarantieTechnique;
+        workSheet.getRow(rowNumber).getCell('T').value = datas.baseCommisionnement;
+        workSheet.getRow(rowNumber).getCell('T').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+        workSheet.getRow(rowNumber).getCell('U').value = datas.tauxCommission;
+        workSheet.getRow(rowNumber).getCell('V').value = datas.montantCommissions;
+        workSheet.getRow(rowNumber).getCell('V').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+        workSheet.getRow(rowNumber).getCell('W').value = datas.bordereauPaiementCommissionsInitiales;
+        workSheet.getRow(rowNumber).getCell('X').value = datas.courtier;
         workSheet.getRow(rowNumber).getCell('X').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('Y').value = datas.pavillon;
-        workSheet.getRow(rowNumber).getCell('Y').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('Z').value = datas.sofracoExpertises;
-        workSheet.getRow(rowNumber).getCell('Z').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('AA').value = datas.budget;
-        workSheet.getRow(rowNumber).getCell('AA').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+        // workSheet.getRow(rowNumber).getCell('X').value = datas.fondateur;
+        // workSheet.getRow(rowNumber).getCell('X').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+        // workSheet.getRow(rowNumber).getCell('Y').value = datas.pavillon;
+        // workSheet.getRow(rowNumber).getCell('Y').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+        // workSheet.getRow(rowNumber).getCell('Z').value = datas.sofracoExpertises;
+        // workSheet.getRow(rowNumber).getCell('Z').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+        // workSheet.getRow(rowNumber).getCell('AA').value = datas.budget;
+        // workSheet.getRow(rowNumber).getCell('AA').numFmt = '#,##0.00"€";\-#,##0.00"€"';
         rowNumber++;
     }
     return rowNumber;
