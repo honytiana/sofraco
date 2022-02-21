@@ -5,6 +5,10 @@ const process = require('process');
 const load = require('./src/loaders/loader');
 const config = require('./config.json');
 const workerThreadLoader = require('./src/loaders/workerThreadLoader');
+const axios = require('axios');
+const treatmentHandler = require('./src/handlers/treatmentHandler.js');
+const tokenHandler = require('./src/handlers/tokenHandler');
+const userHandler = require('./src/handlers/userHandler');
 // const { GPU } = require('gpu.js');
 
 const startServer = async () => {
@@ -32,10 +36,30 @@ const startServer = async () => {
 
         const port = config.nodePort;
         if (require.main === module) {
-            app.listen(port, () => {
+            app.listen(port, async () => {
                 require('events').EventEmitter.prototype._maxListeners = 100;
                 console.info(`Server is listen on port : ${port}`);
                 console.log(`Worker ${process.pid} started`);
+                const processingTreatment = await treatmentHandler.getProcessingTreatment();
+                if (processingTreatment.length > 0) {
+                    await treatmentHandler.updateStatusTreatment('done');
+                }
+                const user = await userHandler.getOneUser('Sofraco');
+                const token = await tokenHandler.createTokens(user._id);
+                axios.default.put(`${config.nodeUrlInterne}/api/document`, {}, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token.value}`
+                    }
+                }).then((res) => {
+                    let executionTime = res.data.executionTime;
+                    console.log(`TRAITEMENT FAIT EN : ${executionTime}`);
+                }).catch((err) => {
+                    console.log(`${new Date()} ERREUR LORS DU TRAITEMENT DES FICHIERS UPLOADES`);
+                    console.log(err);
+                }).finally(() => {
+                    console.log(`${new Date()} FIN DU TRAITEMENT DES FICHIERS UPLOADES`);
+                });
             });
         }
     }

@@ -60,6 +60,20 @@ exports.getProcessingTreatmentByUser = async (req, res) => {
     }
 }
 
+exports.getProcessingTreatment = async (req, res) => {
+    console.log('get treatment status processing');
+    try {
+        const treatments = await treatmentHandler.getProcessingTreatment();
+        if (treatments.length > 0) {
+            res.status(200).json({ treatments: treatments });
+        } else {
+            res.status(200).json({});
+        }
+    } catch (error) {
+        res.status(400).json({ error });
+    }
+}
+
 exports.updateTreatment = async (req, res) => {
     console.log('update treatment');
     const data = req.body;
@@ -70,6 +84,26 @@ exports.updateTreatment = async (req, res) => {
         res.status(400).json({ error });
     }
 }
+
+exports.updateStatusTreatmentUser = async (req, res) => {
+    console.log('update Status Treatment User');
+    try {
+        const treatment = await treatmentHandler.updateStatusTreatmentUser(req.params.user, req.params.status);
+        res.status(200).json(treatment);
+    } catch (error) {
+        res.status(400).json({ error });
+    }
+};
+
+exports.updateStatusTreatment = async (req, res) => {
+    console.log('update Status Treatment');
+    try {
+        const treatment = await treatmentHandler.updateStatusTreatment(req.params.status);
+        res.status(200).json(treatment);
+    } catch (error) {
+        res.status(400).json({ error });
+    }
+};
 
 exports.deleteTreatment = async (req, res) => {
     console.log('Delete Treatment');

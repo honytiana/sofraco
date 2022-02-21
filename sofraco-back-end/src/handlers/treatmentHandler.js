@@ -19,6 +19,10 @@ class TreatmentHandler {
         return Treatment.find();
     }
 
+    getProcessingTreatment() {
+        return Treatment.find({ status: 'processing' });
+    }
+
     getTreatment(id) {
         return Treatment.findById(id);
     }
@@ -33,6 +37,22 @@ class TreatmentHandler {
 
     updateTreatment(id, data) {
         return Treatment.findByIdAndUpdate(id, data);
+    }
+
+    updateStatusTreatmentUser(user, status) {
+        return Treatment.updateMany(
+            {
+                user: user
+            },
+            { $set: { 'status': status } }
+        );
+    }
+
+    updateStatusTreatment(status) {
+        return Treatment.updateMany(
+            {},
+            { $set: { 'status': status } }
+        );
     }
 
     deleteTreatment(id) {

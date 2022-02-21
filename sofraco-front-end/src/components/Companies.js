@@ -39,7 +39,7 @@ class Companies extends Component {
         super(props);
         this.state = {
             local: false,
-            letGenerateEM: false,
+            letGenerateEM: true,
             details: [],
             companies: [],
             collapsed: [],
@@ -109,7 +109,7 @@ class Companies extends Component {
                     }, 1000);
                     setInterval(() => {
                         this.getTreatment();
-                    }, 2000);
+                    }, 5000);
                 }
             })
             .catch((err) => {
@@ -314,7 +314,7 @@ class Companies extends Component {
         this.setState({
             toast: false,
             messageToast: {},
-            letGenerateEM: true,
+            letGenerateEM: false,
             load: this.state.local ? true : false,
             elementCover: this.state.local ? true : false,
             executionTime: ''
@@ -376,11 +376,10 @@ class Companies extends Component {
             console.log(err);
         } finally {
             this.setState({
-                letGenerateEM: false,
+                letGenerateEM: true,
             });
             setTimeout(() => {
                 this.setState({
-                    letGenerateEM: false,
                     drafts: [],
                     toast: false,
                     messageToast: {}
@@ -603,7 +602,7 @@ class Companies extends Component {
                                 <CButton className="sofraco-button" onClick={(e) => { this.launchTreatments(e) }} disabled={this.state.load}>Traiter les fichiers</CButton>
                             </div>
                         )}
-                        <CButton className="sofraco-button" onClick={this.onGenererExcelsMasters} disabled={this.state.letGenerateEM}>
+                        <CButton className="sofraco-button" onClick={this.onGenererExcelsMasters} disabled={!this.state.letGenerateEM}>
                             {
                                 (!this.state.loadGenerateExcelMaster) ? (
                                     <span>Générer les Excels Masters</span>
