@@ -37,6 +37,7 @@ class App extends Component {
     this.setState({
       interne: window.location.hostname.match(regInterne) ? true : false
     });
+    console.log(this.state.interne);
     this.getToken();
 
   }
@@ -46,6 +47,7 @@ class App extends Component {
     this.setState({
       interne: window.location.hostname.match(regInterne) ? true : false
     });
+    console.log(this.state.interne);
   }
 
   getToken() {
