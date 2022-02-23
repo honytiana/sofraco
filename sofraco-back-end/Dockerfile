@@ -10,7 +10,7 @@ RUN python get-pip.py
 
 RUN pip install --upgrade pip
 RUN python -m pip install opencv-python==3.4.0.12
-RUN pip install torch
+RUN pip install torch==1.0.0
 RUN pip install easyocr
 
 WORKDIR /backend    
