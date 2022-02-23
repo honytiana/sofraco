@@ -19,7 +19,7 @@ module.exports = async function ({ app }) {
     app.use((express.json()));
     app.use(morgan('combined', { stream: stream }));
 
-    const allowedOrigin = ['http://localhost:3000', 'http://localhost:9000', 'http://92.182.25.197:3000', 'http://92.182.25.197:9000', 'http://192.168.20.48:3000', 'http://192.168.20.48:9000'];
+    const allowedOrigin = ['http://localhost:3000', 'http://localhost:9000', 'http://92.182.25.197:3000', 'http://92.182.25.197:9000', 'http://5.39.62.49:3000', 'http://5.39.62.49:9000', 'http://192.168.20.48:3000', 'http://192.168.20.48:9000'];
 
     app.use((req, res, next) => {
         const origin = req.headers.origin;
@@ -33,7 +33,7 @@ module.exports = async function ({ app }) {
     });
 
     app.get('/api/api-status', async (req, res) => {
-        res.cookie('sofraco', `${await bcrypt.hash('SOFRACO!2022#', 10)}`, { maxAge: 10 * 60 * 60 * 1000 });
+        res.cookie('sofraco', `${await bcrypt.hash('!SOFRACO!2022#bordereaux sofraco', 10)}`, { maxAge: 10 * 60 * 60 * 1000 });
         res.status(200).json({
             'status': 'Sofraco api is OK'
         });
