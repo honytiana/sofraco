@@ -33,14 +33,14 @@ services:
             - ./data-node:/data/db
         command: mongod --noauth
         networks:
-            sofraco-network:
-               ipv4_address: 172.20.0.2
+            sofraco-network
+               #ipv4_address: 172.20.0.2
 
 networks:
     sofraco-network:
         driver: bridge
-        ipam:
-          config:
-             - subnet: 172.20.0.0/16
+        #ipam:
+          #config:
+             #- subnet: 172.20.0.0/16
            
 
