@@ -19,6 +19,7 @@ import axios from 'axios';
 import sofraco_logo from '../assets/sofraco_groupe_logo.png';
 import config from '../config.json';
 import '../styles/Access.css';
+import moment from 'moment';
 
 class Access extends Component {
     constructor(props) {
@@ -52,71 +53,70 @@ class Access extends Component {
             }
         })
             .then((res) => {
-                
-            });
-        axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/user/login`, options, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then((res) => {
-            const data = res.data;
-            this.setState({
-                toast: true,
-                messageToast: { header: 'SUCCESS', color: 'success', message: 'Vous êtes connecté' }
-            });
-            localStorage.setItem('user', JSON.stringify(data.userId));
-
-            setTimeout(() => {
-                axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/${data.userId}`, {
+                axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/user/login`, options, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
-                })
-                    .then((res) => {
-                        this.setState({
-                            toast: true,
-                            messageToast: { header: 'SUCCESS', color: 'success', message: `Déconnexion` }
-                        });
-                    }).catch((err) => {
-                        this.setState({
-                            toast: true,
-                            messageToast: { header: 'ERROR', color: 'danger', message: err }
-                        })
-                    }).finally(() => {
-                        this.setState({
-                            loader: false
-                        });
-                        setTimeout(() => {
-                            this.setState({
-                                toast: false,
-                                messageToast: {}
-                            });
-                        }, 6000);
+                }).then((res) => {
+                    const data = res.data;
+                    const maxAge = moment().add(data.expiresIn * 60 * 60 * 1000);
+                    document.cookie = `sofraco_=${data.token.value}; expires=${maxAge}; path=/;`;
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'SUCCESS', color: 'success', message: 'Vous êtes connecté' }
                     });
-                localStorage.clear();
-            }, data.expiresIn * 3600 * 1000);
+                    localStorage.setItem('user', JSON.stringify(data.userId));
 
-            window.location.replace(`${(this.state.interne) ? config.reactUrlInterne : config.reactUrlExterne}/home`);
-        }).catch((err) => {
-            document.cookie = "sofraco=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-            this.setState({
-                toast: true,
-                messageToast: { header: 'ERROR', color: 'danger', message: err }
-            })
-        }).finally(() => {
-            this.setState({
-                loader: false
-            });
-            setTimeout(() => {
-                this.setState({
-                    toast: false,
-                    messageToast: {}
+                    setTimeout(() => {
+                        axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/${data.userId}`, {
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                            .then((res) => {
+                                this.setState({
+                                    toast: true,
+                                    messageToast: { header: 'SUCCESS', color: 'success', message: `Déconnexion` }
+                                });
+                            }).catch((err) => {
+                                this.setState({
+                                    toast: true,
+                                    messageToast: { header: 'ERROR', color: 'danger', message: err }
+                                })
+                            }).finally(() => {
+                                this.setState({
+                                    loader: false
+                                });
+                                setTimeout(() => {
+                                    this.setState({
+                                        toast: false,
+                                        messageToast: {}
+                                    });
+                                }, 6000);
+                            });
+                        localStorage.clear();
+                    }, data.expiresIn * 3600 * 1000);
+
+                    window.location.replace(`${(this.state.interne) ? config.reactUrlInterne : config.reactUrlExterne}/home`);
+                }).catch((err) => {
+                    document.cookie = "sofraco=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'ERROR', color: 'danger', message: err }
+                    })
+                }).finally(() => {
+                    this.setState({
+                        loader: false
+                    });
+                    setTimeout(() => {
+                        this.setState({
+                            toast: false,
+                            messageToast: {}
+                        });
+                    }, 6000);
                 });
-            }, 6000);
-        });
+            });
     }
-
-
 
     render() {
         return (

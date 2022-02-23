@@ -252,7 +252,6 @@ const getDraftsDocuments = async () => {
     return drafts;
 }
 
-
 exports.setStatusDocument = async (req, res) => {
     console.log('set status document');
     try {

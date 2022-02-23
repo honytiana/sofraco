@@ -54,7 +54,8 @@ class Navbar extends Component {
 
     deconnexion() {
         const user = JSON.parse(localStorage.getItem('user'));
-        axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
+        const token = document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1');
+        axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}/token/${token}`, {
             headers: {
                 'Content-Type': 'application/json'
             }

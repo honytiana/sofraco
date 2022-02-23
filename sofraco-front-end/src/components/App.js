@@ -52,6 +52,7 @@ class App extends Component {
 
   getToken() {
     const user = JSON.parse(localStorage.getItem('user'));
+    // get token by user
     axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
       headers: {
         'Content-Type': 'application/json',
@@ -62,7 +63,9 @@ class App extends Component {
           this.setState({
             token: res.data
           });
-          axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}/token/${res.data.value}`, {
+          // check token
+          const token = document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1');
+          axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}/token`, {
             withCredentials: true,
             headers: {
               'Content-Type': 'application/json',
@@ -72,7 +75,7 @@ class App extends Component {
               
             })
             .catch((err) => {
-              axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
+              axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}/token/${token}`, {
                 headers: {
                   'Content-Type': 'application/json'
                 }

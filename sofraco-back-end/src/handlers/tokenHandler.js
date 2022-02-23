@@ -25,17 +25,18 @@ class TokensHandler {
         }
     }
 
-    async checkToken(userId, value, cookies) {
-        const token = cookies.sofraco;
-        const tk = await Tokens.findOne({ userId: userId });
+    async checkToken(userId, cookies) {
+        const sofraco = cookies.sofraco;
+        const token = cookies.sofraco_;
+        const tk = await Tokens.findOne({ userId: userId, value: token });
         if (!tk) {
             throw 'Token not found';
         }
-        if (!token) {
+        if (!sofraco) {
             throw 'Token not found';
         }
 
-        const isValid = (value === tk.value) ? true : false;
+        const isValid = (token === tk.value) ? true : false;
         if (!isValid) {
             throw "value doesn't match";
         }
@@ -61,6 +62,14 @@ class TokensHandler {
     removeTokenByUser(userId) {
         return Tokens.deleteOne({ userId: userId });
     };
+
+    removeTokenUser(userId, token) {
+        return Tokens.deleteOne({ userId: userId, value: token });
+    };
+
+    deleteAllToken() {
+        return Tokens.deleteMany({});
+    }
 
 }
 
