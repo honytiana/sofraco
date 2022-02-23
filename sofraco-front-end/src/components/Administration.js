@@ -82,14 +82,14 @@ class Administration extends Component {
                             _classes: ['text-center']
                         },
                         {
-                            key: 'firstName',
-                            label: 'Prénom',
+                            key: 'lastName',
+                            label: 'Nom',
                             _style: { width: '15%' },
                             _classes: ['text-center']
                         },
                         {
-                            key: 'lastName',
-                            label: 'Nom',
+                            key: 'firstName',
+                            label: 'Prénom',
                             _style: { width: '15%' },
                             _classes: ['text-center']
                         },
