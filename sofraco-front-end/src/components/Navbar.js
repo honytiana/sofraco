@@ -55,20 +55,27 @@ class Navbar extends Component {
     deconnexion() {
         const user = JSON.parse(localStorage.getItem('user'));
         const token = document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1');
-        axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}/token/${token}`, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((res) => {
-                console.log('Déconnexion');
-                localStorage.clear();
-                document.cookie = "sofraco=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-                window.location.reload();
-            }).catch((err) => {
-                console.log('Erreur');
-            }).finally(() => {
-            });
+        if (token) {
+            axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}/token/${token}`, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then((res) => {
+                    console.log('Déconnexion');
+                    localStorage.clear();
+                    document.cookie = "sofraco=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+                    window.location.reload();
+                }).catch((err) => {
+                    console.log('Erreur');
+                }).finally(() => {
+                });
+        } else {
+            console.log('Déconnexion');
+            localStorage.clear();
+            document.cookie = "sofraco=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+            window.location.reload();
+        }
     }
 
     render() {

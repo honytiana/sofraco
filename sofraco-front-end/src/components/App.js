@@ -72,23 +72,30 @@ class App extends Component {
             }
           })
             .then((res) => {
-              
+
             })
             .catch((err) => {
-              axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}/token/${token}`, {
-                headers: {
-                  'Content-Type': 'application/json'
-                }
-              })
-                .then((res) => {
-                  window.location.reload();
-                  console.log('Déconnexion');
-                  localStorage.clear();
-                  document.cookie = "sofraco=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-                }).catch((err) => {
-                  console.log('Erreur');
-                }).finally(() => {
-                });
+              if (token) {
+                axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}/token/${token}`, {
+                  headers: {
+                    'Content-Type': 'application/json'
+                  }
+                })
+                  .then((res) => {
+                    window.location.reload();
+                    console.log('Déconnexion');
+                    localStorage.clear();
+                    document.cookie = "sofraco=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+                  }).catch((err) => {
+                    console.log('Erreur');
+                  }).finally(() => {
+                  });
+              } else {
+                window.location.reload();
+                console.log('Déconnexion');
+                localStorage.clear();
+                document.cookie = "sofraco=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+              }
             });
         } else {
           localStorage.clear();
