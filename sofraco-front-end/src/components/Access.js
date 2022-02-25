@@ -18,7 +18,7 @@ import {
     CButton
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
-import { freeSet, flagSet, brandSet } from '@coreui/icons';
+import * as icon from '@coreui/icons';
 import axios from 'axios';
 
 import sofraco_logo from '../assets/sofraco_groupe_logo.png';
@@ -197,11 +197,11 @@ class Access extends Component {
                                             {this.state.showPass &&
                                                 <CIcon
                                                     size="sm"
-                                                    icon={freeSet.cilLockLocked} />}
+                                                    icon={icon.cilLockLocked} />}
                                             {!this.state.showPass &&
                                                 <CIcon
                                                     size="sm"
-                                                    icon={freeSet.cilLockUnlocked} />}
+                                                    icon={icon.cilLockUnlocked} />}
                                         </CButton>
                                     </CInputGroupAppend>
                                 </CInputGroup>

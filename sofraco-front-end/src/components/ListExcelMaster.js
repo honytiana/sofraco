@@ -15,7 +15,7 @@ import {
     CListGroupItem
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
-import { freeSet } from '@coreui/icons';
+import * as icon from '@coreui/icons';
 
 import axios from 'axios';
 
@@ -272,7 +272,7 @@ class ListExcelMaster extends Component {
                                             onClick={(e) => this.toggleYear(e, index)}
                                             className="sofraco-btn-collapse"
                                         >
-                                            <CIcon content={this.state.detailsYear.includes(index) ? freeSet.cilArrowTop : freeSet.cilArrowBottom} />
+                                            <CIcon icon={this.state.detailsYear.includes(index) ? icon.cilArrowTop : icon.cilArrowBottom} />
                                         </CButton><CImg src={closedFolder} fluid width={20} />{excelMaster.year}
                                     </CCardHeader>
                                     <CCollapse
@@ -291,7 +291,7 @@ class ListExcelMaster extends Component {
                                                                     onClick={(e) => this.toggleMonth(e, i)}
                                                                     className="sofraco-btn-collapse"
                                                                 >
-                                                                    <CIcon content={this.state.detailsYear.includes(index) ? freeSet.cilArrowTop : freeSet.cilArrowBottom} />
+                                                                    <CIcon icon={this.state.detailsYear.includes(index) ? icon.cilArrowTop : icon.cilArrowBottom} />
                                                                 </CButton><CImg src={closedFolder} fluid width={20} />{ex.month.month}
                                                             </CCardHeader>
                                                             <CCollapse
@@ -304,7 +304,7 @@ class ListExcelMaster extends Component {
                                                                             return (
                                                                                 <div key={`${j}_devcontentdoc`}>
                                                                                     <CListGroupItem key={`${j}_listgroupitemdoc`}>{filesUtil.getFileName(e.path)} <CButton key={`${j}_btdoc`} className="sofraco-button-download-excel" onClick={() => { this.onDownloadExcelMaster(e); }}>
-                                                                                        <CIcon content={freeSet.cilCloudDownload} />
+                                                                                        <CIcon icon={icon.cilCloudDownload} />
                                                                                     </CButton></CListGroupItem>
 
                                                                                 </div>

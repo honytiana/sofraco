@@ -117,9 +117,9 @@ class App extends Component {
             <Access /> :
             <div>
               <Navbar token={this.state.token} />
-              <div className="sofraco-root" style={{ minHeight: window.innerHeight - 50 }}>
+              <CContainer className="sofraco-root" style={{ minHeight: window.innerHeight - 50 }} >
                 <RouteComponent token={this.state.token} />
-              </div>
+              </CContainer>
               <Footer />
             </div>
         }

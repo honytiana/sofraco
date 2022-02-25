@@ -24,7 +24,7 @@ import {
 } from '@coreui/react';
 import axios from 'axios';
 import CIcon from '@coreui/icons-react';
-import { freeSet } from '@coreui/icons';
+import * as icon from '@coreui/icons';
 
 import '../styles/Administration.css';
 import config from '../config.json';
@@ -407,7 +407,7 @@ class Administration extends Component {
                                             size="sm"
                                             onClick={() => { this.toggleDetails(index) }}><CIcon
                                                 size="sm"
-                                                icon={freeSet.cilPencil} />
+                                                icon={icon.cilPencil} />
                                         </CButton>
                                     </td>
                                 )
@@ -489,7 +489,7 @@ class Administration extends Component {
                                             size="sm"
                                             onClick={(e) => { this.openDeletePopup(e, item) }}><CIcon
                                                 size="sm"
-                                                icon={freeSet.cilTrash} />
+                                                icon={icon.cilTrash} />
                                         </CButton>
                                     </td>
                                 )

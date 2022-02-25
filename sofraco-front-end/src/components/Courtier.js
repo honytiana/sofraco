@@ -14,7 +14,7 @@ import {
 } from '@coreui/react';
 
 import CIcon from '@coreui/icons-react';
-import { freeSet } from '@coreui/icons';
+import * as icon from '@coreui/icons';
 import axios from 'axios';
 
 import '../styles/Courtier.css';
@@ -361,7 +361,7 @@ class Courtier extends Component {
                                         size='sm'
                                         onClick={(e) => { this.onDeleteEmailCopie(e, ec) }}><CIcon
                                             key={`icn_${this.props.courtier._id}_${ec}`}
-                                            content={freeSet.cilDelete} /></CButton></CBadge>
+                                            icon={icon.cilDelete} /></CButton></CBadge>
                             )
                         })
                     }
@@ -375,7 +375,7 @@ class Courtier extends Component {
                                         size='sm'
                                         onClick={(e) => { this.onDeleteStateEmailCopie(e, ec) }}><CIcon
                                             key={`icn_${index._id}_${ec}`}
-                                            content={freeSet.cilDelete} /></CButton></CBadge>
+                                            icon={icon.cilDelete} /></CButton></CBadge>
                             )
                         })
                     }

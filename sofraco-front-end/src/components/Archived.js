@@ -16,7 +16,7 @@ import {
 } from '@coreui/react';
 
 import CIcon from '@coreui/icons-react';
-import { freeSet } from '@coreui/icons';
+import * as icon from '@coreui/icons';
 import axios from 'axios';
 
 import '../styles/Archived.css';
@@ -98,7 +98,7 @@ class Archived extends Component {
                                             onClick={(e) => this.toggleYear(e, index)}
                                             className="sofraco-btn-collapse"
                                         >
-                                            <CIcon content={this.state.detailsYear.includes(index) ? freeSet.cilArrowTop : freeSet.cilArrowBottom} />
+                                            <CIcon icon={this.state.detailsYear.includes(index) ? icon.cilArrowTop : icon.cilArrowBottom} />
                                         </CButton><CImg src={closedFolder} fluid width={20} />{archive.year}
                                     </CCardHeader>
                                     <CCollapse
@@ -117,7 +117,7 @@ class Archived extends Component {
                                                                     onClick={(e) => this.toggleMonth(e, i)}
                                                                     className="sofraco-btn-collapse"
                                                                 >
-                                                                    <CIcon content={this.state.detailsYear.includes(index) ? freeSet.cilArrowTop : freeSet.cilArrowBottom} />
+                                                                    <CIcon icon={this.state.detailsYear.includes(index) ? icon.cilArrowTop : icon.cilArrowBottom} />
                                                                 </CButton><CImg src={closedFolder} fluid width={20} />{document.month.month}
                                                             </CCardHeader>
                                                             <CCollapse
