@@ -39,7 +39,7 @@ exports.getCompany = async (req, res) => {
     } catch (error) {
         res.status(400).json({ error });
     }
-}
+};
 
 exports.getCompanyByName = async (req, res) => {
     console.log('get company by name');
@@ -49,7 +49,22 @@ exports.getCompanyByName = async (req, res) => {
     } catch (error) {
         res.status(400).json({ error });
     }
-}
+};
+
+exports.getCompaniesLike = async (req, res) => {
+    console.log('search company by name');
+    try {
+        const companies = await companyHandler.getCompaniesLike(req.params.name);
+        const newCompanies = [];
+        for (let company of companies) {
+            company.logo = fs.readFileSync(company.logo, { encoding: 'base64' });
+            newCompanies.push(company);
+        }
+        res.status(200).json(newCompanies);
+    } catch (error) {
+        res.status(400).json({ error });
+    }
+};
 
 exports.getCompanyByCompanySurco = async (req, res) => {
     console.log('get company by company surco');
@@ -59,7 +74,7 @@ exports.getCompanyByCompanySurco = async (req, res) => {
     } catch (error) {
         res.status(400).json({ error });
     }
-}
+};
 
 exports.getCompanies = async (req, res) => {
     console.log('get companies');

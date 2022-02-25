@@ -13,6 +13,11 @@
     /* margin: auto; */
 }
 
+.sofraco-form-search{
+    position: relative;
+    width: 500px;
+}
+
 .sofraco-company-card {
     cursor: pointer;
 }

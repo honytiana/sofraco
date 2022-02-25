@@ -20,10 +20,18 @@ import {
     CModalHeader,
     CModalBody,
     CListGroup,
-    CListGroupItem
+    CListGroupItem,
+    CForm,
+    CFormGroup,
+    CInputGroup,
+    CInput,
+    CInputGroupAppend,
+    CAlert
 } from '@coreui/react';
 
 import axios from 'axios';
+import CIcon from '@coreui/icons-react';
+import * as icon from '@coreui/icons';
 
 import config from '../config.json';
 // import config from '../jsConfig';
@@ -60,10 +68,12 @@ class Companies extends Component {
             treatmentTimeStr: null,
             interne: false,
             showErrors: false,
-            treatmentErrors: []
+            treatmentErrors: [],
+            search: false
 
         };
         this.getCompanies = this.getCompanies.bind(this);
+        this.onSearchCompany = this.onSearchCompany.bind(this);
         this.getDraftDocument = this.getDraftDocument.bind(this);
         this.getTreatment = this.getTreatment.bind(this);
         this.checkCompanyOfDraftsDocuments = this.checkCompanyOfDraftsDocuments.bind(this);
@@ -249,6 +259,46 @@ class Companies extends Component {
             .catch((err) => {
                 console.log(err)
             });
+    }
+
+    onSearchCompany(e) {
+        this.setState({
+            search: true
+        });
+        if (e.target.value !== '') {
+            axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company/search/${e.target.value}`, {
+                headers: {
+                    'Authorization': `Bearer ${this.state.token}`
+                }
+            })
+                .then((data) => {
+                    return data.data
+                })
+                .then((companies) => {
+                    if (companies.length > 0) {
+                        let collapsed = [];
+                        for (let company of companies) {
+                            collapsed.push({ company: company.name, collapse: false });
+                        }
+                        this.setState({
+                            companies: companies,
+                            collapsed: collapsed,
+                        });
+                    } else {
+                        this.setState({
+                            companies: []
+                        });
+                    }
+                })
+                .catch((err) => {
+                    console.log(err)
+                });
+        } else {
+            this.getCompanies();
+            this.setState({
+                search: false
+            });
+        }
     }
 
     getTreatment() {
@@ -550,7 +600,31 @@ class Companies extends Component {
         }
         return (
             <CContainer fluid>
-                {(this.state.companies.length > 0) ? (
+                <CForm action="" method="post" className={'sofraco-form-search'} >
+                    <CFormGroup>
+                        <CInputGroup>
+                            <CInput
+                                type="text"
+                                id="sofraco-search-company"
+                                name="sofraco-search-company"
+                                className="sofraco-input"
+                                placeholder='Recherche'
+                                onChange={(e) => { this.onSearchCompany(e) }}
+                            />
+                            <CInputGroupAppend>
+                                <CButton
+                                    color='warning'
+                                    shape="square"
+                                    onClick={(e) => { this.onSearchCompany(e) }}>
+                                    <CIcon
+                                        size="sm"
+                                        icon={icon.cilSearch} />
+                                </CButton>
+                            </CInputGroupAppend>
+                        </CInputGroup>
+                    </CFormGroup>
+                </CForm>
+                {(this.state.companies.length > 0) && (
                     <div>
                         <CRow>
                             {this.state.companies.map((company, index) => {
@@ -600,15 +674,18 @@ class Companies extends Component {
                                 )
                             }
                         </CButton>
-                    </div>) :
-                    (
-                        <div className="sofraco-spinner">
-                            <CSpinner
-                                color="warning" variant="grow"
-                            />
-                        </div>
-                    )
+                    </div>)
                 }
+                {(this.state.companies.length <= 0 && !this.state.search) && (
+                    <div className="sofraco-spinner">
+                        <CSpinner
+                            color="warning" variant="grow"
+                        />
+                    </div>
+                )}
+                {(this.state.companies.length <= 0 && this.state.search) && (
+                    <CAlert color='warning'>La compagnie est introuvable</CAlert>
+                )}
                 {
                     (this.state.showButtonDownload) && (
                         <CButton className="sofraco-button" onClick={this.onDownloadExcelMasters}>Télécharger les Excels Masters</CButton>

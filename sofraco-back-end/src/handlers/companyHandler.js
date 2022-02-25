@@ -32,6 +32,10 @@ class CompanyHandler {
         return Company.findOne({ name: name });
     }
 
+    getCompaniesLike(name) {
+        return Company.find({ name: { $regex: name, $options: 'i' } });
+    }
+
     getCompanyByCompanySurco(companySurco) {
         return Company.findOne({ companySurco: companySurco });
     }
