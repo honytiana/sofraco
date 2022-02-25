@@ -59,10 +59,7 @@ class App extends Component {
       }
     })
       .then((res) => {
-        if (res.data !== null) {
-          this.setState({
-            token: res.data
-          });
+        if (res.data.length > 0) {
           // check token
           const token = document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1');
           axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}/token`, {
@@ -72,7 +69,9 @@ class App extends Component {
             }
           })
             .then((res) => {
-
+              this.setState({
+                token: token
+              });
             })
             .catch((err) => {
               if (token) {

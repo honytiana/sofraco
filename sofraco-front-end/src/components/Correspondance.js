@@ -38,7 +38,7 @@ class Correspondance extends Component {
             fields: [],
             ajoutCorrespondance: false,
             newP: this.props.newP,
-            token: null,
+            token: document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1'),
             interne: false
         }
         this._isMounted = false;
@@ -128,7 +128,7 @@ class Correspondance extends Component {
         axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/correspondance/courtier/${courtier._id}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.props.token}`
             }
         })
             .then((res) => {
@@ -158,7 +158,7 @@ class Correspondance extends Component {
     getCompanies() {
         axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company`, {
             headers: {
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.props.token}`
             }
         })
             .then((res) => {
@@ -206,7 +206,7 @@ class Correspondance extends Component {
         axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/correspondance/code/courtier/edit/${this.props.courtier._id}`, options, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.props.token}`
             }
         }).then((res) => {
             this.setState({
@@ -237,7 +237,7 @@ class Correspondance extends Component {
         axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/correspondance/code/courtier/${this.props.courtier._id}/code/${correspondance.code}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.props.token}`
             }
         })
             .then((res) => {
@@ -298,7 +298,7 @@ class Correspondance extends Component {
         axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/correspondance/code/courtier/${this.props.courtier._id}`, options, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.props.token}`
             }
         }).then((res) => {
             this.setState({

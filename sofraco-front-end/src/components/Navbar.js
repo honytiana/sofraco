@@ -10,12 +10,14 @@ import {
     CDropdown,
     CDropdownToggle,
     CDropdownMenu,
-    CDropdownItem
+    CDropdownItem,
+    CImg
 } from '@coreui/react';
 import axios from 'axios';
 
 import config from '../config.json';
 import '../styles/Navbar.css';
+import sofraco_logo from '../assets/sofraco_groupe_logo.png';
 
 class Navbar extends Component {
     constructor(props) {
@@ -85,6 +87,11 @@ class Navbar extends Component {
                     isOpen: !state.isOpen
                 }))} />
                 <CNavbarBrand>
+                    {/* <CImg
+                        src={sofraco_logo}
+                        fluid
+                        className="mb-2"
+                    /> */}
                     Sofraco
                 </CNavbarBrand>
                 <CCollapse show={this.state.isOpen} navbar>

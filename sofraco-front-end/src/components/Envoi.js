@@ -26,10 +26,10 @@ class Envoi extends Component {
             courtiers: [],
             fields: [],
             toast: false,
-            messageToast: null,
+            messageToast: [],
             month: null,
             year: null,
-            token: null,
+            token: document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1'),
             interne: false
         }
         this.getBadge = this.getBadge.bind(this);
@@ -44,68 +44,53 @@ class Envoi extends Component {
     }
 
     componentDidMount() {
-        const user = JSON.parse(localStorage.getItem('user'));
         const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
         this.setState({
             interne: window.location.hostname.match(regInterne) ? true : false
         });
-
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((res) => {
-                this.setState({
-                    fields: [
-                        {
-                            key: 'check',
-                            label: <input type="checkbox" onChange={(e) => this.onCheckAllHandler(e)} />,
-                            _style: { width: '10%' },
-                            _classes: ['text-center'],
-                            sorter: false,
-                            filter: false
-                        },
-                        {
-                            key: 'cabinet',
-                            label: 'Cabinet',
-                            _style: { width: '20%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'lastName',
-                            label: 'Nom',
-                            _style: { width: '15%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'firstName',
-                            label: 'Prénom',
-                            _style: { width: '15%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'email',
-                            label: 'Email',
-                            _style: { width: '20%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'emailCopie',
-                            label: 'Autres destinataires',
-                            _style: { width: '20%' },
-                            _classes: ['text-center']
-                        }
-                    ],
-                    toast: false,
-                    messageToast: [],
-                    token: res.data
-                });
-                this.fetchCourtiers();
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        this.setState({
+            fields: [
+                {
+                    key: 'check',
+                    label: <input type="checkbox" onChange={(e) => this.onCheckAllHandler(e)} />,
+                    _style: { width: '10%' },
+                    _classes: ['text-center'],
+                    sorter: false,
+                    filter: false
+                },
+                {
+                    key: 'cabinet',
+                    label: 'Cabinet',
+                    _style: { width: '20%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'lastName',
+                    label: 'Nom',
+                    _style: { width: '15%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'firstName',
+                    label: 'Prénom',
+                    _style: { width: '15%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'email',
+                    label: 'Email',
+                    _style: { width: '20%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'emailCopie',
+                    label: 'Autres destinataires',
+                    _style: { width: '20%' },
+                    _classes: ['text-center']
+                }
+            ],
+        });
+        this.fetchCourtiers();
     }
 
     checkProps() {
@@ -117,7 +102,7 @@ class Envoi extends Component {
     fetchCourtiers() {
         axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier`, {
             headers: {
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${this.state.token}`
             }
         })
             .then((data) => {
@@ -222,7 +207,7 @@ class Envoi extends Component {
                     mailPromises.push(
                         axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/mailer/`, options, {
                             headers: {
-                                'Authorization': `Bearer ${this.props.token.value}`
+                                'Authorization': `Bearer ${this.props.token}`
                             }
                         })
                             .then((data) => {

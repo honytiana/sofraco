@@ -35,11 +35,11 @@ class ListExcelMaster extends Component {
             courtier: null,
             loader: false,
             toast: false,
-            messageToast: {},
+            messageToast: [],
             fields: [],
             detailsYear: [],
             detailsMonth: [],
-            token: null,
+            token: document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1'),
             interne: false
         }
         this._isMounted = false;
@@ -69,9 +69,7 @@ class ListExcelMaster extends Component {
                     sorter: false,
                     filter: false
                 }
-            ],
-            toast: false,
-            messageToast: []
+            ]
         });
 
         const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
@@ -97,7 +95,7 @@ class ListExcelMaster extends Component {
         axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/excelMaster/courtier/${courtier._id}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.props.token}`
             }
         })
             .then((res) => {
@@ -129,7 +127,7 @@ class ListExcelMaster extends Component {
         axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/excelMaster/courtier/${courtier._id}/year/month/type/excel`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.props.token}`
             }
         })
             .then((result) => {
@@ -158,7 +156,7 @@ class ListExcelMaster extends Component {
         axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/correspondance/code/courtier/${this.props.courtier._id}/code/${correspondance.code}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.props.token}`
             }
         })
             .then((res) => {
@@ -233,7 +231,7 @@ class ListExcelMaster extends Component {
         axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/excelMaster/xlsx/${id}`, {
             headers: {
                 'Application': 'vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.props.token}`
             },
             responseType: 'blob'
         })

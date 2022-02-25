@@ -29,7 +29,7 @@ class Courtier extends Component {
             messageToast: {},
             newP: this.props.newP,
             emailCopie: [],
-            token: null,
+            token: document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1'),
             interne: false
         }
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
@@ -69,7 +69,7 @@ class Courtier extends Component {
             axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/${this.props.courtier._id}`, options, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.props.token.value}`
+                    'Authorization': `Bearer ${this.props.token}`
                 }
             }).then((res) => {
                 this.saveEmailCopie();
@@ -103,7 +103,7 @@ class Courtier extends Component {
                 axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/courtier/${this.props.courtier._id}/emailCopie`, options, {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${this.props.token.value}`
+                        'Authorization': `Bearer ${this.props.token}`
                     }
                 }).then((res) => {
                     this.setState({
@@ -199,7 +199,7 @@ class Courtier extends Component {
             axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/courtier/${this.props.courtier._id}/emailCopie/edit`, options, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.props.token.value}`
+                    'Authorization': `Bearer ${this.props.token}`
                 }
             }).then((res) => {
                 this.setState({
@@ -237,7 +237,7 @@ class Courtier extends Component {
             axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/courtier/${this.props.courtier._id}/emailCopie/delete`, options, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.props.token.value}`
+                    'Authorization': `Bearer ${this.props.token}`
                 }
             }).then((res) => {
                 this.setState({

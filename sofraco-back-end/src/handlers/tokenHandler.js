@@ -48,7 +48,7 @@ class TokensHandler {
     }
 
     getTokenByUser(userId) {
-        return Tokens.findOne({ userId: userId });
+        return Tokens.find({ userId: userId });
     }
 
     getTokens() {

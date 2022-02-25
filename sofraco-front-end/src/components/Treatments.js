@@ -34,8 +34,8 @@ class Treatments extends Component {
             courtiers: [],
             fields: [],
             toast: false,
-            messageToast: null,
-            token: null,
+            messageToast: [],
+            token: document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1'),
             num: 0,
             interne: false
         }
@@ -47,69 +47,55 @@ class Treatments extends Component {
 
     componentDidMount() {
         this._isMounted = true;
-        const user = JSON.parse(localStorage.getItem('user'));
         const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
         this.setState({
             interne: window.location.hostname.match(regInterne) ? true : false
         });
-        this._isMounted && axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((res) => {
-                this.setState({
-                    fields: [
-                        {
-                            key: 'code',
-                            label: 'Code',
-                            _style: { width: '15%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'cabinet',
-                            label: 'Cabinet',
-                            _style: { width: '25%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'lastName',
-                            label: 'Nom',
-                            _style: { width: '15%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'firstName',
-                            label: 'Prénom',
-                            _style: { width: '15%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'email',
-                            label: 'Email',
-                            _style: { width: '20%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'show_details',
-                            label: '',
-                            _style: { width: '10%' },
-                            _classes: ['text-center'],
-                            sorter: false,
-                            filter: false
-                        }
-                    ],
-                    toast: false,
-                    messageToast: [],
-                    token: res.data
-                });
-                this._isMounted && this.fetchCourtiers();
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        this.setState({
+            fields: [
+                {
+                    key: 'code',
+                    label: 'Code',
+                    _style: { width: '15%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'cabinet',
+                    label: 'Cabinet',
+                    _style: { width: '25%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'lastName',
+                    label: 'Nom',
+                    _style: { width: '15%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'firstName',
+                    label: 'Prénom',
+                    _style: { width: '15%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'email',
+                    label: 'Email',
+                    _style: { width: '20%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'show_details',
+                    label: '',
+                    _style: { width: '10%' },
+                    _classes: ['text-center'],
+                    sorter: false,
+                    filter: false
+                }
+            ]
+        });
+        this._isMounted && this.fetchCourtiers();
     }
-    
+
     componentWillUnmount() {
         this._isMounted = false;
     }
@@ -123,7 +109,7 @@ class Treatments extends Component {
     fetchCourtiers() {
         axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier`, {
             headers: {
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${this.state.token}`
             }
         })
             .then((data) => {

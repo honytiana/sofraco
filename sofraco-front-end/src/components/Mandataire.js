@@ -37,11 +37,11 @@ class Mandataire extends Component {
             details: [],
             courtier: null,
             toast: false,
-            messageToast: {},
+            messageToast: [],
             fields: [],
             ajoutMandataire: false,
             newP: this.props.newP,
-            token: null,
+            token: document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1'),
             visibleAlert: false,
             mandataireToDel: null,
             interne: false
@@ -105,9 +105,7 @@ class Mandataire extends Component {
                     _style: { width: '5%' },
                     _classes: ['text-center']
                 }
-            ],
-            toast: false,
-            messageToast: []
+            ]
         });
 
         const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
@@ -136,7 +134,7 @@ class Mandataire extends Component {
         axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/mandataires/${courtier._id}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.props.token}`
             }
         })
             .then((res) => {
@@ -193,7 +191,7 @@ class Mandataire extends Component {
             axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/`, options, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.props.token.value}`
+                    'Authorization': `Bearer ${this.props.token}`
                 }
             }).then((res) => {
                 let mandataires = this.state.mandataires;
@@ -242,7 +240,7 @@ class Mandataire extends Component {
             axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/${mandataire._id}`, options, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.props.token.value}`
+                    'Authorization': `Bearer ${this.props.token}`
                 }
             }).then((res) => {
                 let mandataires = this.state.mandataires;
@@ -298,7 +296,7 @@ class Mandataire extends Component {
         axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/${this.state.mandataireToDel._id}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.props.token}`
             }
         })
             .then((res) => {

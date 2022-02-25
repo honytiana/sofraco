@@ -12,8 +12,13 @@ import {
     CToast,
     CToastHeader,
     CToastBody,
-    CCardHeader
+    CCardHeader,
+    CInputGroup,
+    CInputGroupAppend,
+    CButton
 } from '@coreui/react';
+import CIcon from '@coreui/icons-react';
+import { freeSet, flagSet, brandSet } from '@coreui/icons';
 import axios from 'axios';
 
 import sofraco_logo from '../assets/sofraco_groupe_logo.png';
@@ -27,9 +32,13 @@ class Access extends Component {
         this.state = {
             toast: false,
             messageToast: '',
-            interne: false
+            interne: false,
+            showPass: false,
+            valuePass: ''
         }
         this.onConnexion = this.onConnexion.bind(this);
+        this.onShowPass = this.onShowPass.bind(this);
+        this.getValuePass = this.getValuePass.bind(this);
 
     }
 
@@ -37,6 +46,20 @@ class Access extends Component {
         const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
         this.setState({
             interne: window.location.hostname.match(regInterne) ? true : false
+        });
+    }
+
+    onShowPass(e) {
+        e.preventDefault();
+        this.setState({
+            showPass: !this.state.showPass
+        });
+    }
+
+    getValuePass(e) {
+        e.preventDefault();
+        this.setState({
+            valuePass: e.target.value
         });
     }
 
@@ -145,14 +168,43 @@ class Access extends Component {
                             </CFormGroup>
                             <CFormGroup>
                                 <CLabel htmlFor="sofraco-password">Mot de passe</CLabel>
-                                <CInput
-                                    type="password"
-                                    id="sofraco-password"
-                                    name="sofraco-password"
-                                    placeholder="Mot de passe"
-                                    autoComplete="current-password"
-                                    className="sofraco-input"
-                                />
+                                <CInputGroup>
+                                    {this.state.showPass &&
+                                        <CInput
+                                            type="text"
+                                            id="sofraco-password-pass"
+                                            name="sofraco-password"
+                                            autoComplete="current-password"
+                                            className="sofraco-input"
+                                            defaultValue={this.state.valuePass}
+                                        />}
+                                    {!this.state.showPass &&
+                                        <CInput
+                                            type="password"
+                                            id="sofraco-password-txt"
+                                            name="sofraco-password"
+                                            placeholder="Mot de passe"
+                                            autoComplete="current-password"
+                                            className="sofraco-input"
+                                            onChange={(e) => { this.getValuePass(e) }}
+                                        />}
+                                    <CInputGroupAppend>
+                                        <CButton
+                                            className={'bg-info text-white'}
+                                            color='warning'
+                                            shape="square"
+                                            onClick={(e) => { this.onShowPass(e) }}>
+                                            {this.state.showPass &&
+                                                <CIcon
+                                                    size="sm"
+                                                    icon={freeSet.cilLockLocked} />}
+                                            {!this.state.showPass &&
+                                                <CIcon
+                                                    size="sm"
+                                                    icon={freeSet.cilLockUnlocked} />}
+                                        </CButton>
+                                    </CInputGroupAppend>
+                                </CInputGroup>
                             </CFormGroup>
                             <CFormGroup>
                                 <CInput

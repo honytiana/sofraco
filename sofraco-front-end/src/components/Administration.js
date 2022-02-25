@@ -41,10 +41,10 @@ class Administration extends Component {
             courtiers: [],
             fields: [],
             toast: false,
-            messageToast: null,
+            messageToast: [],
             activePage: 1,
             num: 0,
-            token: null,
+            token: document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1'),
             ajoutCourtier: false,
             courtierToDel: null,
             visibleAlert: false,
@@ -62,89 +62,75 @@ class Administration extends Component {
 
     componentDidMount() {
         this._isMounted = true;
-        const user = JSON.parse(localStorage.getItem('user'));
         const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
         this.setState({
             interne: window.location.hostname.match(regInterne) ? true : false
         });
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((res) => {
-                this._isMounted && this.setState({
-                    fields: [
-                        {
-                            key: 'cabinet',
-                            label: 'Cabinet',
-                            _style: { width: '20%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'lastName',
-                            label: 'Nom',
-                            _style: { width: '15%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'firstName',
-                            label: 'Prénom',
-                            _style: { width: '15%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'email',
-                            label: 'Email',
-                            _style: { width: '15%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'emailCopie',
-                            label: 'Emails en copie',
-                            _style: { width: '15%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'phone',
-                            label: 'Telephone',
-                            _style: { width: '10%' },
-                            _classes: ['text-center']
-                        },
-                        // {
-                        //     key: 'status',
-                        //     label: 'Status',
-                        //     _style: { width: '5%' },
-                        //     _classes: ['text-center'],
-                        //     sorter: false,
-                        //     filter: false
-                        // },
-                        {
-                            key: 'show_details',
-                            label: '',
-                            _style: { width: '5%' },
-                            _classes: ['text-center'],
-                            sorter: false,
-                            filter: false
-                        },
-                        {
-                            key: 'delete',
-                            label: '',
-                            _style: { width: '5%' },
-                            _classes: ['text-center'],
-                            sorter: false,
-                            filter: false
-                        }
-                    ],
-                    toast: false,
-                    messageToast: [],
-                    token: res.data
-                });
-                this._isMounted && this.fetchCourtiers();
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        this._isMounted && this.setState({
+            fields: [
+                {
+                    key: 'cabinet',
+                    label: 'Cabinet',
+                    _style: { width: '20%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'lastName',
+                    label: 'Nom',
+                    _style: { width: '15%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'firstName',
+                    label: 'Prénom',
+                    _style: { width: '15%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'email',
+                    label: 'Email',
+                    _style: { width: '15%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'emailCopie',
+                    label: 'Emails en copie',
+                    _style: { width: '15%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'phone',
+                    label: 'Telephone',
+                    _style: { width: '10%' },
+                    _classes: ['text-center']
+                },
+                // {
+                //     key: 'status',
+                //     label: 'Status',
+                //     _style: { width: '5%' },
+                //     _classes: ['text-center'],
+                //     sorter: false,
+                //     filter: false
+                // },
+                {
+                    key: 'show_details',
+                    label: '',
+                    _style: { width: '5%' },
+                    _classes: ['text-center'],
+                    sorter: false,
+                    filter: false
+                },
+                {
+                    key: 'delete',
+                    label: '',
+                    _style: { width: '5%' },
+                    _classes: ['text-center'],
+                    sorter: false,
+                    filter: false
+                }
+            ]
+        });
+        this._isMounted && this.fetchCourtiers();
     }
 
     componentWillUnmount() {
@@ -154,7 +140,7 @@ class Administration extends Component {
     fetchCourtiers() {
         axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/role/courtier?limit=0&skip=0`, {
             headers: {
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${this.state.token}`
             }
         })
             .then((data) => {
@@ -225,7 +211,7 @@ class Administration extends Component {
             axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/`, options, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.state.token.value}`
+                    'Authorization': `Bearer ${this.state.token}`
                 }
             }).then((res) => {
                 let courtiers = this.state.courtiers;
@@ -271,7 +257,7 @@ class Administration extends Component {
         axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/${this.state.courtierToDel._id}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${this.state.token}`
             }
         })
             .then((res) => {
@@ -421,7 +407,7 @@ class Administration extends Component {
                                             size="sm"
                                             onClick={() => { this.toggleDetails(index) }}><CIcon
                                                 size="sm"
-                                                content={freeSet.cilPencil} />
+                                                icon={freeSet.cilPencil} />
                                         </CButton>
                                     </td>
                                 )
@@ -503,7 +489,7 @@ class Administration extends Component {
                                             size="sm"
                                             onClick={(e) => { this.openDeletePopup(e, item) }}><CIcon
                                                 size="sm"
-                                                content={freeSet.cilTrash} />
+                                                icon={freeSet.cilTrash} />
                                         </CButton>
                                     </td>
                                 )

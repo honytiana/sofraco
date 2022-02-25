@@ -32,9 +32,9 @@ class ExcelMaster extends Component {
             courtier: null,
             loader: false,
             toast: false,
-            messageToast: {},
+            messageToast: [],
             fields: [],
-            token: null,
+            token: document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1'),
             interne: false
         }
         this.toggleDetails = this.toggleDetails.bind(this);
@@ -42,43 +42,29 @@ class ExcelMaster extends Component {
     }
 
     componentDidMount() {
-        const user = JSON.parse(localStorage.getItem('user'));
         const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
         this.setState({
             interne: window.location.hostname.match(regInterne) ? true : false
         });
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((res) => {
-                this.setState({
-                    fields: [
-                        {
-                            key: 'path',
-                            label: 'Fichier',
-                            _style: { width: '20%' },
-                            _classes: ['text-center']
-                        },
-                        {
-                            key: 'edit',
-                            label: '',
-                            _style: { width: '20%' },
-                            _classes: ['text-center'],
-                            sorter: false,
-                            filter: false
-                        }
-                    ],
-                    toast: false,
-                    messageToast: [],
-                    token: res.data
-                });
-                this.fetchExcelMasters();
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        this.setState({
+            fields: [
+                {
+                    key: 'path',
+                    label: 'Fichier',
+                    _style: { width: '20%' },
+                    _classes: ['text-center']
+                },
+                {
+                    key: 'edit',
+                    label: '',
+                    _style: { width: '20%' },
+                    _classes: ['text-center'],
+                    sorter: false,
+                    filter: false
+                }
+            ]
+        });
+        this.fetchExcelMasters();
     }
 
     checkProps() {
@@ -92,7 +78,7 @@ class ExcelMaster extends Component {
         axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/excelMaster/courtier/${courtier._id}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${this.state.token}`
             }
         })
             .then((res) => {
@@ -132,7 +118,7 @@ class ExcelMaster extends Component {
         axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/correspondance/code/courtier/${this.props.courtier._id}/code/${correspondance.code}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${this.state.token}`
             }
         })
             .then((res) => {
@@ -186,7 +172,7 @@ class ExcelMaster extends Component {
         axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/correspondance/code/courtier/${this.props.courtier._id}`, options, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.state.token.value}`
+                'Authorization': `Bearer ${this.state.token}`
             }
         }).then((res) => {
             this.setState({

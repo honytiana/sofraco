@@ -35,7 +35,7 @@ class Archived extends Component {
             collapseMonth: false,
             detailsYear: [],
             detailsMonth: [],
-            token: null,
+            token: document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1'),
             interne: false
         }
         this.toggleYear = this.toggleYear.bind(this);
@@ -43,26 +43,10 @@ class Archived extends Component {
     }
 
     componentDidMount() {
-        const user = JSON.parse(localStorage.getItem('user'));
         const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
         this.setState({
             interne: window.location.hostname.match(regInterne) ? true : false
         });
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((res) => {
-                this.setState({
-                    toast: false,
-                    messageToast: {},
-                    token: res.data
-                });
-            })
-            .catch((err) => {
-                console.log(err);
-            });
     }
 
     componentDidUpdate() {

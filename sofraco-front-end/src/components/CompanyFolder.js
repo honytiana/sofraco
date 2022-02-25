@@ -39,7 +39,7 @@ class CompanyFolder extends Component {
             loader: false,
             toast: false,
             messageToast: {},
-            token: null,
+            token: document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1'),
             interne: false
         }
         this._isMounted = false;
@@ -85,7 +85,7 @@ class CompanyFolder extends Component {
             axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company/name/${companySurco}`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.props.token.value}`
+                    'Authorization': `Bearer ${this.props.token}`
                 }
             })
                 .then((res) => {
@@ -106,7 +106,7 @@ class CompanyFolder extends Component {
         axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/document/company/${this.props.company._id}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.props.token}`
             }
         })
             .then((result) => {
@@ -126,7 +126,7 @@ class CompanyFolder extends Component {
         axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/document/company/${this.props.company._id}/year/month`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.token.value}`
+                'Authorization': `Bearer ${this.props.token}`
             }
         })
             .then((result) => {
