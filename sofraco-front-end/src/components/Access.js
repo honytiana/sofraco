@@ -164,6 +164,7 @@ class Access extends Component {
                                     placeholder="Login"
                                     autoComplete="login"
                                     className="sofraco-input"
+                                    required={true}
                                 />
                             </CFormGroup>
                             <CFormGroup>
@@ -177,6 +178,7 @@ class Access extends Component {
                                             autoComplete="current-password"
                                             className="sofraco-input"
                                             defaultValue={this.state.valuePass}
+                                            required={true}
                                         />}
                                     {!this.state.showPass &&
                                         <CInput
@@ -186,6 +188,7 @@ class Access extends Component {
                                             placeholder="Mot de passe"
                                             autoComplete="current-password"
                                             className="sofraco-input"
+                                            required={true}
                                             onChange={(e) => { this.getValuePass(e) }}
                                         />}
                                     <CInputGroupAppend>
