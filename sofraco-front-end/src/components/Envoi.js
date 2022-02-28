@@ -324,6 +324,7 @@ class Envoi extends Component {
                     itemsPerPage={20}
                     hover
                     sorter
+                    border
                     pagination={{ className: 'sofraco-pagination' }}
                     size={'sm'}
                     scopedSlots={{

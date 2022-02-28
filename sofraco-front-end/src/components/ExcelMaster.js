@@ -207,6 +207,7 @@ class ExcelMaster extends Component {
                         fields={this.state.fields}
                         hover
                         sorter
+                        border
                         scopedSlots={{
                             'edit':
                                 (item, index) => {

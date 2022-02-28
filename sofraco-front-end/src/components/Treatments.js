@@ -152,6 +152,7 @@ class Treatments extends Component {
                     itemsPerPage={20}
                     hover
                     sorter
+                    border
                     size={'sm'}
                     pagination={{ className: 'sofraco-pagination' }}
                     scopedSlots={{

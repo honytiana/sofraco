@@ -383,6 +383,7 @@ class Administration extends Component {
                     itemsPerPage={10}
                     hover
                     sorter
+                    border
                     size={'sm'}
                     pagination={{
                         className: 'sofraco-pagination'

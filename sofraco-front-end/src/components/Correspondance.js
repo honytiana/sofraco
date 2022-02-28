@@ -393,6 +393,7 @@ class Correspondance extends Component {
                         fields={this.state.fields}
                         hover
                         sorter
+                        border
                         scopedSlots={{
                             'status':
                                 (item) => (
