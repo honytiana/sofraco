@@ -22,6 +22,10 @@
     cursor: pointer;
 }
 
+.sofraco-company-card-grey {
+    background-color: #9D9C9C !important;
+}
+
 .sofraco-company-container {
     width: 50%;
     border-radius: 0 !important;

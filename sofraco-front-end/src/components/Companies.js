@@ -631,17 +631,29 @@ class Companies extends Component {
                                 if (company.type === 'simple') {
                                     return (
                                         <CCol key={`${company._id}_Column`} sm="3">
-                                            <CCard key={`${company._id}_Card`} onDoubleClick={() => { this.toggleDetails(index) }} className="sofraco-company-card">
-                                                <CCardBody key={`${company._id}_CardBody`} className="sofraco-card-body" >
-                                                    <div key={`${company._id}_CardBodyDiv`} className="sofraco-container-image">
-                                                        <CImg className="sofraco-logo-company" key={`${company._id}_Img`} src={`data:image/png;base64,${company.logo}`} alt={`${company.name}`} fluid width={100} />
-                                                    </div>
-                                                </CCardBody>
-                                                <CCardFooter className="d-flex justify-content-between" key={`${company._id}_CardFooter`}>
-                                                    <div key={`${company._id}_CardFooterdiv`} >{company.globalName}</div>
-                                                    {this.getCheckBadge(occurences, company)}
-                                                </CCardFooter>
-                                            </CCard>
+                                            {company.is_enabled ? (
+                                                <CCard key={`${company._id}_Card`} onDoubleClick={() => { this.toggleDetails(index) }} className="sofraco-company-card">
+                                                    <CCardBody key={`${company._id}_CardBody`} className="sofraco-card-body" >
+                                                        <div key={`${company._id}_CardBodyDiv`} className="sofraco-container-image">
+                                                            <CImg className="sofraco-logo-company" key={`${company._id}_Img`} src={`data:image/png;base64,${company.logo}`} alt={`${company.name}`} fluid width={100} />
+                                                        </div>
+                                                    </CCardBody>
+                                                    <CCardFooter className="d-flex justify-content-between" key={`${company._id}_CardFooter`}>
+                                                        <div key={`${company._id}_CardFooterdiv`} >{company.globalName}</div>
+                                                        {this.getCheckBadge(occurences, company)}
+                                                    </CCardFooter>
+                                                </CCard>) :
+                                                <CCard key={`${company._id}_Card`} className="sofraco-company-card-grey">
+                                                    <CCardBody key={`${company._id}_CardBody`} className="sofraco-card-body" >
+                                                        <div key={`${company._id}_CardBodyDiv`} className="sofraco-container-image">
+                                                            <CImg className="sofraco-logo-company" key={`${company._id}_Img`} src={`data:image/png;base64,${company.logo}`} alt={`${company.name}`} fluid width={100} />
+                                                        </div>
+                                                    </CCardBody>
+                                                    <CCardFooter className="d-flex justify-content-between" key={`${company._id}_CardFooter`}>
+                                                        <div key={`${company._id}_CardFooterdiv`} >{company.globalName}</div>
+                                                    </CCardFooter>
+                                                </CCard>
+                                            }
                                             <CompanyFolder
                                                 key={`${company._id}_CompanyFolder`}
                                                 company={company}
