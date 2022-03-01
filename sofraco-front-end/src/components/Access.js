@@ -193,9 +193,7 @@ class Access extends Component {
                                         />}
                                     <CInputGroupAppend>
                                         <CButton
-                                            className={'bg-info text-white'}
-                                            color='warning'
-                                            shape="square"
+                                            color="warning"
                                             onClick={(e) => { this.onShowPass(e) }}>
                                             {this.state.showPass &&
                                                 <CIcon
