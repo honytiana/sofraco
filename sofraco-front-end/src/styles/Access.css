@@ -1,17 +1,19 @@
 .sofraco-container-connexion {
-    padding-top: 10%;
-    padding-bottom: 40%;
+    /* padding-top: 10%;
+    padding-bottom: 40%; */
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Roboto Condensed', sans-serif;
     background-color: #9d8b80;
+    overflow: auto;
 }
 
 .sofraco-connexion {
     margin: auto;
-    width: 400px;
+    width: 300px;
+    min-width: 250px;
 }
 
 .sofraco-icon-pass {
@@ -27,8 +29,8 @@
 }
 
 .sofraco-connexion-form {
-    padding-left: 60px;
-    padding-right: 60px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .sofraco-logo-connexion {
