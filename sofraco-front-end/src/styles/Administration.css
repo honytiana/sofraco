@@ -39,4 +39,5 @@
 
 .sofraco-icon-edit, .sofraco-icon-del {
     width: 20px;
+    cursor: pointer;
 }

@@ -14,6 +14,11 @@
     width: 400px;
 }
 
+.sofraco-icon-pass {
+    width: 20px;
+    cursor: pointer;
+}
+
 .sofraco-connexion-header {
     border: none;
     text-align: center;

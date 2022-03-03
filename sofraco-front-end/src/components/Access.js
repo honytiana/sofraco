@@ -194,20 +194,22 @@ class Access extends Component {
                                             required={true}
                                             onChange={(e) => { this.getValuePass(e) }}
                                         />}
-                                    {/* <CInputGroupAppend>
-                                        <CInputGroupText className={'valid-feedback'}> */}
-                                            {/* {this.state.showPass &&
+                                    <span class="input-group-append">
+                                        <CButton className={"btn border"} >
+                                            {this.state.showPass &&
                                                 <CIcon
+                                                    className={'sofraco-icon-pass'}
                                                     size='sm'
                                                     onClick={(e) => { this.onShowPass(e) }}
                                                     icon={icon.cilLockLocked} />}
                                             {!this.state.showPass &&
                                                 <CIcon
+                                                    className={'sofraco-icon-pass'}
                                                     size='sm'
                                                     onClick={(e) => { this.onShowPass(e) }}
-                                                    icon={icon.cilLockUnlocked} />} */}
-                                        {/* </CInputGroupText>
-                                    </CInputGroupAppend> */}
+                                                    icon={icon.cilLockUnlocked} />}
+                                        </CButton>
+                                    </span>
                                 </CInputGroup>
                             </CFormGroup>
                             <CFormGroup>
@@ -244,7 +246,7 @@ class Access extends Component {
                         </CToaster>
                     )
                 }
-            </div>
+            </div >
         );
     }
 }
