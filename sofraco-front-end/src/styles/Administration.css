@@ -32,3 +32,11 @@
 .sofraco-modal .modal-dialog.modal-dialog-centered {
     max-width: 1050px;
 }
+
+.sofraco-icon-edit {
+    color: #9d8b80 !important;
+}
+
+.sofraco-icon-edit, .sofraco-icon-del {
+    width: 20px;
+}

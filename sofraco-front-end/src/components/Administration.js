@@ -401,15 +401,11 @@ class Administration extends Component {
                             (item, index) => {
                                 return (
                                     <td className="py-2">
-                                        <CButton
-                                            color="warning"
-                                            variant="outline"
-                                            shape="square"
+                                        <CIcon
+                                            className={'sofraco-icon-edit'}
                                             size="sm"
-                                            onClick={() => { this.toggleDetails(index) }}><CIcon
-                                                size="sm"
-                                                icon={icon.cilPencil} />
-                                        </CButton>
+                                            onClick={() => { this.toggleDetails(index) }}
+                                            icon={icon.cilPencil} />
                                     </td>
                                 )
                             },
@@ -483,15 +479,11 @@ class Administration extends Component {
                             (item, index) => {
                                 return (
                                     <td className="py-2">
-                                        <CButton
-                                            color="danger"
-                                            variant="outline"
-                                            shape="square"
+                                        <CIcon
+                                            className={'sofraco-icon-del text-danger'}
+                                            color='danger'
                                             size="sm"
-                                            onClick={(e) => { this.openDeletePopup(e, item) }}><CIcon
-                                                size="sm"
-                                                icon={icon.cilTrash} />
-                                        </CButton>
+                                            icon={icon.cilTrash} />
                                     </td>
                                 )
                             }
