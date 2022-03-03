@@ -15,10 +15,13 @@ import {
     CCardHeader,
     CInputGroup,
     CInputGroupAppend,
-    CButton
+    CButton,
+    CInputGroupText
 } from '@coreui/react';
+
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
+import { freeSet } from '@coreui/icons'
 import axios from 'axios';
 
 import sofraco_logo from '../assets/sofraco_groupe_logo.png';
@@ -145,7 +148,7 @@ class Access extends Component {
         return (
             <div className="sofraco-container-connexion">
                 <CCard className="sofraco-connexion">
-                    <CCardHeader>
+                    <CCardHeader className="sofraco-connexion-header">
                         <CImg
                             src={sofraco_logo}
                             fluid
@@ -153,8 +156,8 @@ class Access extends Component {
                             width={200}
                         />
                     </CCardHeader>
-                    <CCardBody>
-                        <CForm action="" method="post" onSubmit={(e) => this.onConnexion(e)}>
+                    <CCardBody className="sofraco-connexion-body">
+                        <CForm action="" method="post" onSubmit={(e) => this.onConnexion(e)} className="sofraco-connexion-form" >
                             <CFormGroup>
                                 <CLabel htmlFor="sofraco-login">Login</CLabel>
                                 <CInput
@@ -167,7 +170,7 @@ class Access extends Component {
                                     required={true}
                                 />
                             </CFormGroup>
-                            <CFormGroup>
+                            <CFormGroup >
                                 <CLabel htmlFor="sofraco-password">Mot de passe</CLabel>
                                 <CInputGroup>
                                     {this.state.showPass &&
@@ -191,20 +194,20 @@ class Access extends Component {
                                             required={true}
                                             onChange={(e) => { this.getValuePass(e) }}
                                         />}
-                                    <CInputGroupAppend>
-                                        <CButton
-                                            color="warning"
-                                            onClick={(e) => { this.onShowPass(e) }}>
-                                            {this.state.showPass &&
+                                    {/* <CInputGroupAppend>
+                                        <CInputGroupText className={'valid-feedback'}> */}
+                                            {/* {this.state.showPass &&
                                                 <CIcon
-                                                    size="sm"
+                                                    size='sm'
+                                                    onClick={(e) => { this.onShowPass(e) }}
                                                     icon={icon.cilLockLocked} />}
                                             {!this.state.showPass &&
                                                 <CIcon
-                                                    size="sm"
-                                                    icon={icon.cilLockUnlocked} />}
-                                        </CButton>
-                                    </CInputGroupAppend>
+                                                    size='sm'
+                                                    onClick={(e) => { this.onShowPass(e) }}
+                                                    icon={icon.cilLockUnlocked} />} */}
+                                        {/* </CInputGroupText>
+                                    </CInputGroupAppend> */}
                                 </CInputGroup>
                             </CFormGroup>
                             <CFormGroup>

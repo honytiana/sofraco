@@ -1,10 +1,12 @@
 .sofraco-container-connexion {
     padding-top: 10%;
+    padding-bottom: 40%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Roboto Condensed', sans-serif;
+    background-color: #9d8b80;
 }
 
 .sofraco-connexion {
@@ -12,8 +14,23 @@
     width: 400px;
 }
 
+.sofraco-connexion-header {
+    border: none;
+    text-align: center;
+    padding-top: 50px;
+}
+
+.sofraco-connexion-form {
+    padding-left: 60px;
+    padding-right: 60px;
+}
+
 .sofraco-logo-connexion {
     margin: auto;
+}
+
+.sofraco-connexion-body {
+    padding-bottom: 50px;
 }
 
 .sofraco-input:focus {
