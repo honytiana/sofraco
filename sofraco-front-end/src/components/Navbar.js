@@ -104,7 +104,7 @@ class Navbar extends Component {
                     <CNavbarNav className="ml-auto">
                         <CNavLink href='/admin' >Administration</CNavLink>
                         <CDropdown inNav >
-                            <CDropdownToggle color="primary">
+                            <CDropdownToggle>
                                 {(this.state.user !== null) && this.state.user.email}
                             </CDropdownToggle>
                             <CDropdownMenu className="sofraco-dropdown-menu">

@@ -7,14 +7,12 @@
     color: #fff !important;
 }
 
-.sofraco-dropdown-item {
+.sofraco-dropdown-menu {
     text-align: center;
+    background-color: #9d8b80;
 }
 
 .sofraco-dropdown-item:hover {
-    color: #ed7102 !important;
-}
-
-.sofraco-dropdown-menu {
-    background-color: #9d8b80;
+    color: inherit;
+    background-color: inherit;
 }
