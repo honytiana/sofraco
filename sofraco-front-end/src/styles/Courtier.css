@@ -3,6 +3,12 @@
     text-align: center;
 }
 
+.sofraco-icon-suppr {
+    width: 15px;
+    cursor: pointer;
+    color: #9d8b80 !important;
+}
+
 .sofraco-button {
     color: #fff;
     background-color: #ed7102;

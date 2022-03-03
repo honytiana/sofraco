@@ -356,12 +356,12 @@ class Courtier extends Component {
                             return (
                                 <CBadge
                                     key={`badge_${this.props.courtier._id}_${ec}`}
-                                    onClick={(e) => { this.activateEditEmailCopie(e, ec) }}>{ec}<CButton
-                                        key={`btn_${this.props.courtier._id}_${ec}`}
+                                    onClick={(e) => { this.activateEditEmailCopie(e, ec) }}>{ec}<CIcon
+                                        className={'sofraco-icon-suppr'}
                                         size='sm'
-                                        onClick={(e) => { this.onDeleteEmailCopie(e, ec) }}><CIcon
-                                            key={`icn_${this.props.courtier._id}_${ec}`}
-                                            icon={icon.cilDelete} /></CButton></CBadge>
+                                        onClick={(e) => { this.onDeleteEmailCopie(e, ec) }}
+                                        key={`icn_${this.props.courtier._id}_${ec}`}
+                                        icon={icon.cilDelete} /></CBadge>
                             )
                         })
                     }
@@ -370,12 +370,13 @@ class Courtier extends Component {
                             return (
                                 <CBadge
                                     key={`badge_${index}_${ec}`}
-                                    onClick={(e) => { this.activateEditBeforeSaveEmailCopie(e, ec) }}>{ec}<CButton
-                                        key={`btn_${index}_${ec}`}
+                                    onClick={(e) => { this.activateEditBeforeSaveEmailCopie(e, ec) }}>{ec}
+                                    <CIcon
+                                        className={'sofraco-icon-suppr'}
+                                        onClick={(e) => { this.onDeleteStateEmailCopie(e, ec) }}
                                         size='sm'
-                                        onClick={(e) => { this.onDeleteStateEmailCopie(e, ec) }}><CIcon
-                                            key={`icn_${index._id}_${ec}`}
-                                            icon={icon.cilDelete} /></CButton></CBadge>
+                                        key={`icn_${index._id}_${ec}`}
+                                        icon={icon.cilDelete} /></CBadge>
                             )
                         })
                     }
