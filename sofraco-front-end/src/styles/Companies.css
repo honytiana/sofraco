@@ -13,9 +13,22 @@
     /* margin: auto; */
 }
 
-.sofraco-form-search{
-    position: relative;
-    width: 500px;
+.sofraco-button-icon-search {
+    border-left: none !important;
+}
+
+.sofraco-icon-search {
+    width: 20px;
+    cursor: pointer;
+    color: #9d8b80 !important;
+}
+
+.sofraco-form-search {
+    width: 500px !important;
+}
+
+#sofraco-search-compan {
+    border-right: none !important;
 }
 
 .sofraco-company-card {

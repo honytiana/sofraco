@@ -3,7 +3,6 @@ import '@coreui/coreui/dist/css/coreui.min.css';
 import {
     CRow,
     CCol,
-    CContainer,
     CImg,
     CButton,
     CCardBody,
@@ -21,11 +20,9 @@ import {
     CModalBody,
     CListGroup,
     CListGroupItem,
-    CForm,
     CFormGroup,
     CInputGroup,
     CInput,
-    CInputGroupAppend,
     CAlert
 } from '@coreui/react';
 
@@ -599,31 +596,28 @@ class Companies extends Component {
             }
         }
         return (
-            <CContainer fluid>
-                <CForm action="" method="post" className={'sofraco-form-search'} >
-                    <CFormGroup>
-                        <CInputGroup>
-                            <CInput
-                                type="text"
-                                id="sofraco-search-company"
-                                name="sofraco-search-company"
-                                className="sofraco-input"
-                                placeholder='Recherche'
-                                onChange={(e) => { this.onSearchCompany(e) }}
-                            />
-                            <CInputGroupAppend>
-                                <CButton
-                                    color='warning'
-                                    shape="square"
-                                    onClick={(e) => { this.onSearchCompany(e) }}>
-                                    <CIcon
-                                        size="sm"
-                                        icon={icon.cilSearch} />
-                                </CButton>
-                            </CInputGroupAppend>
-                        </CInputGroup>
-                    </CFormGroup>
-                </CForm>
+            <div>
+                <CFormGroup>
+                    <CInputGroup className={'sofraco-form-search'}>
+                        <CInput
+                            type="text"
+                            id="sofraco-search-company"
+                            name="sofraco-search-company"
+                            className={'sofraco-input'}
+                            placeholder='Recherche'
+                            onChange={(e) => { this.onSearchCompany(e) }}
+                        />
+                        <span className="input-group-append">
+                            <CButton className={"btn border sofraco-button-icon-search"} >
+                                <CIcon
+                                    className={'sofraco-icon-search'}
+                                    size="sm"
+                                    onClick={(e) => { this.onSearchCompany(e) }}
+                                    icon={icon.cilSearch} />
+                            </CButton>
+                        </span>
+                    </CInputGroup>
+                </CFormGroup>
                 {(this.state.companies.length > 0) && (
                     <div>
                         <CRow>
@@ -762,8 +756,7 @@ class Companies extends Component {
                     </CToaster>
                 )
                 }
-
-            </CContainer>
+            </div>
         );
     }
 }

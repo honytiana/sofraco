@@ -14,14 +14,11 @@ import {
     CToastBody,
     CCardHeader,
     CInputGroup,
-    CInputGroupAppend,
-    CButton,
-    CInputGroupText
+    CButton
 } from '@coreui/react';
 
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
-import { freeSet } from '@coreui/icons'
 import axios from 'axios';
 
 import sofraco_logo from '../assets/sofraco_groupe_logo.png';
@@ -173,29 +170,18 @@ class Access extends Component {
                             <CFormGroup >
                                 <CLabel htmlFor="sofraco-password">Mot de passe</CLabel>
                                 <CInputGroup>
-                                    {this.state.showPass &&
-                                        <CInput
-                                            type="text"
-                                            id="sofraco-password-pass"
-                                            name="sofraco-password"
-                                            autoComplete="current-password"
-                                            className="sofraco-input"
-                                            defaultValue={this.state.valuePass}
-                                            required={true}
-                                        />}
-                                    {!this.state.showPass &&
-                                        <CInput
-                                            type="password"
-                                            id="sofraco-password-txt"
-                                            name="sofraco-password"
-                                            placeholder="Mot de passe"
-                                            autoComplete="current-password"
-                                            className="sofraco-input"
-                                            required={true}
-                                            onChange={(e) => { this.getValuePass(e) }}
-                                        />}
-                                    <span class="input-group-append">
-                                        <CButton className={"btn border"} >
+                                    <CInput
+                                        type={this.state.showPass ? 'text' : 'password'}
+                                        id="sofraco-password-pass"
+                                        name="sofraco-password"
+                                        autoComplete="current-password"
+                                        className="sofraco-input"
+                                        defaultValue={this.state.valuePass}
+                                        onChange={(e) => { this.getValuePass(e) }}
+                                        required={true}
+                                    />
+                                    <span className="input-group-append">
+                                        <CButton className={"btn border sofraco-button-icon-pass"} >
                                             {this.state.showPass &&
                                                 <CIcon
                                                     className={'sofraco-icon-pass'}
