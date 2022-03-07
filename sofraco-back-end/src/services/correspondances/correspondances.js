@@ -20,9 +20,9 @@ exports.readExcelTableauCorrespondance = async (role) => {
                     const courtierCabinetSheet = row.getCell('C').value;
                     for (let cr of courtiers) {
                         if (courtierCabinetSheet !== null &&
-                            (courtierLastNameSheet.trim() === cr.lastName && courtierFirstNameSheet.trim() === cr.firstName && courtierCabinetSheet.trim() === cr.cabinet) ||
+                            (courtierLastNameSheet.toUpperCase().trim() === cr.lastName.toUpperCase() && courtierFirstNameSheet.toUpperCase().trim() === cr.firstName.toUpperCase() && courtierCabinetSheet.toUpperCase().trim() === cr.cabinet.toUpperCase()) ||
                             courtierCabinetSheet === null &&
-                            (courtierLastNameSheet.trim() === cr.lastName && courtierFirstNameSheet.trim() === cr.firstName)) {
+                            (courtierLastNameSheet.toUpperCase().trim() === cr.lastName.toUpperCase() && courtierFirstNameSheet.toUpperCase().trim() === cr.firstName.toUpperCase())) {
                             const courtier = cr._id;
                             const role_courtier = cr.role;
                             let companies = [];
@@ -34,7 +34,7 @@ exports.readExcelTableauCorrespondance = async (role) => {
                                     }
                                     if (companyNameSheet !== null) {
                                         if (companyNameSheet.toUpperCase().match(comp.globalName)) {
-                                            setCompanyCode(row, i, companies, companyNameSheet, comp);
+                                            setCompanyCode(row, rowNumber, i, companies, companyNameSheet, comp);
                                         }
                                     }
                                 }
@@ -59,7 +59,7 @@ exports.readExcelTableauCorrespondance = async (role) => {
 
 };
 
-const setCompanyCode = (row, colNumber, companies, companyNameSheet, comp) => {
+const setCompanyCode = (row, rowNumber, colNumber, companies, companyNameSheet, comp) => {
     try {
         let idCompany;
         let company;

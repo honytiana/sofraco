@@ -1,42 +1,9 @@
 [
     {
-        "lastName": "AKRICH",
-        "firstName": "Karine",
-        "cabinet": "KARMA CONSEIL & PATRIMOINE",
-        "email": "contact@karmaco.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "ARFAOUI",
-        "firstName": "Monaam",
-        "cabinet": "ALPHA ASSURANCES CONSEIL",
-        "email": "contact@alpha-assurances.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "AMMI",
-        "firstName": "HUGUES",
-        "cabinet": "AF CONSEIL",
-        "email": "afconseil33@gmail.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "BAILLEUL",
-        "firstName": "Maxens",
-        "cabinet": "MB CONSEILS",
-        "email": "maxens.bailleul@conseils-mb.com",
+        "lastName": "AUGARD",
+        "firstName": "Marc",
+        "cabinet": "GENERALE DE PROTECTION SOCIALE",
+        "email": "marc.augard.gps@orange.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -55,10 +22,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "AUGARD",
-        "firstName": "Marc",
-        "cabinet": "GENERALE DE PROTECTION SOCIALE",
-        "email": "marc.augard.gps@orange.fr",
+        "lastName": "BAILLEUL",
+        "firstName": "Maxens",
+        "cabinet": "MB CONSEILS",
+        "email": "maxens.bailleul@conseils-mb.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -70,28 +37,6 @@
         "firstName": "Bertrand",
         "cabinet": "OCCITANIE COURTAGE",
         "email": "occitaniecourtage@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "ALBIE",
-        "firstName": "Stéphane",
-        "cabinet": "AUDIT CONSEILS AP",
-        "email": "acca@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "BARBERY",
-        "firstName": "Valérie",
-        "cabinet": "VB CONSEIL",
-        "email": "valerie.barbery@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -121,10 +66,21 @@
         "is_enabled": true
     },
     {
-        "lastName": "BAREILLE",
-        "firstName": "Benoît",
-        "cabinet": "BPM CONSEIL",
-        "email": "bpm@groupesofraco.com",
+        "lastName": "ABSALON",
+        "firstName": "Luc",
+        "cabinet": "LABEL7PATRIMOINE",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "ALBIE",
+        "firstName": "Stéphane",
+        "cabinet": "AUDIT CONSEILS AP",
+        "email": "acca@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -136,28 +92,6 @@
         "firstName": "Thierry",
         "cabinet": "SOF'COURTAGE",
         "email": "TBARNET@sofirex.experts-comptables.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "ALBIE",
-        "firstName": "Stéphane",
-        "cabinet": "ALBIE CONSEILS ET COURTAGE EN ASSURANCE",
-        "email": "acca@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "ABSALON",
-        "firstName": "Luc",
-        "cabinet": "LABEL7PATRIMOINE",
-        "email": "",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -187,10 +121,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "BAUME",
-        "firstName": "Nicolas",
-        "cabinet": "CABINET BAUME COURTAGE",
-        "email": "baumecourtage@groupesofraco.com",
+        "lastName": "AKRICH",
+        "firstName": "Karine",
+        "cabinet": "KARMA CONSEIL & PATRIMOINE",
+        "email": "contact@karmaco.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -202,6 +136,17 @@
         "firstName": "Félix",
         "cabinet": "APOR CONSEIL",
         "email": "felix.benel@apor-conseil.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "BENEYTON",
+        "firstName": "Sébastien",
+        "cabinet": "E2BIS CONSEILS",
+        "email": "e2bisconseils@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -222,7 +167,7 @@
     {
         "lastName": "BENEYTON",
         "firstName": "Sébastien",
-        "cabinet": "TELM CONSEIL COURTAGE",
+        "cabinet": "PREMIUM ASSURANCES",
         "email": "e2bisconseils@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
@@ -242,10 +187,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "BENEYTON",
-        "firstName": "Sébastien",
-        "cabinet": "PREMIUM ASSURANCES",
-        "email": "e2bisconseils@groupesofraco.com",
+        "lastName": "BARBERY",
+        "firstName": "Valérie",
+        "cabinet": "VB CONSEIL",
+        "email": "valerie.barbery@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -253,10 +198,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "BENEYTON",
-        "firstName": "Sébastien",
-        "cabinet": "E2BIS CONSEILS",
-        "email": "e2bisconseils@groupesofraco.com",
+        "lastName": "BEREZOWSKI",
+        "firstName": "Renaud",
+        "cabinet": "EOS CONSEILS",
+        "email": "rberezowski.eos@gmail.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -288,19 +233,8 @@
     {
         "lastName": "BERNARDET-LERAY",
         "firstName": "Alain",
-        "cabinet": "EXCELIENCE COURTAGE",
+        "cabinet": "VISION COURTAGE",
         "email": "a.bernardet@exceliencecourtage.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "BEREZOWSKI",
-        "firstName": "Renaud",
-        "cabinet": "EOS CONSEILS",
-        "email": "rberezowski.eos@gmail.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -310,8 +244,63 @@
     {
         "lastName": "BERNARDET-LERAY",
         "firstName": "Alain",
-        "cabinet": "VISION COURTAGE",
+        "cabinet": "EXCELIENCE COURTAGE",
         "email": "a.bernardet@exceliencecourtage.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "AMMI",
+        "firstName": "HUGUES",
+        "cabinet": "AF CONSEIL",
+        "email": "afconseil33@gmail.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "ALBIE",
+        "firstName": "Stéphane",
+        "cabinet": "ALBIE CONSEILS ET COURTAGE EN ASSURANCE",
+        "email": "acca@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "ARFAOUI",
+        "firstName": "Monaam",
+        "cabinet": "ALPHA ASSURANCES CONSEIL",
+        "email": "contact@alpha-assurances.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "BAUME",
+        "firstName": "Nicolas",
+        "cabinet": "CABINET BAUME COURTAGE",
+        "email": "baumecourtage@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "BENEYTON",
+        "firstName": "Sébastien",
+        "cabinet": "TELM CONSEIL COURTAGE",
+        "email": "e2bisconseils@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -341,17 +330,6 @@
         "is_enabled": true
     },
     {
-        "lastName": "BESSON",
-        "firstName": "Aymeric",
-        "cabinet": "GR CONSEIL",
-        "email": "a.besson@montagnassur.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
         "lastName": "BERTIER",
         "firstName": "Christina",
         "cabinet": "CABINET BERTIER",
@@ -363,54 +341,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "BIOSCA",
-        "firstName": "Benjamin",
-        "cabinet": "BPC INVEST",
-        "email": "biosca.benjamin@gmail.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "BLANC",
-        "firstName": "Frédéric",
-        "cabinet": "ABCONSEILS",
-        "email": "frederic.blanc5@sfr.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "BOISSARD",
-        "firstName": "Jean-Michel",
-        "cabinet": "CAB EXTRA",
-        "email": "cabextra.jmboissard@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "BOISSEAU",
-        "firstName": "Laurent",
-        "cabinet": "ELICHABE & BOISSEAU AUDIT ET CONSEIL",
-        "email": "laurent@ebassurances.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "BONNET",
-        "firstName": "Gaëtan",
-        "cabinet": "RIZING PATRIMOINE",
-        "email": "gbcc@groupesofraco.com",
+        "lastName": "BESSON",
+        "firstName": "Aymeric",
+        "cabinet": "GR CONSEIL",
+        "email": "a.besson@montagnassur.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -440,21 +374,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "BOUCHENOT",
-        "firstName": "Xavier",
-        "cabinet": "ABCOURTIERS",
-        "email": "xbouchenot@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "BIZET",
-        "firstName": "Philippe",
-        "cabinet": "CABINET DE COURTAGE BIZET",
-        "email": "pbizet@gmail.com",
+        "lastName": "BLANC",
+        "firstName": "Frédéric",
+        "cabinet": "ABCONSEILS",
+        "email": "frederic.blanc5@sfr.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -466,6 +389,17 @@
         "firstName": "François",
         "cabinet": "CFB CONSEIL COURTAGE",
         "email": "contact@groupecfb.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "BOUCHENOT",
+        "firstName": "Xavier",
+        "cabinet": "ABCOURTIERS",
+        "email": "xbouchenot@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -495,10 +429,65 @@
         "is_enabled": true
     },
     {
+        "lastName": "BIOSCA",
+        "firstName": "Benjamin",
+        "cabinet": "BPC INVEST",
+        "email": "biosca.benjamin@gmail.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "BOISSARD",
+        "firstName": "Jean-Michel",
+        "cabinet": "CAB EXTRA",
+        "email": "cabextra.jmboissard@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "BIZET",
+        "firstName": "Philippe",
+        "cabinet": "CABINET DE COURTAGE BIZET",
+        "email": "pbizet@gmail.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "BOISSEAU",
+        "firstName": "Laurent",
+        "cabinet": "ELICHABE & BOISSEAU AUDIT ET CONSEIL",
+        "email": "laurent@ebassurances.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
         "lastName": "BRATIGNY",
         "firstName": "Jean-Charles",
         "cabinet": "JCB COURTAGE ET CONSEIL",
         "email": "jcb.cc@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "BONNET",
+        "firstName": "Gaëtan",
+        "cabinet": "RIZING PATRIMOINE",
+        "email": "gbcc@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -517,6 +506,17 @@
         "is_enabled": true
     },
     {
+        "lastName": "BRISSE-SAUMET",
+        "firstName": "Vivien-Laurent",
+        "cabinet": "SB COURTAGE",
+        "email": "sbcourtage@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
         "lastName": "BRODIN",
         "firstName": "Christian",
         "cabinet": "ATARANCE",
@@ -528,10 +528,32 @@
         "is_enabled": true
     },
     {
-        "lastName": "BURLOT",
-        "firstName": "Guillaume",
-        "cabinet": "GLOBALREM CAPE",
-        "email": "globalrem@groupesofraco.com",
+        "lastName": "BRISSE",
+        "firstName": "Vivien",
+        "cabinet": "COURTAGE ASSURANCES ST ETIENNE",
+        "email": "vbrisse@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "BURATI",
+        "firstName": "Pascal",
+        "cabinet": "PB CONSEIL",
+        "email": "pascal.burati@gmail.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "BAREILLE",
+        "firstName": "Benoît",
+        "cabinet": "BPM CONSEIL",
+        "email": "bpm@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -550,17 +572,6 @@
         "is_enabled": true
     },
     {
-        "lastName": "CALDUBEHERE",
-        "firstName": "Laurent",
-        "cabinet": "BELAGILE CONSEIL",
-        "email": "l.caldubehere@belagile-conseil.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
         "lastName": "BURLOT",
         "firstName": "Guillaume",
         "cabinet": "GLOBALREM EXPERTISES",
@@ -572,10 +583,54 @@
         "is_enabled": true
     },
     {
+        "lastName": "BURLOT",
+        "firstName": "Guillaume",
+        "cabinet": "GLOBALREM",
+        "email": "globalrem@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "BURLOT",
+        "firstName": "Guillaume",
+        "cabinet": "GLOBALREM CAPE",
+        "email": "globalrem@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "CALDUBEHERE",
+        "firstName": "Laurent",
+        "cabinet": "BELAGILE CONSEIL",
+        "email": "l.caldubehere@belagile-conseil.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
         "lastName": "CALLIER",
         "firstName": "Nicolas",
         "cabinet": "CABINET GAIA",
         "email": "nicolas.callier@gaia-conseil.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "BRODIN",
+        "firstName": "Christian",
+        "cabinet": "AB2C",
+        "email": "c.brodin@cabinet-ab2c.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -605,28 +660,6 @@
         "is_enabled": true
     },
     {
-        "lastName": "BRISSE-SAUMET",
-        "firstName": "Vivien-Laurent",
-        "cabinet": "SB COURTAGE",
-        "email": "sbcourtage@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "CALVEZ",
-        "firstName": "Olivier",
-        "cabinet": "CALVEZ CONSEIL & COURTAGE",
-        "email": "olivier.calvez@calvez-conseil.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
         "lastName": "CAMPOS",
         "firstName": "Christophe",
         "cabinet": "AC1 CONSEILS",
@@ -642,50 +675,6 @@
         "firstName": "Yannick",
         "cabinet": "Y.3.C. Yannick Carillon Conseil et Courtage",
         "email": "ycprof@orange.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "BRODIN",
-        "firstName": "Christian",
-        "cabinet": "AB2C",
-        "email": "c.brodin@cabinet-ab2c.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "CERTAIN",
-        "firstName": "Richard",
-        "cabinet": "COURTAGE K6 SARL",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "BURATI",
-        "firstName": "Pascal",
-        "cabinet": "PB CONSEIL",
-        "email": "pascal.burati@gmail.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "BURLOT",
-        "firstName": "Guillaume",
-        "cabinet": "GLOBALREM",
-        "email": "globalrem@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -715,10 +704,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "BRISSE",
-        "firstName": "Vivien",
-        "cabinet": "COURTAGE ASSURANCES ST ETIENNE",
-        "email": "vbrisse@groupesofraco.com",
+        "lastName": "CHALAYE",
+        "firstName": "Corentin",
+        "cabinet": "CMCG COURTAGE",
+        "email": "contact@amelie-chalaye.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -737,6 +726,17 @@
         "is_enabled": true
     },
     {
+        "lastName": "CERTAIN",
+        "firstName": "Richard",
+        "cabinet": "COURTAGE K6 SARL",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
         "lastName": "CHAMARET",
         "firstName": "Thierry",
         "cabinet": "CABINET THIERRY CHAMARET",
@@ -748,43 +748,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "CHEKLER",
-        "firstName": "Bernard",
-        "cabinet": "BC COURTAGE",
-        "email": "bernard.chekler@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "CLOUTET",
-        "firstName": "Mélanie",
-        "cabinet": "GROUPE SOFRACO",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "CHALAYE",
-        "firstName": "Corentin",
-        "cabinet": "CMCG COURTAGE",
-        "email": "contact@amelie-chalaye.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "CHERGUI",
-        "firstName": "Franck",
-        "cabinet": "AR2D COURTAGE",
-        "email": "contact@ar2d-courtage.fr",
+        "lastName": "CALVEZ",
+        "firstName": "Olivier",
+        "cabinet": "CALVEZ CONSEIL & COURTAGE",
+        "email": "olivier.calvez@calvez-conseil.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -803,10 +770,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "COHEN",
-        "firstName": "Jérémy",
-        "cabinet": "CPMA & ASSOCIES",
-        "email": "cohen.jerem@gmail.com",
+        "lastName": "CHERGUI",
+        "firstName": "Franck",
+        "cabinet": "AR2D COURTAGE",
+        "email": "contact@ar2d-courtage.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -826,9 +793,31 @@
     },
     {
         "lastName": "COLLAS",
-        "firstName": "Marie-Laure",
-        "cabinet": "PROAVENIR",
-        "email": "ml.collas@proavenir.bzh",
+        "firstName": "François",
+        "cabinet": "F3C",
+        "email": "f3c@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "CHEKLER",
+        "firstName": "Bernard",
+        "cabinet": "BC COURTAGE",
+        "email": "bernard.chekler@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "COHEN",
+        "firstName": "Jérémy",
+        "cabinet": "CPMA & ASSOCIES",
+        "email": "cohen.jerem@gmail.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -847,54 +836,21 @@
         "is_enabled": true
     },
     {
+        "lastName": "VIVIER",
+        "firstName": "JULIEN",
+        "cabinet": "GROUPE SOFRACO",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
         "lastName": "COLLAS",
-        "firstName": "François",
-        "cabinet": "F3C",
-        "email": "f3c@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "CORTES",
-        "firstName": "Laurent",
-        "cabinet": "B.C.D",
-        "email": "gestion@pragmaconseils.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "CORPAS",
-        "firstName": "Fernando",
-        "cabinet": "DETA CONSEILS & ASSURANCES",
-        "email": "fernando.corpas@deta-assurances.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "CONTE",
-        "firstName": "Rémy",
-        "cabinet": "RESO COURTAGE & ASSOCIES",
-        "email": "r.conte@cabinet-rca.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "CORTES",
-        "firstName": "Laurent",
-        "cabinet": "PRAGMA CONSEILS",
-        "email": "gestion@pragmaconseils.com",
+        "firstName": "Marie-Laure",
+        "cabinet": "PROAVENIR",
+        "email": "ml.collas@proavenir.bzh",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -913,43 +869,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "CORTESE",
-        "firstName": "Stéphane",
-        "cabinet": "C2 CONSEIL",
-        "email": "stephane.cortese@gmail.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "CORDONNIER",
-        "firstName": "Damien",
-        "cabinet": "CABINET DAMIEN CORDONNIER",
-        "email": "cab.dcordonnier@gmail.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "COSSOUL",
-        "firstName": "Philippe",
-        "cabinet": "CABINET PHI PROTEC",
-        "email": "philippe.cossoul@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "COTTENDIN",
-        "firstName": "Jean-Marc",
-        "cabinet": "OPTIM CONSEILS",
-        "email": "optimconseil.cottendin@groupesofraco.com",
+        "lastName": "CONTE",
+        "firstName": "Rémy",
+        "cabinet": "RESO COURTAGE & ASSOCIES",
+        "email": "r.conte@cabinet-rca.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -968,6 +891,50 @@
         "is_enabled": true
     },
     {
+        "lastName": "CORTES",
+        "firstName": "Laurent",
+        "cabinet": "PRAGMA CONSEILS",
+        "email": "gestion@pragmaconseils.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "COSSOUL",
+        "firstName": "Philippe",
+        "cabinet": "CABINET PHI PROTEC",
+        "email": "philippe.cossoul@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "CORTESE",
+        "firstName": "Stéphane",
+        "cabinet": "C2 CONSEIL",
+        "email": "stephane.cortese@gmail.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "CORPAS",
+        "firstName": "Fernando",
+        "cabinet": "DETA CONSEILS & ASSURANCES",
+        "email": "fernando.corpas@deta-assurances.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
         "lastName": "COURMARCEL",
         "firstName": "Fabrice",
         "cabinet": "CABINET AFC COURTAGE",
@@ -979,10 +946,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "COURTE",
-        "firstName": "Pierre",
-        "cabinet": "FIGEC PROTAGORAS",
-        "email": "protagoras@figec.fr",
+        "lastName": "CORDONNIER",
+        "firstName": "Damien",
+        "cabinet": "CABINET DAMIEN CORDONNIER",
+        "email": "cab.dcordonnier@gmail.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -990,10 +957,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "CRAMBERT",
-        "firstName": "René",
-        "cabinet": "RC Conseil Entr.",
-        "email": "rencrambert@orange.fr",
+        "lastName": "CORTES",
+        "firstName": "Laurent",
+        "cabinet": "B.C.D",
+        "email": "gestion@pragmaconseils.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1001,10 +968,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "CRASSO",
-        "firstName": "Julien",
-        "cabinet": "JULIEN CRASSO EXPERTISE",
-        "email": "julien.crasso@groupesofraco.com",
+        "lastName": "COTTENDIN",
+        "firstName": "Jean-Marc",
+        "cabinet": "OPTIM CONSEILS",
+        "email": "optimconseil.cottendin@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1016,39 +983,6 @@
         "firstName": "Philippe",
         "cabinet": "GMPC ROANNE",
         "email": "p.cremont@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "CROCCO",
-        "firstName": "Romain",
-        "cabinet": "HERMES EXPERTISE",
-        "email": "romain.crocco@hermes-expertise.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "CZERNIAK",
-        "firstName": "Christophe",
-        "cabinet": "PREMIUM CONSEILS",
-        "email": "christopheczerniak@yahoo.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "CROISE",
-        "firstName": "Nadine",
-        "cabinet": "NC COURTAGE",
-        "email": "nc.courtage@gmail.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1078,10 +1012,65 @@
         "is_enabled": true
     },
     {
+        "lastName": "CROISE",
+        "firstName": "Nadine",
+        "cabinet": "NC COURTAGE",
+        "email": "nc.courtage@gmail.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "CZERNIAK",
+        "firstName": "Christophe",
+        "cabinet": "PREMIUM CONSEILS",
+        "email": "christopheczerniak@yahoo.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "CROCCO",
+        "firstName": "Romain",
+        "cabinet": "HERMES EXPERTISE",
+        "email": "romain.crocco@hermes-expertise.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "CRAMBERT",
+        "firstName": "René",
+        "cabinet": "RC Conseil Entr.",
+        "email": "rencrambert@orange.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
         "lastName": "DABADIE-SAUJOT",
         "firstName": "Yoann",
         "cabinet": "DS COURTAGE SARL",
         "email": "dscourtage@groupeefficience.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "CRASSO",
+        "firstName": "Julien",
+        "cabinet": "JULIEN CRASSO EXPERTISE",
+        "email": "julien.crasso@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1102,17 +1091,6 @@
     {
         "lastName": "DAVIN",
         "firstName": "Philippe",
-        "cabinet": "PHD CONSEILS",
-        "email": "philippedavin@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "DAVIN",
-        "firstName": "Philippe",
         "cabinet": "KPH COURTAGE SARL",
         "email": "philippedavin@groupesofraco.com",
         "emailCopie": [],
@@ -1122,10 +1100,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "DE BOISSIEU du TIRET",
-        "firstName": "Gonzague",
-        "cabinet": "ACOP EXPERTISE",
-        "email": "gonzague.deboissieu@groupesofraco.com",
+        "lastName": "COURTE",
+        "firstName": "Pierre",
+        "cabinet": "FIGEC PROTAGORAS",
+        "email": "protagoras@figec.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1144,6 +1122,17 @@
         "is_enabled": true
     },
     {
+        "lastName": "DAVIN",
+        "firstName": "Philippe",
+        "cabinet": "PHD CONSEILS",
+        "email": "philippedavin@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
         "lastName": "DE BUEGER",
         "firstName": "Claire",
         "cabinet": "EGIDE COURTAGE",
@@ -1155,10 +1144,21 @@
         "is_enabled": true
     },
     {
-        "lastName": "DELAGNES",
-        "firstName": "Christian",
-        "cabinet": "DK CONSEIL ET COURTAGE",
-        "email": "contact@pacx.fr",
+        "lastName": "DE BOISSIEU du TIRET",
+        "firstName": "Gonzague",
+        "cabinet": "ACOP EXPERTISE",
+        "email": "gonzague.deboissieu@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "DE COURTILLES",
+        "firstName": "Eric",
+        "cabinet": "FINANCIERE DU GRAND OUEST",
+        "email": "contact@financieredugo.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1188,32 +1188,21 @@
         "is_enabled": true
     },
     {
-        "lastName": "DELAGNES",
-        "firstName": "Christian",
-        "cabinet": "ACTIVANCE COURTAGE",
-        "email": "protectionsociale@activancecourtage.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "DE COURTILLES",
-        "firstName": "Eric",
-        "cabinet": "FINANCIERE DU GRAND OUEST",
-        "email": "contact@financieredugo.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
         "lastName": "DELAUDIER",
         "firstName": "Guillaume",
         "cabinet": "G2C VIE",
         "email": "gdelaudier@gmail.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "DELAGNES",
+        "firstName": "Christian",
+        "cabinet": "ACTIVANCE COURTAGE",
+        "email": "protectionsociale@activancecourtage.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1243,17 +1232,6 @@
         "is_enabled": true
     },
     {
-        "lastName": "DERUEL",
-        "firstName": "Frédéric",
-        "cabinet": "CFP AGENCY",
-        "email": "fderuel@cfpagency.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
         "lastName": "DENIBAUD",
         "firstName": "Exavier",
         "cabinet": "GALINY",
@@ -1265,10 +1243,43 @@
         "is_enabled": true
     },
     {
+        "lastName": "DELAGNES",
+        "firstName": "Christian",
+        "cabinet": "DK CONSEIL ET COURTAGE",
+        "email": "contact@pacx.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "DERUEL",
+        "firstName": "Frédéric",
+        "cabinet": "CFP AGENCY",
+        "email": "fderuel@cfpagency.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
         "lastName": "DERVIEUX",
         "firstName": "Alexandre",
         "cabinet": "SFP COURTAGE",
         "email": "alexandre.dervieux@sfp-courtage.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "DESBOIS",
+        "firstName": "François-Xavier",
+        "cabinet": "RIGAUDEAU COURTAGE CONSEILS",
+        "email": "sovitae@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1298,43 +1309,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "DOUMENG",
-        "firstName": "Thierry",
-        "cabinet": "PRAXIE INVESTISSEMENT",
-        "email": "praxie-investissement@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
         "lastName": "DI COSTANZO",
         "firstName": "Philippe",
         "cabinet": "DEPHI COURTAGE",
         "email": "dephi.courtage@orange.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "DESBOIS",
-        "firstName": "François-Xavier",
-        "cabinet": "RIGAUDEAU COURTAGE CONSEILS",
-        "email": "sovitae@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "DUBOUCARRE",
-        "firstName": "Gauthier",
-        "cabinet": "GDCAP-Conseil-Assurance-Patrimoine",
-        "email": "gduboucarre@gdcap.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1353,21 +1331,21 @@
         "is_enabled": true
     },
     {
-        "lastName": "DUCHAMPS",
-        "firstName": "Fabien",
-        "cabinet": "SC AUXILIUM SARL",
-        "email": "",
+        "lastName": "DOUMENG",
+        "firstName": "Thierry",
+        "cabinet": "PRAXIE INVESTISSEMENT",
+        "email": "praxie-investissement@groupesofraco.com",
         "emailCopie": [],
-        "phone": "auxilium@groupeefficience.com",
+        "phone": "",
         "status": "Active",
         "role": "courtier",
         "is_enabled": true
     },
     {
-        "lastName": "DUCROCQ",
-        "firstName": "Fabien",
-        "cabinet": "FT GLOBAL",
-        "email": "ftglobal@groupesofraco.com",
+        "lastName": "DUBOUCARRE",
+        "firstName": "Gauthier",
+        "cabinet": "GDCAP-Conseil-Assurance-Patrimoine",
+        "email": "gduboucarre@gdcap.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1397,10 +1375,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "DUPUY",
-        "firstName": "Julien",
-        "cabinet": "AR2P",
-        "email": "ar2p@groupesofraco.com",
+        "lastName": "DUCROCQ",
+        "firstName": "Fabien",
+        "cabinet": "FT GLOBAL",
+        "email": "ftglobal@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1419,10 +1397,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "DURET",
-        "firstName": "Christelle",
-        "cabinet": "CABINET DURET PREVOYANCE & PATRIMOINE",
-        "email": "duretconseils@groupesofraco.com",
+        "lastName": "DUPUY",
+        "firstName": "Julien",
+        "cabinet": "AR2P",
+        "email": "ar2p@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1441,6 +1419,17 @@
         "is_enabled": true
     },
     {
+        "lastName": "DUCHAMPS",
+        "firstName": "Fabien",
+        "cabinet": "SC AUXILIUM SARL",
+        "email": "auxilium@groupeefficience.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
         "lastName": "DURAND CHEVALIER",
         "firstName": "Dominique",
         "cabinet": "PROTEXIS",
@@ -1452,43 +1441,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "ERRECART",
-        "firstName": "Julie",
-        "cabinet": "ERCOREP",
-        "email": "julie.errecart@gmail.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "DUVAL",
-        "firstName": "Olivier",
-        "cabinet": "ODC COURTAGE",
-        "email": "olivierduval2709@gmail.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "FABRE",
-        "firstName": "Alain",
-        "cabinet": "PROTEC CONSEIL",
-        "email": "protec.conseil@gmail.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "ESPINASSE",
-        "firstName": "Henri",
-        "cabinet": "L'ANNEXE",
-        "email": "espinassehenri@gmail.com",
+        "lastName": "DURET",
+        "firstName": "Christelle",
+        "cabinet": "CABINET DURET PREVOYANCE & PATRIMOINE",
+        "email": "duretconseils@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1507,10 +1463,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "FALCOU",
-        "firstName": "Yohan",
-        "cabinet": "FY PROTECT",
-        "email": "fyprotect@groupesofraco.com",
+        "lastName": "FEVRIER",
+        "firstName": "Joël",
+        "cabinet": "AVENIR SOLUTIONS CONSEILS 2 - LAVIALE",
+        "email": "joelfevrier@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1518,10 +1474,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "FEVRIER",
-        "firstName": "Joël",
-        "cabinet": "AVENIR SOLUTIONS CONSEILS",
-        "email": "joelfevrier@groupesofraco.com",
+        "lastName": "FALCOU",
+        "firstName": "Yohan",
+        "cabinet": "FY PROTECT",
+        "email": "fyprotect@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1553,8 +1509,52 @@
     {
         "lastName": "FEVRIER",
         "firstName": "Joël",
-        "cabinet": "AVENIR SOLUTIONS CONSEILS 2 - LAVIALE",
+        "cabinet": "AVENIR SOLUTIONS CONSEILS",
         "email": "joelfevrier@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "FABRE",
+        "firstName": "Alain",
+        "cabinet": "PROTEC CONSEIL",
+        "email": "protec.conseil@gmail.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "ERRECART",
+        "firstName": "Julie",
+        "cabinet": "ERCOREP",
+        "email": "julie.errecart@gmail.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "ESPINASSE",
+        "firstName": "Henri",
+        "cabinet": "L'ANNEXE",
+        "email": "espinassehenri@gmail.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "DUVAL",
+        "firstName": "Olivier",
+        "cabinet": "ODC COURTAGE",
+        "email": "olivierduval2709@gmail.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1574,6 +1574,50 @@
     },
     {
         "lastName": "FOUCAUD",
+        "firstName": "Michel",
+        "cabinet": "SOFRACO VILLENAVE",
+        "email": "info@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "FRAYSSE",
+        "firstName": "Jean-Pierre",
+        "cabinet": "JP FRAYSSE CONSULTS",
+        "email": "jpfraysseconsults@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "FOURCAUD",
+        "firstName": "Vincent",
+        "cabinet": "PREDICIS SARL",
+        "email": "vincent.fourcaud@predicis.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "FOURETS",
+        "firstName": "Robert",
+        "cabinet": "PILAT COURTAGE",
+        "email": "pilatcourtage@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "FOUCAUD",
         "firstName": "Marion",
         "cabinet": "SOLUVIE",
         "email": "marionfoucaud@groupesofraco.com",
@@ -1584,10 +1628,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "FOUCAUD",
-        "firstName": "Marion",
-        "cabinet": "SOFRACO BORDEAUX",
-        "email": "marionfoucaud@groupesofraco.com",
+        "lastName": "FOURNET",
+        "firstName": "Thibaut",
+        "cabinet": "Jean-Pierre",
+        "email": "t.fournet@preventic-conseil.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1607,53 +1651,9 @@
     },
     {
         "lastName": "FOUCAUD",
-        "firstName": "Michel",
-        "cabinet": "SOFRACO VILLENAVE",
-        "email": "info@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "FOURETS",
-        "firstName": "Robert",
-        "cabinet": "PILAT COURTAGE",
-        "email": "pilatcourtage@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "FOURCAUD",
-        "firstName": "Vincent",
-        "cabinet": "PREDICIS SARL",
-        "email": "vincent.fourcaud@predicis.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "FOURNET",
-        "firstName": "Thibaut",
-        "cabinet": "Jean-Pierre",
-        "email": "t.fournet@preventic-conseil.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "FRAYSSE",
-        "firstName": "Jean-Pierre",
-        "cabinet": "JP FRAYSSE CONSULTS",
-        "email": "jpfraysseconsults@groupesofraco.com",
+        "firstName": "Marion",
+        "cabinet": "SOFRACO BORDEAUX",
+        "email": "marionfoucaud@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1664,6 +1664,39 @@
         "lastName": "GABIN",
         "firstName": "Jérome",
         "cabinet": "PATRIMONIA SOCIAL",
+        "email": "ca-conseil@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "GAMARRA",
+        "firstName": "Christine",
+        "cabinet": "CG SOLUTIONS",
+        "email": "cgsolutions@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "GANTIER",
+        "firstName": "David",
+        "cabinet": "GANTIER CONSEIL",
+        "email": "david@gantier.info",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "GABIN",
+        "firstName": "Jérôme",
+        "cabinet": "EXPERTS ET ASSOCIES",
         "email": "ca-conseil@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
@@ -1683,10 +1716,32 @@
         "is_enabled": true
     },
     {
-        "lastName": "GABIN",
-        "firstName": "Jérôme",
-        "cabinet": "EXPERTS ET ASSOCIES",
-        "email": "ca-conseil@groupesofraco.com",
+        "lastName": "GARDET",
+        "firstName": "Valérie",
+        "cabinet": "ALPES PREVOYANCE PATRIMOINE",
+        "email": "app@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "GENDRIER",
+        "firstName": "Christophe",
+        "cabinet": "CG 2C",
+        "email": "cg2c@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "GAULT",
+        "firstName": "Samuel",
+        "cabinet": "GAULT CONSEILS",
+        "email": "gault.conseils@outlook.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1716,76 +1771,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "GAMARRA",
-        "firstName": "Christine",
-        "cabinet": "CG SOLUTIONS",
-        "email": "cgsolutions@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "GIRARD",
-        "firstName": "Berthy",
-        "cabinet": "GIRARD AUDIT & CONSEIL",
-        "email": "berthy.girard@gmail.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "GARDET",
-        "firstName": "Valérie",
-        "cabinet": "ALPES PREVOYANCE PATRIMOINE",
-        "email": "app@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "GANTIER",
-        "firstName": "David",
-        "cabinet": "GANTIER CONSEIL",
-        "email": "david@gantier.info",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "GAULT",
-        "firstName": "Samuel",
-        "cabinet": "GAULT CONSEILS",
-        "email": "gault.conseils@outlook.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
         "lastName": "GIRARD",
         "firstName": "Pierrick",
         "cabinet": "CONCILIAE COURTAGE",
         "email": "berthy.girard@gmail.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "GENDRIER",
-        "firstName": "Christophe",
-        "cabinet": "CG 2C",
-        "email": "cg2c@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1804,10 +1793,21 @@
         "is_enabled": true
     },
     {
-        "lastName": "GUILHEM",
-        "firstName": "Geoffrey",
-        "cabinet": "AZUR CONSEILS COURTAGE",
-        "email": "geoffrey@azurconseilscourtage.fr",
+        "lastName": "GRANET",
+        "firstName": "Carole",
+        "cabinet": "ALPES PROTECTION SOCIALE 2",
+        "email": "aps@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "GRANGEON",
+        "firstName": "Baptiste",
+        "cabinet": "INKAL COURTAGE",
+        "email": "inkal@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1826,10 +1826,32 @@
         "is_enabled": true
     },
     {
-        "lastName": "GUICHARD",
-        "firstName": "Aurélien",
-        "cabinet": "AGORA FINANCE",
-        "email": "gestion@agorafinance.fr",
+        "lastName": "GONON",
+        "firstName": "Pierre-Stéphane",
+        "cabinet": "OXYGENE COURTAGE",
+        "email": "gonon.ps@oxygene-courtage.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "GIRARD",
+        "firstName": "Berthy",
+        "cabinet": "GIRARD AUDIT & CONSEIL",
+        "email": "berthy.girard@gmail.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "GUATEL",
+        "firstName": "Karine",
+        "cabinet": "PROMETHEE EXPERTISE ET COURTAGE",
+        "email": "karine.guatel@promethee-expertiseetcourtage.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1848,10 +1870,21 @@
         "is_enabled": true
     },
     {
-        "lastName": "GRANET",
-        "firstName": "Carole",
-        "cabinet": "ALPES PROTECTION SOCIALE 2",
-        "email": "aps@groupesofraco.com",
+        "lastName": "GUILHEM",
+        "firstName": "Geoffrey",
+        "cabinet": "AZUR CONSEILS COURTAGE",
+        "email": "geoffrey@azurconseilscourtage.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "GUICHARD",
+        "firstName": "Aurélien",
+        "cabinet": "AGORA FINANCE",
+        "email": "gestion@agorafinance.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1881,43 +1914,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "GUATEL",
-        "firstName": "Karine",
-        "cabinet": "PROMETHEE EXPERTISE ET COURTAGE",
-        "email": "karine.guatel@promethee-expertiseetcourtage.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "GRANGEON",
-        "firstName": "Baptiste",
-        "cabinet": "INKAL COURTAGE",
-        "email": "inkal@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "GONON",
-        "firstName": "Pierre-Stéphane",
-        "cabinet": "OXYGENE COURTAGE",
-        "email": "gonon.ps@oxygene-courtage.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "HOURIEZ",
-        "firstName": "Hervé",
-        "cabinet": "ABH COURTAGE",
-        "email": "hhouriez@groupesofraco.com",
+        "lastName": "HAU",
+        "firstName": "Christophe",
+        "cabinet": "LAPS",
+        "email": "laps@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -1936,17 +1936,6 @@
         "is_enabled": true
     },
     {
-        "lastName": "HAU",
-        "firstName": "Christophe",
-        "cabinet": "LAPS",
-        "email": "laps@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
         "lastName": "HEINTZ",
         "firstName": "Julien",
         "cabinet": "REPPI",
@@ -1958,32 +1947,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "HANCHARD",
-        "firstName": "Marie",
-        "cabinet": "STAR'APS",
-        "email": "marie.hanchard@astre-sfo.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "HUBERT",
-        "firstName": "Pascal",
-        "cabinet": "THEMIS CONSEIL",
-        "email": "pascal.hubertform@orange.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "HANCHARD",
-        "firstName": "Marie",
-        "cabinet": "ASTRE PATRIMOINE",
-        "email": "marie.hanchard@astre-sfo.com",
+        "lastName": "HOURIEZ",
+        "firstName": "Hervé",
+        "cabinet": "ABH COURTAGE - AGAPS",
+        "email": "hhouriez@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2004,7 +1971,7 @@
     {
         "lastName": "HOURIEZ",
         "firstName": "Hervé",
-        "cabinet": "ABH COURTAGE - AGAPS",
+        "cabinet": "ABH COURTAGE",
         "email": "hhouriez@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
@@ -2013,10 +1980,21 @@
         "is_enabled": true
     },
     {
-        "lastName": "IMBERT",
-        "firstName": "Franck",
-        "cabinet": "H.A FINANCES CONSEILS",
-        "email": "hafinancesconseils@groupesofraco.com",
+        "lastName": "HUBERT",
+        "firstName": "Pascal",
+        "cabinet": "THEMIS CONSEIL",
+        "email": "pascal.hubertform@orange.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "HANCHARD",
+        "firstName": "Marie",
+        "cabinet": "STAR'APS",
+        "email": "marie.hanchard@astre-sfo.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2035,10 +2013,21 @@
         "is_enabled": true
     },
     {
-        "lastName": "INGELS",
-        "firstName": "Stéphane",
-        "cabinet": "INGELS COURTAGE CONSEIL",
-        "email": "ingels.s@groupeaprem.com",
+        "lastName": "HANCHARD",
+        "firstName": "Marie",
+        "cabinet": "ASTRE PATRIMOINE",
+        "email": "marie.hanchard@astre-sfo.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "IMBERT",
+        "firstName": "Franck",
+        "cabinet": "H.A FINANCES CONSEILS",
+        "email": "hafinancesconseils@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2057,21 +2046,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "JOURDE",
-        "firstName": "Benoît",
-        "cabinet": "SOFI-VIE CONSEILS",
-        "email": "benoit.jourde@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "JOSSE",
-        "firstName": "Stéphane",
-        "cabinet": "LES FRATES",
-        "email": "sjosse@apcinvest.fr",
+        "lastName": "JAUNATRE",
+        "firstName": "Alexandre",
+        "cabinet": "EMETIS CONSEILS",
+        "email": "aj@emetisconseils.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2090,10 +2068,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "JAUNATRE",
-        "firstName": "Alexandre",
-        "cabinet": "EMETIS CONSEILS",
-        "email": "aj@emetisconseils.com",
+        "lastName": "INGELS",
+        "firstName": "Stéphane",
+        "cabinet": "INGELS COURTAGE CONSEIL",
+        "email": "ingels.s@groupeaprem.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2101,10 +2079,21 @@
         "is_enabled": true
     },
     {
-        "lastName": "JUHEL",
-        "firstName": "Sandrine",
-        "cabinet": "ASSURIANCE",
-        "email": "assuriance@groupesofraco.com",
+        "lastName": "JOSSE",
+        "firstName": "Stéphane",
+        "cabinet": "LES FRATES",
+        "email": "sjosse@apcinvest.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "JOURDE",
+        "firstName": "Benoît",
+        "cabinet": "SOFI-VIE CONSEILS",
+        "email": "benoit.jourde@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2123,10 +2112,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "JUILLAT",
-        "firstName": "Albin",
-        "cabinet": "VS'EXPERTS",
-        "email": "ajuillat@apcinvest.fr",
+        "lastName": "JUHEL",
+        "firstName": "Sandrine",
+        "cabinet": "ASSURIANCE",
+        "email": "assuriance@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2147,18 +2136,7 @@
     {
         "lastName": "JUILLAT",
         "firstName": "Albin",
-        "cabinet": "GPS 2C",
-        "email": "ajuillat@apcinvest.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "JUILLAT",
-        "firstName": "Albin",
-        "cabinet": "ORFAURE FINANCE",
+        "cabinet": "VS'EXPERTS",
         "email": "ajuillat@apcinvest.fr",
         "emailCopie": [],
         "phone": "",
@@ -2178,21 +2156,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "LAGNAU-LEROUX-ZIMMERMAN",
-        "firstName": "Laurent",
-        "cabinet": "VOTRE AVENIR",
-        "email": "laurentlagnauleroux@votreavenir.org",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "LAFARGUE",
-        "firstName": "Laetitia",
-        "cabinet": "CABINET LAFARGUE",
-        "email": "l.lafargue@capeassurances.fr",
+        "lastName": "LAFON",
+        "firstName": "Ludovic",
+        "cabinet": "PERSPECTIVES",
+        "email": "perspectives@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2211,65 +2178,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "LABBE",
-        "firstName": "Bruno",
-        "cabinet": "LYSEIS CONSEILS",
-        "email": "bruno.labbe@lyseis-conseils.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "LACOUDANNE",
-        "firstName": "Jean-Laurent",
-        "cabinet": "ELVEMY CONSEILS SAS",
-        "email": "jllacoudanne@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "LACOMBE",
-        "firstName": "Cassandra",
-        "cabinet": "Cassandra Courtage",
-        "email": "cassandra@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "LAFON",
-        "firstName": "Ludovic",
-        "cabinet": "PERSPECTIVES",
-        "email": "perspectives@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
         "lastName": "LAHNECHE",
         "firstName": "Hocine",
         "cabinet": "CHL",
         "email": "hocine.lahneche@free.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "JUILLAT",
-        "firstName": "Albin",
-        "cabinet": "APC INVESTMENT",
-        "email": "ajuillat@apcinvest.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2288,10 +2200,32 @@
         "is_enabled": true
     },
     {
-        "lastName": "LAUNAY",
-        "firstName": "Emilie",
-        "cabinet": "AVENIR CONSEIL RETRAITE & PREVOYANCE",
-        "email": "emilie.launay@a-conseil.fr",
+        "lastName": "LAGNAU-LEROUX-ZIMMERMAN",
+        "firstName": "Laurent",
+        "cabinet": "VOTRE AVENIR",
+        "email": "laurentlagnauleroux@votreavenir.org",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "LANGLOIS",
+        "firstName": "Mathieu",
+        "cabinet": "LM CONSILIUM",
+        "email": "mlanglois.conseils@gmail.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "LACOUDANNE",
+        "firstName": "Jean-Laurent",
+        "cabinet": "ELVEMY CONSEILS SAS",
+        "email": "jllacoudanne@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2312,8 +2246,74 @@
     {
         "lastName": "LASSALLE",
         "firstName": "Landry",
+        "cabinet": "LCE CONSEILS SAS",
+        "email": "landrylassalle@hotmail.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "JUILLAT",
+        "firstName": "Albin",
+        "cabinet": "ORFAURE FINANCE",
+        "email": "ajuillat@apcinvest.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "JUILLAT",
+        "firstName": "Albin",
+        "cabinet": "GPS 2C",
+        "email": "ajuillat@apcinvest.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "LASSALLE",
+        "firstName": "Landry",
         "cabinet": "GNCTI",
         "email": "landrylassalle@hotmail.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "LAUNAY",
+        "firstName": "Emilie",
+        "cabinet": "AVENIR CONSEIL RETRAITE & PREVOYANCE",
+        "email": "emilie.launay@a-conseil.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "JUILLAT",
+        "firstName": "Albin",
+        "cabinet": "APC INVESTMENT",
+        "email": "ajuillat@apcinvest.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "LAFARGUE",
+        "firstName": "Laetitia",
+        "cabinet": "CABINET LAFARGUE",
+        "email": "l.lafargue@capeassurances.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2332,28 +2332,6 @@
         "is_enabled": true
     },
     {
-        "lastName": "LE LOARER",
-        "firstName": "Fabien",
-        "cabinet": "AMSC2",
-        "email": "sarlamsc2@gmail.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "LASSALLE",
-        "firstName": "Landry",
-        "cabinet": "LCE CONSEILS SAS",
-        "email": "landrylassalle@hotmail.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
         "lastName": "LAURIAC",
         "firstName": "Pascale",
         "cabinet": "SPHERE COURTAGE",
@@ -2365,10 +2343,21 @@
         "is_enabled": true
     },
     {
-        "lastName": "LANGLOIS",
-        "firstName": "Mathieu",
-        "cabinet": "LM CONSILIUM",
-        "email": "mlanglois.conseils@gmail.com",
+        "lastName": "LABBE",
+        "firstName": "Bruno",
+        "cabinet": "LYSEIS CONSEILS",
+        "email": "bruno.labbe@lyseis-conseils.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "LE LOARER",
+        "firstName": "Fabien",
+        "cabinet": "AMSC2",
+        "email": "sarlamsc2@gmail.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2387,10 +2376,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "LECOULS",
-        "firstName": "Bertrand",
-        "cabinet": "BL CONSEIL",
-        "email": "blconseil@groupesofraco.com",
+        "lastName": "LE LOARER",
+        "firstName": "Fabien",
+        "cabinet": "AMSC4",
+        "email": "sarlamsc2@gmail.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2401,6 +2390,28 @@
         "lastName": "LE LOARER",
         "firstName": "Fabien",
         "cabinet": "AMSC5",
+        "email": "sarlamsc2@gmail.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "LE LOARER",
+        "firstName": "Fabien",
+        "cabinet": "AMSC7",
+        "email": "sarlamsc2@gmail.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "LE LOARER",
+        "firstName": "Fabien",
+        "cabinet": "AMSC6",
         "email": "sarlamsc2@gmail.com",
         "emailCopie": [],
         "phone": "",
@@ -2422,8 +2433,19 @@
     {
         "lastName": "LE LOARER",
         "firstName": "Fabien",
-        "cabinet": "AMSC6",
+        "cabinet": "INFINEO ASSURANCES",
         "email": "sarlamsc2@gmail.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "LECOULS",
+        "firstName": "Bertrand",
+        "cabinet": "BL CONSEIL",
+        "email": "blconseil@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2453,21 +2475,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "LE LOARER",
-        "firstName": "Fabien",
-        "cabinet": "AMSC7",
-        "email": "sarlamsc2@gmail.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "LE LOARER",
-        "firstName": "Fabien",
-        "cabinet": "AMSC4",
-        "email": "sarlamsc2@gmail.com",
+        "lastName": "LEBLOND",
+        "firstName": "Nawel",
+        "cabinet": "NL CONSEIL",
+        "email": "nlconseil@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2486,32 +2497,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "LE LOARER",
-        "firstName": "Fabien",
-        "cabinet": "INFINEO ASSURANCES",
-        "email": "sarlamsc2@gmail.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "LEBLOND",
-        "firstName": "Nawel",
-        "cabinet": "NL CONSEIL",
-        "email": "nlconseil@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "LEROUX",
-        "firstName": "Boris",
-        "cabinet": "BKL Audit",
-        "email": "boriskenler@gmail.com",
+        "lastName": "LEON",
+        "firstName": "Alexandre",
+        "cabinet": "EO2C SOLUTIONS-VIE 3",
+        "email": "a.leon@solutions-vie.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2530,21 +2519,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "LEON",
-        "firstName": "Alexandre",
-        "cabinet": "EO2C SOLUTIONS-VIE 2",
-        "email": "a.leon@solutions-vie.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "LEON",
-        "firstName": "Alexandre",
-        "cabinet": "EO2C SOLUTIONS-VIE 3",
-        "email": "a.leon@solutions-vie.fr",
+        "lastName": "LEROUX",
+        "firstName": "Boris",
+        "cabinet": "BKL Audit",
+        "email": "boriskenler@gmail.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2563,6 +2541,17 @@
         "is_enabled": true
     },
     {
+        "lastName": "LEON",
+        "firstName": "Alexandre",
+        "cabinet": "EO2C SOLUTIONS-VIE 2",
+        "email": "a.leon@solutions-vie.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
         "lastName": "LEVY VOCANSON",
         "firstName": "Emmanuelle",
         "cabinet": "PROTECTIO",
@@ -2574,10 +2563,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "LUISES",
-        "firstName": "Ernest",
-        "cabinet": "AUDITS ET SOLUTIONS COURTAGE",
-        "email": "ascourtage@orange.fr",
+        "lastName": "LEVY VOCANSON",
+        "firstName": "Emmanuelle",
+        "cabinet": "EVL COURTAGE",
+        "email": "emmanuellelevyvocanson@gmail.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2589,17 +2578,6 @@
         "firstName": "Hélène",
         "cabinet": "ART'PEGE",
         "email": "artpege@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "LHUISSIER",
-        "firstName": "Frédéric",
-        "cabinet": "LF CONSEIL",
-        "email": "frederic.lhuissier@gmail.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2629,32 +2607,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "LUQUIAU",
-        "firstName": "Corinne",
-        "cabinet": "CL2C ASSURANCES",
-        "email": "corinne.luquiau@cl2cassurances.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "LOUIBA",
-        "firstName": "Sandra",
-        "cabinet": "ARSENE CONSULTING",
-        "email": "sandralouiba@gmail.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "LEVY VOCANSON",
-        "firstName": "Emmanuelle",
-        "cabinet": "EVL COURTAGE",
-        "email": "emmanuellelevyvocanson@gmail.com",
+        "lastName": "LUISES",
+        "firstName": "Ernest",
+        "cabinet": "AUDITS ET SOLUTIONS COURTAGE",
+        "email": "ascourtage@orange.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2673,21 +2629,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "MALAVELLE",
-        "firstName": "Stéphane",
-        "cabinet": "OPTI ASSUR CONSEILS",
-        "email": "stephane@malavelle.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "MALGUID",
-        "firstName": "Philippe",
-        "cabinet": "ADEC COURTAGE SAS",
-        "email": "pmalguid@groupesofraco.com",
+        "lastName": "LHUISSIER",
+        "firstName": "Frédéric",
+        "cabinet": "LF CONSEIL",
+        "email": "frederic.lhuissier@gmail.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2706,10 +2651,21 @@
         "is_enabled": true
     },
     {
-        "lastName": "MALGARINI",
-        "firstName": "Jocelyne",
-        "cabinet": "MAJOS CONSEIL ET STRATEGIE",
-        "email": "jm@alpesprotectionsociale.com",
+        "lastName": "MALAVELLE",
+        "firstName": "Stéphane",
+        "cabinet": "OPTI ASSUR CONSEILS",
+        "email": "stephane@malavelle.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "LUQUIAU",
+        "firstName": "Corinne",
+        "cabinet": "CL2C ASSURANCES",
+        "email": "corinne.luquiau@cl2cassurances.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2728,65 +2684,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "MALTEZEANU",
-        "firstName": "Ion",
-        "cabinet": "IM CONSEIL",
-        "email": "imconseil@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "MARTIRE",
-        "firstName": "Olivier",
-        "cabinet": "MARTIRE CONSEILS COURTAGE",
-        "email": "o.martire@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "MARZIAC",
-        "firstName": "Alexandre",
-        "cabinet": "ALIAS CONSEIL",
-        "email": "alexandre.marziac@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "MASCLET BESSY",
-        "firstName": "Maryvonne et Bertrand",
-        "cabinet": "MBPA",
-        "email": "mbpa@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "MARTIN",
-        "firstName": "Vincent",
-        "cabinet": "S PER COURTAGES",
-        "email": "cmartin@beaubourg-patrimoine.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "MASDIEU",
-        "firstName": "Vincent",
-        "cabinet": "MVP",
-        "email": "mvp@groupesofraco.com",
+        "lastName": "MALGARINI",
+        "firstName": "Jocelyne",
+        "cabinet": "MAJOS CONSEIL ET STRATEGIE",
+        "email": "jm@alpesprotectionsociale.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2805,10 +2706,76 @@
         "is_enabled": true
     },
     {
-        "lastName": "MAYOT",
-        "firstName": "Didier",
-        "cabinet": "A/VIE CONSEIL EXPERT",
-        "email": "didier.mayot@free.fr",
+        "lastName": "MALGUID",
+        "firstName": "Philippe",
+        "cabinet": "ADEC COURTAGE SAS",
+        "email": "pmalguid@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "MALTEZEANU",
+        "firstName": "Ion",
+        "cabinet": "IM CONSEIL",
+        "email": "imconseil@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "LOUIBA",
+        "firstName": "Sandra",
+        "cabinet": "ARSENE CONSULTING",
+        "email": "sandralouiba@gmail.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "MARTIRE",
+        "firstName": "Olivier",
+        "cabinet": "MARTIRE CONSEILS COURTAGE",
+        "email": "o.martire@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "MARTIN",
+        "firstName": "Vincent",
+        "cabinet": "S PER COURTAGES",
+        "email": "cmartin@beaubourg-patrimoine.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "MAYS",
+        "firstName": "Jérôme",
+        "cabinet": "JMC",
+        "email": "J.mays@capeassurances.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "MASCLET BESSY",
+        "firstName": "Maryvonne et Bertrand",
+        "cabinet": "MBPA",
+        "email": "mbpa@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2827,28 +2794,6 @@
         "is_enabled": true
     },
     {
-        "lastName": "MIALHE",
-        "firstName": "David",
-        "cabinet": "MIALHE CONSEIL ET COURTAGE",
-        "email": "mialhe.courtage@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "MELY",
-        "firstName": "Marcel",
-        "cabinet": "MM CONSEIL ET COURTAGE",
-        "email": "marcel.mely@mmconseiletcourtage.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
         "lastName": "MELY",
         "firstName": "Marcel",
         "cabinet": "MARCEL MELY CONSEIL COURTAGE",
@@ -2860,10 +2805,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "MICHEL",
-        "firstName": "Yves",
-        "cabinet": "LA PROTECTION SOCIALE ET PATRIMONIALE",
-        "email": "ymichel@wanadoo.fr",
+        "lastName": "MARZIAC",
+        "firstName": "Alexandre",
+        "cabinet": "ALIAS CONSEIL",
+        "email": "alexandre.marziac@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2871,54 +2816,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "MONTICELLI",
-        "firstName": "Florian",
-        "cabinet": "CABINET CESAM CONSEIL",
-        "email": "florian.monticelli@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "MOREL",
-        "firstName": "Romuald",
-        "cabinet": "RM EXPERTISE & CONSEIL",
-        "email": "morel.romuald@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "MOREL",
-        "firstName": "Jean-Romain",
-        "cabinet": "2C PATRIMOINE",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "MORIN",
-        "firstName": "Jean",
-        "cabinet": "JEAN MORIN FINANCE CONSEILS",
-        "email": "jmfc@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "MOTARD",
-        "firstName": "Frédéric",
-        "cabinet": "INSURANCE CONSEILS",
-        "email": "technicoll@pavillon-prevoyance.fr",
+        "lastName": "MIALHE",
+        "firstName": "David",
+        "cabinet": "MIALHE CONSEIL ET COURTAGE",
+        "email": "mialhe.courtage@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2948,10 +2849,54 @@
         "is_enabled": true
     },
     {
+        "lastName": "MASDIEU",
+        "firstName": "Vincent",
+        "cabinet": "MVP",
+        "email": "mvp@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "MELY",
+        "firstName": "Marcel",
+        "cabinet": "MM CONSEIL ET COURTAGE",
+        "email": "marcel.mely@mmconseiletcourtage.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "MAYOT",
+        "firstName": "Didier",
+        "cabinet": "A/VIE CONSEIL EXPERT",
+        "email": "didier.mayot@free.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "MICHEL",
+        "firstName": "Yves",
+        "cabinet": "LA PROTECTION SOCIALE ET PATRIMONIALE",
+        "email": "ymichel@wanadoo.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
         "lastName": "MOREL",
-        "firstName": "Pascal",
-        "cabinet": "CMAP ASSURANCES",
-        "email": "pm@pascalmorel-assurances.fr",
+        "firstName": "Jean-Romain",
+        "cabinet": "2C PATRIMOINE",
+        "email": "",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2959,10 +2904,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "MAYS",
-        "firstName": "Jérôme",
-        "cabinet": "JMC",
-        "email": "J.mays@capeassurances.fr",
+        "lastName": "MONTICELLI",
+        "firstName": "Florian",
+        "cabinet": "CABINET CESAM CONSEIL",
+        "email": "florian.monticelli@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -2970,32 +2915,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "MOUGENEL",
-        "firstName": "Philippe",
-        "cabinet": "ALL IS STICK CONSEIL SARL",
-        "email": "allisstickconseil@orange.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "NANCHE",
-        "firstName": "Philippe",
-        "cabinet": "PNA SOLUTIONS COURTAGE",
-        "email": "Philippe.Nanche@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "MOBAILLY",
-        "firstName": "Fabien",
-        "cabinet": "ADFIS CONSEIL",
-        "email": "fabien.mobailly@adfis.fr",
+        "lastName": "MOTARD",
+        "firstName": "Frédéric",
+        "cabinet": "INSURANCE CONSEILS",
+        "email": "technicoll@pavillon-prevoyance.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3014,10 +2937,76 @@
         "is_enabled": true
     },
     {
+        "lastName": "MOBAILLY",
+        "firstName": "Fabien",
+        "cabinet": "ADFIS CONSEIL",
+        "email": "fabien.mobailly@adfis.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "NANCHE",
+        "firstName": "Philippe",
+        "cabinet": "PNA SOLUTIONS COURTAGE",
+        "email": "Philippe.Nanche@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "MORIN",
+        "firstName": "Jean",
+        "cabinet": "JEAN MORIN FINANCE CONSEILS",
+        "email": "jmfc@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "MOREL",
+        "firstName": "Pascal",
+        "cabinet": "CMAP ASSURANCES",
+        "email": "pm@pascalmorel-assurances.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "MOUGENEL",
+        "firstName": "Philippe",
+        "cabinet": "ALL IS STICK CONSEIL SARL",
+        "email": "allisstickconseil@orange.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
         "lastName": "NEAU",
         "firstName": "Emmanuelle",
         "cabinet": "CECIAD",
         "email": "ceciad@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "MOREL",
+        "firstName": "Romuald",
+        "cabinet": "RM EXPERTISE & CONSEIL",
+        "email": "morel.romuald@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3060,7 +3049,7 @@
     {
         "lastName": "OTHAX",
         "firstName": "Emmanuel",
-        "cabinet": "PARTENARIAT GOLF",
+        "cabinet": "EO2C SOLUTIONS-VIE SVT",
         "email": "e.othax@solutions-vie.fr",
         "emailCopie": [],
         "phone": "",
@@ -3080,10 +3069,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "OTHAX",
-        "firstName": "Emmanuel",
-        "cabinet": "EO2C SOLUTIONS-VIE SVT",
-        "email": "e.othax@solutions-vie.fr",
+        "lastName": "ORLHIAC",
+        "firstName": "Stephanie",
+        "cabinet": "S.O. COURTAGE",
+        "email": "socourtage@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3102,10 +3091,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "ORLHIAC",
-        "firstName": "Stephanie",
-        "cabinet": "S.O. COURTAGE",
-        "email": "socourtage@groupesofraco.com",
+        "lastName": "OTHAX",
+        "firstName": "Emmanuel",
+        "cabinet": "PARTENARIAT GOLF",
+        "email": "e.othax@solutions-vie.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3135,17 +3124,6 @@
         "is_enabled": true
     },
     {
-        "lastName": "PAGNIER",
-        "firstName": "Jean-Marie",
-        "cabinet": "JMK COURTAGE AUDIT",
-        "email": "jeanmarie.pagnier@outlook.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
         "lastName": "PEREZ",
         "firstName": "Jean-François",
         "cabinet": "PROTEXIUM CONSEILS & COURTAGE",
@@ -3157,10 +3135,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "PETITCOLIN",
-        "firstName": "Pauline",
-        "cabinet": "COTIZ SAS",
-        "email": "paulinepetitcolin@groupesofraco.com",
+        "lastName": "PETIT",
+        "firstName": "Laurent",
+        "cabinet": "OPEN FINANCE SAS",
+        "email": "lpetit@pavillon-prevoyance.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3168,10 +3146,21 @@
         "is_enabled": true
     },
     {
-        "lastName": "PETIT",
-        "firstName": "Laurent",
-        "cabinet": "OPEN FINANCE SAS",
-        "email": "lpetit@pavillon-prevoyance.fr",
+        "lastName": "PAGNIER",
+        "firstName": "Jean-Marie",
+        "cabinet": "JMK COURTAGE AUDIT",
+        "email": "jeanmarie.pagnier@outlook.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "PETITCOLIN",
+        "firstName": "Pauline",
+        "cabinet": "COTIZ SAS",
+        "email": "paulinepetitcolin@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3201,32 +3190,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "PEYRICHOUX",
-        "firstName": "Benoit",
-        "cabinet": "BP COURTAGE CONSEIL",
-        "email": "bpcc@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "PROUGET",
-        "firstName": "Marie",
-        "cabinet": "EXCELLENCE FINANCE",
-        "email": "contact@excellence-finance.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "PIERRON",
-        "firstName": "Thierry",
-        "cabinet": "CAST PIERRON-AGAPS",
-        "email": "t.pierron@orange.fr",
+        "lastName": "RADICE",
+        "firstName": "Sébastien",
+        "cabinet": "SAVOIE SOLUTIONS",
+        "email": "savoie.solutions@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3245,17 +3212,6 @@
         "is_enabled": true
     },
     {
-        "lastName": "PUMEDA GARCIA",
-        "firstName": "Manuel",
-        "cabinet": "UNICOURTAGE",
-        "email": "unicourtage@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
         "lastName": "RATTE",
         "firstName": "Arnaud",
         "cabinet": "PREVIE",
@@ -3267,10 +3223,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "PUXEDDU",
-        "firstName": "Michael",
-        "cabinet": "CABINET PUXEDDU",
-        "email": "mpuxeddu@groupesofraco.com",
+        "lastName": "PROUGET",
+        "firstName": "Marie",
+        "cabinet": "EXCELLENCE FINANCE",
+        "email": "contact@excellence-finance.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3278,10 +3234,21 @@
         "is_enabled": true
     },
     {
-        "lastName": "RADICE",
-        "firstName": "Sébastien",
-        "cabinet": "SAVOIE SOLUTIONS",
-        "email": "savoie.solutions@groupesofraco.com",
+        "lastName": "PUMEDA GARCIA",
+        "firstName": "Manuel",
+        "cabinet": "UNICOURTAGE",
+        "email": "unicourtage@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "PIERRON",
+        "firstName": "Thierry",
+        "cabinet": "CAST PIERRON-AGAPS",
+        "email": "t.pierron@orange.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3300,6 +3267,28 @@
         "is_enabled": true
     },
     {
+        "lastName": "PUXEDDU",
+        "firstName": "Michael",
+        "cabinet": "CABINET PUXEDDU",
+        "email": "mpuxeddu@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "PEYRICHOUX",
+        "firstName": "Benoit",
+        "cabinet": "BP COURTAGE CONSEIL",
+        "email": "bpcc@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
         "lastName": "REIGNOUX",
         "firstName": "Patrick",
         "cabinet": "PREVS 36",
@@ -3311,10 +3300,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "REIX",
-        "firstName": "Hugues",
-        "cabinet": "C2R",
-        "email": "contact.c2r.patrimoine@gmail.com",
+        "lastName": "ROLLES",
+        "firstName": "Thierry",
+        "cabinet": "SAGEC'ASSUR",
+        "email": "sagecassur@sagec-forez.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3322,10 +3311,21 @@
         "is_enabled": true
     },
     {
-        "lastName": "RICHARD",
-        "firstName": "François",
-        "cabinet": "AUDIT CONSEIL COURTAGE",
-        "email": "f.richard@cabinet-a2c.fr",
+        "lastName": "ROQUE",
+        "firstName": "Sébastien",
+        "cabinet": "ATLANTIC CONSEIL COURTAGE",
+        "email": "contact@atlanticconseilcourtage.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "ROMAN",
+        "firstName": "Jean-Claude",
+        "cabinet": "LPE COURTAGE CONSEIL",
+        "email": "jean-claude@avizia-assurances.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3344,10 +3344,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "ROLLES",
-        "firstName": "Thierry",
-        "cabinet": "SAGEC'ASSUR",
-        "email": "sagecassur@sagec-forez.com",
+        "lastName": "ROUX",
+        "firstName": "Sébastien",
+        "cabinet": "S.R. CONSEIL",
+        "email": "sebastien.roux@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3379,41 +3379,30 @@
     {
         "lastName": "ROUX",
         "firstName": "Sébastien",
-        "cabinet": "S.R. CONSEIL",
-        "email": "sebastien.roux@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "ROQUE",
-        "firstName": "Sébastien",
-        "cabinet": "ATLANTIC CONSEIL COURTAGE",
-        "email": "contact@atlanticconseilcourtage.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "ROMAN",
-        "firstName": "Jean-Claude",
-        "cabinet": "LPE COURTAGE CONSEIL",
-        "email": "jean-claude@avizia-assurances.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "ROUX",
-        "firstName": "Sébastien",
         "cabinet": "TC2K",
         "email": "sebastien.roux@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "RICHARD",
+        "firstName": "François",
+        "cabinet": "AUDIT CONSEIL COURTAGE",
+        "email": "f.richard@cabinet-a2c.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "REIX",
+        "firstName": "Hugues",
+        "cabinet": "C2R",
+        "email": "contact.c2r.patrimoine@gmail.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3432,10 +3421,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "ROUX",
-        "firstName": "Ludovic",
-        "cabinet": "LR CONSEILS COURTAGE",
-        "email": "ROUX-ludovic@live.fr",
+        "lastName": "SALLIO",
+        "firstName": "Lionel",
+        "cabinet": "PROTECTION PLURIEL NORD BASSIN",
+        "email": "apsconseil@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3443,10 +3432,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "ROY",
-        "firstName": "Thomas",
-        "cabinet": "3A CONSEILS",
-        "email": "3aconseils@groupesofraco.com",
+        "lastName": "RUBIRA",
+        "firstName": "Nathalie",
+        "cabinet": "TOUTASSURANCES31",
+        "email": "nathalie@toutassurances31.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3466,42 +3455,9 @@
     },
     {
         "lastName": "ROY",
-        "firstName": "Laurent",
-        "cabinet": "ROY CONSEIL",
-        "email": "laurent.roy@royconseil.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "SABATIER",
-        "firstName": "Mario",
-        "cabinet": "NOUVEAU PORTEFEUILLE",
-        "email": "contactsamares@gmail.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "RUBIRA",
-        "firstName": "Nathalie",
-        "cabinet": "TOUTASSURANCES31",
-        "email": "nathalie@toutassurances31.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "SALLIO",
-        "firstName": "Lionel",
-        "cabinet": "PROTECTION PLURIEL NORD BASSIN",
-        "email": "apsconseil@groupesofraco.com",
+        "firstName": "Thomas",
+        "cabinet": "3A CONSEILS",
+        "email": "3aconseils@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3513,6 +3469,17 @@
         "firstName": "Dominique",
         "cabinet": "COURTAGE ASSURANCE CONSEIL 43",
         "email": "cac@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "SABATIER",
+        "firstName": "Mario",
+        "cabinet": "NOUVEAU PORTEFEUILLE",
+        "email": "contactsamares@gmail.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3542,10 +3509,43 @@
         "is_enabled": true
     },
     {
+        "lastName": "SCHAETZEL",
+        "firstName": "Thomas",
+        "cabinet": "CAAPS",
+        "email": "contact@caaps.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
         "lastName": "SAUMET",
         "firstName": "Laurent",
         "cabinet": "LS COURTAGE",
         "email": "lscourtage@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "ROY",
+        "firstName": "Laurent",
+        "cabinet": "ROY CONSEIL",
+        "email": "laurent.roy@royconseil.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "ROUX",
+        "firstName": "Ludovic",
+        "cabinet": "LR CONSEILS COURTAGE",
+        "email": "ROUX-ludovic@live.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3564,72 +3564,6 @@
         "is_enabled": true
     },
     {
-        "lastName": "SEGALL",
-        "firstName": "Julie",
-        "cabinet": "REALYS CONSEIL",
-        "email": "jsegall@realysconseil.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "SCIANDRONE",
-        "firstName": "Jessica",
-        "cabinet": "JS2C",
-        "email": "j.sciandrone@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "SCHAETZEL",
-        "firstName": "Thomas",
-        "cabinet": "CAAPS",
-        "email": "contact@caaps.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "SILVENTE",
-        "firstName": "Sonia",
-        "cabinet": "VALORIS CONSEIL",
-        "email": "jsconseil@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "SILVENTE",
-        "firstName": "Julie",
-        "cabinet": "JS CONSEIL",
-        "email": "jsconseil@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "STRAINOVIC",
-        "firstName": "Dalibor",
-        "cabinet": "CABINET D'ARGUIN - PARTENARIAT CAGPR",
-        "email": "dali@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
         "lastName": "SOURBE",
         "firstName": "Bertrand",
         "cabinet": "ETUDE & COURTAGE",
@@ -3641,10 +3575,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "SICARD",
-        "firstName": "Stéphane",
-        "cabinet": "PREVIANCE CONSEIL",
-        "email": "matthieu@previance.fr",
+        "lastName": "SEGALL",
+        "firstName": "Julie",
+        "cabinet": "REALYS CONSEIL",
+        "email": "jsegall@realysconseil.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3663,10 +3597,54 @@
         "is_enabled": true
     },
     {
+        "lastName": "SILVENTE",
+        "firstName": "Sonia",
+        "cabinet": "VALORIS CONSEIL",
+        "email": "jsconseil@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
         "lastName": "STRAINOVIC",
         "firstName": "Dalibor",
         "cabinet": "CABINET D'ARGUIN",
         "email": "dali@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "SILVENTE",
+        "firstName": "Julie",
+        "cabinet": "JS CONSEIL",
+        "email": "jsconseil@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "SICARD",
+        "firstName": "Stéphane",
+        "cabinet": "PREVIANCE CONSEIL",
+        "email": "matthieu@previance.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "SCIANDRONE",
+        "firstName": "Jessica",
+        "cabinet": "JS2C",
+        "email": "j.sciandrone@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3685,10 +3663,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "TEMPEL",
-        "firstName": "Michel",
-        "cabinet": "CAPP CONSEIL",
-        "email": "micheltempel@yahoo.fr",
+        "lastName": "STRAINOVIC",
+        "firstName": "Dalibor",
+        "cabinet": "CABINET D'ARGUIN - PARTENARIAT CAGPR",
+        "email": "dali@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3707,10 +3685,21 @@
         "is_enabled": true
     },
     {
-        "lastName": "VELLUTINI",
-        "firstName": "Jean",
-        "cabinet": "François CLERIANCE",
-        "email": "vellutini@groupesofraco.com",
+        "lastName": "THIVILLIER",
+        "firstName": "Pierre",
+        "cabinet": "EXPERTICAL",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "TEMPEL",
+        "firstName": "Michel",
+        "cabinet": "CAPP CONSEIL",
+        "email": "micheltempel@yahoo.fr",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3729,32 +3718,32 @@
         "is_enabled": true
     },
     {
+        "lastName": "TRABAUD",
+        "firstName": "Alain",
+        "cabinet": "LABEL ASSURANCES",
+        "email": "contact@label-sante.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "VANDEWOORDE",
+        "firstName": "Catherine",
+        "cabinet": "C2PREM",
+        "email": "seriance@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
         "lastName": "TRINIAC DE PARADE",
         "firstName": "Aymar",
         "cabinet": "ASSURANCES TRINIAC ET ASSOCIES",
         "email": "aymar.triniac-de-parade@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "VERGNE",
-        "firstName": "Bruce",
-        "cabinet": "BV COURTAGE D'ASSURANCE",
-        "email": "vergnebruce@hotmail.fr",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "VERGNE",
-        "firstName": "Wided",
-        "cabinet": "VW COURTAGE D'ASSURANCE",
-        "email": "w.vergne@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3773,10 +3762,54 @@
         "is_enabled": true
     },
     {
-        "lastName": "VANDEWOORDE",
-        "firstName": "Catherine",
-        "cabinet": "C2PREM",
-        "email": "seriance@groupesofraco.com",
+        "lastName": "VELLA",
+        "firstName": "Laurent",
+        "cabinet": "PULSE COURTAGE",
+        "email": "laurent.vella@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "VERGNE",
+        "firstName": "Wided",
+        "cabinet": "VW COURTAGE D'ASSURANCE",
+        "email": "w.vergne@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "VELLUTINI",
+        "firstName": "Jean",
+        "cabinet": "François CLERIANCE",
+        "email": "vellutini@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "VERGNE",
+        "firstName": "Bruce",
+        "cabinet": "BV COURTAGE D'ASSURANCE",
+        "email": "vergnebruce@hotmail.fr",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "VETTER",
+        "firstName": "Michele",
+        "cabinet": "ASSURANCES ET STRATEGIE",
+        "email": "assurancesetstrategie@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3806,54 +3839,10 @@
         "is_enabled": true
     },
     {
-        "lastName": "THIVILLIER",
-        "firstName": "Pierre",
-        "cabinet": "EXPERTICAL",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "VELLA",
-        "firstName": "Laurent",
-        "cabinet": "PULSE COURTAGE",
-        "email": "laurent.vella@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "VINCENOT",
-        "firstName": "Frédéric",
-        "cabinet": "V2 CONSEIL COURTAGE",
-        "email": "rso-consult@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "VETTER",
-        "firstName": "Michele",
-        "cabinet": "ASSURANCES ET STRATEGIE",
-        "email": "assurancesetstrategie@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "TRABAUD",
-        "firstName": "Alain",
-        "cabinet": "LABEL ASSURANCES",
-        "email": "contact@label-sante.com",
+        "lastName": "VIVIER",
+        "firstName": "Julien",
+        "cabinet": "PRODIR",
+        "email": "seriance@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3864,28 +3853,6 @@
         "lastName": "VIVIER",
         "firstName": "Julien",
         "cabinet": "APS",
-        "email": "seriance@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "VIVIER",
-        "firstName": "Julien",
-        "cabinet": "SOFRACO EXPERTISES",
-        "email": "seriance@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "VIVIER",
-        "firstName": "Julien",
-        "cabinet": "PRODIR",
         "email": "seriance@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
@@ -3916,9 +3883,20 @@
         "is_enabled": true
     },
     {
+        "lastName": "VINCENOT",
+        "firstName": "Frédéric",
+        "cabinet": "V2 CONSEIL COURTAGE",
+        "email": "rso-consult@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
         "lastName": "VIVIER",
         "firstName": "Julien",
-        "cabinet": "MJ CONSEILS",
+        "cabinet": "SOFRACO EXPERTISES",
         "email": "seriance@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
@@ -3931,6 +3909,17 @@
         "firstName": "Yves",
         "cabinet": "C2A - B2P COURTAGE",
         "email": "yvincent.c2a@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "VIVIER",
+        "firstName": "Julien",
+        "cabinet": "MJ CONSEILS",
+        "email": "seriance@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -3962,7 +3951,7 @@
     {
         "lastName": "VIVIER",
         "firstName": "Julien",
-        "cabinet": "SERIANCE AXIA",
+        "cabinet": "SERIANCE | RACHAT LC CONSEIL",
         "email": "seriance@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
@@ -3984,17 +3973,6 @@
     {
         "lastName": "VIVIER",
         "firstName": "Julien",
-        "cabinet": "SERIANCE | RACHAT LC CONSEIL",
-        "email": "seriance@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "VIVIER",
-        "firstName": "Julien",
         "cabinet": "SERIANCE CONSEIL | EX CASSIUS",
         "email": "seriance@groupesofraco.com",
         "emailCopie": [],
@@ -4006,7 +3984,18 @@
     {
         "lastName": "VIVIER",
         "firstName": "Julien",
-        "cabinet": "SERIANCE CONSEIL",
+        "cabinet": "SERIANCE HCA",
+        "email": "seriance@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "VIVIER",
+        "firstName": "Julien",
+        "cabinet": "SERIANCE AXIA",
         "email": "seriance@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
@@ -4028,7 +4017,7 @@
     {
         "lastName": "VIVIER",
         "firstName": "Julien",
-        "cabinet": "SERIANCE HCA",
+        "cabinet": "SERIANCE CONSEIL",
         "email": "seriance@groupesofraco.com",
         "emailCopie": [],
         "phone": "",
@@ -4059,10 +4048,32 @@
         "is_enabled": true
     },
     {
+        "lastName": "WAGNER",
+        "firstName": "Philippe",
+        "cabinet": "W CONSULTANT",
+        "email": "w.consultant@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
         "lastName": "WALLET",
         "firstName": "Jimmy",
         "cabinet": "JWA CONSEILS & COURTAGE",
         "email": "jwaconseils@groupesofraco.com",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "WATHIER",
+        "firstName": "Emmanuelle",
+        "cabinet": "EMMANUELLE WATHIER",
+        "email": "",
         "emailCopie": [],
         "phone": "",
         "status": "Active",
@@ -4092,28 +4103,6 @@
         "is_enabled": true
     },
     {
-        "lastName": "WAGNER",
-        "firstName": "Philippe",
-        "cabinet": "W CONSULTANT",
-        "email": "w.consultant@groupesofraco.com",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
-        "lastName": "WATHIER",
-        "firstName": "Emmanuelle",
-        "cabinet": "EMMANUELLE WATHIER",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "courtier",
-        "is_enabled": true
-    },
-    {
         "lastName": "ZWERENZ",
         "firstName": "Marek",
         "cabinet": "MZ CONSEIL",
@@ -4122,6 +4111,17 @@
         "phone": "",
         "status": "Active",
         "role": "courtier",
+        "is_enabled": true
+    },
+    {
+        "lastName": "ALLOUACHE",
+        "firstName": "Nadia",
+        "cabinet": "ABH COURTAGE",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
         "is_enabled": true
     },
     {
@@ -4139,17 +4139,6 @@
         "lastName": "BARBERY",
         "firstName": "Valérie",
         "cabinet": "SERIANCE CONSEIL",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "AUGER",
-        "firstName": "Adrien",
-        "cabinet": "FINABANK CONSULTING GROUP",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4191,9 +4180,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "AOURIDI",
-        "firstName": "Mustapha",
-        "cabinet": "SELECTION PREVOYANCE COURTAGE",
+        "lastName": "BIANCHI",
+        "firstName": "Dorothée",
+        "cabinet": "EOS CONSEILS - MA COMMUNE MA SANTE",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4202,9 +4191,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "AFTE",
-        "firstName": "Jérôme",
-        "cabinet": "E2BIS CONSEILS",
+        "lastName": "AMMI",
+        "firstName": "Jean-Marie",
+        "cabinet": "AF CONSEIL",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4213,42 +4202,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "ALLOUACHE",
-        "firstName": "Nadia",
-        "cabinet": "ABH COURTAGE - MA COMMUNE MA SANTE",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "AY",
-        "firstName": "Ugur",
-        "cabinet": "S.R. CONSEIL",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "ALLOUACHE",
-        "firstName": "Nadia",
-        "cabinet": "ABH COURTAGE",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "BORRELLI",
-        "firstName": "Gilles",
-        "cabinet": "LABEL ASSURANCES",
+        "lastName": "BOISROUX",
+        "firstName": "Isabelle",
+        "cabinet": "BAUME COURTAGE - MA COMMUNE MA SANTE",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4268,31 +4224,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "BOSSE",
-        "firstName": "Johann",
-        "cabinet": "CABINET PHI PROTEC",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "BORY",
-        "firstName": "Alexandre",
-        "cabinet": "RSO CONSULT",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "BIANCHI",
-        "firstName": "Dorothée",
-        "cabinet": "EOS CONSEILS - MA COMMUNE MA SANTE",
+        "lastName": "BORRELLI",
+        "firstName": "Gilles",
+        "cabinet": "LABEL ASSURANCES",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4312,9 +4246,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "BOSSE",
-        "firstName": "Sébastien",
-        "cabinet": "APREM CONSEIL",
+        "lastName": "BORY",
+        "firstName": "Alexandre",
+        "cabinet": "RSO CONSULT",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4323,8 +4257,19 @@
         "is_enabled": true
     },
     {
-        "lastName": "BOURBON",
-        "firstName": "Pascale",
+        "lastName": "AFTE",
+        "firstName": "Jérôme",
+        "cabinet": "E2BIS CONSEILS",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "BOSSE",
+        "firstName": "Johann",
         "cabinet": "CABINET PHI PROTEC",
         "email": "",
         "emailCopie": [],
@@ -4345,6 +4290,28 @@
         "is_enabled": true
     },
     {
+        "lastName": "BOURBON",
+        "firstName": "Pascale",
+        "cabinet": "CABINET PHI PROTEC",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "BOSSE",
+        "firstName": "Sébastien",
+        "cabinet": "APREM CONSEIL",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
         "lastName": "BOYER",
         "firstName": "Frédéric",
         "cabinet": "GMPC",
@@ -4356,9 +4323,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "AMMI",
-        "firstName": "Jean-Marie",
-        "cabinet": "AF CONSEIL",
+        "lastName": "ALLOUACHE",
+        "firstName": "Nadia",
+        "cabinet": "ABH COURTAGE - MA COMMUNE MA SANTE",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4367,9 +4334,31 @@
         "is_enabled": true
     },
     {
-        "lastName": "BRANDILY",
-        "firstName": "Jordan",
-        "cabinet": "ALL IN ONE ASSURANCES - CO COURTAGE",
+        "lastName": "AUGER",
+        "firstName": "Adrien",
+        "cabinet": "FINABANK CONSULTING GROUP",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "AY",
+        "firstName": "Ugur",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "AOURIDI",
+        "firstName": "Mustapha",
+        "cabinet": "SELECTION PREVOYANCE COURTAGE",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4411,28 +4400,6 @@
         "is_enabled": true
     },
     {
-        "lastName": "BRIAND",
-        "firstName": "Elodie",
-        "cabinet": "FINABANK CONSULTING GROUP",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "CANDONI",
-        "firstName": "Kariman",
-        "cabinet": "S.R. CONSEIL",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
         "lastName": "CALLIER",
         "firstName": "Mandataire",
         "cabinet": "CABINET GAIA",
@@ -4455,20 +4422,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "CASADEMONT",
-        "firstName": "Richard",
-        "cabinet": "LABEL ASSURANCES",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "BOISROUX",
-        "firstName": "Isabelle",
-        "cabinet": "BAUME COURTAGE - MA COMMUNE MA SANTE",
+        "lastName": "CANDONI",
+        "firstName": "Kariman",
+        "cabinet": "S.R. CONSEIL",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4480,6 +4436,28 @@
         "lastName": "CASSAGNE",
         "firstName": "Julie",
         "cabinet": "EO2C SOLUTIONS VIE",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "CASADEMONT",
+        "firstName": "Richard",
+        "cabinet": "LABEL ASSURANCES",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "CAZAJUS",
+        "firstName": "Eric",
+        "cabinet": "GLOBALREM",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4510,9 +4488,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "CAZAJUS",
-        "firstName": "Eric",
-        "cabinet": "GLOBALREM",
+        "lastName": "CHAUVEROCHE",
+        "firstName": "Loïc",
+        "cabinet": "APC INVESTMENT",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4532,9 +4510,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "CHAUVEROCHE",
-        "firstName": "Loïc",
-        "cabinet": "APC INVESTMENT",
+        "lastName": "CLAVERIE",
+        "firstName": "Suzanne",
+        "cabinet": "CABINET PHI PROTEC",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4543,9 +4521,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "CLAVERIE",
-        "firstName": "Suzanne",
-        "cabinet": "CABINET PHI PROTEC",
+        "lastName": "BRIAND",
+        "firstName": "Elodie",
+        "cabinet": "FINABANK CONSULTING GROUP",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4576,6 +4554,17 @@
         "is_enabled": true
     },
     {
+        "lastName": "DALBAVIE",
+        "firstName": "Yannick",
+        "cabinet": "ALBIE CONSEILS ET COURTAGE EN ASSURANCE",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
         "lastName": "D'AGARO",
         "firstName": "Eric",
         "cabinet": "SOVITAE",
@@ -4587,9 +4576,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "DENIS",
-        "firstName": "Géraldine",
-        "cabinet": "A2LJ Conseil",
+        "lastName": "BRANDILY",
+        "firstName": "Jordan",
+        "cabinet": "ALL IN ONE ASSURANCES - CO COURTAGE",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4609,31 +4598,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "DOUBRERE",
-        "firstName": "Mandataire",
-        "cabinet": "GLOBALREM",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "DIEUX",
-        "firstName": "Carine",
-        "cabinet": "S.R. CONSEIL",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "DUVIGNEAU-LOBRE",
-        "firstName": "Nicolas",
-        "cabinet": "GROUPE SOFRACO",
+        "lastName": "DENIS",
+        "firstName": "Géraldine",
+        "cabinet": "A2LJ Conseil",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4664,9 +4631,20 @@
         "is_enabled": true
     },
     {
-        "lastName": "DALBAVIE",
-        "firstName": "Yannick",
-        "cabinet": "ALBIE CONSEILS ET COURTAGE EN ASSURANCE",
+        "lastName": "DUVIGNEAU-LOBRE",
+        "firstName": "Nicolas",
+        "cabinet": "GROUPE SOFRACO",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "DOUBRERE",
+        "firstName": "Mandataire",
+        "cabinet": "GLOBALREM",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4686,17 +4664,6 @@
         "is_enabled": true
     },
     {
-        "lastName": "ETAVE",
-        "firstName": "Allan",
-        "cabinet": "AMSC2",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
         "lastName": "FAUTHOUX",
         "firstName": "Frédéric",
         "cabinet": "GLOBALREM",
@@ -4708,9 +4675,31 @@
         "is_enabled": true
     },
     {
+        "lastName": "ETAVE",
+        "firstName": "Allan",
+        "cabinet": "AMSC2",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
         "lastName": "FELIX",
         "firstName": "Christophe",
         "cabinet": "LABEL ASSURANCES",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "DIEUX",
+        "firstName": "Carine",
+        "cabinet": "S.R. CONSEIL",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4741,31 +4730,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "FERLIN",
-        "firstName": "Estelle",
-        "cabinet": "LABEL ASSURANCES",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
         "lastName": "FOUCHER",
         "firstName": "Magali",
         "cabinet": "SERIANCE CONSEIL",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "FRACH",
-        "firstName": "Olivier",
-        "cabinet": "JAURES INVEST",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4785,6 +4752,17 @@
         "is_enabled": true
     },
     {
+        "lastName": "FRACH",
+        "firstName": "Olivier",
+        "cabinet": "JAURES INVEST",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
         "lastName": "FRANCOIS",
         "firstName": "Gérard",
         "cabinet": "AR2P",
@@ -4796,9 +4774,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "FUCHS",
-        "firstName": "Véronique",
-        "cabinet": "LAPS",
+        "lastName": "FERLIN",
+        "firstName": "Estelle",
+        "cabinet": "LABEL ASSURANCES",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4807,9 +4785,20 @@
         "is_enabled": true
     },
     {
-        "lastName": "GALLIX",
-        "firstName": "Jérôme",
-        "cabinet": "APREM CONSEIL",
+        "lastName": "GARCIA",
+        "firstName": "Caroline",
+        "cabinet": "du cabinet INFINEO ASSURANCES",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "FUCHS",
+        "firstName": "Véronique",
+        "cabinet": "LAPS",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4840,31 +4829,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "GENDEK",
-        "firstName": "Jocelyn",
-        "cabinet": "REPPI",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "GARCIA",
-        "firstName": "Caroline",
-        "cabinet": "du cabinet INFINEO ASSURANCES",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "GENOT",
-        "firstName": "Betty",
-        "cabinet": "GLOBALREM",
+        "lastName": "GALLIX",
+        "firstName": "Jérôme",
+        "cabinet": "APREM CONSEIL",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4884,31 +4851,20 @@
         "is_enabled": true
     },
     {
+        "lastName": "GENOT",
+        "firstName": "Betty",
+        "cabinet": "GLOBALREM",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
         "lastName": "GOMES",
         "firstName": "Johnny",
         "cabinet": "GMPC",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "HEMIMED",
-        "firstName": "Salima",
-        "cabinet": "S.R. CONSEIL",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "HELMSTETTER",
-        "firstName": "Francis",
-        "cabinet": "FINABANK CONSULTING GROUP",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4928,9 +4884,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "JACOB",
-        "firstName": "Raphael",
-        "cabinet": "S.R. CONSEIL",
+        "lastName": "GUYOT",
+        "firstName": "Aurélien",
+        "cabinet": "LM CONSILIUM",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4950,9 +4906,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "GUYOT",
-        "firstName": "Aurélien",
-        "cabinet": "LM CONSILIUM",
+        "lastName": "HELMSTETTER",
+        "firstName": "Francis",
+        "cabinet": "FINABANK CONSULTING GROUP",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -4961,8 +4917,30 @@
         "is_enabled": true
     },
     {
-        "lastName": "JOLION",
-        "firstName": "Emilie",
+        "lastName": "HEMIMED",
+        "firstName": "Salima",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "GENDEK",
+        "firstName": "Jocelyn",
+        "cabinet": "REPPI",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "JACOB",
+        "firstName": "Raphael",
         "cabinet": "S.R. CONSEIL",
         "email": "",
         "emailCopie": [],
@@ -4983,9 +4961,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "JUSSIERE",
-        "firstName": "Hervé",
-        "cabinet": "RSO CONSULT",
+        "lastName": "JOLION",
+        "firstName": "Emilie",
+        "cabinet": "S.R. CONSEIL",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -5005,9 +4983,42 @@
         "is_enabled": true
     },
     {
+        "lastName": "JOUTEAU",
+        "firstName": "Karine",
+        "cabinet": "LABEL ASSURANCES",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "JUSSIERE",
+        "firstName": "Hervé",
+        "cabinet": "RSO CONSULT",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
         "lastName": "KUPPER",
         "firstName": "Patrick",
         "cabinet": "AUDIT & VOUS",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "LACOMBRADE",
+        "firstName": "Alexandre",
+        "cabinet": "CAP CONSEIL",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -5027,9 +5038,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "JOUTEAU",
-        "firstName": "Karine",
-        "cabinet": "LABEL ASSURANCES",
+        "lastName": "LAFFAY",
+        "firstName": "Mathieu",
+        "cabinet": "MA COMMUNE MA SANTE - GMPC",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -5038,8 +5049,19 @@
         "is_enabled": true
     },
     {
-        "lastName": "LACOMBRADE",
-        "firstName": "Alexandre",
+        "lastName": "LAFFAY",
+        "firstName": "Mathieu",
+        "cabinet": "GMPC",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "LAM",
+        "firstName": "Minh-Giang",
         "cabinet": "CAP CONSEIL",
         "email": "",
         "emailCopie": [],
@@ -5060,17 +5082,6 @@
         "is_enabled": true
     },
     {
-        "lastName": "LE PORS",
-        "firstName": "Sandra",
-        "cabinet": "LABEL ASSURANCES",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
         "lastName": "LANDON",
         "firstName": "Arthur",
         "cabinet": "STAR APS",
@@ -5082,8 +5093,19 @@
         "is_enabled": true
     },
     {
-        "lastName": "LEBAILLIF",
-        "firstName": "Adrien",
+        "lastName": "LAURENDON",
+        "firstName": "Nathalie",
+        "cabinet": "GMPC",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "LE PORS",
+        "firstName": "Sandra",
         "cabinet": "LABEL ASSURANCES",
         "email": "",
         "emailCopie": [],
@@ -5104,42 +5126,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "LAURENDON",
-        "firstName": "Nathalie",
-        "cabinet": "GMPC",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "LAFFAY",
-        "firstName": "Mathieu",
-        "cabinet": "MA COMMUNE MA SANTE - GMPC",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "LE PORS",
-        "firstName": "Sandra",
-        "cabinet": "Mandataire Alain TRABAUD",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "LAFFAY",
-        "firstName": "Mathieu",
-        "cabinet": "GMPC",
+        "lastName": "LESCHER",
+        "firstName": "Peire",
+        "cabinet": "EO2C SOLUTIONS-VIE",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -5159,6 +5148,17 @@
         "is_enabled": true
     },
     {
+        "lastName": "LE PORS",
+        "firstName": "Sandra",
+        "cabinet": "Mandataire Alain TRABAUD",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
         "lastName": "LEYDIER",
         "firstName": "Loïc",
         "cabinet": "S.R. CONSEIL",
@@ -5170,9 +5170,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "LESCHER",
-        "firstName": "Peire",
-        "cabinet": "EO2C SOLUTIONS-VIE",
+        "lastName": "LEBAILLIF",
+        "firstName": "Adrien",
+        "cabinet": "LABEL ASSURANCES",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -5184,17 +5184,6 @@
         "lastName": "MACHET",
         "firstName": "Aurore",
         "cabinet": "CABINET PHI PROTEC",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "LAM",
-        "firstName": "Minh-Giang",
-        "cabinet": "CAP CONSEIL",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -5225,28 +5214,6 @@
         "is_enabled": true
     },
     {
-        "lastName": "MANIC",
-        "firstName": "Sandra",
-        "cabinet": "CABINET PHI PROTEC",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "MILONET",
-        "firstName": "Stéphane",
-        "cabinet": "JAURES INVEST",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
         "lastName": "MBALOULA",
         "firstName": "Samba",
         "cabinet": "GMPC",
@@ -5258,53 +5225,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "MADEC",
-        "firstName": "Hervé",
-        "cabinet": "APREM CONSEIL",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "MASSIMELLI",
-        "firstName": "Nicolas",
-        "cabinet": "S.R. CONSEIL",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
         "lastName": "MICHELAND",
         "firstName": "Jocelyne",
         "cabinet": "ALPES PROTECTION SOCIALE",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "MICHAUD",
-        "firstName": "Didier",
-        "cabinet": "PERSPECTIVES",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "MOUNIER",
-        "firstName": "Anne-Sophie",
-        "cabinet": "COURTAGE ASSURANCE CONSEIL 43",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -5335,6 +5258,28 @@
         "is_enabled": true
     },
     {
+        "lastName": "MILONET",
+        "firstName": "Stéphane",
+        "cabinet": "JAURES INVEST",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "MOUNIER",
+        "firstName": "Anne-Sophie",
+        "cabinet": "COURTAGE ASSURANCE CONSEIL 43",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
         "lastName": "NEIL",
         "firstName": "Gérald",
         "cabinet": "AMSC2",
@@ -5346,9 +5291,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "OUZOUNIAN",
-        "firstName": "Maxime",
-        "cabinet": "de INFINEO ASSURANCES",
+        "lastName": "MOUTIER",
+        "firstName": "Rodolphe",
+        "cabinet": "AMSC2",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -5357,8 +5302,41 @@
         "is_enabled": true
     },
     {
-        "lastName": "PENON",
-        "firstName": "Patrice",
+        "lastName": "NICOT",
+        "firstName": "Mickael",
+        "cabinet": "C2R",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "MANIC",
+        "firstName": "Sandra",
+        "cabinet": "CABINET PHI PROTEC",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "MADEC",
+        "firstName": "Hervé",
+        "cabinet": "APREM CONSEIL",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "MASSIMELLI",
+        "firstName": "Nicolas",
         "cabinet": "S.R. CONSEIL",
         "email": "",
         "emailCopie": [],
@@ -5379,9 +5357,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "PELETER",
-        "firstName": "Marie",
-        "cabinet": "ABH COURTAGE - MA COMMUNE MA SANTE",
+        "lastName": "MICHAUD",
+        "firstName": "Didier",
+        "cabinet": "PERSPECTIVES",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -5390,9 +5368,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "PELABON",
-        "firstName": "Jean-Marc",
-        "cabinet": "S.R. CONSEIL",
+        "lastName": "OLLER",
+        "firstName": "Françoise",
+        "cabinet": "MBPA",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -5401,9 +5379,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "MOUTIER",
-        "firstName": "Rodolphe",
-        "cabinet": "AMSC2",
+        "lastName": "OUZOUNIAN",
+        "firstName": "Maxime",
+        "cabinet": "de INFINEO ASSURANCES",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -5434,50 +5412,6 @@
         "is_enabled": true
     },
     {
-        "lastName": "POUNDALL",
-        "firstName": "Stéphane",
-        "cabinet": "G2C VIE",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "REINHART",
-        "firstName": "Guillaume",
-        "cabinet": "E2BIS CONSEILS",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "OLLER",
-        "firstName": "Françoise",
-        "cabinet": "MBPA",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "NICOT",
-        "firstName": "Mickael",
-        "cabinet": "C2R",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
         "lastName": "PIOT",
         "firstName": "Laurent",
         "cabinet": "AB2C",
@@ -5489,9 +5423,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "PRORIOL",
-        "firstName": "Philippe",
-        "cabinet": "JAURES INVEST",
+        "lastName": "RELAIX",
+        "firstName": "Swan",
+        "cabinet": "CAPPA COURTAGE",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -5500,9 +5434,20 @@
         "is_enabled": true
     },
     {
-        "lastName": "RELAIX",
-        "firstName": "Swan",
-        "cabinet": "CAPPA COURTAGE",
+        "lastName": "RIPOCHE",
+        "firstName": "Séverine",
+        "cabinet": "NC COURTAGE",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "POUNDALL",
+        "firstName": "Stéphane",
+        "cabinet": "G2C VIE",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -5533,9 +5478,53 @@
         "is_enabled": true
     },
     {
-        "lastName": "ROBY",
-        "firstName": "Jean-Luc",
-        "cabinet": "GROUPE SOFRACO",
+        "lastName": "REINHART",
+        "firstName": "Guillaume",
+        "cabinet": "E2BIS CONSEILS",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "PENON",
+        "firstName": "Patrice",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "PELABON",
+        "firstName": "Jean-Marc",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "PRORIOL",
+        "firstName": "Philippe",
+        "cabinet": "JAURES INVEST",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "PELETER",
+        "firstName": "Marie",
+        "cabinet": "ABH COURTAGE - MA COMMUNE MA SANTE",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -5555,31 +5544,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "RIPOCHE",
-        "firstName": "Séverine",
-        "cabinet": "NC COURTAGE",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "ROLLAND",
+        "lastName": "ROBY",
         "firstName": "Jean-Luc",
-        "cabinet": "CABINET THIERRY CHAMARET",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "ROSA",
-        "firstName": "Thierry",
-        "cabinet": "A2LJ Conseil",
+        "cabinet": "GROUPE SOFRACO",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -5591,6 +5558,17 @@
         "lastName": "ROLLAND",
         "firstName": "Cathy",
         "cabinet": "LABEL ASSURANCES",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "SALEMBIER",
+        "firstName": "François",
+        "cabinet": "LAPS",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -5632,20 +5610,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "SALEMBIER",
-        "firstName": "François",
-        "cabinet": "LAPS",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "SARRAZIN",
-        "firstName": "Serge",
-        "cabinet": "INGELS COURTAGE CONSEIL",
+        "lastName": "ROLLAND",
+        "firstName": "Jean-Luc",
+        "cabinet": "CABINET THIERRY CHAMARET",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -5665,9 +5632,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "THIVILLIER",
-        "firstName": "Pierre",
-        "cabinet": "S.R. CONSEIL",
+        "lastName": "ROSA",
+        "firstName": "Thierry",
+        "cabinet": "A2LJ Conseil",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -5676,31 +5643,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "TOUBOUL",
-        "firstName": "Bernard",
-        "cabinet": "S.R. CONSEIL",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "VEYSSIERE",
-        "firstName": "Severine",
-        "cabinet": "SERIANCE CONSEIL",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "SOL",
-        "firstName": "Lionel",
-        "cabinet": "RSO CONSULT",
+        "lastName": "SARRAZIN",
+        "firstName": "Serge",
+        "cabinet": "INGELS COURTAGE CONSEIL",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -5720,9 +5665,9 @@
         "is_enabled": true
     },
     {
-        "lastName": "VERGIER",
-        "firstName": "Mathieu",
-        "cabinet": "S.R. CONSEIL",
+        "lastName": "SOL",
+        "firstName": "Lionel",
+        "cabinet": "RSO CONSULT",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -5733,6 +5678,17 @@
     {
         "lastName": "STEINMETZ",
         "firstName": "Frédéric",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "THIVILLIER",
+        "firstName": "Pierre",
         "cabinet": "S.R. CONSEIL",
         "email": "",
         "emailCopie": [],
@@ -5753,19 +5709,8 @@
         "is_enabled": true
     },
     {
-        "lastName": "VIAL-PAILLER",
-        "firstName": "Nicolas",
-        "cabinet": "APC INVESTMENT",
-        "email": "",
-        "emailCopie": [],
-        "phone": "",
-        "status": "Active",
-        "role": "mandataire",
-        "is_enabled": true
-    },
-    {
-        "lastName": "YVORA",
-        "firstName": "Audrey",
+        "lastName": "TOUBOUL",
+        "firstName": "Bernard",
         "cabinet": "S.R. CONSEIL",
         "email": "",
         "emailCopie": [],
@@ -5786,9 +5731,31 @@
         "is_enabled": true
     },
     {
-        "lastName": "ZANINETTI",
-        "firstName": "Jean-Fabrice",
-        "cabinet": "AUDIT & VOUS",
+        "lastName": "VERGIER",
+        "firstName": "Mathieu",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "VEYSSIERE",
+        "firstName": "Severine",
+        "cabinet": "SERIANCE CONSEIL",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "VIAL-PAILLER",
+        "firstName": "Nicolas",
+        "cabinet": "APC INVESTMENT",
         "email": "",
         "emailCopie": [],
         "phone": "",
@@ -5808,9 +5775,31 @@
         "is_enabled": true
     },
     {
+        "lastName": "YVORA",
+        "firstName": "Audrey",
+        "cabinet": "S.R. CONSEIL",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
         "lastName": "ZENOUDA",
         "firstName": "Audrey",
         "cabinet": "EO2C SOLUTIONS-VIE",
+        "email": "",
+        "emailCopie": [],
+        "phone": "",
+        "status": "Active",
+        "role": "mandataire",
+        "is_enabled": true
+    },
+    {
+        "lastName": "ZANINETTI",
+        "firstName": "Jean-Fabrice",
+        "cabinet": "AUDIT & VOUS",
         "email": "",
         "emailCopie": [],
         "phone": "",
