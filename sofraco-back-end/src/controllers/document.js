@@ -304,9 +304,6 @@ const setOCRDocument = async (companyName, documentId, filePath) => {
             case 'CARDIF':
                 ocr = await documentCARDIF.readExcelCARDIF(filePath);
                 break;
-            case 'CBP FRANCE': //LOURMEL
-                ocr = await documentLOURMEL.readExcelLOURMEL(filePath);
-                break;
             case 'LOURMEL': //LOURMEL
                 ocr = await documentLOURMEL.readExcelLOURMEL(filePath);
                 break;

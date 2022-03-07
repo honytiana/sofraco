@@ -89,9 +89,6 @@ const getOCRInfos = async () => {
                 case 'CARDIF':
                     infos.push(excelMasterCARDIF.getOCRCARDIF(ocr));
                     break;
-                case 'CBP FRANCE': //LOURMEL
-                    infos.push(excelMasterLOURMEL.getOCRLOURMEL(ocr));
-                    break;
                 case 'LOURMEL': //LOURMEL
                     infos.push(excelMasterLOURMEL.getOCRLOURMEL(ocr));
                     break;

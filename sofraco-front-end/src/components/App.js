@@ -115,7 +115,7 @@ class App extends Component {
         {
           (localStorage.getItem('user') === null) ?
             <Access /> :
-            <div>
+            <div style={{ backgroundColor: '#FFF' }}>
               <Navbar token={this.state.token} />
               <CContainer className="sofraco-root" style={{ minHeight: window.innerHeight - 50 }} >
                 <RouteComponent token={this.state.token} />

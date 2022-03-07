@@ -8,11 +8,11 @@
 }
 
 .sofraco-dropdown-menu {
-    text-align: center;
-    background-color: #9d8b80;
+    text-align: center !important;
+    background-color: #9d8b80 !important;
 }
 
 .sofraco-dropdown-item:hover {
-    color: inherit;
-    background-color: inherit;
+    color: inherit !important;
+    background-color: inherit !important;
 }
