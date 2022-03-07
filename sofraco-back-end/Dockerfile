@@ -1,4 +1,4 @@
-FROM node:16.10.0
+FROM node:16.13.2
 
 RUN apt-get update -y
 RUN apt-get install tesseract-ocr -y
@@ -8,10 +8,10 @@ RUN apt-get install python -y
 RUN curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py
 RUN python get-pip.py
 
-RUN pip install --upgrade pip
-RUN python -m pip install opencv-python==3.4.0.12
-RUN pip install torch==1.0.0
-RUN pip install easyocr
+# RUN pip install --upgrade pip
+# RUN python -m pip install opencv-python==3.4.0.12
+# RUN pip install torch==1.0.0
+# RUN pip install easyocr
 
 WORKDIR /backend    
 COPY package*.json /backend/
