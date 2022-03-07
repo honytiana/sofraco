@@ -169,22 +169,26 @@ const getOCRInfos = async () => {
 };
 
 const readExcelMasterContent = async (file) => {
-    console.log(`${new Date()} DEBUT RECUPERATION CONTENU EXCEL MASTER`);
-    const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
-    let sheetsInformations = [];
-    for (let worksheet of worksheets) {
-        let sheet = { name: worksheet.name, content: [] };
-        worksheet.eachRow((row, rowNumber) => {
-            let rowValues = [];
-            row.eachCell((cell, colNumber) => {
-                rowValues.push({ address: cell.address, value: cell.value });
+    try {
+        console.log(`${new Date()} DEBUT RECUPERATION CONTENU EXCEL MASTER`);
+        const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
+        let sheetsInformations = [];
+        for (let worksheet of worksheets) {
+            let sheet = { name: worksheet.name, content: [] };
+            worksheet.eachRow((row, rowNumber) => {
+                let rowValues = [];
+                row.eachCell((cell, colNumber) => {
+                    rowValues.push({ address: cell.address, value: cell.value });
+                });
+                sheet.content.push(rowValues);
             });
-            sheet.content.push(rowValues);
-        });
-        sheetsInformations.push(sheet);
+            sheetsInformations.push(sheet);
+        }
+        console.log(`${new Date()} FIN RECUPERATION CONTENU EXCEL MASTER`);
+        return sheetsInformations;
+    } catch (err) {
+        throw err;
     }
-    console.log(`${new Date()} FIN RECUPERATION CONTENU EXCEL MASTER`);
-    return sheetsInformations;
 };
 
 const generateExcelMaster = async (ocrInfos) => {

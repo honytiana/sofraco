@@ -9,16 +9,33 @@ exports.checkExcelFileAndGetWorksheets = async (file) => {
         let filePath = file;
         const fileName = fileService.getFileNameWithoutExtension(filePath);
         const extension = fileService.getFileExtension(filePath);
-        if (extension.toUpperCase() === 'XLS' || extension.toUpperCase() === 'CSV') {
+        if (extension.toUpperCase() === 'XLS') {
+            const workbook = new ExcelJS.Workbook();
             let originalFile = XLSX.readFile(filePath);
             filePath = path.join(__dirname, '..', '..', '..', 'documents', 'uploaded', `${fileName}.xlsx`);
             XLSX.writeFile(originalFile, filePath);
+            const finalFile = fs.readFileSync(filePath);
+            await workbook.xlsx.load(finalFile);
+            const worksheets = workbook.worksheets;
+            return worksheets;
+        } else if (extension.toUpperCase() === 'CSV') {
+            const workbook = new ExcelJS.Workbook();
+            const worksheet = await workbook.csv.readFile(filePath, {
+                parserOptions: {
+                    delimiter: ';',
+                    encoding: 'latin1'
+                }
+            });
+            const worksheets = [worksheet];
+            return worksheets;
+        } else if (extension.toUpperCase() === 'XLSX') {
+            const workbook = new ExcelJS.Workbook();
+            const finalFile = fs.readFileSync(filePath);
+            await workbook.xlsx.load(finalFile);
+            const worksheets = workbook.worksheets;
+            return worksheets;
         }
-        const workbook = new ExcelJS.Workbook();
-        const finalFile = fs.readFileSync(filePath);
-        await workbook.xlsx.load(finalFile);
-        const worksheets = workbook.worksheets;
-        return worksheets;
+        
     } catch (err) {
         throw err;
     }
