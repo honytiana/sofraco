@@ -174,6 +174,7 @@ class Access extends Component {
                                         type={this.state.showPass ? 'text' : 'password'}
                                         id="sofraco-password-pass"
                                         name="sofraco-password"
+                                        placeholder="Mot de passe"
                                         autoComplete="current-password"
                                         className="sofraco-input"
                                         defaultValue={this.state.valuePass}
