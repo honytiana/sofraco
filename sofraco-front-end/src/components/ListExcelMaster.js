@@ -12,7 +12,11 @@ import {
     CCollapse,
     CCardBody,
     CListGroup,
-    CListGroupItem
+    CListGroupItem,
+    CModal,
+    CModalHeader,
+    CModalBody,
+    CModalFooter
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
@@ -23,6 +27,7 @@ import '../styles/ListExcelMaster.css';
 import config from '../config.json';
 import closedFolder from '../assets/closed_folder.png';
 import filesUtil from '../utils/filesUtil';
+import ExcelMaster from './ExcelMaster';
 
 class ListExcelMaster extends Component {
     constructor(props) {
@@ -49,6 +54,7 @@ class ListExcelMaster extends Component {
         this.toggleYear = this.toggleYear.bind(this);
         this.toggleMonth = this.toggleMonth.bind(this);
         this.onDownloadExcelMaster = this.onDownloadExcelMaster.bind(this);
+        this.onActivateEditExcelMaster = this.onActivateEditExcelMaster.bind(this);
     }
 
     componentDidMount() {
@@ -257,6 +263,39 @@ class ListExcelMaster extends Component {
             });
     }
 
+    onActivateEditExcelMaster(excel) {
+        const id = excel._id;
+        const fileName = filesUtil.getFileName(excel.path);
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/excelMaster/xlsx/${id}`, {
+            headers: {
+                'Application': 'vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Authorization': `Bearer ${this.props.token}`
+            },
+            responseType: 'blob'
+        })
+            .then((res) => {
+                const url = window.URL.createObjectURL(new Blob([res.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', `${fileName}.xlsx`);
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                setTimeout(() => {
+                    this.setState({
+                        toast: false,
+                        messageToast: {}
+                    });
+                }, 6000);
+            });
+
+    }
+
     render() {
         return (
             <div>
@@ -266,14 +305,13 @@ class ListExcelMaster extends Component {
                             return (
                                 <CCard key={`excelMastercard_${index}`} className="sofraco-card-archive" >
                                     <CCardHeader key={`excelMastercardheader_${index}`}>
-                                        <CButton
+                                        <CIcon
                                             key={`excelMasterbtn_${index}`}
-                                            color=""
+                                            className={'sofraco-arrow-em'}
+                                            size='sm'
                                             onClick={(e) => this.toggleYear(e, index)}
-                                            className="sofraco-btn-collapse"
-                                        >
-                                            <CIcon icon={this.state.detailsYear.includes(index) ? icon.cilArrowTop : icon.cilArrowBottom} />
-                                        </CButton><CImg src={closedFolder} fluid width={20} />{excelMaster.year}
+                                            icon={this.state.detailsYear.includes(index) ? icon.cilArrowTop : icon.cilArrowBottom} />
+                                        <CImg src={closedFolder} fluid width={20} />{excelMaster.year}
                                     </CCardHeader>
                                     <CCollapse
                                         key={`excelMastercollapse_${index}`}
@@ -285,14 +323,12 @@ class ListExcelMaster extends Component {
                                                     ex.excelMaster.length > 0 && (
                                                         <CCard key={`excard_${i}`} className="sofraco-card-archive">
                                                             <CCardHeader key={`excardheader_${i}`}>
-                                                                <CButton
-                                                                    key={`exbtn_${i}`}
-                                                                    color=""
-                                                                    onClick={(e) => this.toggleMonth(e, i)}
-                                                                    className="sofraco-btn-collapse"
-                                                                >
-                                                                    <CIcon icon={this.state.detailsYear.includes(index) ? icon.cilArrowTop : icon.cilArrowBottom} />
-                                                                </CButton><CImg src={closedFolder} fluid width={20} />{ex.month.month}
+                                                                <CIcon
+                                                                    key={`excelMasterbtn_${index}`}
+                                                                    className={'sofraco-arrow-em'}
+                                                                    size='sm'
+                                                                    onClick={(e) => this.toggleMonth(e, index)}
+                                                                    icon={this.state.detailsMonth.includes(index) ? icon.cilArrowTop : icon.cilArrowBottom} /><CImg src={closedFolder} fluid width={20} />{ex.month.month}
                                                             </CCardHeader>
                                                             <CCollapse
                                                                 key={`excollapse_${i}`}
@@ -303,10 +339,47 @@ class ListExcelMaster extends Component {
                                                                         {ex.excelMaster.map((e, j) => {
                                                                             return (
                                                                                 <div key={`${j}_devcontentdoc`}>
-                                                                                    <CListGroupItem key={`${j}_listgroupitemdoc`}>{filesUtil.getFileName(e.path)} <CButton key={`${j}_btdoc`} className="sofraco-button-download-excel" onClick={() => { this.onDownloadExcelMaster(e); }}>
-                                                                                        <CIcon icon={icon.cilCloudDownload} />
-                                                                                    </CButton></CListGroupItem>
-
+                                                                                    <CListGroupItem key={`${j}_listgroupitemdoc`}>{filesUtil.getFileName(e.path)}
+                                                                                        <CIcon
+                                                                                            key={`${j}_iconedit`}
+                                                                                            className={'sofraco-download-em'}
+                                                                                            size='sm'
+                                                                                            onClick={() => { this.toggleDetails(e._id) }}
+                                                                                            icon={icon.cilPencil} />
+                                                                                        <CIcon
+                                                                                            key={`${j}_icondown`}
+                                                                                            className={'sofraco-download-em'}
+                                                                                            size='sm'
+                                                                                            onClick={() => { this.onDownloadExcelMaster(e) }}
+                                                                                            icon={icon.cilCloudDownload} />
+                                                                                        <CModal
+                                                                                            key={`emmodal${e._id}`}
+                                                                                            show={this.state.details.includes(e._id)}
+                                                                                            onClose={() => { this.toggleDetails(e._id) }}
+                                                                                            centered={true}
+                                                                                            className="sofraco-modal-excelMaster"
+                                                                                        >
+                                                                                            <CModalHeader
+                                                                                                key={`emmodalHeader${e._id}`}
+                                                                                                closeButton>{filesUtil.getFileName(e.path)}</CModalHeader>
+                                                                                            <CModalBody
+                                                                                                key={`emmodalBody${e._id}`}
+                                                                                                className={'sofraco-em-modal-body'}>
+                                                                                                <ExcelMaster
+                                                                                                    excelMaster={e._id}
+                                                                                                    key={`em${e._id}`}
+                                                                                                    token={this.state.token}
+                                                                                                />
+                                                                                            </CModalBody>
+                                                                                            <CModalFooter key={`emmodalFooter${e._id}`}>
+                                                                                                <CButton
+                                                                                                    key={`em${e._id}`}
+                                                                                                    color="secondary"
+                                                                                                    onClick={() => { this.toggleDetails(e._id) }}
+                                                                                                >Annuler</CButton>
+                                                                                            </CModalFooter>
+                                                                                        </CModal>
+                                                                                    </CListGroupItem>
                                                                                 </div>
                                                                             )
                                                                         })}

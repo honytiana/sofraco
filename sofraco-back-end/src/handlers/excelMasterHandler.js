@@ -11,6 +11,7 @@ class ExcelMasterHandler {
         excelMaster.create_date = Date.now();
         excelMaster.path = data.path;
         excelMaster.type = data.type;
+        excelMaster.content = data.content;
         excelMaster.is_enabled = true;
         excelMaster.save();
         return excelMaster;

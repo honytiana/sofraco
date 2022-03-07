@@ -16,3 +16,17 @@
     background-color: #ed7102;
     text-align: center;
 }
+
+.sofraco-download-em, .sofraco-arrow-em {
+    width: 20px;
+    cursor: pointer;
+    color: #9d8b80 !important;
+}
+
+.sofraco-em-modal-body {
+    overflow: auto;
+}
+
+.sofraco-modal-excelMaster .modal-dialog {
+    max-width: 100% !important;
+}

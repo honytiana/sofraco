@@ -8,8 +8,7 @@ const excelMasterService = require('../services/excelMaster/excelMasterManagemen
 
 exports.createExcelMaster = async (req, res) => {
     try {
-        const authorization = req.headers.authorization;
-        const result = await excelMasterService.create(authorization);
+        const result = await excelMasterService.create();
         if (result.excelMasters && result.excelsMastersZipped && result.singleZip && result.message) {
             for (let excelMaster of result.excelMasters) {
                 const ems = await excelMasterHandler.createExcelMaster(excelMaster);
@@ -36,7 +35,7 @@ exports.getExcelMaster = async (req, res) => {
     } catch (err) {
         res.status(400).json({ err });
     }
-}
+};
 
 exports.getExcelMasters = async (req, res) => {
     console.log('get excel masters');
@@ -46,7 +45,7 @@ exports.getExcelMasters = async (req, res) => {
     } catch (err) {
         res.status(400).json({ err });
     }
-}
+};
 
 exports.getExcelMastersByCourtier = async (req, res) => {
     console.log('get excel masters by courtier');
@@ -56,7 +55,7 @@ exports.getExcelMastersByCourtier = async (req, res) => {
     } catch (err) {
         res.status(400).json({ err });
     }
-}
+};
 
 exports.getExcelMastersByYearMonth = async (req, res) => {
     console.log('get excelMaster by year and month');
@@ -68,7 +67,7 @@ exports.getExcelMastersByYearMonth = async (req, res) => {
     } catch (err) {
         res.status(400).json({ err });
     }
-}
+};
 
 exports.getExcelMastersByYearMonthV2 = async (req, res) => {
     console.log('get excelMaster by year and month V2');
@@ -105,7 +104,7 @@ exports.getExcelMastersByYearMonthV2 = async (req, res) => {
     } catch (err) {
         res.status(400).json({ err });
     }
-}
+};
 
 exports.getExcelMastersCourtierByYearMonth = async (req, res) => {
     console.log('get excelMaster of courtier by year and month');
@@ -119,7 +118,7 @@ exports.getExcelMastersCourtierByYearMonth = async (req, res) => {
     } catch (err) {
         res.status(400).json({ err });
     }
-}
+};
 
 exports.getExcelMastersZip = async (req, res) => {
     console.log('get excel masters zip');
@@ -134,7 +133,7 @@ exports.getExcelMastersZip = async (req, res) => {
     } catch (err) {
         res.status(400).json({ err });
     }
-}
+};
 
 exports.getExcelMasterXlsx = async (req, res) => {
     console.log('get excel master excel');
@@ -149,7 +148,7 @@ exports.getExcelMasterXlsx = async (req, res) => {
     } catch (err) {
         res.status(400).json({ err });
     }
-}
+};
 
 exports.getExcelMasterZip = async (req, res) => {
     console.log('get excel master zip');
@@ -163,11 +162,11 @@ exports.getExcelMasterZip = async (req, res) => {
     } catch (err) {
         res.status(400).json({ err });
     }
-}
+};
 
 exports.updateExcelMaster = (req, res) => {
     console.log('update')
-}
+};
 
 exports.deleteAllCorrespondances = async (req, res) => {
     console.log('Delete all excelMasters');
@@ -177,4 +176,4 @@ exports.deleteAllCorrespondances = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error });
     }
-}
+};

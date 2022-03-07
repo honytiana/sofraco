@@ -60,7 +60,15 @@ exports.createWorkSheetRECAP = (workSheetRecap, workSheets) => {
         pattern: 'solid',
         fgColor: { argb: 'ed7d31' }
     };
-    workSheetRecap.getRow(rowNumber).getCell('C').value = { formula: `SUM(C${debut}:C${rowNumber - 1})` };
+    let result = 0;
+    for (let i = debut; i <= rowNumber - 1; i++) {
+        result += workSheetRecap.getRow(i).getCell('C').value;
+    }
+    const value =  {
+        formula: `SUM(C${debut}:C${rowNumber - 1})`,
+        result: result
+    };
+    workSheetRecap.getRow(rowNumber).getCell('C').value = value;
     workSheetRecap.getRow(rowNumber).getCell('C').font = { bold: true, name: 'Arial', size: 10 };
     workSheetRecap.getRow(rowNumber).getCell('C').numFmt = '#,##0.00"€";\-#,##0.00"€"';
     workSheetRecap.getRow(rowNumber).getCell('C').fill = {

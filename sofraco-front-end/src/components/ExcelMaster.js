@@ -7,14 +7,16 @@ import {
     CToaster,
     CButton,
     CDataTable,
-    CModal,
-    CModalHeader,
-    CModalBody,
-    CModalFooter,
     CForm,
     CFormGroup,
     CLabel,
-    CInput
+    CInput,
+    CTabs,
+    CNav,
+    CNavItem,
+    CNavLink,
+    CTabContent,
+    CTabPane
 } from '@coreui/react';
 
 import axios from 'axios';
@@ -26,7 +28,7 @@ class ExcelMaster extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            excelMasters: null,
+            excelMaster: null,
             companies: [],
             details: [],
             courtier: null,
@@ -37,11 +39,13 @@ class ExcelMaster extends Component {
             token: document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1'),
             interne: false
         }
+        this._isMounted = false;
         this.toggleDetails = this.toggleDetails.bind(this);
         this.fetchExcelMasters = this.fetchExcelMasters.bind(this);
     }
 
     componentDidMount() {
+        this._isMounted = true;
         const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
         this.setState({
             interne: window.location.hostname.match(regInterne) ? true : false
@@ -55,6 +59,14 @@ class ExcelMaster extends Component {
                     _classes: ['text-center']
                 },
                 {
+                    key: 'value',
+                    label: '',
+                    _style: { width: '10%' },
+                    _classes: ['text-center'],
+                    sorter: false,
+                    filter: false
+                },
+                {
                     key: 'edit',
                     label: '',
                     _style: { width: '20%' },
@@ -64,7 +76,11 @@ class ExcelMaster extends Component {
                 }
             ]
         });
-        this.fetchExcelMasters();
+        this._isMounted && this.fetchExcelMasters();
+    }
+    
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     checkProps() {
@@ -74,8 +90,7 @@ class ExcelMaster extends Component {
     }
 
     fetchExcelMasters() {
-        const courtier = this.props.courtier;
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/excelMaster/courtier/${courtier._id}`, {
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/excelMaster/${this.props.excelMaster}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${this.state.token}`
@@ -83,7 +98,7 @@ class ExcelMaster extends Component {
         })
             .then((res) => {
                 this.setState({
-                    excelMasters: (res.data) ? res.data : null
+                    excelMaster: (res.data) ? res.data : null
                 });
             })
             .catch((err) => {
@@ -201,62 +216,121 @@ class ExcelMaster extends Component {
     render() {
         return (
             <div>
-                {(this.state.excelMasters !== null) && (
-                    <CDataTable
-                        items={this.state.excelMasters}
-                        fields={this.state.fields}
-                        hover
-                        sorter
-                        border
-                        scopedSlots={{
-                            'edit':
-                                (item, index) => {
-                                    return (
-                                        <td className="py-2">
-                                            <CButton
-                                                color="warning"
-                                                variant="outline"
-                                                shape="square"
-                                                size="sm"
-                                                onClick={() => { this.toggleDetails(index) }}
-                                            >
-                                                Afficher
-                                            </CButton>
-                                        </td>
-                                    )
-                                },
-                            'details':
-                                (item, index) => {
-                                    return (
-                                        <CModal
-                                            show={this.state.details.includes(index)}
-                                            onClose={() => { this.toggleDetails(index) }}
-                                            centered={true}
-                                            className="sofraco-modal"
-                                        >
-                                            <CModalHeader closeButton>Excel master</CModalHeader>
-                                            <CModalBody>
-                                                <CForm action="" method="post" >
-                                                    <CFormGroup row>
-                                                        <CLabel className="col-sm-2" htmlFor={`sofraco-compagnie_${item._id}`}>excel</CLabel>
-                                                        <CInput
-                                                            type="text"
-                                                        />
-                                                    </CFormGroup>
-                                                </CForm>
-                                            </CModalBody>
-                                            <CModalFooter>
-                                                <CButton
-                                                    color="secondary"
-                                                    onClick={() => { this.toggleDetails(index) }}
-                                                >Annuler</CButton>
-                                            </CModalFooter>
-                                        </CModal>
-                                    )
-                                }
-                        }
-                        }
-                    />
+                {(this.state.excelMaster !== null) && (
+                    <CTabs activeTab="courtier">
+                        <CNav variant="tabs">
+                            {this.state.excelMaster.content.map((c, i) => {
+                                return (
+                                    <CNavItem
+                                        key={`navitem_${i}`}>
+                                        <CNavLink
+                                            key={`navlink${i}`} data-tab={c.name}>
+                                            {c.name}
+                                        </CNavLink>
+                                    </CNavItem>
+                                )
+                            })}
+                        </CNav>
+                        <CTabContent>
+                            {this.state.excelMaster.content.map((co, i) => {
+                                return (
+                                    <CTabPane key={`tabpan_${i}`} data-tab={co.name}>
+                                        <table className="table">
+                                            {/* <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">First</th>
+                                                    <th scope="col">Last</th>
+                                                    <th scope="col">Handle</th>
+                                                </tr>
+                                            </thead> */}
+                                            <tbody>
+                                                {co.content.map((c, i) => {
+                                                    return (
+                                                        <tr
+                                                            key={`tr${i}`}>
+                                                            {
+                                                                c.map((con, j) => {
+                                                                    let v = null;
+                                                                    if (con.value.text) {
+                                                                        v = con.value.text;
+                                                                    } else if (con.value.result) {
+                                                                        v = con.value.result;
+                                                                    } else {
+                                                                        v = con.value;
+                                                                    }
+                                                                    return (
+                                                                        <td key={`td${j}`}>{v}</td>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </tr>
+                                                    )
+                                                })}
+                                            </tbody>
+                                        </table>
+                                        {/* <CDataTable
+                                            key={`dataTable_${i}`}
+                                            items={c.content}
+                                            fields={this.state.fields}
+                                            hover
+                                            sorter
+                                            border
+                                            scopedSlots={{
+                                                'edit':
+                                                    (item, index) => {
+                                                        return (
+                                                            <td className="py-2">
+                                                                <CButton
+                                                                    color="warning"
+                                                                    variant="outline"
+                                                                    shape="square"
+                                                                    size="sm"
+                                                                    onClick={() => { this.toggleDetails(index) }}
+                                                                >
+                                                                    Afficher
+                                                                </CButton>
+                                                            </td>
+                                                        )
+                                                    },
+                                                'details':
+                                                    (item, index) => {
+                                                        return (
+                                                            <CModal
+                                                                show={this.state.details.includes(index)}
+                                                                onClose={() => { this.toggleDetails(index) }}
+                                                                centered={true}
+                                                                className="sofraco-modal"
+                                                            >
+                                                                <CModalHeader closeButton>Excel master</CModalHeader>
+                                                                <CModalBody>
+                                                                    <CForm action="" method="post" >
+                                                                        <CFormGroup row>
+                                                                            <CLabel className="col-sm-2" htmlFor={`sofraco-compagnie_${item._id}`}>excel</CLabel>
+                                                                            <CInput
+                                                                                type="text"
+                                                                            />
+                                                                        </CFormGroup>
+                                                                    </CForm>
+                                                                </CModalBody>
+                                                                <CModalFooter>
+                                                                    <CButton
+                                                                        color="secondary"
+                                                                        onClick={() => { this.toggleDetails(index) }}
+                                                                    >Annuler</CButton>
+                                                                </CModalFooter>
+                                                            </CModal>
+                                                        )
+                                                    }
+                                            }
+                                            }
+                                        /> */}
+                                    </CTabPane>
+                                )
+                            })}
+                        </CTabContent>
+                    </CTabs>
+
                 )}
                 {
                     (this.state.toast === true &&

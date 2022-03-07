@@ -3,6 +3,8 @@ const axios = require('axios');
 const ExcelJS = require('exceljs');
 const archiver = require('archiver');
 const fs = require('fs');
+const generals = require('../utils/generals');
+const excelFile = require('../utils/excelFile');
 
 const config = require('../../../config.json');
 const fileService = require('../utils/files');
@@ -32,7 +34,7 @@ const correspondanceHandler = require('../../handlers/correspondanceHandler');
 const courtierHandler = require('../../handlers/courtierHandler');
 
 
-exports.create = async (authorization) => {
+exports.create = async () => {
     try {
         console.log(`${new Date()} DEBUT GENERATION EXCEL MASTER`);
         const ocrInfos = await getOCRInfos();
@@ -166,6 +168,25 @@ const getOCRInfos = async () => {
 
 };
 
+const readExcelMasterContent = async (file) => {
+    console.log(`${new Date()} DEBUT RECUPERATION CONTENU EXCEL MASTER`);
+    const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
+    let sheetsInformations = [];
+    for (let worksheet of worksheets) {
+        let sheet = { name: worksheet.name, content: [] };
+        worksheet.eachRow((row, rowNumber) => {
+            let rowValues = [];
+            row.eachCell((cell, colNumber) => {
+                rowValues.push({ address: cell.address, value: cell.value });
+            });
+            sheet.content.push(rowValues);
+        });
+        sheetsInformations.push(sheet);
+    }
+    console.log(`${new Date()} FIN RECUPERATION CONTENU EXCEL MASTER`);
+    return sheetsInformations;
+};
+
 const generateExcelMaster = async (ocrInfos) => {
     let excelMasters = [];
     try {
@@ -182,6 +203,7 @@ const generateExcelMaster = async (ocrInfos) => {
                 cabinet: cr !== null ? cr.cabinet : '',
                 create_date: new Date(),
                 path: null,
+                content: null,
                 type: 'excel',
                 is_enabled: true
             }
@@ -231,8 +253,10 @@ const generateExcelMaster = async (ocrInfos) => {
                 excelMasterRecap.createWorkSheetRECAP(recapWorkSheet, sheets);
                 excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(courtier) ? courtier : ''}.xlsx`);
                 await workbook.xlsx.writeFile(excelPath);
+                const excelContent = await readExcelMasterContent(excelPath);
                 console.log(`FIN GENERATION EXCEL MASTER : ${cr.cabinet}`);
                 excelMaster.path = excelPath;
+                excelMaster.content = excelContent;
                 excelMasters.push(excelMaster);
             } catch (err) {
                 throw err;

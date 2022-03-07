@@ -7,6 +7,7 @@ const excelMasterSchema = new Schema({
     create_date: { type: Date, default: Date.now() },
     path: { type: String, default: '' },
     type: { type: String, required: true, enum: ['excel', 'zip', 'zip of zip'], default: null },
+    content: {type: Schema.Types.Mixed, default: undefined},
     is_enabled: { type: Boolean, default: true },
 });
 
