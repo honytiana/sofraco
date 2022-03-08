@@ -85,7 +85,7 @@ class ExcelMaster extends Component {
 
     checkProps() {
         if (this.props.token !== null) {
-            this.fetchExcelMasters();
+            this._isMounted && this.fetchExcelMasters();
         }
     }
 
@@ -141,7 +141,7 @@ class ExcelMaster extends Component {
                     toast: true,
                     messageToast: { header: 'SUCCESS', color: 'success', message: `Le code ${correspondance.code} à été désactivé` }
                 });
-                this.fetchExcelMasters();
+                this._isMounted && this.fetchExcelMasters();
             }).catch((err) => {
                 this.setState({
                     toast: true,
@@ -194,7 +194,7 @@ class ExcelMaster extends Component {
                 toast: true,
                 messageToast: { header: 'SUCCESS', color: 'success', message: `Un code du courtier ${this.props.courtier.cabinet} à été ajouté` }
             });
-            this.fetchExcelMasters();
+            this._isMounted && this.fetchExcelMasters();
         }).catch((err) => {
             this.setState({
                 toast: true,

@@ -118,8 +118,8 @@ class Companies extends Component {
 
     checkProps() {
         if (this.props.token !== null) {
-            this.getCompanies();
-            this.getDraftDocument();
+            this._isMounted && this.getCompanies();
+            this._isMounted && this.getDraftDocument();
         }
     }
 
@@ -297,7 +297,7 @@ class Companies extends Component {
                     console.log(err)
                 });
         } else {
-            this.getCompanies();
+            this._isMounted && this.getCompanies();
             this.setState({
                 search: false
             });
@@ -396,7 +396,7 @@ class Companies extends Component {
                     treatmentErrors: res.data.errors
                 });
             }
-            this.getDraftDocument();
+            this._isMounted && this.getDraftDocument();
             this.setState({
                 executionTime,
                 load: false
@@ -449,7 +449,7 @@ class Companies extends Component {
             this.setState({
                 details: newDetails
             });
-            this.getDraftDocument();
+            this._isMounted && this.getDraftDocument();
         }
     }
 

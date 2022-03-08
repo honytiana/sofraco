@@ -227,7 +227,7 @@ class Administration extends Component {
                 event.target['sofraco-prenom'].value = '';
                 event.target['sofraco-email'].value = '';
                 event.target['sofraco-phone'].value = '';
-                this.fetchCourtiers();
+                this._isMounted && this.fetchCourtiers();
             }).catch((err) => {
                 this.setState({
                     toast: true,
@@ -291,7 +291,7 @@ class Administration extends Component {
         });
     }
 
-    handleAdministrationCallback = () => {
+    handleAdministrationCallback() {
         this._isMounted && this.fetchCourtiers();
     }
 

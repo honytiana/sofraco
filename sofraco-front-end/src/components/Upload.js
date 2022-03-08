@@ -65,7 +65,7 @@ class Upload extends Component {
 
     checkProps() {
         if (this.props.token !== null) {
-            this.getCompanySurco();
+            this._isMounted && this.getCompanySurco();
         }
     }
 

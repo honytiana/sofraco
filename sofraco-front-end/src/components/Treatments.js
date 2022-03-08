@@ -102,7 +102,7 @@ class Treatments extends Component {
 
     checkProps() {
         if (this.props.token !== null) {
-            this.fetchCourtiers();
+            this._isMounted && this.fetchCourtiers();
         }
     }
 

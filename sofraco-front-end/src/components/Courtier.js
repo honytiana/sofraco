@@ -46,7 +46,8 @@ class Courtier extends Component {
         this._isMounted = true;
         this.setState({
             toast: false,
-            messageToast: {}
+            messageToast: {},
+            courtier: this.props.courtier
         });
         const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
         this.setState({
@@ -56,6 +57,7 @@ class Courtier extends Component {
 
     componentWillUnmount() {
         this._isMounted = false;
+        this.props.administrationCallback();
     }
 
     onSubmitHandler(event) {
