@@ -167,11 +167,10 @@ const readBordereauMETLIFE = (textFilePath) => {
                 infos.syntheseDesCommissions = syntheseDesCommissions;
             } else {
                 const detailDesPolices = readDetailsPolicesBordereauMETLIFE(textFile);
-                infos.detailDesPolices = detailDesPolices;
+                infos.detailDesPolices.push(detailDesPolices);
             }
             i++;
         }
-
         let headers = { firstHeaders: null, secondHeader: null };
         headers.firstHeaders = ['CONTRAT', 'PRIME', 'COMMISSION'];
         headers.secondHeader = [
@@ -333,7 +332,7 @@ const readDetailsPolicesBordereauMETLIFE = (textFile) => {
             sousTotalPolice.police = sousTotalPolice.police.replace('$', 'S');
             sousTotalPolice.sousTotalPolice = parseFloat(sousTotalPolice.sousTotalPolice.replace(/[^\d]*(\d+,+\d+)€*/, '$1').replace(',', '.'));
             contrats.push(sousTotalPolice);
-            detailDesPolices.push(contrats);
+            detailDesPolices = contrats;
             contrats = [];
         }
     }

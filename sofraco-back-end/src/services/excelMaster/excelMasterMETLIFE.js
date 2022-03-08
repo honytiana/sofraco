@@ -86,8 +86,10 @@ exports.createWorkSheetMETLIFE = (workSheet, dataCourtierOCR) => {
     let rowNumber = 18;
     for (let datas of detailDesPolices) {
         workSheet.getRow(rowNumber).font = font1;
+        let police = null;
         for (let data of datas) {
             if (data.contrat && data.prime && data.commission) {
+                police = data.contrat.police;
                 workSheet.getRow(rowNumber).font = font1;
                 workSheet.getRow(rowNumber).getCell('A').value = data.contrat.police;
                 workSheet.getRow(rowNumber).getCell('B').value = data.contrat.assure;
@@ -104,12 +106,12 @@ exports.createWorkSheetMETLIFE = (workSheet, dataCourtierOCR) => {
                 workSheet.getRow(rowNumber).getCell('K').numFmt = '#,##0.00"€";\-#,##0.00"€"';
                 rowNumber++;
             }
-            if (data.police && data.sousTotalPolice) {
+            if (data.police) {
                 workSheet.getRow(rowNumber).getCell('G').value = 'Sous-total police';
                 workSheet.getRow(rowNumber).getCell('G').font = font8;
-                workSheet.getRow(rowNumber).getCell('I').value = data.police;
+                workSheet.getRow(rowNumber).getCell('I').value = police;
                 workSheet.getRow(rowNumber).getCell('I').font = font8;
-                workSheet.getRow(rowNumber).getCell('K').value = data.sousTotalPolice;
+                workSheet.getRow(rowNumber).getCell('K').value = data.sousTotalPolice !== null ? data.sousTotalPolice : '';
                 workSheet.getRow(rowNumber).getCell('K').font = font8;
                 workSheet.getRow(rowNumber).getCell('K').numFmt = '#,##0.00"€";\-#,##0.00"€"';
                 rowNumber++;
