@@ -11,7 +11,7 @@ import {
     CDropdownToggle,
     CDropdownMenu,
     CDropdownItem,
-    CImg
+    // CImg
 } from '@coreui/react';
 import axios from 'axios';
 import CIcon from '@coreui/icons-react';
@@ -19,7 +19,7 @@ import * as icon from '@coreui/icons';
 
 import config from '../config.json';
 import '../styles/Navbar.css';
-import sofraco_logo from '../assets/sofraco_groupe_logo.png';
+// import sofraco_logo from '../assets/sofraco_groupe_logo.png';
 
 class Navbar extends Component {
     constructor(props) {
