@@ -48,8 +48,8 @@ class CompanyHandler {
         return Company.findByIdAndUpdate(id, data);
     }
 
-    deleteCompany() {
-
+    deleteCompany(id) {
+        return Company.deleteOne({_id: id});
     }
 
 }

@@ -94,3 +94,13 @@ exports.getCompanies = async (req, res) => {
 exports.updateCompany = (req, res) => {
     console.log('update')
 }
+
+exports.deleteCompany = async (req, res) => {
+    console.log('Delete company');
+    try {
+        await companyHandler.deleteCompany(req.params.id);
+        res.status(200).end('Company deleted');
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+}

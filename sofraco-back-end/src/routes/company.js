@@ -19,6 +19,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.route('/:id').get(accessControl, companyController.getCompany);
+router.route('/:id').delete(accessControl, companyController.deleteCompany);
 router.route('/name/:name').get(accessControl, companyController.getCompanyByName);
 router.route('/search/:name').get(accessControl, companyController.getCompaniesLike);
 router.route('/companySurco/:companySurco').get(accessControl, companyController.getCompanyByCompanySurco);

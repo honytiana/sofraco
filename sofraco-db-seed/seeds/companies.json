@@ -712,21 +712,5 @@
         "surco": false,
         "companySurco": "",
         "type": "simple"
-    },
-    {
-        "address": "France",
-        "zip": "",
-        "city": "France",
-        "country": "France",
-        "phone": "+3300410000",
-        "website": "masantesolidaire.com",
-        "is_enabled": false,
-        "name": "MA SANTE SOLIDAIRE - HENNER",
-        "globalName": "MA SANTE SOLIDAIRE - HENNER",
-        "logo": "/backend/documents/logos/henner.png",
-        "creation_date": "2010-12-02T00:00:00.000Z",
-        "surco": false,
-        "companySurco": "",
-        "type": "simple"
     }
 ]
