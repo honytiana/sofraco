@@ -37,6 +37,7 @@ class Upload extends Component {
             token: document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1'),
             interne: false
         }
+        this._isMounted = false;
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.onChangeHandler = this.onChangeHandler.bind(this);
         this.testExtension = this.testExtension.bind(this);
@@ -46,6 +47,7 @@ class Upload extends Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
         const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
         this.setState({
             interne: window.location.hostname.match(regInterne) ? true : false
@@ -54,7 +56,11 @@ class Upload extends Component {
         this.setState({
             company: company
         });
-        this.getCompanySurco();
+        this._isMounted && this.getCompanySurco();
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     checkProps() {

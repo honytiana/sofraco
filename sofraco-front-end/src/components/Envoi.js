@@ -32,6 +32,7 @@ class Envoi extends Component {
             token: document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1'),
             interne: false
         }
+        this._isMounted = false;
         this.getBadge = this.getBadge.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
         this.onCheckHandler = this.onCheckHandler.bind(this);
@@ -44,6 +45,7 @@ class Envoi extends Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
         const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
         this.setState({
             interne: window.location.hostname.match(regInterne) ? true : false
@@ -90,7 +92,11 @@ class Envoi extends Component {
                 }
             ],
         });
-        this.fetchCourtiers();
+        this._isMounted && this.fetchCourtiers();
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     checkProps() {

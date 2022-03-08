@@ -32,6 +32,7 @@ class Courtier extends Component {
             token: document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1'),
             interne: false
         }
+        this._isMounted = false;
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.onAddEmailCopie = this.onAddEmailCopie.bind(this);
         this.onEditEmailCopie = this.onEditEmailCopie.bind(this);
@@ -42,6 +43,7 @@ class Courtier extends Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
         this.setState({
             toast: false,
             messageToast: {}
@@ -50,6 +52,10 @@ class Courtier extends Component {
         this.setState({
             interne: window.location.hostname.match(regInterne) ? true : false
         });
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     onSubmitHandler(event) {

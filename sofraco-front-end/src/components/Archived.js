@@ -38,15 +38,21 @@ class Archived extends Component {
             token: document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1'),
             interne: false
         }
+        this._isMounted = false;
         this.toggleYear = this.toggleYear.bind(this);
         this.toggleMonth = this.toggleMonth.bind(this);
     }
 
     componentDidMount() {
+        this._isMounted = true;
         const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
         this.setState({
             interne: window.location.hostname.match(regInterne) ? true : false
         });
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     componentDidUpdate() {

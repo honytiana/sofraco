@@ -69,6 +69,7 @@ class Companies extends Component {
             search: false
 
         };
+        this._isMounted = false;
         this.getCompanies = this.getCompanies.bind(this);
         this.onSearchCompany = this.onSearchCompany.bind(this);
         this.getDraftDocument = this.getDraftDocument.bind(this);
@@ -85,15 +86,16 @@ class Companies extends Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
         const regInterne = /192.168.[0-9]{1,3}.[0-9]{1,3}/;
         this.setState({
             interne: window.location.hostname.match(regInterne) ? true : false
         });
-        this.getCompanies();
-        this.getDraftDocument();
+        this._isMounted && this.getCompanies();
+        this._isMounted && this.getDraftDocument();
         // this.loadingHandler();
         if (this.state.local) {
-            this.getTreatmentTime();
+            this._isMounted && this.getTreatmentTime();
             setInterval(() => {
                 if (this.state.load) {
                     let treatmentTimeMS = this.state.treatmentTimeMS + 1000;
@@ -105,9 +107,13 @@ class Companies extends Component {
                 }
             }, 1000);
             setInterval(() => {
-                this.getTreatment();
+                this._isMounted && this.getTreatment();
             }, 5000);
         }
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     checkProps() {
