@@ -16,3 +16,9 @@
     color: inherit !important;
     background-color: inherit !important;
 }
+
+.sofraco-icon-user {
+    width: 20px;
+    cursor: pointer;
+    color: #fff;
+}

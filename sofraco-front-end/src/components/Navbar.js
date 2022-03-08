@@ -14,6 +14,8 @@ import {
     CImg
 } from '@coreui/react';
 import axios from 'axios';
+import CIcon from '@coreui/icons-react';
+import * as icon from '@coreui/icons';
 
 import config from '../config.json';
 import '../styles/Navbar.css';
@@ -105,6 +107,10 @@ class Navbar extends Component {
                         <CNavLink href='/admin' >Administration</CNavLink>
                         <CDropdown inNav >
                             <CDropdownToggle>
+                                <CIcon
+                                    className={'sofraco-icon-user'}
+                                    size='sm'
+                                    icon={icon.cilUser} />
                                 {(this.state.user !== null) && this.state.user.email}
                             </CDropdownToggle>
                             <CDropdownMenu className="sofraco-dropdown-menu">

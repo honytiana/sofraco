@@ -20,6 +20,8 @@ import {
 } from '@coreui/react';
 
 import axios from 'axios';
+import CIcon from '@coreui/icons-react';
+import * as icon from '@coreui/icons';
 
 import '../styles/Correspondance.css';
 import config from '../config.json';
@@ -118,7 +120,7 @@ class Correspondance extends Component {
         this._isMounted && this.fetchCorrespondances();
         this._isMounted && this.getCompanies();
     }
-    
+
     componentWillUnmount() {
         this._isMounted = false;
     }
@@ -407,15 +409,11 @@ class Correspondance extends Component {
                                 (item, index) => {
                                     return (
                                         <td className="py-2">
-                                            <CButton
-                                                color="warning"
-                                                variant="outline"
-                                                shape="square"
+                                            <CIcon
+                                                className={'sofraco-icon-edit'}
                                                 size="sm"
                                                 onClick={() => { this.toggleDetails(index) }}
-                                            >
-                                                Modifier
-                                            </CButton>
+                                                icon={icon.cilPencil} />
                                         </td>
                                     )
                                 },
