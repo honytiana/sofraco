@@ -24,6 +24,8 @@ import {
 } from '@coreui/react';
 
 import axios from 'axios';
+import CIcon from '@coreui/icons-react';
+import * as icon from '@coreui/icons';
 
 import Correspondance from './Correspondance';
 import '../styles/Mandataire.css';
@@ -429,15 +431,11 @@ class Mandataire extends Component {
                             (item, index) => {
                                 return (
                                     <td className="py-2">
-                                        <CButton
-                                            color="warning"
-                                            variant="outline"
-                                            shape="square"
+                                        <CIcon
+                                            className={'sofraco-icon-edit'}
                                             size="sm"
                                             onClick={() => { this.toggleDetails(index) }}
-                                        >
-                                            Afficher
-                                        </CButton>
+                                            icon={icon.cilPencil} />
                                     </td>
                                 )
                             },
@@ -557,15 +555,12 @@ class Mandataire extends Component {
                             (item, index) => {
                                 return (
                                     <td className="py-2">
-                                        <CButton
-                                            color="danger"
-                                            variant="outline"
-                                            shape="square"
+                                        <CIcon
+                                            className={'sofraco-icon-del text-danger'}
+                                            color='danger'
                                             size="sm"
-                                            onClick={(e) => this.openDeletePopup(e, item)}
-                                        >
-                                            Supprimer
-                                        </CButton>
+                                            icon={icon.cilTrash}
+                                            onClick={(e) => this.openDeletePopup(e, item)} />
                                     </td>
                                 )
                             }
@@ -580,7 +575,7 @@ class Mandataire extends Component {
                 >
                     <CModalHeader closeButton></CModalHeader>
                     <CModalBody>
-                        Voulez vous vraiment supprimer le courtier {this.state.mandataireToDel ? this.state.mandataireToDel.cabinet : ''}?
+                        Voulez vous vraiment supprimer le mandataire {this.state.mandataireToDel ? this.state.mandataireToDel.cabinet : ''}?
                     </CModalBody>
                     <CModalFooter>
                         <CButton

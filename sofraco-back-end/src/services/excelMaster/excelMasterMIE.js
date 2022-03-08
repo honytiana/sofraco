@@ -65,7 +65,7 @@ exports.createWorkSheetMIEMCMS = (workSheet, dataCourtierOCR) => {
 const createPavetMIEAXIOM = (dataCourtierOCR, workSheet, rowNumber) => {
     for (let datas of dataCourtierOCR.infosOCR.datas) {
         workSheet.getRow(rowNumber).font = { name: 'Arial', size: 10 };
-        workSheet.getRow(rowNumber).getCell('A').value = datas.dateComptable ? new Date(datas.dateComptable) : '';
+        workSheet.getRow(rowNumber).getCell('A').value = datas.dateComptable;
         workSheet.getRow(rowNumber).getCell('A').numFmt = 'dd/mm/yyyy';
         workSheet.getRow(rowNumber).getCell('B').value = datas.numAdherent;
         workSheet.getRow(rowNumber).getCell('C').value = datas.codeCourtier;
@@ -76,9 +76,9 @@ const createPavetMIEAXIOM = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('H').value = datas.mail;
         workSheet.getRow(rowNumber).getCell('I').value = datas.codePostal;
         workSheet.getRow(rowNumber).getCell('J').value = datas.ville;
-        workSheet.getRow(rowNumber).getCell('K').value = datas.dateEffetContrat ? new Date(datas.dateEffetContrat) : '';
+        workSheet.getRow(rowNumber).getCell('K').value = datas.dateEffetContrat;
         workSheet.getRow(rowNumber).getCell('K').numFmt = 'dd/mm/yyyy';
-        workSheet.getRow(rowNumber).getCell('L').value = datas.dateFinContrat ? new Date(datas.dateEffetContrat) : '';
+        workSheet.getRow(rowNumber).getCell('L').value = datas.dateFinContrat;
         workSheet.getRow(rowNumber).getCell('L').numFmt = 'dd/mm/yyyy';
         workSheet.getRow(rowNumber).getCell('M').value = datas.codeProduit;
         workSheet.getRow(rowNumber).getCell('N').value = datas.libelleProduit;
@@ -116,7 +116,7 @@ const createPavetMIEAXIOM = (dataCourtierOCR, workSheet, rowNumber) => {
 const createPavetMIEV1 = (dataCourtierOCR, workSheet, rowNumber) => {
     for (let datas of dataCourtierOCR.infosOCR.datas) {
         workSheet.getRow(rowNumber).font = { name: 'Arial', size: 10 };
-        workSheet.getRow(rowNumber).getCell('A').value = datas.dateComptable ? new Date(datas.dateComptable) : '';
+        workSheet.getRow(rowNumber).getCell('A').value = datas.dateComptable;
         workSheet.getRow(rowNumber).getCell('A').numFmt = 'dd/mm/yyyy';
         workSheet.getRow(rowNumber).getCell('B').value = datas.codeCourtier;
         workSheet.getRow(rowNumber).getCell('C').value = datas.raisonSocialeApporteur;
@@ -127,9 +127,9 @@ const createPavetMIEV1 = (dataCourtierOCR, workSheet, rowNumber) => {
         workSheet.getRow(rowNumber).getCell('H').value = datas.mail;
         workSheet.getRow(rowNumber).getCell('I').value = datas.codePostal;
         workSheet.getRow(rowNumber).getCell('J').value = datas.ville;
-        workSheet.getRow(rowNumber).getCell('K').value = datas.dateEffetContrat ? new Date(datas.dateEffetContrat) : '';
+        workSheet.getRow(rowNumber).getCell('K').value = datas.dateEffetContrat;
         workSheet.getRow(rowNumber).getCell('K').numFmt = 'dd/mm/yyyy';
-        workSheet.getRow(rowNumber).getCell('L').value = datas.dateFinContrat ? new Date(datas.dateEffetContrat) : '';
+        workSheet.getRow(rowNumber).getCell('L').value = datas.dateFinContrat;
         workSheet.getRow(rowNumber).getCell('L').numFmt = 'dd/mm/yyyy';
         workSheet.getRow(rowNumber).getCell('M').value = datas.codeProduit;
         workSheet.getRow(rowNumber).getCell('N').value = datas.libelleProduit;
