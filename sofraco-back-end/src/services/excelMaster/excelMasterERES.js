@@ -10,7 +10,7 @@ exports.getOCRERES = (ocr) => {
         'Commissions à régler en €'
     ];
     let infosOCR = [];
-    ocr.infos.allContratsPerConseillers.forEach((contrat, index) => {
+    ocr.infos.allContratsPerCourtier.forEach((contrat, index) => {
         if (contrat.conseiller.code) {
             const dataCourtierOCR = {
                 code: {

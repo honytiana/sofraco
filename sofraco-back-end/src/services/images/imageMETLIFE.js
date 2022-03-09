@@ -118,7 +118,8 @@ exports.getCellFromImageMETLIFE = async (cv, file_name, input_path, output_path,
         }
 
         if (lines_tab_valid[lines_tab_valid.length - 1]) {
-            lines_tab_valid[lines_tab_valid.length - 1].height = 50; let i = 1;
+            lines_tab_valid[lines_tab_valid.length - 1].height = 50;
+            let i = 1;
             for (let line of lines_tab_valid) {
                 let x1_line = line.coord[0];
                 let y1_line = line.coord[1];

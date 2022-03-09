@@ -1,5 +1,6 @@
 const path = require('path');
 const imageMETLIFE = require('./imageMETLIFE');
+const imageERES = require('./imageERES');
 const imageAPIVIA = require('./imageAPIVIA');
 
 exports.loadOpenCV = (images, company) => {
@@ -35,6 +36,21 @@ exports.loadOpenCV = (images, company) => {
                                     cell_width = cw
                                 );
                                 break;
+                                case 'ERES':
+                                    console.log(`------ Image numero : ${numImage} ------`);
+                                    cw = [290, 462, 367, 356, 348, 350];
+                                    file_names = await imageERES.getCellFromImageERES(
+                                        cv,
+                                        image_name.replace(/.+\/([^/])/, '$1'),
+                                        dirPath,
+                                        dirPath,
+                                        show_tracage = false,
+                                        frame_data = false,
+                                        crop_lines = false,
+                                        crop_cell = true,
+                                        cell_width = cw
+                                    );
+                                    break;
                             case 'METLIFE':
                                 console.log(`------ Image numero : ${numImage} ------`);
                                 cw = [170, 230, 199, 270, 175, 202, 198, 200, 200, 200, 199];
