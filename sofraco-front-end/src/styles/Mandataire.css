@@ -9,6 +9,10 @@
     max-height: 200px !important;
 }
 
+.sofraco-modal-body {
+    overflow: auto;
+}
+
 .sofraco-button:hover {
     color: #fff;
     background-color: #F39200;

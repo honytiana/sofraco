@@ -734,7 +734,7 @@ class Companies extends Component {
                     className="sofraco-modal"
                 >
                     <CModalHeader closeButton>Erreurs</CModalHeader>
-                    <CModalBody>
+                    <CModalBody className="sofraco-modal-body">
                         <CListGroup>
                             {this.state.treatmentErrors.map((err, i) => {
                                 return (

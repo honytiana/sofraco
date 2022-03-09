@@ -1,3 +1,7 @@
 .sofraco-select-filtre {
     width: 400px;
 }
+
+.sofraco-modal-body {
+    overflow: auto;
+}

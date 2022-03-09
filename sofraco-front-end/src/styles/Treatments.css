@@ -11,3 +11,7 @@
 .sofraco-modal-treatment .modal-dialog .modal-dialog-centered .modal-content{
     max-width: 800 !important;
 }
+
+.sofraco-modal-body {
+    overflow: auto;
+}

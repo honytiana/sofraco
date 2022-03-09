@@ -303,7 +303,7 @@ class ExcelMaster extends Component {
                                                                 className="sofraco-modal"
                                                             >
                                                                 <CModalHeader closeButton>Excel master</CModalHeader>
-                                                                <CModalBody>
+                                                                <CModalBody className="sofraco-modal-body">
                                                                     <CForm action="" method="post" >
                                                                         <CFormGroup row>
                                                                             <CLabel className="col-sm-2" htmlFor={`sofraco-compagnie_${item._id}`}>excel</CLabel>

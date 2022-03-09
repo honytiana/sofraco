@@ -305,7 +305,7 @@ class Administration extends Component {
                     className="sofraco-modal"
                 >
                     <CModalHeader closeButton>Creez un courtier</CModalHeader>
-                    <CModalBody>
+                    <CModalBody className="sofraco-modal-body">
                         <CForm action="" method="post" onSubmit={(e) => this.ajouterCourtier(e)}>
                             <CFormGroup row>
                                 <CLabel className="col-sm-2" htmlFor={`sofraco-cabinet-courtier${this.props.sIndex}`}>Cabinet</CLabel>
@@ -419,7 +419,7 @@ class Administration extends Component {
                                         className="sofraco-modal"
                                     >
                                         <CModalHeader closeButton>{item.cabinet}</CModalHeader>
-                                        <CModalBody>
+                                        <CModalBody className="sofraco-modal-body">
                                             <CTabs activeTab="courtier">
                                                 <CNav variant="tabs">
                                                     <CNavItem>

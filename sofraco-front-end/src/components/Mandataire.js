@@ -341,7 +341,7 @@ class Mandataire extends Component {
                     className="sofraco-modal"
                 >
                     <CModalHeader closeButton>Ajouter un mandataire</CModalHeader>
-                    <CModalBody>
+                    <CModalBody className="sofraco-modal-body">
                         <CForm action="" method="post" onSubmit={(e) => this.ajouterMandataire(e)}>
                             <CFormGroup row>
                                 <CLabel className="col-sm-2" htmlFor={`sofraco-cabinet-mandataire_${this.props.sIndex}`}>Cabinet</CLabel>
@@ -449,7 +449,7 @@ class Mandataire extends Component {
                                         className="sofraco-modal"
                                     >
                                         <CModalHeader closeButton>{item.cabinet}</CModalHeader>
-                                        <CModalBody>
+                                        <CModalBody className="sofraco-modal-body">
                                             <CTabs activeTab="mandataire">
                                                 <CNav variant="tabs">
                                                     <CNavItem>

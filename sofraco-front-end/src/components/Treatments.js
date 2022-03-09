@@ -182,7 +182,7 @@ class Treatments extends Component {
                                         className="sofraco-modal-treatment"
                                     >
                                         <CModalHeader closeButton>{item.cabinet}</CModalHeader>
-                                        <CModalBody>
+                                        <CModalBody className="sofraco-modal-body">
                                             <CTabs activeTab="excelMaster">
                                                 <CNav variant="tabs">
                                                     <CNavItem>

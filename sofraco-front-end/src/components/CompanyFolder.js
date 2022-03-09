@@ -156,7 +156,7 @@ class CompanyFolder extends Component {
                     className="sofraco-modal"
                 >
                     <CModalHeader closeButton>{this.props.companyName}</CModalHeader>
-                    <CModalBody>
+                    <CModalBody className="sofraco-modal-body">
                         <CTabs activeTab="upload">
                             <CNav variant="tabs">
                                 <CNavItem>

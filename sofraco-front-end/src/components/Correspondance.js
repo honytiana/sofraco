@@ -339,7 +339,7 @@ class Correspondance extends Component {
                     className="sofraco-modal"
                 >
                     <CModalHeader closeButton>Ajouter un nouveau code au courtier {this.props.courtier.cabinet}</CModalHeader>
-                    <CModalBody>
+                    <CModalBody className="sofraco-modal-body">
                         <CForm action="" method="post" onSubmit={(e) => this.ajouterCorrespondance(e)}>
                             <CFormGroup row>
                                 <CLabel className="col-sm-2" htmlFor={`sofraco-compagnie_${this.props.sIndex}`}>Compagnie</CLabel>
@@ -427,7 +427,7 @@ class Correspondance extends Component {
                                             className="sofraco-modal"
                                         >
                                             <CModalHeader closeButton>Modifier le code {item.code} du courtier {this.props.courtier.cabinet}</CModalHeader>
-                                            <CModalBody>
+                                            <CModalBody className="sofraco-modal-body">
                                                 <CForm action="" method="post" onSubmit={(e) => this.onSubmitHandler(e, item)}>
                                                     <CFormGroup row>
                                                         <CLabel className="col-sm-2" htmlFor={`sofraco-compagnie_${item._id}`}>Compagnie</CLabel>
