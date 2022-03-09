@@ -100,10 +100,13 @@ const readBordereauERES = (textFilePaths) => {
                 contrat.conseiller = contrat.conseiller.replace(/(.+)/i, '$1');
                 contrat.montantVersee = contrat.montantVersee.replace(/\s/g, '');
                 contrat.montantVersee = contrat.montantVersee.replace(/(\d+,*\d*)/i, '$1');
+                contrat.montantVersee = parseFloat(contrat.montantVersee.replace(',', '.'));
                 contrat.droitEntree = contrat.droitEntree.replace(/\s/g, '');
                 contrat.droitEntree = contrat.droitEntree.replace(/(\d+,*\d*)/i, '$1');
+                contrat.droitEntree = parseFloat(contrat.droitEntree.replace(',', '.'));
                 contrat.commissionARegler = contrat.commissionARegler.replace(/\s/g, '');
                 contrat.commissionARegler = contrat.commissionARegler.replace(/(\d+,*\d*)/i, '$1');
+                contrat.commissionARegler = parseFloat(contrat.commissionARegler.replace(',', '.'));
                 allContrats.push(contrat);
             }
         }
