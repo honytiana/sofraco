@@ -5,6 +5,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const bcrypt = require('bcrypt');
 const { logger } = require('../tools/logger');
+const config = require('../../config.json');
 
 module.exports = async function ({ app }) {
     const stream = {
@@ -19,7 +20,7 @@ module.exports = async function ({ app }) {
     app.use((express.json()));
     app.use(morgan('combined', { stream: stream }));
 
-    const allowedOrigin = ['http://localhost:3000', 'http://localhost:9000', 'http://92.182.25.197:3000', 'http://92.182.25.197:9000', 'http://5.39.62.49:3000', 'http://5.39.62.49:9000', 'http://192.168.20.48:3000', 'http://192.168.20.48:9000'];
+    const allowedOrigin = config.allowOrigin;
 
     app.use((req, res, next) => {
         const origin = req.headers.origin;

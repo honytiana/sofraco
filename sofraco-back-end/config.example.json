@@ -1,0 +1,23 @@
+{
+    "nodeUrl": "http://localhost:9000",
+    "nodeUrlInterne": "http://localhost:9000",
+    "nodePort": 9000,
+    "reactUrl": "http://localhost:3000",
+    "reactPort": 3000,
+    "database": "mongodb://localhost:27017/sofraco",
+    "mailSenderInfomaniak": "no-reply@sofraco.com",
+    "mailPassInfomaniak": "Sofraco2021!",
+    "infomaniakHost": "mail.infomaniak.com",
+    "pythonEnv": "/opt/venv_python/Python-3.7.10/sofraco/bin/python",
+    "python": "python3",
+    "allowOrigin": [
+        "http://localhost:3000",
+        "http://localhost:9000",
+        "http://92.182.25.197:3000",
+        "http://92.182.25.197:9000",
+        "http://5.39.62.49:3000",
+        "http://5.39.62.49:9000",
+        "http://192.168.20.48:3000",
+        "http://192.168.20.48:9000"
+    ]
+}

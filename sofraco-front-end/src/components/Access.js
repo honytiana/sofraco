@@ -120,7 +120,7 @@ class Access extends Component {
                         localStorage.clear();
                     }, data.expiresIn * 3600 * 1000);
 
-                    window.location.replace(`${(this.state.interne) ? config.reactUrlInterne : config.reactUrlExterne}/home`);
+                    window.location.pathname = '/home';
                 }).catch((err) => {
                     document.cookie = "sofraco=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
                     this.setState({

@@ -1,11 +1,5 @@
 {
-    "nodeUrl": "http://localhost:9000",
+    "nodeSrc": "http://bordereaux.sofraco.com:9000",
     "nodeUrlExterne": "http://localhost:9000",
-    "nodeUrlInterne": "http://localhost:9000",
-    "nodePort": 9000,
-    "reactUrl": "http://localhost:3000",
-    "reactUrlExterne": "http://localhost:3000",
-    "reactUrlInterne": "http://localhost:3000",
-    "reactPort": 3000,
-    "database": "mongodb://localhost:27017/sofraco"
+    "nodeUrlInterne": "http://localhost:9000"
 }

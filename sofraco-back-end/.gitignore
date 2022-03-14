@@ -39,3 +39,5 @@ config.json
 /logs/errors/
 /logs/infos/
 /logs/warnings/
+
+/.history
