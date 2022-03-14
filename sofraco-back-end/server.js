@@ -5,10 +5,8 @@ const process = require('process');
 const load = require('./src/loaders/loader');
 const config = require('./config.json');
 const workerThreadLoader = require('./src/loaders/workerThreadLoader');
-const axios = require('axios');
 const treatmentHandler = require('./src/handlers/treatmentHandler.js');
-const tokenHandler = require('./src/handlers/tokenHandler');
-const userHandler = require('./src/handlers/userHandler');
+const documentController = require('./src/controllers/document');
 // const { GPU } = require('gpu.js');
 
 const startServer = async () => {
@@ -44,22 +42,14 @@ const startServer = async () => {
                 if (processingTreatment.length > 0) {
                     await treatmentHandler.updateStatusTreatment('done');
                 }
-                const user = await userHandler.getOneUser('Sofraco');
-                const token = await tokenHandler.createTokens(user._id);
-                axios.default.put(`${config.nodeUrlInterne}/api/document`, {}, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token.value}`
-                    }
-                }).then((res) => {
-                    let executionTime = res.data.executionTime;
-                    console.log(`TRAITEMENT FAIT EN : ${executionTime}`);
-                }).catch((err) => {
+                try {
+                    const result = await documentController.updateDocuments();
+                    console.log(`${new Date()} TRAITEMENT FAIT EN : ${result.executionTime}`);
+                } catch (err) {
                     console.log(`${new Date()} ERREUR LORS DU TRAITEMENT DES FICHIERS UPLOADES`);
-                    console.log(err);
-                }).finally(() => {
+                } finally {
                     console.log(`${new Date()} FIN DU TRAITEMENT DES FICHIERS UPLOADES`);
-                });
+                }
             });
         }
     }

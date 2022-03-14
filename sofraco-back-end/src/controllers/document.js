@@ -173,7 +173,7 @@ exports.updateDocuments = async (req, res) => {
         console.log(`${new Date()} TRAITEMENT DES FICHIERS`);
         let executionTimes = [];
         const treatment = {
-            user: req.body.user,
+            user: req ? req.body.user : null,
             begin_treatment: Date.now(),
             status: 'processing',
             progress: 0,
@@ -183,7 +183,7 @@ exports.updateDocuments = async (req, res) => {
         let errors = [];
         let numberFiles = 1;
         for (let draftId of drafts) {
-            deleteCacheRequire();
+            req && deleteCacheRequire();
             try {
                 console.log('**********************************************');
                 console.log(`------ Fichier numero : ${numberFiles} ------`);
@@ -226,9 +226,14 @@ exports.updateDocuments = async (req, res) => {
         let executionTime = Date.now() - treatment.begin_treatment;
         executionTime = time.millisecondToTime(executionTime);
         console.log(`${new Date()} FIN TRAITEMENT DES FICHIERS`);
-        res.status(202).json({ executionTime, errors });
+        const jsonRes = { executionTime, errors };
+        if (req) {
+            res.status(202).json(jsonRes);
+        } else {
+            return jsonRes;
+        }
     } catch (err) {
-        res.status(500).json({ err });
+        req ? res.status(500).json({ err }) : console.log(`${new Date()} ERROR ${err}`);
     }
 };
 
