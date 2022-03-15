@@ -38,7 +38,7 @@ exports.getExcelMaster = async (req, res) => {
 };
 
 exports.getExcelMasters = async (req, res) => {
-    console.log('get excel masters');
+    console.log(`${new Date()} get excel masters`);
     try {
         const excelMasters = await excelMasterHandler.getExcelMasters();
         res.status(200).json(excelMasters);
@@ -48,7 +48,7 @@ exports.getExcelMasters = async (req, res) => {
 };
 
 exports.getExcelMastersByCourtier = async (req, res) => {
-    console.log('get excel masters by courtier');
+    console.log(`${new Date()} get excel masters by courtier`);
     try {
         const excelMasters = await excelMasterHandler.getExcelMastersByCourtier(req.params.courtier);
         res.status(200).json(excelMasters);
@@ -58,7 +58,7 @@ exports.getExcelMastersByCourtier = async (req, res) => {
 };
 
 exports.getExcelMastersByYearMonth = async (req, res) => {
-    console.log('get excelMaster by year and month');
+    console.log(`${new Date()} get excelMaster by year and month`);
     try {
         const year = req.params.year;
         const month = req.params.month;
@@ -70,7 +70,7 @@ exports.getExcelMastersByYearMonth = async (req, res) => {
 };
 
 exports.getExcelMastersByYearMonthV2 = async (req, res) => {
-    console.log('get excelMaster by year and month V2');
+    console.log(`${new Date()} get excelMaster by year and month V2`);
     try {
         let excelMaster = [];
         const months = [
@@ -107,7 +107,7 @@ exports.getExcelMastersByYearMonthV2 = async (req, res) => {
 };
 
 exports.getExcelMastersCourtierByYearMonth = async (req, res) => {
-    console.log('get excelMaster of courtier by year and month');
+    console.log(`${new Date()} get excelMaster of courtier by year and month`);
     try {
         const courtier = req.params.courtier;
         const year = req.params.year;
@@ -121,7 +121,7 @@ exports.getExcelMastersCourtierByYearMonth = async (req, res) => {
 };
 
 exports.getExcelMastersZip = async (req, res) => {
-    console.log('get excel masters zip');
+    console.log(`${new Date()} get excel masters zip`);
     try {
         const excelMastersGlobalZip = await excelMasterHandler.getZipGlobalContainer();
         const fileName = fileService.getFileName(excelMastersGlobalZip.path);
@@ -136,7 +136,7 @@ exports.getExcelMastersZip = async (req, res) => {
 };
 
 exports.getExcelMasterXlsx = async (req, res) => {
-    console.log('get excel master excel');
+    console.log(`${new Date()} get excel master excel`);
     try {
         const excelMaster = await excelMasterHandler.getExcelMaster(req.params.excel);
         const fileName = fileService.getFileName(excelMaster.path);
@@ -151,7 +151,7 @@ exports.getExcelMasterXlsx = async (req, res) => {
 };
 
 exports.getExcelMasterZip = async (req, res) => {
-    console.log('get excel master zip');
+    console.log(`${new Date()} get excel master zip`);
     try {
         const excelMasters = await excelMasterHandler.getExcelMastersZip();
         for (let excelMaster of excelMasters) {
@@ -165,11 +165,11 @@ exports.getExcelMasterZip = async (req, res) => {
 };
 
 exports.updateExcelMaster = (req, res) => {
-    console.log('update')
+    console.log(`${new Date()} updat`);
 };
 
 exports.deleteAllCorrespondances = async (req, res) => {
-    console.log('Delete all excelMasters');
+    console.log(`${new Date()} Delete all excelMasters`);
     try {
         await excelMasterHandler.deleteAllExcelMaster();
         res.status(200).end('excelMasters deleted');

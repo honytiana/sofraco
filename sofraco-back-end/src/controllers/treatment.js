@@ -2,6 +2,7 @@ const config = require('../../config.json');
 const treatmentHandler = require('../handlers/treatmentHandler');
 
 exports.createTreatment = async (req, res) => {
+    console.log(`${new Date()} create treatment`);
     const treatment = req.body;
     try {
         const c = await treatmentHandler.createTreatment(treatment);
@@ -13,7 +14,7 @@ exports.createTreatment = async (req, res) => {
 };
 
 exports.getTreatment = async (req, res) => {
-    console.log('get treatment');
+    console.log(`${new Date()} get treatment`);
     try {
         const c = await treatmentHandler.getTreatment(req.params.id);
         res.status(200).json(c);
@@ -23,7 +24,7 @@ exports.getTreatment = async (req, res) => {
 }
 
 exports.getTreatments = async (req, res) => {
-    console.log('get treatments');
+    console.log(`${new Date()} get treatments`);
     try {
         const c = await treatmentHandler.getTreatments();
         res.status(200).json(c);
@@ -33,7 +34,7 @@ exports.getTreatments = async (req, res) => {
 }
 
 exports.getTreatmentByUser = async (req, res) => {
-    console.log('get treatment by user');
+    console.log(`${new Date()} get treatment by user`);
     try {
         const c = await treatmentHandler.getTreatmentByUser(req.params.user);
         res.status(200).json(c);
@@ -43,7 +44,7 @@ exports.getTreatmentByUser = async (req, res) => {
 }
 
 exports.getProcessingTreatmentByUser = async (req, res) => {
-    console.log('get treatment by user, status processing');
+    console.log(`${new Date()} get treatment by user, status processing`);
     try {
         const c = await treatmentHandler.getTreatmentByUser(req.params.user);
         const treatment = c.filter((treatment) => {
@@ -61,7 +62,7 @@ exports.getProcessingTreatmentByUser = async (req, res) => {
 }
 
 exports.getProcessingTreatment = async (req, res) => {
-    console.log('get treatment status processing');
+    console.log(`${new Date()} get treatment status processing`);
     try {
         const treatments = await treatmentHandler.getProcessingTreatment();
         if (treatments.length > 0) {
@@ -75,7 +76,7 @@ exports.getProcessingTreatment = async (req, res) => {
 }
 
 exports.updateTreatment = async (req, res) => {
-    console.log('update treatment');
+    console.log(`${new Date()} update treatment`);
     const data = req.body;
     try {
         const treatment = await treatmentHandler.updateTreatment(req.params.id, data);
@@ -86,7 +87,7 @@ exports.updateTreatment = async (req, res) => {
 }
 
 exports.updateStatusTreatmentUser = async (req, res) => {
-    console.log('update Status Treatment User');
+    console.log(`${new Date()} update Status Treatment User`);
     try {
         const treatment = await treatmentHandler.updateStatusTreatmentUser(req.params.user, req.params.status);
         res.status(200).json(treatment);
@@ -96,7 +97,7 @@ exports.updateStatusTreatmentUser = async (req, res) => {
 };
 
 exports.updateStatusTreatment = async (req, res) => {
-    console.log('update Status Treatment');
+    console.log(`${new Date()} update Status Treatment`);
     try {
         const treatment = await treatmentHandler.updateStatusTreatment(req.params.status);
         res.status(200).json(treatment);
@@ -106,7 +107,7 @@ exports.updateStatusTreatment = async (req, res) => {
 };
 
 exports.deleteTreatment = async (req, res) => {
-    console.log('Delete Treatment');
+    console.log(`${new Date()} Delete Treatment`);
     try {
         await treatmentHandler.deleteTreatment(req.params.id);
         res.status(200).end('Treatment deleted');
@@ -116,7 +117,7 @@ exports.deleteTreatment = async (req, res) => {
 }
 
 exports.deleteAllTreatment = async (req, res) => {
-    console.log('Delete all Treatment');
+    console.log(`${new Date()} Delete all Treatment`);
     try {
         await treatmentHandler.deleteAllTreatment();
         res.status(200).end('Treatments deleted');

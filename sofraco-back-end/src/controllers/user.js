@@ -6,6 +6,7 @@ const userHandler = require('../handlers/userHandler');
 const tokenHandler = require('../handlers/tokenHandler');
 
 exports.createUser = async (req, res) => {      // signup
+    console.log(`${new Date()} create user`);
     const data = req.body;
     try {
         const hash = await bcrypt.hash(data.password, 10);
@@ -31,6 +32,7 @@ exports.createUser = async (req, res) => {      // signup
 
 exports.login = async (req, res) => {
     try {
+        console.log(`${new Date()} Login`);
         const user = await userHandler.getOneUser(req.body.login);
         if (!user) {
             return res.status(401).json({ error: 'Utilisateur non trouvé !' });
@@ -62,7 +64,7 @@ exports.createToken = (req, res, next) => {
 };
 
 exports.getUsers = async (req, res) => {
-    console.log('get users');
+    console.log(`${new Date()} get users`);
     try {
         const users = await userHandler.getUsers();
         res.status(200).json(users);
@@ -72,7 +74,7 @@ exports.getUsers = async (req, res) => {
 }
 
 exports.getUser = async (req, res) => {
-    console.log('get user');
+    console.log(`${new Date()} get user`);
     try {
         const user = await userHandler.getUserById(req.params.id);
         res.status(200).json(user);

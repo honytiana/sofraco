@@ -52,7 +52,7 @@ const deleteCacheRequire = () => {
 };
 
 exports.createDocument = async (req, res) => {  // create document
-    console.log('Create document');
+    console.log(`${new Date()} Create document`);
     try {
         const company = JSON.parse(req.body.company);
         let companySurco;
@@ -128,8 +128,8 @@ exports.createDocument = async (req, res) => {  // create document
             //     const singleDoc = saveDocument(company, pdf, req.body.extension);
             // }
         }
-        console.log('Document created');
-        res.status(200).end('Sent to Server');
+        console.log(`${new Date()} Document created`);
+        res.status(200).end(`Sent to Server`);
 
     } catch (err) {
         res.status(500).json({ err });
@@ -258,7 +258,7 @@ const getDraftsDocuments = async () => {
 }
 
 exports.setStatusDocument = async (req, res) => {
-    console.log('set status document');
+    console.log(`${new Date()} set status document`);
     try {
         let documents = await documentHandler.getDocuments();
         documents = documents.filter((doc, index) => {
@@ -389,7 +389,7 @@ const setOCRDocument = async (companyName, documentId, filePath) => {
 }
 
 exports.getDocument = async (req, res) => {
-    console.log('get document');
+    console.log(`${new Date()} get document`);
     try {
         const document = await documentHandler.getDocument(req.params.id);
         res.status(200).json(document);
@@ -399,7 +399,7 @@ exports.getDocument = async (req, res) => {
 }
 
 exports.getDocuments = async (req, res) => {
-    console.log('get documents');
+    console.log(`${new Date()} get documents`);
     try {
         const documents = await documentHandler.getDocuments();
         res.status(200).json(documents);
@@ -409,7 +409,7 @@ exports.getDocuments = async (req, res) => {
 }
 
 exports.getDocumentsByDate = async (req, res) => {
-    console.log('get documents');
+    console.log(`${new Date()} get documents`);
     try {
         const documents = await documentHandler.getDocuments();
         res.status(200).json(documents);
@@ -419,7 +419,7 @@ exports.getDocumentsByDate = async (req, res) => {
 }
 
 exports.getDocumentsByStatus = async (req, res) => {
-    console.log(`get documents by status ${req.params.status}`);
+    console.log(`${new Date()} get documents by status ${req.params.status}`);
     try {
         const documents = await documentHandler.getDocumentsByStatus(req.params.status);
         res.status(200).json(documents);
@@ -429,7 +429,7 @@ exports.getDocumentsByStatus = async (req, res) => {
 }
 
 exports.getDocumentsByYearMonth = async (req, res) => {
-    console.log('get documents by year and month');
+    console.log(`${new Date()} get documents by year and month`);
     try {
         const year = req.params.year;
         const month = req.params.month;
@@ -441,7 +441,7 @@ exports.getDocumentsByYearMonth = async (req, res) => {
 }
 
 exports.getDocumentsCompanyByYearMonth = async (req, res) => {
-    console.log('get documents of company by year and month');
+    console.log(`${new Date()} get documents of company by year and month`);
     try {
         const company = req.params.company;
         const year = req.params.year;
@@ -454,7 +454,7 @@ exports.getDocumentsCompanyByYearMonth = async (req, res) => {
 }
 
 exports.getDocumentsCompanyByAllYearMonth = async (req, res) => {
-    console.log('get all documents of company by all year and month');
+    console.log(`${new Date()} get all documents of company by all year and month`);
     try {
         const company = req.params.company;
         let archived = [];
@@ -492,7 +492,7 @@ exports.getDocumentsCompanyByAllYearMonth = async (req, res) => {
 }
 
 exports.getDocumentsCompany = async (req, res) => {
-    console.log('get documents of company');
+    console.log(`${new Date()} get documents of company`);
     try {
         const company = req.params.company;
         const documents = await documentHandler.getDocumentsCompany(company);
@@ -503,7 +503,7 @@ exports.getDocumentsCompany = async (req, res) => {
 }
 
 exports.deleteDocument = async (req, res) => {
-    console.log('Delete document');
+    console.log(`${new Date()} Delete document`);
     try {
         await documentHandler.deleteDocument(req.params.id);
         res.status(200).end('Document deleted');
@@ -513,7 +513,7 @@ exports.deleteDocument = async (req, res) => {
 }
 
 exports.deleteAllDocuments = async (req, res) => {
-    console.log('Delete all documents');
+    console.log(`${new Date()} Delete all documents`);
     try {
         await documentHandler.deleteAllDocuments();
         res.status(200).end('Documents deleted');

@@ -6,7 +6,7 @@ const courtierHandler = require('../handlers/courtierHandler');
 
 
 exports.createCourtier = async (req, res) => {
-    console.log('Create courtier');
+    console.log(`${new Date()} Create courtier`);
     const data = req.body;
     let courtier = {
         lastName: data.lastName,
@@ -28,7 +28,7 @@ exports.createCourtier = async (req, res) => {
 };
 
 exports.getCourtier = async (req, res) => {
-    console.log('get courtier');
+    console.log(`${new Date()} get courtier`);
     try {
         const courtier = await courtierHandler.getCourtierById(req.params.id);
         res.status(200).json(courtier);
@@ -38,7 +38,7 @@ exports.getCourtier = async (req, res) => {
 };
 
 exports.getCourtiers = async (req, res) => {
-    console.log('get courtiers and mandataires');
+    console.log(`${new Date()} get courtiers and mandataires`);
     try {
         const courtiers = await courtierHandler.getCourtiers();
         res.status(200).json(courtiers);
@@ -48,7 +48,7 @@ exports.getCourtiers = async (req, res) => {
 };
 
 exports.getCourtiersByRole = async (req, res) => {
-    console.log('get courtiers by role');
+    console.log(`${new Date()} get courtiers by role`);
     const limit = parseInt(req.query.limit);
     const skip = parseInt(req.query.skip);
     try {
@@ -60,7 +60,7 @@ exports.getCourtiersByRole = async (req, res) => {
 };
 
 exports.getMandatairesOfCourtier = async (req, res) => {
-    console.log('get mandataires of courtier');
+    console.log(`${new Date()} get mandataires of courtier`);
     try {
         const courtiers = await courtierHandler.getMandatairesOfCourtier(req.params.courtier);
         res.status(200).json(courtiers);
@@ -70,7 +70,7 @@ exports.getMandatairesOfCourtier = async (req, res) => {
 };
 
 exports.getCourtierOfMandataire = async (req, res) => {
-    console.log('get courtier of mandataire');
+    console.log(`${new Date()} get courtier of mandataire`);
     try {
         const courtier = await courtierHandler.getCourtierOfMandataire(req.params.mandataire);
         res.status(200).json(courtier);
@@ -80,7 +80,7 @@ exports.getCourtierOfMandataire = async (req, res) => {
 };
 
 exports.updateCourtier = async (req, res) => {
-    console.log('Update courtier');
+    console.log(`${new Date()} Update courtier`);
     try {
         const courtier = await courtierHandler.updateCourtier(req.params.id, req.body);
         res.status(200).json(courtier);
@@ -90,7 +90,7 @@ exports.updateCourtier = async (req, res) => {
 };
 
 exports.updateAllCourtier = async (req, res) => {
-    console.log('Update All courtier');
+    console.log(`${new Date()} Update All courtier`);
     try {
         const courtiers = await courtierHandler.updateAllCourtier();
         res.status(200).json(courtiers);
@@ -100,7 +100,7 @@ exports.updateAllCourtier = async (req, res) => {
 };
 
 exports.addEmailCopieCourtier = async (req, res) => {
-    console.log('Add email copie courtier');
+    console.log(`${new Date()} Add email copie courtier`);
     try {
         const courtier = await courtierHandler.addEmailCopieCourtier(req.params.courtier, req.body.emailCopie);
         res.status(200).json(courtier);
@@ -110,7 +110,7 @@ exports.addEmailCopieCourtier = async (req, res) => {
 };
 
 exports.editEmailCopieCourtier = async (req, res) => {
-    console.log('Edit email copie courtier');
+    console.log(`${new Date()} Edit email copie courtier`);
     try {
         const courtier = await courtierHandler.editEmailCopieCourtier(req.params.courtier, req.body.oldEmailCopie, req.body.emailCopie);
         res.status(200).json(courtier);
@@ -120,7 +120,7 @@ exports.editEmailCopieCourtier = async (req, res) => {
 };
 
 exports.deleteEmailCopieCourtier = async (req, res) => {
-    console.log('Delete email copie courtier');
+    console.log(`${new Date()} Delete email copie courtier`);
     try {
         const courtier = await courtierHandler.deleteEmailCopieCourtier(req.params.courtier, req.body.emailCopie);
         res.status(200).json(courtier);
@@ -130,7 +130,7 @@ exports.deleteEmailCopieCourtier = async (req, res) => {
 };
 
 exports.deleteCourtier = async (req, res) => {
-    console.log('Delete courtier');
+    console.log(`${new Date()} Delete courtier`);
     try {
         const courtiers = await courtierHandler.deleteCourtier(req.params.id);
         res.status(200).json(courtiers);
@@ -140,10 +140,10 @@ exports.deleteCourtier = async (req, res) => {
 };
 
 exports.deleteAllCourtiers = async (req, res) => {
-    console.log('Delete all courtiers');
+    console.log(`${new Date()} Delete all courtiers`);
     try {
         const courtiers = await courtierHandler.deleteAllCourtier();
-        res.status(200).end('Courtiers deleted');
+        res.status(200).end(`Courtiers deleted`);
     } catch (error) {
         res.status(500).json({ error });
     }

@@ -32,7 +32,7 @@ exports.createCompany = async (req, res) => {
 };
 
 exports.getCompany = async (req, res) => {
-    console.log('get company');
+    console.log(`${new Date()} get company`);
     try {
         const c = await companyHandler.getCompany(req.params.id);
         res.status(200).json(c);
@@ -42,7 +42,7 @@ exports.getCompany = async (req, res) => {
 };
 
 exports.getCompanyByName = async (req, res) => {
-    console.log('get company by name');
+    console.log(`${new Date()} get company by name`);
     try {
         const company = await companyHandler.getCompanyByName(req.params.name);
         res.status(200).json(company);
@@ -52,7 +52,7 @@ exports.getCompanyByName = async (req, res) => {
 };
 
 exports.getCompaniesLike = async (req, res) => {
-    console.log('search company by name');
+    console.log(`${new Date()} search company by name`);
     try {
         const companies = await companyHandler.getCompaniesLike(req.params.name);
         const newCompanies = [];
@@ -67,7 +67,7 @@ exports.getCompaniesLike = async (req, res) => {
 };
 
 exports.getCompanyByCompanySurco = async (req, res) => {
-    console.log('get company by company surco');
+    console.log(`${new Date()} get company by company surco`);
     try {
         const company = await companyHandler.getCompanyByCompanySurco(req.params.companySurco);
         res.status(200).json(company);
@@ -77,7 +77,7 @@ exports.getCompanyByCompanySurco = async (req, res) => {
 };
 
 exports.getCompanies = async (req, res) => {
-    console.log('get companies');
+    console.log(`${new Date()} get companies`);
     try {
         const companies = await companyHandler.getCompanies();
         const newCompanies = [];
@@ -92,11 +92,11 @@ exports.getCompanies = async (req, res) => {
 }
 
 exports.updateCompany = (req, res) => {
-    console.log('update')
+    console.log(`${new Date()} update`)
 }
 
 exports.deleteCompany = async (req, res) => {
-    console.log('Delete company');
+    console.log(`${new Date()} Delete company`);
     try {
         await companyHandler.deleteCompany(req.params.id);
         res.status(200).end('Company deleted');

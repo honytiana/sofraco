@@ -52,7 +52,7 @@ exports.createCorrespondance = async (req, res) => {
             }
         }
 
-        res.status(200).end('Correspondances added');
+        res.status(200).end(`${new Date()} Correspondances added`);
     } catch (error) {
         res.status(400).json({ error })
     }
@@ -60,7 +60,7 @@ exports.createCorrespondance = async (req, res) => {
 };
 
 exports.addCodeCourtier = async (req, res) => {
-    console.log('Add code courtier');
+    console.log(`${new Date()} Add code courtier`);
     const courtier = req.params.courtier;
     const idCompany = req.body.company;
     const particular = req.body.particular;
@@ -68,28 +68,28 @@ exports.addCodeCourtier = async (req, res) => {
     try {
         const company = await companyHandler.getCompany(idCompany);
         const correspondances = await correspondanceHandler.addCodeCourtier(courtier, idCompany, company.name, company.companyGlobalName, particular, code);
-        res.status(200).end('Code added');
+        res.status(200).end(`Code added`);
     } catch (error) {
         res.status(400).json({ error })
     }
 };
 
 exports.editCodeCourtier = async (req, res) => {
-    console.log('Modifier le code courtier');
+    console.log(`${new Date()} Modifier le code courtier`);
     const courtier = req.params.courtier;
     const company = req.body.company;
     const particular = req.body.particular;
     const code = req.body.code;
     try {
         const correspondances = await correspondanceHandler.editCodeCourtier(courtier, company, code);
-        res.status(200).end('Code modifié');
+        res.status(200).end(`Code modifié`);
     } catch (error) {
         res.status(400).json({ error })
     }
 };
 
 exports.getCorrespondance = async (req, res) => {
-    console.log('get correspondance');
+    console.log(`${new Date()} get correspondance`);
     try {
         const correspondance = await correspondanceHandler.getCorrespondance(req.params.id);
         res.status(200).json(correspondance);
@@ -99,7 +99,7 @@ exports.getCorrespondance = async (req, res) => {
 }
 
 exports.getCorrespondanceByCourtier = async (req, res) => {
-    console.log('get correspondance by courtier');
+    console.log(`${new Date()} get correspondance by courtier`);
     try {
         const correspondance = await correspondanceHandler.getCorrespondanceByCourtier(req.params.courtier);
         res.status(200).json(correspondance);
@@ -109,7 +109,7 @@ exports.getCorrespondanceByCourtier = async (req, res) => {
 }
 
 exports.getCorrespondances = async (req, res) => {
-    console.log('get correspondances');
+    console.log(`${new Date()} get correspondances`);
     try {
         const correspondances = await correspondanceHandler.getCorrespondances();
         res.status(200).json(correspondances);
@@ -119,7 +119,7 @@ exports.getCorrespondances = async (req, res) => {
 }
 
 exports.updateCorrespondance = async (req, res) => {
-    console.log('update correpondance');
+    console.log(`${new Date()} update correpondance`);
     try {
         const correspondance = await correspondanceHandler.updateCorrespondance(req.params.id, req.body);
         res.status(200).json(correspondance);
@@ -129,7 +129,7 @@ exports.updateCorrespondance = async (req, res) => {
 }
 
 exports.deleteCorrespondance = async (req, res) => {
-    console.log('Delete correspondance');
+    console.log(`${new Date()} Delete correspondance`);
     try {
         const corr = await correspondanceHandler.deleteCorrespondance(req.params.id);
         res.status(200).end('Correspondance deleted');
@@ -139,7 +139,7 @@ exports.deleteCorrespondance = async (req, res) => {
 }
 
 exports.deleteCodeCourtier = async (req, res) => {
-    console.log('Delete code courtier');
+    console.log(`${new Date()} Delete code courtier`);
     try {
         const corr = await correspondanceHandler.deleteCodeCourtier(req.params.courtier, req.params.code);
         res.status(200).end('Code courtier deleted');
@@ -149,7 +149,7 @@ exports.deleteCodeCourtier = async (req, res) => {
 }
 
 exports.deleteAllCorrespondances = async (req, res) => {
-    console.log('Delete all correspondances');
+    console.log(`${new Date()} Delete all correspondances`);
     try {
         await correspondanceHandler.deleteAllCorrespondances();
         res.status(200).end('Correspondances deleted');

@@ -1,7 +1,7 @@
 const tokenHandler = require("../handlers/tokenHandler");
 
 exports.getTokenByUser = async (req, res) => {
-    console.log('Get token by user');
+    console.log(`${new Date()} Get token by user`);
     try {
         const tokens = await tokenHandler.getTokenByUser(req.params.userId);
         res.status(200).json(tokens);
@@ -11,7 +11,7 @@ exports.getTokenByUser = async (req, res) => {
 };
 
 exports.getTokens = async (req, res) => {
-    console.log('Get all tokens');
+    console.log(`${new Date()} Get all tokens`);
     try {
         const tokens = await tokenHandler.getTokens();
         res.status(200).json(tokens);
@@ -21,7 +21,7 @@ exports.getTokens = async (req, res) => {
 };
 
 exports.checkToken = async (req, res) => {
-    console.log('Check token');
+    console.log(`${new Date()} Check token`);
     try {
         const token = await tokenHandler.checkToken(req.params.userId, req.cookies);
         res.status(200).json(token);
@@ -31,7 +31,7 @@ exports.checkToken = async (req, res) => {
 };
 
 exports.removeTokenById = async (req, res) => {
-    console.log('Remove token by id');
+    console.log(`${new Date()} Remove token by id`);
     try {
         await tokenHandler.removeTokenById(req.params.id);
         res.status(200).end('Token deleted');
@@ -41,7 +41,7 @@ exports.removeTokenById = async (req, res) => {
 };
 
 exports.removeTokenByUser = async (req, res) => {
-    console.log('Remove token by user');
+    console.log(`${new Date()} Remove token by user`);
     try {
         await tokenHandler.removeTokenByUser(req.params.userId);
         res.status(200).end('Token deleted');
@@ -51,7 +51,7 @@ exports.removeTokenByUser = async (req, res) => {
 };
 
 exports.removeTokenUser = async (req, res) => {
-    console.log('Remove token user');
+    console.log(`${new Date()} Remove token user`);
     try {
         await tokenHandler.removeTokenUser(req.params.userId, req.params.token);
         res.status(200).end('Token deleted');
@@ -61,7 +61,7 @@ exports.removeTokenUser = async (req, res) => {
 };
 
 exports.deleteAllToken = async (req, res) => {
-    console.log('Delete all token');
+    console.log(`${new Date()} Delete all token`);
     try {
         await tokenHandler.deleteAllToken();
         res.status(200).end('Tokens deleted');

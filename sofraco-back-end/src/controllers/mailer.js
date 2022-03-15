@@ -9,7 +9,7 @@ const mailManagement = require('../services/mail/mailManagement');
 
 
 exports.sendMail = async (req, res) => {
-    console.log('Send email');
+    console.log(`${new Date()} Send email`);
     try {
         const emailDestination = req.body.email;
         const emailCopiesDestination = req.body.emailCopie;
