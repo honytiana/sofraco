@@ -370,7 +370,7 @@ const createWorkSheetCompany = (ocr, workSheet, ocrPerCourtier) => {
             excelMasterAPICIL.createWorkSheetAPICIL(workSheet, ocr);
             break;
         case 'APIVIA':
-            excelMasterAPIVIA.createWorkSheetAPIVIA(workSheet, ocrPerCourtier);
+            excelMasterAPIVIA.createWorkSheetAPIVIA(workSheet, ocr);
             break;
         case 'APREP':
             excelMasterAPREP.createWorkSheetAPREP(workSheet, ocr);
