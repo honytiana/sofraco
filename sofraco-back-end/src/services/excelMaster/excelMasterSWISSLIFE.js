@@ -176,7 +176,7 @@ exports.createWorkSheetSWISSLIFESURCO = (workSheet, dataCourtierOCR) => {
     let debut = 2;
     for (let datas of dataCourtierOCR.infosOCR.datas) {
         excelFile.setStylizedCell(workSheet, rowNumber, 'A', datas.apporteurVente, true, border, font3);
-        excelFile.setStylizedCell(workSheet, rowNumber, 'B', (datas.dateComptabVente) ? new Date(0, 0, datas.dateComptabVente, 0, 0, 0) : '', true, border, font3, 'dd/mm/yyyy');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'B', (datas.dateComptabVente) ? datas.dateComptabVente : '', true, border, font3, 'dd/mm/yyyy');
         excelFile.setStylizedCell(workSheet, rowNumber, 'C', datas.numeroPolice, true, border, font3, '');
         excelFile.setStylizedCell(workSheet, rowNumber, 'D', datas.codeProduit, true, border, font3, '');
         excelFile.setStylizedCell(workSheet, rowNumber, 'E', datas.nomClient, true, border, font3, '');
@@ -195,11 +195,24 @@ exports.createWorkSheetSWISSLIFESURCO = (workSheet, dataCourtierOCR) => {
 
     excelFile.setSimpleCell(workSheet, rowNumber, 'M', 'TOTAL', font2);
     let result = 0;
+    const valueComm = workSheet.getRow(debut).getCell('N').value;
     if(debut === rowNumber - 2) {
-        result += workSheet.getRow(debut).getCell('N').value.result;
+        if (valueComm.result) {
+            result += valueComm.result;
+        } else {
+            result += valueComm;
+        }
     } else {
         for (let i = debut; i <= rowNumber - 2; i++) {
-            result += (workSheet.getRow(debut).getCell('N').value !== null) ? workSheet.getRow(debut).getCell('N').value.result : 0;
+            if (valueComm !== null) {
+                if(valueComm.result) {
+                    result += valueComm.result;
+                } else {
+                    result += valueComm;
+                }
+            } else {
+                result += 0;
+            }
         }
     }
     const value = {
