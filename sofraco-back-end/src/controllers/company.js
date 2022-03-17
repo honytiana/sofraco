@@ -92,7 +92,7 @@ exports.getCompanies = async (req, res) => {
 }
 
 exports.updateCompany = (req, res) => {
-    console.log(`${new Date()} update`)
+    console.log(`${new Date()} update`);
 }
 
 exports.deleteCompany = async (req, res) => {
