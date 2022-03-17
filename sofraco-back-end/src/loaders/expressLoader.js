@@ -21,7 +21,6 @@ module.exports = async function ({ app }) {
     app.use(morgan('combined', { stream: stream }));
 
     const allowedOrigin = config.allowOrigin;
-    console.log(allowedOrigin);
 
     app.use((req, res, next) => {
         const origin = req.headers.origin;
