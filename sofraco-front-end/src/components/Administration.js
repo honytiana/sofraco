@@ -380,7 +380,7 @@ class Administration extends Component {
                     columnFilter
                     tableFilter={{ label: 'Recherche', placeholder: '...' }}
                     itemsPerPageSelect={{ label: 'Nombre de courtiers par page' }}
-                    itemsPerPage={10}
+                    itemsPerPage={15}
                     hover
                     sorter
                     border
