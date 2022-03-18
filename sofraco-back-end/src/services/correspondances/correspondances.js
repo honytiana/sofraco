@@ -67,34 +67,36 @@ const setCompanyCode = (row, rowNumber, colNumber, companies, companyNameSheet, 
         let particular;
         let code;
         const codeCourtier = row.getCell(colNumber).value;
-        if (companyNameSheet.toUpperCase() === comp.globalName) {
-            if (codeCourtier !== null) {
-                idCompany = comp._id;
-                company = comp.name;
-                companyGlobalName = comp.globalName;
-                particular = '';
-                code = codeCourtier;
-            }
-        } else {
-            if (companyNameSheet.toUpperCase() !== 'MIEL MUTUELLE') {
+        if (codeCourtier !== null) {
+            if (companyNameSheet.toUpperCase() === comp.globalName) {
                 if (codeCourtier !== null) {
                     idCompany = comp._id;
                     company = comp.name;
                     companyGlobalName = comp.globalName;
-                    particular = companyNameSheet.trim().replace(/\n/g, ' ');
+                    particular = '';
                     code = codeCourtier;
                 }
+            } else {
+                if (companyNameSheet.toUpperCase() !== 'MIEL MUTUELLE') {
+                    if (codeCourtier !== null) {
+                        idCompany = comp._id;
+                        company = comp.name;
+                        companyGlobalName = comp.globalName;
+                        particular = companyNameSheet.trim().replace(/\n/g, ' ');
+                        code = codeCourtier;
+                    }
+                }
             }
-        }
-        if (idCompany && code) {
-            companies.push({
-                idCompany,
-                companyGlobalName,
-                company,
-                particular,
-                code,
-                is_enabled: true
-            });
+            if (idCompany && code) {
+                companies.push({
+                    idCompany,
+                    companyGlobalName,
+                    company,
+                    particular,
+                    code,
+                    is_enabled: true
+                });
+            }
         }
     } catch (err) {
         throw err;
