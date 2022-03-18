@@ -361,7 +361,7 @@ exports.readExcelSWISSLIFESURCO = async (file) => {
         avanceSurco: /^\s*Avance\s*surco\s*20%\s*$/i,
         incompressible: /^\s*incompressible\s*$/i,
         avanceComprisRepriseIncompressible: /^\s*avance\s*y\s*compris\s*reprise\s*incompressbile\s*$/i,
-    };	
+    };
 
     for (let worksheet of worksheets) {
         if (worksheet.name === worksheets[0].name ||
@@ -402,7 +402,7 @@ exports.readExcelSWISSLIFESURCO = async (file) => {
                     }
                 }
                 if (rowNumber > rowNumberHeader) {
-                    const {contrat, error} = generals.createContratSimpleHeader(row, indexesHeader);
+                    const { contrat, error } = generals.createContratSimpleHeader(row, indexesHeader);
                     // for (let err of error) {
                     //     errors.push(errorHandler.errorEmptyCell('SWISSLIFE SURCO', err));
                     // }
@@ -414,24 +414,30 @@ exports.readExcelSWISSLIFESURCO = async (file) => {
 
     let allContratsPerCourtier = [];
     let courtiers = [];
-    allContrats.forEach((element, index) => {
-        if (!element.apporteurVente.match(/total/i)) {
-            const courtier = { code: element.apporteurVente, libelle: element.apporteurVente };
+    let courtier = { code: null, libelle: null, total: null };
+    for (let element of allContrats) {
+        if (element.apporteurVente.match(/total/i)) {
+            courtier.total = element.avanceComprisRepriseIncompressible.result;
             if (!courtiers.some(c => { return c.code === courtier.code })) {
                 courtiers.push(courtier);
+                courtier = { code: null, libelle: null, total: null };
             }
+        } else {
+            courtier.code = element.apporteurVente;
+            courtier.libelle = element.apporteurVente;
         }
-    })
+    }
     for (let courtier of courtiers) {
         let contratCourtier = {
-            courtier: courtier,
-            contrats: []
+            courtier: { code: courtier.code, libelle: courtier.libelle},
+            contrats: [],
+            total: courtier.total
         };
-        allContrats.forEach((element, index) => {
+        for (let element of allContrats) {
             if (element.apporteurVente === contratCourtier.courtier.code) {
                 contratCourtier.contrats.push(element);
             }
-        });
+        };
         allContratsPerCourtier.push(contratCourtier);
     }
 

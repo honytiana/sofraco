@@ -68,19 +68,19 @@ exports.createContratDoubleHeader = (row, indexesFirstHeader, indexesSecondHeade
 exports.regroupContratByCourtier = (allContrats, codeCourtier) => {
     let allContratsPerCourtier = [];
     let courtiers = [];
-    allContrats.forEach((element, index) => {
+    for (let element of allContrats) {
         if (courtiers.indexOf(element[codeCourtier]) < 0) {
             courtiers.push(element[codeCourtier]);
         }
-    })
+    }
     for (let courtier of courtiers) {
         let contratCourtier = { courtier: '', contrats: [] };
-        allContrats.forEach((element, index) => {
+        for (let element of allContrats) {
             contratCourtier.courtier = courtier;
             if (element[codeCourtier] === contratCourtier.courtier) {
                 contratCourtier.contrats.push(element);
             }
-        });
+        };
         allContratsPerCourtier.push(contratCourtier);
     }
     return allContratsPerCourtier;

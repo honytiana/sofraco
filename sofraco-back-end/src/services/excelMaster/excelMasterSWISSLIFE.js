@@ -132,7 +132,8 @@ exports.getOCRSWISSLIFESURCO = (ocr) => {
                 code: contrat.courtier.code,
             },
             headers,
-            datas: contrat.contrats
+            datas: contrat.contrats,
+            total: contrat.total
         };
         infosOCR.push({ companyGlobalName: 'SWISSLIFE', companyName: 'SWISSLIFE SURCO', infosOCR: dataCourtierOCR });
     });
@@ -194,30 +195,9 @@ exports.createWorkSheetSWISSLIFESURCO = (workSheet, dataCourtierOCR) => {
     rowNumber++;
 
     excelFile.setSimpleCell(workSheet, rowNumber, 'M', 'TOTAL', font2);
-    let result = 0;
-    const valueComm = workSheet.getRow(debut).getCell('N').value;
-    if(debut === rowNumber - 2) {
-        if (valueComm.result) {
-            result += valueComm.result;
-        } else {
-            result += valueComm;
-        }
-    } else {
-        for (let i = debut; i <= rowNumber - 2; i++) {
-            if (valueComm !== null) {
-                if(valueComm.result) {
-                    result += valueComm.result;
-                } else {
-                    result += valueComm;
-                }
-            } else {
-                result += 0;
-            }
-        }
-    }
     const value = {
         formula: `SUM(N${debut}:N${rowNumber - 2})`,
-        result: result
+        result: dataCourtierOCR.infosOCR.total
     };
     excelFile.setStylizedCell(workSheet, rowNumber, 'N', value, false, {}, font2, '#,##0.00"€";\-#,##0.00"€"');
 }
