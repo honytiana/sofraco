@@ -168,29 +168,6 @@ const getOCRInfos = async () => {
 
 };
 
-const readExcelMasterContent = async (file) => {
-    try {
-        console.log(`${new Date()} DEBUT RECUPERATION CONTENU EXCEL MASTER`);
-        const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
-        let sheetsInformations = [];
-        for (let worksheet of worksheets) {
-            let sheet = { name: worksheet.name, content: [] };
-            worksheet.eachRow((row, rowNumber) => {
-                let rowValues = [];
-                row.eachCell((cell, colNumber) => {
-                    rowValues.push({ address: cell.address, value: cell.value });
-                });
-                sheet.content.push(rowValues);
-            });
-            sheetsInformations.push(sheet);
-        }
-        console.log(`${new Date()} FIN RECUPERATION CONTENU EXCEL MASTER`);
-        return sheetsInformations;
-    } catch (err) {
-        throw err;
-    }
-};
-
 const generateExcelMaster = async (ocrInfos) => {
     let excelMasters = [];
     try {
@@ -201,7 +178,7 @@ const generateExcelMaster = async (ocrInfos) => {
             let workbook;
             let recapWorkSheet;
             const cr = await courtierHandler.getCourtierById(ocrPerCourtier.courtier);
-            console.log(`DEBUT GENERATION EXCEL MASTER : ${cr.cabinet}`);
+            console.log(`${new Date()} DEBUT GENERATION EXCEL MASTER : ${cr.cabinet}`);
             excelMaster = {
                 courtier: ocrPerCourtier.courtier,
                 cabinet: cr !== null ? cr.cabinet : '',
@@ -211,8 +188,9 @@ const generateExcelMaster = async (ocrInfos) => {
                 type: 'excel',
                 is_enabled: true
             }
-            const courtier = cr !== null ? cr.cabinet.replace(/[/]/g, '_') : `cabMet${Date.now()}`;
-            excelMaster.code_courtier = courtier;
+            const courtierCabinet = cr !== null ? cr.cabinet.replace(/[/]/g, '_') : `cabMet${Date.now()}`;
+            const courtierNomPrenom = `${cr.lastName}_${cr.firstName}`;
+
             let datas = [];
             for (let ocr of ocrPerCourtier.infos) {
                 let d = { companyName: null, companyName: null, ocr: [] };
@@ -255,10 +233,15 @@ const generateExcelMaster = async (ocrInfos) => {
             try {
                 const sheets = excelMasterRecap.getWorkSheets(workbook);
                 excelMasterRecap.createWorkSheetRECAP(recapWorkSheet, sheets);
-                excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(courtier) ? courtier : ''}.xlsx`);
+                if (cr.role === 'courtier') {
+                    excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(courtierCabinet) ? courtierCabinet : ''}.xlsx`);
+                }
+                if (cr.role === 'mandataire') {
+                    excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(courtierCabinet) ? courtierCabinet : ''}_${courtierNomPrenom}.xlsx`);
+                }
                 await workbook.xlsx.writeFile(excelPath);
                 const excelContent = await readExcelMasterContent(excelPath);
-                console.log(`FIN GENERATION EXCEL MASTER : ${cr.cabinet}`);
+                console.log(`${new Date()} FIN GENERATION EXCEL MASTER : ${cr.cabinet}`);
                 excelMaster.path = excelPath;
                 excelMaster.content = excelContent;
                 excelMasters.push(excelMaster);
@@ -268,6 +251,29 @@ const generateExcelMaster = async (ocrInfos) => {
         }
         return excelMasters;
 
+    } catch (err) {
+        throw err;
+    }
+};
+
+const readExcelMasterContent = async (file) => {
+    try {
+        console.log(`${new Date()} DEBUT RECUPERATION CONTENU EXCEL MASTER`);
+        const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
+        let sheetsInformations = [];
+        for (let worksheet of worksheets) {
+            let sheet = { name: worksheet.name, content: [] };
+            worksheet.eachRow((row, rowNumber) => {
+                let rowValues = [];
+                row.eachCell((cell, colNumber) => {
+                    rowValues.push({ address: cell.address, value: cell.value });
+                });
+                sheet.content.push(rowValues);
+            });
+            sheetsInformations.push(sheet);
+        }
+        console.log(`${new Date()} FIN RECUPERATION CONTENU EXCEL MASTER`);
+        return sheetsInformations;
     } catch (err) {
         throw err;
     }
@@ -500,14 +506,13 @@ const generateZipFilesEM = async (excelMastersPerCourtier) => {
 };
 
 const generateSingleZipForAllZippedEM = async (excelsMastersZipped) => {
-    console.log('Generate single zip');
+    console.log(`${new Date()} Generate single zip`);
     let month = new Date().getMonth();
     month = (month + 1 < 10) ? `0${month + 1}` : `${month + 1}`;
     const date = `${month}${new Date().getFullYear()}`;
     const singleZip = await generateZip(`all_files_${date}`, excelsMastersZipped);
     const singleZipEM = {
         courtier: null,
-        code_courtier: null,
         company: 'ALL COMPANIES',
         create_date: new Date(),
         ocr: null,
@@ -515,7 +520,7 @@ const generateSingleZipForAllZippedEM = async (excelsMastersZipped) => {
         type: 'zip of zip',
         is_enabled: true
     };
-    console.log('Single zip DONE');
+    console.log(`${new Date()} Single zip DONE`);
     return singleZipEM;
 }
 
