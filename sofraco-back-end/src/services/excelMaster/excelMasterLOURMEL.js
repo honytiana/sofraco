@@ -20,6 +20,13 @@ exports.getOCRLOURMEL = (ocr) => {
 }
 
 exports.createWorkSheetLOURMEL = (workSheet, dataCourtierOCR) => {
+    const font1 = { name: 'Arial', size: 10 };
+    const border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' }
+    };
     const row1 = workSheet.getRow(1);
     row1.font = { bold: true, name: 'Arial', size: 10 };
     let cellNumber = 1;
@@ -31,51 +38,44 @@ exports.createWorkSheetLOURMEL = (workSheet, dataCourtierOCR) => {
     let rowNumber = 2;
     let debut = 2;
     for (let datas of dataCourtierOCR.infosOCR.datas) {
-        workSheet.getRow(rowNumber).font = { name: 'Arial', size: 10 };
-        workSheet.getRow(rowNumber).getCell('A').value = datas.courtier;
-        workSheet.getRow(rowNumber).getCell('A').fill = {
-            type: 'pattern',
-            pattern: 'solid',
-            fgColor: { argb: 'ffff00' }
-        };
-        workSheet.getRow(rowNumber).getCell('B').value = datas.b;
-        workSheet.getRow(rowNumber).getCell('C').value = datas.c;
-        workSheet.getRow(rowNumber).getCell('D').value = datas.d;
-        workSheet.getRow(rowNumber).getCell('E').value = datas.genre;
-        workSheet.getRow(rowNumber).getCell('F').value = datas.nom;
-        workSheet.getRow(rowNumber).getCell('G').value = datas.prenom;
-        workSheet.getRow(rowNumber).getCell('H').value = datas.nomDeNaissance;
-        workSheet.getRow(rowNumber).getCell('I').value = datas.codePostal;
-        workSheet.getRow(rowNumber).getCell('J').value = datas.ville;
-        workSheet.getRow(rowNumber).getCell('K').value = (datas.dateEffet) ? new Date(datas.dateEffet) : '';
-        workSheet.getRow(rowNumber).getCell('K').numFmt = 'dd/mm/yyyy';
-        workSheet.getRow(rowNumber).getCell('L').value = datas.montantCotisation;
-        workSheet.getRow(rowNumber).getCell('L').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('M').value = datas.m;
-        workSheet.getRow(rowNumber).getCell('N').value = (datas.dateDebut) ? new Date(datas.dateDebut) : '';
-        workSheet.getRow(rowNumber).getCell('N').numFmt = 'dd/mm/yyyy';
-        workSheet.getRow(rowNumber).getCell('O').value = (datas.dateFin) ? new Date(datas.dateFin) : '';
-        workSheet.getRow(rowNumber).getCell('O').numFmt = 'dd/mm/yyyy';
-        workSheet.getRow(rowNumber).getCell('P').value = datas.tauxCommission;
-        workSheet.getRow(rowNumber).getCell('Q').value = datas.montantCommission;
-        workSheet.getRow(rowNumber).getCell('Q').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('Q').fill = {
-            type: 'pattern',
-            pattern: 'solid',
-            fgColor: { argb: 'ffff00' }
-        };
+        excelFile.setStylizedCell(workSheet, rowNumber, 'A', datas.a, true, border, font1);
+        excelFile.setStylizedCell(workSheet, rowNumber, 'B', datas.b, true, border, font1);
+        excelFile.setStylizedCell(workSheet, rowNumber, 'C', datas.courtier, true, border, font1, '', 'ffff00');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'D', datas.d, true, border, font1);
+        excelFile.setStylizedCell(workSheet, rowNumber, 'E', datas.e, true, border, font1);
+        excelFile.setStylizedCell(workSheet, rowNumber, 'F', datas.f, true, border, font1);
+        excelFile.setStylizedCell(workSheet, rowNumber, 'G', datas.genre, true, border, font1);
+        excelFile.setStylizedCell(workSheet, rowNumber, 'H', datas.nom, true, border, font1);
+        excelFile.setStylizedCell(workSheet, rowNumber, 'I', datas.prenom, true, border, font1);
+        excelFile.setStylizedCell(workSheet, rowNumber, 'J', datas.nomDeNaissance, true, border, font1);
+        excelFile.setStylizedCell(workSheet, rowNumber, 'K', datas.k, true, border, font1);
+        excelFile.setStylizedCell(workSheet, rowNumber, 'L', datas.l, true, border, font1);
+        excelFile.setStylizedCell(workSheet, rowNumber, 'M', datas.codePostal, true, border, font1);
+        excelFile.setStylizedCell(workSheet, rowNumber, 'N', datas.ville, true, border, font1);
+        excelFile.setStylizedCell(workSheet, rowNumber, 'O', datas.o, true, border, font1);
+        excelFile.setStylizedCell(workSheet, rowNumber, 'P', datas.p, true, border, font1);
+        excelFile.setStylizedCell(workSheet, rowNumber, 'Q', datas.q, true, border, font1);
+        excelFile.setStylizedCell(workSheet, rowNumber, 'R', datas.r, true, border, font1);
+        excelFile.setStylizedCell(workSheet, rowNumber, 'S', datas.s, true, border, font1);
+        excelFile.setStylizedCell(workSheet, rowNumber, 'T', datas.dateEffet, true, border, font1, 'dd/mm/yyyy');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'U', datas.montantCotisation, true, border, font1, '#,##0.00"€";\-#,##0.00"€"');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'V', datas.v, true, border, font1);
+        excelFile.setStylizedCell(workSheet, rowNumber, 'W', datas.dateDebut, true, border, font1, 'dd/mm/yyyy');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'X', datas.dateFin, true, border, font1, 'dd/mm/yyyy');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'Y', datas.tauxCommission, true, border, font1);
+        excelFile.setStylizedCell(workSheet, rowNumber, 'Z', datas.montantCommission, true, border, font1, '#,##0.00"€";\-#,##0.00"€"', 'ffff00');
         rowNumber++;
     }
-    excelFile.setSimpleCell(workSheet, rowNumber, 'P', 'TOTAL', { bold: true, name: 'Arial', size: 10 });
+    excelFile.setSimpleCell(workSheet, rowNumber, 'Y', 'TOTAL', { bold: true, name: 'Arial', size: 10 });
     let result = 0;
     for (let i = debut; i <= rowNumber - 2; i++) {
-        result += workSheet.getRow(i).getCell('Q').value;
+        result += workSheet.getRow(i).getCell('Z').value;
     }
     const value = {
-        formula: `SUM(Q${debut}:Q${rowNumber - 1})`,
+        formula: `SUM(Z${debut}:Z${rowNumber - 1})`,
         result: result
     };
-    excelFile.setStylizedCell(workSheet, rowNumber, 'Q', value, false, {}, { bold: true, name: 'Arial', size: 10 }, '#,##0.00"€";\-#,##0.00"€"', 'ffff00');
+    excelFile.setStylizedCell(workSheet, rowNumber, 'Z', value, false, {}, { bold: true, name: 'Arial', size: 10 }, '#,##0.00"€";\-#,##0.00"€"', 'ffff00');
 }
 
 
