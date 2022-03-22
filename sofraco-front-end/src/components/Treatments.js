@@ -208,7 +208,7 @@ class Treatments extends Component {
                                         </CModalBody>
                                         <CModalFooter>
                                             <CButton
-                                                color="secondary"
+                                                className={'sofraco-button-anuler'}
                                                 onClick={() => { this.toggleDetails(index) }}
                                             >Annuler</CButton>
                                         </CModalFooter>

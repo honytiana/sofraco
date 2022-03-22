@@ -3,3 +3,8 @@
     max-height: 600px;
     overflow: auto;
 }
+
+.sofraco-button-anuler {
+  color: #fff;
+  background-color: #F39200;
+}

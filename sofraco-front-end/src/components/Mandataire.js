@@ -407,7 +407,7 @@ class Mandataire extends Component {
                     </CModalBody>
                     <CModalFooter>
                         <CButton
-                            color="secondary"
+                            className={'sofraco-button-anuler'}
                             onClick={() => { this.activerAjoutMandataire() }}
                         >Annuler</CButton>
                     </CModalFooter>
@@ -544,7 +544,7 @@ class Mandataire extends Component {
                                         </CModalBody>
                                         <CModalFooter>
                                             <CButton
-                                                color="secondary"
+                                                className={'sofraco-button-anuler'}
                                                 onClick={() => { this.toggleDetails(index) }}
                                             >Annuler</CButton>
                                         </CModalFooter>
@@ -585,7 +585,7 @@ class Mandataire extends Component {
                             Supprimer
                         </CButton>
                         <CButton
-                            color="secondary"
+                            className={'sofraco-button-anuler'}
                             onClick={(e) => this.closeDeletePopup()}
                             size="sm">
                             Annuler

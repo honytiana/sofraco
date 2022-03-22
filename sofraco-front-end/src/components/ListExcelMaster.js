@@ -374,7 +374,7 @@ class ListExcelMaster extends Component {
                                                                                             <CModalFooter key={`emmodalFooter${e._id}`}>
                                                                                                 <CButton
                                                                                                     key={`em${e._id}`}
-                                                                                                    color="secondary"
+                                                                                                    className={'sofraco-button-anuler'}
                                                                                                     onClick={() => { this.toggleDetails(e._id) }}
                                                                                                 >Annuler</CButton>
                                                                                             </CModalFooter>

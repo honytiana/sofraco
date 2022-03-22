@@ -15,3 +15,8 @@
 .sofraco-modal-body {
     overflow: auto;
 }
+
+.sofraco-button-anuler {
+  color: #fff;
+  background-color: #F39200;
+}

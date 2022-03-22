@@ -30,3 +30,8 @@
 .sofraco-modal-excelMaster .modal-dialog {
     max-width: 100% !important;
 }
+
+.sofraco-button-anuler {
+  color: #fff;
+  background-color: #F39200;
+}

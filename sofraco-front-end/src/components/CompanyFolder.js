@@ -194,7 +194,7 @@ class CompanyFolder extends Component {
                     </CModalBody>
                     <CModalFooter>
                         <CButton
-                            color="secondary"
+                            className={'sofraco-button-anuler'}
                             onClick={this.props.onCloseModal}
                         >Annuler</CButton>
                     </CModalFooter>

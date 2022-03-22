@@ -384,7 +384,7 @@ class Correspondance extends Component {
                             onClick={() => { this.activerAjoutCorrespondance() }}
                         >Annuler</CButton>
                         <CButton
-                            color="secondary"
+                            className={'sofraco-button-anuler'}
                             onClick={() => { this.activerAjoutCorrespondance() }}
                         >Annuler</CButton>
                     </CModalFooter>
@@ -466,7 +466,7 @@ class Correspondance extends Component {
                                             </CModalBody>
                                             <CModalFooter>
                                                 <CButton
-                                                    color="secondary"
+                                                    className={'sofraco-button-anuler'}
                                                     onClick={() => { this.toggleDetails(index) }}
                                                 >Annuler</CButton>
                                             </CModalFooter>
