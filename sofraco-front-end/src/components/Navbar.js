@@ -104,7 +104,13 @@ class Navbar extends Component {
                         <CNavLink href='/treatments'>Traitements</CNavLink>
                     </CNavbarNav>
                     <CNavbarNav className="ml-auto">
-                        <CNavLink href='/admin' >Administration</CNavLink>
+                        <CDropdown inNav >
+                            <CDropdownToggle>Administration</CDropdownToggle>
+                            <CDropdownMenu className="sofraco-dropdown-menu">
+                                <CDropdownItem className="sofraco-dropdown-item" href='/list-courtier' >Courtiers</CDropdownItem>
+                                <CDropdownItem className="sofraco-dropdown-item" href='/client' >Clients</CDropdownItem>
+                            </CDropdownMenu>
+                        </CDropdown>
                         <CDropdown inNav >
                             <CDropdownToggle>
                                 <CIcon

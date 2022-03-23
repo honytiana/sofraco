@@ -27,6 +27,12 @@ class CorrespondanceHandler {
         return Correspondance.find();
     }
 
+    getCorrespondancesLike(name) {
+        return Correspondance.find({
+            'companies.code': { $regex: name, $options: 'i' }
+        });
+    }
+
     addCodeCourtier(courtier, idCompany, company, companyGlobalName, particular, code) {
         return Correspondance.findOneAndUpdate(
             {

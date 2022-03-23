@@ -57,7 +57,7 @@ class Courtier extends Component {
 
     componentWillUnmount() {
         this._isMounted = false;
-        this.props.administrationCallback();
+        this.props.listCourtierCallback();
     }
 
     onSubmitHandler(event) {
@@ -119,7 +119,7 @@ class Courtier extends Component {
                         toast: true,
                         messageToast: { header: 'SUCCESS', color: 'success', message: `Les emails en copie ont été ajouté au courtier ${res.data.cabinet}` },
                     });
-                    this.props.administrationCallback();
+                    this.props.listCourtierCallback();
                 }).catch((err) => {
                     this.setState({
                         toast: true,
@@ -215,7 +215,7 @@ class Courtier extends Component {
                     toast: true,
                     messageToast: { header: 'SUCCESS', color: 'success', message: `${options.emailCopie} à été modifié` }
                 });
-                this.props.administrationCallback();
+                this.props.listCourtierCallback();
             }).catch((err) => {
                 this.setState({
                     toast: true,
@@ -253,7 +253,7 @@ class Courtier extends Component {
                     toast: true,
                     messageToast: { header: 'SUCCESS', color: 'success', message: `${options.emailCopie} à été supprimé` }
                 });
-                this.props.administrationCallback();
+                this.props.listCourtierCallback();
             }).catch((err) => {
                 this.setState({
                     toast: true,

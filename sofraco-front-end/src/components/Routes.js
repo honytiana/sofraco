@@ -14,7 +14,8 @@ class RouteComponent extends Component {
         // this.Upload = React.lazy(() => import('./Upload'));
         this.Envoi = React.lazy(() => import('./Envoi'));
         this.Treatments = React.lazy(() => import('./Treatments'));
-        this.Administration = React.lazy(() => import('./Administration'));
+        this.ListCourtier = React.lazy(() => import('./ListCourtier'));
+        this.Client = React.lazy(() => import('./Client'));
     }
 
     componentDidMount() {
@@ -38,8 +39,11 @@ class RouteComponent extends Component {
                         <Route path="/treatments" component={this.Treatments} >
                             <this.Treatments token={this.props.token} />
                         </Route>
-                        <Route path="/admin" component={this.Administration} >
-                            <this.Administration token={this.props.token} />
+                        <Route path="/list-courtier" component={this.ListCourtier} >
+                            <this.ListCourtier token={this.props.token} />
+                        </Route>
+                        <Route path="/client" component={this.Client} >
+                            <this.Client token={this.props.token} />
                         </Route>
                     </Switch>
                 </Suspense>
@@ -58,7 +62,7 @@ class RouteComponent extends Component {
 //                 <Route path="/companies" component={Companies} />
 //                 {/* <Route path="/upload" component={Upload} /> */}
 //                 <Route path="/treatments" component={Treatments} />
-//                 <Route path="/admin" component={Administration} />
+//                 <Route path="/admin" component={ListCourtier} />
 //             </Switch>
 //         </Suspense>
 //     </Router>

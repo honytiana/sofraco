@@ -3,6 +3,7 @@ const path = require('path');
 const config = require('../../config.json');
 const Courtier = require('../models/courtier');
 const courtierHandler = require('../handlers/courtierHandler');
+const correspondanceHandler = require('../handlers/correspondanceHandler');
 
 
 exports.createCourtier = async (req, res) => {
@@ -74,6 +75,18 @@ exports.getCourtierOfMandataire = async (req, res) => {
     try {
         const courtier = await courtierHandler.getCourtierOfMandataire(req.params.mandataire);
         res.status(200).json(courtier);
+    } catch (error) {
+        res.status(400).json({ error });
+    }
+};
+
+exports.getGlobalCourtierMandataireCodeLike = async (req, res) => {
+    console.log(`${new Date()} search courtier by name, cabinet`);
+    try {
+        const courtiers = await courtierHandler.getCourtiersLike(req.params.name);
+        const mandataires = await courtierHandler.getMandatairesLike(req.params.name);
+        const correspondances = await correspondanceHandler.getCorrespondancesLike(req.params.name);
+        res.status(200).json({ courtiers, mandataires, correspondances });
     } catch (error) {
         res.status(400).json({ error });
     }

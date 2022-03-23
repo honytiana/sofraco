@@ -1,3 +1,4 @@
+const client = require('../routes/client');
 const company = require('../routes/company');
 const correspondance = require('../routes/correspondance');
 const courtier = require('../routes/courtier');
@@ -9,6 +10,7 @@ const treatment = require('../routes/treatment');
 const user = require('../routes/user');
 
 module.exports = async function ({ app }) {
+    app.use('/api/client', client);
     app.use('/api/correspondance', correspondance);
     app.use('/api/company', company);
     app.use('/api/courtier', courtier);

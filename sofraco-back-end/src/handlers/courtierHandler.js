@@ -52,6 +52,41 @@ class CourtierHandler {
         return Courtier.findOne({ _id: id });
     }
 
+    getCourtiersLike(name) {
+        return Courtier.find({
+            role: 'courtier',
+            $or: [
+                {
+                    lastName: { $regex: name, $options: 'i' }
+                },
+                {
+                    firstName: { $regex: name, $options: 'i' }
+                },
+                {
+                    cabinet: { $regex: name, $options: 'i' }
+                },
+            ]
+        });
+    }
+
+    getMandatairesLike(name) {
+        return Courtier.find({
+            role: 'mandataire',
+            $or: [
+                {
+                    lastName: { $regex: name, $options: 'i' }
+                },
+                {
+                    firstName: { $regex: name, $options: 'i' }
+                },
+                {
+                    cabinet: { $regex: name, $options: 'i' }
+                },
+            ]
+        });
+    }
+       
+
     updateCourtier(id, data) {
         return Courtier.findByIdAndUpdate(id, data);
     }

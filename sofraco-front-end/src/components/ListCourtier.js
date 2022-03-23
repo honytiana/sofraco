@@ -20,19 +20,20 @@ import {
     CForm,
     CFormGroup,
     CLabel,
-    CInput
+    CInput,
+    CInputGroup
 } from '@coreui/react';
 import axios from 'axios';
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
 
-import '../styles/Administration.css';
+import '../styles/ListCourtier.css';
 import config from '../config.json';
 import Courtier from './Courtier';
 import Mandataire from './Mandataire';
 import Correspondance from './Correspondance';
 
-class Administration extends Component {
+class ListCourtier extends Component {
 
     constructor(props) {
         super(props);
@@ -57,7 +58,8 @@ class Administration extends Component {
         this.fetchCourtiers = this.fetchCourtiers.bind(this);
         this.activerAjoutCourtier = this.activerAjoutCourtier.bind(this);
         this.ajouterCourtier = this.ajouterCourtier.bind(this);
-        this.handleAdministrationCallback = this.handleAdministrationCallback.bind(this);
+        this.handleListCourtierCallback = this.handleListCourtierCallback.bind(this);
+        this.onSearchGlobalCourtierMandataireCode = this.onSearchGlobalCourtierMandataireCode.bind(this);
     }
 
     componentDidMount() {
@@ -291,8 +293,45 @@ class Administration extends Component {
         });
     }
 
-    handleAdministrationCallback() {
+    handleListCourtierCallback() {
         this._isMounted && this.fetchCourtiers();
+    }
+
+    onSearchGlobalCourtierMandataireCode(e) {
+        if (e.target.value !== '') {
+            axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company/search/${e.target.value}`, {
+                headers: {
+                    'Authorization': `Bearer ${this.state.token}`
+                }
+            })
+                .then((data) => {
+                    return data.data
+                })
+                .then((companies) => {
+                    if (companies.length > 0) {
+                        let collapsed = [];
+                        for (let company of companies) {
+                            collapsed.push({ company: company.name, collapse: false });
+                        }
+                        this.setState({
+                            companies: companies,
+                            collapsed: collapsed,
+                        });
+                    } else {
+                        this.setState({
+                            companies: []
+                        });
+                    }
+                })
+                .catch((err) => {
+                    console.log(err)
+                });
+        } else {
+            this._isMounted && this.getCompanies();
+            this.setState({
+                search: false
+            });
+        }
     }
 
     render() {
@@ -369,11 +408,32 @@ class Administration extends Component {
                     </CModalBody>
                     <CModalFooter>
                         <CButton
-                            color="secondary"
+                            className={'sofraco-button-anuler'}
                             onClick={() => { this.activerAjoutCourtier() }}
                         >Annuler</CButton>
                     </CModalFooter>
                 </CModal>
+                <CFormGroup>
+                    <CInputGroup className={'sofraco-form-search'}>
+                        <CInput
+                            type="text"
+                            id="sofraco-search-company"
+                            name="sofraco-search-company"
+                            className={'sofraco-input'}
+                            placeholder='Recherche'
+                            onChange={(e) => { this.onSearchGlobalCourtierMandataireCode(e) }}
+                        />
+                        <span className="input-group-append">
+                            <CButton className={"btn border sofraco-button-icon-search"} >
+                                <CIcon
+                                    className={'sofraco-icon-search'}
+                                    size="sm"
+                                    onClick={(e) => { this.onSearchGlobalCourtierMandataireCode(e) }}
+                                    icon={icon.cilSearch} />
+                            </CButton>
+                        </span>
+                    </CInputGroup>
+                </CFormGroup>
                 <CDataTable
                     items={this.state.courtiers}
                     fields={this.state.fields}
@@ -444,7 +504,7 @@ class Administration extends Component {
                                                             courtier={item}
                                                             key={`courtier${this.state.num}${item._id}`}
                                                             token={this.state.token}
-                                                            administrationCallback={() => { this.handleAdministrationCallback() }}
+                                                            listCourtierCallback={() => { this.handleListCourtierCallback() }}
                                                         />
                                                     </CTabPane>
                                                     <CTabPane data-tab="mandataires">
@@ -458,7 +518,7 @@ class Administration extends Component {
                                         </CModalBody>
                                         <CModalFooter>
                                             <CButton
-                                                color="secondary"
+                                                className={'sofraco-button-anuler'}
                                                 onClick={() => { this.toggleDetails(index) }}
                                             >Annuler</CButton>
                                         </CModalFooter>
@@ -509,7 +569,7 @@ class Administration extends Component {
                             Supprimer
                         </CButton>
                         <CButton
-                            color="secondary"
+                            className={'sofraco-button-anuler'}
                             onClick={(e) => this.closeDeletePopup()}
                             size="sm">
                             Annuler
@@ -541,4 +601,4 @@ class Administration extends Component {
 
 }
 
-export default Administration;
+export default ListCourtier;

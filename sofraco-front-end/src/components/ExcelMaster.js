@@ -256,6 +256,8 @@ class ExcelMaster extends Component {
                                                                         v = con.value.text;
                                                                     } else if (con.value.result) {
                                                                         v = con.value.result;
+                                                                    } else if (con.value.formula) {
+                                                                        v = con.value.formula;
                                                                     } else {
                                                                         v = con.value;
                                                                     }
@@ -269,62 +271,6 @@ class ExcelMaster extends Component {
                                                 })}
                                             </tbody>
                                         </table>
-                                        {/* <CDataTable
-                                            key={`dataTable_${i}`}
-                                            items={c.content}
-                                            fields={this.state.fields}
-                                            hover
-                                            sorter
-                                            border
-                                            scopedSlots={{
-                                                'edit':
-                                                    (item, index) => {
-                                                        return (
-                                                            <td className="py-2">
-                                                                <CButton
-                                                                    color="warning"
-                                                                    variant="outline"
-                                                                    shape="square"
-                                                                    size="sm"
-                                                                    onClick={() => { this.toggleDetails(index) }}
-                                                                >
-                                                                    Afficher
-                                                                </CButton>
-                                                            </td>
-                                                        )
-                                                    },
-                                                'details':
-                                                    (item, index) => {
-                                                        return (
-                                                            <CModal
-                                                                show={this.state.details.includes(index)}
-                                                                onClose={() => { this.toggleDetails(index) }}
-                                                                centered={true}
-                                                                className="sofraco-modal"
-                                                            >
-                                                                <CModalHeader closeButton>Excel master</CModalHeader>
-                                                                <CModalBody className="sofraco-modal-body">
-                                                                    <CForm action="" method="post" >
-                                                                        <CFormGroup row>
-                                                                            <CLabel className="col-sm-2" htmlFor={`sofraco-compagnie_${item._id}`}>excel</CLabel>
-                                                                            <CInput
-                                                                                type="text"
-                                                                            />
-                                                                        </CFormGroup>
-                                                                    </CForm>
-                                                                </CModalBody>
-                                                                <CModalFooter>
-                                                                    <CButton
-                                                                        color="secondary"
-                                                                        onClick={() => { this.toggleDetails(index) }}
-                                                                    >Annuler</CButton>
-                                                                </CModalFooter>
-                                                            </CModal>
-                                                        )
-                                                    }
-                                            }
-                                            }
-                                        /> */}
                                     </CTabPane>
                                 )
                             })}
