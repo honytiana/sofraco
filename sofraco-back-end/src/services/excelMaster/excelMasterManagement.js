@@ -151,7 +151,7 @@ const getOCRInfos = async () => {
                 case 'SMATIS MCMS':
                     infos.push(excelMasterSMATIS.getOCRSMATISMCMS(ocr));
                     break;
-                case 'SWISSLIFE SURCO':
+                case 'SWISS LIFE SURCO':
                     infos.push(excelMasterSWISSLIFE.getOCRSWISSLIFESURCO(ocr));
                     break;
                 case 'UAF LIFE PATRIMOINE':
@@ -508,7 +508,7 @@ const createWorkSheetCompany = (ocr, workSheet, ocrPerCourtier) => {
         case 'SMATIS MCMS':
             excelMasterSMATIS.createWorkSheetSMATISMCMS(workSheet, ocr);
             break;
-        case 'SWISSLIFE SURCO':
+        case 'SWISS LIFE SURCO':
             excelMasterSWISSLIFE.createWorkSheetSWISSLIFESURCO(workSheet, ocr);
             break;
         case 'UAF LIFE PATRIMOINE':

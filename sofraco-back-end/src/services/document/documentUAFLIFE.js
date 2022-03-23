@@ -110,7 +110,7 @@ exports.readExcelUAFLIFE = async (file) => {
                 if (rowNumber > rowNumberHeader) {
                     const { contrat, error } = generals.createContratSimpleHeader(row, indexesHeader);
                     // for (let err of error) {
-                    //     errors.push(errorHandler.errorEmptyCell('SWISSLIFE SURCO', err));
+                    //     errors.push(errorHandler.errorEmptyCell('SWISS LIFE SURCO', err));
                     // }
                     allContrats.push(contrat);
                 }

@@ -435,7 +435,7 @@ module.exports = async function () {
         const resultSWISSLIFE = await swisslifeService('SWISSLIFE Worker thread');
         console.log(resultSWISSLIFE);
     } catch (err) {
-        console.log(`Error SWISSLIFE Worker : \n ${err}`);
+        console.log(`Error SWISS LIFE Worker : \n ${err}`);
     }
     try {
         const resultUAFLIFE = await uafLifeService('UAFLIFE Worker thread');

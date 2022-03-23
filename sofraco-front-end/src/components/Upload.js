@@ -280,7 +280,7 @@ class Upload extends Component {
             case 'SPVIE':
                 this.testExtension(extension, 'XLSX', false, false, files);
                 break;
-            case 'SWISSLIFE SURCO':
+            case 'SWISS LIFE SURCO':
                 this.testExtension(extension, 'XLSX', true, false, files);
                 break;
             case 'UAF LIFE PATRIMOINE':

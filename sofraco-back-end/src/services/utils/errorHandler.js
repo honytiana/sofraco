@@ -933,7 +933,7 @@ exports.errorReadExcelSWISSLIFESURCO = (index) => {
         avanceComprisRepriseIncompressible: 'avance y compris reprise incompressbile'
     };
 
-    const errorSwisslifeSurco = `SWISSLIFE SURCO : La colonne ${indexesHeader[index]} n'est pas présente`;
+    const errorSwisslifeSurco = `SWISS LIFE SURCO : La colonne ${indexesHeader[index]} n'est pas présente`;
     return errorSwisslifeSurco;
 };
 

@@ -369,7 +369,7 @@ const setOCRDocument = async (companyName, documentId, filePath) => {
             case 'SPVIE':
                 ocr = await documentSPVIE.readExcelSPVIE(filePath);
                 break;
-            case 'SWISSLIFE SURCO':
+            case 'SWISS LIFE SURCO':
                 ocr = await documentSWISSLIFE.readExcelSWISSLIFESURCO(filePath);
                 break;
             case 'UAF LIFE PATRIMOINE':

@@ -339,7 +339,7 @@ const readBordereauSLADE = (textFilePaths) => {
 }
 
 exports.readExcelSWISSLIFESURCO = async (file) => {
-    console.log(`${new Date()} DEBUT TRAITEMENT SWISSLIFE SURCO`);
+    console.log(`${new Date()} DEBUT TRAITEMENT SWISS LIFE SURCO`);
     const excecutionStartTime = performance.now();
     const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
     let headers = [];
@@ -404,7 +404,7 @@ exports.readExcelSWISSLIFESURCO = async (file) => {
                 if (rowNumber > rowNumberHeader) {
                     const { contrat, error } = generals.createContratSimpleHeader(row, indexesHeader);
                     // for (let err of error) {
-                    //     errors.push(errorHandler.errorEmptyCell('SWISSLIFE SURCO', err));
+                    //     errors.push(errorHandler.errorEmptyCell('SWISS LIFE SURCO', err));
                     // }
                     allContrats.push(contrat);
                 }
@@ -448,7 +448,7 @@ exports.readExcelSWISSLIFESURCO = async (file) => {
     console.log('Total Execution time : ', executionTime);
     ocr.executionTime = executionTime;
     ocr.executionTimeMS = executionTimeMS;
-    console.log(`${new Date()} FIN TRAITEMENT SWISSLIFE SURCO`);
+    console.log(`${new Date()} FIN TRAITEMENT SWISS LIFE SURCO`);
     return ocr;
 };
 
