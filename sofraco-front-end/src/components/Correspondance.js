@@ -380,10 +380,6 @@ class Correspondance extends Component {
                     </CModalBody>
                     <CModalFooter>
                         <CButton
-                            className="sofraco-button"
-                            onClick={() => { this.activerAjoutCorrespondance() }}
-                        >Annuler</CButton>
-                        <CButton
                             className={'sofraco-button-anuler'}
                             onClick={() => { this.activerAjoutCorrespondance() }}
                         >Annuler</CButton>
