@@ -67,7 +67,26 @@ exports.addCodeCourtier = async (req, res) => {
     const code = req.body.code;
     try {
         const company = await companyHandler.getCompany(idCompany);
-        const correspondances = await correspondanceHandler.addCodeCourtier(courtier, idCompany, company.name, company.companyGlobalName, particular, code);
+        const corr = await correspondanceHandler.getCorrespondanceByCourtier(courtier);
+        if (corr) {
+            const correspondances = await correspondanceHandler.addCodeCourtier(courtier, idCompany, company.name, company.globalName, particular, code);
+        } else {
+            const correspondance = {
+                courtier,
+                companies: [
+                    {
+                        idCompany: idCompany,
+                        company: company.name,
+                        companyGlobalName: company.globalName,
+                        particular: particular,
+                        code: code,
+                        is_enabled: true
+                    }
+
+                ]
+            };
+            const c = await correspondanceHandler.createCorrespondance(correspondance);
+        }
         res.status(200).end(`Code added`);
     } catch (error) {
         res.status(400).json({ error })
