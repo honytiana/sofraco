@@ -360,6 +360,7 @@ const getAllOCRInfosPerCourtiers = (ocrInfos, correspondances) => {
                         }
                     }
                 }
+                // ocrInfos.splice(ocrInfos.indexOf(ocr), 1);
             }
         }
         if (infos.length > 0) {
