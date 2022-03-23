@@ -91,8 +91,14 @@ exports.getCompanies = async (req, res) => {
     }
 }
 
-exports.updateCompany = (req, res) => {
+exports.updateCompany = async (req, res) => {
     console.log(`${new Date()} update`);
+    try {
+        const company = await companyHandler.updateCompany(req.params.id, req.body);
+        res.status(200).json(company);
+    } catch (error) {
+        res.status(500).json({ error });
+    }
 }
 
 exports.deleteCompany = async (req, res) => {
