@@ -10,7 +10,7 @@ router.route('/').post(accessControl, clientController.createClient);
 router.route('/courtier/:courtier').get(accessControl, clientController.getClientsOfCourtier);
 router.route('/:id').put(accessControl, clientController.updateClient);
 router.route('/').put(clientController.deleteAllClients);
-router.route('/:id').post(accessControl, clientController.deleteClient);
+router.route('/:id').delete(accessControl, clientController.deleteClient);
 
 
 module.exports = router;

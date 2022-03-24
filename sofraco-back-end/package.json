@@ -32,6 +32,8 @@
     "pdf-lib": "^1.17.1",
     "run": "^1.4.0",
     "socket.io": "^4.4.1",
+    "swagger": "^0.7.5",
+    "swagger-ui-express": "^4.3.0",
     "test": "^0.6.0",
     "winston": "^3.4.0",
     "winston-daily-rotate-file": "^4.5.5",

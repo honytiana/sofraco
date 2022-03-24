@@ -7,6 +7,7 @@ const excelMaster = require('../routes/excelMaster');
 const mailer = require('../routes/mailer');
 const token = require('../routes/token');
 const treatment = require('../routes/treatment');
+const swagger = require('../routes/swagger');
 const user = require('../routes/user');
 
 module.exports = async function ({ app }) {
@@ -19,6 +20,7 @@ module.exports = async function ({ app }) {
     app.use('/api/mailer', mailer);
     app.use('/api/token', token);
     app.use('/api/treatment', treatment);
+    app.use('/api/api-docs', swagger);
     app.use('/api/user', user);
 }
 
