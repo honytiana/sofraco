@@ -19,9 +19,9 @@ exports.readExcelTableauCorrespondance = async (role) => {
                     const courtierFirstNameSheet = row.getCell('B').value;
                     const courtierCabinetSheet = row.getCell('C').value;
                     for (let cr of courtiers) {
-                        if (courtierCabinetSheet !== null &&
+                        if ((courtierCabinetSheet !== null && courtierFirstNameSheet !== null && courtierCabinetSheet !== null) &&
                             (courtierLastNameSheet.toUpperCase().trim() === cr.lastName.toUpperCase() && courtierFirstNameSheet.toUpperCase().trim() === cr.firstName.toUpperCase() && courtierCabinetSheet.toUpperCase().trim() === cr.cabinet.toUpperCase()) ||
-                            courtierCabinetSheet === null &&
+                            (courtierCabinetSheet === null && courtierFirstNameSheet !== null && courtierCabinetSheet !== null) &&
                             (courtierLastNameSheet.toUpperCase().trim() === cr.lastName.toUpperCase() && courtierFirstNameSheet.toUpperCase().trim() === cr.firstName.toUpperCase())) {
                             const courtier = cr._id;
                             const role_courtier = cr.role;
