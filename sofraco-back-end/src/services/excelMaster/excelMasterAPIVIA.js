@@ -19,8 +19,8 @@ exports.getOCRAPIVIA = (ocr) => {
     return infosOCR;
 }
 
-exports.createWorkSheetAPIVIA = (workSheet, dataCourtierOCR) => {
-    let rowNumber = 1;
+exports.createWorkSheetAPIVIA = (workSheet, dataCourtierOCR, reste = false, rowNumberI = null) => {
+    let rowNumber = !reste ? 1 : rowNumberI;
     const row = workSheet.getRow(rowNumber);
     row.height = 40;
     row.font = { bold: true, name: 'Arial', size: 10 };
@@ -66,6 +66,9 @@ exports.createWorkSheetAPIVIA = (workSheet, dataCourtierOCR) => {
     };
     workSheet.getRow(rowNumber).getCell('L').font = { bold: true, name: 'Arial', size: 10 };
     workSheet.getRow(rowNumber).getCell('L').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+    if (reste) {
+        return rowNumber;
+    }
 }
 
 
