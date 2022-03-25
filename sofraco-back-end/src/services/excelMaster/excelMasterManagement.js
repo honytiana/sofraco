@@ -321,198 +321,439 @@ const getAllOCRInfosPerCourtiers = (ocrInfos, correspondances) => {
 };
 
 const setExcelMaster = async (allOcr) => {
-    let excelMasters = [];
-    for (let ocrPerCourtier of allOcr) {
-        let excelMaster;
-        let workbook;
-        let recapWorkSheet;
-        let cr;
-        let courtierCabinet;
-        let courtierNomPrenom;
-        if (ocrPerCourtier.courtier !== null) {
-            cr = await courtierHandler.getCourtierById(ocrPerCourtier.courtier);
-            console.log(`${new Date()} DEBUT GENERATION EXCEL MASTER : ${cr.cabinet}`);
-            excelMaster = {
-                courtier: ocrPerCourtier.courtier,
-                cabinet: cr !== null ? cr.cabinet : '',
-                create_date: new Date(),
-                path: null,
-                content: null,
-                type: 'excel',
-                is_enabled: true
-            }
-            courtierCabinet = cr !== null ? cr.cabinet.replace(/[/]/g, '_') : `cabMet${Date.now()}`;
-            courtierNomPrenom = `${cr.lastName}_${cr.firstName}`;
-        } else {
-            console.log(`${new Date()} DEBUT GENERATION EXCEL MASTER : reste de données`);
-            excelMaster = {
-                courtier: ocrPerCourtier.courtier,
-                cabinet: 'RESTE_DONNEES',
-                create_date: new Date(),
-                path: null,
-                content: null,
-                type: 'excel',
-                is_enabled: true
-            }
-        }
-
-        let datas = [];
-        for (let ocr of ocrPerCourtier.infos) {
-            let d = { companyName: null, companyName: null, ocr: [] };
-            editDataOCR(ocr, datas, d, 'CARDIF');
-            editDataOCR(ocr, datas, d, 'CEGEMA');
-        }
-        removeDoublonsOcr(datas, ocrPerCourtier);
-        ocrPerCourtier.infos = [...ocrPerCourtier.infos, ...datas];
-        workbook = new ExcelJS.Workbook();
-        recapWorkSheet = workbook.addWorksheet('RECAP');
-        let month = new Date().getMonth();
-        month = (month + 1 < 10) ? `0${month + 1}` : `${month + 1}`;
-        const date = `${month}${new Date().getFullYear()}`;
-        if (ocrPerCourtier.company === 'METLIFE') {
-            let workSheet = workbook.addWorksheet(ocrPerCourtier.companyGlobalName);
-            workSheet.properties.defaultColWidth = 20;
-            excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, ocrPerCourtier);
-        }
-        else {
-            for (let ocr of ocrPerCourtier.infos) {
-                if (ocr.companyName && ocr.companyName !== null) {
-                    if (!workbook.worksheets.some(worksheet => worksheet.name === ocr.companyGlobalName)) {
-                        let workSheet;
-                        if (ocr.companyGlobalName === 'MMA') {
-                            workSheet = workbook.addWorksheet(ocr.companyName);
-                        } else {
-                            workSheet = workbook.addWorksheet(ocr.companyGlobalName);
+    try {
+        let excelMasters = [];
+        for (let ocrPerCourtier of allOcr) {
+            let excelMaster;
+            let workbook;
+            let recapWorkSheet;
+            let cr;
+            let courtierCabinet;
+            let courtierNomPrenom;
+            let reste =  false;
+            if (ocrPerCourtier.courtier !== null) {
+                cr = await courtierHandler.getCourtierById(ocrPerCourtier.courtier);
+                console.log(`${new Date()} DEBUT GENERATION EXCEL MASTER : ${cr.cabinet}`);
+                excelMaster = {
+                    courtier: ocrPerCourtier.courtier,
+                    cabinet: cr !== null ? cr.cabinet : '',
+                    create_date: new Date(),
+                    path: null,
+                    content: null,
+                    type: 'excel',
+                    is_enabled: true
+                };
+                courtierCabinet = cr !== null ? cr.cabinet.replace(/[/]/g, '_') : `cabMet${Date.now()}`;
+                courtierNomPrenom = `${cr.lastName}_${cr.firstName}`;
+            } else {
+                console.log(`${new Date()} DEBUT GENERATION EXCEL MASTER : reste de données`);
+                reste = true;
+                excelMaster = {
+                    courtier: ocrPerCourtier.courtier,
+                    cabinet: 'RESTE_DONNEES',
+                    create_date: new Date(),
+                    path: null,
+                    content: null,
+                    type: 'excel',
+                    is_enabled: true
+                };
+                const ocrInfosNoCourtier = ocrPerCourtier.infos;
+                let newOcrPer = [];
+                let companies = [];
+                for (let element of ocrInfosNoCourtier) {
+                    const comp = { companyGlobalName: element.companyGlobalName, companyName: element.companyName };
+                    if (!companies.some(c => { return c.companyGlobalName === element.companyGlobalName && c.companyName === element.companyName })) {
+                        companies.push(comp);
+                    }
+                }
+                for (let company of companies) {
+                    let newOcr = { companyGlobalName: company.companyGlobalName, companyName: company.companyName, infosOCR: [] };
+                    for (let element of ocrInfosNoCourtier) {
+                        if (element.companyGlobalName === newOcr.companyGlobalName && element.companyName === newOcr.companyName) {
+                            newOcr.infosOCR.push(element.infosOCR);
                         }
-                        workSheet.properties.defaultColWidth = 20;
-                        try {
-                            createWorkSheetCompany(ocr, workSheet, ocrPerCourtier);
-                        } catch (err) {
-                            throw err;
+                    };
+                    newOcrPer.push(newOcr);
+                }
+                ocrPerCourtier.infos = newOcrPer;
+            }
+
+            let datas = [];
+            for (let ocr of ocrPerCourtier.infos) {
+                let d = { companyName: null, companyName: null, ocr: [] };
+                editDataOCR(ocr, datas, d, 'CARDIF');
+                editDataOCR(ocr, datas, d, 'CEGEMA');
+            }
+            removeDoublonsOcr(datas, ocrPerCourtier);
+            ocrPerCourtier.infos = [...ocrPerCourtier.infos, ...datas];
+            workbook = new ExcelJS.Workbook();
+            recapWorkSheet = workbook.addWorksheet('RECAP');
+            let month = new Date().getMonth();
+            month = (month + 1 < 10) ? `0${month + 1}` : `${month + 1}`;
+            const date = `${month}${new Date().getFullYear()}`;
+            if (ocrPerCourtier.company === 'METLIFE') {
+                let workSheet = workbook.addWorksheet(ocrPerCourtier.companyGlobalName);
+                workSheet.properties.defaultColWidth = 20;
+                excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, ocrPerCourtier);
+            }
+            else {
+                for (let ocr of ocrPerCourtier.infos) {
+                    if (ocr.companyName && ocr.companyName !== null) {
+                        if (!workbook.worksheets.some(worksheet => worksheet.name === ocr.companyGlobalName)) {
+                            let workSheet;
+                            if (ocr.companyGlobalName === 'MMA') {
+                                workSheet = workbook.addWorksheet(ocr.companyName);
+                            } else {
+                                workSheet = workbook.addWorksheet(ocr.companyGlobalName);
+                            }
+                            workSheet.properties.defaultColWidth = 20;
+                            try {
+                                createWorkSheetCompany(ocr, workSheet, reste);
+                            } catch (err) {
+                                throw err;
+                            }
                         }
                     }
                 }
             }
-        }
 
-        try {
-            const sheets = excelMasterRecap.getWorkSheets(workbook);
-            excelMasterRecap.createWorkSheetRECAP(recapWorkSheet, sheets);
-            if (excelMaster.courtier === null) {
-                excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}_RESTE_DONNEES.xlsx`);
-            } else {
-                if (cr.role === 'courtier') {
-                    excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(courtierCabinet) ? courtierCabinet : ''}.xlsx`);
+            try {
+                const sheets = excelMasterRecap.getWorkSheets(workbook);
+                excelMasterRecap.createWorkSheetRECAP(recapWorkSheet, sheets);
+                if (excelMaster.courtier === null) {
+                    excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}_RESTE_DONNEES.xlsx`);
+                } else {
+                    if (cr.role === 'courtier') {
+                        excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(courtierCabinet) ? courtierCabinet : ''}.xlsx`);
+                    }
+                    if (cr.role === 'mandataire') {
+                        excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(courtierCabinet) ? courtierCabinet : ''}_${courtierNomPrenom}.xlsx`);
+                    }
                 }
-                if (cr.role === 'mandataire') {
-                    excelPath = path.join(__dirname, '..', '..', '..', 'documents', 'master_excel', `Commissions${date}${(courtierCabinet) ? courtierCabinet : ''}_${courtierNomPrenom}.xlsx`);
+                await workbook.xlsx.writeFile(excelPath);
+                const excelContent = await readExcelMasterContent(excelPath);
+                if (ocrPerCourtier.courtier !== null) {
+                    console.log(`${new Date()} FIN GENERATION EXCEL MASTER : ${cr.cabinet}`);
+                } else {
+                    console.log(`${new Date()} FIN GENERATION EXCEL MASTER : reste de données`);
                 }
+                excelMaster.path = excelPath;
+                excelMaster.content = excelContent;
+                excelMasters.push(excelMaster);
+            } catch (err) {
+                throw err;
             }
-            await workbook.xlsx.writeFile(excelPath);
-            const excelContent = await readExcelMasterContent(excelPath);
-            if (ocrPerCourtier.courtier !== null) {
-                console.log(`${new Date()} FIN GENERATION EXCEL MASTER : ${cr.cabinet}`);
-            } else {
-                console.log(`${new Date()} FIN GENERATION EXCEL MASTER : reste de données`);
-            }
-            excelMaster.path = excelPath;
-            excelMaster.content = excelContent;
-            excelMasters.push(excelMaster);
-        } catch (err) {
-            throw err;
         }
+        return excelMasters;
+    } catch (err) {
+        throw err;
     }
-    return excelMasters;
 }
 
-const createWorkSheetCompany = (ocr, workSheet, ocrPerCourtier) => {
+const createWorkSheetCompany = (ocr, workSheet, reste) => {
     switch (ocr.companyName.toUpperCase()) {
         case 'APICIL':
-            excelMasterAPICIL.createWorkSheetAPICIL(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterAPICIL.createWorkSheetAPICIL(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterAPICIL.createWorkSheetAPICIL(workSheet, ocr);
+            }
             break;
         case 'APIVIA':
-            excelMasterAPIVIA.createWorkSheetAPIVIA(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterAPIVIA.createWorkSheetAPIVIA(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterAPIVIA.createWorkSheetAPIVIA(workSheet, ocr);
+            }
             break;
         case 'APREP':
-            excelMasterAPREP.createWorkSheetAPREP(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterAPREP.createWorkSheetAPREP(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterAPREP.createWorkSheetAPREP(workSheet, ocr);
+            }
             break;
         case 'APREP ENCOURS':
-            excelMasterAPREP.createWorkSheetAPREPENCOURS(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterAPREP.createWorkSheetAPREPENCOURS(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterAPREP.createWorkSheetAPREPENCOURS(workSheet, ocr);
+            }
             break;
         // case 'AVIVA':
         //     infos = await readExcel(file);
         //     break;
         case 'AVIVA SURCO':
-            excelMasterAVIVA.createWorkSheetAVIVASURCO(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterAVIVA.createWorkSheetAVIVASURCO(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterAVIVA.createWorkSheetAVIVASURCO(workSheet, ocr);
+            }
             break;
         case 'CARDIF':
-            excelMasterCARDIF.createWorkSheetCARDIF(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterCARDIF.createWorkSheetCARDIF(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterCARDIF.createWorkSheetCARDIF(workSheet, ocr);
+            }
             break;
         case 'CEGEMA':
-            excelMasterCEGEMA.createWorkSheetCEGEMA(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterCEGEMA.createWorkSheetCEGEMA(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterCEGEMA.createWorkSheetCEGEMA(workSheet, ocr);
+            }
             break;
         case 'ERES':
-            excelMasterERES.createWorkSheetERES(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterERES.createWorkSheetERES(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterERES.createWorkSheetERES(workSheet, ocr);
+            }
             break;
         case 'GENERALI':
-            excelMasterGENERALI.createWorkSheetGENERALI(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterGENERALI.createWorkSheetGENERALI(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterGENERALI.createWorkSheetGENERALI(workSheet, ocr);
+            }
             break;
         case 'HODEVA':
-            excelMasterHODEVA.createWorkSheetHODEVA(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterHODEVA.createWorkSheetHODEVA(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterHODEVA.createWorkSheetHODEVA(workSheet, ocr);
+            }
             break;
         case 'LOURMEL':  //CBP FRANCE
-            excelMasterLOURMEL.createWorkSheetLOURMEL(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterLOURMEL.createWorkSheetLOURMEL(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterLOURMEL.createWorkSheetLOURMEL(workSheet, ocr);
+            }
             break;
         case 'METLIFE':
-            excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterMETLIFE.createWorkSheetMETLIFE(workSheet, ocr);
+            }
             break;
         case 'MIE':
-            excelMasterMIE.createWorkSheetMIE(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterMIE.createWorkSheetMIE(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterMIE.createWorkSheetMIE(workSheet, ocr);
+            }
             break;
         case 'MIE MCMS':
-            excelMasterMIE.createWorkSheetMIEMCMS(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterMIE.createWorkSheetMIEMCMS(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterMIE.createWorkSheetMIEMCMS(workSheet, ocr);
+            }
             break;
         case 'MIEL MUTUELLE':
-            excelMasterMIEL.createWorkSheetMIEL(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterMIEL.createWorkSheetMIEL(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterMIEL.createWorkSheetMIEL(workSheet, ocr);
+            }
             break;
         case 'MIEL MCMS':
-            excelMasterMIEL.createWorkSheetMIELMCMS(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterMIEL.createWorkSheetMIELMCMS(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterMIEL.createWorkSheetMIELMCMS(workSheet, ocr);
+            }
             break;
         case 'MILTIS':
-            excelMasterMILTIS.createWorkSheetMILTIS(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterMILTIS.createWorkSheetMILTIS(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterMILTIS.createWorkSheetMILTIS(workSheet, ocr);
+            }
             break;
         case 'MMA INCITATION':
-            excelMasterMMA.createWorkSheetMMAINCITATION(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterMMA.createWorkSheetMMAINCITATION(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterMMA.createWorkSheetMMAINCITATION(workSheet, ocr);
+            }
             break;
         case 'MMA ACQUISITION':
-            excelMasterMMA.createWorkSheetMMAACQUISITION(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterMMA.createWorkSheetMMAACQUISITION(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterMMA.createWorkSheetMMAACQUISITION(workSheet, ocr);
+            }
             break;
         case 'MMA ENCOURS':
-            excelMasterMMA.createWorkSheetMMAENCOURS(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterMMA.createWorkSheetMMAENCOURS(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterMMA.createWorkSheetMMAENCOURS(workSheet, ocr);
+            }
             break;
         case 'PAVILLON PREVOYANCE':
-            excelMasterPAVILLON.createWorkSheetPAVILLON(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterPAVILLON.createWorkSheetPAVILLON(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterPAVILLON.createWorkSheetPAVILLON(workSheet, ocr);
+            }
             break;
         case 'PAVILLON MCMS':
-            excelMasterPAVILLON.createWorkSheetPAVILLONMCMS(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterPAVILLON.createWorkSheetPAVILLONMCMS(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterPAVILLON.createWorkSheetPAVILLONMCMS(workSheet, ocr);
+            }
             break;
         case 'SLADE':   // SWISSLIFE
-            excelMasterSWISSLIFE.createWorkSheetSLADE(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterSWISSLIFE.createWorkSheetSLADE(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterSWISSLIFE.createWorkSheetSLADE(workSheet, ocr);
+            }
             break;
         case 'SPVIE':
-            excelMasterSPVIE.createWorkSheetSPVIE(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterSPVIE.createWorkSheetSPVIE(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterSPVIE.createWorkSheetSPVIE(workSheet, ocr);
+            }
             break;
         // case 'SMATIS':
         //     excelMasterSMATIS.createWorkSheetSMATIS(workSheet, ocr);
         //     break;
         case 'SMATIS MCMS':
-            excelMasterSMATIS.createWorkSheetSMATISMCMS(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterSMATIS.createWorkSheetSMATISMCMS(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterSMATIS.createWorkSheetSMATISMCMS(workSheet, ocr);
+            }
             break;
         case 'SWISS LIFE SURCO':
-            excelMasterSWISSLIFE.createWorkSheetSWISSLIFESURCO(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterSWISSLIFE.createWorkSheetSWISSLIFESURCO(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterSWISSLIFE.createWorkSheetSWISSLIFESURCO(workSheet, ocr);
+            }
             break;
         case 'UAF LIFE PATRIMOINE':
-            excelMasterUAFLIFE.createWorkSheetUAFLIFE(workSheet, ocr);
+            if (Array.isArray(ocr.infosOCR)) {
+                let rowNumberI = 1;
+                for (let inf of ocr.infosOCR) {
+                    inf = { infosOCR: inf };
+                    rowNumberI = excelMasterUAFLIFE.createWorkSheetUAFLIFE(workSheet, inf, reste, rowNumberI + 1);
+                }
+            } else {
+                excelMasterUAFLIFE.createWorkSheetUAFLIFE(workSheet, ocr);
+            }
             break;
         default:
             console.log('Pas de compagnie correspondante');

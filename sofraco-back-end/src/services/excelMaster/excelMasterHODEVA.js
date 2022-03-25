@@ -20,7 +20,7 @@ exports.getOCRHODEVA = (ocr) => {
     return infosOCR;
 }
 
-exports.createWorkSheetHODEVA = (workSheet, dataCourtierOCR) => {
+exports.createWorkSheetHODEVA = (workSheet, dataCourtierOCR, reste = false, rowNumberI = null) => {
     const font1 = { bold: true, name: 'Arial', size: 10 };
     const font2 = { bold: true, name: 'Arial', size: 10, color: { argb: 'FFFFFF' } };
     const font3 = { name: 'Arial', size: 10 };
@@ -31,19 +31,21 @@ exports.createWorkSheetHODEVA = (workSheet, dataCourtierOCR) => {
         right: { style: 'thin' }
     };
 
-    const cellInfo = { workSheet, rowNumber: 1, cell: 'A', value: dataCourtierOCR.infosOCR.code.cabinet, mergedCells: 'A1:C1' };
+    let rowNumber = !reste ? 1 : rowNumberI;
+    const cellInfo = { workSheet, rowNumber, cell: 'A', value: dataCourtierOCR.infosOCR.code.cabinet, mergedCells: `A${rowNumber}:C${rowNumber}` };
     excelFile.setMergedCell(cellInfo, true, border, font1);
+    rowNumber++;
 
-    excelFile.setStylizedCell(workSheet, 2, 'A', dataCourtierOCR.infosOCR.headers.adhesion, true, border, font2, '', 'cc0000');
-    excelFile.setStylizedCell(workSheet, 2, 'B', dataCourtierOCR.infosOCR.headers.nom, true, border, font2, '', 'cc0000');
-    excelFile.setStylizedCell(workSheet, 2, 'C', dataCourtierOCR.infosOCR.headers.prenom, true, border, font2, '', 'cc0000');
-    excelFile.setStylizedCell(workSheet, 2, 'D', dataCourtierOCR.infosOCR.headers.dateEffet, true, border, font2, '', 'cc0000');
-    excelFile.setStylizedCell(workSheet, 2, 'E', dataCourtierOCR.infosOCR.headers.montantPrimeHT, true, border, font2, '', 'cc0000');
-    excelFile.setStylizedCell(workSheet, 2, 'F', dataCourtierOCR.infosOCR.headers.tauxCommissionnement, true, border, font2, '', 'cc0000');
-    excelFile.setStylizedCell(workSheet, 2, 'G', dataCourtierOCR.infosOCR.headers.montantCommissionnement, true, border, font2, '', 'cc0000');
+    excelFile.setStylizedCell(workSheet, rowNumber, 'A', dataCourtierOCR.infosOCR.headers.adhesion, true, border, font2, '', 'cc0000');
+    excelFile.setStylizedCell(workSheet, rowNumber, 'B', dataCourtierOCR.infosOCR.headers.nom, true, border, font2, '', 'cc0000');
+    excelFile.setStylizedCell(workSheet, rowNumber, 'C', dataCourtierOCR.infosOCR.headers.prenom, true, border, font2, '', 'cc0000');
+    excelFile.setStylizedCell(workSheet, rowNumber, 'D', dataCourtierOCR.infosOCR.headers.dateEffet, true, border, font2, '', 'cc0000');
+    excelFile.setStylizedCell(workSheet, rowNumber, 'E', dataCourtierOCR.infosOCR.headers.montantPrimeHT, true, border, font2, '', 'cc0000');
+    excelFile.setStylizedCell(workSheet, rowNumber, 'F', dataCourtierOCR.infosOCR.headers.tauxCommissionnement, true, border, font2, '', 'cc0000');
+    excelFile.setStylizedCell(workSheet, rowNumber, 'G', dataCourtierOCR.infosOCR.headers.montantCommissionnement, true, border, font2, '', 'cc0000');
+    rowNumber++;
 
-    let rowNumber = 3;
-    let debut = 3;
+    let debut = rowNumber;
     for (let datas of dataCourtierOCR.infosOCR.datas) {
         excelFile.setStylizedCell(workSheet, rowNumber, 'A', datas.adhesion, true, border, font3);
         excelFile.setStylizedCell(workSheet, rowNumber, 'B', datas.nom, true, border, font3);
@@ -64,6 +66,8 @@ exports.createWorkSheetHODEVA = (workSheet, dataCourtierOCR) => {
         result: result
     };
     excelFile.setStylizedCell(workSheet, rowNumber, 'G', value, false, {}, font2, '#,##0.00"€";\-#,##0.00"€"', 'cc0000');
-}
 
-
+    if (reste) {
+        return rowNumber;
+    }
+};
