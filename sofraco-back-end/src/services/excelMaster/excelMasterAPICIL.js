@@ -115,23 +115,27 @@ exports.getOCRAPICIL = (ocr) => {
 
 }
 
-exports.createWorkSheetAPICIL = (workSheet, dataCourtierOCR) => {
-    const row1 = workSheet.getRow(1);
+exports.createWorkSheetAPICIL = (workSheet, dataCourtierOCR, reste = false, rowNumberI = null) => {
+    let rowNumber = !reste ? 1 : rowNumberI;
+    const row1 = workSheet.getRow(rowNumber);
     row1.getCell('B').value = 'RELEVE';
     row1.getCell('C').value = 'PRESCRIPTEUR';
     row1.getCell('E').value = 'CODE STE';
+    rowNumber++;
 
-    const row2 = workSheet.getRow(2);
+    const row2 = workSheet.getRow(rowNumber);
     row2.getCell('B').value = dataCourtierOCR.infosOCR.headers.releve;
     row2.getCell('C').value = dataCourtierOCR.infosOCR.headers.prescripteur;
     row2.getCell('E').value = dataCourtierOCR.infosOCR.headers.codeSte;
+    rowNumber++;
 
-    const row3 = workSheet.getRow(3);
+    const row3 = workSheet.getRow(rowNumber);
     row3.getCell('B').value = 'ECHEANCE';
     row3.getCell('C').value = new Date(dataCourtierOCR.infosOCR.headers.echeance);
     row3.getCell('C').numFmt = 'mmm-yy';
+    rowNumber++;
 
-    const row4 = workSheet.getRow(4);
+    const row4 = workSheet.getRow(rowNumber);
     row4.getCell('A').value = 'CONTRAT JURIDIQUE';
     row4.getCell('B').value = 'NO-ADHERENT';
     row4.getCell('C').value = 'INTITULE';
@@ -147,6 +151,7 @@ exports.createWorkSheetAPICIL = (workSheet, dataCourtierOCR) => {
     row4.getCell('M').value = 'NOM PRESC REMU';
     row4.getCell('N').value = 'PRENOM PRECR REMU';
     row4.getCell('O').value = 'PERIODE';
+    rowNumber++;
 
     let dataTri = { reprise: [], collective: [], individual: [] };
     dataCourtierOCR.infosOCR.datas.forEach((e, index) => {
@@ -165,8 +170,7 @@ exports.createWorkSheetAPICIL = (workSheet, dataCourtierOCR) => {
         }
     });
 
-    let debut = 5;
-    let rowNumber = 5;
+    let debut = rowNumber;
     rowNumber = createPaveAPICIL(workSheet, rowNumber, dataTri.reprise);
 
     workSheet.getRow(rowNumber).getCell('H').value = 'TOTAL';
@@ -252,6 +256,9 @@ exports.createWorkSheetAPICIL = (workSheet, dataCourtierOCR) => {
         result: result
     };
     workSheet.getRow(rowNumber).getCell('I').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+    if (reste) {
+        return rowNumber;
+    }
 
 }
 
