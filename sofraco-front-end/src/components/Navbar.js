@@ -11,7 +11,7 @@ import {
     CDropdownToggle,
     CDropdownMenu,
     CDropdownItem,
-    // CImg
+    CImg
 } from '@coreui/react';
 import axios from 'axios';
 import CIcon from '@coreui/icons-react';
@@ -19,7 +19,7 @@ import * as icon from '@coreui/icons';
 
 import config from '../config.json';
 import '../styles/Navbar.css';
-// import sofraco_logo from '../assets/sofraco_groupe_logo.png';
+import sofraco_blanc from '../assets/sofraco_blanc.png';
 
 class Navbar extends Component {
     constructor(props) {
@@ -88,17 +88,16 @@ class Navbar extends Component {
                 <CToggler inNavbar onClick={() => this.setState((state) => ({
                     isOpen: !state.isOpen
                 }))} />
-                <CNavbarBrand>
-                    {/* <CImg
-                        src={sofraco_logo}
+                <CNavbarBrand href='/home'>
+                    <CImg
+                        src={sofraco_blanc}
                         fluid
                         className="mb-2"
-                    /> */}
-                    Sofraco
+                        width={110}
+                    />
                 </CNavbarBrand>
                 <CCollapse show={this.state.isOpen} navbar>
                     <CNavbarNav>
-                        <CNavLink href='/home' >Home</CNavLink>
                         <CNavLink href='/companies'>Compagnies d'assurance</CNavLink>
                         <CNavLink href='/envoi'>Envoi</CNavLink>
                         <CNavLink href='/treatments'>Traitements</CNavLink>
@@ -107,7 +106,7 @@ class Navbar extends Component {
                         <CDropdown inNav >
                             <CDropdownToggle>Administration</CDropdownToggle>
                             <CDropdownMenu className="sofraco-dropdown-menu">
-                                <CDropdownItem className="sofraco-dropdown-item" href='/list-courtier' >Courtiers</CDropdownItem>
+                                <CDropdownItem className="sofraco-dropdown-item" href='/courtiers' >Courtiers</CDropdownItem>
                                 <CDropdownItem className="sofraco-dropdown-item" href='/client' >Clients</CDropdownItem>
                             </CDropdownMenu>
                         </CDropdown>

@@ -39,7 +39,7 @@ class RouteComponent extends Component {
                         <Route path="/treatments" component={this.Treatments} >
                             <this.Treatments token={this.props.token} />
                         </Route>
-                        <Route path="/list-courtier" component={this.ListCourtier} >
+                        <Route path="/courtiers" component={this.ListCourtier} >
                             <this.ListCourtier token={this.props.token} />
                         </Route>
                         <Route path="/client" component={this.Client} >
@@ -51,21 +51,5 @@ class RouteComponent extends Component {
         )
     }
 }
-
-// const RouteComponent = () => {
-//     return (
-//     <Router>
-//         <Suspense fallback={<div>Chargement...</div>}>
-//             <Switch>
-//                 {/* <Route exact path="/" component={Access} /> */}
-//                 <Route exact path="/home" component={Home} />
-//                 <Route path="/companies" component={Companies} />
-//                 {/* <Route path="/upload" component={Upload} /> */}
-//                 <Route path="/treatments" component={Treatments} />
-//                 <Route path="/admin" component={ListCourtier} />
-//             </Switch>
-//         </Suspense>
-//     </Router>
-// )};
 
 export default RouteComponent;
