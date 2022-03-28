@@ -22,37 +22,45 @@ exports.getOCRAPREP = (ocr) => {
         datas: ocr.infos.contrats,
         infosBordereau: ocr.infos.infosBordereau
     };
-    infosOCR.push({ companyGlobalName: 'APREP', companyName: 'APREP', infosOCR: dataCourtierOCR });
+    infosOCR.push({ companyGlobalName: 'NORTIA', companyName: 'APREP PREVOYANCE', infosOCR: dataCourtierOCR });
     return infosOCR;
 }
 
-exports.createWorkSheetAPREP = (workSheet, dataCourtierOCR) => {
+exports.createWorkSheetAPREP = (workSheet, dataCourtierOCR, reste = false, rowNumberI = null) => {
+    let rowNumber = !reste ? 1 : rowNumberI;
     const font1 = { name: 'Arial', size: 10 };
     const font2 = { bold: true, name: 'Arial', size: 10 };
 
-    excelFile.setSimpleCell(workSheet, 1, 'A', dataCourtierOCR.infosOCR.infosBordereau.lieu, font1);
-    excelFile.setSimpleCell(workSheet, 1, 'B', dataCourtierOCR.infosOCR.infosBordereau.datebordereau, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', dataCourtierOCR.infosOCR.infosBordereau.lieu, font1);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'B', dataCourtierOCR.infosOCR.infosBordereau.datebordereau, font2);
+    rowNumber++;
 
-    excelFile.setSimpleCell(workSheet, 2, 'A', 'N° ORIAS', font1);
-    excelFile.setSimpleCell(workSheet, 2, 'B', dataCourtierOCR.infosOCR.infosBordereau.numOrias, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', 'N° ORIAS', font1);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'B', dataCourtierOCR.infosOCR.infosBordereau.numOrias, font2);
+    rowNumber++;
 
-    excelFile.setSimpleCell(workSheet, 3, 'A', 'Objet', font1);
-    excelFile.setSimpleCell(workSheet, 3, 'B', dataCourtierOCR.infosOCR.infosBordereau.objet, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', 'Objet', font1);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'B', dataCourtierOCR.infosOCR.infosBordereau.objet, font2);
+    rowNumber++;
 
-    excelFile.setSimpleCell(workSheet, 4, 'A', 'Designation', font1);
-    excelFile.setSimpleCell(workSheet, 4, 'B', dataCourtierOCR.infosOCR.infosBordereau.designation, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', 'Designation', font1);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'B', dataCourtierOCR.infosOCR.infosBordereau.designation, font2);
+    rowNumber++;
 
-    excelFile.setSimpleCell(workSheet, 5, 'A', 'Montant HT', font1);
-    excelFile.setSimpleCell(workSheet, 5, 'B', dataCourtierOCR.infosOCR.infosBordereau.montantHT, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', 'Montant HT', font1);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'B', dataCourtierOCR.infosOCR.infosBordereau.montantHT, font2);
+    rowNumber++;
+    rowNumber++;
+    rowNumber++;
 
     let cellNumber = 1;
     dataCourtierOCR.infosOCR.headers.forEach((header, index) => {
-        excelFile.setSimpleCell(workSheet, 8, cellNumber, header, font2);
+        excelFile.setSimpleCell(workSheet, rowNumber, cellNumber, header, font2);
         cellNumber++;
     });
 
-    let rowNumber = 9;
-    let debut = 9;
+    rowNumber++;
+    let debut = rowNumber;
     for (let datas of dataCourtierOCR.infosOCR.datas) {
         workSheet.getRow(rowNumber).font = font1;
         workSheet.getRow(rowNumber).getCell('A').value = datas.datePrelevement;
@@ -83,6 +91,9 @@ exports.createWorkSheetAPREP = (workSheet, dataCourtierOCR) => {
     workSheet.getRow(rowNumber).getCell('I').value = dataCourtierOCR.infosOCR.infosBordereau.montantHT;
     workSheet.getRow(rowNumber).getCell('I').font = { bold: true, name: 'Arial', size: 10 };
     workSheet.getRow(rowNumber).getCell('I').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+    if (reste) {
+        return rowNumber;
+    }
 }
 
 exports.getOCRAPREPENCOURS = (ocr) => {
@@ -97,30 +108,34 @@ exports.getOCRAPREPENCOURS = (ocr) => {
             datas: contrat,
             infosBordereau: ocr.infos.infosBordereau
         };
-        infosOCR.push({ companyGlobalName: 'APREP', companyName: 'APREP ENCOURS', infosOCR: dataCourtierOCR });
+        infosOCR.push({ companyGlobalName: 'NORTIA', companyName: 'APREP ENCOURS', infosOCR: dataCourtierOCR });
     }
     return infosOCR;
 }
 
-exports.createWorkSheetAPREPENCOURS = (workSheet, dataCourtierOCR) => {
+exports.createWorkSheetAPREPENCOURS = (workSheet, dataCourtierOCR, reste = false, rowNumberI = null) => {
+    let rowNumber = !reste ? 1 : rowNumberI;
     workSheet.getColumn('A').width = 50;
     const font1 = { bold: true, name: 'Arial', size: 12 };
     const font2 = { name: 'Arial', size: 12 };
-    const row1 = workSheet.getRow(1);
+    const row1 = workSheet.getRow(rowNumber);
     row1.height = 20;
 
-    const cellInfo = { workSheet, rowNumber: 1, cell: 'A', value: 'Commissions sur encours versées trimestriellement', mergedCells: 'A1:I1' };
+    const cellInfo = { workSheet, rowNumber, cell: 'A', value: 'Commissions sur encours versées trimestriellement', mergedCells: `A${rowNumber}:I${rowNumber}` };
     excelFile.setMergedCell(cellInfo, false, {}, font2);
+    rowNumber++;
+    rowNumber++;
 
     let cellNumber = 1;
     dataCourtierOCR.infosOCR.headers.forEach((header, index) => {
-        excelFile.setSimpleCell(workSheet, 3, cellNumber, header, font2);
+        excelFile.setSimpleCell(workSheet, rowNumber, cellNumber, header, font2);
         cellNumber++;
     });
+    rowNumber++;
 
-    excelFile.setSimpleCell(workSheet, 4, 'A', `CONTACT : ${dataCourtierOCR.infosOCR.code.cabinet}`, font1);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', `CONTACT : ${dataCourtierOCR.infosOCR.code.cabinet}`, font1);
+    rowNumber++;
 
-    let rowNumber = 5;
     for (let datas of dataCourtierOCR.infosOCR.datas.contrats) {
         workSheet.getRow(rowNumber).font = font2
         workSheet.getRow(rowNumber).height = 40;
@@ -180,5 +195,8 @@ exports.createWorkSheetAPREPENCOURS = (workSheet, dataCourtierOCR) => {
     excelFile.setStylizedCell(workSheet, rowNumber, 'H', '', false, {}, font2, '#,##0.00"€";\-#,##0.00"€"', 'ed7d31');
     excelFile.setStylizedCell(workSheet, rowNumber, 'I', dataCourtierOCR.infosOCR.datas.total.totalCommission, false, {}, font2, '#,##0.00"€";\-#,##0.00"€"', 'ed7d31');
     rowNumber++;
+    if (reste) {
+        return rowNumber;
+    }
 }
 

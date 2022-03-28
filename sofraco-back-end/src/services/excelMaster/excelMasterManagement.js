@@ -10,7 +10,7 @@ const config = require('../../../config.json');
 const fileService = require('../utils/files');
 const excelMasterAPICIL = require('./excelMasterAPICIL');
 const excelMasterAPIVIA = require('./excelMasterAPIVIA');
-const excelMasterAPREP = require('./excelMasterAPREP');
+const excelMasterNORTIA = require('./excelMasterNORTIA');
 const excelMasterAVIVA = require('./excelMasterAVIVA');
 const excelMasterCARDIF = require('./excelMasterCARDIF');
 const excelMasterCEGEMA = require('./excelMasterCEGEMA');
@@ -76,11 +76,11 @@ const getOCRInfos = async () => {
                 case 'APIVIA':
                     infos.push(excelMasterAPIVIA.getOCRAPIVIA(ocr));
                     break;
-                case 'APREP':
-                    infos.push(excelMasterAPREP.getOCRAPREP(ocr));
+                case 'APREP PREVOYANCE':
+                    infos.push(excelMasterNORTIA.getOCRAPREP(ocr));
                     break;
                 case 'APREP ENCOURS':
-                    infos.push(excelMasterAPREP.getOCRAPREPENCOURS(ocr));
+                    infos.push(excelMasterNORTIA.getOCRAPREPENCOURS(ocr));
                     break;
                 // case 'AVIVA':
                 //     infos = await getOCRAPICIL(file);
@@ -474,15 +474,15 @@ const createWorkSheetCompany = (ocr, workSheet, reste) => {
                 excelMasterAPIVIA.createWorkSheetAPIVIA(workSheet, ocr);
             }
             break;
-        case 'APREP':
+        case 'APREP PREVOYANCE':
             if (Array.isArray(ocr.infosOCR)) {
                 let rowNumberI = 1;
                 for (let inf of ocr.infosOCR) {
                     inf = { infosOCR: inf };
-                    rowNumberI = excelMasterAPREP.createWorkSheetAPREP(workSheet, inf, reste, rowNumberI + 1);
+                    rowNumberI = excelMasterNORTIA.createWorkSheetAPREP(workSheet, inf, reste, rowNumberI + 1);
                 }
             } else {
-                excelMasterAPREP.createWorkSheetAPREP(workSheet, ocr);
+                excelMasterNORTIA.createWorkSheetAPREP(workSheet, ocr);
             }
             break;
         case 'APREP ENCOURS':
@@ -490,10 +490,10 @@ const createWorkSheetCompany = (ocr, workSheet, reste) => {
                 let rowNumberI = 1;
                 for (let inf of ocr.infosOCR) {
                     inf = { infosOCR: inf };
-                    rowNumberI = excelMasterAPREP.createWorkSheetAPREPENCOURS(workSheet, inf, reste, rowNumberI + 1);
+                    rowNumberI = excelMasterNORTIA.createWorkSheetAPREPENCOURS(workSheet, inf, reste, rowNumberI + 1);
                 }
             } else {
-                excelMasterAPREP.createWorkSheetAPREPENCOURS(workSheet, ocr);
+                excelMasterNORTIA.createWorkSheetAPREPENCOURS(workSheet, ocr);
             }
             break;
         // case 'AVIVA':

@@ -205,7 +205,7 @@ class Upload extends Component {
             case 'APIVIA':
                 this.testExtension(extension, 'PDF', false, false, files);
                 break;
-            case 'APREP':
+            case 'APREP PREVOYANCE':
                 this.testExtension(extension, 'PDF', false, false, files);
                 break;
             case 'APREP ENCOURS':

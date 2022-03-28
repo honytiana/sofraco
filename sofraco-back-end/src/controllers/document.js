@@ -8,7 +8,7 @@ const time = require('../services/utils/time');
 const documentHandler = require('../handlers/documentHandler');
 const documentAPICIL = require('../services/document/documentAPICIL');
 const documentAPIVIA = require('../services/document/documentAPIVIA');
-const documentAPREP = require('../services/document/documentAPREP');
+const documentNORTIA = require('../services/document/documentNORTIA');
 const documentAVIVA = require('../services/document/documentAVIVA');
 const documentCARDIF = require('../services/document/documentCARDIF');
 const documentCEGEMA = require('../services/document/documentCEGEMA');
@@ -31,7 +31,7 @@ const treatmentHandler = require('../handlers/treatmentHandler');
 const deleteCacheRequire = () => {
     delete require.cache[require.resolve('../services/document/documentAPICIL')];
     delete require.cache[require.resolve('../services/document/documentAPIVIA')];
-    delete require.cache[require.resolve('../services/document/documentAPREP')];
+    delete require.cache[require.resolve('../services/document/documentNORTIA')];
     delete require.cache[require.resolve('../services/document/documentAVIVA')];
     delete require.cache[require.resolve('../services/document/documentCARDIF')];
     delete require.cache[require.resolve('../services/document/documentCEGEMA')];
@@ -294,11 +294,11 @@ const setOCRDocument = async (companyName, documentId, filePath) => {
             case 'APIVIA':
                 ocr = await documentAPIVIA.readPdfAPIVIA(filePath);
                 break;
-            case 'APREP':
-                ocr = await documentAPREP.readPdfAPREP(filePath);
+            case 'APREP PREVOYANCE':
+                ocr = await documentNORTIA.readPdfAPREP(filePath);
                 break;
             case 'APREP ENCOURS':
-                ocr = await documentAPREP.readPdfAPREPENCOURS(filePath);
+                ocr = await documentNORTIA.readPdfAPREPENCOURS(filePath);
                 break;
             // case 'AVIVA':
             // ocr = await documentAVIVA.readExcelAVIVASURCO(filePath);
