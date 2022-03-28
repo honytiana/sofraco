@@ -59,7 +59,8 @@ exports.getOCRMMAENCOURS = (ocr) => {
     return infosOCR;
 }
 
-exports.createWorkSheetMMAINCITATION = (workSheet, dataCourtierOCR) => {
+exports.createWorkSheetMMAINCITATION = (workSheet, dataCourtierOCR, reste = false, rowNumberI = null) => {
+    let rowNumber = !reste ? 1 : rowNumberI;
     const font1 = { bold: true, name: 'Arial', size: 10 };
     const font2 = { name: 'Arial', size: 10 };
     const border = {
@@ -69,26 +70,34 @@ exports.createWorkSheetMMAINCITATION = (workSheet, dataCourtierOCR) => {
         right: { style: 'thin' }
     };
 
-    excelFile.setSimpleCell(workSheet, 1, 'C', dataCourtierOCR.infosOCR.detailsBordereau.title, font1);
-    excelFile.setSimpleCell(workSheet, 1, 'H', dataCourtierOCR.infosOCR.detailsBordereau.dateBordereau, font1);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'C', dataCourtierOCR.infosOCR.detailsBordereau.title, font1);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'H', dataCourtierOCR.infosOCR.detailsBordereau.dateBordereau, font1);
+    rowNumber++;
+    rowNumber++;
 
-    excelFile.setSimpleCell(workSheet, 3, 'G', dataCourtierOCR.infosOCR.detailsBordereau.row3G, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'G', dataCourtierOCR.infosOCR.detailsBordereau.row3G, font2);
+    rowNumber++;
 
-    excelFile.setSimpleCell(workSheet, 4, 'A', dataCourtierOCR.infosOCR.detailsBordereau.row4A, font2);
-    excelFile.setSimpleCell(workSheet, 4, 'G', dataCourtierOCR.infosOCR.detailsBordereau.row4G, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', dataCourtierOCR.infosOCR.detailsBordereau.row4A, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'G', dataCourtierOCR.infosOCR.detailsBordereau.row4G, font2);
+    rowNumber++;
 
-    excelFile.setSimpleCell(workSheet, 5, 'A', dataCourtierOCR.infosOCR.detailsBordereau.row5A, font2);
-    excelFile.setSimpleCell(workSheet, 5, 'G', dataCourtierOCR.infosOCR.detailsBordereau.row5G, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', dataCourtierOCR.infosOCR.detailsBordereau.row5A, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'G', dataCourtierOCR.infosOCR.detailsBordereau.row5G, font2);
+    rowNumber++;
 
-    excelFile.setSimpleCell(workSheet, 6, 'A', dataCourtierOCR.infosOCR.detailsBordereau.row6A, font2);
-    excelFile.setSimpleCell(workSheet, 6, 'G', dataCourtierOCR.infosOCR.detailsBordereau.row6G, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', dataCourtierOCR.infosOCR.detailsBordereau.row6A, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'G', dataCourtierOCR.infosOCR.detailsBordereau.row6G, font2);
+    rowNumber++;
 
-    excelFile.setSimpleCell(workSheet, 7, 'A', dataCourtierOCR.infosOCR.detailsBordereau.row7A.text, font2);
-    excelFile.setSimpleCell(workSheet, 7, 'G', dataCourtierOCR.infosOCR.detailsBordereau.row7G, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', dataCourtierOCR.infosOCR.detailsBordereau.row7A.text, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'G', dataCourtierOCR.infosOCR.detailsBordereau.row7G, font2);
+    rowNumber++;
 
-    excelFile.setSimpleCell(workSheet, 8, 'H', dataCourtierOCR.infosOCR.detailsBordereau.ref, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'H', dataCourtierOCR.infosOCR.detailsBordereau.ref, font2);
+    rowNumber++;
+    rowNumber++;
 
-    let rowNumber = 10;
     const row = workSheet.getRow(rowNumber);
     row.font = font1;
     row.height = 40;
@@ -122,9 +131,13 @@ exports.createWorkSheetMMAINCITATION = (workSheet, dataCourtierOCR) => {
         result: result
     };
     excelFile.setStylizedCell(workSheet, rowNumber, 'H', value, false, {}, font1, '#,##0.00"€";\-#,##0.00"€"');
+    if (reste) {
+        return rowNumber;
+    }
 }
 
-exports.createWorkSheetMMAACQUISITION = (workSheet, dataCourtierOCR) => {
+exports.createWorkSheetMMAACQUISITION = (workSheet, dataCourtierOCR, reste = false, rowNumberI = null) => {
+    let rowNumber = !reste ? 1 : rowNumberI;
     const font1 = { bold: true, name: 'Arial', size: 10 };
     const font2 = { name: 'Arial', size: 10 };
     const border = {
@@ -134,7 +147,6 @@ exports.createWorkSheetMMAACQUISITION = (workSheet, dataCourtierOCR) => {
         right: { style: 'thin' }
     };
 
-    let rowNumber = 1;
     const row = workSheet.getRow(rowNumber);
     row.font = font1;
     row.height = 40;
@@ -173,9 +185,13 @@ exports.createWorkSheetMMAACQUISITION = (workSheet, dataCourtierOCR) => {
         result: result
     };
     excelFile.setStylizedCell(workSheet, rowNumber, 'M', value, false, {}, font1, '#,##0.00"€";\-#,##0.00"€"');
+    if (reste) {
+        return rowNumber;
+    }
 }
 
-exports.createWorkSheetMMAENCOURS = (workSheet, dataCourtierOCR) => {
+exports.createWorkSheetMMAENCOURS = (workSheet, dataCourtierOCR, reste = false, rowNumberI = null) => {
+    let rowNumber = !reste ? 1 : rowNumberI;
     const font1 = { bold: true, name: 'Arial', size: 10 };
     const font2 = { name: 'Arial', size: 10 };
     const border = {
@@ -185,25 +201,32 @@ exports.createWorkSheetMMAENCOURS = (workSheet, dataCourtierOCR) => {
         right: { style: 'thin' }
     };
 
-    excelFile.setSimpleCell(workSheet, 1, 'C', dataCourtierOCR.infosOCR.detailsBordereau.title, font1);
-    excelFile.setSimpleCell(workSheet, 1, 'H', dataCourtierOCR.infosOCR.detailsBordereau.dateBordereau, font1);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'C', dataCourtierOCR.infosOCR.detailsBordereau.title, font1);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'H', dataCourtierOCR.infosOCR.detailsBordereau.dateBordereau, font1);
+    rowNumber++;
+    rowNumber++;
 
-    excelFile.setSimpleCell(workSheet, 3, 'F', dataCourtierOCR.infosOCR.detailsBordereau.row3F, font2);
-    excelFile.setSimpleCell(workSheet, 3, 'G', dataCourtierOCR.infosOCR.detailsBordereau.ref, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'F', dataCourtierOCR.infosOCR.detailsBordereau.row3F, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'G', dataCourtierOCR.infosOCR.detailsBordereau.ref, font2);
+    rowNumber++;
 
-    excelFile.setSimpleCell(workSheet, 4, 'A', dataCourtierOCR.infosOCR.detailsBordereau.row4A, font2);
-    excelFile.setSimpleCell(workSheet, 4, 'G', dataCourtierOCR.infosOCR.detailsBordereau.row4G, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', dataCourtierOCR.infosOCR.detailsBordereau.row4A, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'G', dataCourtierOCR.infosOCR.detailsBordereau.row4G, font2);
+    rowNumber++;
 
-    excelFile.setSimpleCell(workSheet, 5, 'A', dataCourtierOCR.infosOCR.detailsBordereau.row5A, font2);
-    excelFile.setSimpleCell(workSheet, 5, 'G', dataCourtierOCR.infosOCR.detailsBordereau.row5G, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', dataCourtierOCR.infosOCR.detailsBordereau.row5A, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'G', dataCourtierOCR.infosOCR.detailsBordereau.row5G, font2);
+    rowNumber++;
 
-    excelFile.setSimpleCell(workSheet, 6, 'A', dataCourtierOCR.infosOCR.detailsBordereau.row6A.text, font2);
-    excelFile.setSimpleCell(workSheet, 6, 'G', dataCourtierOCR.infosOCR.detailsBordereau.row6G, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', dataCourtierOCR.infosOCR.detailsBordereau.row6A.text, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'G', dataCourtierOCR.infosOCR.detailsBordereau.row6G, font2);
+    rowNumber++;
 
-    excelFile.setSimpleCell(workSheet, 7, 'A', dataCourtierOCR.infosOCR.detailsBordereau.row7A.text, font2);
-    excelFile.setSimpleCell(workSheet, 7, 'G', dataCourtierOCR.infosOCR.detailsBordereau.row7G, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', dataCourtierOCR.infosOCR.detailsBordereau.row7A.text, font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'G', dataCourtierOCR.infosOCR.detailsBordereau.row7G, font2);
+    rowNumber++;
+    rowNumber++;
 
-    let rowNumber = 9;
     const row = workSheet.getRow(rowNumber);
     row.font = font1;
     row.height = 40;
@@ -237,4 +260,7 @@ exports.createWorkSheetMMAENCOURS = (workSheet, dataCourtierOCR) => {
         result: result
     };
     excelFile.setStylizedCell(workSheet, rowNumber, 'H', value, false, {}, font1, '#,##0.00"€";\-#,##0.00"€"');
+    if (reste) {
+        return rowNumber;
+    }
 }

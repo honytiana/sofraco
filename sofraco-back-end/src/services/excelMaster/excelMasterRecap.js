@@ -41,9 +41,13 @@ exports.createWorkSheetRECAP = (workSheetRecap, workSheets) => {
                 row.eachCell((cell, colNumber) => {
                     if (rowNumber > 1) {
                         if (cell.value === 'TOTAL') {
-                            total = (row.getCell(colNumber + 1).value.result ?
-                                row.getCell(colNumber + 1).value.result :
-                                row.getCell(colNumber + 1).value);
+                            if (row.getCell(colNumber + 1).value !== null) {
+                                total = (row.getCell(colNumber + 1).value.result ?
+                                    row.getCell(colNumber + 1).value.result :
+                                    row.getCell(colNumber + 1).value);
+                            } else {
+                                total = 0;
+                            }
                         }
                     }
                 });
