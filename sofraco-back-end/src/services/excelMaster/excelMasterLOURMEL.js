@@ -19,7 +19,8 @@ exports.getOCRLOURMEL = (ocr) => {
     return infosOCR;
 }
 
-exports.createWorkSheetLOURMEL = (workSheet, dataCourtierOCR) => {
+exports.createWorkSheetLOURMEL = (workSheet, dataCourtierOCR, reste = false, rowNumberI = null) => {
+    let rowNumber = !reste ? 1 : rowNumberI;
     const font1 = { name: 'Arial', size: 10 };
     const border = {
         top: { style: 'thin' },
@@ -27,16 +28,16 @@ exports.createWorkSheetLOURMEL = (workSheet, dataCourtierOCR) => {
         bottom: { style: 'thin' },
         right: { style: 'thin' }
     };
-    const row1 = workSheet.getRow(1);
+    const row1 = workSheet.getRow(rowNumber);
     row1.font = { bold: true, name: 'Arial', size: 10 };
     let cellNumber = 1;
     dataCourtierOCR.infosOCR.headers.forEach((header, index) => {
         row1.getCell(cellNumber).value = header;
         cellNumber++;
     });
+    rowNumber++;
 
-    let rowNumber = 2;
-    let debut = 2;
+    let debut = rowNumber;
     for (let datas of dataCourtierOCR.infosOCR.datas) {
         excelFile.setStylizedCell(workSheet, rowNumber, 'A', datas.a, true, border, font1);
         excelFile.setStylizedCell(workSheet, rowNumber, 'B', datas.b, true, border, font1);
@@ -58,12 +59,12 @@ exports.createWorkSheetLOURMEL = (workSheet, dataCourtierOCR) => {
         excelFile.setStylizedCell(workSheet, rowNumber, 'R', datas.r, true, border, font1);
         excelFile.setStylizedCell(workSheet, rowNumber, 'S', datas.s, true, border, font1);
         excelFile.setStylizedCell(workSheet, rowNumber, 'T', datas.dateEffet, true, border, font1, 'dd/mm/yyyy');
-        excelFile.setStylizedCell(workSheet, rowNumber, 'U', datas.montantCotisation, true, border, font1, '#,##0.00"€";\-#,##0.00"€"');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'U', typeof datas.montantCotisation === 'string' ? parseFloat(datas.montantCotisation.replace(/\s/g, '').replace(',', '.')) : datas.montantCotisation, true, border, font1, '#,##0.00"€";\-#,##0.00"€"');
         excelFile.setStylizedCell(workSheet, rowNumber, 'V', datas.v, true, border, font1);
         excelFile.setStylizedCell(workSheet, rowNumber, 'W', datas.dateDebut, true, border, font1, 'dd/mm/yyyy');
         excelFile.setStylizedCell(workSheet, rowNumber, 'X', datas.dateFin, true, border, font1, 'dd/mm/yyyy');
         excelFile.setStylizedCell(workSheet, rowNumber, 'Y', datas.tauxCommission, true, border, font1);
-        excelFile.setStylizedCell(workSheet, rowNumber, 'Z', datas.montantCommission, true, border, font1, '#,##0.00"€";\-#,##0.00"€"', 'ffff00');
+        excelFile.setStylizedCell(workSheet, rowNumber, 'Z', typeof datas.montantCommission === 'string' ? parseFloat(datas.montantCommission.replace(/\s/g, '').replace(',', '.')) : datas.montantCommission, true, border, font1, '#,##0.00"€";\-#,##0.00"€"', 'ffff00');
         rowNumber++;
     }
     excelFile.setSimpleCell(workSheet, rowNumber, 'Y', 'TOTAL', { bold: true, name: 'Arial', size: 10 });
@@ -76,6 +77,9 @@ exports.createWorkSheetLOURMEL = (workSheet, dataCourtierOCR) => {
         result: result
     };
     excelFile.setStylizedCell(workSheet, rowNumber, 'Z', value, false, {}, { bold: true, name: 'Arial', size: 10 }, '#,##0.00"€";\-#,##0.00"€"', 'ffff00');
+    if (reste) {
+        return rowNumber;
+    }
 }
 
 
