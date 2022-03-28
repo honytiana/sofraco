@@ -26,29 +26,32 @@ exports.getOCRERES = (ocr) => {
     return infosOCR;
 }
 
-exports.createWorkSheetERES = (workSheet, dataCourtierOCR) => {
-    const row1 = workSheet.getRow(1);
+exports.createWorkSheetERES = (workSheet, dataCourtierOCR, reste = false, rowNumberI = null) => {
+    let rowNumber = !reste ? 1 : rowNumberI;
+    const row1 = workSheet.getRow(rowNumber);
     row1.font = { bold: true, name: 'Arial', size: 11 };
     let cellNumber = 1;
     dataCourtierOCR.infosOCR.headers.forEach((header, index) => {
         row1.getCell(cellNumber).value = header;
         cellNumber++;
     });
+    rowNumber++;
 
-    let rowNumber = 2;
-    let debut = 2;
+    let debut = rowNumber;
     for (let datas of dataCourtierOCR.infosOCR.datas) {
-        workSheet.getRow(rowNumber).font = { name: 'Arial', size: 11 };
-        workSheet.getRow(rowNumber).getCell('A').value = datas.codeEntreprise;
-        workSheet.getRow(rowNumber).getCell('B').value = datas.raisonSocial;
-        workSheet.getRow(rowNumber).getCell('C').value = datas.conseiller;
-        workSheet.getRow(rowNumber).getCell('D').value = datas.montantVersee;
-        workSheet.getRow(rowNumber).getCell('D').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('E').value = datas.droitEntree;
-        workSheet.getRow(rowNumber).getCell('E').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        workSheet.getRow(rowNumber).getCell('F').value = datas.commissionARegler;
-        workSheet.getRow(rowNumber).getCell('F').numFmt = '#,##0.00"€";\-#,##0.00"€"';
-        rowNumber++;
+        if (!isNaN(datas.montantVersee)) {
+            workSheet.getRow(rowNumber).font = { name: 'Arial', size: 11 };
+            workSheet.getRow(rowNumber).getCell('A').value = datas.codeEntreprise;
+            workSheet.getRow(rowNumber).getCell('B').value = datas.raisonSocial;
+            workSheet.getRow(rowNumber).getCell('C').value = datas.conseiller;
+            workSheet.getRow(rowNumber).getCell('D').value = datas.montantVersee;
+            workSheet.getRow(rowNumber).getCell('D').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+            workSheet.getRow(rowNumber).getCell('E').value = datas.droitEntree;
+            workSheet.getRow(rowNumber).getCell('E').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+            workSheet.getRow(rowNumber).getCell('F').value = datas.commissionARegler;
+            workSheet.getRow(rowNumber).getCell('F').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+            rowNumber++;
+        }
     }
     rowNumber++;
     const font1 = { bold: true, name: 'Arial', size: 11, color: { argb: 'FFFFFF' } };
@@ -61,12 +64,17 @@ exports.createWorkSheetERES = (workSheet, dataCourtierOCR) => {
     excelFile.setStylizedCell(workSheet, rowNumber, 'E', 'TOTAL', false, {}, font2, '', 'ed7d31');
     let result = 0;
     for (let i = debut; i <= rowNumber - 2; i++) {
-        result += workSheet.getRow(i).getCell('F').value;
+        if (!isNaN(workSheet.getRow(i).getCell('F').value)) {
+            result += workSheet.getRow(i).getCell('F').value;
+        }
     }
     const value = {
         formula: `SUM(F${debut}:F${rowNumber - 2})`,
         result: result
     };
     excelFile.setStylizedCell(workSheet, rowNumber, 'F', value, false, {}, font2, '#,##0.00"€";\-#,##0.00"€"', 'ed7d31');
+    if (reste) {
+        return rowNumber;
+    }
 }
 
