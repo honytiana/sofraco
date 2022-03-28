@@ -20,8 +20,8 @@ exports.getOCRMILTIS = (ocr) => {
     return infosOCR;
 }
 
-exports.createWorkSheetMILTIS = (workSheet, dataCourtierOCR) => {
-    let rowNumber = 1;
+exports.createWorkSheetMILTIS = (workSheet, dataCourtierOCR, reste = false, rowNumberI = null) => {
+    let rowNumber = !reste ? 1 : rowNumberI;
     let cellNumber = 1;
     dataCourtierOCR.infosOCR.headers.forEach((header, index) => {
         excelFile.setSimpleCell(workSheet, rowNumber, cellNumber, header, { bold: true, name: 'Arial', size: 10 });
@@ -78,6 +78,9 @@ exports.createWorkSheetMILTIS = (workSheet, dataCourtierOCR) => {
         result: result
     };
     excelFile.setStylizedCell(workSheet, rowNumber, 'K', value, false, {}, { bold: true, name: 'Arial', size: 10 }, '#,##0.00"€";\-#,##0.00"€"');
+    if (reste) {
+        return rowNumber;
+    }
 }
 
 
