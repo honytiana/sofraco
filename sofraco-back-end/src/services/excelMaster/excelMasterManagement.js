@@ -291,11 +291,14 @@ const getAllOCRInfosPerCourtiers = (ocrInfos, correspondances) => {
         }
     }
     resteOcrInfos = ocrInfos;
+    let allOcr = null;
     let infos = [];
     let allResteOCR = [];
     for (let ocr of resteOcrInfos) {
-        for (let dataCourtierOCR of ocr) {
-            infos.push(dataCourtierOCR);
+        if (ocr.length > 0) {
+            for (let dataCourtierOCR of ocr) {
+                infos.push(dataCourtierOCR);
+            }
         }
     }
     if (infos.length > 0) {
@@ -303,8 +306,10 @@ const getAllOCRInfosPerCourtiers = (ocrInfos, correspondances) => {
             courtier: null,
             infos
         };
+        allOcr = [...allOCRPerCourtiers, allResteOCR];
+    } else {
+        allOcr = allOCRPerCourtiers;
     }
-    const allOcr = [...allOCRPerCourtiers, allResteOCR];
     return allOcr;
 };
 
@@ -318,7 +323,7 @@ const setExcelMaster = async (allOcr) => {
             let cr;
             let courtierCabinet;
             let courtierNomPrenom;
-            let reste =  false;
+            let reste = false;
             if (ocrPerCourtier.courtier !== null) {
                 cr = await courtierHandler.getCourtierById(ocrPerCourtier.courtier);
                 console.log(`${new Date()} DEBUT GENERATION EXCEL MASTER : ${cr.cabinet}`);

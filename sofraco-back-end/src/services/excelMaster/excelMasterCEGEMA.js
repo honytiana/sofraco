@@ -19,18 +19,19 @@ exports.getOCRCEGEMA = (ocr) => {
     return infosOCR;
 }
 
-exports.createWorkSheetCEGEMA = (workSheet, dataCourtierOCR) => {
+exports.createWorkSheetCEGEMA = (workSheet, dataCourtierOCR, reste = false, rowNumberI = null) => {
+    let rowNumber = !reste ? 1 : rowNumberI;
     const font1 = { bold: true, name: 'Arial', size: 10 };
-    const row1 = workSheet.getRow(1);
+    const row1 = workSheet.getRow(rowNumber);
     row1.font = font1;
     let cellNumber = 1;
     dataCourtierOCR.ocr[0].infosOCR.headers.forEach((header, index) => {
         row1.getCell(cellNumber).value = header;
         cellNumber++;
     });
+    rowNumber++;
 
-    let rowNumber = 2;
-    let debut = 2;
+    let debut = rowNumber;
     for (let d of dataCourtierOCR.ocr) {
         for (let datas of d.infosOCR.datas) {
             workSheet.getRow(rowNumber).font = { name: 'Arial', size: 10 };
@@ -59,6 +60,9 @@ exports.createWorkSheetCEGEMA = (workSheet, dataCourtierOCR) => {
         result: result
     };
     excelFile.setStylizedCell(workSheet, rowNumber, 'H', value, false, {}, font1, '#,##0.00"€";[Red]\-#,##0.00"€"');
+    if (reste) {
+        return rowNumber;
+    }
 }
 
 
