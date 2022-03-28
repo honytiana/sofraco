@@ -228,18 +228,6 @@ const editDataOCR = (ocr, datas, d, companyName) => {
 
 };
 
-const removeDoublonsOcr = (datas, ocrPerCourtier) => {
-    for (let data of datas) {
-        for (let d of data.ocr) {
-            for (let ocr of ocrPerCourtier.infos) {
-                if (d === ocr) {
-                    ocrPerCourtier.infos.splice(ocrPerCourtier.infos.indexOf(ocr), 1);
-                }
-            }
-        }
-    }
-};
-
 const getAllOCRInfosPerCourtiers = (ocrInfos, correspondances) => {
     let allOCRPerCourtiers = [];
     let resteOcrInfos = [];
@@ -379,10 +367,12 @@ const setExcelMaster = async (allOcr) => {
             }
 
             let datas = [];
-            for (let ocr of ocrPerCourtier.infos) {
-                let d = { companyName: null, companyName: null, ocr: [] };
-                editDataOCR(ocr, datas, d, 'CARDIF');
-                editDataOCR(ocr, datas, d, 'CEGEMA');
+            if (!reste) {
+                for (let ocr of ocrPerCourtier.infos) {
+                    let d = { companyName: null, companyName: null, ocr: [] };
+                    editDataOCR(ocr, datas, d, 'CARDIF');
+                    editDataOCR(ocr, datas, d, 'CEGEMA');
+                }
             }
             removeDoublonsOcr(datas, ocrPerCourtier);
             ocrPerCourtier.infos = [...ocrPerCourtier.infos, ...datas];
@@ -449,6 +439,18 @@ const setExcelMaster = async (allOcr) => {
         throw err;
     }
 }
+
+const removeDoublonsOcr = (datas, ocrPerCourtier) => {
+    for (let data of datas) {
+        for (let d of data.ocr) {
+            for (let ocr of ocrPerCourtier.infos) {
+                if (d === ocr) {
+                    ocrPerCourtier.infos.splice(ocrPerCourtier.infos.indexOf(ocr), 1);
+                }
+            }
+        }
+    }
+};
 
 const createWorkSheetCompany = (ocr, workSheet, reste) => {
     switch (ocr.companyName.toUpperCase()) {
