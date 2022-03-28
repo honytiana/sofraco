@@ -20,11 +20,11 @@ exports.getOCRUAFLIFE = (ocr) => {
     return infosOCR;
 }
 
-exports.createWorkSheetUAFLIFE = (workSheet, dataCourtierOCR) => {
+exports.createWorkSheetUAFLIFE = (workSheet, dataCourtierOCR, reste = false, rowNumberI = null) => {
+    let rowNumber = !reste ? 1 : rowNumberI;
     const font1 = { bold: true, name: 'Arial', size: 10 };
     const font2 = { name: 'Arial', size: 10 };
 
-    let rowNumber = 1;
     for (let details of dataCourtierOCR.infosOCR.detailsBordereau) {
         excelFile.setSimpleCell(workSheet, rowNumber, 'A', details, font2);
         rowNumber++;
@@ -96,6 +96,9 @@ exports.createWorkSheetUAFLIFE = (workSheet, dataCourtierOCR) => {
         result: result
     };
     excelFile.setStylizedCell(workSheet, rowNumber, 'Z', value, false, {}, font1, '#,##0.00"€";\-#,##0.00"€"');
+    if (reste) {
+        return rowNumber;
+    }
 }
 
 
