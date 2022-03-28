@@ -2,7 +2,7 @@ const excelFile = require('../utils/excelFile');
 
 exports.getOCRMIEL = (ocr) => { };
 
-exports.createWorkSheetMIEL = (workSheet, dataCourtierOCR) => { };
+exports.createWorkSheetMIEL = (workSheet, dataCourtierOCR, reste = false, rowNumberI = null) => { };
 
 exports.getOCRMIELMCMS = (ocr) => {
     const headers = ocr.headers;
@@ -48,7 +48,8 @@ exports.getOCRMIELMCMS = (ocr) => {
     return infosOCR;
 }
 
-exports.createWorkSheetMIELMCMS = (workSheet, dataCourtierOCR) => {
+exports.createWorkSheetMIELMCMS = (workSheet, dataCourtierOCR, reste = false, rowNumberI = null) => {
+    let rowNumber = !reste ? 1 : rowNumberI;
     let mielCreasio, mielV1, mielV2, mielV3, mielV4 = false;
     switch (dataCourtierOCR.infosOCR.mielVersion) {
         case 'mielCreasio':
@@ -67,7 +68,6 @@ exports.createWorkSheetMIELMCMS = (workSheet, dataCourtierOCR) => {
             mielV4 = true;
             break;
     }
-    let rowNumber = 1;
     let cellNumber = 1;
     dataCourtierOCR.infosOCR.headers.forEach((header, index) => {
         excelFile.setSimpleCell(workSheet, rowNumber, cellNumber, header, { bold: true, name: 'Arial', size: 10 });
@@ -102,6 +102,9 @@ exports.createWorkSheetMIELMCMS = (workSheet, dataCourtierOCR) => {
         result: result
     };
     excelFile.setStylizedCell(workSheet, rowNumber, 'U', value, false, {}, { bold: true, name: 'Arial', size: 10 }, '#,##0.00"€";\-#,##0.00"€"');
+    if (reste) {
+        return rowNumber;
+    }
 }
 
 const createPavetMIELCREASIO = (dataCourtierOCR, workSheet, rowNumber) => {
