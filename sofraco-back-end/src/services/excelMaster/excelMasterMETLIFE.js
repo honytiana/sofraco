@@ -22,7 +22,8 @@ exports.getOCRMETLIFE = (ocr) => {
 
 }
 
-exports.createWorkSheetMETLIFE = (workSheet, dataCourtierOCR) => {
+exports.createWorkSheetMETLIFE = (workSheet, dataCourtierOCR, reste = false, rowNumberI = null) => {
+    let rowNumber = !reste ? 1 : rowNumberI;
     const font1 = { name: 'Arial', size: 10 };
     const font2 = { name: 'Arial', size: 12, bold: true, color: { argb: '050080' } };
     const font3 = { name: 'Arial', size: 10, color: { argb: '007ac1' } };
@@ -33,57 +34,62 @@ exports.createWorkSheetMETLIFE = (workSheet, dataCourtierOCR) => {
     const font8 = { name: 'Arial', size: 11, bold: true };
 
     workSheet.getColumn('A').width = 40;
-    const row1 = workSheet.getRow(1);
+    const row1 = workSheet.getRow(rowNumber);
     row1.font = font1;
-    excelFile.setSimpleCell(workSheet, 1, 'A', 'Synthèse de vos commissions', font2);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', 'Synthèse de vos commissions', font2);
+    rowNumber++;
 
-    excelFile.setSimpleCell(workSheet, 2, 'A', 'Report solde précédent : ', font3);
-    excelFile.setStylizedCell(workSheet, 2, 'B', dataCourtierOCR.infosOCR.syntheseDesCommissions.reportSoldePrecedent, false, {}, font4, '#,##0.00"€";\-#,##0.00"€"');
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', 'Report solde précédent : ', font3);
+    excelFile.setStylizedCell(workSheet, rowNumber, 'B', dataCourtierOCR.infosOCR.syntheseDesCommissions.reportSoldePrecedent, false, {}, font4, '#,##0.00"€";\-#,##0.00"€"');
+    rowNumber++;
 
-    excelFile.setSimpleCell(workSheet, 3, 'A', 'Nombre de polices sur la période : ', font3);
-    excelFile.setStylizedCell(workSheet, 3, 'B', dataCourtierOCR.infosOCR.syntheseDesCommissions.nombrePolicesSurLaPeriode, false, {}, font4);
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', 'Nombre de polices sur la période : ', font3);
+    excelFile.setStylizedCell(workSheet, rowNumber, 'B', dataCourtierOCR.infosOCR.syntheseDesCommissions.nombrePolicesSurLaPeriode, false, {}, font4);
+    rowNumber++;
 
-    excelFile.setSimpleCell(workSheet, 4, 'A', 'Total des primes encaissées sur la période : ', font3);
-    excelFile.setStylizedCell(workSheet, 4, 'B', dataCourtierOCR.infosOCR.syntheseDesCommissions.primesEncaisseesSurLaPeriode, false, {}, font4, '#,##0.00"€";\-#,##0.00"€"');
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', 'Total des primes encaissées sur la période : ', font3);
+    excelFile.setStylizedCell(workSheet, rowNumber, 'B', dataCourtierOCR.infosOCR.syntheseDesCommissions.primesEncaisseesSurLaPeriode, false, {}, font4, '#,##0.00"€";\-#,##0.00"€"');
+    rowNumber++;
 
-    const row5 = workSheet.getRow(5);
-    excelFile.setSimpleCell(workSheet, 5, 'A', 'Sous-total des commissions calculées sur la période : ', font3);
-    excelFile.setStylizedCell(workSheet, 5, 'B', dataCourtierOCR.infosOCR.syntheseDesCommissions.stCommissionsCalculeesSurLaPeriode, false, {}, font4, '#,##0.00"€";\-#,##0.00"€"');
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', 'Sous-total des commissions calculées sur la période : ', font3);
+    excelFile.setStylizedCell(workSheet, rowNumber, 'B', dataCourtierOCR.infosOCR.syntheseDesCommissions.stCommissionsCalculeesSurLaPeriode, false, {}, font4, '#,##0.00"€";\-#,##0.00"€"');
+    rowNumber++;
 
-    const row6 = workSheet.getRow(6);
-    excelFile.setSimpleCell(workSheet, 6, 'A', 'Sous-total des commissions reprises sur la période : ', font3);
-    excelFile.setStylizedCell(workSheet, 6, 'B', dataCourtierOCR.infosOCR.syntheseDesCommissions.stCommissionsReprisesSurLaPeriode, false, {}, font4, '#,##0.00"€";\-#,##0.00"€"');
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', 'Sous-total des commissions reprises sur la période : ', font3);
+    excelFile.setStylizedCell(workSheet, rowNumber, 'B', dataCourtierOCR.infosOCR.syntheseDesCommissions.stCommissionsReprisesSurLaPeriode, false, {}, font4, '#,##0.00"€";\-#,##0.00"€"');
+    rowNumber++;
 
-    const row7 = workSheet.getRow(7);
-    excelFile.setSimpleCell(workSheet, 7, 'A', 'Sous-total des commissions déduites sur la période : ', font3);
-    excelFile.setStylizedCell(workSheet, 7, 'B', dataCourtierOCR.infosOCR.syntheseDesCommissions.stCommissionsDeduitesSurLaPeriode, false, {}, font4, '#,##0.00"€";\-#,##0.00"€"');
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', 'Sous-total des commissions déduites sur la période : ', font3);
+    excelFile.setStylizedCell(workSheet, rowNumber, 'B', dataCourtierOCR.infosOCR.syntheseDesCommissions.stCommissionsDeduitesSurLaPeriode, false, {}, font4, '#,##0.00"€";\-#,##0.00"€"');
+    rowNumber++;
 
-    const row8 = workSheet.getRow(8);
-    excelFile.setSimpleCell(workSheet, 8, 'A', 'Sous-total des opérations diverses sur la période : ', font3);
-    excelFile.setStylizedCell(workSheet, 8, 'B', dataCourtierOCR.infosOCR.syntheseDesCommissions.stOperationsDiversesSurLaPeriode, false, {}, font4, '#,##0.00"€";\-#,##0.00"€"');
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', 'Sous-total des opérations diverses sur la période : ', font3);
+    excelFile.setStylizedCell(workSheet, rowNumber, 'B', dataCourtierOCR.infosOCR.syntheseDesCommissions.stOperationsDiversesSurLaPeriode, false, {}, font4, '#,##0.00"€";\-#,##0.00"€"');
+    rowNumber++;
 
-    const row9 = workSheet.getRow(9);
-    excelFile.setSimpleCell(workSheet, 9, 'A', 'Total des commissions dues : ', font5);
-    excelFile.setStylizedCell(workSheet, 9, 'B', dataCourtierOCR.infosOCR.syntheseDesCommissions.totalCommissionsDues, false, {}, font6, '#,##0.00"€";\-#,##0.00"€"');
+    excelFile.setSimpleCell(workSheet, rowNumber, 'A', 'Total des commissions dues : ', font5);
+    excelFile.setStylizedCell(workSheet, rowNumber, 'B', dataCourtierOCR.infosOCR.syntheseDesCommissions.totalCommissionsDues, false, {}, font6, '#,##0.00"€";\-#,##0.00"€"');
+    rowNumber++; rowNumber++; rowNumber++; rowNumber++; rowNumber++; rowNumber++;
 
-    const cellInfoA = { workSheet, rowNumber: 15, cell: 'A', value: 'CONTRAT', mergedCells: 'A15:C15' };
+    const cellInfoA = { workSheet, rowNumber, cell: 'A', value: 'CONTRAT', mergedCells: `A${rowNumber}:C${rowNumber}` };
     excelFile.setMergedCell(cellInfoA, false, {}, font7, '', '050080');
 
-    const cellInfoD = { workSheet, rowNumber: 15, cell: 'D', value: 'PRIME', mergedCells: 'D15:G15' };
+    const cellInfoD = { workSheet, rowNumber, cell: 'D', value: 'PRIME', mergedCells: `D${rowNumber}:G${rowNumber}` };
     excelFile.setMergedCell(cellInfoD, false, {}, font7, '', '050080');
 
-    const cellInfoH = { workSheet, rowNumber: 15, cell: 'H', value: 'COMMISSIONS', mergedCells: 'H15:K15' };
+    const cellInfoH = { workSheet, rowNumber, cell: 'H', value: 'COMMISSIONS', mergedCells: `H${rowNumber}:K${rowNumber}` };
     excelFile.setMergedCell(cellInfoH, false, {}, font7, '', '050080');
+    rowNumber++;
 
     let cellNumber = 1;
     dataCourtierOCR.infosOCR.headers.secondHeader.forEach((header, index) => {
-        excelFile.setStylizedCell(workSheet, 16, cellNumber, header, false, {}, font7, '', '007abc');
+        excelFile.setStylizedCell(workSheet, rowNumber, cellNumber, header, false, {}, font7, '', '007abc');
         cellNumber++;
     });
+    rowNumber++; rowNumber++;
     
     let detailDesPolices = dataCourtierOCR.infosOCR.detailDesPolices;
 
-    let rowNumber = 18;
     for (let datas of detailDesPolices) {
         workSheet.getRow(rowNumber).font = font1;
         let police = null;
@@ -118,6 +124,9 @@ exports.createWorkSheetMETLIFE = (workSheet, dataCourtierOCR) => {
                 rowNumber++;
             }
         }
+    }
+    if (reste) {
+        return rowNumber;
     }
 
 }
