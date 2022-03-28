@@ -186,74 +186,61 @@ class Envoi extends Component {
     }
 
     onSendMailHandler() {
-        if (this.state.month === null || this.state.year === null) {
-            let mt = this.state.messageToast.slice();
-            mt.push({
-                header: 'ERROR',
-                color: 'danger',
-                message: 'Veuillez selectionner le mois et l\'année'
-            });
-            this.setState({
-                toast: true,
-                messageToast: mt
-            });
-        } else {
-            let mailPromises = [];
-            for (let courtier of this.state.checked) {
-                if (courtier.checked) {
-                    const options = {
-                        courtier: courtier.courtier,
-                        email: courtier.email,
-                        emailCopie: courtier.emailCopie,
-                        firstName: courtier.firstName,
-                        lastName: courtier.lastName,
-                        month: this.state.month,
-                        year: this.state.year
-                    };
-                    mailPromises.push(
-                        axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/mailer/`, options, {
-                            headers: {
-                                'Authorization': `Bearer ${this.props.token}`
-                            }
-                        })
-                            .then((data) => {
-                            }).catch((err) => {
-                            }).finally(() => {
-                            })
-                    );
-                }
-
-            }
-            Promise.all(mailPromises)
-                .then(() => {
-                    this.setState({
-                        toast: true,
-                        messageToast: {
-                            header: 'SUCCESS',
-                            color: 'success',
-                            message: `Les emails ont été envoyé aux courtiers`
-                        }
-                    });
-                })
-                .catch((err) => {
-                    this.setState({
-                        toast: true,
-                        messageToast: {
-                            header: 'ERROR',
-                            color: 'danger',
-                            message: err
+        let mailPromises = [];
+        for (let courtier of this.state.checked) {
+            if (courtier.checked) {
+                const options = {
+                    courtier: courtier.courtier,
+                    email: courtier.email,
+                    emailCopie: courtier.emailCopie,
+                    firstName: courtier.firstName,
+                    lastName: courtier.lastName,
+                    month: this.state.month !== null ? this.state.month : new Date().getMonth(),
+                    year: this.state.year !== null ? this.state.year : new Date().getFullYear()
+                };
+                mailPromises.push(
+                    axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/mailer/`, options, {
+                        headers: {
+                            'Authorization': `Bearer ${this.props.token}`
                         }
                     })
-                })
-                .finally(() => {
-                    setTimeout(() => {
-                        this.setState({
-                            toast: false,
-                            messageToast: {}
+                        .then((data) => {
+                        }).catch((err) => {
+                        }).finally(() => {
                         })
-                    }, 10000)
-                });
+                );
+            }
+
         }
+        Promise.all(mailPromises)
+            .then(() => {
+                this.setState({
+                    toast: true,
+                    messageToast: {
+                        header: 'SUCCESS',
+                        color: 'success',
+                        message: `Les emails ont été envoyé aux courtiers`
+                    }
+                });
+            })
+            .catch((err) => {
+                this.setState({
+                    toast: true,
+                    messageToast: {
+                        header: 'ERROR',
+                        color: 'danger',
+                        message: err
+                    }
+                })
+            })
+            .finally(() => {
+                setTimeout(() => {
+                    this.setState({
+                        toast: false,
+                        messageToast: {}
+                    })
+                }, 10000)
+            });
     }
 
     onChangeSelectFilterMonthHandler(e) {
@@ -303,7 +290,7 @@ class Envoi extends Component {
                         <option>Selectionnez le mois</option>
                         {months.map((month, index) => {
                             return (
-                                <option key={`monthoption${index}`} value={month.index}>{month.month}</option>
+                                <option key={`monthoption${index}`} value={month.index} selected={month.index === new Date().getMonth()}>{month.month}</option>
                             )
                         })}
                     </CSelect>
@@ -316,7 +303,7 @@ class Envoi extends Component {
                         <option>Selectionnez une année</option>
                         {years.map((year, index) => {
                             return (
-                                <option key={`yearoption${index}`} value={year}>{year}</option>
+                                <option key={`yearoption${index}`} value={year} selected={year === new Date().getFullYear()}>{year}</option>
                             )
                         })}
                     </CSelect>
