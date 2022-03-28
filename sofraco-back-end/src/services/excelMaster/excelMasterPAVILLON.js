@@ -2,7 +2,7 @@ const excelFile = require('../utils/excelFile');
 
 exports.getOCRPAVILLON = (ocr) => { };
 
-exports.createWorkSheetPAVILLON = (workSheet, dataCourtierOCR) => { };
+exports.createWorkSheetPAVILLON = (workSheet, dataCourtierOCR, reste = false, rowNumberI = null) => { };
 
 exports.getOCRPAVILLONMCMS = (ocr) => {
     const headers = ocr.headers;
@@ -24,7 +24,8 @@ exports.getOCRPAVILLONMCMS = (ocr) => {
     return infosOCR;
 }
 
-exports.createWorkSheetPAVILLONMCMS = (workSheet, dataCourtierOCR) => {
+exports.createWorkSheetPAVILLONMCMS = (workSheet, dataCourtierOCR, reste = false, rowNumberI = null) => {
+    let rowNumber = !reste ? 1 : rowNumberI;
     const font1 = { bold: true, name: 'Arial', size: 10 };
     let pavActio, pavV1, pavV2, pavV3, pavV4, pavV5, pavV6, pavV7, pavV8 = false;
     switch (dataCourtierOCR.infosOCR.pavVersion) {
@@ -56,7 +57,6 @@ exports.createWorkSheetPAVILLONMCMS = (workSheet, dataCourtierOCR) => {
             pavV8 = true;
             break;
     }
-    let rowNumber = 1;
     let cellNumber = 1;
     dataCourtierOCR.infosOCR.headers.forEach((header, index) => {
         excelFile.setSimpleCell(workSheet, rowNumber, cellNumber, header, font1);
@@ -104,6 +104,9 @@ exports.createWorkSheetPAVILLONMCMS = (workSheet, dataCourtierOCR) => {
         result: result
     };
     excelFile.setStylizedCell(workSheet, rowNumber, 'S', value, false, {}, font1, '#,##0.00"€";\-#,##0.00"€"');
+    if (reste) {
+        return rowNumber;
+    }
 }
 
 const createPavetPAVILLONACTIO = (dataCourtierOCR, workSheet, rowNumber) => {
