@@ -2,7 +2,7 @@ const excelFile = require('../utils/excelFile');
 
 exports.getOCRMIE = (ocr) => { };
 
-exports.createWorkSheetMIE = (workSheet, dataCourtierOCR) => { };
+exports.createWorkSheetMIE = (workSheet, dataCourtierOCR, reste = false, rowNumberI = null) => { };
 
 exports.getOCRMIEMCMS = (ocr) => {
     const headers = ocr.headers;
@@ -24,7 +24,8 @@ exports.getOCRMIEMCMS = (ocr) => {
     return infosOCR;
 }
 
-exports.createWorkSheetMIEMCMS = (workSheet, dataCourtierOCR) => {
+exports.createWorkSheetMIEMCMS = (workSheet, dataCourtierOCR, reste = false, rowNumberI = null) => {
+    let rowNumber = !reste ? 1 : rowNumberI;
     let mieAxiom, mieV1 = false;
     switch (dataCourtierOCR.infosOCR.mieVersion) {
         case 'mieAxiom':
@@ -34,7 +35,6 @@ exports.createWorkSheetMIEMCMS = (workSheet, dataCourtierOCR) => {
             mieV1 = true;
             break;
     }
-    let rowNumber = 1;
     let cellNumber = 1;
     dataCourtierOCR.infosOCR.headers.forEach((header, index) => {
         excelFile.setSimpleCell(workSheet, rowNumber, cellNumber, header, { bold: true, name: 'Arial', size: 10 });
@@ -60,6 +60,9 @@ exports.createWorkSheetMIEMCMS = (workSheet, dataCourtierOCR) => {
         result: result
     };
     excelFile.setStylizedCell(workSheet, rowNumber, 'O', value, false, {}, { bold: true, name: 'Arial', size: 10 }, '#,##0.00"€";\-#,##0.00"€"');
+    if (reste) {
+        return rowNumber;
+    }
 }
 
 const createPavetMIEAXIOM = (dataCourtierOCR, workSheet, rowNumber) => {
