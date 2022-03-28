@@ -295,19 +295,6 @@ class Envoi extends Component {
             <div>
                 <div className="sofraco-content-filtre">
                     <CSelect
-                        label="Année"
-                        className="sofraco-select-filtre"
-                        onChange={(e) => this.onChangeSelectFilterYearHandler(e)}
-                        style={{ display: "inline-block" }}
-                    >
-                        <option>Selectionnez une année</option>
-                        {years.map((year, index) => {
-                            return (
-                                <option key={`yearoption${index}`} value={year}>{year}</option>
-                            )
-                        })}
-                    </CSelect>
-                    <CSelect
                         label="Mois"
                         className="sofraco-select-filtre"
                         onChange={(e) => this.onChangeSelectFilterMonthHandler(e)}
@@ -317,6 +304,19 @@ class Envoi extends Component {
                         {months.map((month, index) => {
                             return (
                                 <option key={`monthoption${index}`} value={month.index}>{month.month}</option>
+                            )
+                        })}
+                    </CSelect>
+                    <CSelect
+                        label="Année"
+                        className="sofraco-select-filtre"
+                        onChange={(e) => this.onChangeSelectFilterYearHandler(e)}
+                        style={{ display: "inline-block" }}
+                    >
+                        <option>Selectionnez une année</option>
+                        {years.map((year, index) => {
+                            return (
+                                <option key={`yearoption${index}`} value={year}>{year}</option>
                             )
                         })}
                     </CSelect>
