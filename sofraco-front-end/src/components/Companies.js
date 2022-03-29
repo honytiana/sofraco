@@ -23,7 +23,8 @@ import {
     CFormGroup,
     CInputGroup,
     CInput,
-    CAlert
+    CAlert,
+    CSelect
 } from '@coreui/react';
 
 import axios from 'axios';
@@ -53,6 +54,8 @@ class Companies extends Component {
             logo: '',
             toast: false,
             messageToast: {},
+            month: new Date().getMonth(),
+            year: new Date().getFullYear(),
             load: false,
             loadGenerateExcelMaster: false,
             showButtonDownload: false,
@@ -81,6 +84,8 @@ class Companies extends Component {
         this.onGenererExcelsMasters = this.onGenererExcelsMasters.bind(this);
         this.onDownloadExcelMasters = this.onDownloadExcelMasters.bind(this);
         this.closeErrorsModal = this.closeErrorsModal.bind(this);
+        this.setCompaniesOccurences = this.setCompaniesOccurences.bind(this);
+        this.setSelectMonthYear = this.setSelectMonthYear.bind(this);
         this.user = JSON.parse(localStorage.getItem('user'));
 
     }
@@ -569,7 +574,30 @@ class Companies extends Component {
         });
     }
 
-    render() {
+    setSelectMonthYear() {
+        const months = [
+            { month: 'Janvier', index: 1 },
+            { month: 'Février', index: 2 },
+            { month: 'Mars', index: 3 },
+            { month: 'Avril', index: 4 },
+            { month: 'Mai', index: 5 },
+            { month: 'Juin', index: 6 },
+            { month: 'Juillet', index: 7 },
+            { month: 'Août', index: 8 },
+            { month: 'Septembre', index: 9 },
+            { month: 'Octobre', index: 10 },
+            { month: 'Novembre', index: 11 },
+            { month: 'Décembre', index: 12 }
+        ];
+        let years = [];
+        const currentYear = new Date().getFullYear();
+        for (let i = 2020; i <= currentYear; i++) {
+            years.push(i);
+        }
+        return { months, years };
+    }
+
+    setCompaniesOccurences() {
         let companies = [];
         let occurences = [];
         for (let infoDraft of this.state.infoDrafts) {
@@ -601,9 +629,15 @@ class Companies extends Component {
                 }
             }
         }
+        return { companies, occurences };
+    }
+
+    render() {
+        const { months, years } = this.setSelectMonthYear(); 
+        const { companies, occurences } = this.setCompaniesOccurences();
         return (
             <div>
-                <CFormGroup>
+                <CFormGroup className={'sofraco-form-search-group'}>
                     <CInputGroup className={'sofraco-form-search'}>
                         <CInput
                             type="text"
@@ -624,6 +658,34 @@ class Companies extends Component {
                         </span>
                     </CInputGroup>
                 </CFormGroup>
+                <div className="sofraco-content-filtre">
+                    <CSelect
+                        label="Mois"
+                        className="sofraco-select-filtre"
+                        onChange={(e) => this.onChangeSelectFilterMonthHandler(e)}
+                        defaultValue={new Date().getMonth()}
+                    >
+                        <option>Selectionnez le mois</option>
+                        {months.map((month, index) => {
+                            return (
+                                <option key={`monthoption${index}`} value={month.index} >{month.month}</option>
+                            )
+                        })}
+                    </CSelect>
+                    <CSelect
+                        label="Année"
+                        className="sofraco-select-filtre"
+                        onChange={(e) => this.onChangeSelectFilterYearHandler(e)}
+                        defaultValue={new Date().getFullYear()}
+                    >
+                        <option>Selectionnez une année</option>
+                        {years.map((year, index) => {
+                            return (
+                                <option key={`yearoption${index}`} value={year} >{year}</option>
+                            )
+                        })}
+                    </CSelect>
+                </div>
                 {(this.state.companies.length > 0) && (
                     <div>
                         <CRow>

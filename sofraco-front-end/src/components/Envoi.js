@@ -27,8 +27,8 @@ class Envoi extends Component {
             fields: [],
             toast: false,
             messageToast: [],
-            month: null,
-            year: null,
+            month: new Date().getMonth(),
+            year: new Date().getFullYear(),
             token: document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1'),
             interne: false
         }
@@ -40,6 +40,7 @@ class Envoi extends Component {
         this.onSendMailHandler = this.onSendMailHandler.bind(this);
         this.onChangeSelectFilterYearHandler = this.onChangeSelectFilterYearHandler.bind(this);
         this.onChangeSelectFilterMonthHandler = this.onChangeSelectFilterMonthHandler.bind(this);
+        this.setSelectMonthYear = this.setSelectMonthYear.bind(this);
         this.fetchCourtiers = this.fetchCourtiers.bind(this);
 
     }
@@ -195,8 +196,8 @@ class Envoi extends Component {
                     emailCopie: courtier.emailCopie,
                     firstName: courtier.firstName,
                     lastName: courtier.lastName,
-                    month: this.state.month !== null ? this.state.month : new Date().getMonth(),
-                    year: this.state.year !== null ? this.state.year : new Date().getFullYear()
+                    month: this.state.month,
+                    year: this.state.year
                 };
                 mailPromises.push(
                     axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/mailer/`, options, {
@@ -257,7 +258,7 @@ class Envoi extends Component {
         });
     }
 
-    render() {
+    setSelectMonthYear() {
         const months = [
             { month: 'Janvier', index: 1 },
             { month: 'Février', index: 2 },
@@ -277,7 +278,11 @@ class Envoi extends Component {
         for (let i = 2020; i <= currentYear; i++) {
             years.push(i);
         }
+        return { months, years };
+    }
 
+    render() {
+        const { months, years } = this.setSelectMonthYear();
         return (
             <div>
                 <div className="sofraco-content-filtre">
@@ -285,12 +290,12 @@ class Envoi extends Component {
                         label="Mois"
                         className="sofraco-select-filtre"
                         onChange={(e) => this.onChangeSelectFilterMonthHandler(e)}
-                        style={{ display: "inline-block" }}
+                        defaultValue={new Date().getMonth()}
                     >
                         <option>Selectionnez le mois</option>
                         {months.map((month, index) => {
                             return (
-                                <option key={`monthoption${index}`} value={month.index} selected={month.index === new Date().getMonth()}>{month.month}</option>
+                                <option key={`monthoption${index}`} value={month.index} >{month.month}</option>
                             )
                         })}
                     </CSelect>
@@ -298,12 +303,12 @@ class Envoi extends Component {
                         label="Année"
                         className="sofraco-select-filtre"
                         onChange={(e) => this.onChangeSelectFilterYearHandler(e)}
-                        style={{ display: "inline-block" }}
+                        defaultValue={new Date().getFullYear()}
                     >
                         <option>Selectionnez une année</option>
                         {years.map((year, index) => {
                             return (
-                                <option key={`yearoption${index}`} value={year} selected={year === new Date().getFullYear()}>{year}</option>
+                                <option key={`yearoption${index}`} value={year} >{year}</option>
                             )
                         })}
                     </CSelect>

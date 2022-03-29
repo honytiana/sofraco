@@ -124,3 +124,16 @@
     align-items: center;
 }
 
+.sofraco-select-filtre {
+    width: 200px !important;
+    display: inline-block !important;
+}
+
+.sofraco-content-filtre {
+    display: inline-block;
+}
+
+.sofraco-form-search-group {
+    display: inline-block;
+}
+

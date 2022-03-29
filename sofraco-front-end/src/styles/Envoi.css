@@ -25,6 +25,7 @@
 
 .sofraco-select-filtre {
     width: 200px;
+    display: inline-block;
 }
 
 /* .sofraco-content-filtre {
