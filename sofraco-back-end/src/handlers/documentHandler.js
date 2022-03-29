@@ -11,7 +11,7 @@ class DocumentHandler {
         document.company = data.company;
         document.companyGlobalName = data.globalName;
         document.companyName = data.companyName;
-        document.upload_date = Date.now();
+        document.upload_date = data.upload_date;
         document.path_original_file = data.path_original_file;
         document.type = data.type;
         document.status = data.status;

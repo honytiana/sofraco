@@ -67,6 +67,7 @@ exports.createDocument = async (req, res) => {  // create document
         const surco = JSON.parse(req.body.surco);
         const surco2 = JSON.parse(req.body.surco2);
         const mcms = JSON.parse(req.body.mcms);
+        const selectedDate = JSON.parse(req.body.selectedDate);
         let fileLength = 0;
         let surcoLength = 0;
         if (req.body.fileLength !== 'undefined') {
@@ -77,49 +78,49 @@ exports.createDocument = async (req, res) => {  // create document
         }
 
         if (simple && surco && surco2 && !mcms) {  // company and surco ans surco2
-            const docCompany = saveDocumentUploaded(company, req.files[0].path, req.body.extension);
-            const docSurco = saveDocumentUploaded(companySurco, req.files[1].path, req.body.extension);
-            const docMCMS = saveDocumentUploaded(companySurco2, req.files[2].path, req.body.extension);
+            const docCompany = saveDocumentUploaded(company, req.files[0].path, req.body.extension, selectedDate);
+            const docSurco = saveDocumentUploaded(companySurco, req.files[1].path, req.body.extension, selectedDate);
+            const docMCMS = saveDocumentUploaded(companySurco2, req.files[2].path, req.body.extension, selectedDate);
         }
 
         if (simple && surco && !surco2 && !mcms) {  // company and surco
-            const docCompany = saveDocumentUploaded(company, req.files[0].path, req.body.extension);
-            const docSurco = saveDocumentUploaded(companySurco, req.files[1].path, req.body.extension);
+            const docCompany = saveDocumentUploaded(company, req.files[0].path, req.body.extension, selectedDate);
+            const docSurco = saveDocumentUploaded(companySurco, req.files[1].path, req.body.extension, selectedDate);
         }
 
         if (!simple && surco && surco2 && !mcms) { // surco and surco2
-            const docSurco = saveDocumentUploaded(companySurco, req.files[0].path, req.body.extension);
-            const docSurco2 = saveDocumentUploaded(companySurco2, req.files[1].path, req.body.extension);
+            const docSurco = saveDocumentUploaded(companySurco, req.files[0].path, req.body.extension, selectedDate);
+            const docSurco2 = saveDocumentUploaded(companySurco2, req.files[1].path, req.body.extension, selectedDate);
         }
 
         if (simple && !surco && surco2 && !mcms) { // company and surco2
-            const docCompany = saveDocumentUploaded(company, req.files[0].path, req.body.extension);
-            const docSurco2 = saveDocumentUploaded(companySurco2, req.files[1].path, req.body.extension);
+            const docCompany = saveDocumentUploaded(company, req.files[0].path, req.body.extension, selectedDate);
+            const docSurco2 = saveDocumentUploaded(companySurco2, req.files[1].path, req.body.extension, selectedDate);
         }
 
         if (simple && !surco && !surco2 && !mcms) {     // company
-            const docCompany = saveDocumentUploaded(company, req.files[0].path, req.body.extension);
+            const docCompany = saveDocumentUploaded(company, req.files[0].path, req.body.extension, selectedDate);
         }
 
         if (!simple && surco && !surco2 && !mcms) { // surco
-            const docSurco = saveDocumentUploaded(companySurco, req.files[0].path, req.body.extension);
+            const docSurco = saveDocumentUploaded(companySurco, req.files[0].path, req.body.extension, selectedDate);
         }
 
         if (!simple && !surco && surco2 && !mcms) { // surco2
-            const docSurco2 = saveDocumentUploaded(companySurco2, req.files[0].path, req.body.extension);
+            const docSurco2 = saveDocumentUploaded(companySurco2, req.files[0].path, req.body.extension, selectedDate);
         }
 
         if (!simple && surco && !surco2 && mcms && surcoLength > 0 && fileLength === 0) { // MCMS 
             for (let file of req.files) {
-                saveDocumentUploaded(companySurco, file.path, req.body.extension);
+                saveDocumentUploaded(companySurco, file.path, req.body.extension, selectedDate);
             }
         }
         if (simple && surco && !surco2 && mcms && surcoLength > 0 && fileLength > 0) { // company & MCMS 
-            const docCompany = saveDocumentUploaded(company, req.files[0].path, req.body.extension);
+            const docCompany = saveDocumentUploaded(company, req.files[0].path, req.body.extension, selectedDate);
             const doc = documentHandler.createDocument(document);
             const files = req.files.splice(1, req.files.length - 1);
             for (let file of files) {
-                const docMCMS = saveDocumentUploaded(companySurco, file.path, req.body.extension);
+                const docMCMS = saveDocumentUploaded(companySurco, file.path, req.body.extension, selectedDate);
             }
         }
         if (company.name === 'METLIFE') {
@@ -136,7 +137,7 @@ exports.createDocument = async (req, res) => {  // create document
     }
 }
 
-exports.saveDocument = (company, filePath, extension, status = 'draft') => {
+exports.saveDocument = (company, filePath, extension, selectedDate, status = 'draft') => {
     try {
         let document = {};
         const fileName = fileService.getFileName(filePath);
@@ -145,6 +146,7 @@ exports.saveDocument = (company, filePath, extension, status = 'draft') => {
         document.companyGlobalName = company.globalName;
         document.companyName = company.name;
         document.path_original_file = filePath;
+        document.upload_date = new Date(selectedDate.year, selectedDate.month);
         document.type = extension;
         document.status = status;
         const doc = documentHandler.createDocument(document);
@@ -154,13 +156,13 @@ exports.saveDocument = (company, filePath, extension, status = 'draft') => {
     }
 };
 
-const saveDocumentUploaded = (company, filePath, extension) => {
+const saveDocumentUploaded = (company, filePath, extension, selectedDate) => {
     try {
         let doc;
         if (company.name === 'METLIFE') {
-            doc = this.saveDocument(company, filePath, extension, 'cancel');
+            doc = this.saveDocument(company, filePath, extension, selectedDate, 'cancel');
         } else {
-            doc = this.saveDocument(company, filePath, extension);
+            doc = this.saveDocument(company, filePath, extension, selectedDate);
         }
         return doc;
     } catch (err) {

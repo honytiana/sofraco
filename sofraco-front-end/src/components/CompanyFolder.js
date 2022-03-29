@@ -178,6 +178,7 @@ class CompanyFolder extends Component {
                                         companyName={this.props.companyName}
                                         token={this.props.token}
                                         companyFolderCallback = {this.handleCompanyFolderCallback}
+                                        selectedDate={this.props.selectedDate}
                                     />
                                 </CTabPane>
                                 <CTabPane data-tab="historique">

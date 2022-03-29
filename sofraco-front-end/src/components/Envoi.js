@@ -27,7 +27,7 @@ class Envoi extends Component {
             fields: [],
             toast: false,
             messageToast: [],
-            month: new Date().getMonth(),
+            month: new Date().getMonth() + 1,
             year: new Date().getFullYear(),
             token: document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1'),
             interne: false
@@ -290,7 +290,7 @@ class Envoi extends Component {
                         label="Mois"
                         className="sofraco-select-filtre"
                         onChange={(e) => this.onChangeSelectFilterMonthHandler(e)}
-                        defaultValue={new Date().getMonth()}
+                        defaultValue={new Date().getMonth() + 1}
                     >
                         <option>Selectionnez le mois</option>
                         {months.map((month, index) => {

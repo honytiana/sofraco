@@ -114,6 +114,7 @@ class Upload extends Component {
     }
 
     onSubmitHandler(event) {
+        const selectedDate = this.props.selectedDate;
         event.preventDefault();
         this.setState({
             loader: true
@@ -167,6 +168,7 @@ class Upload extends Component {
         formData.append('company', JSON.stringify(company));
         formData.append('companySurco', JSON.stringify(companySurco));
         formData.append('companySurco2', JSON.stringify(companySurco2));
+        formData.append('selectedDate', JSON.stringify(selectedDate));
         axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/document/`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',

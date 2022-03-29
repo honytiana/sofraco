@@ -54,7 +54,7 @@ class Companies extends Component {
             logo: '',
             toast: false,
             messageToast: {},
-            month: new Date().getMonth(),
+            month: new Date().getMonth() + 1,
             year: new Date().getFullYear(),
             load: false,
             loadGenerateExcelMaster: false,
@@ -633,7 +633,7 @@ class Companies extends Component {
     }
 
     render() {
-        const { months, years } = this.setSelectMonthYear(); 
+        const { months, years } = this.setSelectMonthYear();
         const { companies, occurences } = this.setCompaniesOccurences();
         return (
             <div>
@@ -663,7 +663,7 @@ class Companies extends Component {
                         label="Mois"
                         className="sofraco-select-filtre"
                         onChange={(e) => this.onChangeSelectFilterMonthHandler(e)}
-                        defaultValue={new Date().getMonth()}
+                        defaultValue={new Date().getMonth() + 1}
                     >
                         <option>Selectionnez le mois</option>
                         {months.map((month, index) => {
@@ -724,6 +724,7 @@ class Companies extends Component {
                                                 companyCallback={(companyFolderData) => { this.handleCompanyCallback(index, companyFolderData) }}
                                                 onCloseModal={() => { this.toggleDetails(index) }}
                                                 token={this.state.token}
+                                                selectedDate={{ month: this.state.month, year: this.state.year }}
                                             />
                                         </CCol>
                                     )
