@@ -44,7 +44,6 @@ class CompanyFolder extends Component {
         }
         this._isMounted = false;
         this.fetchAllDocumentsCompany = this.fetchAllDocumentsCompany.bind(this);
-        this.fetchDocumentsCompanyByYearAndMonth = this.fetchDocumentsCompanyByYearAndMonth.bind(this);
         this.fetchDocumentsCompany = this.fetchDocumentsCompany.bind(this);
         this.fetchCompany = this.fetchCompany.bind(this);
     }
@@ -62,7 +61,6 @@ class CompanyFolder extends Component {
         this._isMounted && this.fetchCompany();
         this._isMounted && this.fetchDocumentsCompany();
         this._isMounted && this.fetchAllDocumentsCompany();
-        this._isMounted && this.fetchDocumentsCompanyByYearAndMonth();
     }
 
     componentWillUnmount() {
@@ -135,27 +133,6 @@ class CompanyFolder extends Component {
                 this.setState({
                     archived: result.data
                 });
-            })
-            .catch((err) => {
-                this.setState({
-                    toast: true,
-                    messageToast: { header: 'ERROR', color: 'danger', message: err }
-                })
-            });
-    }
-
-    fetchDocumentsCompanyByYearAndMonth() {
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/document/company/${this.props.company._id}/year/${this.props.selectedDate.year}/month/${this.props.selectedDate.month}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.token}`
-            }
-        })
-            .then((result) => {
-                const res = result.data;
-                if (res.length > 0) {
-                    this.props.companyInformationCallback(res);
-                }
             })
             .catch((err) => {
                 this.setState({

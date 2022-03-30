@@ -10,3 +10,9 @@
     padding: 0;
     padding-left: 10px;
 }
+
+.sofraco-icon-arrow {
+    width: 20px;
+    cursor: pointer;
+    color: #9d8b80 !important;
+}

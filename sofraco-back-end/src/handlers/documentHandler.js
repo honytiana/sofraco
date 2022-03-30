@@ -9,7 +9,7 @@ class DocumentHandler {
         let document = new Document();
         document.name = data.name;
         document.company = data.company;
-        document.companyGlobalName = data.globalName;
+        document.companyGlobalName = data.companyGlobalName;
         document.companyName = data.companyName;
         document.upload_date = data.upload_date;
         document.path_original_file = data.path_original_file;
@@ -40,25 +40,25 @@ class DocumentHandler {
         const mmonth = parseInt(month);
         return Document.find({
             upload_date: {
-                $gte: new Date(myear, mmonth - 1, 1),
-                $lt: new Date(myear, mmonth, 1)
+                $gte: new Date(myear, mmonth),
+                $lt: new Date(myear, mmonth + 1)
             }
         });
     }
 
-    getDocumentsByYearMonth(company, year, month) {
+    getDocumentsCompanyByYearMonth(company, year, month) {
         const myear = parseInt(year);
         const mmonth = parseInt(month);
         return Document.find({
             $and: [
                 {
-                    upload_date: {
-                        $gte: new Date(myear, mmonth - 1, 1),
-                        $lt: new Date(myear, mmonth, 1)
-                    }
+                    company: company
                 },
                 {
-                    company: company
+                    upload_date: {
+                        $gte: new Date(myear, mmonth),
+                        $lt: new Date(myear, mmonth + 1)
+                    }
                 }
             ]
         }

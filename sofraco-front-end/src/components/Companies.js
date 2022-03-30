@@ -50,7 +50,7 @@ class Companies extends Component {
             companies: [],
             collapsed: [],
             drafts: [],
-            infoDrafts: [],
+            companiesDocuments: [],
             logo: '',
             toast: false,
             messageToast: {},
@@ -77,15 +77,14 @@ class Companies extends Component {
         this.onSearchCompany = this.onSearchCompany.bind(this);
         this.getDraftDocument = this.getDraftDocument.bind(this);
         this.getTreatment = this.getTreatment.bind(this);
-        this.checkCompanyOfDraftsDocuments = this.checkCompanyOfDraftsDocuments.bind(this);
         this.toggle = this.toggle.bind(this);
         this.loadingHandler = this.loadingHandler.bind(this);
         this.onValiderHandler = this.onValiderHandler.bind(this);
         this.onGenererExcelsMasters = this.onGenererExcelsMasters.bind(this);
         this.onDownloadExcelMasters = this.onDownloadExcelMasters.bind(this);
         this.closeErrorsModal = this.closeErrorsModal.bind(this);
-        this.setCompaniesOccurences = this.setCompaniesOccurences.bind(this);
         this.setSelectMonthYear = this.setSelectMonthYear.bind(this);
+        this.fetchDocumentsYearAndMonth = this.fetchDocumentsYearAndMonth.bind(this);
         this.user = JSON.parse(localStorage.getItem('user'));
 
     }
@@ -98,6 +97,7 @@ class Companies extends Component {
         });
         this._isMounted && this.getCompanies();
         this._isMounted && this.getDraftDocument();
+        this._isMounted && this.fetchDocumentsYearAndMonth();
         // this.loadingHandler();
         if (this.state.local) {
             this._isMounted && this.getTreatmentTime();
@@ -151,72 +151,10 @@ class Companies extends Component {
                 this.setState({
                     drafts
                 });
-                await this.checkCompanyOfDraftsDocuments();
             })
             .catch((err) => {
                 console.log(err)
             });
-    }
-
-    async checkCompanyOfDraftsDocuments() {
-        const drafts = this.state.drafts;
-        let infoDrafts = [];
-        for (let draft of drafts) {
-            try {
-                const result = await axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company/${draft.company}`, {
-                    headers: {
-                        'Authorization': `Bearer ${this.state.token}`
-                    }
-                });
-                const company = result.data;
-                if (company.type === 'surco') {
-                    try {
-                        const result = await axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company/companySurco/${company.name}`, {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${this.state.token}`
-                            }
-                        });
-                        const companyParent = result.data;
-                        const info = { company: companyParent, surco: company, owner: 'surco' };
-                        infoDrafts.push(info);
-                    } catch (err) {
-                        this.setState({
-                            toast: true,
-                            messageToast: { header: 'ERROR', color: 'danger', message: err }
-                        })
-                    }
-                    continue;
-                }
-                if (company.surco) {
-                    const companySurco = company.companySurco;
-                    try {
-                        const result = await axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company/name/${companySurco}`, {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${this.state.token}`
-                            }
-                        });
-                        const info = { company: company, surco: result.data, owner: 'parent' };
-                        infoDrafts.push(info);
-                    } catch (err) {
-                        this.setState({
-                            toast: true,
-                            messageToast: { header: 'ERROR', color: 'danger', message: err }
-                        })
-                    }
-                } else {
-                    const info = { company: company, surco: null };
-                    infoDrafts.push(info);
-                }
-            } catch (err) {
-                console.log(err)
-            }
-        }
-        this.setState({
-            infoDrafts
-        });
-
     }
 
     loadingHandler() {
@@ -263,6 +201,36 @@ class Companies extends Component {
                     companies: companies,
                     collapsed: collapsed,
                 })
+            })
+            .catch((err) => {
+                console.log(err)
+            });
+    }
+
+    fetchDocumentsYearAndMonth() {
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/document/year/${this.state.year}/month/${this.state.month}`, {
+            headers: {
+                'Authorization': `Bearer ${this.state.token}`
+            }
+        })
+            .then((data) => {
+                for (let document of data.data) {
+                    axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company/${document.company}`, {
+                        headers: {
+                            'Authorization': `Bearer ${this.state.token}`
+                        }
+                    })
+                        .then((data) => {
+                            const companiesDocuments = this.state.companiesDocuments;
+                            companiesDocuments.push(data.data);
+                            this.setState({
+                                companiesDocuments
+                            });
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                        });
+                }
             })
             .catch((err) => {
                 console.log(err)
@@ -552,23 +520,10 @@ class Companies extends Component {
         }
     }
 
-
-    handleCompanyInformationsCallback = (companyInformationData) => {
-        const company = companyInformationData;
-    }
-
-    getCheckBadge(occurences, company) {
-        for (let occ of occurences) {
-            if (occ.company._id === company._id) {
-                if (!company.surco) {
-                    return (<CBadge key={`${company._id}_CardBodydraft${occurences.indexOf(occ)}`} ><CImg className="sofraco-img-check" size="sm" src={check}></CImg></CBadge>)
-                } else {
-                    if (occ.count === 1) {
-                        return (<CBadge key={`${company._id}_badge${occurences.indexOf(occ)}`} color="warning">1/2</CBadge>)
-                    } else {
-                        return (<CBadge key={`${company._id}_CardBodydraft${occurences.indexOf(occ)}`} ><CImg className="sofraco-img-check" size="sm" src={check}></CImg></CBadge>)
-                    }
-                }
+    getCheckBadge(company) {
+        for (let companyD of this.state.companiesDocuments) {
+            if (companyD._id === company._id) {
+                return (<CBadge key={`${company._id}_CardBodydraft${this.state.companiesDocuments.indexOf(companyD)}`} ><CImg className="sofraco-img-check" size="sm" src={check}></CImg></CBadge>)
             }
         }
     }
@@ -602,46 +557,8 @@ class Companies extends Component {
         return { months, years };
     }
 
-    setCompaniesOccurences() {
-        // selectionner les documents uploadés pendant le mois
-        // si mois en cours uploadé : check
-        let companies = [];
-        let occurences = [];
-        for (let infoDraft of this.state.infoDrafts) {
-            if (!companies.includes(infoDraft.company)) {
-                companies.push(infoDraft.company);
-            }
-        }
-        for (let company of companies) {
-            let count = this.state.infoDrafts.filter((infoDraft, indew) => {
-                return infoDraft.company === company;
-            }).length;
-            if (!company.surco &&
-                !occurences.some(o => { return o.company.globalName === company.globalName })
-            ) {
-                occurences.push({ count, company });
-            }
-            if (company.surco) {
-                if (occurences.some(o => { return o.company.globalName === company.globalName && o.company.surco })) {
-                    const newOcc = occurences.slice();
-                    for (let i = 0; i < newOcc.length; i++) {
-                        if (newOcc[i].company.globalName === company.globalName) {
-                            newOcc[i].count = 2;
-                        }
-                    }
-                    occurences = newOcc;
-                } else {
-                    count = 1;
-                    occurences.push({ count, company });
-                }
-            }
-        }
-        return { companies, occurences };
-    }
-
     render() {
         const { months, years } = this.setSelectMonthYear();
-        const { companies, occurences } = this.setCompaniesOccurences();
         return (
             <div>
                 <CFormGroup className={'sofraco-form-search-group'}>
@@ -709,7 +626,7 @@ class Companies extends Component {
                                                     </CCardBody>
                                                     <CCardFooter className="d-flex justify-content-between" key={`${company._id}_CardFooter`}>
                                                         <div key={`${company._id}_CardFooterdiv`} >{company.globalName}</div>
-                                                        {this.getCheckBadge(occurences, company)}
+                                                        {this.getCheckBadge(company)}
                                                     </CCardFooter>
                                                 </CCard>) :
                                                 <CCard key={`${company._id}_Card`} className="sofraco-company-card-grey">
@@ -729,7 +646,6 @@ class Companies extends Component {
                                                 companyName={company.globalName}
                                                 showModal={this.state.details.includes(index)}
                                                 companyCallback={(companyFolderData) => { this.handleCompanyCallback(index, companyFolderData) }}
-                                                companyInformationCallback={(companyFolderInformationData) => { this.handleCompanyInformationsCallback(companyFolderInformationData) }}
                                                 onCloseModal={() => { this.toggleDetails(index) }}
                                                 token={this.state.token}
                                                 selectedDate={{ month: this.state.month, year: this.state.year }}

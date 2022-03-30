@@ -123,7 +123,10 @@ class Archived extends Component {
                                                                     onClick={(e) => this.toggleMonth(e, i)}
                                                                     className="sofraco-btn-collapse"
                                                                 >
-                                                                    <CIcon icon={this.state.detailsYear.includes(index) ? icon.cilArrowTop : icon.cilArrowBottom} />
+                                                                    <CIcon
+                                                                        className={'sofraco-icon-arrow'}
+                                                                        size='sm'
+                                                                        icon={this.state.detailsYear.includes(index) ? icon.cilArrowTop : icon.cilArrowBottom} />
                                                                 </CButton><CImg src={closedFolder} fluid width={20} />{document.month.month}
                                                             </CCardHeader>
                                                             <CCollapse

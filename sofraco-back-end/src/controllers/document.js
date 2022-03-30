@@ -448,7 +448,7 @@ exports.getDocumentsCompanyByYearMonth = async (req, res) => {
         const company = req.params.company;
         const year = req.params.year;
         const month = req.params.month;
-        const documents = await documentHandler.getDocumentsByYearMonth(company, year, month);
+        const documents = await documentHandler.getDocumentsCompanyByYearMonth(company, year, month);
         res.status(200).json(documents);
     } catch (err) {
         res.status(400).json({ err });

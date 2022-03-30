@@ -138,12 +138,14 @@ class Upload extends Component {
         const company = {
             _id: this.props.company._id,
             name: this.props.company.name,
+            globalName: this.props.company.globalName,
             surco: this.props.company.surco,
         }
         let companySurco;
         if (this.state.companySurco) {
             companySurco = {
                 _id: this.state.companySurco._id,
+                globalName: this.state.companySurco.globalName,
                 name: this.state.companySurco.name,
             }
         }
@@ -151,6 +153,7 @@ class Upload extends Component {
         if (this.state.companySurco2) {
             companySurco2 = {
                 _id: this.state.companySurco2._id,
+                globalName: this.state.companySurco2.globalName,
                 name: this.state.companySurco2.name,
             }
         }
