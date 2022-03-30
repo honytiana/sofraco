@@ -557,6 +557,22 @@ class Companies extends Component {
         return { months, years };
     }
 
+    onChangeSelectFilterMonthHandler(e) {
+        this.setState({
+            month: e.target.value
+        });
+        this._isMounted && this.getDraftDocument();
+        this._isMounted && this.fetchDocumentsYearAndMonth();
+    }
+
+    onChangeSelectFilterYearHandler(e) {
+        this.setState({
+            year: e.target.value
+        });
+        this._isMounted && this.getDraftDocument();
+        this._isMounted && this.fetchDocumentsYearAndMonth();
+    }
+
     render() {
         const { months, years } = this.setSelectMonthYear();
         return (
