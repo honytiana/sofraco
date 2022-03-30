@@ -552,6 +552,11 @@ class Companies extends Component {
         }
     }
 
+
+    handleCompanyInformationsCallback = (companyInformationData) => {
+        const company = companyInformationData;
+    }
+
     getCheckBadge(occurences, company) {
         for (let occ of occurences) {
             if (occ.company._id === company._id) {
@@ -598,6 +603,8 @@ class Companies extends Component {
     }
 
     setCompaniesOccurences() {
+        // selectionner les documents uploadés pendant le mois
+        // si mois en cours uploadé : check
         let companies = [];
         let occurences = [];
         for (let infoDraft of this.state.infoDrafts) {
@@ -722,6 +729,7 @@ class Companies extends Component {
                                                 companyName={company.globalName}
                                                 showModal={this.state.details.includes(index)}
                                                 companyCallback={(companyFolderData) => { this.handleCompanyCallback(index, companyFolderData) }}
+                                                companyInformationCallback={(companyFolderInformationData) => { this.handleCompanyInformationsCallback(companyFolderInformationData) }}
                                                 onCloseModal={() => { this.toggleDetails(index) }}
                                                 token={this.state.token}
                                                 selectedDate={{ month: this.state.month, year: this.state.year }}

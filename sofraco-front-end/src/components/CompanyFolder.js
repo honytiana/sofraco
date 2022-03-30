@@ -43,6 +43,7 @@ class CompanyFolder extends Component {
             interne: false
         }
         this._isMounted = false;
+        this.fetchAllDocumentsCompany = this.fetchAllDocumentsCompany.bind(this);
         this.fetchDocumentsCompanyByYearAndMonth = this.fetchDocumentsCompanyByYearAndMonth.bind(this);
         this.fetchDocumentsCompany = this.fetchDocumentsCompany.bind(this);
         this.fetchCompany = this.fetchCompany.bind(this);
@@ -60,6 +61,7 @@ class CompanyFolder extends Component {
         });
         this._isMounted && this.fetchCompany();
         this._isMounted && this.fetchDocumentsCompany();
+        this._isMounted && this.fetchAllDocumentsCompany();
         this._isMounted && this.fetchDocumentsCompanyByYearAndMonth();
     }
 
@@ -71,7 +73,7 @@ class CompanyFolder extends Component {
         if (this.props.token !== null) {
             this._isMounted && this.fetchCompany();
             this._isMounted && this.fetchDocumentsCompany();
-            this._isMounted && this.fetchDocumentsCompanyByYearAndMonth();
+            this._isMounted && this.fetchAllDocumentsCompany();
         }
     }
 
@@ -122,7 +124,7 @@ class CompanyFolder extends Component {
             });
     }
 
-    fetchDocumentsCompanyByYearAndMonth() {
+    fetchAllDocumentsCompany() {
         axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/document/company/${this.props.company._id}/year/month`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -142,7 +144,28 @@ class CompanyFolder extends Component {
             });
     }
 
-    handleCompanyFolderCallback = (uploadData) =>{
+    fetchDocumentsCompanyByYearAndMonth() {
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/document/company/${this.props.company._id}/year/${this.props.selectedDate.year}/month/${this.props.selectedDate.month}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.props.token}`
+            }
+        })
+            .then((result) => {
+                const res = result.data;
+                if (res.length > 0) {
+                    this.props.companyInformationCallback(res);
+                }
+            })
+            .catch((err) => {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'ERROR', color: 'danger', message: err }
+                })
+            });
+    }
+
+    handleCompanyFolderCallback = (uploadData) => {
         this.props.companyCallback(uploadData);
     }
 
@@ -177,7 +200,7 @@ class CompanyFolder extends Component {
                                         company={this.props.company}
                                         companyName={this.props.companyName}
                                         token={this.props.token}
-                                        companyFolderCallback = {this.handleCompanyFolderCallback}
+                                        companyFolderCallback={this.handleCompanyFolderCallback}
                                         selectedDate={this.props.selectedDate}
                                     />
                                 </CTabPane>
