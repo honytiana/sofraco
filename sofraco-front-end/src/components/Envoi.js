@@ -26,7 +26,7 @@ class Envoi extends Component {
             courtiers: [],
             fields: [],
             toast: false,
-            messageToast: [],
+            messageToast: {},
             month: new Date().getMonth() + 1,
             year: new Date().getFullYear(),
             token: document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1'),
@@ -358,30 +358,23 @@ class Envoi extends Component {
                         Envoyer les emails
                     </CButton>
                 </div>
-                {
-                    (this.state.toast === true &&
-                        this.state.messageToast.length > 0) && (
-                        this.state.messageToast.map((toast, index) => {
-                            return (
-                                <CToaster position="bottom-right" key={index}>
-                                    <CToast
-                                        show={true}
-                                        fade={true}
-                                        autohide={5000}
-                                        color={toast.color}
-                                    >
-                                        <CToastHeader closeButton>
-                                            {toast.header}
-                                        </CToastHeader>
-                                        <CToastBody>
-                                            {`${toast.message}`}
-                                        </CToastBody>
-                                    </CToast>
-                                </CToaster>
-                            )
-                        })
-
-                    )
+                {(this.state.toast === true) && (
+                    <CToaster position="bottom-right" >
+                        <CToast
+                            show={true}
+                            fade={true}
+                            autohide={5000}
+                            color={this.state.messageToast.color}
+                        >
+                            <CToastHeader closeButton>
+                                {this.state.messageToast.header}
+                            </CToastHeader>
+                            <CToastBody>
+                                {this.state.messageToast.message}
+                            </CToastBody>
+                        </CToast>
+                    </CToaster>
+                )
                 }
             </div>
         );
