@@ -146,7 +146,7 @@ exports.saveDocument = (company, filePath, extension, selectedDate, status = 'dr
         document.companyGlobalName = company.globalName;
         document.companyName = company.name;
         document.path_original_file = filePath;
-        document.upload_date = new Date(selectedDate.year, selectedDate.month);
+        document.upload_date = new Date(selectedDate.year, selectedDate.month, selectedDate.day);
         document.type = extension;
         document.status = status;
         const doc = documentHandler.createDocument(document);
@@ -461,18 +461,18 @@ exports.getDocumentsCompanyByAllYearMonth = async (req, res) => {
         const company = req.params.company;
         let archived = [];
         const months = [
-            { month: 'Janvier', index: 1 },
-            { month: 'Février', index: 2 },
-            { month: 'Mars', index: 3 },
-            { month: 'Avril', index: 4 },
-            { month: 'Mai', index: 5 },
-            { month: 'Juin', index: 6 },
-            { month: 'Juillet', index: 7 },
-            { month: 'Août', index: 8 },
-            { month: 'Septembre', index: 9 },
-            { month: 'Octobre', index: 10 },
-            { month: 'Novembre', index: 11 },
-            { month: 'Décembre', index: 12 }
+            { month: 'Janvier', index: 0 },
+            { month: 'Février', index: 1 },
+            { month: 'Mars', index: 2 },
+            { month: 'Avril', index: 3 },
+            { month: 'Mai', index: 4 },
+            { month: 'Juin', index: 5 },
+            { month: 'Juillet', index: 6 },
+            { month: 'Août', index: 7 },
+            { month: 'Septembre', index: 8 },
+            { month: 'Octobre', index: 9 },
+            { month: 'Novembre', index: 10 },
+            { month: 'Décembre', index: 11 }
         ];
         let years = [];
         const currentYear = new Date().getFullYear();
@@ -482,7 +482,7 @@ exports.getDocumentsCompanyByAllYearMonth = async (req, res) => {
         for (let year of years) {
             let documentsPerMonth = [];
             for (let month of months) {
-                const docs = await documentHandler.getDocumentsByYearMonth(company, year, month.index);
+                const docs = await documentHandler.getDocumentsCompanyByYearMonth(company, year, month.index);
                 documentsPerMonth.push({ month: month, documents: docs });
             }
             archived.push({ year: year, documents: documentsPerMonth });

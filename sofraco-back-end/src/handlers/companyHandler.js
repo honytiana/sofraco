@@ -18,6 +18,7 @@ class CompanyHandler {
         company.phone = data.phone;
         company.website = data.website;
         company.surco = data.surco;
+        company.surcoCount = data.surcoCount;
         company.companySurco = data.companySurco;
         company.is_enabled = data.is_enabled;
         company.save();

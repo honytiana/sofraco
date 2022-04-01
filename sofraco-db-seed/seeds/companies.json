@@ -12,6 +12,7 @@
         "logo": "/backend/documents/logos/apicil.png",
         "creation_date": "2010-01-01T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -28,6 +29,7 @@
         "logo": "/backend/documents/logos/aprep.png",
         "creation_date": "2010-03-02T00:00:00.000Z",
         "surco": true,
+        "surcoCount": 2,
         "companySurco": "APREP ENCOURS",
         "type": "simple"
     },
@@ -44,6 +46,7 @@
         "logo": "/backend/documents/logos/company.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "surco"
     },
@@ -60,6 +63,7 @@
         "logo": "/backend/documents/logos/aviva.png",
         "creation_date": "2010-04-02T00:00:00.000Z",
         "surco": true,
+        "surcoCount": 2,
         "companySurco": "AVIVA SURCO",
         "type": "simple"
     },
@@ -76,6 +80,7 @@
         "logo": "/backend/documents/logos/company.png",
         "creation_date": "2010-04-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "surco"
     },
@@ -92,6 +97,7 @@
         "logo": "/backend/documents/logos/cardif.png",
         "creation_date": "2010-05-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -108,6 +114,7 @@
         "logo": "/backend/documents/logos/lourmel.png",
         "creation_date": "2010-06-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -124,6 +131,7 @@
         "logo": "/backend/documents/logos/cegema.png",
         "creation_date": "2010-07-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -140,6 +148,7 @@
         "logo": "/backend/documents/logos/eres.png",
         "creation_date": "2010-08-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -156,6 +165,7 @@
         "logo": "/backend/documents/logos/generali.png",
         "creation_date": "2010-09-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -172,6 +182,7 @@
         "logo": "/backend/documents/logos/hodeva.png",
         "creation_date": "2010-10-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -188,6 +199,7 @@
         "logo": "/backend/documents/logos/metlife.png",
         "creation_date": "2010-11-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -204,6 +216,7 @@
         "logo": "/backend/documents/logos/swisslife.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": true,
+        "surcoCount": 2,
         "companySurco": "SWISS LIFE SURCO",
         "type": "simple"
     },
@@ -220,6 +233,7 @@
         "logo": "/backend/documents/logos/company.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "surco"
     },
@@ -236,6 +250,7 @@
         "logo": "/backend/documents/logos/apivia.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -252,6 +267,7 @@
         "logo": "/backend/documents/logos/asafafps.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -268,6 +284,7 @@
         "logo": "/backend/documents/logos/axa.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -284,6 +301,7 @@
         "logo": "/backend/documents/logos/bpsis.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -300,6 +318,7 @@
         "logo": "/backend/documents/logos/owliance.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -316,6 +335,7 @@
         "logo": "/backend/documents/logos/chapka.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -332,6 +352,7 @@
         "logo": "/backend/documents/logos/metlife.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -348,6 +369,7 @@
         "logo": "/backend/documents/logos/eca.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -364,6 +386,7 @@
         "logo": "/backend/documents/logos/elois.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -380,6 +403,7 @@
         "logo": "/backend/documents/logos/henner.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -396,6 +420,7 @@
         "logo": "/backend/documents/logos/klesia.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -412,6 +437,7 @@
         "logo": "/backend/documents/logos/mutuellegenerale.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -428,6 +454,7 @@
         "logo": "/backend/documents/logos/mie.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": true,
+        "surcoCount": 2,
         "mcms": false,
         "companySurco": "MIE MCMS",
         "type": "simple"
@@ -445,6 +472,7 @@
         "logo": "/backend/documents/logos/mie.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "mcms": true,
         "companySurco": "",
         "type": "surco"
@@ -462,6 +490,7 @@
         "logo": "/backend/documents/logos/miel.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": true,
+        "surcoCount": 2,
         "mcms": false,
         "companySurco": "MIEL MCMS",
         "type": "simple"
@@ -479,6 +508,7 @@
         "logo": "/backend/documents/logos/miel.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "mcms": true,
         "companySurco": "",
         "type": "surco"
@@ -496,6 +526,7 @@
         "logo": "/backend/documents/logos/miltis.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -512,6 +543,7 @@
         "logo": "/backend/documents/logos/mma.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": true,
+        "surcoCount": 3,
         "companySurco": "MMA ACQUISITION",
         "type": "simple"
     },
@@ -528,6 +560,7 @@
         "logo": "/backend/documents/logos/mma.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": true,
+        "surcoCount": 2,
         "mcms": false,
         "companySurco": "MMA ENCOURS",
         "type": "surco"
@@ -545,6 +578,7 @@
         "logo": "/backend/documents/logos/mma.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "mcms": false,
         "companySurco": "",
         "type": "surco2"
@@ -562,6 +596,7 @@
         "logo": "/backend/documents/logos/multiimpact.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -578,6 +613,7 @@
         "logo": "/backend/documents/logos/neoliane.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -594,6 +630,7 @@
         "logo": "/backend/documents/logos/pavillon_prevoyance.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": true,
+        "surcoCount": 2,
         "mcms": false,
         "companySurco": "PAVILLON MCMS",
         "type": "simple"
@@ -611,6 +648,7 @@
         "logo": "/backend/documents/logos/pavillon_prevoyance.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "mcms": true,
         "companySurco": "",
         "type": "surco"
@@ -628,6 +666,7 @@
         "logo": "/backend/documents/logos/epsens.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -644,6 +683,7 @@
         "logo": "/backend/documents/logos/smatis.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": true,
+        "surcoCount": 2,
         "mcms": false,
         "companySurco": "SMATIS MCMS",
         "type": "simple"
@@ -661,6 +701,7 @@
         "logo": "/backend/documents/logos/smatis.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "mcms": true,
         "companySurco": "",
         "type": "surco"
@@ -678,6 +719,7 @@
         "logo": "/backend/documents/logos/spvie.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -694,6 +736,7 @@
         "logo": "/backend/documents/logos/uaflife.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     },
@@ -710,6 +753,7 @@
         "logo": "/backend/documents/logos/utwin.png",
         "creation_date": "2010-12-02T00:00:00.000Z",
         "surco": false,
+        "surcoCount": 0,
         "companySurco": "",
         "type": "simple"
     }

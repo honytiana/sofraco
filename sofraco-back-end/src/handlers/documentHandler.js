@@ -40,8 +40,8 @@ class DocumentHandler {
         const mmonth = parseInt(month);
         return Document.find({
             upload_date: {
-                $gte: new Date(myear, mmonth),
-                $lt: new Date(myear, mmonth + 1)
+                $gte: new Date(myear, mmonth, 1),
+                $lt: new Date(myear, mmonth + 1, 1)
             }
         });
     }

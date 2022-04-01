@@ -146,6 +146,10 @@ class CompanyFolder extends Component {
         this.props.companyCallback(uploadData);
     }
 
+    handleCompanyFolderSurcoCallback = (count) => {
+        this.props.companySurcoCallback(count);
+    }
+
     render() {
         return (
             <div>
@@ -178,6 +182,7 @@ class CompanyFolder extends Component {
                                         companyName={this.props.companyName}
                                         token={this.props.token}
                                         companyFolderCallback={this.handleCompanyFolderCallback}
+                                        companyFolderSurcoCallback={this.handleCompanyFolderSurcoCallback}
                                         selectedDate={this.props.selectedDate}
                                     />
                                 </CTabPane>

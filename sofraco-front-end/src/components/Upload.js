@@ -27,6 +27,7 @@ class Upload extends Component {
             company: null,
             companySurco: null,
             companySurco2: null,
+            companySurcoCount: {},
             location: props.location,
             files: null,
             filesSurco: null,
@@ -84,6 +85,15 @@ class Upload extends Component {
                     this.setState({
                         companySurco
                     });
+                    const companySurcoCount = {
+                        company: company._id,
+                        companySurco: companySurco._id,
+                        count: 2
+                    };
+                    this.setState({
+                        companySurcoCount
+                    });
+                    this.props.companyFolderSurcoCallback(companySurcoCount);
                     if (companySurco.surco) {
                         axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company/name/${companySurco.companySurco}`, {
                             headers: {
@@ -95,6 +105,16 @@ class Upload extends Component {
                                 this.setState({
                                     companySurco2: res.data
                                 });
+                                const companySurcoCount = {
+                                    company: company._id,
+                                    companySurco: companySurco._id,
+                                    companySurco2: res.data._id,
+                                    count: 3
+                                };
+                                this.setState({
+                                    companySurcoCount
+                                });
+                                this.props.companyFolderSurcoCallback(companySurcoCount);
                             })
                             .catch((err) => {
                                 this.setState({
@@ -115,6 +135,7 @@ class Upload extends Component {
 
     onSubmitHandler(event) {
         const selectedDate = this.props.selectedDate;
+        selectedDate.day = new Date().getDate();
         event.preventDefault();
         this.setState({
             loader: true

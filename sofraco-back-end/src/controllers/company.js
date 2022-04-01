@@ -19,6 +19,7 @@ exports.createCompany = async (req, res) => {
         phone: data.phone,
         website: data.website,
         surco: data.surco,
+        surcoCount: data.surcoCount,
         companySurco: data.companySurco,
         is_enabled: data.is_enabled,
     };

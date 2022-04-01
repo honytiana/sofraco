@@ -14,6 +14,7 @@ const companySchema = new Schema({
     website: { type: String, default: '' },
     is_enabled: { type: Boolean, default: true },
     surco: { type: Boolean, default: false },
+    surcoCount: { type: Number, default: false },
     companySurco: { type: String, default: '' },
     type: { type: String, enum: ['simple', 'surco', 'surco2'] }
 });

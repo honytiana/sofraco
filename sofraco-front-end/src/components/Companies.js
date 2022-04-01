@@ -48,13 +48,14 @@ class Companies extends Component {
             letGenerateEM: true,
             details: [],
             companies: [],
+            surcoCount: [],
             collapsed: [],
             drafts: [],
             companiesDocuments: [],
             logo: '',
             toast: false,
             messageToast: {},
-            month: new Date().getMonth() + 1,
+            month: new Date().getMonth(),
             year: new Date().getFullYear(),
             load: false,
             loadGenerateExcelMaster: false,
@@ -85,6 +86,7 @@ class Companies extends Component {
         this.closeErrorsModal = this.closeErrorsModal.bind(this);
         this.setSelectMonthYear = this.setSelectMonthYear.bind(this);
         this.fetchDocumentsYearAndMonth = this.fetchDocumentsYearAndMonth.bind(this);
+        this.getCheckBadge = this.getCheckBadge.bind(this);
         this.user = JSON.parse(localStorage.getItem('user'));
 
     }
@@ -208,12 +210,15 @@ class Companies extends Component {
     }
 
     fetchDocumentsYearAndMonth() {
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/document/year/${this.state.year}/month/${this.state.month}`, {
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/document/year/${this.state.year}/month/${parseInt(this.state.month)}`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token}`
             }
         })
             .then((data) => {
+                this.setState({
+                    companiesDocuments: []
+                });
                 for (let document of data.data) {
                     axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company/${document.company}`, {
                         headers: {
@@ -423,6 +428,7 @@ class Companies extends Component {
                 details: newDetails
             });
             this._isMounted && this.getDraftDocument();
+            this._isMounted && this.fetchDocumentsYearAndMonth();
         }
     }
 
@@ -511,6 +517,7 @@ class Companies extends Component {
     }
 
     handleCompanyCallback = (index, companyFolderData) => {
+        this._isMounted && this.fetchDocumentsYearAndMonth();
         if (companyFolderData !== null && !companyFolderData) {
             this.toggleDetails(index);
             this.setState({
@@ -520,10 +527,74 @@ class Companies extends Component {
         }
     }
 
+    handleCompanySurcoCallback = (count) => {
+        const surcoCount = this.state.surcoCount;
+        surcoCount.push(count);
+        this.setState({
+            surcoCount
+        });
+    }
+
     getCheckBadge(company) {
+        let count = 0;
         for (let companyD of this.state.companiesDocuments) {
-            if (companyD._id === company._id) {
-                return (<CBadge key={`${company._id}_CardBodydraft${this.state.companiesDocuments.indexOf(companyD)}`} ><CImg className="sofraco-img-check" size="sm" src={check}></CImg></CBadge>)
+            if (!company.surco && company.surcoCount === 0) {
+                if (companyD._id === company._id) {
+                    return (
+                        <CBadge key={`${company._id}_CardBodydraft${this.state.companiesDocuments.indexOf(companyD)}`} >
+                            <CImg key={`${company._id}_ckeckgreen${this.state.companiesDocuments.indexOf(companyD)}`} className="sofraco-img-check" size="sm" src={check}></CImg>
+                        </CBadge>
+                    );
+                }
+            }
+            if (company.surco && company.surcoCount === 2) {
+                count = 0;
+                for (let c of this.state.surcoCount) {
+                    if (c.company === company._id) {
+                        if (company._id === companyD._id || c.companySurco === companyD._id) {
+                            count += 1;
+                        }
+                    }
+                }
+                if (count === 1) {
+                    return (
+                        <CBadge key={`${company._id}_CardBodydraft${this.state.companiesDocuments.indexOf(companyD)}`} color="warning">1/2</CBadge>
+                    )
+                }
+                if (count === 2) {
+                    return (
+                        <CBadge key={`${company._id}_CardBodydraft${this.state.companiesDocuments.indexOf(companyD)}`} >
+                            <CImg key={`${company._id}_ckeckgreen${this.state.companiesDocuments.indexOf(companyD)}`} className="sofraco-img-check" size="sm" src={check}></CImg>
+                        </CBadge>
+                    )
+                }
+            }
+            if (company.surco && company.surcoCount === 3) {
+                count = 0;
+                for (let c of this.state.surcoCount) {
+                    if (c.company === company._id) {
+                        if (company._id === companyD._id || c.companySurco === companyD._id || c.companySurco2 === companyD._id) {
+                            count += 1;
+                        }
+                    }
+                }
+                if (count === 1) {
+                    return (
+                        <CBadge key={`${company._id}_CardBodydraft${this.state.companiesDocuments.indexOf(companyD)}`} color="warning">1/3</CBadge>
+                    )
+                }
+                if (count === 2) {
+                    return (
+                        <CBadge key={`${company._id}_CardBodydraft${this.state.companiesDocuments.indexOf(companyD)}`} color="warning">2/3</CBadge>
+                    )
+                }
+                if (count === 3) {
+                    return (
+                        <CBadge key={`${company._id}_CardBodydraft${this.state.companiesDocuments.indexOf(companyD)}`} >
+                            <CImg key={`${company._id}_ckeckgreen${this.state.companiesDocuments.indexOf(companyD)}`} className="sofraco-img-check" size="sm" src={check}></CImg>
+                        </CBadge>
+                    )
+                }
             }
         }
     }
@@ -536,18 +607,18 @@ class Companies extends Component {
 
     setSelectMonthYear() {
         const months = [
-            { month: 'Janvier', index: 1 },
-            { month: 'Février', index: 2 },
-            { month: 'Mars', index: 3 },
-            { month: 'Avril', index: 4 },
-            { month: 'Mai', index: 5 },
-            { month: 'Juin', index: 6 },
-            { month: 'Juillet', index: 7 },
-            { month: 'Août', index: 8 },
-            { month: 'Septembre', index: 9 },
-            { month: 'Octobre', index: 10 },
-            { month: 'Novembre', index: 11 },
-            { month: 'Décembre', index: 12 }
+            { month: 'Janvier', index: 0 },
+            { month: 'Février', index: 1 },
+            { month: 'Mars', index: 2 },
+            { month: 'Avril', index: 3 },
+            { month: 'Mai', index: 4 },
+            { month: 'Juin', index: 5 },
+            { month: 'Juillet', index: 6 },
+            { month: 'Août', index: 7 },
+            { month: 'Septembre', index: 8 },
+            { month: 'Octobre', index: 9 },
+            { month: 'Novembre', index: 10 },
+            { month: 'Décembre', index: 11 }
         ];
         let years = [];
         const currentYear = new Date().getFullYear();
@@ -561,16 +632,12 @@ class Companies extends Component {
         this.setState({
             month: e.target.value
         });
-        this._isMounted && this.getDraftDocument();
-        this._isMounted && this.fetchDocumentsYearAndMonth();
     }
 
     onChangeSelectFilterYearHandler(e) {
         this.setState({
             year: e.target.value
         });
-        this._isMounted && this.getDraftDocument();
-        this._isMounted && this.fetchDocumentsYearAndMonth();
     }
 
     render() {
@@ -603,7 +670,8 @@ class Companies extends Component {
                         label="Mois"
                         className="sofraco-select-filtre"
                         onChange={(e) => this.onChangeSelectFilterMonthHandler(e)}
-                        defaultValue={new Date().getMonth() + 1}
+                        onBlur={() => { this.fetchDocumentsYearAndMonth() }}
+                        defaultValue={new Date().getMonth()}
                     >
                         <option>Selectionnez le mois</option>
                         {months.map((month, index) => {
@@ -616,6 +684,7 @@ class Companies extends Component {
                         label="Année"
                         className="sofraco-select-filtre"
                         onChange={(e) => this.onChangeSelectFilterYearHandler(e)}
+                        onBlur={() => { this.fetchDocumentsYearAndMonth() }}
                         defaultValue={new Date().getFullYear()}
                     >
                         <option>Selectionnez une année</option>
@@ -662,6 +731,7 @@ class Companies extends Component {
                                                 companyName={company.globalName}
                                                 showModal={this.state.details.includes(index)}
                                                 companyCallback={(companyFolderData) => { this.handleCompanyCallback(index, companyFolderData) }}
+                                                companySurcoCallback={(count) => { this.handleCompanySurcoCallback(count) }}
                                                 onCloseModal={() => { this.toggleDetails(index) }}
                                                 token={this.state.token}
                                                 selectedDate={{ month: this.state.month, year: this.state.year }}
