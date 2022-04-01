@@ -26,18 +26,26 @@ exports.sendMail = async (emailDestination, emailCopiesDestination, data, courti
     try {
         if (emailDestination !== '') {
             const excelMasters = await excelMasterHandler.getExcelMastersCourtierByYearMonth(courtier, year, month, 'zip');
+            let eMFinal = [];
+            for (let eMs of excelMasters) {
+                const eM = {
+                    attachementPath: eMs.path,
+                    fileNameAttachement: filesService.getFileName(eMs.path)
+                };
+                if (!eMFinal.some(e => { return e.attachementPath === eM.attachementPath })) {
+                    eMFinal.push(eM);
+                }
+            }
             if (excelMasters.length > 0) {
                 ejs.renderFile(path.join(__dirname, '..', '..', 'views', 'mail.ejs'), { data: data }, async (err, str) => {
                     if (err) {
                         console.log(err);
                     } else {
                         let attachments = [];
-                        for (let excelMaster of excelMasters) {
-                            const attachementPath = excelMaster.path;
-                            const fileNameAttachement = filesService.getFileName(attachementPath);
+                        for (let excelMaster of eMFinal) {
                             attachments.push({
-                                filename: fileNameAttachement,
-                                path: attachementPath
+                                filename: excelMaster.fileNameAttachement,
+                                path: excelMaster.attachementPath
                             });
                         }
                         const mailOptions = {
