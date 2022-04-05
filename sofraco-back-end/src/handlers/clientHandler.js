@@ -7,11 +7,11 @@ class ClientHandler {
 
     createClient(data) {      // signup
         let client = new Client();
+        client.numeroContrat = data.numeroContrat;
         client.lastName = data.lastName;
         client.firstName = data.firstName;
-        client.courtier = data.courtier;
-        client.email = data.email;
-        client.phone = data.phone;
+        client.cabinet = data.cabinet;
+        client.versementCommissions = data.versementCommissions;
         client.save();
         return client;
     }

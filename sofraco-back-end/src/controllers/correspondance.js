@@ -4,7 +4,7 @@ const config = require('../../config.json');
 const companyHandler = require('../handlers/companyHandler');
 const correspondanceHandler = require('../handlers/correspondanceHandler');
 const courtierHandler = require('../handlers/courtierHandler');
-const correspondanceService = require('../services/correspondances/correspondances');
+const correspondanceService = require('../services/features/correspondances');
 
 exports.createCorrespondance = async (req, res) => {
     try {

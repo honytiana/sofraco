@@ -3,23 +3,19 @@ const path = require('path');
 const config = require('../../config.json');
 const Client = require('../models/client');
 const clientHandler = require('../handlers/clientHandler');
+const clientService = require('../services/features/client');
 
 
 exports.createClient = async (req, res) => {
-    console.log(`${new Date()} Create client`);
-    const data = req.body;
-    let client = {
-        lastName: data.lastName,
-        firstName: data.firstName,
-        courtier: data.courtier,
-        email: data.email,
-        phone: data.phone
-    };
     try {
-        const c = await clientHandler.createClient(client);
-        res.status(200).json(c);
+        console.log(`${new Date()} create clients`);
+        const rattachements = await clientService.readExcelRattachementClient(req.params.name);
+        for (let rattachement of rattachements) {
+            const c = await clientHandler.createClient(rattachement);
+        }
+        res.status(200).end(`${new Date()} Clients added`);
     } catch (error) {
-        res.status(500).json({ error });
+        res.status(400).json({ error })
     }
 
 };

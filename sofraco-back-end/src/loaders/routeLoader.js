@@ -1,3 +1,4 @@
+const cabinet = require('../routes/cabinet');
 const client = require('../routes/client');
 const company = require('../routes/company');
 const correspondance = require('../routes/correspondance');
@@ -11,6 +12,7 @@ const swagger = require('../routes/swagger');
 const user = require('../routes/user');
 
 module.exports = async function ({ app }) {
+    app.use('/api/cabinet', cabinet);
     app.use('/api/client', client);
     app.use('/api/correspondance', correspondance);
     app.use('/api/company', company);
