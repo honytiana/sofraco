@@ -9,7 +9,7 @@ router.route('/:id').get(accessControl, clientController.getClient);
 router.route('/name/:name').post(accessControl, clientController.createClient);
 router.route('/courtier/:courtier').get(accessControl, clientController.getClientsOfCourtier);
 router.route('/:id').put(accessControl, clientController.updateClient);
-router.route('/').put(clientController.deleteAllClients);
+router.route('/').delete(clientController.deleteAllClients);
 router.route('/:id').delete(accessControl, clientController.deleteClient);
 
 
