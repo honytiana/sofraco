@@ -33,7 +33,7 @@ services:
             - ./data-node:/data/db
         command: mongod --noauth
         networks:
-            sofraco-network
+            - sofraco-network
 
 networks:
     sofraco-network:
