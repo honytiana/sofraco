@@ -13,16 +13,20 @@ exports.getOCRAPREP = (ocr) => {
         'Commission Apporteur'
     ];
     let infosOCR = [];
-    const dataCourtierOCR = {
-        code: {
-            cabinet: ocr.infos.infosBordereau.numOrias,
-            code: ocr.infos.infosBordereau.numOrias,
-        },
-        headers,
-        datas: ocr.infos.contrats,
-        infosBordereau: ocr.infos.infosBordereau
-    };
-    infosOCR.push({ companyGlobalName: 'NORTIA', companyName: 'APREP PREVOYANCE', infosOCR: dataCourtierOCR });
+    ocr.allContratsPerCourtier.forEach((contrat, index) => {
+        if (contrat.courtier) {
+            const dataCourtierOCR = {
+                code: {
+                    cabinet: contrat.courtier,
+                    code: contrat.courtier,
+                },
+                headers,
+                datas: contrat.contrats,
+                infosBordereau: ocr.infosBordereau
+            };
+            infosOCR.push({ companyGlobalName: 'NORTIA', companyName: 'APREP PREVOYANCE', infosOCR: dataCourtierOCR });
+        }
+    });
     return infosOCR;
 }
 
@@ -88,9 +92,15 @@ exports.createWorkSheetAPREP = (workSheet, dataCourtierOCR, reste = false, rowNu
     rowNumber++;
     workSheet.getRow(rowNumber).getCell('H').value = 'TOTAL';
     workSheet.getRow(rowNumber).getCell('H').font = { bold: true, name: 'Arial', size: 10 };
-    workSheet.getRow(rowNumber).getCell('I').value = dataCourtierOCR.infosOCR.infosBordereau.montantHT;
-    workSheet.getRow(rowNumber).getCell('I').font = { bold: true, name: 'Arial', size: 10 };
-    workSheet.getRow(rowNumber).getCell('I').numFmt = '#,##0.00"€";\-#,##0.00"€"';
+    let result = 0;
+    for (let i = debut; i <= rowNumber - 1; i++) {
+        result += workSheet.getRow(i).getCell('I').value;
+    }
+    const value = {
+        formula: `SUM(I${debut}:I${rowNumber - 2})`,
+        result: result
+    };
+    excelFile.setStylizedCell(workSheet, rowNumber, 'I', value, false, {}, { bold: true, name: 'Arial', size: 10 }, '#,##0.00"€";\-#,##0.00"€"');
     if (reste) {
         return rowNumber;
     }

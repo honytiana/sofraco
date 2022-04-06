@@ -434,7 +434,7 @@ class Client extends Component {
                                     <td className="text-center">
                                         {this.state.cabinets.map((cabinet, index) => {
                                             if(cabinet._id === item.cabinet) {
-                                                return cabinet.cabinet
+                                                return cabinet.cabinet;
                                             }
                                         })}
                                     </td>
@@ -443,7 +443,7 @@ class Client extends Component {
                         'show_details':
                             (item, index) => {
                                 return (
-                                    <td className="py-2">
+                                    <td className="text-center">
                                         <CIcon
                                             className={'sofraco-icon-edit'}
                                             size="sm"

@@ -6,6 +6,7 @@ const pdfService = require('../utils/pdfFile');
 const time = require('../utils/time');
 const fileService = require('../utils/files');
 const redefinition = require('../utils/redefinition');
+const generals = require('../utils/generals');
 
 const { workerData, parentPort } = require('worker_threads');
 if (parentPort !== null) {
@@ -13,22 +14,20 @@ if (parentPort !== null) {
 }
 
 exports.readPdfAPREP = async (file) => {
-    let infos = { executionTime: 0, infos: null };
     console.log(`${new Date()} DEBUT TRAITEMENT APREP`);
     const excecutionStartTime = performance.now();
     const images = await pdfService.convertPDFToImg(file);
     const textFilePaths = getTextFromImages(images);
     // const textFilePaths = fs.readdirSync(path.join(__dirname, '..', '..', '..', 'documents', 'texte'));
     const infoBordereau = readBordereauAPREP(textFilePaths);
-    infos.infos = infoBordereau;
     const excecutionStopTime = performance.now();
     let executionTimeMS = excecutionStopTime - excecutionStartTime;
     const executionTime = time.millisecondToTime(executionTimeMS);
     console.log('Total Execution time : ', executionTime);
-    infos.executionTime = executionTime;
-    infos.executionTimeMS = executionTimeMS;
+    infoBordereau.executionTime = executionTime;
+    infoBordereau.executionTimeMS = executionTimeMS;
     console.log(`${new Date()} FIN TRAITEMENT APREP`);
-    return infos;
+    return infoBordereau;
 };
 
 exports.readPdfAPREPENCOURS = async (file) => {
@@ -93,7 +92,16 @@ const combineTextToOneFile = (file, textFilePaths) => {
 
 const readBordereauAPREP = (textFilePaths) => {
     const readBordereauAPREPStartTime = performance.now();
-    let infos = { infosBordereau: null, contrats: [] };
+    let contrats = [];
+    let infosBordereau = {
+        lieu: null,
+        datebordereau: null,
+        numOrias: null,
+        objet: null,
+        designation: null,
+        montantHT: null
+    };
+    let ocr = { headers: [], infosBordereau, allContratsPerCourtier: [], executionTime: 0 };
     for (let textFilePath of textFilePaths) {
         // textFilePath = path.join(__dirname, '..', '..', '..', 'documents', 'texte', textFilePath);
         const content = fs.readFileSync(textFilePath, { encoding: 'utf-8' });
@@ -105,14 +113,6 @@ const readBordereauAPREP = (textFilePaths) => {
         const nameArr = fileNameWithoutExtension.split('_');
         const numero = nameArr[nameArr.length - 1];
         if (numero === '1') {
-            let infosBordereau = {
-                lieu: null,
-                datebordereau: null,
-                numOrias: null,
-                objet: null,
-                designation: null,
-                montantHT: null
-            };
             const rDateLieuBordereau = /^([^\d]*) (\d{1,2}[/]\d{1,2}[/]\d{1,4})+$/i;
             const rNumOrias = /^(N°[^\d]+)(\d+)$/i;
             const rObjet = /^Objet : ([^\d]+)$/i;
@@ -136,7 +136,7 @@ const readBordereauAPREP = (textFilePaths) => {
                     infosBordereau.montantHT = d.replace(rDesignationMontantHT, '$2');
                 }
             });
-            infos.infosBordereau = infosBordereau;
+            ocr.infosBordereau = infosBordereau;
         } else {
             const regex = /^(\d{1,2}[/]\d{1,2}[/]\d{1,4})?.+(\d{1,2}[/]\d{1,2}[/]\d{1,4})+.+\d+[,]?\d % \d+[,]\d+$/i;
             const firstIndexUtil = redefinition.reIndexOf(data, regex);
@@ -222,15 +222,18 @@ const readBordereauAPREP = (textFilePaths) => {
                     contrat.verificationCommissionApporteur = false;
                 }
 
-                infos.contrats.push(contrat);
+                contrats.push(contrat);
             })
         }
     }
+
+    const allContratsPerCourtier = generals.regroupContratByCourtier(contrats, 'numeroContrat');
+    ocr = { headers: [], infosBordereau, allContratsPerCourtier, executionTime: 0, executionTimeMS: 0 };
     const readBordereauAPREPStopTime = performance.now();
     const executionTimeMS = readBordereauAPREPStopTime - readBordereauAPREPStartTime;
     const executionTime = time.millisecondToTime(executionTimeMS);
     console.log('Read bordereau APREP time : ', executionTime);
-    return infos;
+    return ocr;
 }
 
 const readBordereauAPREPENCOURS = (textFilePath) => {

@@ -24,15 +24,20 @@ exports.createCorrespondance = async (req, res) => {
         const corr = await correspondanceHandler.getCorrespondances();
         for (let c of corr) {
             let a = false;
+            let ae = false;
             let e = false;
             let h = false;
             const courtier = await courtierHandler.getCourtierById(c.courtier);
             const apivia = await companyHandler.getCompanyByName('APIVIA');
+            const arpepEncours = await companyHandler.getCompanyByName('APREP ENCOURS');
             const eres = await companyHandler.getCompanyByName('ERES');
             const hodeva = await companyHandler.getCompanyByName('HODEVA');
             for (let comp of c.companies) {
                 if (comp.company === 'APIVIA') {
                     a = true;
+                }
+                if (comp.company === 'APREP ENCOURS') {
+                    ae = true;
                 }
                 if (comp.company === 'ERES') {
                     e = true;
@@ -43,6 +48,9 @@ exports.createCorrespondance = async (req, res) => {
             }
             if (!a) {
                 await correspondanceHandler.addCodeCourtier(c.courtier, apivia._id, apivia.name, apivia.globalName, '', `${courtier.lastName} ${courtier.firstName}`);
+            }
+            if (!ae) {
+                await correspondanceHandler.addCodeCourtier(c.courtier, arpepEncours._id, arpepEncours.name, arpepEncours.globalName, arpepEncours.name, courtier.cabinet);
             }
             if (!e) {
                 await correspondanceHandler.addCodeCourtier(c.courtier, eres._id, eres.name, eres.globalName, '', `${courtier.lastName} ${courtier.firstName}`);
