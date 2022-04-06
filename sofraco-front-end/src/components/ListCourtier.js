@@ -21,7 +21,8 @@ import {
     CFormGroup,
     CLabel,
     CInput,
-    CInputGroup
+    CInputGroup,
+    CSelect
 } from '@coreui/react';
 import axios from 'axios';
 import CIcon from '@coreui/icons-react';
@@ -40,6 +41,7 @@ class ListCourtier extends Component {
         this.state = {
             details: [],
             courtiers: [],
+            cabinets: [],
             fields: [],
             toast: false,
             messageToast: [],
@@ -54,6 +56,7 @@ class ListCourtier extends Component {
         this._isMounted = false;
         this.getBadge = this.getBadge.bind(this);
         this.toggleDetails = this.toggleDetails.bind(this);
+        this.fetchCabinets = this.fetchCabinets.bind(this);
         this.changeActivePage = this.changeActivePage.bind(this);
         this.fetchCourtiers = this.fetchCourtiers.bind(this);
         this.activerAjoutCourtier = this.activerAjoutCourtier.bind(this);
@@ -133,6 +136,7 @@ class ListCourtier extends Component {
             ]
         });
         this._isMounted && this.fetchCourtiers();
+        this._isMounted && this.fetchCabinets();
     }
 
     componentWillUnmount() {
@@ -152,6 +156,26 @@ class ListCourtier extends Component {
                 const courtiers = data;
                 this.setState({
                     courtiers
+                });
+            })
+            .catch((err) => {
+                console.log(err)
+            });
+    }
+
+    fetchCabinets() {
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet`, {
+            headers: {
+                'Authorization': `Bearer ${this.state.token}`
+            }
+        })
+            .then((data) => {
+                return data.data
+            })
+            .then((data) => {
+                const cabinets = data;
+                this.setState({
+                    cabinets
                 });
             })
             .catch((err) => {
@@ -346,16 +370,22 @@ class ListCourtier extends Component {
                     <CModalHeader closeButton>Creez un courtier</CModalHeader>
                     <CModalBody className="sofraco-modal-body">
                         <CForm action="" method="post" onSubmit={(e) => this.ajouterCourtier(e)}>
-                            <CFormGroup row>
-                                <CLabel className="col-sm-2" htmlFor={`sofraco-cabinet-courtier${this.props.sIndex}`}>Cabinet</CLabel>
-                                <CInput
-                                    type="text"
-                                    id={`sofraco-cabinet-courtiers${this.props.sIndex}`}
-                                    name={`sofraco-cabinet`}
-                                    autoComplete="cabinet"
-                                    className="sofraco-input"
-                                />
-                            </CFormGroup>
+                        <CFormGroup row>
+                            <CLabel className="col-sm-2" htmlFor={`sofraco-cabinet-courtier${this.props.sIndex}`}>Cabinet</CLabel>
+                            <CSelect
+                                id={`sofraco-cabinet-courtiers${this.props.sIndex}`}
+                                label="Cabinet"
+                                className="sofraco-input"
+                                name={`sofraco-cabinet`}
+                            >
+                                <option>Selectionnez un cabinet</option>
+                                {this.state.cabinets.map((cabinet, index) => {
+                                    return (
+                                        <option key={`cabinetOption${index}`} value={cabinet._id}>{cabinet.cabinet}</option>
+                                    )
+                                })}
+                            </CSelect>
+                        </CFormGroup>
                             <CFormGroup row>
                                 <CLabel className="col-sm-2" htmlFor={`sofraco-nom-courtier_${this.props.sIndex}`}>Nom</CLabel>
                                 <CInput

@@ -381,7 +381,7 @@ class Client extends Component {
                                     <option>Selectionnez un cabinet</option>
                                     {this.state.cabinets.map((cabinet, index) => {
                                         return (
-                                            <option key={`yearoption${index}`} value={cabinet._id}>{cabinet.cabinet}</option>
+                                            <option key={`cabinetOption${index}`} value={cabinet._id}>{cabinet.cabinet}</option>
                                         )
                                     })}
                                 </CSelect>

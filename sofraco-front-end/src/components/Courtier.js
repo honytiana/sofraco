@@ -10,7 +10,8 @@ import {
     CLabel,
     CInput,
     CButton,
-    CBadge
+    CBadge,
+    CSelect
 } from '@coreui/react';
 
 import CIcon from '@coreui/icons-react';
@@ -25,6 +26,7 @@ class Courtier extends Component {
         super(props);
         this.state = {
             courtier: props.courtier,
+            cabinets: [],
             toast: false,
             messageToast: {},
             newP: this.props.newP,
@@ -33,6 +35,7 @@ class Courtier extends Component {
             interne: false
         }
         this._isMounted = false;
+        this.fetchCabinets = this.fetchCabinets.bind(this);
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.onAddEmailCopie = this.onAddEmailCopie.bind(this);
         this.onEditEmailCopie = this.onEditEmailCopie.bind(this);
@@ -53,11 +56,32 @@ class Courtier extends Component {
         this.setState({
             interne: window.location.hostname.match(regInterne) ? true : false
         });
+        this._isMounted && this.fetchCabinets();
     }
 
     componentWillUnmount() {
         this._isMounted = false;
         this.props.listCourtierCallback();
+    }
+
+    fetchCabinets() {
+        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet`, {
+            headers: {
+                'Authorization': `Bearer ${this.props.token}`
+            }
+        })
+            .then((data) => {
+                return data.data
+            })
+            .then((data) => {
+                const cabinets = data;
+                this.setState({
+                    cabinets
+                });
+            })
+            .catch((err) => {
+                console.log(err)
+            });
     }
 
     onSubmitHandler(event) {
@@ -286,14 +310,20 @@ class Courtier extends Component {
                     <CForm action="" method="post" onSubmit={(e) => this.onSubmitHandler(e)}>
                         <CFormGroup row>
                             <CLabel className="col-sm-2" htmlFor={`sofraco-cabinet_${this.props.courtier._id}`}>Cabinet</CLabel>
-                            <CInput
-                                type="text"
+                            <CSelect
                                 id={`sofraco-cabinet_${this.props.courtier._id}`}
-                                name={`sofraco-cabinet`}
-                                defaultValue={this.props.courtier.cabinet}
-                                autoComplete="cabinet"
+                                label="Cabinet"
                                 className="sofraco-input"
-                            />
+                                name={`sofraco-cabinet`}
+                                defaultValue={this.props.courtier.cabinetRef}
+                            >
+                                <option>Selectionnez un cabinet</option>
+                                {this.state.cabinets.map((cabinet, index) => {
+                                    return (
+                                        <option key={`cabinetOption${index}`} value={cabinet._id} selected={this.props.courtier.cabinetRef === cabinet._id}>{cabinet.cabinet}</option>
+                                    )
+                                })}
+                            </CSelect>
                         </CFormGroup>
                         <CFormGroup row>
                             <CLabel className="col-sm-2" htmlFor={`sofraco-nom_${this.props.courtier._id}`}>Nom</CLabel>

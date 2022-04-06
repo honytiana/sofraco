@@ -5,11 +5,12 @@ class CourtierHandler {
 
     constructor() { }
 
-    createCourtier(data) {      // signup
+    createCourtier(data) {
         let courtier = new Courtier();
         courtier.lastName = data.lastName;
         courtier.firstName = data.firstName;
         courtier.cabinet = data.cabinet;
+        courtier.cabinetRef = data.cabinetRef;
         courtier.email = data.email;
         courtier.emailCopie = data.emailCopie;
         courtier.phone = data.phone;
@@ -85,7 +86,7 @@ class CourtierHandler {
             ]
         });
     }
-       
+
 
     updateCourtier(id, data) {
         return Courtier.findByIdAndUpdate(id, data);
@@ -93,6 +94,17 @@ class CourtierHandler {
 
     updateAllCourtier() {
         return Courtier.updateMany({ is_enabled: 'TRUE' }, { $set: { is_enabled: true } });
+    }
+
+    updateCourtierSetCabinets(courtier, cabinet) {
+        return Courtier.findOneAndUpdate(
+            {
+                _id: courtier
+            },
+            {
+                cabinetRef: cabinet
+            }
+        )
     }
 
     addEmailCopieCourtier(courtier, email) {

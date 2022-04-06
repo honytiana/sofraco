@@ -13,6 +13,7 @@ router.route('/courtier/:mandataire').get(accessControl, courtierController.getC
 router.route('/').post(accessControl, courtierController.createCourtier);
 router.route('/:id').put(courtierController.updateCourtier);
 router.route('/').put(courtierController.updateAllCourtier);
+router.route('/add/cabinet').put(courtierController.updateCourtierSetCabinets);
 router.route('/courtier/:courtier/emailCopie').put(courtierController.addEmailCopieCourtier);
 router.route('/courtier/:courtier/emailCopie/edit').put(courtierController.editEmailCopieCourtier);
 router.route('/courtier/:courtier/emailCopie/delete').put(courtierController.deleteEmailCopieCourtier);

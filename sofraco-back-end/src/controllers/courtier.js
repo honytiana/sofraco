@@ -4,6 +4,7 @@ const config = require('../../config.json');
 const Courtier = require('../models/courtier');
 const courtierHandler = require('../handlers/courtierHandler');
 const correspondanceHandler = require('../handlers/correspondanceHandler');
+const cabinetHandler = require('../handlers/cabinetHandler');
 
 
 exports.createCourtier = async (req, res) => {
@@ -13,6 +14,7 @@ exports.createCourtier = async (req, res) => {
         lastName: data.lastName,
         firstName: data.firstName,
         cabinet: data.cabinet,
+        cabinetRef: data.cabinetRef,
         email: data.email,
         phone: data.phone,
         status: 'Active',
@@ -107,6 +109,24 @@ exports.updateAllCourtier = async (req, res) => {
     try {
         const courtiers = await courtierHandler.updateAllCourtier();
         res.status(200).json(courtiers);
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+};
+
+exports.updateCourtierSetCabinets = async (req, res) => {
+    console.log(`${new Date()} Update All courtiers Set Cabinets`);
+    try {
+        const courtiers = await courtierHandler.getCourtiers();
+        const cabinets = await cabinetHandler.getCabinets();
+        for (let cabinet of cabinets) {
+            for (let courtier of courtiers) {
+                if (cabinet.cabinet === courtier.cabinet) {
+                    const c = await courtierHandler.updateCourtierSetCabinets(courtier._id, cabinet._id);
+                }
+            }
+        }
+        res.status(200).json(`Courtiers updated`);
     } catch (error) {
         res.status(500).json({ error });
     }
