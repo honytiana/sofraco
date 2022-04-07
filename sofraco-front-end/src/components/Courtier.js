@@ -20,6 +20,7 @@ import axios from 'axios';
 
 import '../styles/Courtier.css';
 import config from '../config.json';
+import CabinetService from '../services/cabinet';
 
 class Courtier extends Component {
     constructor(props) {
@@ -65,6 +66,9 @@ class Courtier extends Component {
     }
 
     fetchCabinets() {
+        // const cabinetService = new CabinetService();
+        // const cabinets = cabinetService.getCabinets(this.props.token);
+        // console.log(cabinets);
         axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet`, {
             headers: {
                 'Authorization': `Bearer ${this.props.token}`

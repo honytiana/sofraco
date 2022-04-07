@@ -9,6 +9,7 @@ class RouteComponent extends Component {
         // this.App = React.lazy(() => import('./App'));
         // this.Navbar = React.lazy(() => import('./Navbar'));
         // this.Access = React.lazy(() => import('./Access'));
+        this.Administration = React.lazy(() => import('./Administration'));
         this.Home = React.lazy(() => import('./Home'));
         this.Companies = React.lazy(() => import('./Companies'));
         // this.Upload = React.lazy(() => import('./Upload'));
@@ -44,6 +45,9 @@ class RouteComponent extends Component {
                         </Route>
                         <Route path="/client" component={this.Client} >
                             <this.Client token={this.props.token} />
+                        </Route>
+                        <Route path="/administration" component={this.Administration} >
+                            <this.Administration token={this.props.token} />
                         </Route>
                     </Switch>
                 </Suspense>
