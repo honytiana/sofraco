@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - dev
+      - NO
 
 jobs:
   build:
@@ -15,10 +15,10 @@ jobs:
     - name: Executing remote command
       uses: appleboy/ssh-action@master
       with:
-        HOST: ${{ secrets.HOST }}
-        USERNAME: ${{ secrets.USER }}
-        PORT: ${{ secrets.PORT }}
-        KEY: ${{ secrets.KEY }}
+        HOST: ${{ secrets.HOST0 }}
+        USERNAME: ${{ secrets.USER0 }}
+        PORT: ${{ secrets.PORT0 }}
+        KEY: ${{ secrets.KEY0 }}
         command_timeout: 60m
         script: |
           cd ../data/Sofraco/
