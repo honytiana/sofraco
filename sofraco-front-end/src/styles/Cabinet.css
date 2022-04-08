@@ -1,0 +1,45 @@
+.sofraco-icon-edit {
+    width: 20px;
+    cursor: pointer;
+    color: #9d8b80 !important;
+}
+
+.sofraco-pagination, .sofraco-pagination ul, .sofraco-pagination li, .sofraco-pagination a {
+    color: #ed7102 !important;
+}
+
+.sofraco-pagination .page-item.active a {
+    color: #fff !important;
+    background-color: #ed7102 !important;
+    border-color: #ed7102 !important;
+}
+
+.sofraco-modal .modal-content {
+    min-height: 525px;
+    max-height: 600px;
+}
+
+.sofraco-modal-body {
+    overflow: auto;
+}
+
+.sofraco-modal .modal-dialog.modal-dialog-centered {
+    max-width: 1050px;
+}
+
+.sofraco-button-anuler {
+    color: #fff;
+    background-color: #817369;
+  }
+
+.sofraco-button-add {
+    color: #fff;
+    background-color: #ed7102;
+    width: 50px;
+}
+
+.sofraco-icon-suppr {
+    width: 15px;
+    cursor: pointer;
+    color: #9d8b80 !important;
+}

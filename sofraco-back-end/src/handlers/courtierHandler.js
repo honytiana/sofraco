@@ -87,7 +87,6 @@ class CourtierHandler {
         });
     }
 
-
     updateCourtier(id, data) {
         return Courtier.findByIdAndUpdate(id, data);
     }

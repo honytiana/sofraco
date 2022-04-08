@@ -7,48 +7,72 @@ class CabinetService {
         this.interne = window.location.hostname.match(regInterne) ? true : false
     }
 
-    createCabinet(token, data) {
-        axios.post(`${(this.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet`, data, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        }).then((res) => {
-            return res.data
-        }).catch((err) => {
-            console.log(err);
-        }).finally(() => {
+    createCabinet(data, token) {
+        return new Promise((resolve, reject) => {
+            axios.post(`${(this.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet`, data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then((res) => {
+                resolve(res.data);
+            }).catch((err) => {
+                reject(err);
+            }).finally(() => {
 
+            });
         });
 
     }
 
     getCabinet(id, token) {
+        return new Promise((resolve, reject) => {
         axios.get(`${(this.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet/${id}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         })
-            .then((data) => {
-                return data.data
+            .then((res) => {
+                resolve(res.data);
             })
             .catch((err) => {
-                console.log(err)
+                reject(err);
             });
+        });
     }
 
     getCabinets(token) {
-        axios.get(`${(this.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .then((data) => {
-                return data.data
-            })
-            .catch((err) => {
-                console.log(err)
+        return new Promise((resolve, reject) => {
+            axios.get(`${(this.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then((res) => {
+                resolve(res.data);
+            }).catch((err) => {
+                reject(err);
+            }).finally(() => {
+
             });
+        });
+    }
+
+    getCabinetByName (cabinet, token) {
+        return new Promise((resolve, reject) => {
+            axios.get(`${(this.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet/cabinet/${cabinet}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then((res) => {
+                resolve(res.data);
+            }).catch((err) => {
+                reject(err);
+            }).finally(() => {
+
+            });
+        });
     }
 
     updateCabinet(id, data, token) {

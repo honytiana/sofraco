@@ -10,10 +10,11 @@ const cabinetHandler = require('../handlers/cabinetHandler');
 exports.createCourtier = async (req, res) => {
     console.log(`${new Date()} Create courtier`);
     const data = req.body;
+    const cabinet = await cabinetHandler.getCabinetById(data.cabinetRef);
     let courtier = {
         lastName: data.lastName,
         firstName: data.firstName,
-        cabinet: data.cabinet,
+        cabinet: cabinet.cabinet,
         cabinetRef: data.cabinetRef,
         email: data.email,
         phone: data.phone,

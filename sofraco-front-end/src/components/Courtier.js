@@ -27,6 +27,8 @@ class Courtier extends Component {
         super(props);
         this.state = {
             courtier: props.courtier,
+            cabinet: null,
+            cabinetNames: [],
             cabinets: [],
             toast: false,
             messageToast: {},
@@ -36,6 +38,7 @@ class Courtier extends Component {
             interne: false
         }
         this._isMounted = false;
+        this.fetchCabinet = this.fetchCabinet.bind(this);
         this.fetchCabinets = this.fetchCabinets.bind(this);
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.onAddEmailCopie = this.onAddEmailCopie.bind(this);
@@ -57,6 +60,7 @@ class Courtier extends Component {
         this.setState({
             interne: window.location.hostname.match(regInterne) ? true : false
         });
+        this._isMounted && this.fetchCabinet();
         this._isMounted && this.fetchCabinets();
     }
 
@@ -65,20 +69,24 @@ class Courtier extends Component {
         this.props.listCourtierCallback();
     }
 
-    fetchCabinets() {
-        // const cabinetService = new CabinetService();
-        // const cabinets = cabinetService.getCabinets(this.props.token);
-        // console.log(cabinets);
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet`, {
-            headers: {
-                'Authorization': `Bearer ${this.props.token}`
-            }
-        })
-            .then((data) => {
-                return data.data
+    fetchCabinet() {
+        const cabinetService = new CabinetService();
+        cabinetService.getCabinet(this.props.courtier.cabinetRef, this.props.token)
+            .then((res) => {
+                this.setState({
+                    cabinet: res
+                });
             })
-            .then((data) => {
-                const cabinets = data;
+            .catch((err) => {
+                console.log(err)
+            });
+    }
+
+    fetchCabinets() {
+        const cabinetService = new CabinetService();
+        cabinetService.getCabinets(this.props.token)
+            .then((res) => {
+                const cabinets = res;
                 this.setState({
                     cabinets
                 });
@@ -319,12 +327,12 @@ class Courtier extends Component {
                                 label="Cabinet"
                                 className="sofraco-input"
                                 name={`sofraco-cabinet`}
-                                defaultValue={this.props.courtier.cabinetRef}
+                                defaultValue={this.state.cabinet !== null && this.state.cabinet._id}
                             >
                                 <option>Selectionnez un cabinet</option>
                                 {this.state.cabinets.map((cabinet, index) => {
                                     return (
-                                        <option key={`cabinetOption${index}`} value={cabinet._id} selected={this.props.courtier.cabinetRef === cabinet._id}>{cabinet.cabinet}</option>
+                                        <option key={`cabinetOption${index}`} value={cabinet._id} selected={cabinet._id === this.props.courtier.cabinetRef}>{cabinet.cabinet}</option>
                                     )
                                 })}
                             </CSelect>
@@ -369,7 +377,7 @@ class Courtier extends Component {
                                 id={`sofraco-email-copie_${this.props.courtier._id}`}
                                 name={`sofraco-email-copie`}
                                 className="sofraco-input"
-                            /><CButton className="sofraco-button-add" onClick={(e) => this.onAddEmailCopie(e)}>+</CButton>
+                            /><CButton size={'sm'} className="sofraco-button-add" onClick={(e) => this.onAddEmailCopie(e)}>+</CButton>
                         </CFormGroup>
                         <CFormGroup row>
                             <CLabel className="col-sm-2" htmlFor={`sofraco-phone_${this.props.courtier._id}`}>Téléphone</CLabel>
