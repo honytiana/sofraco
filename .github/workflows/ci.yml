@@ -9,19 +9,19 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    timeout-minutes: 70
+    timeout-minutes: 60
 
     steps:
     - name: Executing remote command
       uses: appleboy/ssh-action@master
       with:
-        HOST: ${{ secrets.HOST }}
+        HOST: ${{ secrets.HOST2 }}
         USERNAME: ${{ secrets.USER }}
-        PORT: ${{ secrets.PORT }}
-        KEY: ${{ secrets.KEY }}
+        PORT: ${{ secrets.PORT2 }}
+        KEY: ${{ secrets.KEY2 }}
         command_timeout: 60m
         script: |
-          cd ../data/Sofraco/
+          cd Sofraco
           git fetch -a && git pull
           docker-compose build --no-cache
           docker-compose up -d

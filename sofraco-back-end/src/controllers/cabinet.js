@@ -21,8 +21,38 @@ exports.createCabinet = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error });
     }
-
 };
+
+exports.addCabinetName = async (req, res) => {
+    console.log(`${new Date()} Add Other cabinet names`);
+    try {
+        const cabinet = await cabinetHandler.addCabinetName(req.params.cabinet, req.body.cabinetName);
+        res.status(200).json(cabinet);
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+};
+
+exports.editCabinetName = async (req, res) => {
+    console.log(`${new Date()} Edit Other cabinet name`);
+    try {
+        const cabinet = await cabinetHandler.editCabinetName(req.params.cabinet, req.body.odlCabinetName, req.body.cabinetName);
+        res.status(200).json(cabinet);
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+};
+
+exports.deleteCabinetName = async (req, res) => {
+    console.log(`${new Date()} Delete Other cabinet name`);
+    try {
+        const cabinet = await cabinetHandler.deleteCabinetName(req.params.cabinet, req.body.cabinetName);
+        res.status(200).json(cabinet);
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+};
+
 
 exports.getCabinet = async (req, res) => {
     console.log(`${new Date()} get cabinet`);
@@ -39,6 +69,16 @@ exports.getCabinets = async (req, res) => {
     try {
         const cabinets = await cabinetHandler.getCabinets();
         res.status(200).json(cabinets);
+    } catch (error) {
+        res.status(400).json({ error });
+    }
+};
+
+exports.getCabinetByName = async (req, res) => {
+    console.log(`${new Date()} get cabinet by name`);
+    try {
+        const cabinet = await cabinetHandler.getCabinetByName(req.params.cabinet);
+        res.status(200).json(cabinet);
     } catch (error) {
         res.status(400).json({ error });
     }

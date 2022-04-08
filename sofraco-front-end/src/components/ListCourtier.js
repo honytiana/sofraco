@@ -223,6 +223,7 @@ class ListCourtier extends Component {
         event.preventDefault();
         const options = {
             cabinet: event.target['sofraco-cabinet'].value,
+            cabinetRef: event.target['sofraco-cabinet'].value,
             lastName: event.target['sofraco-nom'].value,
             firstName: event.target['sofraco-prenom'].value,
             email: event.target['sofraco-email'].value,
@@ -573,6 +574,7 @@ class ListCourtier extends Component {
                                             className={'sofraco-icon-del text-danger'}
                                             color='danger'
                                             size="sm"
+                                            onClick={(e) => {this.openDeletePopup(e, item)}}
                                             icon={icon.cilTrash} />
                                     </td>
                                 )
