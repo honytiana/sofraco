@@ -5,7 +5,7 @@ services:
         build: ./sofraco-front-end
         restart: always
         ports:
-            - "127.0.0.1:3000:3000"
+            - "3000:3000"
         links:
             - backend
         networks:
@@ -14,7 +14,7 @@ services:
         build: ./sofraco-back-end
         restart: always
         ports:
-            - "127.0.0.1:9000:9000"
+            - "9000:9000"
         depends_on:
             - mongodb-sofraco
         environment:
