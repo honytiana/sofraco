@@ -29,6 +29,10 @@ class TokensHandler {
         const sofraco = cookies.sofraco;
         const token = cookies.sofraco_;
         const tk = await Tokens.findOne({ userId: userId, value: token });
+        const tokenFind = await Tokens.findOne({ value: token });
+
+        console.log(`Token recu et créé : ${token}`);
+        console.log(`Token trouvé dans la base: ${tokenFind}`);
         if (!tk) {
             throw `Token not found - no token ${tk}  ${userId}  ${token}`;
         }
