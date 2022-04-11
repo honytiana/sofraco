@@ -30,10 +30,10 @@ class TokensHandler {
         const token = cookies.sofraco_;
         const tk = await Tokens.findOne({ userId: userId, value: token });
         if (!tk) {
-            throw 'Token not found';
+            throw 'Token not found - no token';
         }
         if (!sofraco) {
-            throw 'Token not found';
+            throw 'Token not found - no sofraco cookie';
         }
 
         const isValid = (token === tk.value) ? true : false;
