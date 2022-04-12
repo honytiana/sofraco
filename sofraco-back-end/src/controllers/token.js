@@ -26,7 +26,7 @@ exports.checkToken = async (req, res) => {
         const token = await tokenHandler.checkToken(req.params.userId, req.cookies);
         res.status(200).json(token);
     } catch (err) {
-        res.status(400).json({ err });
+        res.status(400).json(err);
     }
 };
 
