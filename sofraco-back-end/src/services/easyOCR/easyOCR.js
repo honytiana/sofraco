@@ -1,8 +1,8 @@
 const path = require('path');
 const { execSync } = require('child_process');
-const config = require('../../../config.json');
+require('dotenv').config();
 
-const python = (config.pythonEnv) ? config.pythonEnv : config.python;
+const python = (process.env.PYTHON_ENV) ? process.env.PYTHON_ENV : process.env.PYTHON;
 const pythonEasyOCR = path.join(__dirname, `easyOCR2.py`);
 
 const easyOCR = (imageFullPath, destFullPath) => {

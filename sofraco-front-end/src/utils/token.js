@@ -1,10 +1,10 @@
 const axios = require('axios');
-const config = require('../config.json');
+require('dotenv').config();
 
 exports.getUserToken = async () => {
     const user = JSON.parse(localStorage.getItem('user'));
     try{
-        const result = await axios.get(`${config.nodeUrl}/api/token/user/${user}`, {
+        const result = await axios.get(`${process.env.REACT_APP_NODE_URL_EXTERNE}/api/token/user/${user}`, {
             headers: {
                 'Content-Type': 'application/json',
             }

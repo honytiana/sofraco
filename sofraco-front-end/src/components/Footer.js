@@ -3,6 +3,7 @@ import '@coreui/coreui/dist/css/coreui.min.css';
 import {
     CFooter
 } from '@coreui/react';
+
 import '../styles/Footer.css';
 
 

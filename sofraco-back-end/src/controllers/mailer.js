@@ -4,8 +4,8 @@ const inspect = require('util').inspect;
 const fs = require('fs');
 const { Base64Decode } = require('base64-stream')
 
-const config = require('../../config.json');
 const mailManagement = require('../services/mail/mailManagement');
+require('dotenv').config();
 
 
 exports.sendMail = async (req, res) => {
@@ -25,8 +25,8 @@ exports.sendMail = async (req, res) => {
 }
 
 const imap = new Imap({
-    user: config.mailSenderInfomaniak,
-    password: config.mailPassInfomaniak,
+    user: process.env.MAIL_SENDER_INFOMANIAK,
+    password: process.env.MAIL_PASS_INFOMANIAK,
     host: 'mail.infomaniak.com',
     port: 993,
     tls: true

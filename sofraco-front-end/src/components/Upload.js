@@ -11,14 +11,14 @@ import {
     CButton,
     CSpinner
 } from '@coreui/react';
-
 import axios from 'axios';
 import Dropzone from 'react-dropzone';
 
 import '../styles/Upload.css';
-import config from '../config.json';
 import closedFolder from '../assets/closed_folder.png';
 import openedFolder from '../assets/opened_folder.png';
+
+require('dotenv').config();
 
 class Upload extends Component {
     constructor(props) {
@@ -74,7 +74,7 @@ class Upload extends Component {
         const company = this.props.company;
         if (company.surco) {
             const companySurco = company.companySurco;
-            axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company/name/${companySurco}`, {
+            axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/company/name/${companySurco}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.state.token}`
@@ -95,7 +95,7 @@ class Upload extends Component {
                     });
                     this.props.companyFolderSurcoCallback(companySurcoCount);
                     if (companySurco.surco) {
-                        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company/name/${companySurco.companySurco}`, {
+                        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/company/name/${companySurco.companySurco}`, {
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token : this.props.token}`
@@ -193,7 +193,7 @@ class Upload extends Component {
         formData.append('companySurco', JSON.stringify(companySurco));
         formData.append('companySurco2', JSON.stringify(companySurco2));
         formData.append('selectedDate', JSON.stringify(selectedDate));
-        axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/document/`, formData, {
+        axios.post(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/document/`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${this.state.token}`

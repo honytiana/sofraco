@@ -14,14 +14,14 @@ import {
     CListGroup,
     CListGroupItem
 } from '@coreui/react';
-
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
 // import axios from 'axios';
 
 import '../styles/Archived.css';
-// import config from '../config.json';
 import closedFolder from '../assets/closed_folder.png';
+
+require('dotenv').config();
 
 class Archived extends Component {
     constructor(props) {

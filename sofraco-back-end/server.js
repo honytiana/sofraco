@@ -3,10 +3,11 @@ const cluster = require('cluster');
 const os = require('os');
 const process = require('process');
 const load = require('./src/loaders/loader');
-const config = require('./config.json');
 const workerThreadLoader = require('./src/loaders/workerThreadLoader');
 const treatmentHandler = require('./src/handlers/treatmentHandler.js');
 const documentController = require('./src/controllers/document');
+
+require('dotenv').config();
 // const { GPU } = require('gpu.js');
 
 const startServer = async () => {
@@ -32,11 +33,10 @@ const startServer = async () => {
         const app = express();
         await load({ app: app });
 
-        const port = config.nodePort;
         if (require.main === module) {
-            app.listen(port, async () => {
+            app.listen(process.env.PORT, async () => {
                 require('events').EventEmitter.prototype._maxListeners = 100;
-                console.info(`Server is listen on port : ${port}`);
+                console.info(`Server is listen on port : ${process.env.PORT}`);
                 console.log(`Worker ${process.pid} started`);
                 const processingTreatment = await treatmentHandler.getProcessingTreatment();
                 if (processingTreatment.length > 0) {

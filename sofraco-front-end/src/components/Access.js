@@ -16,15 +16,15 @@ import {
     CInputGroup,
     CButton
 } from '@coreui/react';
-
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
 import axios from 'axios';
+import moment from 'moment';
 
 import sofraco_logo from '../assets/sofraco_groupe_logo.png';
-import config from '../config.json';
 import '../styles/Access.css';
-import moment from 'moment';
+
+require('dotenv').config();
 
 class Access extends Component {
     constructor(props) {
@@ -69,14 +69,14 @@ class Access extends Component {
             login: e.target['sofraco-login'].value,
             password: e.target['sofraco-password'].value,
         };
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/api-status`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/api-status`, {
             withCredentials: true,
             headers: {
                 'Content-Type': 'application/json',
             }
         })
             .then((res) => {
-                axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/user/login`, options, {
+                axios.post(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/user/login`, options, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
@@ -91,7 +91,7 @@ class Access extends Component {
                     localStorage.setItem('user', JSON.stringify(data.userId));
 
                     setTimeout(() => {
-                        axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/${data.userId}`, {
+                        axios.delete(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/token/${data.userId}`, {
                             headers: {
                                 'Content-Type': 'application/json'
                             }

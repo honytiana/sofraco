@@ -1,7 +1,6 @@
 const path = require('path');
 const fs = require('fs');
 const axios = require('axios');
-const config = require('../../config.json');
 const fileService = require('../services/utils/files');
 const splitPDF = require('../services/pdf/splitPDF');
 const time = require('../services/utils/time');

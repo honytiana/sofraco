@@ -13,14 +13,14 @@ import {
     CBadge,
     CSelect
 } from '@coreui/react';
-
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
 import axios from 'axios';
 
 import '../styles/Courtier.css';
-import config from '../config.json';
 import CabinetService from '../services/cabinet';
+
+require('dotenv').config();
 
 class Courtier extends Component {
     constructor(props) {
@@ -110,7 +110,7 @@ class Courtier extends Component {
             options.firstName !== '' ||
             options.email !== '' ||
             options.phone !== '') {
-            axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/${this.props.courtier._id}`, options, {
+            axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/${this.props.courtier._id}`, options, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.props.token}`
@@ -144,7 +144,7 @@ class Courtier extends Component {
                 emailCopie: email
             };
             if (options.emailCopie !== '') {
-                axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/courtier/${this.props.courtier._id}/emailCopie`, options, {
+                axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/courtier/${this.props.courtier._id}/emailCopie`, options, {
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${this.props.token}`
@@ -240,7 +240,7 @@ class Courtier extends Component {
             oldEmailCopie
         };
         if (options.emailCopie !== '') {
-            axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/courtier/${this.props.courtier._id}/emailCopie/edit`, options, {
+            axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/courtier/${this.props.courtier._id}/emailCopie/edit`, options, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.props.token}`
@@ -278,7 +278,7 @@ class Courtier extends Component {
             emailCopie
         };
         if (options.emailCopie !== '') {
-            axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/courtier/${this.props.courtier._id}/emailCopie/delete`, options, {
+            axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/courtier/${this.props.courtier._id}/emailCopie/delete`, options, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.props.token}`

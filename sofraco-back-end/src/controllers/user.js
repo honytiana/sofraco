@@ -1,7 +1,6 @@
 const path = require('path');
 const bcrypt = require('bcrypt');
 
-const config = require('../../config.json');
 const userHandler = require('../handlers/userHandler');
 const tokenHandler = require('../handlers/tokenHandler');
 

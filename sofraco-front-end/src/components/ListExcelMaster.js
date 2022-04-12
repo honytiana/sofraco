@@ -20,14 +20,14 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
-
 import axios from 'axios';
 
 import '../styles/ListExcelMaster.css';
-import config from '../config.json';
 import closedFolder from '../assets/closed_folder.png';
 import filesUtil from '../utils/filesUtil';
 import ExcelMaster from './ExcelMaster';
+
+require('dotenv').config();
 
 class ListExcelMaster extends Component {
     constructor(props) {
@@ -98,7 +98,7 @@ class ListExcelMaster extends Component {
 
     fetchListExcelMasters() {
         const courtier = this.props.courtier;
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/excelMaster/courtier/${courtier._id}`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/excelMaster/courtier/${courtier._id}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${this.props.token}`
@@ -130,7 +130,7 @@ class ListExcelMaster extends Component {
 
     fetchListExcelMasterByYearAndMonth() {
         const courtier = this.props.courtier;
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/excelMaster/courtier/${courtier._id}/year/month/type/excel`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/excelMaster/courtier/${courtier._id}/year/month/type/excel`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.props.token}`
@@ -159,7 +159,7 @@ class ListExcelMaster extends Component {
 
     deleteListExcelMaster(e, correspondance) {
         e.preventDefault();
-        axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/correspondance/code/courtier/${this.props.courtier._id}/code/${correspondance.code}`, {
+        axios.delete(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/correspondance/code/courtier/${this.props.courtier._id}/code/${correspondance.code}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.props.token}`
@@ -234,7 +234,7 @@ class ListExcelMaster extends Component {
     onDownloadExcelMaster(excel) {
         const id = excel._id;
         const fileName = filesUtil.getFileName(excel.path);
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/excelMaster/xlsx/${id}`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/excelMaster/xlsx/${id}`, {
             headers: {
                 'Application': 'vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Authorization': `Bearer ${this.props.token}`
@@ -266,7 +266,7 @@ class ListExcelMaster extends Component {
     onActivateEditExcelMaster(excel) {
         const id = excel._id;
         const fileName = filesUtil.getFileName(excel.path);
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/excelMaster/xlsx/${id}`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/excelMaster/xlsx/${id}`, {
             headers: {
                 'Application': 'vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Authorization': `Bearer ${this.props.token}`

@@ -1,15 +1,16 @@
 import { Component } from 'react';
-import '@coreui/coreui/dist/css/coreui.min.css';
 import { CContainer } from '@coreui/react';
+import '@coreui/coreui/dist/css/coreui.min.css';
 // import { io } from 'socket.io-client';
-
 import axios from 'axios';
+
 import Navbar from './Navbar';
 import RouteComponent from './Routes';
 import Footer from './Footer';
 import '../styles/App.css';
-import config from '../config.json';
 import Access from './Access';
+
+require('dotenv').config();
 
 
 class App extends Component {
@@ -37,7 +38,6 @@ class App extends Component {
     this.setState({
       interne: window.location.hostname.match(regInterne) ? true : false
     });
-    console.log(this.state.interne);
     this.getToken();
 
   }
@@ -47,13 +47,12 @@ class App extends Component {
     this.setState({
       interne: window.location.hostname.match(regInterne) ? true : false
     });
-    console.log(this.state.interne);
   }
 
   getToken() {
     const user = JSON.parse(localStorage.getItem('user'));
     // get token by user
-    axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}`, {
+    axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/token/user/${user}`, {
       headers: {
         'Content-Type': 'application/json',
       }
@@ -62,7 +61,7 @@ class App extends Component {
         if (res.data.length > 0) {
           // check token
           const token = document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1');
-          axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}/token`, {
+          axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/token/user/${user}/token`, {
             withCredentials: true,
             headers: {
               'Content-Type': 'application/json',
@@ -75,7 +74,7 @@ class App extends Component {
             })
             .catch((err) => {
               if (token) {
-                axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}/token/${token}`, {
+                axios.delete(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/token/user/${user}/token/${token}`, {
                   headers: {
                     'Content-Type': 'application/json'
                   }

@@ -6,19 +6,18 @@ const inspect = require('util').inspect;
 const fs = require('fs');
 const { Base64Decode } = require('base64-stream')
 
-const config = require('../../../config.json');
 const excelMasterHandler = require('../../handlers/excelMasterHandler');
 const filesService = require('../utils/files');
 
 const transporter = nodemailer.createTransport({
     pool: true,
-    host: config.infomaniakHost,
+    host: process.env.INFOMANIAK_HOST,
     port: 587,
     secure: false,
     requireTLS: true,
     auth: {
-        user: config.mailSenderInfomaniak,
-        pass: config.mailPassInfomaniak
+        user: process.env.MAIL_SENDER_INFOMANIAK,
+        pass: process.env.MAIL_PASS_INFOMANIAK
     }
 });
 
@@ -49,12 +48,12 @@ exports.sendMail = async (emailDestination, emailCopiesDestination, data, courti
                             });
                         }
                         const mailOptions = {
-                            from: config.mailSenderInfomaniak,
+                            from: process.env.MAIL_SENDER_INFOMANIAK,
                             to: emailDestination,
                             cc: emailCopiesDestination,
                             subject: `VOS COMMISSIONS DU MOIS`,
                             html: str,
-                            bcc: config.mailSenderInfomaniak,
+                            bcc: process.env.MAIL_SENDER_INFOMANIAK,
                             attachments
                         };
 
@@ -77,9 +76,9 @@ exports.sendMail = async (emailDestination, emailCopiesDestination, data, courti
 };
 
 const imap = new Imap({
-    user: config.mailSenderInfomaniak,
-    password: config.mailPassInfomaniak,
-    host: 'mail.infomaniak.com',
+    user: process.env.MAIL_SENDER_INFOMANIAK,
+    password: process.env.MAIL_PASS_INFOMANIAK,
+    host: process.env.INFOMANIAK_HOST,
     port: 993,
     tls: true
 });

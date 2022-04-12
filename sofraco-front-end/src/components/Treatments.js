@@ -23,7 +23,8 @@ import axios from 'axios';
 import ListExcelMaster from './ListExcelMaster';
 import Correspondance from './Correspondance';
 import '../styles/Treatments.css';
-import config from '../config.json';
+
+require('dotenv').config();
 
 class Treatments extends Component {
 
@@ -107,7 +108,7 @@ class Treatments extends Component {
     }
 
     fetchCourtiers() {
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token}`
             }

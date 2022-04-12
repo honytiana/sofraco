@@ -1,4 +1,3 @@
-const config = require('../../config.json');
 const treatmentHandler = require('../handlers/treatmentHandler');
 
 exports.createTreatment = async (req, res) => {

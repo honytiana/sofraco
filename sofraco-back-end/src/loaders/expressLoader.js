@@ -5,7 +5,8 @@ const cors = require('cors');
 const morgan = require('morgan');
 const bcrypt = require('bcrypt');
 const { logger } = require('../tools/logger');
-const config = require('../../config.json');
+
+require('dotenv').config();
 
 module.exports = async function ({ app }) {
     const stream = {
@@ -20,8 +21,8 @@ module.exports = async function ({ app }) {
     app.use((express.json()));
     app.use(morgan('combined', { stream: stream }));
 
-    const allowedOrigin = config.allowOrigin;
-
+    const allowedOrigin = JSON.parse(process.env.ALLOW_ORIGIN);
+    
     app.use((req, res, next) => {
         const origin = req.headers.origin;
         if (allowedOrigin.includes(origin)) {

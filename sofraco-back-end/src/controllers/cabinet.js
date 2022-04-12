@@ -1,6 +1,5 @@
 const path = require('path');
 
-const config = require('../../config.json');
 const Cabinet = require('../models/cabinet');
 const cabinetHandler = require('../handlers/cabinetHandler');
 

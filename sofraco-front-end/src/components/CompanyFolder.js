@@ -17,13 +17,13 @@ import {
     CNavItem,
     CNavLink
 } from '@coreui/react';
-
 import axios from 'axios';
 
 import '../styles/CompanyFolder.css';
-import config from '../config.json';
 import Upload from './Upload';
 import Archived from './Archived';
+
+require('dotenv').config();
 
 class CompanyFolder extends Component {
     constructor(props) {
@@ -82,7 +82,7 @@ class CompanyFolder extends Component {
         })
         if (company.surco) {
             const companySurco = company.companySurco;
-            axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company/name/${companySurco}`, {
+            axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/company/name/${companySurco}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.props.token}`
@@ -103,7 +103,7 @@ class CompanyFolder extends Component {
     }
 
     fetchDocumentsCompany() {
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/document/company/${this.props.company._id}`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/document/company/${this.props.company._id}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.props.token}`
@@ -123,7 +123,7 @@ class CompanyFolder extends Component {
     }
 
     fetchAllDocumentsCompany() {
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/document/company/${this.props.company._id}/year/month`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/document/company/${this.props.company._id}/year/month`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.props.token}`

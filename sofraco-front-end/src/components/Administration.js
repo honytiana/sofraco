@@ -7,11 +7,10 @@ import {
     CToastBody
 } from '@coreui/react';
 import axios from 'axios';
-import CIcon from '@coreui/icons-react';
-import * as icon from '@coreui/icons';
 
 import '../styles/Administration.css';
-import config from '../config.json';
+
+require('dotenv').config();
 
 class Administration extends Component {
 
@@ -56,7 +55,7 @@ class Administration extends Component {
     }
 
     fetchCourtiers() {
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/role/courtier?limit=0&skip=0`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/role/courtier?limit=0&skip=0`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token}`
             }
@@ -76,7 +75,7 @@ class Administration extends Component {
     }
 
     fetchCabinets() {
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token}`
             }
@@ -96,7 +95,7 @@ class Administration extends Component {
     }
 
     fetchAdministrations() {
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/client`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/client`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token}`
             }
@@ -129,7 +128,7 @@ class Administration extends Component {
             options.firstName !== '' ||
             options.cabinet !== '' ||
             options.versementCommissions !== '') {
-            axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/client/`, options, {
+            axios.post(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/client/`, options, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.state.token}`
@@ -174,7 +173,7 @@ class Administration extends Component {
             cabinet: event.target['sofraco-cabinet-edit'].value,
             versementCommissions: event.target['sofraco-versement-commission-edit'].value
         };
-        axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/client/${item._id}`, options, {
+        axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/client/${item._id}`, options, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.state.token}`
@@ -210,7 +209,7 @@ class Administration extends Component {
     deleteCourtier(e) {
         e.preventDefault();
         this.setState({ visibleAlert: false });
-        axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/${this.state.courtierToDel._id}`, {
+        axios.delete(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/${this.state.courtierToDel._id}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.state.token}`

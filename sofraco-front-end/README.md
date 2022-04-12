@@ -1,8 +1,8 @@
 <!-- SOFRACO installation -->
 
 - npm install
-- créez un fichier config.json en suivant l'exemple dans config.example.json
-- modifiez config.json selon vos propres configurations
+- créez un fichier .env en suivant l'exemple dans example.env
+- modifiez .env selon vos propres configurations
 - run npm start ou yarn start 
 
 

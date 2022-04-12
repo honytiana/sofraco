@@ -22,14 +22,14 @@ import {
     CTabContent,
     CTabPane
 } from '@coreui/react';
-
 import axios from 'axios';
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
 
 import Correspondance from './Correspondance';
 import '../styles/Mandataire.css';
-import config from '../config.json';
+
+require('dotenv').config();
 
 class Mandataire extends Component {
     constructor(props) {
@@ -133,7 +133,7 @@ class Mandataire extends Component {
 
     fetchMandataires() {
         const courtier = this.props.courtier;
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/mandataires/${courtier._id}`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/mandataires/${courtier._id}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${this.props.token}`
@@ -190,7 +190,7 @@ class Mandataire extends Component {
             options.firstName !== '' ||
             options.email !== '' ||
             options.phone !== '') {
-            axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/`, options, {
+            axios.post(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/`, options, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.props.token}`
@@ -239,7 +239,7 @@ class Mandataire extends Component {
             options.firstName !== '' ||
             options.email !== '' ||
             options.phone !== '') {
-            axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/${mandataire._id}`, options, {
+            axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/${mandataire._id}`, options, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.props.token}`
@@ -295,7 +295,7 @@ class Mandataire extends Component {
     deleteMandataire(e) {
         e.preventDefault();
         this.setState({ visibleAlert: false });
-        axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/${this.state.mandataireToDel._id}`, {
+        axios.delete(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/${this.state.mandataireToDel._id}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.props.token}`

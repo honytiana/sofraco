@@ -1,6 +1,5 @@
 const path = require('path');
 
-const config = require('../../config.json');
 const Client = require('../models/client');
 const clientHandler = require('../handlers/clientHandler');
 const clientService = require('../services/features/client');

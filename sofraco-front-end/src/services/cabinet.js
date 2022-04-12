@@ -1,5 +1,5 @@
 import axios from 'axios';
-import config from '../config.json';
+require('dotenv').config();
 
 class CabinetService {
     constructor() {
@@ -9,7 +9,7 @@ class CabinetService {
 
     createCabinet(data, token) {
         return new Promise((resolve, reject) => {
-            axios.post(`${(this.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet`, data, {
+            axios.post(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet`, data, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
@@ -27,7 +27,7 @@ class CabinetService {
 
     getCabinet(id, token) {
         return new Promise((resolve, reject) => {
-        axios.get(`${(this.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet/${id}`, {
+        axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/${id}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -43,7 +43,7 @@ class CabinetService {
 
     getCabinets(token) {
         return new Promise((resolve, reject) => {
-            axios.get(`${(this.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet`, {
+            axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
@@ -60,7 +60,7 @@ class CabinetService {
 
     getCabinetByName (cabinet, token) {
         return new Promise((resolve, reject) => {
-            axios.get(`${(this.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet/cabinet/${cabinet}`, {
+            axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/cabinet/${cabinet}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
@@ -76,7 +76,7 @@ class CabinetService {
     }
 
     updateCabinet(id, data, token) {
-        axios.put(`${(this.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet/${id}`, data, {
+        axios.put(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/${id}`, data, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -90,7 +90,7 @@ class CabinetService {
     }
 
     deleteCabinet(id, token) {
-        axios.delete(`${(this.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet/${id}`, {
+        axios.delete(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/${id}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -104,7 +104,7 @@ class CabinetService {
     }
 
     deleteAllCabinets(token) {
-        axios.delete(`${(this.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet`, {
+        axios.delete(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }

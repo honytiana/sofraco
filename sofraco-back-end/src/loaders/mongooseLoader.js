@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
-const config = require('../../config.json');
+require('dotenv').config();
 
 module.exports = async () => {
     const facteurMilli = 100000;
-    mongoose.connect(config.database, {
+    mongoose.connect(process.env.DATABASE, {
         socketTimeoutMS: 60 * facteurMilli,
         connectTimeoutMS: 60 * facteurMilli
     })

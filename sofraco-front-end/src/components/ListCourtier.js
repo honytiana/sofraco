@@ -29,10 +29,11 @@ import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
 
 import '../styles/ListCourtier.css';
-import config from '../config.json';
 import Courtier from './Courtier';
 import Mandataire from './Mandataire';
 import Correspondance from './Correspondance';
+
+require('dotenv').config();
 
 class ListCourtier extends Component {
 
@@ -144,7 +145,7 @@ class ListCourtier extends Component {
     }
 
     fetchCourtiers() {
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/role/courtier?limit=0&skip=0`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/role/courtier?limit=0&skip=0`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token}`
             }
@@ -164,7 +165,7 @@ class ListCourtier extends Component {
     }
 
     fetchCabinets() {
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token}`
             }
@@ -235,7 +236,7 @@ class ListCourtier extends Component {
             options.firstName !== '' ||
             options.email !== '' ||
             options.phone !== '') {
-            axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/`, options, {
+            axios.post(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/`, options, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.state.token}`
@@ -281,7 +282,7 @@ class ListCourtier extends Component {
     deleteCourtier(e) {
         e.preventDefault();
         this.setState({ visibleAlert: false });
-        axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier/${this.state.courtierToDel._id}`, {
+        axios.delete(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/${this.state.courtierToDel._id}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.state.token}`
@@ -324,7 +325,7 @@ class ListCourtier extends Component {
 
     onSearchGlobalCourtierMandataireCode(e) {
         if (e.target.value !== '') {
-            axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company/search/${e.target.value}`, {
+            axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/company/search/${e.target.value}`, {
                 headers: {
                     'Authorization': `Bearer ${this.state.token}`
                 }

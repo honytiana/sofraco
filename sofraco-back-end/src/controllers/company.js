@@ -1,7 +1,6 @@
 const path = require('path');
 const fs = require('fs');
 
-const config = require('../../config.json');
 const companyHandler = require('../handlers/companyHandler');
 
 exports.createCompany = async (req, res) => {

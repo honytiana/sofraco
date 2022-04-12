@@ -18,11 +18,11 @@ import {
     CTabContent,
     CTabPane
 } from '@coreui/react';
-
 import axios from 'axios';
 
 import '../styles/ExcelMaster.css';
-import config from '../config.json';
+
+require('dotenv').config();
 
 class ExcelMaster extends Component {
     constructor(props) {
@@ -90,7 +90,7 @@ class ExcelMaster extends Component {
     }
 
     fetchExcelMasters() {
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/excelMaster/${this.props.excelMaster}`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/excelMaster/${this.props.excelMaster}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${this.state.token}`
@@ -130,7 +130,7 @@ class ExcelMaster extends Component {
 
     deleteExcelMaster(e, correspondance) {
         e.preventDefault();
-        axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/correspondance/code/courtier/${this.props.courtier._id}/code/${correspondance.code}`, {
+        axios.delete(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/correspondance/code/courtier/${this.props.courtier._id}/code/${correspondance.code}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.state.token}`
@@ -184,7 +184,7 @@ class ExcelMaster extends Component {
             particular: '',
             code: event.target['sofraco-code'].value,
         };
-        axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/correspondance/code/courtier/${this.props.courtier._id}`, options, {
+        axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/correspondance/code/courtier/${this.props.courtier._id}`, options, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.state.token}`

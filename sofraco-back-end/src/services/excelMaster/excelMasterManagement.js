@@ -6,7 +6,6 @@ const fs = require('fs');
 const generals = require('../utils/generals');
 const excelFile = require('../utils/excelFile');
 
-const config = require('../../../config.json');
 const fileService = require('../utils/files');
 const excelMasterAPICIL = require('./excelMasterAPICIL');
 const excelMasterAPIVIA = require('./excelMasterAPIVIA');

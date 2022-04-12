@@ -18,13 +18,13 @@ import {
     CInput,
     CSelect
 } from '@coreui/react';
-
-import axios from 'axios';
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
+import axios from 'axios';
 
 import '../styles/Correspondance.css';
-import config from '../config.json';
+
+require('dotenv').config();
 
 class Correspondance extends Component {
     constructor(props) {
@@ -127,7 +127,7 @@ class Correspondance extends Component {
 
     fetchCorrespondances() {
         const courtier = this.props.courtier;
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/correspondance/courtier/${courtier._id}`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/correspondance/courtier/${courtier._id}`, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${this.props.token}`
@@ -158,7 +158,7 @@ class Correspondance extends Component {
     }
 
     getCompanies() {
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/company`, {
             headers: {
                 'Authorization': `Bearer ${this.props.token}`
             }
@@ -205,7 +205,7 @@ class Correspondance extends Component {
             particular: '',
             code: event.target['sofraco-code'].value,
         };
-        axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/correspondance/code/courtier/edit/${this.props.courtier._id}`, options, {
+        axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/correspondance/code/courtier/edit/${this.props.courtier._id}`, options, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.props.token}`
@@ -236,7 +236,7 @@ class Correspondance extends Component {
 
     deleteCorrespondance(e, correspondance) {
         e.preventDefault();
-        axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/correspondance/code/courtier/${this.props.courtier._id}/code/${correspondance.code}`, {
+        axios.delete(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/correspondance/code/courtier/${this.props.courtier._id}/code/${correspondance.code}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.props.token}`
@@ -297,7 +297,7 @@ class Correspondance extends Component {
             particular: '',
             code: event.target['sofraco-code'].value,
         };
-        axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/correspondance/code/courtier/${this.props.courtier._id}`, options, {
+        axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/correspondance/code/courtier/${this.props.courtier._id}`, options, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.props.token}`

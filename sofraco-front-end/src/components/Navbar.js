@@ -17,9 +17,10 @@ import axios from 'axios';
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
 
-import config from '../config.json';
 import '../styles/Navbar.css';
 import sofraco_blanc from '../assets/sofraco_blanc.png';
+
+require('dotenv').config();
 
 class Navbar extends Component {
     constructor(props) {
@@ -40,7 +41,7 @@ class Navbar extends Component {
         this.setState({
             interne: window.location.hostname.match(regInterne) ? true : false
         });
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/user/${userId}`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/user/${userId}`, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -60,7 +61,7 @@ class Navbar extends Component {
         const user = JSON.parse(localStorage.getItem('user'));
         const token = document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1');
         if (token) {
-            axios.delete(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/token/user/${user}/token/${token}`, {
+            axios.delete(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/token/user/${user}/token/${token}`, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

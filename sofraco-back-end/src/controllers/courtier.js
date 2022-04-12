@@ -1,6 +1,5 @@
 const path = require('path');
 
-const config = require('../../config.json');
 const Courtier = require('../models/courtier');
 const courtierHandler = require('../handlers/courtierHandler');
 const correspondanceHandler = require('../handlers/correspondanceHandler');

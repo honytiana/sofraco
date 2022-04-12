@@ -6,7 +6,6 @@ import {
     CToast,
     CToastHeader,
     CToastBody,
-    CSelect,
     CBadge,
     CModal,
     CModalHeader,
@@ -23,7 +22,8 @@ import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
 
 import '../styles/Cabinet.css';
-import config from '../config.json';
+
+require('dotenv').config();
 
 class Cabinet extends Component {
 
@@ -102,7 +102,7 @@ class Cabinet extends Component {
     }
 
     fetchCabinets() {
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token}`
             }
@@ -151,7 +151,7 @@ class Cabinet extends Component {
         };
         if (options.cabinet !== '' ||
             options.description !== '') {
-            axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet/`, options, {
+            axios.post(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/`, options, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.state.token}`
@@ -189,7 +189,7 @@ class Cabinet extends Component {
             cabinet: event.target['sofraco-cabinet-cabinet-edit'].value,
             description: event.target['sofraco-cabinet-description-edit'].value,
         };
-        axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet/${item._id}`, options, {
+        axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/${item._id}`, options, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.state.token}`
@@ -229,7 +229,7 @@ class Cabinet extends Component {
                 cabinetName: cabinetName
             };
             if (options.cabinetName !== '') {
-                axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet/cabinet/${cabinet}/name`, options, {
+                axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/cabinet/${cabinet}/name`, options, {
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${this.props.token}`
@@ -323,7 +323,7 @@ class Cabinet extends Component {
             odlCabinetName
         };
         if (options.cabinetName !== '') {
-            axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet/cabinet/${cabinet._id}/name/edit`, options, {
+            axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/cabinet/${cabinet._id}/name/edit`, options, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.props.token}`
@@ -360,7 +360,7 @@ class Cabinet extends Component {
             cabinetName
         };
         if (options.cabinetName !== '') {
-            axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/cabinet/cabinet/${cabinet}/name/delete`, options, {
+            axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/cabinet/${cabinet}/name/delete`, options, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.props.token}`
@@ -431,21 +431,6 @@ class Cabinet extends Component {
                                     className={"sofraco-button-add col-sm-1"}
                                     onClick={(e) => this.onAddCabinetName(e)}>+</CButton>
                                 <div className="sofraco-cabinet-copie">
-                                    {
-                                        this.state.cabinet !== null &&
-                                        this.state.cabinet.names.map((name, index) => {
-                                            return (
-                                                <CBadge
-                                                    key={`badge_${this.state.cabinet._id}_${index}_${name}`}
-                                                    onClick={(e) => { this.activateEditCabinetName(e, name, this.state.cabinet._id) }}>{name}<CIcon
-                                                        className={'sofraco-icon-suppr'}
-                                                        size='sm'
-                                                        onClick={(e) => { this.onDeleteCabinetName(e, name) }}
-                                                        key={`icn_${this.state.cabinet._id}_${index}_${name}`}
-                                                        icon={icon.cilDelete} /></CBadge>
-                                            )
-                                        })
-                                    }
                                     {
                                         this.state.cabinetNames !== null &&
                                         this.state.cabinetNames.map((cabinet, index) => {

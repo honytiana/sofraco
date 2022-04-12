@@ -26,18 +26,17 @@ import {
     CAlert,
     CSelect
 } from '@coreui/react';
-
 import axios from 'axios';
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
 
-import config from '../config.json';
 // import config from '../jsConfig';
-
 import '../styles/Companies.css';
 import check from '../assets/check.png';
 import { millisecondToTime } from '../utils/timeUtil';
 import CompanyFolder from './CompanyFolder';
+
+require('dotenv').config();
 
 
 class Companies extends Component {
@@ -131,7 +130,7 @@ class Companies extends Component {
     }
 
     getDraftDocument() {
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/document`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/document`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token}`
             }
@@ -160,7 +159,7 @@ class Companies extends Component {
     }
 
     loadingHandler() {
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/document`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/document`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token}`
             }
@@ -186,7 +185,7 @@ class Companies extends Component {
     }
 
     getCompanies() {
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/company`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token}`
             }
@@ -210,7 +209,7 @@ class Companies extends Component {
     }
 
     fetchDocumentsYearAndMonth() {
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/document/year/${this.state.year}/month/${parseInt(this.state.month)}`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/document/year/${this.state.year}/month/${parseInt(this.state.month)}`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token}`
             }
@@ -220,7 +219,7 @@ class Companies extends Component {
                     companiesDocuments: []
                 });
                 for (let document of data.data) {
-                    axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company/${document.company}`, {
+                    axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/company/${document.company}`, {
                         headers: {
                             'Authorization': `Bearer ${this.state.token}`
                         }
@@ -247,7 +246,7 @@ class Companies extends Component {
             search: true
         });
         if (e.target.value !== '') {
-            axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/company/search/${e.target.value}`, {
+            axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/company/search/${e.target.value}`, {
                 headers: {
                     'Authorization': `Bearer ${this.state.token}`
                 }
@@ -283,7 +282,7 @@ class Companies extends Component {
     }
 
     getTreatment() {
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/treatment/user/${this.user}/status/processing`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/treatment/user/${this.user}/status/processing`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token}`
             }
@@ -307,7 +306,7 @@ class Companies extends Component {
     }
 
     getTreatmentTime() {
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/treatment/user/${this.user}/status/processing`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/treatment/user/${this.user}/status/processing`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token}`
             }
@@ -340,7 +339,7 @@ class Companies extends Component {
             const options = {
                 user: JSON.parse(localStorage.getItem('user'))
             }
-            const res = await axios.put(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/document`, options, {
+            const res = await axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/document`, options, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.state.token}`
@@ -450,7 +449,7 @@ class Companies extends Component {
         const options = {
             userId: JSON.parse(localStorage.getItem('user'))
         }
-        axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/excelMaster`, options, {
+        axios.post(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/excelMaster`, options, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${this.state.token}`
@@ -484,7 +483,7 @@ class Companies extends Component {
     }
 
     onDownloadExcelMasters() {
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/excelMaster/zip/excels`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/excelMaster/zip/excels`, {
             headers: {
                 'Content-Type': 'application/zip',
                 'Authorization': `Bearer ${this.state.token}`

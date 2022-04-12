@@ -13,7 +13,8 @@ import {
 import axios from 'axios';
 
 import '../styles/Envoi.css';
-import config from '../config.json';
+
+require('dotenv').config();
 
 class Envoi extends Component {
 
@@ -107,7 +108,7 @@ class Envoi extends Component {
     }
 
     fetchCourtiers() {
-        axios.get(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/courtier`, {
+        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier`, {
             headers: {
                 'Authorization': `Bearer ${this.state.token}`
             }
@@ -200,7 +201,7 @@ class Envoi extends Component {
                     year: this.state.year
                 };
                 mailPromises.push(
-                    axios.post(`${(this.state.interne) ? config.nodeUrlInterne : config.nodeUrlExterne}/api/mailer/`, options, {
+                    axios.post(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/mailer/`, options, {
                         headers: {
                             'Authorization': `Bearer ${this.props.token}`
                         }

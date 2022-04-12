@@ -1,8 +1,8 @@
 const axios = require('axios');
-const config = require('../../config.json');
+require('dotenv').config();
 
 exports.sendMail = () => {
-    const courtiers = axios.get(`${config.nodeUrl}/api/courtier`);
+    const courtiers = axios.get(`${process.env.NODE_SRC}/api/courtier`);
     for (let courtier of courtiers) {
         const options = {
             user: {
@@ -11,7 +11,7 @@ exports.sendMail = () => {
                 lastName: courtier.lastName
             }
         };
-        axios.post(`${config.nodeUrl}/api/mailer`, options)
+        axios.post(`${process.env.NODE_SRC}/api/mailer`, options)
             .then(() => {
                 console.log('Mail sent');
             }).catch((err) => {
