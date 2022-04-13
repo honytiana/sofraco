@@ -18,14 +18,14 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+router.route('/').post(accessControl, upload.single('file'), companyController.createCompany);
+router.route('/').get(accessControl, companyController.getCompanies);
 router.route('/:id').get(accessControl, companyController.getCompany);
-router.route('/:id').delete(accessControl, companyController.deleteCompany);
 router.route('/name/:name').get(accessControl, companyController.getCompanyByName);
 router.route('/search/:name').get(accessControl, companyController.getCompaniesLike);
 router.route('/companySurco/:companySurco').get(accessControl, companyController.getCompanyByCompanySurco);
-router.route('/').get(accessControl, companyController.getCompanies);
-router.route('/').post(accessControl, upload.single('file'), companyController.createCompany);
 router.route('/:id').put(accessControl, companyController.updateCompany);
+router.route('/:id').delete(accessControl, companyController.deleteCompany);
 
 
 module.exports = router;

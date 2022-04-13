@@ -4,9 +4,9 @@ const router = express.Router();
 const accessControl = require('../middlewares/accessControl');
 const userController =  require('../controllers/user');
 
+router.route('/signup').post(userController.createUser);
 router.route('/').get(userController.getUsers);
 router.route('/:id').get(userController.getUser);
-router.route('/signup').post(userController.createUser);
 router.route('/login').post(userController.login);
 // router.route('/token').post();
 

@@ -79,6 +79,10 @@ class ExcelMasterHandler {
         return ExcelMaster.deleteMany({});
     }
 
+    deleteExcelMaster() {
+        return ExcelMaster.deleteOne({_id: id});
+    }
+
 }
 
 module.exports = new ExcelMasterHandler();

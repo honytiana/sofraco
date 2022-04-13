@@ -167,10 +167,20 @@ exports.updateExcelMaster = (req, res) => {
     console.log(`${new Date()} updat`);
 };
 
-exports.deleteAllCorrespondances = async (req, res) => {
+exports.deleteAllExcelMaster = async (req, res) => {
     console.log(`${new Date()} Delete all excelMasters`);
     try {
         await excelMasterHandler.deleteAllExcelMaster();
+        res.status(200).end('excelMasters deleted');
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+};
+
+exports.deleteExcelMaster = async (req, res) => {
+    console.log(`${new Date()} Delete excelMaster`);
+    try {
+        await excelMasterHandler.deleteExcelMaster(req.params.id);
         res.status(200).end('excelMasters deleted');
     } catch (error) {
         res.status(500).json({ error });

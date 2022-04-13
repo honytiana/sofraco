@@ -5,8 +5,8 @@ const accessControl = require('../middlewares/accessControl');
 const cabinetController =  require('../controllers/cabinet');
 
 router.route('/').get(accessControl, cabinetController.getCabinets);
-router.route('/cabinet/:cabinet').get(accessControl, cabinetController.getCabinetByName);
 router.route('/:id').get(accessControl, cabinetController.getCabinet);
+router.route('/cabinet/:cabinet').get(accessControl, cabinetController.getCabinetByName);
 router.route('/').post(accessControl, cabinetController.createCabinet);
 router.route('/:id').put(accessControl, cabinetController.updateCabinet);
 router.route('/').put(cabinetController.deleteAllCabinets);

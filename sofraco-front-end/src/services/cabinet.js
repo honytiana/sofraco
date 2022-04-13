@@ -27,17 +27,17 @@ class CabinetService {
 
     getCabinet(id, token) {
         return new Promise((resolve, reject) => {
-        axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/${id}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .then((res) => {
-                resolve(res.data);
+            axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             })
-            .catch((err) => {
-                reject(err);
-            });
+                .then((res) => {
+                    resolve(res.data);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
         });
     }
 
@@ -58,7 +58,7 @@ class CabinetService {
         });
     }
 
-    getCabinetByName (cabinet, token) {
+    getCabinetByName(cabinet, token) {
         return new Promise((resolve, reject) => {
             axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/cabinet/${cabinet}`, {
                 headers: {
@@ -76,45 +76,99 @@ class CabinetService {
     }
 
     updateCabinet(id, data, token) {
-        axios.put(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/${id}`, data, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .then((data) => {
-                return data.data
+        return new Promise((resolve, reject) => {
+            axios.put(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/${id}`, data, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             })
-            .catch((err) => {
-                console.log(err)
-            });
+                .then((res) => {
+                    resolve(res.data);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    }
+
+    addCabinetName(id, data, token) {
+        return new Promise((resolve, reject) => {
+            axios.put(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/cabinet/${id}/name`, data, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then((res) => {
+                    resolve(res.data);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    }
+
+    editCabinetName(id, data, token) {
+        return new Promise((resolve, reject) => {
+            axios.put(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/cabinet/${id}/name/edit`, data, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then((res) => {
+                    resolve(res.data);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    }
+
+    deleteCabinetName(id, data, token) {
+        return new Promise((resolve, reject) => {
+            axios.put(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/cabinet/${id}/name/delete`, data, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then((res) => {
+                    resolve(res.data);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
     }
 
     deleteCabinet(id, token) {
-        axios.delete(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/${id}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .then((data) => {
-                return data.data
+        return new Promise((resolve, reject) => {
+            axios.delete(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             })
-            .catch((err) => {
-                console.log(err)
-            });
+                .then((res) => {
+                    resolve(res.data);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
     }
 
     deleteAllCabinets(token) {
-        axios.delete(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .then((data) => {
-                return data.data
+        return new Promise((resolve, reject) => {
+            axios.delete(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             })
-            .catch((err) => {
-                console.log(err)
-            });
+                .then((res) => {
+                    resolve(res.data);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
     }
 
 }
