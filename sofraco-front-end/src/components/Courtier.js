@@ -19,6 +19,7 @@ import axios from 'axios';
 
 import '../styles/Courtier.css';
 import CabinetService from '../services/cabinet';
+import CourtierService from '../services/courtier';
 
 require('dotenv').config();
 
@@ -47,6 +48,9 @@ class Courtier extends Component {
         this.saveEmailCopie = this.saveEmailCopie.bind(this);
         this.onDeleteStateEmailCopie = this.onDeleteStateEmailCopie.bind(this);
         this.onEditBeforeSaveEmailCopie = this.onEditBeforeSaveEmailCopie.bind(this);
+
+        this.courtierService = new CourtierService();
+        this.cabinetService = new CabinetService();
     }
 
     componentDidMount() {
@@ -70,8 +74,7 @@ class Courtier extends Component {
     }
 
     fetchCabinet() {
-        const cabinetService = new CabinetService();
-        cabinetService.getCabinet(this.props.courtier.cabinetRef, this.props.token)
+        this.cabinetService.getCabinet(this.props.courtier.cabinetRef, this.props.token)
             .then((res) => {
                 this.setState({
                     cabinet: res
@@ -83,8 +86,7 @@ class Courtier extends Component {
     }
 
     fetchCabinets() {
-        const cabinetService = new CabinetService();
-        cabinetService.getCabinets(this.props.token)
+        this.cabinetService.getCabinets(this.props.token)
             .then((res) => {
                 const cabinets = res;
                 this.setState({
@@ -110,31 +112,27 @@ class Courtier extends Component {
             options.firstName !== '' ||
             options.email !== '' ||
             options.phone !== '') {
-            axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/${this.props.courtier._id}`, options, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.props.token}`
-                }
-            }).then((res) => {
-                this.saveEmailCopie();
-                this.setState({
-                    courtier: res.data,
-                    toast: true,
-                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le courtier ${res.data.cabinet} à été modifié` }
-                });
-            }).catch((err) => {
-                this.setState({
-                    toast: true,
-                    messageToast: { header: 'ERROR', color: 'danger', message: err }
-                })
-            }).finally(() => {
-                setTimeout(() => {
+            this.courtierService.updateCourtier(this.props.courtier._id, options, this.props.token)
+                .then((res) => {
+                    this.saveEmailCopie();
                     this.setState({
-                        toast: false,
-                        messageToast: {}
+                        courtier: res.data,
+                        toast: true,
+                        messageToast: { header: 'SUCCESS', color: 'success', message: `Le courtier ${res.data.cabinet} à été modifié` }
                     });
-                }, 6000);
-            });
+                }).catch((err) => {
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'ERROR', color: 'danger', message: err }
+                    })
+                }).finally(() => {
+                    setTimeout(() => {
+                        this.setState({
+                            toast: false,
+                            messageToast: {}
+                        });
+                    }, 6000);
+                });
         }
     }
 
