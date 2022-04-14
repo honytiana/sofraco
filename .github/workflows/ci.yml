@@ -15,10 +15,10 @@ jobs:
     - name: Executing remote command
       uses: appleboy/ssh-action@master
       with:
-        HOST: ${{ secrets.HOST2 }}
+        HOST: ${{ secrets.HOST }}
         USERNAME: ${{ secrets.USER }}
-        PORT: ${{ secrets.PORT2 }}
-        KEY: ${{ secrets.KEY2 }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.KEY }}
         command_timeout: 60m
         script: |
           cd Sofraco
