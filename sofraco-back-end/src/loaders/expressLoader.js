@@ -39,20 +39,20 @@ module.exports = async function ({ app }) {
         next();
     });
 
-    app.use((req, res, next) => {
-        proxy.web(req, res, {
-            ws: true
-        }, (err) => {
-            console.log(err);
-        });
-        next();
-    });
-
     app.get('/api/api-status', async (req, res) => {
         res.cookie('sofraco', `${await bcrypt.hash('!SOFRACO!2022#bordereaux sofraco', 10)}`, { maxAge: 10 * 60 * 60 * 1000 });
         res.status(200).json({
             'status': 'Sofraco api is OK'
         });
     });
+
+    // app.use((req, res, next) => {
+    //     proxy.web(req, res, {
+    //         ws: true
+    //     }, (err) => {
+    //         console.log(err);
+    //     });
+    //     next();
+    // });
 
 }
