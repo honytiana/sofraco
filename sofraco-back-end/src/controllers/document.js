@@ -123,7 +123,7 @@ exports.createDocument = async (req, res) => {  // create document
             }
         }
         if (company.name === 'METLIFE') {
-            const pdfPaths = await splitPDF.splitPDFMETLIFEByBordereaux(req.files[0].path, company);
+            const pdfPaths = await splitPDF.splitPDFMETLIFEByBordereaux(req.files[0].path, company, selectedDate);
             // for (let pdf of pdfPaths) {
             //     const singleDoc = saveDocument(company, pdf, req.body.extension);
             // }

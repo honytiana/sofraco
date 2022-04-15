@@ -114,7 +114,7 @@ exports.split100pagesMax = async (file) => {
     }
 };
 
-exports.splitPDFMETLIFEByBordereaux = async (file, company) => {
+exports.splitPDFMETLIFEByBordereaux = async (file, company, selectedDate) => {
     try {
         console.log(`${new Date()} DEBUT SEPARATION par bordereaux`);
         const pathsToPDF = await this.splitPDFToSinglePagePDF(file);
@@ -144,7 +144,7 @@ exports.splitPDFMETLIFEByBordereaux = async (file, company) => {
                     const pathPdf = path.join(__dirname, '..', '..', '..', 'documents', 'uploaded', `${fileName}_${pdfNumero}.pdf`);
                     fs.writeFileSync(pathPdf, pdfBytes);
                     pathsToPDF.splice(0, numero);
-                    documentController.saveDocument(company, pathPdf, 'pdf', 'draft');
+                    documentController.saveDocument(company, pathPdf, 'pdf',selectedDate, 'draft');
                     pdfPaths.push(pathPdf);
 
                     const newCurrentPDFDoc = await PDFDocument.create();
