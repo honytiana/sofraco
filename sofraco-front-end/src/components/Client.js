@@ -17,11 +17,13 @@ import {
     CInput,
     CDataTable
 } from '@coreui/react';
-import axios from 'axios';
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
 
 import '../styles/Client.css';
+import CabinetService from '../services/cabinet';
+import ClientService from '../services/client';
+import CourtierService from '../services/courtier';
 
 require('dotenv').config();
 
@@ -41,7 +43,7 @@ class Client extends Component {
             num: 0,
             token: document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1'),
             ajoutClient: false,
-            courtierToDel: null,
+            clientToDel: null,
             visibleAlert: false,
             interne: false
         }
@@ -52,6 +54,10 @@ class Client extends Component {
         this.activerAjoutClient = this.activerAjoutClient.bind(this);
         this.ajouterClient = this.ajouterClient.bind(this);
         this.handleClientCallback = this.handleClientCallback.bind(this);
+
+        this.cabinetService = new CabinetService();
+        this.clientService = new ClientService();
+        this.courtierService = new CourtierService();
     }
 
     componentDidMount() {
@@ -112,14 +118,7 @@ class Client extends Component {
     }
 
     fetchCourtiers() {
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/role/courtier?limit=0&skip=0`, {
-            headers: {
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
-            .then((data) => {
-                return data.data
-            })
+        this.courtierService.getCourtiersByRole('courtier', this.state.token)
             .then((data) => {
                 const courtiers = data;
                 this.setState({
@@ -132,14 +131,7 @@ class Client extends Component {
     }
 
     fetchCabinets() {
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet`, {
-            headers: {
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
-            .then((data) => {
-                return data.data
-            })
+        this.cabinetService.getCabinets(this.state.token)
             .then((data) => {
                 const cabinets = data;
                 this.setState({
@@ -152,14 +144,7 @@ class Client extends Component {
     }
 
     fetchClients() {
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/client`, {
-            headers: {
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
-            .then((data) => {
-                return data.data
-            })
+        this.clientService.getClients(this.state.token)
             .then((data) => {
                 const clients = data;
                 this.setState({
@@ -207,26 +192,54 @@ class Client extends Component {
             options.firstName !== '' ||
             options.cabinet !== '' ||
             options.versementCommissions !== '') {
-            axios.post(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/client/`, options, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.state.token}`
-                }
-            }).then((res) => {
-                let courtiers = this.state.courtiers;
-                courtiers.push(res.data);
-                this.setState({
-                    courtiers: courtiers,
-                    toast: true,
-                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le client à été ajouté au cabinet` }
+            this.clientService.createClient(options, this.state.token)
+                .then((res) => {
+                    let courtiers = this.state.courtiers;
+                    courtiers.push(res);
+                    this.setState({
+                        courtiers: courtiers,
+                        toast: true,
+                        messageToast: { header: 'SUCCESS', color: 'success', message: `Le client à été ajouté au cabinet` }
+                    });
+                    this.activerAjoutClient();
+                    event.target['sofraco-contrat'].value = '';
+                    event.target['sofraco-nom'].value = '';
+                    event.target['sofraco-prenom'].value = '';
+                    event.target['sofraco-cabinet'].value = '';
+                    event.target['sofraco-versement-commission'].value = '';
+                    this._isMounted && this.fetchCourtiers();
+                }).catch((err) => {
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'ERROR', color: 'danger', message: err }
+                    })
+                }).finally(() => {
+                    setTimeout(() => {
+                        this.setState({
+                            toast: false,
+                            messageToast: {}
+                        });
+                    }, 6000);
                 });
-                this.activerAjoutClient();
-                event.target['sofraco-contrat'].value = '';
-                event.target['sofraco-nom'].value = '';
-                event.target['sofraco-prenom'].value = '';
-                event.target['sofraco-cabinet'].value = '';
-                event.target['sofraco-versement-commission'].value = '';
-                this._isMounted && this.fetchCourtiers();
+        }
+    }
+
+    editClient(event, item) {
+        event.preventDefault();
+        const options = {
+            numeroContrat: event.target['sofraco-contrat-edit'].value,
+            lastName: event.target['sofraco-nom-edit'].value,
+            firstName: event.target['sofraco-prenom-edit'].value,
+            cabinet: event.target['sofraco-cabinet-edit'].value,
+            versementCommissions: event.target['sofraco-versement-commission-edit'].value
+        };
+        this.clientService.updateClient(item._id, options)
+            .then((res) => {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le client à été modifié` }
+                });
+                this._isMounted && this.fetchClients();
             }).catch((err) => {
                 this.setState({
                     toast: true,
@@ -240,64 +253,23 @@ class Client extends Component {
                     });
                 }, 6000);
             });
-        }
     }
 
-    editClient(event, item) {
-        event.preventDefault();
-        const options = {
-            numeroContrat: event.target['sofraco-contrat-edit'].value,
-            lastName: event.target['sofraco-nom-edit'].value,
-            firstName: event.target['sofraco-prenom-edit'].value,
-            cabinet: event.target['sofraco-cabinet-edit'].value,
-            versementCommissions: event.target['sofraco-versement-commission-edit'].value
-        };
-        axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/client/${item._id}`, options, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        }).then((res) => {
-            this.setState({
-                toast: true,
-                messageToast: { header: 'SUCCESS', color: 'success', message: `Le client à été modifié` }
-            });
-            this._isMounted && this.fetchClients();
-        }).catch((err) => {
-            this.setState({
-                toast: true,
-                messageToast: { header: 'ERROR', color: 'danger', message: err }
-            })
-        }).finally(() => {
-            setTimeout(() => {
-                this.setState({
-                    toast: false,
-                    messageToast: {}
-                });
-            }, 6000);
-        });
-    }
-
-    openDeletePopup(e, courtier) {
+    openDeletePopup(e, client) {
         this.setState({
-            courtierToDel: courtier,
+            clientToDel: client,
             visibleAlert: true
         });
     }
 
-    deleteCourtier(e) {
+    deleteClient(e) {
         e.preventDefault();
         this.setState({ visibleAlert: false });
-        axios.delete(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/${this.state.courtierToDel._id}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
+        this.clientService.deleteClient(this.state.clientToDel._id, this.state.token)
             .then((res) => {
                 this.setState({
                     toast: true,
-                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le courtier ${this.state.courtierToDel.cabinet} à été supprimé` }
+                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le client ${this.state.clientToDel.cabinet} à été supprimé` }
                 });
                 this._isMounted && this.fetchCourtiers();
             }).catch((err) => {
@@ -307,7 +279,7 @@ class Client extends Component {
                 })
             }).finally(() => {
                 this.setState({
-                    courtierToDel: null
+                    clientToDel: null
                 });
                 setTimeout(() => {
                     this.setState({
@@ -321,7 +293,7 @@ class Client extends Component {
     closeDeletePopup(e) {
         this.setState({
             visibleAlert: false,
-            courtierToDel: null
+            clientToDel: null
         });
     }
 
@@ -434,7 +406,7 @@ class Client extends Component {
                                 return (
                                     <td className="text-center">
                                         {this.state.cabinets.map((cabinet, index) => {
-                                            if(cabinet._id === item.cabinet) {
+                                            if (cabinet._id === item.cabinet) {
                                                 return cabinet.cabinet;
                                             }
                                         })}
@@ -563,6 +535,7 @@ class Client extends Component {
                                             className={'sofraco-icon-del text-danger'}
                                             color='danger'
                                             size="sm"
+                                            onClick={(e) => { this.openDeletePopup(e, item) }}
                                             icon={icon.cilTrash} />
                                     </td>
                                 )
@@ -571,6 +544,31 @@ class Client extends Component {
                     }
                 />
                 <CButton className="sofraco-button" onClick={this.activerAjoutClient}>Ajouter un client</CButton>
+                <CModal
+                    show={this.state.visibleAlert}
+                    className="sofraco-modal-ask"
+                    id="sofraco-modal-ask"
+                    onClose={(e) => { this.closeDeletePopup() }}
+                >
+                    <CModalHeader closeButton></CModalHeader>
+                    <CModalBody>
+                        Voulez vous vraiment supprimer le client {this.state.courtierToDel ? this.state.clientToDel.cabinet : ''}?
+                    </CModalBody>
+                    <CModalFooter>
+                        <CButton
+                            color="danger"
+                            onClick={(e) => { this.deleteClient(e) }}
+                            size="sm">
+                            Supprimer
+                        </CButton>
+                        <CButton
+                            className={'sofraco-button-anuler'}
+                            onClick={(e) => this.closeDeletePopup()}
+                            size="sm">
+                            Annuler
+                        </CButton>
+                    </CModalFooter>
+                </CModal>
                 {
                     (this.state.toast === true &&
                         this.state.messageToast !== null) &&
