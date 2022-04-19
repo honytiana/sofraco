@@ -56,11 +56,11 @@ class UserService {
         });
     }
 
-    login(data, token) {
+    login(data) {
         return new Promise((resolve, reject) => {
             axios.post(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/user/login`, data, {
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Content-Type': 'application/json'
                 }
             })
                 .then((res) => {

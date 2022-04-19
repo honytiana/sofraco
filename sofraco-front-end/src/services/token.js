@@ -7,6 +7,23 @@ class TokenService {
         this.interne = window.location.hostname.match(regInterne) ? true : false
     }
 
+    getApiStatus() {
+        return new Promise((resolve, reject) => {
+            axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/api-status`, {
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((res) => {
+                resolve(res.data);
+            }).catch((err) => {
+                reject(err);
+            }).finally(() => {
+
+            });
+        });
+    }
+
     getTokens() {
         return new Promise((resolve, reject) => {
             axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/token`, {
@@ -58,7 +75,9 @@ class TokenService {
     removeTokenById(id) {
         return new Promise((resolve, reject) => {
             axios.delete(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/token/${id}`, {
-                headers: {}
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             })
                 .then((res) => {
                     resolve(res.data);
@@ -72,7 +91,9 @@ class TokenService {
     removeTokenByUser(userId) {
         return new Promise((resolve, reject) => {
             axios.delete(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/token/user/${userId}`, {
-                headers: {}
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             })
                 .then((res) => {
                     resolve(res.data);
