@@ -75,9 +75,9 @@ class CourtierService {
         });
     }
 
-    getCourtiersByRole(role, token) {
+    getCourtiersByRole(role, token, limit=0, skip=0) {
         return new Promise((resolve, reject) => {
-            axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/role/${role}`, {
+            axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/role/${role}?limit=${limit}&skip=${skip}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

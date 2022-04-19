@@ -7,7 +7,25 @@ class ClientService {
         this.interne = window.location.hostname.match(regInterne) ? true : false
     }
 
-    createClient(name, token) {
+    createClient(data, token) {
+        return new Promise((resolve, reject) => {
+            axios.post(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/client`, data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then((res) => {
+                resolve(res.data);
+            }).catch((err) => {
+                reject(err);
+            }).finally(() => {
+
+            });
+        });
+
+    }
+
+    createClients(name, token) {
         return new Promise((resolve, reject) => {
             axios.post(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/client/name/${name}`, {
                 headers: {
@@ -79,6 +97,7 @@ class ClientService {
         return new Promise((resolve, reject) => {
             axios.put(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/client/${id}`, data, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             })

@@ -6,9 +6,11 @@ import {
     CToastHeader,
     CToastBody
 } from '@coreui/react';
-import axios from 'axios';
 
 import '../styles/Administration.css';
+import TokenService from '../services/token';
+import CabinetService from '../services/cabinet';
+import ClientService from '../services/client';
 
 require('dotenv').config();
 
@@ -35,8 +37,13 @@ class Administration extends Component {
         this._isMounted = false;
         this.fetchCourtiers = this.fetchCourtiers.bind(this);
         this.fetchCabinets = this.fetchCabinets.bind(this);
-        this.fetchAdministrations = this.fetchAdministrations.bind(this);
-        this.ajouterAdministration = this.ajouterAdministration.bind(this);
+        this.fetchClients = this.fetchClients.bind(this);
+        this.ajouterClients = this.ajouterClients.bind(this);
+        this.editClient = this.editClient.bind(this);
+
+        this.tokenService = new TokenService();
+        this.clientService = new ClientService();
+        this.cabinetService = new CabinetService();
     }
 
     componentDidMount() {
@@ -47,7 +54,7 @@ class Administration extends Component {
         });
         this._isMounted && this.fetchCourtiers();
         this._isMounted && this.fetchCabinets();
-        this._isMounted && this.fetchAdministrations();
+        this._isMounted && this.fetchClients();
     }
 
     componentWillUnmount() {
@@ -55,16 +62,9 @@ class Administration extends Component {
     }
 
     fetchCourtiers() {
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/role/courtier?limit=0&skip=0`, {
-            headers: {
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
-            .then((data) => {
-                return data.data
-            })
-            .then((data) => {
-                const courtiers = data;
+        this.courtierService.getCourtiersByRole('courtier', this.state.token)
+            .then((res) => {
+                const courtiers = res;
                 this.setState({
                     courtiers
                 });
@@ -75,34 +75,20 @@ class Administration extends Component {
     }
 
     fetchCabinets() {
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet`, {
-            headers: {
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
-            .then((data) => {
-                return data.data
-            })
-            .then((data) => {
-                const cabinets = data;
+        this.cabinetService.getCabinets(this.state.token)
+            .then((res) => {
+                const cabinets = res;
                 this.setState({
                     cabinets
                 });
             })
             .catch((err) => {
-                console.log(err)
+                console.log(err);
             });
     }
 
-    fetchAdministrations() {
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/client`, {
-            headers: {
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
-            .then((data) => {
-                return data.data
-            })
+    fetchClients() {
+        this.clientService.getClients(this.state.token)
             .then((data) => {
                 const clients = data;
                 this.setState({
@@ -114,7 +100,7 @@ class Administration extends Component {
             });
     }
 
-    ajouterAdministration(event) {
+    ajouterClients(event) {
         event.preventDefault();
         const options = {
             numeroContrat: event.target['sofraco-contrat'].value,
@@ -128,26 +114,54 @@ class Administration extends Component {
             options.firstName !== '' ||
             options.cabinet !== '' ||
             options.versementCommissions !== '') {
-            axios.post(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/client/`, options, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.state.token}`
-                }
-            }).then((res) => {
-                let courtiers = this.state.courtiers;
-                courtiers.push(res.data);
-                this.setState({
-                    courtiers: courtiers,
-                    toast: true,
-                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le client à été ajouté au cabinet` }
+            this.clientService.createClient(options, this.state.token)
+                .then((res) => {
+                    let courtiers = this.state.courtiers;
+                    courtiers.push(res);
+                    this.setState({
+                        courtiers: courtiers,
+                        toast: true,
+                        messageToast: { header: 'SUCCESS', color: 'success', message: `Le client à été ajouté au cabinet` }
+                    });
+                    this.activerAjoutClient();
+                    event.target['sofraco-contrat'].value = '';
+                    event.target['sofraco-nom'].value = '';
+                    event.target['sofraco-prenom'].value = '';
+                    event.target['sofraco-cabinet'].value = '';
+                    event.target['sofraco-versement-commission'].value = '';
+                    this._isMounted && this.fetchCourtiers();
+                }).catch((err) => {
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'ERROR', color: 'danger', message: err }
+                    })
+                }).finally(() => {
+                    setTimeout(() => {
+                        this.setState({
+                            toast: false,
+                            messageToast: {}
+                        });
+                    }, 6000);
                 });
-                this.activerAjoutAdministration();
-                event.target['sofraco-contrat'].value = '';
-                event.target['sofraco-nom'].value = '';
-                event.target['sofraco-prenom'].value = '';
-                event.target['sofraco-cabinet'].value = '';
-                event.target['sofraco-versement-commission'].value = '';
-                this._isMounted && this.fetchCourtiers();
+        }
+    }
+
+    editClient(event, item) {
+        event.preventDefault();
+        const options = {
+            numeroContrat: event.target['sofraco-contrat-edit'].value,
+            lastName: event.target['sofraco-nom-edit'].value,
+            firstName: event.target['sofraco-prenom-edit'].value,
+            cabinet: event.target['sofraco-cabinet-edit'].value,
+            versementCommissions: event.target['sofraco-versement-commission-edit'].value
+        };
+        this.clientService.updateClient(item._id, options, this.state.token)
+            .then((res) => {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le client à été modifié` }
+                });
+                this._isMounted && this.fetchClients();
             }).catch((err) => {
                 this.setState({
                     toast: true,
@@ -161,42 +175,6 @@ class Administration extends Component {
                     });
                 }, 6000);
             });
-        }
-    }
-
-    editAdministration(event, item) {
-        event.preventDefault();
-        const options = {
-            numeroContrat: event.target['sofraco-contrat-edit'].value,
-            lastName: event.target['sofraco-nom-edit'].value,
-            firstName: event.target['sofraco-prenom-edit'].value,
-            cabinet: event.target['sofraco-cabinet-edit'].value,
-            versementCommissions: event.target['sofraco-versement-commission-edit'].value
-        };
-        axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/client/${item._id}`, options, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        }).then((res) => {
-            this.setState({
-                toast: true,
-                messageToast: { header: 'SUCCESS', color: 'success', message: `Le client à été modifié` }
-            });
-            this._isMounted && this.fetchAdministrations();
-        }).catch((err) => {
-            this.setState({
-                toast: true,
-                messageToast: { header: 'ERROR', color: 'danger', message: err }
-            })
-        }).finally(() => {
-            setTimeout(() => {
-                this.setState({
-                    toast: false,
-                    messageToast: {}
-                });
-            }, 6000);
-        });
     }
 
     openDeletePopup(e, courtier) {
@@ -206,43 +184,9 @@ class Administration extends Component {
         });
     }
 
-    deleteCourtier(e) {
-        e.preventDefault();
-        this.setState({ visibleAlert: false });
-        axios.delete(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/${this.state.courtierToDel._id}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
-            .then((res) => {
-                this.setState({
-                    toast: true,
-                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le courtier ${this.state.courtierToDel.cabinet} à été supprimé` }
-                });
-                this._isMounted && this.fetchCourtiers();
-            }).catch((err) => {
-                this.setState({
-                    toast: true,
-                    messageToast: { header: 'ERROR', color: 'danger', message: err }
-                })
-            }).finally(() => {
-                this.setState({
-                    courtierToDel: null
-                });
-                setTimeout(() => {
-                    this.setState({
-                        toast: false,
-                        messageToast: {}
-                    });
-                }, 6000);
-            });
-    }
-
     render() {
         return (
             <div>
-
                 {
                     (this.state.toast === true &&
                         this.state.messageToast !== null) &&

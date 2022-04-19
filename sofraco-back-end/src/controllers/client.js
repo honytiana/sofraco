@@ -5,7 +5,7 @@ const clientHandler = require('../handlers/clientHandler');
 const clientService = require('../services/features/client');
 
 
-exports.createClient = async (req, res) => {
+exports.createClients = async (req, res) => {
     try {
         console.log(`${new Date()} create clients`);
         const rattachements = await clientService.readExcelRattachementClient(req.params.name);
@@ -13,6 +13,17 @@ exports.createClient = async (req, res) => {
             const c = await clientHandler.createClient(rattachement);
         }
         res.status(200).end(`${new Date()} Clients added`);
+    } catch (error) {
+        res.status(400).json({ error })
+    }
+
+};
+
+exports.createClient = async (req, res) => {
+    try {
+        console.log(`${new Date()} create client`);
+        const client = await clientHandler.createClient(req.body);
+        res.status(200).end(`${new Date()} Client added`);
     } catch (error) {
         res.status(400).json({ error })
     }

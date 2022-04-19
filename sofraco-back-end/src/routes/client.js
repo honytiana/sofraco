@@ -6,7 +6,8 @@ const clientController =  require('../controllers/client');
 
 router.route('/').get(accessControl, clientController.getClients);
 router.route('/:id').get(accessControl, clientController.getClient);
-router.route('/name/:name').post(accessControl, clientController.createClient);
+router.route('/').post(accessControl, clientController.createClient);
+router.route('/name/:name').post(accessControl, clientController.createClients);
 router.route('/courtier/:courtier').get(accessControl, clientController.getClientsOfCourtier);
 router.route('/:id').put(accessControl, clientController.updateClient);
 router.route('/').delete(clientController.deleteAllClients);
