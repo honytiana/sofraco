@@ -26,7 +26,6 @@ import {
     CAlert,
     CSelect
 } from '@coreui/react';
-import axios from 'axios';
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
 
@@ -35,6 +34,10 @@ import '../styles/Companies.css';
 import check from '../assets/check.png';
 import { millisecondToTime } from '../utils/timeUtil';
 import CompanyFolder from './CompanyFolder';
+import CompanyService from '../services/company';
+import DocumentService from '../services/document';
+import ExcelMasterService from '../services/excelMaster';
+import TreatmentService from '../services/treatment';
 
 require('dotenv').config();
 
@@ -88,6 +91,10 @@ class Companies extends Component {
         this.getCheckBadge = this.getCheckBadge.bind(this);
         this.user = JSON.parse(localStorage.getItem('user'));
 
+        this.companyService = new CompanyService();
+        this.documentService = new DocumentService();
+        this.excelMasterService = new ExcelMasterService();
+        this.treatmentService = new TreatmentService();
     }
 
     componentDidMount() {
@@ -130,15 +137,8 @@ class Companies extends Component {
     }
 
     getDraftDocument() {
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/document`, {
-            headers: {
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
-            .then((data) => {
-                return data.data
-            })
-            .then(async (documents) => {
+        this.documentService.getDocuments(this.state.token)
+            .then((documents) => {
                 let drafts = [];
                 for (let doc of documents) {
                     const uploadDateMonth = new Date(doc.upload_date).getMonth();
@@ -159,14 +159,7 @@ class Companies extends Component {
     }
 
     loadingHandler() {
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/document`, {
-            headers: {
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
-            .then((data) => {
-                return data.data
-            })
+        this.documentService.getDocuments(this.state.token)
             .then((documents) => {
                 if (documents.some(element => element.status === 'processing')) {
                     this.setState({
@@ -185,14 +178,7 @@ class Companies extends Component {
     }
 
     getCompanies() {
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/company`, {
-            headers: {
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
-            .then((data) => {
-                return data.data
-            })
+        this.documentService.getDocuments(this.state.token)
             .then((companies) => {
                 let collapsed = [];
                 for (let company of companies) {
@@ -209,24 +195,16 @@ class Companies extends Component {
     }
 
     fetchDocumentsYearAndMonth() {
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/document/year/${this.state.year}/month/${parseInt(this.state.month)}`, {
-            headers: {
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
+        this.documentService.getDocumentsByYearMonth(this.state.year, parseInt(this.state.month), this.state.token)
             .then((data) => {
                 this.setState({
                     companiesDocuments: []
                 });
-                for (let document of data.data) {
-                    axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/company/${document.company}`, {
-                        headers: {
-                            'Authorization': `Bearer ${this.state.token}`
-                        }
-                    })
+                for (let document of data) {
+                    this.companyService.getCompany(document.company, this.state.token)
                         .then((data) => {
                             const companiesDocuments = this.state.companiesDocuments;
-                            companiesDocuments.push(data.data);
+                            companiesDocuments.push(data);
                             this.setState({
                                 companiesDocuments
                             });
@@ -246,14 +224,7 @@ class Companies extends Component {
             search: true
         });
         if (e.target.value !== '') {
-            axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/company/search/${e.target.value}`, {
-                headers: {
-                    'Authorization': `Bearer ${this.state.token}`
-                }
-            })
-                .then((data) => {
-                    return data.data
-                })
+            this.companyService.getCompaniesLike(e.target.value, this.state.token)
                 .then((companies) => {
                     if (companies.length > 0) {
                         let collapsed = [];
@@ -282,43 +253,17 @@ class Companies extends Component {
     }
 
     getTreatment() {
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/treatment/user/${this.user}/status/processing`, {
-            headers: {
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
-            .then((data) => {
-                return data.data
-            })
+        this.treatmentService.getProcessingTreatmentByUser(this.user, this.state.token)
             .then((treatment) => {
                 if (treatment.treatment) {
                     this.setState({
                         progress: treatment.treatment.progress,
                         load: true,
                         elementCover: true,
-                        treatmentTimeMS: treatment.time
+                        treatmentTimeMS: treatment.time,
+                        treatmentTime: treatment.time,
                     });
                 }
-            })
-            .catch((err) => {
-                console.log(err)
-            });
-    }
-
-    getTreatmentTime() {
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/treatment/user/${this.user}/status/processing`, {
-            headers: {
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
-            .then((data) => {
-                return data.data
-            })
-            .then((treatment) => {
-                const treatmentTime = treatment.time;
-                this.setState({
-                    treatmentTime,
-                });
             })
             .catch((err) => {
                 console.log(err)
@@ -339,13 +284,8 @@ class Companies extends Component {
             const options = {
                 user: JSON.parse(localStorage.getItem('user'))
             }
-            const res = await axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/document`, options, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.state.token}`
-                }
-            });
-            let executionTime = res.data.executionTime;
+            const res = await this.documentService.updateDocuments(options, this.state.token);
+            let executionTime = res.executionTime;
             if (this.state.drafts.length > 0) {
                 this.setState({
                     toast: true,
@@ -367,10 +307,10 @@ class Companies extends Component {
                     progress: 0
                 });
             }
-            if (res.data.errors.length > 0) {
+            if (res.errors.length > 0) {
                 this.setState({
                     showErrors: true,
-                    treatmentErrors: res.data.errors
+                    treatmentErrors: res.errors
                 });
             }
             this._isMounted && this.getDraftDocument();
@@ -449,19 +389,14 @@ class Companies extends Component {
         const options = {
             userId: JSON.parse(localStorage.getItem('user'))
         }
-        axios.post(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/excelMaster`, options, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
+        this.excelMasterService.createExcelMaster(options, this.state.token)
             .then((res) => {
                 this.setState({
                     toast: true,
                     messageToast: {
                         header: 'SUCCESS',
                         color: 'success',
-                        message: res.data.message
+                        message: res.message
                     }
                 });
             })
@@ -483,18 +418,12 @@ class Companies extends Component {
     }
 
     onDownloadExcelMasters() {
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/excelMaster/zip/excels`, {
-            headers: {
-                'Content-Type': 'application/zip',
-                'Authorization': `Bearer ${this.state.token}`
-            },
-            responseType: 'blob'
-        })
+        this.excelMasterService.getExcelMastersZip(this.state.token)
             .then((res) => {
                 let month = new Date().getMonth();
                 month = (month + 1 < 10) ? `0${month + 1}` : `${month + 1}`;
                 const sofdate = `${month}${new Date().getFullYear()}`;
-                const url = window.URL.createObjectURL(new Blob([res.data]));
+                const url = window.URL.createObjectURL(new Blob([res]));
                 const link = document.createElement('a');
                 link.href = url;
                 link.setAttribute('download', `${sofdate}.zip`);

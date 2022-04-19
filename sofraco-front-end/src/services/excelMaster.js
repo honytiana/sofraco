@@ -62,6 +62,7 @@ class ExcelMasterService {
         return new Promise((resolve, reject) => {
             axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/excelMaster/courtier/${courtier}`, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             })
@@ -78,6 +79,7 @@ class ExcelMasterService {
         return new Promise((resolve, reject) => {
             axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/excelMaster/zip/excels`, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             })
@@ -94,6 +96,7 @@ class ExcelMasterService {
         return new Promise((resolve, reject) => {
             axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/excelMaster/xlsx/${excel}`, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             })
@@ -110,6 +113,7 @@ class ExcelMasterService {
         return new Promise((resolve, reject) => {
             axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/excelMaster/year/${year}/month/${month}`, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             })
@@ -126,6 +130,7 @@ class ExcelMasterService {
         return new Promise((resolve, reject) => {
             axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/excelMaster/courtier/${courtier}/year/${year}/month/${month}/type/${type}`, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             })
@@ -142,6 +147,7 @@ class ExcelMasterService {
         return new Promise((resolve, reject) => {
             axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/excelMaster/courtier/${courtier}/year/month/type/${type}`, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             })
@@ -158,6 +164,7 @@ class ExcelMasterService {
         return new Promise((resolve, reject) => {
             axios.put(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/excelMaster/${id}`, data, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             })
@@ -174,6 +181,7 @@ class ExcelMasterService {
         return new Promise((resolve, reject) => {
             axios.delete(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/excelMaster/${id}`, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             })
@@ -190,6 +198,7 @@ class ExcelMasterService {
         return new Promise((resolve, reject) => {
             axios.delete(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/excelMaster`, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             })

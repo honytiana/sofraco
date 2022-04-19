@@ -62,6 +62,7 @@ class TreatmentService {
         return new Promise((resolve, reject) => {
             axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/treatment/user/${user}`, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             })
@@ -78,6 +79,7 @@ class TreatmentService {
         return new Promise((resolve, reject) => {
             axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/treatment/user/${user}/status/processing`, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             })
@@ -94,6 +96,7 @@ class TreatmentService {
         return new Promise((resolve, reject) => {
             axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/treatment/status/processing`, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             })
@@ -110,6 +113,7 @@ class TreatmentService {
         return new Promise((resolve, reject) => {
             axios.put(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/treatment/user/${user}/status/${status}`, data, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             })
@@ -126,6 +130,7 @@ class TreatmentService {
         return new Promise((resolve, reject) => {
             axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/treatment/status/${status}`, data, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             })
@@ -142,6 +147,7 @@ class TreatmentService {
         return new Promise((resolve, reject) => {
             axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/treatment/${id}`, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             })
@@ -158,6 +164,7 @@ class TreatmentService {
         return new Promise((resolve, reject) => {
             axios.put(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/treatment`, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             })
@@ -174,6 +181,7 @@ class TreatmentService {
         return new Promise((resolve, reject) => {
             axios.delete(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/treatment/${id}`, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             })
