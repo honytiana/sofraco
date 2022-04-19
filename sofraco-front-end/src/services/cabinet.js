@@ -79,6 +79,7 @@ class CabinetService {
         return new Promise((resolve, reject) => {
             axios.put(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/${id}`, data, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             })
@@ -95,6 +96,7 @@ class CabinetService {
         return new Promise((resolve, reject) => {
             axios.put(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/cabinet/${id}/name`, data, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             })
@@ -111,6 +113,7 @@ class CabinetService {
         return new Promise((resolve, reject) => {
             axios.put(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/cabinet/${id}/name/edit`, data, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             })
@@ -127,6 +130,7 @@ class CabinetService {
         return new Promise((resolve, reject) => {
             axios.put(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/cabinet/${id}/name/delete`, data, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             })

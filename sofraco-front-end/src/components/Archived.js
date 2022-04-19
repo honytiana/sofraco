@@ -16,7 +16,6 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
-// import axios from 'axios';
 
 import '../styles/Archived.css';
 import closedFolder from '../assets/closed_folder.png';

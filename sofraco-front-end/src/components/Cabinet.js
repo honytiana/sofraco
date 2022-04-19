@@ -17,11 +17,11 @@ import {
     CInput,
     CDataTable
 } from '@coreui/react';
-import axios from 'axios';
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
 
 import '../styles/Cabinet.css';
+import CabinetService from '../services/cabinet';
 
 require('dotenv').config();
 
@@ -56,6 +56,8 @@ class Cabinet extends Component {
         this.saveCabinetName = this.saveCabinetName.bind(this);
         this.onDeleteStateCabinetName = this.onDeleteStateCabinetName.bind(this);
         this.onEditBeforeSaveCabinetName = this.onEditBeforeSaveCabinetName.bind(this);
+
+        this.cabinetService = new CabinetService();
     }
 
     componentDidMount() {
@@ -102,14 +104,7 @@ class Cabinet extends Component {
     }
 
     fetchCabinets() {
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet`, {
-            headers: {
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
-            .then((data) => {
-                return data.data
-            })
+        this.cabinetService.getCabinets(this.state.token)
             .then((data) => {
                 const cabinets = data;
                 this.setState({
@@ -151,21 +146,47 @@ class Cabinet extends Component {
         };
         if (options.cabinet !== '' ||
             options.description !== '') {
-            axios.post(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/`, options, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.state.token}`
-                }
-            }).then((res) => {
-                this.saveCabinetName(res.data._id);
+            this.cabinetService.createCabinet(options, this.state.token)
+                .then((res) => {
+                    this.saveCabinetName(res._id);
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'SUCCESS', color: 'success', message: `Le cabinet à été créé` }
+                    });
+                    this.activerAjoutCabinet();
+                    event.target['sofraco-cabinet-cabinet'].value = '';
+                    event.target['sofraco-cabinet-name'].value = '';
+                    event.target['sofraco-cabinet-description'].value = '';
+                    this._isMounted && this.fetchCabinets();
+                }).catch((err) => {
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'ERROR', color: 'danger', message: err }
+                    })
+                }).finally(() => {
+                    setTimeout(() => {
+                        this.setState({
+                            toast: false,
+                            messageToast: {}
+                        });
+                    }, 6000);
+                });
+        }
+    }
+
+    editCabinet(event, item) {
+        event.preventDefault();
+        const options = {
+            cabinet: event.target['sofraco-cabinet-cabinet-edit'].value,
+            description: event.target['sofraco-cabinet-description-edit'].value,
+        };
+        this.cabinetService.updateCabinet(item._id, options, this.state.token)
+            .then((res) => {
+                this.saveCabinetName(item._id);
                 this.setState({
                     toast: true,
-                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le cabinet à été créé` }
+                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le cabinet à été modifié` }
                 });
-                this.activerAjoutCabinet();
-                event.target['sofraco-cabinet-cabinet'].value = '';
-                event.target['sofraco-cabinet-name'].value = '';
-                event.target['sofraco-cabinet-description'].value = '';
                 this._isMounted && this.fetchCabinets();
             }).catch((err) => {
                 this.setState({
@@ -180,40 +201,6 @@ class Cabinet extends Component {
                     });
                 }, 6000);
             });
-        }
-    }
-
-    editCabinet(event, item) {
-        event.preventDefault();
-        const options = {
-            cabinet: event.target['sofraco-cabinet-cabinet-edit'].value,
-            description: event.target['sofraco-cabinet-description-edit'].value,
-        };
-        axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/${item._id}`, options, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        }).then((res) => {
-            this.saveCabinetName(item._id);
-            this.setState({
-                toast: true,
-                messageToast: { header: 'SUCCESS', color: 'success', message: `Le cabinet à été modifié` }
-            });
-            this._isMounted && this.fetchCabinets();
-        }).catch((err) => {
-            this.setState({
-                toast: true,
-                messageToast: { header: 'ERROR', color: 'danger', message: err }
-            })
-        }).finally(() => {
-            setTimeout(() => {
-                this.setState({
-                    toast: false,
-                    messageToast: {}
-                });
-            }, 6000);
-        });
     }
 
     openDeletePopup(e, courtier) {
@@ -229,32 +216,28 @@ class Cabinet extends Component {
                 cabinetName: cabinetName
             };
             if (options.cabinetName !== '') {
-                axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/cabinet/${cabinet}/name`, options, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${this.props.token}`
-                    }
-                }).then((res) => {
-                    this.setState({
-                        toast: true,
-                        messageToast: { header: 'SUCCESS', color: 'success', message: `Les emails en copie ont été ajouté au courtier ${res.data.cabinet}` },
-                    });
-                }).catch((err) => {
-                    this.setState({
-                        toast: true,
-                        messageToast: { header: 'ERROR', color: 'danger', message: err }
-                    })
-                }).finally(() => {
-                    this.setState({
-                        emailName: []
-                    });
-                    setTimeout(() => {
+                this.cabinetService.addCabinetName(cabinet, options, this.state.token)
+                    .then((res) => {
                         this.setState({
-                            toast: false,
-                            messageToast: {}
+                            toast: true,
+                            messageToast: { header: 'SUCCESS', color: 'success', message: `Les emails en copie ont été ajouté au courtier ${res.cabinet}` },
                         });
-                    }, 6000);
-                });
+                    }).catch((err) => {
+                        this.setState({
+                            toast: true,
+                            messageToast: { header: 'ERROR', color: 'danger', message: err }
+                        })
+                    }).finally(() => {
+                        this.setState({
+                            emailName: []
+                        });
+                        setTimeout(() => {
+                            this.setState({
+                                toast: false,
+                                messageToast: {}
+                            });
+                        }, 6000);
+                    });
             }
         }
     }
@@ -323,34 +306,30 @@ class Cabinet extends Component {
             odlCabinetName
         };
         if (options.cabinetName !== '') {
-            axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/cabinet/${cabinet._id}/name/edit`, options, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.props.token}`
-                }
-            }).then((res) => {
-                this.setState({
-                    courtier: res.data,
-                    toast: true,
-                    messageToast: { header: 'SUCCESS', color: 'success', message: `${options.cabinetName} à été modifié` }
-                });
-            }).catch((err) => {
-                this.setState({
-                    toast: true,
-                    messageToast: { header: 'ERROR', color: 'danger', message: err }
-                })
-            }).finally(() => {
-                event.preventDefault();
-                event.target.style.display = 'none';
-                event.target.remove();
-                badge.style.display = 'inline';
-                setTimeout(() => {
+            this.cabinetService.editCabinetName(cabinet._id, options, this.state.token)
+                .then((res) => {
                     this.setState({
-                        toast: false,
-                        messageToast: {}
+                        courtier: res,
+                        toast: true,
+                        messageToast: { header: 'SUCCESS', color: 'success', message: `${options.cabinetName} à été modifié` }
                     });
-                }, 6000);
-            });
+                }).catch((err) => {
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'ERROR', color: 'danger', message: err }
+                    })
+                }).finally(() => {
+                    event.preventDefault();
+                    event.target.style.display = 'none';
+                    event.target.remove();
+                    badge.style.display = 'inline';
+                    setTimeout(() => {
+                        this.setState({
+                            toast: false,
+                            messageToast: {}
+                        });
+                    }, 6000);
+                });
         }
     }
 
@@ -360,12 +339,8 @@ class Cabinet extends Component {
             cabinetName
         };
         if (options.cabinetName !== '') {
-            axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet/cabinet/${cabinet}/name/delete`, options, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.props.token}`
-                }
-            }).then((res) => {
+            this.cabinetService.deleteCabinetName(cabinet, options, this.state.token)
+            .then((res) => {
                 this.setState({
                     toast: true,
                     messageToast: { header: 'SUCCESS', color: 'success', message: `${options.cabinetName} à été supprimé` }
@@ -495,7 +470,7 @@ class Cabinet extends Component {
                             (item, index) => {
                                 return (
                                     <td className="text-center" >
-                                        { item.names && item.names.map((name, i) => {
+                                        {item.names && item.names.map((name, i) => {
                                             return <span href="#" key={`${name}-${index}-${i}`}>{name}, </span>
                                         })}
                                     </td>
