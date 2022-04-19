@@ -15,7 +15,6 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
-import axios from 'axios';
 
 import '../styles/Courtier.css';
 import CabinetService from '../services/cabinet';
@@ -142,34 +141,30 @@ class Courtier extends Component {
                 emailCopie: email
             };
             if (options.emailCopie !== '') {
-                axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/courtier/${this.props.courtier._id}/emailCopie`, options, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${this.props.token}`
-                    }
-                }).then((res) => {
-                    this.setState({
-                        courtier: res.data,
-                        toast: true,
-                        messageToast: { header: 'SUCCESS', color: 'success', message: `Les emails en copie ont été ajouté au courtier ${res.data.cabinet}` },
-                    });
-                    this.props.listCourtierCallback();
-                }).catch((err) => {
-                    this.setState({
-                        toast: true,
-                        messageToast: { header: 'ERROR', color: 'danger', message: err }
-                    })
-                }).finally(() => {
-                    this.setState({
-                        emailCopie: []
-                    });
-                    setTimeout(() => {
+                this.courtierService.addEmailCopieCourtier(this.props.courtier._id, options, this.props.token)
+                    .then((res) => {
                         this.setState({
-                            toast: false,
-                            messageToast: {}
+                            courtier: res,
+                            toast: true,
+                            messageToast: { header: 'SUCCESS', color: 'success', message: `Les emails en copie ont été ajouté au courtier ${res.cabinet}` },
                         });
-                    }, 6000);
-                });
+                        this.props.listCourtierCallback();
+                    }).catch((err) => {
+                        this.setState({
+                            toast: true,
+                            messageToast: { header: 'ERROR', color: 'danger', message: err }
+                        })
+                    }).finally(() => {
+                        this.setState({
+                            emailCopie: []
+                        });
+                        setTimeout(() => {
+                            this.setState({
+                                toast: false,
+                                messageToast: {}
+                            });
+                        }, 6000);
+                    });
             }
         }
     }
@@ -238,35 +233,31 @@ class Courtier extends Component {
             oldEmailCopie
         };
         if (options.emailCopie !== '') {
-            axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/courtier/${this.props.courtier._id}/emailCopie/edit`, options, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.props.token}`
-                }
-            }).then((res) => {
-                this.setState({
-                    courtier: res.data,
-                    toast: true,
-                    messageToast: { header: 'SUCCESS', color: 'success', message: `${options.emailCopie} à été modifié` }
-                });
-                this.props.listCourtierCallback();
-            }).catch((err) => {
-                this.setState({
-                    toast: true,
-                    messageToast: { header: 'ERROR', color: 'danger', message: err }
-                })
-            }).finally(() => {
-                event.preventDefault();
-                event.target.style.display = 'none';
-                event.target.remove();
-                badge.style.display = 'inline';
-                setTimeout(() => {
+            this.courtierService.editEmailCopieCourtier(this.props.courtier._id, options, this.props.token)
+                .then((res) => {
                     this.setState({
-                        toast: false,
-                        messageToast: {}
+                        courtier: res,
+                        toast: true,
+                        messageToast: { header: 'SUCCESS', color: 'success', message: `${options.emailCopie} à été modifié` }
                     });
-                }, 6000);
-            });
+                    this.props.listCourtierCallback();
+                }).catch((err) => {
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'ERROR', color: 'danger', message: err }
+                    })
+                }).finally(() => {
+                    event.preventDefault();
+                    event.target.style.display = 'none';
+                    event.target.remove();
+                    badge.style.display = 'inline';
+                    setTimeout(() => {
+                        this.setState({
+                            toast: false,
+                            messageToast: {}
+                        });
+                    }, 6000);
+                });
         }
     }
 
@@ -276,14 +267,10 @@ class Courtier extends Component {
             emailCopie
         };
         if (options.emailCopie !== '') {
-            axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/courtier/${this.props.courtier._id}/emailCopie/delete`, options, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.props.token}`
-                }
-            }).then((res) => {
+            this.courtierService.deleteEmailCopieCourtier(this.props.courtier._id, options, this.props.token)
+            .then((res) => {
                 this.setState({
-                    courtier: res.data,
+                    courtier: res,
                     toast: true,
                     messageToast: { header: 'SUCCESS', color: 'success', message: `${options.emailCopie} à été supprimé` }
                 });
