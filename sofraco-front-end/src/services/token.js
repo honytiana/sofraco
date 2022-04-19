@@ -107,7 +107,9 @@ class TokenService {
     removeTokenUser(userId, token) {
         return new Promise((resolve, reject) => {
             axios.delete(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/token/user/${userId}/token/${token}`, {
-                headers: {}
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             })
                 .then((res) => {
                     resolve(res.data);

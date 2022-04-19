@@ -2,13 +2,14 @@ import { Component } from 'react';
 import { CContainer } from '@coreui/react';
 import '@coreui/coreui/dist/css/coreui.min.css';
 // import { io } from 'socket.io-client';
-import axios from 'axios';
 
 import Navbar from './Navbar';
 import RouteComponent from './Routes';
 import Footer from './Footer';
 import '../styles/App.css';
 import Access from './Access';
+import TokenService from '../services/token';
+import UserService from '../services/user';
 
 require('dotenv').config();
 
@@ -22,6 +23,9 @@ class App extends Component {
     };
     this.getToken = this.getToken.bind(this);
     this.getIPClient = this.getIPClient.bind(this);
+
+    this.tokenService = new TokenService();
+    this.userService = new UserService();
 
   }
 
@@ -52,21 +56,12 @@ class App extends Component {
   getToken() {
     const user = JSON.parse(localStorage.getItem('user'));
     // get token by user
-    axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/token/user/${user}`, {
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
+    this.tokenService.getTokenByUser(user)
       .then((res) => {
-        if (res.data.length > 0) {
+        if (res.length > 0) {
           // check token
           const token = document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1');
-          axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/token/user/${user}/token`, {
-            withCredentials: true,
-            headers: {
-              'Content-Type': 'application/json',
-            }
-          })
+          this.tokenService.checkToken(user)
             .then((res) => {
               this.setState({
                 token: token
@@ -74,11 +69,7 @@ class App extends Component {
             })
             .catch((err) => {
               if (token) {
-                axios.delete(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/token/user/${user}/token/${token}`, {
-                  headers: {
-                    'Content-Type': 'application/json'
-                  }
-                })
+                this.tokenService.removeTokenUser(user, token)
                   .then((res) => {
                     window.location.reload();
                     console.log('Déconnexion');
