@@ -260,8 +260,7 @@ class Companies extends Component {
                         progress: treatment.treatment.progress,
                         load: true,
                         elementCover: true,
-                        treatmentTimeMS: treatment.time,
-                        treatmentTime: treatment.time,
+                        treatmentTimeMS: treatment.time
                     });
                 }
             })

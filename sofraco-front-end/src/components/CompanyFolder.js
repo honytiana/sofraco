@@ -17,11 +17,14 @@ import {
     CNavItem,
     CNavLink
 } from '@coreui/react';
-import axios from 'axios';
 
 import '../styles/CompanyFolder.css';
 import Upload from './Upload';
 import Archived from './Archived';
+import CompanyService from '../services/company';
+import DocumentService from '../services/document';
+import ExcelMasterService from '../services/excelMaster';
+import TreatmentService from '../services/treatment';
 
 require('dotenv').config();
 
@@ -46,6 +49,11 @@ class CompanyFolder extends Component {
         this.fetchAllDocumentsCompany = this.fetchAllDocumentsCompany.bind(this);
         this.fetchDocumentsCompany = this.fetchDocumentsCompany.bind(this);
         this.fetchCompany = this.fetchCompany.bind(this);
+
+        this.companyService = new CompanyService();
+        this.documentService = new DocumentService();
+        this.excelMasterService = new ExcelMasterService();
+        this.treatmentService = new TreatmentService();
     }
 
     componentDidMount() {
@@ -82,15 +90,10 @@ class CompanyFolder extends Component {
         })
         if (company.surco) {
             const companySurco = company.companySurco;
-            axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/company/name/${companySurco}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.props.token}`
-                }
-            })
+            this.companyService.getCompanyByName(companySurco, this.props.token)
                 .then((res) => {
                     this.setState({
-                        companySurco: res.data
+                        companySurco: res
                     });
                 })
                 .catch((err) => {
@@ -103,15 +106,10 @@ class CompanyFolder extends Component {
     }
 
     fetchDocumentsCompany() {
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/document/company/${this.props.company._id}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.token}`
-            }
-        })
+        this.documentService.getDocumentsCompany(this.props.company._id, this.props.token)
             .then((result) => {
                 this.setState({
-                    documents: result.data,
+                    documents: result,
                 })
             })
             .catch((err) => {
@@ -123,15 +121,10 @@ class CompanyFolder extends Component {
     }
 
     fetchAllDocumentsCompany() {
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/document/company/${this.props.company._id}/year/month`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.token}`
-            }
-        })
+        this.documentService.getDocumentsCompanyByAllYearMonth(this.props.company._id, this.props.token)
             .then((result) => {
                 this.setState({
-                    archived: result.data
+                    archived: result
                 });
             })
             .catch((err) => {
@@ -142,11 +135,11 @@ class CompanyFolder extends Component {
             });
     }
 
-    handleCompanyFolderCallback = (uploadData) => {
+    handleCompanyFolderCallback (uploadData) {
         this.props.companyCallback(uploadData);
     }
 
-    handleCompanyFolderSurcoCallback = (count) => {
+    handleCompanyFolderSurcoCallback (count) {
         this.props.companySurcoCallback(count);
     }
 
