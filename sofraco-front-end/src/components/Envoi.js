@@ -10,7 +10,6 @@ import {
     CToastBody,
     CSelect
 } from '@coreui/react';
-import axios from 'axios';
 
 import '../styles/Envoi.css';
 import CourtierService from '../services/courtier';
