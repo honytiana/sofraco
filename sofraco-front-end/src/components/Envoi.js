@@ -13,6 +13,8 @@ import {
 import axios from 'axios';
 
 import '../styles/Envoi.css';
+import CourtierService from '../services/courtier';
+import MailerService from '../services/mailer';
 
 require('dotenv').config();
 
@@ -43,6 +45,9 @@ class Envoi extends Component {
         this.onChangeSelectFilterMonthHandler = this.onChangeSelectFilterMonthHandler.bind(this);
         this.setSelectMonthYear = this.setSelectMonthYear.bind(this);
         this.fetchCourtiers = this.fetchCourtiers.bind(this);
+
+        this.courtierService = new CourtierService();
+        this.mailerService = new MailerService();
 
     }
 
@@ -108,14 +113,7 @@ class Envoi extends Component {
     }
 
     fetchCourtiers() {
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier`, {
-            headers: {
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
-            .then((data) => {
-                return data.data
-            })
+        this.courtierService.getCourtiers(this.state.token)
             .then((data) => {
                 const checked = data.map(element => {
                     return {
@@ -201,11 +199,7 @@ class Envoi extends Component {
                     year: this.state.year
                 };
                 mailPromises.push(
-                    axios.post(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/mailer/`, options, {
-                        headers: {
-                            'Authorization': `Bearer ${this.props.token}`
-                        }
-                    })
+                    this.mailerService.sendMail(options, this.props.token)
                         .then((data) => {
                         }).catch((err) => {
                         }).finally(() => {
