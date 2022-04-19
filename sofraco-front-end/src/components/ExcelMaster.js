@@ -18,9 +18,9 @@ import {
     CTabContent,
     CTabPane
 } from '@coreui/react';
-import axios from 'axios';
 
 import '../styles/ExcelMaster.css';
+import ExcelMasterService from '../services/excelMaster';
 
 require('dotenv').config();
 
@@ -42,6 +42,8 @@ class ExcelMaster extends Component {
         this._isMounted = false;
         this.toggleDetails = this.toggleDetails.bind(this);
         this.fetchExcelMasters = this.fetchExcelMasters.bind(this);
+
+        this.excelMasterService = new ExcelMasterService();
     }
 
     componentDidMount() {
@@ -78,7 +80,7 @@ class ExcelMaster extends Component {
         });
         this._isMounted && this.fetchExcelMasters();
     }
-    
+
     componentWillUnmount() {
         this._isMounted = false;
     }
@@ -90,15 +92,10 @@ class ExcelMaster extends Component {
     }
 
     fetchExcelMasters() {
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/excelMaster/${this.props.excelMaster}`, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
+        this.excelMasterService.getExcelMaster(this.props.excelMaster, this.state.token)
             .then((res) => {
                 this.setState({
-                    excelMaster: (res.data) ? res.data : null
+                    excelMaster: (res) ? res : null
                 });
             })
             .catch((err) => {
@@ -130,16 +127,11 @@ class ExcelMaster extends Component {
 
     deleteExcelMaster(e, correspondance) {
         e.preventDefault();
-        axios.delete(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/correspondance/code/courtier/${this.props.courtier._id}/code/${correspondance.code}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
+        this.excelMasterService.deleteExcelMaster(this.props.excelMaster, this.state.token)
             .then((res) => {
                 this.setState({
                     toast: true,
-                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le code ${correspondance.code} à été désactivé` }
+                    messageToast: { header: 'SUCCESS', color: 'success', message: `L'excel master à été supprimé` }
                 });
                 this._isMounted && this.fetchExcelMasters();
             }).catch((err) => {
@@ -172,45 +164,6 @@ class ExcelMaster extends Component {
         this.setState({
             details: newDetails
         })
-    }
-
-    ajouterExcelMaster(event) {
-        event.preventDefault();
-        this.setState({
-            loader: true
-        });
-        const options = {
-            company: event.target['sofraco-company'].value,
-            particular: '',
-            code: event.target['sofraco-code'].value,
-        };
-        axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/correspondance/code/courtier/${this.props.courtier._id}`, options, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        }).then((res) => {
-            this.setState({
-                toast: true,
-                messageToast: { header: 'SUCCESS', color: 'success', message: `Un code du courtier ${this.props.courtier.cabinet} à été ajouté` }
-            });
-            this._isMounted && this.fetchExcelMasters();
-        }).catch((err) => {
-            this.setState({
-                toast: true,
-                messageToast: { header: 'ERROR', color: 'danger', message: err }
-            })
-        }).finally(() => {
-            this.setState({
-                loader: false
-            });
-            setTimeout(() => {
-                this.setState({
-                    toast: false,
-                    messageToast: {}
-                });
-            }, 6000);
-        });
     }
 
     render() {
