@@ -79,7 +79,7 @@ class ExcelMasterService {
         return new Promise((resolve, reject) => {
             axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/excelMaster/zip/excels`, {
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/zip',
                     'Authorization': `Bearer ${token}`
                 }
             })

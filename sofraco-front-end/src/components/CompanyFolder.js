@@ -23,8 +23,6 @@ import Upload from './Upload';
 import Archived from './Archived';
 import CompanyService from '../services/company';
 import DocumentService from '../services/document';
-import ExcelMasterService from '../services/excelMaster';
-import TreatmentService from '../services/treatment';
 
 require('dotenv').config();
 
@@ -52,8 +50,6 @@ class CompanyFolder extends Component {
 
         this.companyService = new CompanyService();
         this.documentService = new DocumentService();
-        this.excelMasterService = new ExcelMasterService();
-        this.treatmentService = new TreatmentService();
     }
 
     componentDidMount() {

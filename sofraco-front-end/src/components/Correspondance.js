@@ -20,9 +20,10 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
-import axios from 'axios';
 
 import '../styles/Correspondance.css';
+import CompanyService from '../services/company';
+import CorrespondanceService from '../services/correspondance';
 
 require('dotenv').config();
 
@@ -49,6 +50,9 @@ class Correspondance extends Component {
         this.activerAjoutCorrespondance = this.activerAjoutCorrespondance.bind(this);
         this.fetchCorrespondances = this.fetchCorrespondances.bind(this);
         this.getCompanies = this.getCompanies.bind(this);
+
+        this.companyService = new CompanyService();
+        this.correspondanceService = new CorrespondanceService();
     }
 
     componentDidMount() {
@@ -127,15 +131,10 @@ class Correspondance extends Component {
 
     fetchCorrespondances() {
         const courtier = this.props.courtier;
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/correspondance/courtier/${courtier._id}`, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${this.props.token}`
-            }
-        })
+        this.correspondanceService.getCorrespondanceByCourtier(courtier._id, this.props.token)
             .then((res) => {
                 this.setState({
-                    correspondance: (res.data) ? res.data : null
+                    correspondance: (res) ? res : null
                 });
             })
             .catch((err) => {
@@ -158,14 +157,10 @@ class Correspondance extends Component {
     }
 
     getCompanies() {
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/company`, {
-            headers: {
-                'Authorization': `Bearer ${this.props.token}`
-            }
-        })
+        this.companyService.getCompanies(this.props.token)
             .then((res) => {
                 this.setState({
-                    companies: res.data
+                    companies: res
                 });
             })
             .catch((err) => {
@@ -205,43 +200,34 @@ class Correspondance extends Component {
             particular: '',
             code: event.target['sofraco-code'].value,
         };
-        axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/correspondance/code/courtier/edit/${this.props.courtier._id}`, options, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.token}`
-            }
-        }).then((res) => {
-            this.setState({
-                toast: true,
-                messageToast: { header: 'SUCCESS', color: 'success', message: `Le code du courtier ${this.props.courtier.cabinet} à été modifié` }
-            });
-            this._isMounted && this.fetchCorrespondances();
-        }).catch((err) => {
-            this.setState({
-                toast: true,
-                messageToast: { header: 'ERROR', color: 'danger', message: err }
-            })
-        }).finally(() => {
-            this.setState({
-                loader: false
-            });
-            setTimeout(() => {
+        this.correspondanceService.editCodeCourtier(this.props.courtier._id, options, this.props.token)
+            .then((res) => {
                 this.setState({
-                    toast: false,
-                    messageToast: {}
+                    toast: true,
+                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le code du courtier ${this.props.courtier.cabinet} à été modifié` }
                 });
-            }, 6000);
-        });
+                this._isMounted && this.fetchCorrespondances();
+            }).catch((err) => {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'ERROR', color: 'danger', message: err }
+                })
+            }).finally(() => {
+                this.setState({
+                    loader: false
+                });
+                setTimeout(() => {
+                    this.setState({
+                        toast: false,
+                        messageToast: {}
+                    });
+                }, 6000);
+            });
     }
 
     deleteCorrespondance(e, correspondance) {
         e.preventDefault();
-        axios.delete(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/correspondance/code/courtier/${this.props.courtier._id}/code/${correspondance.code}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.token}`
-            }
-        })
+        this.correspondanceService.deleteCodeCourtier(this.props.courtier._id, correspondance.code, this.props.token)
             .then((res) => {
                 this.setState({
                     toast: true,
@@ -297,12 +283,8 @@ class Correspondance extends Component {
             particular: '',
             code: event.target['sofraco-code'].value,
         };
-        axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/correspondance/code/courtier/${this.props.courtier._id}`, options, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.token}`
-            }
-        }).then((res) => {
+        this.correspondanceService.addCodeCourtier(this.props.courtier._id, options, this.props.token)
+        .then((res) => {
             this.setState({
                 toast: true,
                 messageToast: { header: 'SUCCESS', color: 'success', message: `Un code du courtier ${this.props.courtier.cabinet} à été ajouté` }
