@@ -13,12 +13,13 @@ import {
     CDropdownItem,
     CImg
 } from '@coreui/react';
-import axios from 'axios';
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
 
 import '../styles/Navbar.css';
 import sofraco_blanc from '../assets/sofraco_blanc.png';
+import TokenService from '../services/token';
+import UserService from '../services/user';
 
 require('dotenv').config();
 
@@ -32,6 +33,9 @@ class Navbar extends Component {
         }
         this.deconnexion = this.deconnexion.bind(this);
 
+        this.tokenService = new TokenService();
+        this.userService = new UserService();
+
     }
 
     componentDidMount() {
@@ -41,13 +45,9 @@ class Navbar extends Component {
         this.setState({
             interne: window.location.hostname.match(regInterne) ? true : false
         });
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/user/${userId}`, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
+        this.userService.getUser(userId)
             .then((res) => {
-                const user = res.data;
+                const user = res;
                 this.setState({
                     user
                 });
@@ -61,11 +61,7 @@ class Navbar extends Component {
         const user = JSON.parse(localStorage.getItem('user'));
         const token = document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1');
         if (token) {
-            axios.delete(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/token/user/${user}/token/${token}`, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
+            this.tokenService.removeTokenUser(user, token)
                 .then((res) => {
                     console.log('Déconnexion');
                     localStorage.clear();
