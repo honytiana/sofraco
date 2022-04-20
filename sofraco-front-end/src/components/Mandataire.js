@@ -22,12 +22,12 @@ import {
     CTabContent,
     CTabPane
 } from '@coreui/react';
-import axios from 'axios';
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
 
 import Correspondance from './Correspondance';
 import '../styles/Mandataire.css';
+import CourtierService from '../services/courtier';
 
 require('dotenv').config();
 
@@ -53,6 +53,8 @@ class Mandataire extends Component {
         this.toggleDetails = this.toggleDetails.bind(this);
         this.activerAjoutMandataire = this.activerAjoutMandataire.bind(this);
         this.fetchMandataires = this.fetchMandataires.bind(this);
+
+        this.courtierService = new CourtierService();
     }
 
     componentDidMount() {
@@ -133,15 +135,10 @@ class Mandataire extends Component {
 
     fetchMandataires() {
         const courtier = this.props.courtier;
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/mandataires/${courtier._id}`, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${this.props.token}`
-            }
-        })
+        this.courtierService.getMandatairesOfCourtier(courtier._id, this.props.token)
             .then((res) => {
                 this.setState({
-                    mandataires: res.data
+                    mandataires: res
                 });
             })
             .catch((err) => {
@@ -190,38 +187,34 @@ class Mandataire extends Component {
             options.firstName !== '' ||
             options.email !== '' ||
             options.phone !== '') {
-            axios.post(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/`, options, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.props.token}`
-                }
-            }).then((res) => {
-                let mandataires = this.state.mandataires;
-                mandataires.push(res.data);
-                this.setState({
-                    mandataires: mandataires,
-                    toast: true,
-                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le mandataire ${res.data.cabinet} à été ajouté` }
-                });
-                this.activerAjoutMandataire();
-                event.target['sofraco-nom'].value = '';
-                event.target['sofraco-prenom'].value = '';
-                event.target['sofraco-email'].value = '';
-                event.target['sofraco-phone'].value = '';
-                this._isMounted && this.fetchMandataires();
-            }).catch((err) => {
-                this.setState({
-                    toast: true,
-                    messageToast: { header: 'ERROR', color: 'danger', message: err }
-                })
-            }).finally(() => {
-                setTimeout(() => {
+            this.courtierService.createCourtier(options, this.props.token)
+                .then((res) => {
+                    let mandataires = this.state.mandataires;
+                    mandataires.push(res);
                     this.setState({
-                        toast: false,
-                        messageToast: {}
+                        mandataires: mandataires,
+                        toast: true,
+                        messageToast: { header: 'SUCCESS', color: 'success', message: `Le mandataire ${res.cabinet} à été ajouté` }
                     });
-                }, 6000);
-            });
+                    this.activerAjoutMandataire();
+                    event.target['sofraco-nom'].value = '';
+                    event.target['sofraco-prenom'].value = '';
+                    event.target['sofraco-email'].value = '';
+                    event.target['sofraco-phone'].value = '';
+                    this._isMounted && this.fetchMandataires();
+                }).catch((err) => {
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'ERROR', color: 'danger', message: err }
+                    })
+                }).finally(() => {
+                    setTimeout(() => {
+                        this.setState({
+                            toast: false,
+                            messageToast: {}
+                        });
+                    }, 6000);
+                });
         }
     }
 
@@ -239,36 +232,32 @@ class Mandataire extends Component {
             options.firstName !== '' ||
             options.email !== '' ||
             options.phone !== '') {
-            axios.put(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/${mandataire._id}`, options, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.props.token}`
-                }
-            }).then((res) => {
-                let mandataires = this.state.mandataires;
-                for (let m of mandataires) {
-                    if (m._id === res.data._id) {
-                        mandataires.splice(mandataires.indexOf(m), 1, res.data);
+            this.courtierService.updateCourtier(mandataire._id, options, this.props.token)
+                .then((res) => {
+                    let mandataires = this.state.mandataires;
+                    for (let m of mandataires) {
+                        if (m._id === res._id) {
+                            mandataires.splice(mandataires.indexOf(m), 1, res);
+                        }
                     }
-                }
-                this.setState({
-                    mandataires: mandataires,
-                    toast: true,
-                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le mandataire ${mandataire.cabinet} à été modifié` }
-                });
-            }).catch((err) => {
-                this.setState({
-                    toast: true,
-                    messageToast: { header: 'ERROR', color: 'danger', message: err }
-                })
-            }).finally(() => {
-                setTimeout(() => {
                     this.setState({
-                        toast: false,
-                        messageToast: {}
+                        mandataires: mandataires,
+                        toast: true,
+                        messageToast: { header: 'SUCCESS', color: 'success', message: `Le mandataire ${mandataire.cabinet} à été modifié` }
                     });
-                }, 6000);
-            });
+                }).catch((err) => {
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'ERROR', color: 'danger', message: err }
+                    })
+                }).finally(() => {
+                    setTimeout(() => {
+                        this.setState({
+                            toast: false,
+                            messageToast: {}
+                        });
+                    }, 6000);
+                });
         }
     }
 
@@ -295,16 +284,11 @@ class Mandataire extends Component {
     deleteMandataire(e) {
         e.preventDefault();
         this.setState({ visibleAlert: false });
-        axios.delete(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/${this.state.mandataireToDel._id}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.props.token}`
-            }
-        })
+        this.courtierService.deleteCourtier(this.state.mandataireToDel._id, this.props.token)
             .then((res) => {
                 this.setState({
                     toast: true,
-                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le mandataire ${res.data.cabinet} à été supprimé` }
+                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le mandataire ${res.cabinet} à été supprimé` }
                 });
                 this._isMounted && this.fetchMandataires();
             }).catch((err) => {
