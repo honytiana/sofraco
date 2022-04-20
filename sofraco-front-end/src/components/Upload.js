@@ -11,12 +11,13 @@ import {
     CButton,
     CSpinner
 } from '@coreui/react';
-import axios from 'axios';
 import Dropzone from 'react-dropzone';
 
 import '../styles/Upload.css';
 import closedFolder from '../assets/closed_folder.png';
 import openedFolder from '../assets/opened_folder.png';
+import CompanyService from '../services/company';
+import DocumentService from '../services/document';
 
 require('dotenv').config();
 
@@ -45,6 +46,9 @@ class Upload extends Component {
         this.generateDropzone = this.generateDropzone.bind(this);
         this.setStateFile = this.setStateFile.bind(this);
         this.getCompanySurco = this.getCompanySurco.bind(this);
+
+        this.companyService = new CompanyService();
+        this.documentService = new DocumentService();
     }
 
     componentDidMount() {
@@ -74,14 +78,9 @@ class Upload extends Component {
         const company = this.props.company;
         if (company.surco) {
             const companySurco = company.companySurco;
-            axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/company/name/${companySurco}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.state.token}`
-                }
-            })
+            this.companyService.getCompanyByName(companySurco, this.state.token)
                 .then((res) => {
-                    const companySurco = res.data;
+                    const companySurco = res;
                     this.setState({
                         companySurco
                     });
@@ -95,20 +94,15 @@ class Upload extends Component {
                     });
                     this.props.companyFolderSurcoCallback(companySurcoCount);
                     if (companySurco.surco) {
-                        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/company/name/${companySurco.companySurco}`, {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${(this.state.token !== null) ? this.state.token : this.props.token}`
-                            }
-                        })
+                        this.companyService.getCompanyByName(companySurco.companySurco, (this.state.token !== null) ? this.state.token : this.props.token)
                             .then((res) => {
                                 this.setState({
-                                    companySurco2: res.data
+                                    companySurco2: res
                                 });
                                 const companySurcoCount = {
                                     company: company._id,
                                     companySurco: companySurco._id,
-                                    companySurco2: res.data._id,
+                                    companySurco2: res._id,
                                     count: 3
                                 };
                                 this.setState({
@@ -193,33 +187,29 @@ class Upload extends Component {
         formData.append('companySurco', JSON.stringify(companySurco));
         formData.append('companySurco2', JSON.stringify(companySurco2));
         formData.append('selectedDate', JSON.stringify(selectedDate));
-        axios.post(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/document/`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        }).then((res) => {
-            this.setState({
-                toast: true,
-                messageToast: { header: 'SUCCESS', color: 'success', message: 'Le document a été envoyé vers le serveur' }
-            });
-            this.props.companyFolderCallback(false);
-        }).catch((err) => {
-            this.setState({
-                toast: true,
-                messageToast: { header: 'ERROR', color: 'danger', message: err }
-            })
-        }).finally(() => {
-            this.setState({
-                loader: false
-            });
-            setTimeout(() => {
+        this.documentService.createDocument(formData, this.state.token)
+            .then((res) => {
                 this.setState({
-                    toast: false,
-                    messageToast: {}
+                    toast: true,
+                    messageToast: { header: 'SUCCESS', color: 'success', message: 'Le document a été envoyé vers le serveur' }
                 });
-            }, 6000);
-        });
+                this.props.companyFolderCallback(false);
+            }).catch((err) => {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'ERROR', color: 'danger', message: err }
+                })
+            }).finally(() => {
+                this.setState({
+                    loader: false
+                });
+                setTimeout(() => {
+                    this.setState({
+                        toast: false,
+                        messageToast: {}
+                    });
+                }, 6000);
+            });
     }
 
     testCompanyName(companyName, extension, files) {
