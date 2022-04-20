@@ -96,9 +96,10 @@ class ExcelMasterService {
         return new Promise((resolve, reject) => {
             axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/excelMaster/xlsx/${excel}`, {
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Application': 'vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                     'Authorization': `Bearer ${token}`
-                }
+                },
+                responseType: 'blob'
             })
                 .then((res) => {
                     resolve(res.data);
