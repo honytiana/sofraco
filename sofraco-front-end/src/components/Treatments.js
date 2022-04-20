@@ -18,11 +18,11 @@ import {
     CTabPane,
     CModalFooter
 } from '@coreui/react';
-import axios from 'axios';
 
 import ListExcelMaster from './ListExcelMaster';
 import Correspondance from './Correspondance';
 import '../styles/Treatments.css';
+import CourtierService from '../services/courtier';
 
 require('dotenv').config();
 
@@ -43,6 +43,8 @@ class Treatments extends Component {
         this._isMounted = false;
         this.toggleDetails = this.toggleDetails.bind(this);
         this.fetchCourtiers = this.fetchCourtiers.bind(this);
+
+        this.courtierService = new CourtierService();
 
     }
 
@@ -108,14 +110,7 @@ class Treatments extends Component {
     }
 
     fetchCourtiers() {
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier`, {
-            headers: {
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
-            .then((data) => {
-                return data.data
-            })
+        this.courtierService.getCourtiers(this.state.token)
             .then((data) => {
                 const courtiers = data;
                 this.setState({
