@@ -115,9 +115,9 @@ class Courtier extends Component {
                 .then((res) => {
                     this.saveEmailCopie();
                     this.setState({
-                        courtier: res.data,
+                        courtier: res,
                         toast: true,
-                        messageToast: { header: 'SUCCESS', color: 'success', message: `Le courtier ${res.data.cabinet} à été modifié` }
+                        messageToast: { header: 'SUCCESS', color: 'success', message: `Le courtier ${res.cabinet} à été modifié` }
                     });
                 }).catch((err) => {
                     this.setState({
@@ -307,20 +307,14 @@ class Courtier extends Component {
                     <CForm action="" method="post" onSubmit={(e) => this.onSubmitHandler(e)}>
                         <CFormGroup row>
                             <CLabel className="col-sm-2" htmlFor={`sofraco-cabinet_${this.props.courtier._id}`}>Cabinet</CLabel>
-                            <CSelect
+                            <CInput
+                                type="text"
                                 id={`sofraco-cabinet_${this.props.courtier._id}`}
-                                label="Cabinet"
-                                className="sofraco-input"
                                 name={`sofraco-cabinet`}
-                                defaultValue={this.state.cabinet !== null && this.state.cabinet._id}
-                            >
-                                <option>Selectionnez un cabinet</option>
-                                {this.state.cabinets.map((cabinet, index) => {
-                                    return (
-                                        <option key={`cabinetOption${index}`} value={cabinet._id} selected={cabinet._id === this.props.courtier.cabinetRef}>{cabinet.cabinet}</option>
-                                    )
-                                })}
-                            </CSelect>
+                                defaultValue={this.props.courtier.cabinet}
+                                autoComplete="cabinet"
+                                className="sofraco-input"
+                            />
                         </CFormGroup>
                         <CFormGroup row>
                             <CLabel className="col-sm-2" htmlFor={`sofraco-nom_${this.props.courtier._id}`}>Nom</CLabel>
@@ -390,12 +384,12 @@ class Courtier extends Component {
                         this.props.courtier.emailCopie.map((ec, index) => {
                             return (
                                 <CBadge
-                                    key={`badge_${this.props.courtier._id}_${ec}`}
+                                    key={`badge_${this.props.courtier._id}_${ec}_${index}`}
                                     onClick={(e) => { this.activateEditEmailCopie(e, ec) }}>{ec}<CIcon
                                         className={'sofraco-icon-suppr'}
                                         size='sm'
                                         onClick={(e) => { this.onDeleteEmailCopie(e, ec) }}
-                                        key={`icn_${this.props.courtier._id}_${ec}`}
+                                        key={`icn_${this.props.courtier._id}_${ec}_${index}`}
                                         icon={icon.cilDelete} /></CBadge>
                             )
                         })

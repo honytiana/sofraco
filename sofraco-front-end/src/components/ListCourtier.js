@@ -166,9 +166,6 @@ class ListCourtier extends Component {
     fetchCabinets() {
         this.cabinetService.getCabinets(this.state.token)
             .then((data) => {
-                return data.data
-            })
-            .then((data) => {
                 const cabinets = data;
                 this.setState({
                     cabinets
@@ -218,7 +215,7 @@ class ListCourtier extends Component {
     ajouterCourtier(event) {
         event.preventDefault();
         const options = {
-            cabinet: event.target['sofraco-cabinet'].value,
+            cabinet: event.target['sofraco-cabinet'].text,
             cabinetRef: event.target['sofraco-cabinet'].value,
             lastName: event.target['sofraco-nom'].value,
             firstName: event.target['sofraco-prenom'].value,
@@ -540,8 +537,8 @@ class ListCourtier extends Component {
                             (item, index) => {
                                 return (
                                     <td className="text-center" >
-                                        {item.emailCopie.map(ec => {
-                                            return <span href="#" key={`${ec}-${index}`}>{ec}, </span>
+                                        {item.emailCopie.map((ec, i) => {
+                                            return <span href="#" key={`${item._id}_${ec}-${index}_${i}`}>{ec}, </span>
                                         })}
                                     </td>
                                 )

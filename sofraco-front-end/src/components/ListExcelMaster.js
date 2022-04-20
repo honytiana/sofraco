@@ -130,7 +130,7 @@ class ListExcelMaster extends Component {
         this.excelMasterService.getExcelMastersByYearMonthV2(courtier._id, 'excel',  this.props.token)
             .then((result) => {
                 this.setState({
-                    excelMastersFilter: (result.data) ? result.data : null
+                    excelMastersFilter: (result) ? result : null
                 });
             })
             .catch((err) => {

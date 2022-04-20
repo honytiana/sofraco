@@ -178,7 +178,7 @@ class Companies extends Component {
     }
 
     getCompanies() {
-        this.documentService.getDocuments(this.state.token)
+        this.companyService.getCompanies(this.state.token)
             .then((companies) => {
                 let collapsed = [];
                 for (let company of companies) {

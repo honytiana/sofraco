@@ -11,7 +11,6 @@ class CourtierService {
         return new Promise((resolve, reject) => {
             axios.post(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier`, data, {
                 headers: {
-                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             }).then((res) => {
