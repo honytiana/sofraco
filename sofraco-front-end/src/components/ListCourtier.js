@@ -24,7 +24,6 @@ import {
     CInputGroup,
     CSelect
 } from '@coreui/react';
-import axios from 'axios';
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
 
@@ -32,6 +31,9 @@ import '../styles/ListCourtier.css';
 import Courtier from './Courtier';
 import Mandataire from './Mandataire';
 import Correspondance from './Correspondance';
+import CabinetService from '../services/cabinet';
+import CompanyService from '../services/company';
+import CourtierService from '../services/courtier';
 
 require('dotenv').config();
 
@@ -64,6 +66,10 @@ class ListCourtier extends Component {
         this.ajouterCourtier = this.ajouterCourtier.bind(this);
         this.handleListCourtierCallback = this.handleListCourtierCallback.bind(this);
         this.onSearchGlobalCourtierMandataireCode = this.onSearchGlobalCourtierMandataireCode.bind(this);
+
+        this.companyService = new CompanyService();
+        this.cabinetService = new CabinetService();
+        this.courtierService = new CourtierService();
     }
 
     componentDidMount() {
@@ -145,14 +151,7 @@ class ListCourtier extends Component {
     }
 
     fetchCourtiers() {
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/role/courtier?limit=0&skip=0`, {
-            headers: {
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
-            .then((data) => {
-                return data.data
-            })
+        this.courtierService.getCourtiersByRole('courtier', this.state.token)
             .then((data) => {
                 const courtiers = data;
                 this.setState({
@@ -165,11 +164,7 @@ class ListCourtier extends Component {
     }
 
     fetchCabinets() {
-        axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/cabinet`, {
-            headers: {
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
+        this.cabinetService.getCabinets(this.state.token)
             .then((data) => {
                 return data.data
             })
@@ -236,39 +231,35 @@ class ListCourtier extends Component {
             options.firstName !== '' ||
             options.email !== '' ||
             options.phone !== '') {
-            axios.post(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/`, options, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.state.token}`
-                }
-            }).then((res) => {
-                let courtiers = this.state.courtiers;
-                courtiers.push(res.data);
-                this.setState({
-                    courtiers: courtiers,
-                    toast: true,
-                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le courtier ${res.data.cabinet} à été ajouté` }
-                });
-                this.activerAjoutCourtier();
-                event.target['sofraco-cabinet'].value = '';
-                event.target['sofraco-nom'].value = '';
-                event.target['sofraco-prenom'].value = '';
-                event.target['sofraco-email'].value = '';
-                event.target['sofraco-phone'].value = '';
-                this._isMounted && this.fetchCourtiers();
-            }).catch((err) => {
-                this.setState({
-                    toast: true,
-                    messageToast: { header: 'ERROR', color: 'danger', message: err }
-                })
-            }).finally(() => {
-                setTimeout(() => {
+            this.courtierService.createCourtier(options, this.state.token)
+                .then((res) => {
+                    let courtiers = this.state.courtiers;
+                    courtiers.push(res);
                     this.setState({
-                        toast: false,
-                        messageToast: {}
+                        courtiers: courtiers,
+                        toast: true,
+                        messageToast: { header: 'SUCCESS', color: 'success', message: `Le courtier ${res.cabinet} à été ajouté` }
                     });
-                }, 6000);
-            });
+                    this.activerAjoutCourtier();
+                    event.target['sofraco-cabinet'].value = '';
+                    event.target['sofraco-nom'].value = '';
+                    event.target['sofraco-prenom'].value = '';
+                    event.target['sofraco-email'].value = '';
+                    event.target['sofraco-phone'].value = '';
+                    this._isMounted && this.fetchCourtiers();
+                }).catch((err) => {
+                    this.setState({
+                        toast: true,
+                        messageToast: { header: 'ERROR', color: 'danger', message: err }
+                    })
+                }).finally(() => {
+                    setTimeout(() => {
+                        this.setState({
+                            toast: false,
+                            messageToast: {}
+                        });
+                    }, 6000);
+                });
         }
     }
 
@@ -282,12 +273,7 @@ class ListCourtier extends Component {
     deleteCourtier(e) {
         e.preventDefault();
         this.setState({ visibleAlert: false });
-        axios.delete(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/${this.state.courtierToDel._id}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.state.token}`
-            }
-        })
+        this.courtierService.deleteCourtier(this.state.courtierToDel._id, this.state.token)
             .then((res) => {
                 this.setState({
                     toast: true,
@@ -325,14 +311,7 @@ class ListCourtier extends Component {
 
     onSearchGlobalCourtierMandataireCode(e) {
         if (e.target.value !== '') {
-            axios.get(`${(this.state.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/company/search/${e.target.value}`, {
-                headers: {
-                    'Authorization': `Bearer ${this.state.token}`
-                }
-            })
-                .then((data) => {
-                    return data.data
-                })
+            this.companyService.getCompaniesLike(e.target.value, this.state.token)
                 .then((companies) => {
                     if (companies.length > 0) {
                         let collapsed = [];
@@ -372,22 +351,22 @@ class ListCourtier extends Component {
                     <CModalHeader closeButton>Creez un courtier</CModalHeader>
                     <CModalBody className="sofraco-modal-body">
                         <CForm action="" method="post" onSubmit={(e) => this.ajouterCourtier(e)}>
-                        <CFormGroup row>
-                            <CLabel className="col-sm-2" htmlFor={`sofraco-cabinet-courtier${this.props.sIndex}`}>Cabinet</CLabel>
-                            <CSelect
-                                id={`sofraco-cabinet-courtiers${this.props.sIndex}`}
-                                label="Cabinet"
-                                className="sofraco-input"
-                                name={`sofraco-cabinet`}
-                            >
-                                <option>Selectionnez un cabinet</option>
-                                {this.state.cabinets.map((cabinet, index) => {
-                                    return (
-                                        <option key={`cabinetOption${index}`} value={cabinet._id}>{cabinet.cabinet}</option>
-                                    )
-                                })}
-                            </CSelect>
-                        </CFormGroup>
+                            <CFormGroup row>
+                                <CLabel className="col-sm-2" htmlFor={`sofraco-cabinet-courtier${this.props.sIndex}`}>Cabinet</CLabel>
+                                <CSelect
+                                    id={`sofraco-cabinet-courtiers${this.props.sIndex}`}
+                                    label="Cabinet"
+                                    className="sofraco-input"
+                                    name={`sofraco-cabinet`}
+                                >
+                                    <option>Selectionnez un cabinet</option>
+                                    {this.state.cabinets.map((cabinet, index) => {
+                                        return (
+                                            <option key={`cabinetOption${index}`} value={cabinet._id}>{cabinet.cabinet}</option>
+                                        )
+                                    })}
+                                </CSelect>
+                            </CFormGroup>
                             <CFormGroup row>
                                 <CLabel className="col-sm-2" htmlFor={`sofraco-nom-courtier_${this.props.sIndex}`}>Nom</CLabel>
                                 <CInput
@@ -575,7 +554,7 @@ class ListCourtier extends Component {
                                             className={'sofraco-icon-del text-danger'}
                                             color='danger'
                                             size="sm"
-                                            onClick={(e) => {this.openDeletePopup(e, item)}}
+                                            onClick={(e) => { this.openDeletePopup(e, item) }}
                                             icon={icon.cilTrash} />
                                     </td>
                                 )
