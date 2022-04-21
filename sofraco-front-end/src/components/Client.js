@@ -406,9 +406,7 @@ class Client extends Component {
                                 return (
                                     <td className="text-center">
                                         {this.state.cabinets.map((cabinet, index) => {
-                                            if (cabinet._id === item.cabinet) {
-                                                return cabinet.cabinet;
-                                            }
+                                            return(cabinet._id === item.cabinet && cabinet.cabinet)
                                         })}
                                     </td>
                                 )

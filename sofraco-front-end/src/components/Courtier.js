@@ -10,8 +10,7 @@ import {
     CLabel,
     CInput,
     CButton,
-    CBadge,
-    CSelect
+    CBadge
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
@@ -314,6 +313,7 @@ class Courtier extends Component {
                                 defaultValue={this.props.courtier.cabinet}
                                 autoComplete="cabinet"
                                 className="sofraco-input"
+                                disabled={true}
                             />
                         </CFormGroup>
                         <CFormGroup row>
