@@ -24,6 +24,23 @@ class CourtierService {
 
     }
 
+    createCourtiers(name, token) {
+        return new Promise((resolve, reject) => {
+            axios.post(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/name/${name}`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }).then((res) => {
+                resolve(res.data);
+            }).catch((err) => {
+                reject(err);
+            }).finally(() => {
+
+            });
+        });
+
+    }
+
     getCourtiers(token) {
         return new Promise((resolve, reject) => {
             axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier`, {

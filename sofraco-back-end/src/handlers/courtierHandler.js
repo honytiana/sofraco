@@ -14,7 +14,6 @@ class CourtierHandler {
         courtier.email = data.email;
         courtier.emailCopie = data.emailCopie;
         courtier.phone = data.phone;
-        courtier.status = data.status;
         courtier.role = data.role;
         courtier.is_enabled = data.is_enabled;
         courtier.save();

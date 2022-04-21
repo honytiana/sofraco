@@ -4,6 +4,7 @@ const Courtier = require('../models/courtier');
 const courtierHandler = require('../handlers/courtierHandler');
 const correspondanceHandler = require('../handlers/correspondanceHandler');
 const cabinetHandler = require('../handlers/cabinetHandler');
+const courtierService = require('../services/features/courtier');
 
 
 exports.createCourtier = async (req, res) => {
@@ -17,7 +18,6 @@ exports.createCourtier = async (req, res) => {
         cabinetRef: data.cabinetRef,
         email: data.email,
         phone: data.phone,
-        status: 'Active',
         role: data.role,
         is_enabled: true
     };
@@ -26,6 +26,21 @@ exports.createCourtier = async (req, res) => {
         res.status(200).json(c);
     } catch (error) {
         res.status(500).json({ error });
+    }
+
+};
+
+
+exports.createCourtiers = async (req, res) => {
+    try {
+        console.log(`${new Date()} create courtiers`);
+        const courtiers = await courtierService.readExcelCourtiers(req.params.name);
+        for (let courtier of courtiers) {
+            const c = await courtierHandler.createCourtier(courtier);
+        }
+        res.status(200).end(`${new Date()} Courtiers added`);
+    } catch (error) {
+        res.status(400).json({ error });
     }
 
 };

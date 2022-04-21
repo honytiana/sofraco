@@ -9,7 +9,6 @@ const courtierSchema = new Schema({
     email: { type: String, default: '', default: undefined },
     emailCopie: { type: Schema.Types.Mixed, default: [] },
     phone: { type: String, default: '' },
-    status: { type: String, enum: ['Active', 'Inactive'] },
     role: { type: String, enum: ['courtier', 'mandataire'], default: 'courtier' },
     is_enabled: { type: Boolean, default: true },
 });

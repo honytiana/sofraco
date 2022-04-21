@@ -11,6 +11,7 @@ router.route('/role/:role').get(accessControl, courtierController.getCourtiersBy
 router.route('/mandataires/:courtier').get(accessControl, courtierController.getMandatairesOfCourtier);
 router.route('/courtier/:mandataire').get(accessControl, courtierController.getCourtierOfMandataire);
 router.route('/').post(accessControl, courtierController.createCourtier);
+router.route('/name/:name').post(accessControl, courtierController.createCourtiers);
 router.route('/:id').put(courtierController.updateCourtier);
 router.route('/').put(courtierController.updateAllCourtier);
 router.route('/add/cabinet').put(courtierController.updateCourtierSetCabinets);
