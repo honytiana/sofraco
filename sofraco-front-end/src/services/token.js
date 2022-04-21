@@ -43,6 +43,7 @@ class TokenService {
     checkToken(userId) {
         return new Promise((resolve, reject) => {
             axios.get(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/token/user/${userId}/token`, {
+                withCredentials: true,
                 headers: {
                     'Content-Type': 'application/json'
                 }
