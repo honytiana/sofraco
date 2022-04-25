@@ -31,6 +31,7 @@ exports.logger = winston.createLogger({
         new winston.transports.File({ filename: path.join(__dirname, '..', '..', 'logs', 'warnings', `warning_${day}_${month}_${year}.log`), level: 'warning' }),
         new winston.transports.File({ filename: path.join(__dirname, '..', '..', 'logs', 'errors', `error_${day}_${month}_${year}.log`), level: 'error' }),
         new winston.transports.File({ filename: path.join(__dirname, '..', '..', 'logs', 'all', `all_${day}_${month}_${year}.log`) }),
+        new winston.transports.Console()
         // new winston.transports.DailyRotateFile({
         //     filename: path.join(__dirname, '..', '..', 'logs', 'all', `log_file_%DATE%.log`),
         //     datePattern: 'DD-MM-YYYY',

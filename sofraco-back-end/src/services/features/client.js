@@ -24,6 +24,7 @@ exports.readExcelRattachementClient = async (name) => {
                                 lastName: prenomClient,
                                 firstName: nomClient,
                                 cabinet: cab._id,
+                                cabinetName: cab.cabinet,
                                 versementCommissions,
                                 is_enabled: true
                             };

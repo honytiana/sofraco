@@ -6,6 +6,7 @@ const clientSchema = new Schema({
     lastName: { type: String, default: '' },
     firstName: { type: String, default: ''},
     cabinet: { type: Schema.Types.ObjectId, ref: 'Cabinet', required: true },
+    cabinetName: { type: String, default: ''},
     versementCommissions: { type: String, default: ''},
     is_enabled: { type: Boolean, default: true },
 });

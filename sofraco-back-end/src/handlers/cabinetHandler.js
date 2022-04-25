@@ -51,7 +51,7 @@ class CabinetHandler {
     }
 
     getCabinets() {
-        return Cabinet.find({});
+        return Cabinet.find({}).sort({ cabinet: 1 });
     }
 
     getCabinetByName(cabinet) {

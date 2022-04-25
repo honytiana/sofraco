@@ -11,6 +11,7 @@ class ClientHandler {
         client.lastName = data.lastName;
         client.firstName = data.firstName;
         client.cabinet = data.cabinet;
+        client.cabinetName = data.cabinetName;
         client.versementCommissions = data.versementCommissions;
         client.save();
         return client;

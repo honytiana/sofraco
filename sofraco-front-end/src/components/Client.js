@@ -406,7 +406,7 @@ class Client extends Component {
                                 return (
                                     <td className="text-center">
                                         {this.state.cabinets.map((cabinet, index) => {
-                                            return(cabinet._id === item.cabinet && cabinet.cabinet)
+                                            return (cabinet._id === item.cabinet && cabinet.cabinet)
                                         })}
                                     </td>
                                 )
@@ -432,7 +432,7 @@ class Client extends Component {
                                         centered={true}
                                         className="sofraco-modal"
                                     >
-                                        <CModalHeader closeButton>{item.cabinet}</CModalHeader>
+                                        <CModalHeader closeButton>{item.cabinetName}</CModalHeader>
                                         <CModalBody className="sofraco-modal-body">
                                             <CForm action="" method="post" onSubmit={(e) => this.editClient(e, item)}>
                                                 <CFormGroup row>
@@ -477,7 +477,6 @@ class Client extends Component {
                                                         name={`sofraco-cabinet-edit`}
                                                         defaultValue={item.cabinet}
                                                     >
-                                                        <option>Selectionnez un cabinet</option>
                                                         {this.state.cabinets.map((cabinet, index) => {
                                                             return (
                                                                 <option key={`yearoption${index}`} value={cabinet._id}>{cabinet.cabinet}</option>
