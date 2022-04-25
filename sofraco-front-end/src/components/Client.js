@@ -436,7 +436,6 @@ class Client extends Component {
                                                     />
                                                 </CFormGroup>
                                                 <CFormGroup row>
-                                                    {item.lastName}
                                                     <CLabel className="col-sm-3" htmlFor={`sofraco-nom-client${item._id}`}>Nom</CLabel>
                                                     <CInput
                                                         type="text"
@@ -469,7 +468,7 @@ class Client extends Component {
                                                     >
                                                         {this.state.cabinets.map((cabinet, index) => {
                                                             return (
-                                                                <option key={`yearoption${index}`} value={cabinet._id}>{cabinet.cabinet}</option>
+                                                                <option key={`yearoption${index}`} value={cabinet._id} selected={item.cabinet === cabinet._id}>{cabinet.cabinet}</option>
                                                             )
                                                         })}
                                                     </CSelect>
