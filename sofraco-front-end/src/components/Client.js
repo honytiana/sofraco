@@ -423,6 +423,9 @@ class Client extends Component {
                                     >
                                         <CModalHeader closeButton>{item.cabinetName}</CModalHeader>
                                         <CModalBody className="sofraco-modal-body">
+                                            <div>
+                                            {item.numeroContrat} {item.lastName} {item.firstName}
+                                            </div>
                                             <CForm action="" method="post" id={`detail_form-${item._id}`} onSubmit={(e) => this.editClient(e, item)}>
                                                 <CFormGroup row>
                                                     <CLabel className="col-sm-3" htmlFor={`sofraco-contrat-client${item._id}`}>Numéro de contrat</CLabel>

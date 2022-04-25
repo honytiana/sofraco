@@ -4,13 +4,26 @@ import {
     CToaster,
     CToast,
     CToastHeader,
-    CToastBody
+    CToastBody,
+    CJumbotron,
+    CButton,
+    CCard,
+    CCardHeader,
+    CCardBody,
+    CCardFooter,
+    CCollapse,
+    CInput
 } from '@coreui/react';
+import CIcon from '@coreui/icons-react';
+import * as icon from '@coreui/icons';
 
 import '../styles/Administration.css';
 import TokenService from '../services/token';
 import CabinetService from '../services/cabinet';
+import CourtierService from '../services/courtier';
 import ClientService from '../services/client';
+import DocumentService from '../services/document';
+import ExcelMasterService from '../services/excelMaster';
 
 require('dotenv').config();
 
@@ -19,31 +32,27 @@ class Administration extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            details: [],
             courtiers: [],
             cabinets: [],
             clients: [],
-            fields: [],
             toast: false,
             messageToast: [],
-            activePage: 1,
-            num: 0,
             token: document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1'),
-            ajoutAdministration: false,
-            courtierToDel: null,
-            visibleAlert: false,
-            interne: false
+            interne: false,
+            collapse: false,
+            collapse2: false
         }
         this._isMounted = false;
         this.fetchCourtiers = this.fetchCourtiers.bind(this);
         this.fetchCabinets = this.fetchCabinets.bind(this);
         this.fetchClients = this.fetchClients.bind(this);
-        this.ajouterClients = this.ajouterClients.bind(this);
-        this.editClient = this.editClient.bind(this);
 
         this.tokenService = new TokenService();
         this.clientService = new ClientService();
+        this.courtierService = new CourtierService();
         this.cabinetService = new CabinetService();
+        this.documentService = new DocumentService();
+        this.excelMasterService = new ExcelMasterService();
     }
 
     componentDidMount() {
@@ -100,74 +109,58 @@ class Administration extends Component {
             });
     }
 
-    ajouterClients(event) {
-        event.preventDefault();
-        const options = {
-            numeroContrat: event.target['sofraco-contrat'].value,
-            lastName: event.target['sofraco-nom'].value,
-            firstName: event.target['sofraco-prenom'].value,
-            cabinet: event.target['sofraco-cabinet'].value,
-            versementCommissions: event.target['sofraco-versement-commission'].value
-        };
-        if (options.numeroContrat !== '' ||
-            options.lastName !== '' ||
-            options.firstName !== '' ||
-            options.cabinet !== '' ||
-            options.versementCommissions !== '') {
-            this.clientService.createClient(options, this.state.token)
-                .then((res) => {
-                    let courtiers = this.state.courtiers;
-                    courtiers.push(res);
-                    this.setState({
-                        courtiers: courtiers,
-                        toast: true,
-                        messageToast: { header: 'SUCCESS', color: 'success', message: `Le client à été ajouté au cabinet` }
-                    });
-                    this.activerAjoutClient();
-                    event.target['sofraco-contrat'].value = '';
-                    event.target['sofraco-nom'].value = '';
-                    event.target['sofraco-prenom'].value = '';
-                    event.target['sofraco-cabinet'].value = '';
-                    event.target['sofraco-versement-commission'].value = '';
-                    this._isMounted && this.fetchCourtiers();
-                }).catch((err) => {
-                    this.setState({
-                        toast: true,
-                        messageToast: { header: 'ERROR', color: 'danger', message: err }
-                    })
-                }).finally(() => {
-                    setTimeout(() => {
-                        this.setState({
-                            toast: false,
-                            messageToast: {}
-                        });
-                    }, 6000);
-                });
-        }
+    toggle(e) {
+        this.setState({
+            collapse: !this.state.collapse
+        });
+        e.preventDefault();
     }
 
-    editClient(event, item) {
-        event.preventDefault();
-        const options = {
-            numeroContrat: event.target['sofraco-contrat-edit'].value,
-            lastName: event.target['sofraco-nom-edit'].value,
-            firstName: event.target['sofraco-prenom-edit'].value,
-            cabinet: event.target['sofraco-cabinet-edit'].value,
-            versementCommissions: event.target['sofraco-versement-commission-edit'].value
-        };
-        this.clientService.updateClient(item._id, options, this.state.token)
+    // inner
+    toggle2(e) {
+        this.setState({
+            collapse2: !this.state.collapse2
+        });
+        e.preventDefault();
+    }
+
+    resetDocuments(e) {
+        e.preventDefault();
+        this.documentService.deleteAllDocuments(this.state.token)
             .then((res) => {
                 this.setState({
                     toast: true,
-                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le client à été modifié` }
+                    messageToast: { header: 'SUCCESS', color: 'success', message: `Tous les documents ont été supprimé` }
                 });
-                this._isMounted && this.fetchClients();
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 this.setState({
                     toast: true,
-                    messageToast: { header: 'ERROR', color: 'danger', message: err }
-                })
-            }).finally(() => {
+                    messageToast: { header: 'ERROR', color: 'danger', message: `Erreur lors de la suppression des documents` }
+                });
+            })
+            .finally(() => {
+                setTimeout(() => {
+                    this.setState({
+                        toast: false,
+                        messageToast: {}
+                    });
+                }, 6000);
+            });
+        this.excelMasterService.deleteAllExcelMaster(this.state.token)
+            .then((res) => {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'SUCCESS', color: 'success', message: `Tous les excels masters ont été supprimé` }
+                });
+            })
+            .catch((err) => {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'ERROR', color: 'danger', message: `Erreur lors de la suppression des excels masters` }
+                });
+            })
+            .finally(() => {
                 setTimeout(() => {
                     this.setState({
                         toast: false,
@@ -177,16 +170,79 @@ class Administration extends Component {
             });
     }
 
-    openDeletePopup(e, courtier) {
-        this.setState({
-            courtierToDel: courtier,
-            visibleAlert: true
-        });
-    }
-
     render() {
         return (
             <div>
+                <CJumbotron>
+                    <h1 className="display-3">Réinitialisation des documents</h1>
+                    <p className="lead">Pour vider la base de données des documents et excels masters</p>
+                    <CButton color="primary" onClick={(e) => { this.resetDocuments(e) }} >Réinitialiser</CButton>
+                </CJumbotron>
+                <CJumbotron>
+                    <h1 className="display-3">Intégration courtiers</h1>
+                    <p className="lead">Pour l'intégration des courtiers</p>
+                    <p>Veuillez insérer l'excel des courtiers</p>
+                    <CInput type='file' />
+                    <CButton color="primary" href="https://coreui.io/" target="_blank">Insérer</CButton>
+                </CJumbotron>
+                <CJumbotron>
+                    <h1 className="display-3">Intégration mandataires</h1>
+                    <p className="lead">Pour l'intégration des mandataires</p>
+                    <p>Veuillez insérer l'excel des mandataires</p>
+                    <CInput type='file' />
+                    <CButton color="primary" href="https://coreui.io/" target="_blank">Insérer</CButton>
+                </CJumbotron>
+                <CJumbotron>
+                    <h1 className="display-3">Intégration codes Courtiers<CIcon
+                        className={'sofraco-icon-arrow'}
+                        size="sm"
+                        onClick={(e) => { this.toggle(e) }}
+                        icon={icon.cilArrowBottom} /></h1>
+                    <CCollapse
+                        show={this.state.collapse}
+                    >
+                        <CCard>
+                            <CCardHeader><h2 className="display-3">Codes Courtiers</h2></CCardHeader>
+                            <CCardBody>
+                                <p className="lead">Pour l'intégration des codes courtiers</p>
+                                <p>Veuillez insérer l'excel des codes courtiers</p>
+                                <CInput type='file' />
+                                <CButton color="primary" href="https://coreui.io/" target="_blank">Insérer</CButton>
+                            </CCardBody>
+                            <CCardFooter></CCardFooter>
+                        </CCard>
+                        <CCard>
+                            <CCardHeader><h2 className="display-3">Codes Courtiers MCMS</h2></CCardHeader>
+                            <CCardBody>
+                                <p className="lead">Pour l'intégration des codes courtiers MCMS</p>
+                                <p>Veuillez insérer l'excel des codes courtiers MCMS</p>
+                                <CInput type='file' />
+                                <CButton color="primary" href="https://coreui.io/" target="_blank">Insérer</CButton>
+                            </CCardBody>
+                            <CCardFooter></CCardFooter>
+                        </CCard>
+                        <CCard>
+                            <CCardHeader><h2 className="display-3">Codes Mandataires</h2></CCardHeader>
+                            <CCardBody>
+                                <p className="lead">Pour l'intégration des codes mandataires</p>
+                                <p>Veuillez insérer l'excel des codes mandataires</p>
+                                <CInput type='file' />
+                                <CButton color="primary" href="https://coreui.io/" target="_blank">Insérer</CButton>
+                            </CCardBody>
+                            <CCardFooter></CCardFooter>
+                        </CCard>
+                        <CCard>
+                            <CCardHeader><h2 className="display-3">Codes Mandataires MCMS</h2></CCardHeader>
+                            <CCardBody>
+                                <p className="lead">Pour l'intégration des codes mandataires MCMS</p>
+                                <p>Veuillez insérer l'excel des codes mandataires MCMS</p>
+                                <CInput type='file' />
+                                <CButton color="primary" href="https://coreui.io/" target="_blank">Insérer</CButton>
+                            </CCardBody>
+                            <CCardFooter></CCardFooter>
+                        </CCard>
+                    </CCollapse>
+                </CJumbotron>
                 {
                     (this.state.toast === true &&
                         this.state.messageToast !== null) &&
