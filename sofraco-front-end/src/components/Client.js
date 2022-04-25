@@ -48,12 +48,10 @@ class Client extends Component {
             interne: false
         }
         this._isMounted = false;
-        this.fetchCourtiers = this.fetchCourtiers.bind(this);
         this.fetchCabinets = this.fetchCabinets.bind(this);
         this.fetchClients = this.fetchClients.bind(this);
         this.activerAjoutClient = this.activerAjoutClient.bind(this);
         this.ajouterClient = this.ajouterClient.bind(this);
-        this.handleClientCallback = this.handleClientCallback.bind(this);
 
         this.cabinetService = new CabinetService();
         this.clientService = new ClientService();
@@ -106,28 +104,22 @@ class Client extends Component {
                     sorter: false,
                     filter: false
                 },
+                {
+                    key: 'delete',
+                    label: '',
+                    _style: { width: '5%' },
+                    _classes: ['text-center'],
+                    sorter: false,
+                    filter: false
+                }
             ]
         });
-        this._isMounted && this.fetchCourtiers();
         this._isMounted && this.fetchCabinets();
         this._isMounted && this.fetchClients();
     }
 
     componentWillUnmount() {
         this._isMounted = false;
-    }
-
-    fetchCourtiers() {
-        this.courtierService.getCourtiersByRole('courtier', this.state.token)
-            .then((data) => {
-                const courtiers = data;
-                this.setState({
-                    courtiers
-                });
-            })
-            .catch((err) => {
-                console.log(err)
-            });
     }
 
     fetchCabinets() {
@@ -156,7 +148,7 @@ class Client extends Component {
             });
     }
 
-    toggleDetails(index) {
+    toggleDetails(event, index) {
         const position = this.state.details.indexOf(index);
         let newDetails = this.state.details.slice();
         if (position !== -1) {
@@ -168,7 +160,7 @@ class Client extends Component {
             details: newDetails,
             num: index
         });
-        this._isMounted && this.fetchCourtiers();
+        this._isMounted && this.fetchClients();
     }
 
     activerAjoutClient() {
@@ -185,6 +177,7 @@ class Client extends Component {
             lastName: event.target['sofraco-nom'].value,
             firstName: event.target['sofraco-prenom'].value,
             cabinet: event.target['sofraco-cabinet'].value,
+            cabinetName: event.target['sofraco-cabinet'].text,
             versementCommissions: event.target['sofraco-versement-commission'].value
         };
         if (options.numeroContrat !== '' ||
@@ -194,12 +187,12 @@ class Client extends Component {
             options.versementCommissions !== '') {
             this.clientService.createClient(options, this.state.token)
                 .then((res) => {
-                    let courtiers = this.state.courtiers;
-                    courtiers.push(res);
+                    let clients = this.state.clients;
+                    clients.push(res);
                     this.setState({
-                        courtiers: courtiers,
+                        clients: clients,
                         toast: true,
-                        messageToast: { header: 'SUCCESS', color: 'success', message: `Le client à été ajouté au cabinet` }
+                        messageToast: { header: 'SUCCESS', color: 'success', message: `Le client à été ajouté` }
                     });
                     this.activerAjoutClient();
                     event.target['sofraco-contrat'].value = '';
@@ -207,7 +200,7 @@ class Client extends Component {
                     event.target['sofraco-prenom'].value = '';
                     event.target['sofraco-cabinet'].value = '';
                     event.target['sofraco-versement-commission'].value = '';
-                    this._isMounted && this.fetchCourtiers();
+                    this._isMounted && this.fetchClients();
                 }).catch((err) => {
                     this.setState({
                         toast: true,
@@ -269,9 +262,9 @@ class Client extends Component {
             .then((res) => {
                 this.setState({
                     toast: true,
-                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le client ${this.state.clientToDel.cabinet} à été supprimé` }
+                    messageToast: { header: 'SUCCESS', color: 'success', message: `Le client ${this.state.clientToDel.cabinetName} à été supprimé` }
                 });
-                this._isMounted && this.fetchCourtiers();
+                this._isMounted && this.fetchClients();
             }).catch((err) => {
                 this.setState({
                     toast: true,
@@ -295,10 +288,6 @@ class Client extends Component {
             visibleAlert: false,
             clientToDel: null
         });
-    }
-
-    handleClientCallback() {
-        this._isMounted && this.fetchCourtiers();
     }
 
     render() {
@@ -418,7 +407,7 @@ class Client extends Component {
                                         <CIcon
                                             className={'sofraco-icon-edit'}
                                             size="sm"
-                                            onClick={() => { this.toggleDetails(index) }}
+                                            onClick={(e) => { this.toggleDetails(e, index) }}
                                             icon={icon.cilPencil} />
                                     </td>
                                 )
@@ -428,13 +417,13 @@ class Client extends Component {
                                 return (
                                     <CModal
                                         show={this.state.details.includes(index)}
-                                        onClose={() => { this.toggleDetails(index) }}
+                                        onClose={(e) => { this.toggleDetails(e, index) }}
                                         centered={true}
                                         className="sofraco-modal"
                                     >
                                         <CModalHeader closeButton>{item.cabinetName}</CModalHeader>
                                         <CModalBody className="sofraco-modal-body">
-                                            <CForm action="" method="post" onSubmit={(e) => this.editClient(e, item)}>
+                                            <CForm action="" method="post" id={`detail_form-${item._id}`} onSubmit={(e) => this.editClient(e, item)}>
                                                 <CFormGroup row>
                                                     <CLabel className="col-sm-3" htmlFor={`sofraco-contrat-client${item._id}`}>Numéro de contrat</CLabel>
                                                     <CInput
@@ -447,6 +436,7 @@ class Client extends Component {
                                                     />
                                                 </CFormGroup>
                                                 <CFormGroup row>
+                                                    {item.lastName}
                                                     <CLabel className="col-sm-3" htmlFor={`sofraco-nom-client${item._id}`}>Nom</CLabel>
                                                     <CInput
                                                         type="text"
@@ -508,7 +498,7 @@ class Client extends Component {
                                         <CModalFooter>
                                             <CButton
                                                 className={'sofraco-button-anuler'}
-                                                onClick={() => { this.toggleDetails(index) }}
+                                                onClick={(e) => { this.toggleDetails(e, index) }}
                                             >Annuler</CButton>
                                         </CModalFooter>
                                     </CModal>

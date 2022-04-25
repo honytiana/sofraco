@@ -457,14 +457,6 @@ class ListCourtier extends Component {
                         className: 'sofraco-pagination'
                     }}
                     scopedSlots={{
-                        // 'status':
-                        //     (item) => (
-                        //         <td className="text-center" >
-                        //             <CBadge color={this.getBadge(item.is_enabled)}>
-                        //                 {item.is_enabled ? 'Active' : 'Inactive'}
-                        //             </CBadge>
-                        //         </td>
-                        //     ),
                         'show_details':
                             (item, index) => {
                                 return (

@@ -23,7 +23,8 @@ exports.createClient = async (req, res) => {
     try {
         console.log(`${new Date()} create client`);
         const client = await clientHandler.createClient(req.body);
-        res.status(200).end(`${new Date()} Client added`);
+        console.log(`${new Date()} Client added`);
+        res.status(200).json(client);
     } catch (error) {
         res.status(400).json({ error })
     }

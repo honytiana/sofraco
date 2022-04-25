@@ -1,7 +1,10 @@
 .sofraco-icon-edit {
+    color: #9d8b80 !important;
+}
+
+.sofraco-icon-edit , .sofraco-icon-del{
     width: 20px;
     cursor: pointer;
-    color: #9d8b80 !important;
 }
 
 .sofraco-pagination, .sofraco-pagination ul, .sofraco-pagination li, .sofraco-pagination a {
