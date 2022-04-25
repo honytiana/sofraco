@@ -10,7 +10,8 @@ import {
     CLabel,
     CInput,
     CButton,
-    CBadge
+    CBadge,
+    CSelect
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import * as icon from '@coreui/icons';
@@ -306,15 +307,19 @@ class Courtier extends Component {
                     <CForm action="" method="post" onSubmit={(e) => this.onSubmitHandler(e)}>
                         <CFormGroup row>
                             <CLabel className="col-sm-2" htmlFor={`sofraco-cabinet_${this.props.courtier._id}`}>Cabinet</CLabel>
-                            <CInput
-                                type="text"
-                                id={`sofraco-cabinet_${this.props.courtier._id}`}
-                                name={`sofraco-cabinet`}
-                                defaultValue={this.props.courtier.cabinet}
-                                autoComplete="cabinet"
-                                className="sofraco-input"
-                                disabled={true}
-                            />
+                            <CSelect
+                                label="Cabinet"
+                                className="sofraco-select-filtre col-sm-7"
+                                style={{ display: "inline-block" }}
+                                name={`sofraco-cabinet-edit`}
+                                defaultValue={this.props.courtier.cabinetRef}
+                            >
+                                {this.state.cabinets.map((cabinet, index) => {
+                                    return (
+                                        <option key={`yearoption${index}`} value={cabinet._id} selected={this.props.courtier.cabinetRef === cabinet._id}>{cabinet.cabinet}</option>
+                                    )
+                                })}
+                            </CSelect>
                         </CFormGroup>
                         <CFormGroup row>
                             <CLabel className="col-sm-2" htmlFor={`sofraco-nom_${this.props.courtier._id}`}>Nom</CLabel>
