@@ -10,7 +10,7 @@ import {
     CCard,
     CCardHeader,
     CCardBody,
-    CCardFooter,
+    CInputGroup,
     CCollapse,
     CInput
 } from '@coreui/react';
@@ -441,128 +441,133 @@ class Administration extends Component {
         return (
             <div>
                 <CJumbotron>
-                    <h2 className="display-3">Réinitialisation des documents</h2>
+                    <h3 className="display-4">Réinitialisation des documents</h3>
                     <p className="lead">Pour vider la base de données des documents et excels masters</p>
-                    <CButton color="primary" onClick={(e) => { this.resetDocuments(e) }} >Réinitialiser</CButton>
+                    <CButton className="sofraco-confirm-button" onClick={(e) => { this.resetDocuments(e) }} >Réinitialiser</CButton>
                 </CJumbotron>
                 <CJumbotron>
-                    <h2 className="display-3">Intégration courtiers<CIcon
-                        className={'sofraco-icon-arrow'}
-                        size="sm"
-                        onClick={(e) => { this.toggle2(e) }}
-                        icon={icon.cilArrowBottom} /></h2>
-                    <CCollapse
-                        show={this.state.collapse2}
-                    >
-                        <CCard>
-                            <CCardHeader><h3 className="display-3">Intégration courtiers</h3></CCardHeader>
-                            <CCardBody>
-                                <p className="lead">Pour l'intégration des courtiers</p>
-                                <p>Veuillez insérer l'excel des courtiers</p>
-                                <CInput type='file' onChange={(e) => { this.onChangeHandler(e, 'courtiers') }} />
-                                <CButton color="primary" onClick={(e) => { this.uploadCourtiers(e) }} >Insérer</CButton>
-                            </CCardBody>
-                            <CCardFooter></CCardFooter>
-                        </CCard>
-                        <CCard>
-                            <CCardHeader><h3 className="display-3">Intégration mandataires</h3></CCardHeader>
-                            <CCardBody>
-                                <p className="lead">Pour l'intégration des mandataires</p>
-                                <p>Veuillez insérer l'excel des courtiers</p>
-                                <CInput type='file' onChange={(e) => { this.onChangeHandler(e, 'mandataires') }} />
-                                <CButton color="primary" onClick={(e) => { this.uploadMandataires(e) }} >Insérer</CButton>
-                            </CCardBody>
-                            <CCardFooter></CCardFooter>
-                        </CCard>
-                    </CCollapse>
-                </CJumbotron>
-                <CJumbotron>
-                    <h2 className="display-3">Intégration codes de Correspondance<CIcon
+                    <h3 className="display-4">Intégration courtiers<CIcon
                         className={'sofraco-icon-arrow'}
                         size="sm"
                         onClick={(e) => { this.toggle(e) }}
-                        icon={icon.cilArrowBottom} /></h2>
+                        icon={this.state.collapse ? icon.cilArrowTop: icon.cilArrowBottom} /></h3>
                     <CCollapse
                         show={this.state.collapse}
                     >
                         <CCard>
-                            <CCardHeader><h3 className="display-3">Réinitialisation Codes Courtiers</h3></CCardHeader>
+                            <CCardHeader><h4>Intégration courtiers</h4></CCardHeader>
                             <CCardBody>
-                                <p className="lead">Réinitialisation des Codes Courtiers</p>
-                                <p>A faire avant de réintégrer des nouveaux codes</p>
-                                <CButton color="primary" onClick={(e) => { this.resetCorrespondances(e) }} >Réinitialiser</CButton>
+                                <p className="lead">Pour l'intégration des courtiers</p>
+                                <p>Veuillez insérer l'excel des courtiers</p>
+                                <CInputGroup>
+                                    <CInput type='file' className="col-sm-5" onChange={(e) => { this.onChangeHandler(e, 'courtiers') }} />
+                                    <CButton className="input-group-append sofraco-confirm-button" onClick={(e) => { this.uploadCourtiers(e) }} >Insérer</CButton>
+                                </CInputGroup>
                             </CCardBody>
-                            <CCardFooter></CCardFooter>
                         </CCard>
                         <CCard>
-                            <CCardHeader><h3 className="display-3">Codes Courtiers</h3></CCardHeader>
+                            <CCardHeader><h4>Intégration mandataires</h4></CCardHeader>
                             <CCardBody>
-                                <p className="lead">Pour l'intégration des codes courtiers</p>
-                                <p>Veuillez insérer l'excel des codes courtiers</p>
-                                <CInput type='file' onChange={(e) => { this.onChangeHandler(e, 'code courtiers') }} />
-                                <CButton color="primary" onClick={(e) => { this.uploadCodeCourtier(e) }} >Insérer</CButton>
+                                <p className="lead">Pour l'intégration des mandataires</p>
+                                <p>Veuillez insérer l'excel des courtiers</p>
+                                <CInputGroup>
+                                    <CInput type='file' className="col-sm-5" onChange={(e) => { this.onChangeHandler(e, 'mandataires') }} />
+                                    <CButton className="input-group-append sofraco-confirm-button" onClick={(e) => { this.uploadMandataires(e) }} >Insérer</CButton>
+                                </CInputGroup>
                             </CCardBody>
-                            <CCardFooter></CCardFooter>
-                        </CCard>
-                        <CCard>
-                            <CCardHeader><h3 className="display-3">Codes Courtiers MCMS</h3></CCardHeader>
-                            <CCardBody>
-                                <p className="lead">Pour l'intégration des codes courtiers MCMS</p>
-                                <p>Veuillez insérer l'excel des codes courtiers MCMS</p>
-                                <CInput type='file' onChange={(e) => { this.onChangeHandler(e, 'code mandataires') }} />
-                                <CButton color="primary" onClick={(e) => { this.uploadCodeMandataires(e) }} >Insérer</CButton>
-                            </CCardBody>
-                            <CCardFooter></CCardFooter>
-                        </CCard>
-                        <CCard>
-                            <CCardHeader><h3 className="display-3">Codes Mandataires</h3></CCardHeader>
-                            <CCardBody>
-                                <p className="lead">Pour l'intégration des codes mandataires</p>
-                                <p>Veuillez insérer l'excel des codes mandataires</p>
-                                <CInput type='file' onChange={(e) => { this.onChangeHandler(e, 'code courtiers MCMS') }} />
-                                <CButton color="primary" onClick={(e) => { this.uploadCodeCourtierMCMS(e) }} >Insérer</CButton>
-                            </CCardBody>
-                            <CCardFooter></CCardFooter>
-                        </CCard>
-                        <CCard>
-                            <CCardHeader><h3 className="display-3">Codes Mandataires MCMS</h3></CCardHeader>
-                            <CCardBody>
-                                <p className="lead">Pour l'intégration des codes mandataires MCMS</p>
-                                <p>Veuillez insérer l'excel des codes mandataires MCMS</p>
-                                <CInput type='file' onChange={(e) => { this.onChangeHandler(e, 'code mandataires MCMS') }} />
-                                <CButton color="primary" onClick={(e) => { this.uploadCodeMandatairesMCMS(e) }} >Insérer</CButton>
-                            </CCardBody>
-                            <CCardFooter></CCardFooter>
                         </CCard>
                     </CCollapse>
                 </CJumbotron>
                 <CJumbotron>
-                    <h2 className="display-3">Intégration des codes clients<CIcon
+                    <h3 className="display-4">Intégration codes de Correspondance<CIcon
+                        className={'sofraco-icon-arrow'}
+                        size="sm"
+                        onClick={(e) => { this.toggle2(e) }}
+                        icon={this.state.collapse2 ? icon.cilArrowTop: icon.cilArrowBottom} /></h3>
+                    <CCollapse
+                        show={this.state.collapse2}
+                    >
+                        <CCard>
+                            <CCardHeader><h4>Réinitialisation Codes Courtiers</h4></CCardHeader>
+                            <CCardBody>
+                                <p className="lead">Réinitialisation des Codes Courtiers</p>
+                                <p>A faire avant de réintégrer des nouveaux codes</p>
+                                <CButton className="sofraco-confirm-button" onClick={(e) => { this.resetCorrespondances(e) }} >Réinitialiser</CButton>
+                            </CCardBody>
+                        </CCard>
+                        <CCard>
+                            <CCardHeader><h4>Codes Courtiers</h4></CCardHeader>
+                            <CCardBody>
+                                <p className="lead">Pour l'intégration des codes courtiers</p>
+                                <p>Veuillez insérer l'excel des codes courtiers</p>
+                                <CInputGroup>
+                                    <CInput type='file' className="col-sm-5" onChange={(e) => { this.onChangeHandler(e, 'code courtiers') }} />
+                                    <CButton className="input-group-append sofraco-confirm-button" onClick={(e) => { this.uploadCodeCourtier(e) }} >Insérer</CButton>
+                                </CInputGroup>
+                            </CCardBody>
+                        </CCard>
+                        <CCard>
+                            <CCardHeader><h4>Codes Courtiers MCMS</h4></CCardHeader>
+                            <CCardBody>
+                                <p className="lead">Pour l'intégration des codes courtiers MCMS</p>
+                                <p>Veuillez insérer l'excel des codes courtiers MCMS</p>
+                                <CInputGroup>
+                                    <CInput type='file' className="col-sm-5" onChange={(e) => { this.onChangeHandler(e, 'code courtiers MCMS') }} />
+                                    <CButton className="input-group-append sofraco-confirm-button" onClick={(e) => { this.uploadCodeCourtierMCMS(e) }} >Insérer</CButton>
+                                </CInputGroup>
+                            </CCardBody>
+                        </CCard>
+                        <CCard>
+                            <CCardHeader><h4>Codes Mandataires</h4></CCardHeader>
+                            <CCardBody>
+                                <p className="lead">Pour l'intégration des codes mandataires</p>
+                                <p>Veuillez insérer l'excel des codes mandataires</p>
+                                <CInputGroup>
+                                    <CInput type='file' className="col-sm-5" onChange={(e) => { this.onChangeHandler(e, 'code mandataires') }} />
+                                    <CButton className="input-group-append sofraco-confirm-button" onClick={(e) => { this.uploadCodeMandataires(e) }} >Insérer</CButton>
+                                </CInputGroup>
+                            </CCardBody>
+                        </CCard>
+                        <CCard>
+                            <CCardHeader><h4>Codes Mandataires MCMS</h4></CCardHeader>
+                            <CCardBody>
+                                <p className="lead">Pour l'intégration des codes mandataires MCMS</p>
+                                <p>Veuillez insérer l'excel des codes mandataires MCMS</p>
+                                <CInputGroup>
+                                    <CInput type='file' className="col-sm-5" onChange={(e) => { this.onChangeHandler(e, 'code mandataires MCMS') }} />
+                                    <CButton className="input-group-append sofraco-confirm-button" onClick={(e) => { this.uploadCodeMandatairesMCMS(e) }} >Insérer</CButton>
+                                </CInputGroup>
+                            </CCardBody>
+                        </CCard>
+                    </CCollapse>
+                </CJumbotron>
+                <CJumbotron>
+                    <h3 className="display-4">Intégration des codes clients<CIcon
                         className={'sofraco-icon-arrow'}
                         size="sm"
                         onClick={(e) => { this.toggle3(e) }}
-                        icon={icon.cilArrowBottom} /></h2>
+                        icon={this.state.collapse3 ? icon.cilArrowTop: icon.cilArrowBottom} /></h3>
                     <CCollapse
                         show={this.state.collapse3}
                     >
                         <CCard>
-                            <CCardHeader><h3 className="display-3">Réinitialisation Codes Clients</h3></CCardHeader>
+                            <CCardHeader><h4>Réinitialisation Codes Clients</h4></CCardHeader>
                             <CCardBody>
                                 <p className="lead">Réinitialisation des Codes Clients</p>
                                 <p>A faire avant de réintégrer des nouveaux codes</p>
-                                <CButton color="primary" onClick={(e) => { this.resetClients(e) }} >Réinitialiser</CButton>
+                                <CButton className="sofraco-confirm-button" onClick={(e) => { this.resetClients(e) }} >Réinitialiser</CButton>
                             </CCardBody>
-                            <CCardFooter></CCardFooter>
                         </CCard>
                         <CCard>
-                            <CCardHeader><h3 className="display-3">Intégration des codes clients</h3></CCardHeader>
+                            <CCardHeader><h4>Intégration des codes clients</h4></CCardHeader>
                             <CCardBody>
                                 <p className="lead">Pour l'intégration des codes clients</p>
                                 <p>Veuillez insérer l'excel des codes clients</p>
-                                <CInput type='file' onChange={(e) => { this.onChangeHandler(e, 'client') }} />
-                                <CButton color="primary" onClick={(e) => { this.uploadCodeClient(e) }} >Insérer</CButton>
+                                <CInputGroup>
+                                    <CInput type='file' className="col-sm-5" onChange={(e) => { this.onChangeHandler(e, 'client') }} />
+                                    <CButton className="input-group-append sofraco-confirm-button" onClick={(e) => { this.uploadCodeClient(e) }} >Insérer</CButton>
+                                </CInputGroup>
                             </CCardBody>
-                            <CCardFooter></CCardFooter>
                         </CCard>
                     </CCollapse>
                 </CJumbotron>

@@ -3,3 +3,8 @@
     width: 20px;
     cursor: pointer;
 }
+
+.sofraco-confirm-button {
+    color: #fff;
+    background-color: #817369;
+}
