@@ -34,7 +34,13 @@ exports.createCourtier = async (req, res) => {
 exports.createCourtiers = async (req, res) => {
     try {
         console.log(`${new Date()} create courtiers`);
-        const courtiers = await courtierService.readExcelCourtiers(req.params.name);
+        let courtiers;
+        if (req.params.name !== 'undefined') {
+            const file = path.join(__dirname, '..', '..', '..', 'documents', `${req.params.name}.xlsx`);
+            courtiers = await courtierService.readExcelCourtiers(file);
+        } else {
+            courtiers = await courtierService.readExcelCourtiers(req.file.path);
+        }
         for (let courtier of courtiers) {
             const c = await courtierHandler.createCourtier(courtier);
         }
@@ -181,6 +187,16 @@ exports.deleteCourtier = async (req, res) => {
     console.log(`${new Date()} Delete courtier`);
     try {
         const courtiers = await courtierHandler.deleteCourtier(req.params.id);
+        res.status(200).json(courtiers);
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+};
+
+exports.deleteCourtiersByRole = async (req, res) => {
+    console.log(`${new Date()} Delete courtier by role ${req.params.role}`);
+    try {
+        const courtiers = await courtierHandler.deleteCourtiersByRole(req.params.role);
         res.status(200).json(courtiers);
     } catch (error) {
         res.status(500).json({ error });

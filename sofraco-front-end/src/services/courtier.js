@@ -24,9 +24,9 @@ class CourtierService {
 
     }
 
-    createCourtiers(name, token) {
+    createCourtiers(name, data, token) {
         return new Promise((resolve, reject) => {
-            axios.post(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/name/${name}`, {}, {
+            axios.post(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/name/${name}`, data, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -248,6 +248,23 @@ class CourtierService {
     deleteCourtier(id, token) {
         return new Promise((resolve, reject) => {
             axios.delete(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/${id}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then((res) => {
+                    resolve(res.data);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    }
+
+    deleteCourtiersByRole(role, token) {
+        return new Promise((resolve, reject) => {
+            axios.delete(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/courtier/role/${role}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`

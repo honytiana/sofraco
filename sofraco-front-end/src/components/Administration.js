@@ -35,6 +35,8 @@ class Administration extends Component {
             courtiers: [],
             cabinets: [],
             clients: [],
+            fileCourtiers: null,
+            fileMandataires: null,
             toast: false,
             messageToast: [],
             token: document.cookie.replace(/.*sofraco_=(.*);*.*/, '$1'),
@@ -46,6 +48,12 @@ class Administration extends Component {
         this.fetchCourtiers = this.fetchCourtiers.bind(this);
         this.fetchCabinets = this.fetchCabinets.bind(this);
         this.fetchClients = this.fetchClients.bind(this);
+        this.toggle = this.toggle.bind(this);
+        this.toggle2 = this.toggle2.bind(this);
+        this.onChangeHandler = this.onChangeHandler.bind(this);
+        this.createCourtiers = this.createCourtiers.bind(this);
+        this.uploadCourtiers = this.uploadCourtiers.bind(this);
+        this.uploadMandataires = this.uploadMandataires.bind(this);
 
         this.tokenService = new TokenService();
         this.clientService = new ClientService();
@@ -116,7 +124,6 @@ class Administration extends Component {
         e.preventDefault();
     }
 
-    // inner
     toggle2(e) {
         this.setState({
             collapse2: !this.state.collapse2
@@ -170,39 +177,141 @@ class Administration extends Component {
             });
     }
 
+    onChangeHandler(event, target) {
+        event.preventDefault();
+        const files = event.target.files[0];
+        switch (target) {
+            case 'courtiers':
+                this.setState({
+                    fileCourtiers: files
+                });
+                break;
+            case 'mandataires':
+                this.setState({
+                    fileMandataires: files
+                });
+                break;
+            default:
+                console.log('Target not found');
+        }
+    }
+
+    createCourtiers(formData) {
+        this.courtierService.createCourtiers(undefined, formData, this.state.token)
+            .then((res) => {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'SUCCESS', color: 'success', message: 'Les courtiers ont été insérés' }
+                });
+            }).catch((err) => {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'ERROR', color: 'danger', message: err }
+                })
+            }).finally(() => {
+                setTimeout(() => {
+                    this.setState({
+                        toast: false,
+                        messageToast: {}
+                    });
+                }, 6000);
+            });
+    }
+
+    uploadCourtiers(e) {
+        e.preventDefault();
+        this.courtierService.deleteCourtiersByRole('courtier', this.state.token)
+            .then((res) => {
+                const formData = new FormData();
+                formData.append('files', this.state.fileCourtiers);
+                this.createCourtiers(formData);
+            }).catch((err) => {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'ERROR', color: 'danger', message: err }
+                })
+            }).finally(() => {
+                setTimeout(() => {
+                    this.setState({
+                        toast: false,
+                        messageToast: {}
+                    });
+                }, 6000);
+            });
+    }
+
+    uploadMandataires(e) {
+        e.preventDefault();
+        this.courtierService.deleteCourtiersByRole('mandataire', this.state.token)
+            .then((res) => {
+                const formData = new FormData();
+                formData.append('files', this.state.fileMandataires);
+                this.createCourtiers(formData);
+            }).catch((err) => {
+                this.setState({
+                    toast: true,
+                    messageToast: { header: 'ERROR', color: 'danger', message: err }
+                })
+            }).finally(() => {
+                setTimeout(() => {
+                    this.setState({
+                        toast: false,
+                        messageToast: {}
+                    });
+                }, 6000);
+            });
+    }
+
     render() {
         return (
             <div>
                 <CJumbotron>
-                    <h1 className="display-3">Réinitialisation des documents</h1>
+                    <h2 className="display-3">Réinitialisation des documents</h2>
                     <p className="lead">Pour vider la base de données des documents et excels masters</p>
                     <CButton color="primary" onClick={(e) => { this.resetDocuments(e) }} >Réinitialiser</CButton>
                 </CJumbotron>
                 <CJumbotron>
-                    <h1 className="display-3">Intégration courtiers</h1>
-                    <p className="lead">Pour l'intégration des courtiers</p>
-                    <p>Veuillez insérer l'excel des courtiers</p>
-                    <CInput type='file' />
-                    <CButton color="primary" href="https://coreui.io/" target="_blank">Insérer</CButton>
+                    <h2 className="display-3">Intégration courtiers<CIcon
+                        className={'sofraco-icon-arrow'}
+                        size="sm"
+                        onClick={(e) => { this.toggle2(e) }}
+                        icon={icon.cilArrowBottom} /></h2>
+                    <CCollapse
+                        show={this.state.collapse2}
+                    >
+                        <CCard>
+                            <CCardHeader><h3 className="display-3">Intégration courtiers</h3></CCardHeader>
+                            <CCardBody>
+                                <p className="lead">Pour l'intégration des courtiers</p>
+                                <p>Veuillez insérer l'excel des courtiers</p>
+                                <CInput type='file' name='sofraco-upload-courtiers' onChange={(e) => { this.onChangeHandler(e, 'courtiers') }} />
+                                <CButton color="primary" onClick={(e) => { this.uploadCourtiers(e) }} >Insérer</CButton>
+                            </CCardBody>
+                            <CCardFooter></CCardFooter>
+                        </CCard>
+                        <CCard>
+                            <CCardHeader><h3 className="display-3">Intégration mandataires</h3></CCardHeader>
+                            <CCardBody>
+                                <p className="lead">Pour l'intégration des mandataires</p>
+                                <p>Veuillez insérer l'excel des courtiers</p>
+                                <CInput type='file' name='sofraco-upload-mandataires' onChange={(e) => { this.onChangeHandler(e, 'mandataires') }} />
+                                <CButton color="primary" onClick={(e) => { this.uploadMandataires(e) }} >Insérer</CButton>
+                            </CCardBody>
+                            <CCardFooter></CCardFooter>
+                        </CCard>
+                    </CCollapse>
                 </CJumbotron>
                 <CJumbotron>
-                    <h1 className="display-3">Intégration mandataires</h1>
-                    <p className="lead">Pour l'intégration des mandataires</p>
-                    <p>Veuillez insérer l'excel des mandataires</p>
-                    <CInput type='file' />
-                    <CButton color="primary" href="https://coreui.io/" target="_blank">Insérer</CButton>
-                </CJumbotron>
-                <CJumbotron>
-                    <h1 className="display-3">Intégration codes Courtiers<CIcon
+                    <h2 className="display-3">Intégration codes Courtiers<CIcon
                         className={'sofraco-icon-arrow'}
                         size="sm"
                         onClick={(e) => { this.toggle(e) }}
-                        icon={icon.cilArrowBottom} /></h1>
+                        icon={icon.cilArrowBottom} /></h2>
                     <CCollapse
                         show={this.state.collapse}
                     >
                         <CCard>
-                            <CCardHeader><h2 className="display-3">Codes Courtiers</h2></CCardHeader>
+                            <CCardHeader><h3 className="display-3">Codes Courtiers</h3></CCardHeader>
                             <CCardBody>
                                 <p className="lead">Pour l'intégration des codes courtiers</p>
                                 <p>Veuillez insérer l'excel des codes courtiers</p>
@@ -212,7 +321,7 @@ class Administration extends Component {
                             <CCardFooter></CCardFooter>
                         </CCard>
                         <CCard>
-                            <CCardHeader><h2 className="display-3">Codes Courtiers MCMS</h2></CCardHeader>
+                            <CCardHeader><h3 className="display-3">Codes Courtiers MCMS</h3></CCardHeader>
                             <CCardBody>
                                 <p className="lead">Pour l'intégration des codes courtiers MCMS</p>
                                 <p>Veuillez insérer l'excel des codes courtiers MCMS</p>
@@ -222,7 +331,7 @@ class Administration extends Component {
                             <CCardFooter></CCardFooter>
                         </CCard>
                         <CCard>
-                            <CCardHeader><h2 className="display-3">Codes Mandataires</h2></CCardHeader>
+                            <CCardHeader><h3 className="display-3">Codes Mandataires</h3></CCardHeader>
                             <CCardBody>
                                 <p className="lead">Pour l'intégration des codes mandataires</p>
                                 <p>Veuillez insérer l'excel des codes mandataires</p>
@@ -232,7 +341,7 @@ class Administration extends Component {
                             <CCardFooter></CCardFooter>
                         </CCard>
                         <CCard>
-                            <CCardHeader><h2 className="display-3">Codes Mandataires MCMS</h2></CCardHeader>
+                            <CCardHeader><h3 className="display-3">Codes Mandataires MCMS</h3></CCardHeader>
                             <CCardBody>
                                 <p className="lead">Pour l'intégration des codes mandataires MCMS</p>
                                 <p>Veuillez insérer l'excel des codes mandataires MCMS</p>

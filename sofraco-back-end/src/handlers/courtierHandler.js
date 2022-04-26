@@ -142,6 +142,10 @@ class CourtierHandler {
         return Courtier.findByIdAndDelete(id);
     }
 
+    deleteCourtiersByRole(role) {
+        return Courtier.deleteMany({ role: role});
+    }
+
     deleteAllCourtier() {
         return Courtier.deleteMany({});
     }
