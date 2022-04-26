@@ -16,7 +16,7 @@ class RouteComponent extends Component {
         this.Envoi = React.lazy(() => import('./Envoi'));
         this.Treatments = React.lazy(() => import('./Treatments'));
         this.ListCourtier = React.lazy(() => import('./ListCourtier'));
-        this.Client = React.lazy(() => import('./Client'));
+        this.ListClient = React.lazy(() => import('./ListClient'));
         this.Cabinet = React.lazy(() => import('./Cabinet'));
     }
 
@@ -44,12 +44,12 @@ class RouteComponent extends Component {
                         <Route path="/courtiers" component={this.ListCourtier} >
                             <this.ListCourtier token={this.props.token} />
                         </Route>
-                        <Route path="/clients" component={this.Client} >
-                            <this.Client token={this.props.token} />
+                        <Route path="/clients" component={this.ListClient} >
+                            <this.ListClient token={this.props.token} />
                         </Route>
-                        <Route path="/cabinets" component={this.Cabinet} >
+                        {/* <Route path="/cabinets" component={this.Cabinet} >
                             <this.Cabinet token={this.props.token} />
-                        </Route>
+                        </Route> */}
                         <Route path="/administration" component={this.Administration} >
                             <this.Administration token={this.props.token} />
                         </Route>

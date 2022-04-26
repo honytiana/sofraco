@@ -105,7 +105,7 @@ class Navbar extends Component {
                             <CDropdownMenu className="sofraco-dropdown-menu">
                                 <CDropdownItem className="sofraco-dropdown-item" href='/courtiers' >Courtiers</CDropdownItem>
                                 <CDropdownItem className="sofraco-dropdown-item" href='/clients' >Clients</CDropdownItem>
-                                <CDropdownItem className="sofraco-dropdown-item" href='/cabinets' >Cabinets</CDropdownItem>
+                                {/* <CDropdownItem className="sofraco-dropdown-item" href='/cabinets' >Cabinets</CDropdownItem> */}
                                 <CDropdownItem className="sofraco-dropdown-item" href='/administration' >Administration</CDropdownItem>
                             </CDropdownMenu>
                         </CDropdown>

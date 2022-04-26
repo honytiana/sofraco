@@ -6,13 +6,3 @@
     width: 20px;
     cursor: pointer;
 }
-
-.sofraco-pagination, .sofraco-pagination ul, .sofraco-pagination li, .sofraco-pagination a {
-    color: #ed7102 !important;
-}
-
-.sofraco-pagination .page-item.active a {
-    color: #fff !important;
-    background-color: #ed7102 !important;
-    border-color: #ed7102 !important;
-}
