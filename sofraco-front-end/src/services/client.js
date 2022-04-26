@@ -25,9 +25,9 @@ class ClientService {
 
     }
 
-    createClients(name, token) {
+    createClients(name, data, token) {
         return new Promise((resolve, reject) => {
-            axios.post(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/client/name/${name}`, {}, {
+            axios.post(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/client/name/${name}`, data, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`

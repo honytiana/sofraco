@@ -1,10 +1,25 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path');
+const multer = require('multer');
 
 const accessControl = require('../middlewares/accessControl');
 const correspondanceController =  require('../controllers/correspondance');
+const storage = multer.diskStorage({
+	destination: (req, file, callback) => {
+		const destination = path.join(__dirname, '..', '..', 'documents', 'uploaded');
+		callback(null, destination);
+	},
+	filename: (req, file, callback) => {
+		callback(null, file.originalname.replace(/[\s()]/g, '_'));
+	},
+});
 
-router.route('/:role').post(accessControl, correspondanceController.createCorrespondance);
+const upload = multer({ 
+	storage: storage
+});
+
+router.route('/:role?').post(accessControl, upload.single('files'), correspondanceController.createCorrespondance);
 router.route('/').get(correspondanceController.getCorrespondances);
 router.route('/:id').get(correspondanceController.getCorrespondance);
 router.route('/courtier/:courtier').get(correspondanceController.getCorrespondanceByCourtier);

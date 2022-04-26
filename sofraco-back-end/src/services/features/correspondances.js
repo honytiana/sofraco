@@ -4,52 +4,49 @@ const companyHandler = require('../../handlers/companyHandler');
 const courtierHandler = require('../../handlers/courtierHandler');
 const excelFile = require('../utils/excelFile');
 
-exports.readExcelTableauCorrespondance = async (role) => {
-    const file = path.join(__dirname, '..', '..', '..', 'documents', `${role}.xlsx`);
+exports.readExcelTableauCorrespondance = async (file) => {
     console.log(`${new Date()} DEBUT LECTURE DU TABLEAU DE CORRESPONDANCE`);
     try {
         const worksheets = await excelFile.checkExcelFileAndGetWorksheets(file);
         const courtiers = await courtierHandler.getCourtiers();
         const allCompanies = await companyHandler.getCompanies();
         let correspondance = [];
-        for (let worksheet of worksheets) {
-            worksheet.eachRow((row, rowNumber) => {
-                if (rowNumber > 1) {
-                    const courtierLastNameSheet = row.getCell('A').value;
-                    const courtierFirstNameSheet = row.getCell('B').value;
-                    const courtierCabinetSheet = row.getCell('C').value;
-                    for (let cr of courtiers) {
-                        if ((courtierCabinetSheet !== null && courtierFirstNameSheet !== null && courtierCabinetSheet !== null) &&
-                            (courtierLastNameSheet.toUpperCase().trim() === cr.lastName.toUpperCase() && courtierFirstNameSheet.toUpperCase().trim() === cr.firstName.toUpperCase() && courtierCabinetSheet.toUpperCase().trim() === cr.cabinet.toUpperCase()) ||
-                            (courtierCabinetSheet === null && courtierFirstNameSheet !== null && courtierCabinetSheet !== null) &&
-                            (courtierLastNameSheet.toUpperCase().trim() === cr.lastName.toUpperCase() && courtierFirstNameSheet.toUpperCase().trim() === cr.firstName.toUpperCase())) {
-                            const courtier = cr._id;
-                            const role_courtier = cr.role;
-                            let companies = [];
-                            for (let i = 4; i <= 72; i++) {
-                                const companyNameSheet = worksheet.getRow(1).getCell(i).value;
-                                for (let comp of allCompanies) {
-                                    if (comp.type !== 'simple') {
-                                        continue;
-                                    }
-                                    if (companyNameSheet !== null) {
-                                        if (companyNameSheet.toUpperCase().match(comp.globalName)) {
-                                            setCompanyCode(row, rowNumber, i, companies, companyNameSheet, comp);
-                                        }
+        worksheets[0].eachRow((row, rowNumber) => {
+            if (rowNumber > 1) {
+                const courtierLastNameSheet = row.getCell('A').value;
+                const courtierFirstNameSheet = row.getCell('B').value;
+                const courtierCabinetSheet = row.getCell('C').value;
+                for (let cr of courtiers) {
+                    if ((courtierCabinetSheet !== null && courtierFirstNameSheet !== null && courtierCabinetSheet !== null) &&
+                        (courtierLastNameSheet.toUpperCase().trim() === cr.lastName.toUpperCase() && courtierFirstNameSheet.toUpperCase().trim() === cr.firstName.toUpperCase() && courtierCabinetSheet.toUpperCase().trim() === cr.cabinet.toUpperCase()) ||
+                        (courtierCabinetSheet === null && courtierFirstNameSheet !== null && courtierCabinetSheet !== null) &&
+                        (courtierLastNameSheet.toUpperCase().trim() === cr.lastName.toUpperCase() && courtierFirstNameSheet.toUpperCase().trim() === cr.firstName.toUpperCase())) {
+                        const courtier = cr._id;
+                        const role_courtier = cr.role;
+                        let companies = [];
+                        for (let i = 4; i <= 72; i++) {
+                            const companyNameSheet = worksheet.getRow(1).getCell(i).value;
+                            for (let comp of allCompanies) {
+                                if (comp.type !== 'simple') {
+                                    continue;
+                                }
+                                if (companyNameSheet !== null) {
+                                    if (companyNameSheet.toUpperCase().match(comp.globalName)) {
+                                        setCompanyCode(row, rowNumber, i, companies, companyNameSheet, comp);
                                     }
                                 }
                             }
-                            correspondance.push({
-                                courtier,
-                                role_courtier,
-                                companies,
-                                is_enabled: true
-                            });
                         }
+                        correspondance.push({
+                            courtier,
+                            role_courtier,
+                            companies,
+                            is_enabled: true
+                        });
                     }
                 }
-            });
-        }
+            }
+        });
         console.log(`${new Date()} FIN LECTURE DU TABLEAU DE CORRESPONDANCE`);
         return correspondance;
 

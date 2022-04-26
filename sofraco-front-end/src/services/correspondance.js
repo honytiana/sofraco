@@ -7,9 +7,9 @@ class CorrespondanceService {
         this.interne = window.location.hostname.match(regInterne) ? true : false
     }
 
-    createCorrespondance(role, token) {
+    createCorrespondance(role, data, token) {
         return new Promise((resolve, reject) => {
-            axios.post(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/correspondance/${role}`, {
+            axios.post(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/correspondance/${role}`, data, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`

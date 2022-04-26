@@ -8,7 +8,13 @@ const clientService = require('../services/features/client');
 exports.createClients = async (req, res) => {
     try {
         console.log(`${new Date()} create clients`);
-        const rattachements = await clientService.readExcelRattachementClient(req.params.name);
+        let rattachements;
+        if (req.params.name !== 'undefined') {
+            const file = path.join(__dirname, '..', '..', '..', 'documents', `${req.params.name}.xlsx`);
+            rattachements = await clientService.readExcelRattachementClient(file);
+        } else {
+            rattachements = await clientService.readExcelRattachementClient(req.file.path);
+        }
         for (let rattachement of rattachements) {
             const c = await clientHandler.createClient(rattachement);
         }

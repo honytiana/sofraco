@@ -7,7 +7,13 @@ const correspondanceService = require('../services/features/correspondances');
 
 exports.createCorrespondance = async (req, res) => {
     try {
-        const correspondances = await correspondanceService.readExcelTableauCorrespondance(req.params.role);
+        let correspondances;
+        if (req.params.role !== 'undefined') {
+            const file = path.join(__dirname, '..', '..', '..', 'documents', `${req.params.role}.xlsx`);
+            correspondances = await correspondanceService.readExcelTableauCorrespondance(file);
+        } else {
+            correspondances = await correspondanceService.readExcelTableauCorrespondance(req.file.path);
+        }
         let i = 0;
         for (let correspondance of correspondances) {
             const corr = await correspondanceHandler.getCorrespondanceByCourtier(correspondance.courtier);
