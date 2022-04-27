@@ -44,7 +44,7 @@ exports.login = async (req, res) => {
             const token = await tokenHandler.createTokens(user._id);
             // res.cookie('token', token, { maxAge: 10 * 3600, encode: async (token) => { await bcrypt.hash(token, 10) } });
             res.cookie('sofraco_', `${token}`, { maxAge: 10 * 60 * 60 * 1000, secure: true, sameSite: 'None' });
-            res.cookie('sofraco_', `${token}`, { maxAge: 10 * 60 * 60 * 1000 });
+            // res.cookie('sofraco_', `${token}`, { maxAge: 10 * 60 * 60 * 1000 });
             res.status(200)
                 .json({
                     userId: user._id,
