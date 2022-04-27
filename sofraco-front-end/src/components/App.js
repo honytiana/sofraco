@@ -76,7 +76,7 @@ class App extends Component {
                     localStorage.clear();
                     document.cookie = "sofraco=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
                   }).catch((err) => {
-                    console.log('Erreur');
+                    console.log(err);
                   }).finally(() => {
                   });
               } else {
