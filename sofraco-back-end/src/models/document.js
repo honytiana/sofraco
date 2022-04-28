@@ -12,7 +12,7 @@ const documentSchema = new Schema({
     path_original_file: { type: String, default: undefined },
     type: { type: String, default: undefined },
     is_enabled: { type: Boolean, default: true },
-    status: { type: String, required: true, enum: ['draft', 'processing', 'done', 'cancel'], default: 'draft' },
+    status: { type: String, required: true, enum: ['draft', 'processing', 'done', 'cancel', 'waiting'], default: 'draft' },
     ocr: { type: Schema.Types.Mixed, default: undefined },
 });
 

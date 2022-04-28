@@ -43,6 +43,14 @@ const startServer = async () => {
                     await treatmentHandler.updateStatusTreatment('done');
                 }
                 try {
+                    const waitingDocuments = await documentController.createDocument();
+                    console.log(`${new Date()} SPLIT FAIT`);
+                } catch (err) {
+                    console.log(`${new Date()} ERREUR LORS DU SPLIT`);
+                } finally {
+                    console.log(`${new Date()} FIN DU SPLIT`);
+                }
+                try {
                     const result = await documentController.updateDocuments();
                     console.log(`${new Date()} TRAITEMENT FAIT EN : ${result.executionTime}`);
                 } catch (err) {

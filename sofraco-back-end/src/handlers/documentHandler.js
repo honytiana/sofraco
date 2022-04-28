@@ -76,7 +76,11 @@ class DocumentHandler {
     }
 
     deleteDocument(id) {
-        return Document.deleteOne({_id: id});
+        return Document.deleteOne({ _id: id });
+    }
+
+    deleteDocumentByStatus(status) {
+        return Document.deleteMany({ status: status });
     }
 
     deleteAllDocuments() {

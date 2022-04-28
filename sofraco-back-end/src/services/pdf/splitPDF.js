@@ -8,6 +8,7 @@ const fileService = require('../utils/files');
 const pdfService = require('../utils/pdfFile');
 const imageManagment = require('../images/imageManagment');
 const documentController = require('../../controllers/document');
+const documentHandler = require('../../handlers/documentHandler');
 
 exports.splitPDFMETLIFE = async (file) => {
     console.log(`${new Date()} DEBUT SEPARATION PDF METLIFE`);
@@ -122,8 +123,10 @@ exports.splitPDFMETLIFEByBordereaux = async (file, company, selectedDate) => {
         console.log(`${new Date()} DEBUT REGROUPEMENT PAR BORDEREAU PDF METLIFE`);
         let currentPDFBytes = fs.readFileSync(file);
         let currentPDFDoc = await PDFDocument.load(currentPDFBytes);
+        await documentHandler.deleteDocumentByStatus('waiting');
         let pdfPaths = [];
         let pdfNumero = 1;
+        let currentDoc = null;
         while (pathsToPDF.length > 0) {
             const pageCount = currentPDFDoc.getPageCount();
             const image = await pdfService.convertPDFToImg(pathsToPDF[0]);
@@ -132,6 +135,9 @@ exports.splitPDFMETLIFEByBordereaux = async (file, company, selectedDate) => {
             const content = fs.readFileSync(textFilePath, { encoding: 'utf-8' });
             let data = content.split('\n');
             for (let d of data) {
+                if (currentDoc !== null) {
+                    await documentHandler.deleteDocument(currentDoc._id);
+                }
                 if (d.match(/Page 1[/]\d/i)) {
                     const dArray = d.split('/');
                     const numero = parseInt(dArray[dArray.length - 1]);
@@ -144,7 +150,7 @@ exports.splitPDFMETLIFEByBordereaux = async (file, company, selectedDate) => {
                     const pathPdf = path.join(__dirname, '..', '..', '..', 'documents', 'uploaded', `${fileName}_${pdfNumero}.pdf`);
                     fs.writeFileSync(pathPdf, pdfBytes);
                     pathsToPDF.splice(0, numero);
-                    documentController.saveDocument(company, pathPdf, 'pdf',selectedDate, 'draft');
+                    await documentController.saveDocument(company, pathPdf, 'pdf', selectedDate, 'draft');
                     pdfPaths.push(pathPdf);
 
                     const newCurrentPDFDoc = await PDFDocument.create();
@@ -153,12 +159,16 @@ exports.splitPDFMETLIFEByBordereaux = async (file, company, selectedDate) => {
                         newCurrentPDFDoc.addPage(pageToAdd);
                     }
                     const newPdfBytes = await newCurrentPDFDoc.save();
+                    const pathNewPdf = path.join(__dirname, '..', '..', '..', 'documents', 'uploaded', `current_${fileName}.pdf`);
+                    currentDoc = await documentController.saveDocument(company, pathNewPdf, 'pdf', selectedDate, 'waiting');
+                    fs.writeFileSync(pathNewPdf, newPdfBytes);
                     currentPDFDoc = await PDFDocument.load(newPdfBytes);
                     break;
                 }
             }
             pdfNumero++;
         }
+        await documentHandler.deleteDocumentByStatus('waiting');
         console.log(`${new Date()} FIN REGROUPEMENT PAR BORDEREAU PDF METLIFE`);
         console.log(`${new Date()} FIN SEPARATION par bordereaux`);
         return pdfPaths;

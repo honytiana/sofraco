@@ -26,6 +26,7 @@ const documentSPVIE = require('../services/document/documentSPVIE');
 const documentSWISSLIFE = require('../services/document/documentSWISSLIFE');
 const documentUAFLIFE = require('../services/document/documentUAFLIFE');
 const treatmentHandler = require('../handlers/treatmentHandler');
+const companyHandler = require('../handlers/companyHandler');
 
 const deleteCacheRequire = () => {
     delete require.cache[require.resolve('../services/document/documentAPICIL')];
@@ -53,90 +54,100 @@ const deleteCacheRequire = () => {
 exports.createDocument = async (req, res) => {  // create document
     console.log(`${new Date()} Create document`);
     try {
-        const company = JSON.parse(req.body.company);
-        let companySurco;
-        if (req.body.companySurco !== 'undefined') {
-            companySurco = JSON.parse(req.body.companySurco);
-        }
-        let companySurco2;
-        if (req.body.companySurco2 !== 'undefined') {
-            companySurco2 = JSON.parse(req.body.companySurco2);
-        }
-        const simple = JSON.parse(req.body.simple);
-        const surco = JSON.parse(req.body.surco);
-        const surco2 = JSON.parse(req.body.surco2);
-        const mcms = JSON.parse(req.body.mcms);
-        const selectedDate = JSON.parse(req.body.selectedDate);
-        let fileLength = 0;
-        let surcoLength = 0;
-        if (req.body.fileLength !== 'undefined') {
-            fileLength = parseInt(req.body.fileLength);
-        }
-        if (req.body.surcoLength !== 'undefined') {
-            surcoLength = parseInt(req.body.surcoLength);
-        }
-
-        if (simple && surco && surco2 && !mcms) {  // company and surco ans surco2
-            const docCompany = saveDocumentUploaded(company, req.files[0].path, req.body.extension, selectedDate);
-            const docSurco = saveDocumentUploaded(companySurco, req.files[1].path, req.body.extension, selectedDate);
-            const docMCMS = saveDocumentUploaded(companySurco2, req.files[2].path, req.body.extension, selectedDate);
-        }
-
-        if (simple && surco && !surco2 && !mcms) {  // company and surco
-            const docCompany = saveDocumentUploaded(company, req.files[0].path, req.body.extension, selectedDate);
-            const docSurco = saveDocumentUploaded(companySurco, req.files[1].path, req.body.extension, selectedDate);
-        }
-
-        if (!simple && surco && surco2 && !mcms) { // surco and surco2
-            const docSurco = saveDocumentUploaded(companySurco, req.files[0].path, req.body.extension, selectedDate);
-            const docSurco2 = saveDocumentUploaded(companySurco2, req.files[1].path, req.body.extension, selectedDate);
-        }
-
-        if (simple && !surco && surco2 && !mcms) { // company and surco2
-            const docCompany = saveDocumentUploaded(company, req.files[0].path, req.body.extension, selectedDate);
-            const docSurco2 = saveDocumentUploaded(companySurco2, req.files[1].path, req.body.extension, selectedDate);
-        }
-
-        if (simple && !surco && !surco2 && !mcms) {     // company
-            const docCompany = saveDocumentUploaded(company, req.files[0].path, req.body.extension, selectedDate);
-        }
-
-        if (!simple && surco && !surco2 && !mcms) { // surco
-            const docSurco = saveDocumentUploaded(companySurco, req.files[0].path, req.body.extension, selectedDate);
-        }
-
-        if (!simple && !surco && surco2 && !mcms) { // surco2
-            const docSurco2 = saveDocumentUploaded(companySurco2, req.files[0].path, req.body.extension, selectedDate);
-        }
-
-        if (!simple && surco && !surco2 && mcms && surcoLength > 0 && fileLength === 0) { // MCMS 
-            for (let file of req.files) {
-                saveDocumentUploaded(companySurco, file.path, req.body.extension, selectedDate);
+        if (!req) {
+            const waitingDocs = await documentHandler.getDocumentsByStatus('waiting');
+            if (waitingDocs.length > 0) {
+                for(let waitingDoc of waitingDocs) {
+                    const company = await companyHandler.getCompanyByName('METLIFE');
+                    const pdfPaths = await splitPDF.splitPDFMETLIFEByBordereaux(waitingDoc.path_original_file, company, new Date());
+                }
             }
-        }
-        if (simple && surco && !surco2 && mcms && surcoLength > 0 && fileLength > 0) { // company & MCMS 
-            const docCompany = saveDocumentUploaded(company, req.files[0].path, req.body.extension, selectedDate);
-            const doc = documentHandler.createDocument(document);
-            const files = req.files.splice(1, req.files.length - 1);
-            for (let file of files) {
-                const docMCMS = saveDocumentUploaded(companySurco, file.path, req.body.extension, selectedDate);
+        } else {
+            const company = JSON.parse(req.body.company);
+            let companySurco;
+            if (req.body.companySurco !== 'undefined') {
+                companySurco = JSON.parse(req.body.companySurco);
             }
-        }
-        if (company.name === 'METLIFE') {
-            const pdfPaths = await splitPDF.splitPDFMETLIFEByBordereaux(req.files[0].path, company, selectedDate);
-            // for (let pdf of pdfPaths) {
-            //     const singleDoc = saveDocument(company, pdf, req.body.extension);
-            // }
+            let companySurco2;
+            if (req.body.companySurco2 !== 'undefined') {
+                companySurco2 = JSON.parse(req.body.companySurco2);
+            }
+            const simple = JSON.parse(req.body.simple);
+            const surco = JSON.parse(req.body.surco);
+            const surco2 = JSON.parse(req.body.surco2);
+            const mcms = JSON.parse(req.body.mcms);
+            const selectedDate = JSON.parse(req.body.selectedDate);
+            let fileLength = 0;
+            let surcoLength = 0;
+            if (req.body.fileLength !== 'undefined') {
+                fileLength = parseInt(req.body.fileLength);
+            }
+            if (req.body.surcoLength !== 'undefined') {
+                surcoLength = parseInt(req.body.surcoLength);
+            }
+
+            if (simple && surco && surco2 && !mcms) {  // company and surco ans surco2
+                const docCompany = await saveDocumentUploaded(company, req.files[0].path, req.body.extension, selectedDate);
+                const docSurco = await saveDocumentUploaded(companySurco, req.files[1].path, req.body.extension, selectedDate);
+                const docMCMS = await saveDocumentUploaded(companySurco2, req.files[2].path, req.body.extension, selectedDate);
+            }
+
+            if (simple && surco && !surco2 && !mcms) {  // company and surco
+                const docCompany = await saveDocumentUploaded(company, req.files[0].path, req.body.extension, selectedDate);
+                const docSurco = await saveDocumentUploaded(companySurco, req.files[1].path, req.body.extension, selectedDate);
+            }
+
+            if (!simple && surco && surco2 && !mcms) { // surco and surco2
+                const docSurco = await saveDocumentUploaded(companySurco, req.files[0].path, req.body.extension, selectedDate);
+                const docSurco2 = await saveDocumentUploaded(companySurco2, req.files[1].path, req.body.extension, selectedDate);
+            }
+
+            if (simple && !surco && surco2 && !mcms) { // company and surco2
+                const docCompany = await saveDocumentUploaded(company, req.files[0].path, req.body.extension, selectedDate);
+                const docSurco2 = await saveDocumentUploaded(companySurco2, req.files[1].path, req.body.extension, selectedDate);
+            }
+
+            if (simple && !surco && !surco2 && !mcms) {     // company
+                const docCompany = await saveDocumentUploaded(company, req.files[0].path, req.body.extension, selectedDate);
+            }
+
+            if (!simple && surco && !surco2 && !mcms) { // surco
+                const docSurco = await saveDocumentUploaded(companySurco, req.files[0].path, req.body.extension, selectedDate);
+            }
+
+            if (!simple && !surco && surco2 && !mcms) { // surco2
+                const docSurco2 = await saveDocumentUploaded(companySurco2, req.files[0].path, req.body.extension, selectedDate);
+            }
+
+            if (!simple && surco && !surco2 && mcms && surcoLength > 0 && fileLength === 0) { // MCMS 
+                for (let file of req.files) {
+                    await saveDocumentUploaded(companySurco, file.path, req.body.extension, selectedDate);
+                }
+            }
+            if (simple && surco && !surco2 && mcms && surcoLength > 0 && fileLength > 0) { // company & MCMS 
+                const docCompany = await saveDocumentUploaded(company, req.files[0].path, req.body.extension, selectedDate);
+                const doc = await documentHandler.createDocument(document);
+                const files = req.files.splice(1, req.files.length - 1);
+                for (let file of files) {
+                    const docMCMS = await saveDocumentUploaded(companySurco, file.path, req.body.extension, selectedDate);
+                }
+            }
+            if (company.name === 'METLIFE') {
+                const pdfPaths = await splitPDF.splitPDFMETLIFEByBordereaux(req.files[0].path, company, selectedDate);
+                // for (let pdf of pdfPaths) {
+                //     const singleDoc = saveDocument(company, pdf, req.body.extension);
+                // }
+            }
+            res.status(200).end(`Sent to Server`);
         }
         console.log(`${new Date()} Document created`);
-        res.status(200).end(`Sent to Server`);
 
     } catch (err) {
         res.status(500).json({ err });
     }
 }
 
-exports.saveDocument = (company, filePath, extension, selectedDate, status = 'draft') => {
+exports.saveDocument = async (company, filePath, extension, selectedDate, status = 'draft') => {
     try {
         let document = {};
         const fileName = fileService.getFileName(filePath);
@@ -145,23 +156,27 @@ exports.saveDocument = (company, filePath, extension, selectedDate, status = 'dr
         document.companyGlobalName = company.globalName;
         document.companyName = company.name;
         document.path_original_file = filePath;
-        document.upload_date = new Date(selectedDate.year, selectedDate.month, selectedDate.day);
+        if (selectedDate.year) {
+            document.upload_date = new Date(selectedDate.year, selectedDate.month, selectedDate.day);
+        } else {
+            document.upload_date === selectedDate;
+        }
         document.type = extension;
         document.status = status;
-        const doc = documentHandler.createDocument(document);
+        const doc = await documentHandler.createDocument(document);
         return doc;
     } catch (err) {
         throw err;
     }
 };
 
-const saveDocumentUploaded = (company, filePath, extension, selectedDate) => {
+const saveDocumentUploaded = async (company, filePath, extension, selectedDate) => {
     try {
         let doc;
         if (company.name === 'METLIFE') {
-            doc = this.saveDocument(company, filePath, extension, selectedDate, 'cancel');
+            doc = await this.saveDocument(company, filePath, extension, selectedDate, 'cancel');
         } else {
-            doc = this.saveDocument(company, filePath, extension, selectedDate);
+            doc = await this.saveDocument(company, filePath, extension, selectedDate);
         }
         return doc;
     } catch (err) {
