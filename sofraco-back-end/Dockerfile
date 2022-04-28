@@ -20,7 +20,7 @@ COPY . .
 ENV MONGODB_URL=mongodb://localhost:27017/sofraco
 ENV BACKEND_HOST_PATH=http://localhost:9000/
 EXPOSE 9000
-CMD ["node", "--max-old-space-size=3584", "server"]
+CMD ["node", "server"]
 
 
 
