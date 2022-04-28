@@ -132,11 +132,23 @@ exports.createDocument = async (req, res) => {  // create document
                     const docMCMS = await saveDocumentUploaded(companySurco, file.path, req.body.extension, selectedDate);
                 }
             }
-            if (company.name === 'METLIFE') {
-                const pdfPaths = await splitPDF.splitPDFMETLIFEByBordereaux(req.files[0].path, company, selectedDate);
-                // for (let pdf of pdfPaths) {
-                //     const singleDoc = saveDocument(company, pdf, req.body.extension);
-                // }
+            try {
+                if (company.name === 'METLIFE') {
+                    const pdfPaths = await splitPDF.splitPDFMETLIFEByBordereaux(req.files[0].path, company, selectedDate);
+                    // for (let pdf of pdfPaths) {
+                    //     const singleDoc = saveDocument(company, pdf, req.body.extension);
+                    // }
+                }
+            } catch (err) {
+                console.log(err);
+            } finally {
+                const waitingDocs = await documentHandler.getDocumentsByStatus('waiting');
+                if (waitingDocs.length > 0) {
+                    for(let waitingDoc of waitingDocs) {
+                        const company = await companyHandler.getCompanyByName('METLIFE');
+                        const pdfPaths = await splitPDF.splitPDFMETLIFEByBordereaux(waitingDoc.path_original_file, company, new Date());
+                    }
+                }
             }
             res.status(200).end(`Sent to Server`);
         }
