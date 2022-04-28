@@ -88,6 +88,8 @@ class Companies extends Component {
         this.closeErrorsModal = this.closeErrorsModal.bind(this);
         this.setSelectMonthYear = this.setSelectMonthYear.bind(this);
         this.fetchDocumentsYearAndMonth = this.fetchDocumentsYearAndMonth.bind(this);
+        this.handleCompanyCallback = this.handleCompanyCallback.bind(this);
+        this.handleCompanySurcoCallback = this.handleCompanySurcoCallback.bind(this);
         this.getCheckBadge = this.getCheckBadge.bind(this);
         this.user = JSON.parse(localStorage.getItem('user'));
 
@@ -443,7 +445,7 @@ class Companies extends Component {
             });
     }
 
-    handleCompanyCallback = (index, companyFolderData) => {
+    handleCompanyCallback(index, companyFolderData) {
         this._isMounted && this.fetchDocumentsYearAndMonth();
         if (companyFolderData !== null && !companyFolderData) {
             this.toggleDetails(index);
@@ -454,7 +456,7 @@ class Companies extends Component {
         }
     }
 
-    handleCompanySurcoCallback = (count) => {
+    handleCompanySurcoCallback(count) {
         const surcoCount = this.state.surcoCount;
         surcoCount.push(count);
         this.setState({

@@ -46,6 +46,8 @@ class CompanyFolder extends Component {
         this._isMounted = false;
         this.fetchAllDocumentsCompany = this.fetchAllDocumentsCompany.bind(this);
         this.fetchDocumentsCompany = this.fetchDocumentsCompany.bind(this);
+        this.handleCompanyFolderCallback = this.handleCompanyFolderCallback.bind(this);
+        this.handleCompanyFolderSurcoCallback = this.handleCompanyFolderSurcoCallback.bind(this);
         this.fetchCompany = this.fetchCompany.bind(this);
 
         this.companyService = new CompanyService();
@@ -131,11 +133,11 @@ class CompanyFolder extends Component {
             });
     }
 
-    handleCompanyFolderCallback (uploadData) {
+    handleCompanyFolderCallback(uploadData) {
         this.props.companyCallback(uploadData);
     }
 
-    handleCompanyFolderSurcoCallback (count) {
+    handleCompanyFolderSurcoCallback(count) {
         this.props.companySurcoCallback(count);
     }
 
