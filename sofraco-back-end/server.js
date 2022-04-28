@@ -42,22 +42,22 @@ const startServer = async () => {
                 if (processingTreatment.length > 0) {
                     await treatmentHandler.updateStatusTreatment('done');
                 }
-                try {
-                    const waitingDocuments = await documentController.createDocument();
-                    console.log(`${new Date()} SPLIT FAIT`);
-                } catch (err) {
-                    console.log(`${new Date()} ERREUR LORS DU SPLIT`);
-                } finally {
-                    console.log(`${new Date()} FIN DU SPLIT`);
-                }
-                try {
-                    const result = await documentController.updateDocuments();
-                    console.log(`${new Date()} TRAITEMENT FAIT EN : ${result.executionTime}`);
-                } catch (err) {
-                    console.log(`${new Date()} ERREUR LORS DU TRAITEMENT DES FICHIERS UPLOADES`);
-                } finally {
-                    console.log(`${new Date()} FIN DU TRAITEMENT DES FICHIERS UPLOADES`);
-                }
+                // try {
+                //     const waitingDocuments = await documentController.createDocument();
+                //     console.log(`${new Date()} SPLIT FAIT`);
+                // } catch (err) {
+                //     console.log(`${new Date()} ERREUR LORS DU SPLIT`);
+                // } finally {
+                //     console.log(`${new Date()} FIN DU SPLIT`);
+                // }
+                // try {
+                //     const result = await documentController.updateDocuments();
+                //     console.log(`${new Date()} TRAITEMENT FAIT EN : ${result.executionTime}`);
+                // } catch (err) {
+                //     console.log(`${new Date()} ERREUR LORS DU TRAITEMENT DES FICHIERS UPLOADES`);
+                // } finally {
+                //     console.log(`${new Date()} FIN DU TRAITEMENT DES FICHIERS UPLOADES`);
+                // }
             });
         }
     }
