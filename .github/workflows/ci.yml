@@ -21,7 +21,7 @@ jobs:
         KEY: ${{ secrets.KEY }}
         command_timeout: 60m
         script: |
-          cd Sofraco
+          cd ../data/Sofraco
           git fetch -a && git pull
           docker-compose build --no-cache
           docker-compose up -d
