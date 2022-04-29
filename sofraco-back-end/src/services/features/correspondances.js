@@ -25,7 +25,7 @@ exports.readExcelTableauCorrespondance = async (file) => {
                         const role_courtier = cr.role;
                         let companies = [];
                         for (let i = 4; i <= 72; i++) {
-                            const companyNameSheet = worksheet.getRow(1).getCell(i).value;
+                            const companyNameSheet = worksheets[0].getRow(1).getCell(i).value;
                             for (let comp of allCompanies) {
                                 if (comp.type !== 'simple') {
                                     continue;
