@@ -9,7 +9,7 @@ services:
         links:
             - backend
         volumes:
-            - ./sofraco-front-end:/fontend
+            - ./sofraco-front-end:/fontend:shared
         networks:
             - sofraco-network
     backend:
@@ -22,7 +22,7 @@ services:
         environment:
             MONGO_URL: mongodb://mongodb-sofraco:27017/sofraco
         volumes:
-            - ./sofraco-back-end:/backend
+            - ./sofraco-back-end:/backend:shared
         networks:
             - sofraco-network
 
