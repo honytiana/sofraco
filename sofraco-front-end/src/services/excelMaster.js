@@ -81,7 +81,8 @@ class ExcelMasterService {
                 headers: {
                     'Content-Type': 'application/zip',
                     'Authorization': `Bearer ${token}`
-                }
+                },
+                responseType: 'blob'
             })
                 .then((res) => {
                     resolve(res.data);
