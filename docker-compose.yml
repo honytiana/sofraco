@@ -8,6 +8,8 @@ services:
             - "3000:3000"
         links:
             - backend
+        volumes:
+            - ./sofraco-front-end:/fontend
         networks:
             - sofraco-network
     backend:
@@ -20,8 +22,7 @@ services:
         environment:
             MONGO_URL: mongodb://mongodb-sofraco:27017/sofraco
         volumes:
-            - ./sofraco-back-end/documents:/backend/documents
-            - ./sofraco-back-end/logs:/backend/logs
+            - ./sofraco-back-end:/backend
         networks:
             - sofraco-network
 
