@@ -156,36 +156,33 @@ class Administration extends Component {
         e.preventDefault();
         this.documentService.deleteAllDocuments(this.state.token)
             .then((res) => {
-                this.setState({
-                    toast: true,
-                    messageToast: { header: 'SUCCESS', color: 'success', message: `Tous les documents ont été supprimé` }
-                });
+                this.excelMasterService.deleteAllExcelMaster(this.state.token)
+                    .then((res) => {
+                        this.documentService.deleteAllDocumentFiles(this.state.token)
+                            .then((res) => {
+                                this.setState({
+                                    toast: true,
+                                    messageToast: { header: 'SUCCESS', color: 'success', message: `Les Documents ont été supprimé` }
+                                });
+                            })
+                            .catch((err) => {
+                                this.setState({
+                                    toast: true,
+                                    messageToast: { header: 'ERROR', color: 'danger', message: `Erreur lors de la suppression des fichiers documents` }
+                                });
+                            });
+                    })
+                    .catch((err) => {
+                        this.setState({
+                            toast: true,
+                            messageToast: { header: 'ERROR', color: 'danger', message: `Erreur lors de la suppression des excels masters` }
+                        });
+                    })
             })
             .catch((err) => {
                 this.setState({
                     toast: true,
                     messageToast: { header: 'ERROR', color: 'danger', message: `Erreur lors de la suppression des documents` }
-                });
-            })
-            .finally(() => {
-                setTimeout(() => {
-                    this.setState({
-                        toast: false,
-                        messageToast: {}
-                    });
-                }, 6000);
-            });
-        this.excelMasterService.deleteAllExcelMaster(this.state.token)
-            .then((res) => {
-                this.setState({
-                    toast: true,
-                    messageToast: { header: 'SUCCESS', color: 'success', message: `Tous les excels masters ont été supprimé` }
-                });
-            })
-            .catch((err) => {
-                this.setState({
-                    toast: true,
-                    messageToast: { header: 'ERROR', color: 'danger', message: `Erreur lors de la suppression des excels masters` }
                 });
             })
             .finally(() => {
@@ -450,7 +447,7 @@ class Administration extends Component {
                         className={'sofraco-icon-arrow'}
                         size="sm"
                         onClick={(e) => { this.toggle(e) }}
-                        icon={this.state.collapse ? icon.cilArrowTop: icon.cilArrowBottom} /></h3>
+                        icon={this.state.collapse ? icon.cilArrowTop : icon.cilArrowBottom} /></h3>
                     <CCollapse
                         show={this.state.collapse}
                     >
@@ -483,7 +480,7 @@ class Administration extends Component {
                         className={'sofraco-icon-arrow'}
                         size="sm"
                         onClick={(e) => { this.toggle2(e) }}
-                        icon={this.state.collapse2 ? icon.cilArrowTop: icon.cilArrowBottom} /></h3>
+                        icon={this.state.collapse2 ? icon.cilArrowTop : icon.cilArrowBottom} /></h3>
                     <CCollapse
                         show={this.state.collapse2}
                     >
@@ -546,7 +543,7 @@ class Administration extends Component {
                         className={'sofraco-icon-arrow'}
                         size="sm"
                         onClick={(e) => { this.toggle3(e) }}
-                        icon={this.state.collapse3 ? icon.cilArrowTop: icon.cilArrowBottom} /></h3>
+                        icon={this.state.collapse3 ? icon.cilArrowTop : icon.cilArrowBottom} /></h3>
                     <CCollapse
                         show={this.state.collapse3}
                     >

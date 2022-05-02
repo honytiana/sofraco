@@ -33,6 +33,7 @@ router.route('/').put(accessControl, documentController.updateDocuments);
 router.route('/:id').put(accessControl, documentController.updateDocument);
 router.route('/status/:status').put(accessControl, documentController.setStatusDocument);
 router.route('/').delete(accessControl, documentController.deleteAllDocuments);
+router.route('/files').delete(accessControl, documentController.deleteAllDocumentFiles);
 router.route('/:id').delete(accessControl, documentController.deleteDocument);
 
 

@@ -244,8 +244,10 @@ exports.updateDocuments = async (req, res) => {
         const directoryTexte = path.join(__dirname, '..', '..', 'documents', 'texte');
         const directorySplitedPDF = path.join(__dirname, '..', '..', 'documents', 'splited_PDF');
         try {
-            fileService.deleteFilesinDirectory(directoryTemp);
-            fileService.deleteFilesinDirectory(directoryTexte);
+            fileService.deleteDirectory(directoryTemp);
+            fileService.deleteDirectory(directoryTexte);
+            fileService.createDirectory(directoryTemp);
+            fileService.createDirectory(directoryTexte);
             fileService.deleteFilesinDirectory(directorySplitedPDF);
         } catch (err) {
             console.log(err);
@@ -545,6 +547,37 @@ exports.deleteAllDocuments = async (req, res) => {
     try {
         await documentHandler.deleteAllDocuments();
         res.status(200).end('Documents deleted');
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+}
+
+exports.deleteAllDocumentFiles = async (req, res) => {
+    console.log(`${new Date()} Delete all documents files`);
+    try {
+        const directoryArchived = path.join(__dirname, '..', '..', 'documents', 'archived');
+        const directoryAttachments = path.join(__dirname, '..', '..', 'documents', 'attachments');
+        const directoryMaster_excel = path.join(__dirname, '..', '..', 'documents', 'master_excel');
+        const directoryOcr= path.join(__dirname, '..', '..', 'documents', 'ocr');
+        const directorySplited_PDF = path.join(__dirname, '..', '..', 'documents', 'splited_PDF');
+        const directoryUploaded = path.join(__dirname, '..', '..', 'documents', 'uploaded');
+        const directoryTemp = path.join(__dirname, '..', '..', 'documents', 'temp');
+        const directoryTexte = path.join(__dirname, '..', '..', 'documents', 'texte');
+        try {
+            fileService.deleteFilesinDirectory(directoryArchived);
+            fileService.deleteFilesinDirectory(directoryAttachments);
+            fileService.deleteFilesinDirectory(directoryMaster_excel);
+            fileService.deleteFilesinDirectory(directoryOcr);
+            fileService.deleteFilesinDirectory(directorySplited_PDF);
+            fileService.deleteFilesinDirectory(directoryUploaded);
+            fileService.deleteDirectory(directoryTemp);
+            fileService.deleteDirectory(directoryTexte);
+            fileService.createDirectory(directoryTemp);
+            fileService.createDirectory(directoryTexte);
+        } catch (err) {
+            console.log(err);
+        }
+        res.status(200).end('Documents files deleted');
     } catch (error) {
         res.status(500).json({ error });
     }

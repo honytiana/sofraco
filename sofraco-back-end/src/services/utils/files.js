@@ -21,6 +21,22 @@ exports.getFileNameWithoutExtension = (filePath) => {
     return fileNameWithoutExtension;
 };
 
+exports.createDirectory = (directory) => {
+    try {
+        if (!fs.existsSync(directory)) {
+            fs.mkdirSync(directory)
+        }
+    } catch (err) {
+        throw err;
+    }
+};
+
+exports.deleteDirectory = (directory) => {
+    fs.rm(directory, { recursive: true }, (err) => {
+        if (err) throw err;
+    });
+};
+
 exports.deleteFilesinDirectory = (directory) => {
     fs.readdir(directory, (err, files) => {
         if (err) throw err;

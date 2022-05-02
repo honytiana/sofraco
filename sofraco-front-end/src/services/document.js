@@ -228,6 +228,23 @@ class DocumentService {
         });
     }
 
+    deleteAllDocumentFiles(token) {
+        return new Promise((resolve, reject) => {
+            axios.delete(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/document/files`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then((res) => {
+                    resolve(res.data);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+        });
+    }
+
     deleteDocument(id, token) {
         return new Promise((resolve, reject) => {
             axios.delete(`${(this.interne) ? process.env.REACT_APP_NODE_URL_INTERNE : process.env.REACT_APP_NODE_URL_EXTERNE}/api/document/${id}`, {
