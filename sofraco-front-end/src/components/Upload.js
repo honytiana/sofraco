@@ -423,15 +423,15 @@ class Upload extends Component {
     render() {
         return (
             <div>
-                {this.generateDropzone(this.props.company, this.state.files)}
+                {this.props.company.show && this.generateDropzone(this.props.company, this.state.files)}
                 {
                     (this.props.company.surco && this.state.companySurco !== null) && (
-                        this.generateDropzone(this.state.companySurco, this.state.filesSurco)
+                        this.state.companySurco.show && this.generateDropzone(this.state.companySurco, this.state.filesSurco)
                     )
                 }
                 {
                     (this.state.companySurco !== null && this.state.companySurco.surco && this.state.companySurco2 !== null) && (
-                        this.generateDropzone(this.state.companySurco2, this.state.filesSurco2)
+                        this.state.companySurco2.show && this.generateDropzone(this.state.companySurco2, this.state.filesSurco2)
                     )
                 }
                 <CButton
