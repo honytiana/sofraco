@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const { PDFDocument } = require('pdf-lib');
 const { performance } = require('perf_hooks');
-const { execSync } = require('child_process');
+const { execSync, spawnSync } = require('child_process');
 const time = require('../utils/time');
 const fileService = require('../utils/files');
 const pdfService = require('../utils/pdfFile');
@@ -185,7 +185,7 @@ const getTextFromImages = (image) => {
         let executionTimeTesseract;
         try {
             const tesseractStartTime = performance.now();
-            execSync(`tesseract ${image[0]} ${destFullPath} --psm 6`);
+            spawnSync('tesseract', [image[0], destFullPath, '--psm', 6]);
             const tesseractStopTime = performance.now();
             executionTimeTesseract = tesseractStopTime - tesseractStartTime;
             console.log('Execution time Tesseract : ', time.millisecondToTime(executionTimeTesseract));
