@@ -279,7 +279,7 @@ class ListExcelMaster extends Component {
                                                             </CCardHeader>
                                                             <CCollapse
                                                                 key={`excollapse_${i}`}
-                                                                show={this.state.detailsMonth.includes(i)}
+                                                                show={this.state.detailsMonth.includes(index)}
                                                             >
                                                                 <CCardBody key={`excardbode_${i}`} className="sofraco-card-archive-body">
                                                                     <CListGroup key={`${i}_listgroupdoc`}>
