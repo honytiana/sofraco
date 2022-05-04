@@ -1,5 +1,6 @@
 const body_parser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -27,7 +28,7 @@ module.exports = async function ({ app }) {
     app.use(morgan('combined', { stream: stream }));
 
     const allowedOrigin = JSON.parse(process.env.ALLOW_ORIGIN);
-    
+
     app.use((req, res, next) => {
         const origin = req.headers.origin;
         if (allowedOrigin.includes(origin)) {
@@ -39,21 +40,21 @@ module.exports = async function ({ app }) {
         next();
     });
 
+    const sessionSofraco = {
+        secret: 'SOFRACO',
+        resave: false,
+        saveUninitialized: true,
+        cookie: { secure: true }
+    };
+
+    app.set('trust proxy', 1);
+    app.use(session(sessionSofraco));
+
     app.get('/api/api-status', async (req, res) => {
-        // res.cookie('sofraco', `${await bcrypt.hash('!SOFRACO!2022#bordereaux sofraco', 10)}`, { maxAge: 10 * 60 * 60 * 1000, secure: true, sameSite: 'None' });
         res.cookie('sofraco', `${await bcrypt.hash('!SOFRACO!2022#bordereaux sofraco', 10)}`, { maxAge: 10 * 60 * 60 * 1000 });
         res.status(200).json({
             'status': 'Sofraco api is OK'
         });
     });
-
-    // app.use((req, res, next) => {
-    //     proxy.web(req, res, {
-    //         ws: true
-    //     }, (err) => {
-    //         console.log(err);
-    //     });
-    //     next();
-    // });
 
 }
